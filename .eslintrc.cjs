@@ -41,7 +41,6 @@ module.exports = {
     "@typescript-eslint/strict-boolean-expressions": 0,
     "import/extensions": [
       "error",
-      "ignorePackages",
       {
       "ts": "never",
       "tsx": "never"
