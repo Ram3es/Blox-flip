@@ -1,0 +1,16 @@
+<svg width="196" height="206" viewBox="0 0 196 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g style="mix-blend-mode:luminosity" opacity="0.13">
+<path d="M28.0039 121.837C48.9522 147.87 69.9996 149.492 98.3476 128.302C126.696 107.113 145.759 65.7934 124.81 39.7606C103.862 13.7279 69.7501 15.1447 41.4021 36.334C13.0541 57.5233 98.4445 60.9632 28.0039 121.837Z" fill="url(#paint0_radial_544_22)" fill-opacity="0.14"/>
+<path d="M0.636841 177.533C31.3642 215.718 67.4106 214.23 120.889 174.256C174.368 134.282 216.039 63.4266 185.312 25.2413C154.584 -12.944 95.31 -3.96057 41.8315 36.0131C-11.6471 75.9868 135.257 64.8483 0.636841 177.533Z" fill="url(#paint1_radial_544_22)"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_544_22" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(98.2015 103.042) rotate(78.2827) scale(558.14 543.722)">
+<stop stop-color="#F58011"/>
+<stop offset="1" stop-color="#F58011" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint1_radial_544_22" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(90.4954 98.3064) rotate(65.6418) scale(157.484 242.213)">
+<stop stop-color="#F58011"/>
+<stop offset="1" stop-color="#F58011" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
