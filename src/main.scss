@@ -40,6 +40,11 @@
 700
 500*/
 
+@layer base {
+  body {
+    @apply h-full;
+  }
+}
 
 body{
     color:#FFF;
