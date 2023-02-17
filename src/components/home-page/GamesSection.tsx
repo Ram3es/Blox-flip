@@ -26,9 +26,9 @@ const GamesSection = () => {
   return (
         <div className="flex flex-wrap -mx-3">
             <WelcomeCard user={user}/>
-            {games.map(({ name }, idx) => (
-                <GameCard key={name} titleBtn={name} isLeftCorner={idx % 2 === 0} />
-            ))}
+              {games.map(({ name }, idx) => (
+                 <GameCard key={name} titleBtn={name} isLeftCorner={idx % 2 === 0} />
+              ))}
             <GiftCard />
         </div>
   )
