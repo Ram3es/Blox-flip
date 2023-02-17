@@ -1,12 +1,13 @@
 import React from 'react'
 import { IUser } from '../../types/User'
+import Avatar from '../../assets/img/avatar_img.png'
 
 const UserProgress = ({ user }: { user: IUser }) => {
   const progress = Math.floor((user?.progress?.current / user?.progress?.required) * 100).toString()
   return (
         <>
              <div className="w-18 h-17 border border-blue-highlight rounded-lg radial--blue mb-2">
-                        <img src="/src/assets/img/avatar_img.png" alt="" width="73" height="68" loading="lazy" decoding="async" className="object-cover" />
+                        <img src={ Avatar } alt="" width="73" height="68" loading="lazy" decoding="async" className="object-cover" />
                     </div>
                     <div className="flex justify-center items-center font-extrabold mb-6">
                         <div className="text-11 border border-pink-primary rounded text-pink-primary px-1 leading-4 radial--blue">{user?.level}</div>
