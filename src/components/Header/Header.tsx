@@ -8,13 +8,57 @@ import PlusIcon from '../../assets/img/plus_ico.svg'
 import HomeIcon from '../../assets/img/home_ico.svg'
 import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
+import { RouteItem } from '../../types/routes'
 
-interface routesGamesItem {
-  path: string
-  name: string
+const GamesButton = () => {
+  return (
+    <div className='flex'>
+      <img
+        src={GamesIcon}
+        alt=''
+        width='17'
+        height='11'
+        loading='lazy'
+        decoding='async'
+        className='mr-2'
+      />
+      <span className='py-2 mr-2 font-bold hidden md:block'>Games</span>
+      <img src={ArrowWhiteIcon} alt='' width='7' height='4' loading='lazy' decoding='async' />
+    </div>
+  )
 }
 
-const routesGames: routesGamesItem[] = [
+const UserWalletIcon = () => {
+  return (
+    <span className='w-6 h-6 text-center leading-6 bg-green-primary rounded relative'>
+      <img
+        src={PlusIcon}
+        alt=''
+        width='11'
+        height='11'
+        loading='lazy'
+        decoding='async'
+        className='-inset-full absolute m-auto'
+      />
+    </span>
+  )
+}
+
+const UserWalletButton = () => {
+  return (
+    <span className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
+      <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
+        <DiamondIcon size='LARGE' className='-inset-full absolute m-auto' />
+      </span>
+      <span className='font-bold text-sm whitespace-nowrap mr-7 hidden xs:block'>
+        1,500<span className='text-white/50'>.00</span>
+      </span>
+      <UserWalletIcon />
+    </span>
+  )
+}
+
+const routesGames: RouteItem[] = [
   { path: '/cases', name: 'Cases' },
   { path: '/cups', name: 'Cups' },
   { path: '/mines', name: 'Mines' },
@@ -122,53 +166,5 @@ export const Header = () => {
         </div>
       </div>
     </div>
-  )
-}
-
-const GamesButton = () => {
-  return (
-    <div className='flex'>
-      <img
-        src={GamesIcon}
-        alt=''
-        width='17'
-        height='11'
-        loading='lazy'
-        decoding='async'
-        className='mr-2'
-      />
-      <span className='py-2 mr-2 font-bold hidden md:block'>Games</span>
-      <img src={ArrowWhiteIcon} alt='' width='7' height='4' loading='lazy' decoding='async' />
-    </div>
-  )
-}
-
-const UserWalletIcon = () => {
-  return (
-    <span className='w-6 h-6 text-center leading-6 bg-green-primary rounded relative'>
-      <img
-        src={PlusIcon}
-        alt=''
-        width='11'
-        height='11'
-        loading='lazy'
-        decoding='async'
-        className='-inset-full absolute m-auto'
-      />
-    </span>
-  )
-}
-
-const UserWalletButton = () => {
-  return (
-    <span className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
-      <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
-        <DiamondIcon size='LARGE' className='-inset-full absolute m-auto' />
-      </span>
-      <span className='font-bold text-sm whitespace-nowrap mr-7 hidden xs:block'>
-        1,500<span className='text-white/50'>.00</span>
-      </span>
-      <UserWalletIcon />
-    </span>
   )
 }
