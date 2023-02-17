@@ -40,6 +40,11 @@
 700
 500*/
 
+@layer base {
+  body {
+    @apply min-h-screen;
+  }
+}
 
 body{
     color:#FFF;
