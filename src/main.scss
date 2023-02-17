@@ -42,7 +42,7 @@
 
 @layer base {
   body {
-    @apply h-full;
+    @apply min-h-screen;
   }
 }
 

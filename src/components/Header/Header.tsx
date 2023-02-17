@@ -86,8 +86,8 @@ export const Header = () => {
             href='#'
             className='text-xs flex-row flex items-center w-8 h-8 xs:h-9 xs:w-auto xs:px-2.5 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20'
           >
-            <span className='w-4 shrink-0 mx-auto'>
-              <DiamondIcon color='WHITE' size='LARGE' />
+            <span className='w-4 shrink-0 mx-auto relative text-white'>
+              <DiamondIcon size='LARGE' />
             </span>
             <span className='hidden md:block ml-2.5'>Free Diamonds</span>
           </a>
@@ -104,8 +104,8 @@ export const Header = () => {
                   to='/deposit'
                   className='relative z-20 text-xs flex-row flex justify-center items-center h-8 px-2.5 leading-8 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20 mb-2'
                 >
-                  <span className='w-4 shrink-0 mr-2.5'>
-                    <DiamondIcon color='WHITE' />
+                  <span className='w-4 shrink-0 mr-2.5 flex text-white'>
+                    <DiamondIcon />
                   </span>
                   <span>Deposit</span>
                 </Menu.Item>
@@ -161,10 +161,10 @@ const UserWalletIcon = () => {
 
 const UserWalletButton = () => {
   return (
-    <span
-      className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'
-    >
-      <DiamondIcon size='LARGE' />
+    <span className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
+      <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
+        <DiamondIcon size='LARGE' className='-inset-full absolute m-auto' />
+      </span>
       <span className='font-bold text-sm whitespace-nowrap mr-7 hidden xs:block'>
         1,500<span className='text-white/50'>.00</span>
       </span>

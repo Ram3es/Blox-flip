@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
-import { Chat } from './components/Chat/Chat'
 
 import { Cases } from './pages/Cases/Cases'
 import { Cups } from './pages/Cups/Cups'
@@ -17,7 +16,6 @@ export const App = () => {
     <BrowserRouter>
       <Container>
         <Header />
-        <Chat />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cases' element={<Cases />} />
