@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react'
 import clsx from 'clsx'
 
-import { ChatHeader } from './ChatHeader/ChatHeader'
-import { ChatTools } from './ChatTools/ChatTools'
-import { ChatMessageList } from './ChatMessagesList/ChatMessagesList'
-import { ChatMessageInput } from './ChatMessageInput/ChatMessageInput'
-import { ChatFab } from './ChatFab/ChatFab'
+import { ChatHeader } from './ChatHeader'
+import { ChatTools } from './ChatTools'
+import { ChatMessageList } from './ChatMessagesList'
+import { ChatMessageInput } from './ChatMessageInput'
+import { ChatFab } from './ChatFab'
 
 import { user } from '../../mocks'
 

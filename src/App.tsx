@@ -12,6 +12,7 @@ import { Deposit } from './pages/Deposit/Deposit'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import Wheel from './pages/Wheel/Wheel'
 import King from './pages/King/King'
+import { Chat } from './components/Chat/Chat'
 
 export const App = () => {
   return (
