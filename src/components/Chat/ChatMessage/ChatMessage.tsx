@@ -9,7 +9,7 @@ interface UserMessageProps extends IUser {
 
 export const ChatMessage: FC<UserMessageProps> = ({ message, ...user }) => {
   return (
-    <div className='relative hover:z-50'>
+    <div className='relative'>
       <div className='flex items-center justify-between mb-2 relative'>
         <UserCard {...user} />
         <UserInfoDropdown />
