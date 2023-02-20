@@ -10,12 +10,14 @@ import { Mines } from './pages/Mines/Mines'
 import { Plinko } from './pages/Plinko/Plinko'
 import { Deposit } from './pages/Deposit/Deposit'
 import { Withdraw } from './pages/Withdraw/Withdraw'
+import { Chat } from './components/Chat/Chat'
 
 export const App = () => {
   return (
     <BrowserRouter>
       <Container>
         <Header />
+        <Chat />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cases' element={<Cases />} />
