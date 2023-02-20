@@ -7,7 +7,7 @@ const UserProgress = ({ user }: { user: IUser }) => {
   return (
         <>
              <div className="w-18 h-17 border border-blue-highlight rounded-lg radial--blue mb-2">
-                        <img src={ Avatar } alt="" width="73" height="68" loading="lazy" decoding="async" className="object-cover" />
+                        <img src={ Avatar } alt="avatar" width="73" height="68" loading="lazy" decoding="async" className="object-cover" />
                     </div>
                     <div className="flex justify-center items-center font-extrabold mb-6">
                         <div className="text-11 border border-pink-primary rounded text-pink-primary px-1 leading-4 radial--blue">{user?.level}</div>
