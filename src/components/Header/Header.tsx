@@ -103,9 +103,9 @@ export const Header = () => {
           </Menu.Button>
           <Menu.Items
             as='div'
-            className='absolute mx-auto max-w-xs -left-full -right-full top-full pt-2.5 popup'
+            className='absolute mx-auto max-w-xs -left-full -right-full top-full pt-2.5'
           >
-            <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tc'>
+            <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary'>
               {routesGames.map((route) => (
                 <Menu.Item
                   as={NavLink}
@@ -125,24 +125,24 @@ export const Header = () => {
           <span className='w-1.5 h-1.5 bg-green-primary rounded-full outline outline-3 outline-green-primary/25 mr-1.5'></span>
           1545
         </div>
-        <div className='diamond--highlight mr-2 xs:mr-6 ml-2 xs:ml-6'>
-          <a
-            href='#'
+        <button className='diamond--highlight mr-2 xs:mr-6 ml-2 xs:ml-6'>
+          <Link
+            to='/deposit'
             className='text-xs flex-row flex items-center w-8 h-8 xs:h-9 xs:w-auto xs:px-2.5 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20'
           >
             <span className='w-4 shrink-0 mx-auto relative text-white'>
               <DiamondIcon size='LARGE' />
             </span>
             <span className='hidden md:block ml-2.5'>Free Diamonds</span>
-          </a>
-        </div>
+          </Link>
+        </button>
         <div className='group p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
           <Menu>
             <Menu.Button>
               <UserWalletButton />
             </Menu.Button>
-            <Menu.Items as='div' className='absolute w-full right-0 top-full pt-2.5 popup'>
-              <div className='relative min-w-fit p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tc'>
+            <Menu.Items as='div' className='absolute w-full right-0 top-full pt-2.5'>
+              <div className='relative min-w-fit p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary'>
                 <Menu.Item
                   as={NavLink}
                   to='/deposit'
