@@ -14,8 +14,8 @@ const Button: FC<IButtonProps> = ({ text, submitFunction, buttonClasses, childre
           className={buttonClasses ?? 'flex justify-center items-center py-2 px-4 text-gray-primary bg-blue-accent rounded cursor-pointer'}
           onClick={() => submitFunction()}
           >
-            {text}
             {children}
+            {text}
         </button>
   )
 }
