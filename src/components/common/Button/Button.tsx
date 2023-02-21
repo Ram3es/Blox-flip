@@ -17,11 +17,10 @@ enum ButtonSizeEnum {
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: keyof typeof BaseSizes | keyof typeof ButtonSizeEnum
   variant: keyof typeof ButtonVariantEnum
-  icon?: ReactNode
   children?: ReactNode
 }
 
-export const Button: FC<ButtonProps> = ({ size, variant, icon, children, ...buttonProps }) => {
+export const Button: FC<ButtonProps> = ({ size, variant, children, ...buttonProps }) => {
   const buttonClasses = clsx(
     'bg-green-primary flex flex-row items-center justify-center whitespace-nowrap leading-7 text-11 font-bold rounded',
     {
@@ -37,8 +36,7 @@ export const Button: FC<ButtonProps> = ({ size, variant, icon, children, ...butt
 
   return (
     <button className={buttonClasses} {...buttonProps}>
-      {icon && <p>{icon}</p>}
-      {children && <p>{children}</p>}
+      <div className='flex items-center justify-around gap-1'>{children}</div>
     </button>
   )
 }

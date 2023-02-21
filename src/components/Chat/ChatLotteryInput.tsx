@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-
-import { InputWithLabel } from '../base/InputWithLabel'
 import { Button } from '../common/Button/Button'
+import { Input } from '../common/Input/Input'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 
 export const ChatLotteryInput = () => {
@@ -25,7 +24,7 @@ export const ChatLotteryInput = () => {
       <span className='w-5 h-5 text-center leading-6 shrink-0 bg-green-primary/20 rounded relative mr-2 text-green-primary'>
         <DiamondIcon className='-inset-full absolute m-auto' />
       </span>
-      <InputWithLabel
+      <Input
         type='text'
         placeholder='...'
         variant='OUTLINED'

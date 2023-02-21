@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { InputWithLabel } from '../base/InputWithLabel'
 import { Button } from '../common/Button/Button'
+import { Input } from '../common/Input/Input'
+
 const MailIcon = ({ className }: { className: string }) => {
   return (
     <svg
@@ -40,12 +41,12 @@ export const ChatMessageInput = () => {
   return (
     <div className='absolute inset-0 top-auto z-50 p-4 bg-blue-primary'>
       <form onSubmit={handleSubmit}>
-        <InputWithLabel
+        <Input
           placeholder='Send message...'
           value={message}
           onChange={handleMessage}
           type='text'
-          variant='CHAT'
+          variant='BASE'
         />
         <div className='absolute right-7 z-20 top-2/4 -mt-3.5'>
           <Button variant='STANDARD' size='MEDIUM' type='submit'>

@@ -28,9 +28,8 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
         placeholder='...'
         onChange={(event) => handleChange(event)}
       >
-        <Button size='MEDIUM' variant='GRADIENT' icon={
+        <Button size='MEDIUM' variant='GRADIENT'>
           <DiamondIcon />
-        }>
           Claim
         </Button>
       </InputWithLabel>
@@ -42,9 +41,8 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
         placeholder='...'
         onChange={(event) => handleChange(event)}
       >
-        <Button size='MEDIUM' variant='GRADIENT' icon={
+        <Button size='MEDIUM' variant='GRADIENT'>
           <DiamondIcon />
-        }>
           Claim
         </Button>
       </InputWithLabel>
