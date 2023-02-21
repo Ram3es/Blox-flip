@@ -1,8 +1,6 @@
-import React from 'react'
-
-const GiftWithDiamond = ({ iconCalsses }: { iconCalsses?: string }) => {
+export const GiftWithDiamond = ({ iconClasses }: { iconClasses?: string }) => {
   return (
-        <svg className={`${iconCalsses ?? ''}`} viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className={`${iconClasses ?? ''}`} viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.82432 13.665H10.2241V29H5.34478C4.45258 29 3.71834 28.2657 3.71834 27.3735V14.5479L0.0937007 8.2002C-0.101505 7.86561 0.0192977 7.43814 0.353885 7.25217C0.688472 7.06621 1.11595 7.17777 1.30191 7.51245L4.82432 13.665Z" fill="black"/>
         <path d="M4.82432 13.665H10.2241V29H5.34478C4.45258 29 3.71834 28.2657 3.71834 27.3735V14.5479L0.0937007 8.2002C-0.101505 7.86561 0.0192977 7.43814 0.353885 7.25217C0.688472 7.06621 1.11595 7.17777 1.30191 7.51245L4.82432 13.665Z" fill="currentColor"/>
         <path d="M11.6182 13.6653H13.9418V29H11.6182V13.6653Z" fill="black"/>
@@ -32,5 +30,3 @@ const GiftWithDiamond = ({ iconCalsses }: { iconCalsses?: string }) => {
         </svg>
   )
 }
-
-export default GiftWithDiamond

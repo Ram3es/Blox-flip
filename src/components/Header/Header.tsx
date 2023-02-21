@@ -9,6 +9,7 @@ import HomeIcon from '../../assets/img/home_ico.svg'
 import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/routes'
+import { Button } from '../common/Button/Button'
 
 const GamesButton = () => {
   return (
@@ -29,32 +30,24 @@ const GamesButton = () => {
 }
 
 const UserWalletIcon = () => {
-  return (
-    <span className='w-6 h-6 text-center leading-6 bg-green-primary rounded relative'>
-      <img
-        src={PlusIcon}
-        alt=''
-        width='11'
-        height='11'
-        loading='lazy'
-        decoding='async'
-        className='-inset-full absolute m-auto'
-      />
-    </span>
-  )
+  return <img src={PlusIcon} alt='' width='11' height='11' loading='lazy' decoding='async' />
 }
 
 const UserWalletButton = () => {
   return (
-    <span className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
+    <div className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
       <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
-        <DiamondIcon size='LARGE' className='-inset-full absolute m-auto' />
+        <DiamondIcon size='SMALL' className='-inset-full absolute m-auto' />
       </span>
       <span className='font-bold text-sm whitespace-nowrap mr-7 hidden xs:block'>
         1,500<span className='text-white/50'>.00</span>
       </span>
-      <UserWalletIcon />
-    </span>
+      <span>
+        <Button size='SMALL' variant='STANDARD'>
+          <UserWalletIcon />
+        </Button>
+      </span>
+    </div>
   )
 }
 
@@ -136,9 +129,9 @@ export const Header = () => {
             <span className='hidden md:block ml-2.5'>Free Diamonds</span>
           </Link>
         </button>
-        <div className='group p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
+        <div className=' p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
           <Menu>
-            <Menu.Button>
+            <Menu.Button as='div'>
               <UserWalletButton />
             </Menu.Button>
             <Menu.Items as='div' className='absolute w-full right-0 top-full pt-2.5'>

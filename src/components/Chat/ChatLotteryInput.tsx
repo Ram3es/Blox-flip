@@ -1,4 +1,4 @@
-import { Button } from '../Button/Button'
+import { Button } from '../common/Button/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 
 export const ChatLotteryInput = () => {
@@ -12,7 +12,7 @@ export const ChatLotteryInput = () => {
         className='group grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none appearance-none m-0'
         placeholder='...'
       />
-      <Button>Tip rain</Button>
+      <Button variant='GRADIENT'>Tip Rain</Button>
     </div>
   )
 }
