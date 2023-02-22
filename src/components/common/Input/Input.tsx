@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes, ReactNode } from 'react'
+import { FC, InputHTMLAttributes } from 'react'
 import clsx from 'clsx'
 
 enum InputVariantEnum {
@@ -10,13 +10,11 @@ enum InputVariantEnum {
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   variant?: keyof typeof InputVariantEnum
-  children?: ReactNode
 }
 
 export const Input: FC<InputProps> = ({
   label,
   variant = InputVariantEnum.BASE,
-  children,
   ...inputProps
 }) => {
   const inputClasses = clsx('relative z-10', {
@@ -27,16 +25,13 @@ export const Input: FC<InputProps> = ({
   })
 
   return (
-    <div className=''>
-      <input
-        type={inputProps.type}
-        name={inputProps.name}
-        value={inputProps.value}
-        onChange={inputProps.onChange}
-        placeholder={inputProps.placeholder}
-        className={inputClasses}
-      />
-      {children}
-    </div>
+    <input
+      type={inputProps.type}
+      name={inputProps.name}
+      value={inputProps.value}
+      onChange={inputProps.onChange}
+      placeholder={inputProps.placeholder}
+      className={inputClasses}
+    />
   )
 }

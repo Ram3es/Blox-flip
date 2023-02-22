@@ -1,9 +1,8 @@
-import { FC, InputHTMLAttributes, ReactNode } from 'react'
+import { FC, InputHTMLAttributes } from 'react'
 
 interface IInputWithLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   labelClasses?: string
-  children?: ReactNode
 }
 
 export const InputWithLabel: FC<IInputWithLabelProps> = ({ label, labelClasses, children, ...inputLabelProps }) => {
@@ -18,9 +17,8 @@ export const InputWithLabel: FC<IInputWithLabelProps> = ({ label, labelClasses, 
                     value={inputLabelProps.value}
                     onChange={inputLabelProps.onChange}
                     placeholder={inputLabelProps.placeholder}
-                    className="grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none"
+                    className="grow w-0 mr-2 h-10 bg-transparent bg-none border-none outline-none shadow-none"
                 />
-                  {children}
                </div>
             </div>
         </label>

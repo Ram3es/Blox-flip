@@ -5,7 +5,7 @@ import { Button } from '../common/Button/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 import { GiftWithDiamond } from '../icons/GiftWithDiamond'
 
-const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
+const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: Function }) => {
   const [inputsValue, setInputValue] = useState({ promo: '', affiliate: '' })
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,40 +13,48 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
   }
 
   return isOpen
-    ? (<ModalWrapper closeModal={onClose}>
+    ? (
+    <ModalWrapper closeModal={onClose}>
       <div className='flex border-b border-blue-highlight mb-6 pb-6 pr-8'>
         <div className='w-7 mr-2 shrink-0 text-green-primary'>
           <GiftWithDiamond />
         </div>
         <h3 className='text-2xl font-extrabold'>WANT FREE ROBUX?</h3>
       </div>
-      <InputWithLabel
-        type='text'
-        name='promo'
-        label='Promo Code'
-        value={inputsValue.promo}
-        placeholder='...'
-        onChange={(event) => handleChange(event)}
-      >
-        <Button size='MEDIUM' variant='GRADIENT'>
-          <DiamondIcon />
-          Claim
-        </Button>
-      </InputWithLabel>
-      <InputWithLabel
-        type='text'
-        name='affiliate'
-        label='Affiliate code'
-        value={inputsValue.affiliate}
-        placeholder='...'
-        onChange={(event) => handleChange(event)}
-      >
-        <Button size='MEDIUM' variant='GRADIENT'>
-          <DiamondIcon />
-          Claim
-        </Button>
-      </InputWithLabel>
-    </ModalWrapper>)
+      <div className='relative'>
+        <InputWithLabel
+          type='text'
+          name='promo'
+          label='Promo Code'
+          value={inputsValue.promo}
+          placeholder='...'
+          onChange={(event) => handleChange(event)}
+        />
+        <div className='absolute z-20 inset-y-11 right-3'>
+          <Button size='MEDIUM' variant='GRADIENT'>
+            <DiamondIcon />
+            Claim
+          </Button>
+        </div>
+      </div>
+      <div className='relative'>
+        <InputWithLabel
+          type='text'
+          name='affiliate'
+          label='Affiliate code'
+          value={inputsValue.affiliate}
+          placeholder='...'
+          onChange={(event) => handleChange(event)}
+        />
+        <div className='absolute z-20 inset-y-11 right-3'>
+          <Button size='MEDIUM' variant='GRADIENT'>
+            <DiamondIcon />
+            Claim
+          </Button>
+        </div>
+      </div>
+    </ModalWrapper>
+      )
     : null
 }
 
