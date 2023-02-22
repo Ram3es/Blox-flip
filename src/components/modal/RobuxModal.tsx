@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react'
-import { InputWithLabel } from '../base/InputWithLabel'
+import InputWithLabel from '../base/InputWithLabel'
 import ModalWrapper from '../base/ModalWrapper'
 import { Button } from '../common/Button/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
@@ -30,7 +30,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: Function })
           placeholder='...'
           onChange={(event) => handleChange(event)}
         />
-        <div className='absolute z-20 inset-y-11 right-3'>
+        <div className='absolute z-20 inset-y-[42px] right-2'>
           <Button size='MEDIUM' variant='GRADIENT'>
             <DiamondIcon />
             Claim
@@ -46,7 +46,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: Function })
           placeholder='...'
           onChange={(event) => handleChange(event)}
         />
-        <div className='absolute z-20 inset-y-11 right-3'>
+        <div className='absolute z-20 inset-y-[42px] right-2'>
           <Button size='MEDIUM' variant='GRADIENT'>
             <DiamondIcon />
             Claim

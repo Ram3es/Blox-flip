@@ -3,24 +3,56 @@ import { FC, InputHTMLAttributes } from 'react'
 interface IInputWithLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   labelClasses?: string
+  inputClasses?: string
+  titleClasses?: string
 }
 
-export const InputWithLabel: FC<IInputWithLabelProps> = ({ label, labelClasses, children, ...inputLabelProps }) => {
+const InputWithLabel: FC<IInputWithLabelProps> = ({
+  label,
+  labelClasses,
+  inputClasses,
+  titleClasses,
+  ...inputProps
+}) => {
   return (
-        <label className={labelClasses ?? 'flex flex-col w-full mb-8'}>
-            { label !== undefined && <div className=" w-fit gradient-blue-secondary text-gray-primary text-sm px-4 py-2 leading-4 rounded-t-xl inline-block">{label}</div> }
-            <div className="bg-dark/25 rounded-xl rounded-tl-none overflow-hidden">
-                <div className="relative z-10 gradient-blue-secondary flex items-center py-2.5 pl-4 pr-3">
-                  <input
-                    type={inputLabelProps.type}
-                    name={inputLabelProps.name}
-                    value={inputLabelProps.value}
-                    onChange={inputLabelProps.onChange}
-                    placeholder={inputLabelProps.placeholder}
-                    className="grow w-0 mr-2 h-10 bg-transparent bg-none border-none outline-none shadow-none"
-                />
-               </div>
-            </div>
-        </label>
+    <label className={labelClasses ?? 'flex flex-col w-full mb-8'}>
+      {label !== undefined && (
+        <div
+          className={
+            titleClasses ??
+            'w-fit gradient-blue-secondary text-gray-primary text-sm px-4 py-2 leading-4 rounded-t-xl inline-block'
+          }
+        >
+          {label}
+        </div>
+      )}
+      {inputProps.type === 'text'
+        ? (
+        <div className='bg-dark/25 rounded-xl rounded-tl-none overflow-hidden'>
+          <div className='relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-4 pr-3'>
+            <input
+              type={inputProps.type}
+              name={inputProps.name}
+              value={inputProps.value}
+              onChange={inputProps.onChange}
+              placeholder={inputProps.placeholder}
+              className='grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none'
+            />
+          </div>
+        </div>
+          )
+        : (
+        <input
+          type={inputProps.type}
+          name={inputProps.name}
+          value={inputProps.value}
+          onChange={inputProps.onChange}
+          placeholder={inputProps.placeholder}
+          className={inputClasses ?? 'h-5 w-5  rounded accent-green cursor-pointer'}
+        />
+          )}
+    </label>
   )
 }
+
+export default InputWithLabel
