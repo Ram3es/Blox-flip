@@ -1,20 +1,23 @@
 import {
-  ColumnDef,
   flexRender,
+  ColumnDef,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 
-export const Table = <T extends unknown> ({ data, columns }: { data: T[], columns: Array<ColumnDef<T>> }) => {
+interface ReactTableProps<T extends object> {
+  data: T[]
+  columns: ColumnDef<T>[]
+}
+
+export const Table = <T extends object> ({ data, columns }: ReactTableProps<T>) => {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable: true

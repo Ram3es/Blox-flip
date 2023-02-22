@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { User } from '../LiveFeed/LiveFeed2'
+import { User } from '../LiveFeed/LiveFeed'
 
 interface UserInfoCellProps {
   user: User

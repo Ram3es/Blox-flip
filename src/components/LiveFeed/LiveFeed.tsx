@@ -23,7 +23,7 @@ export interface User {
   id: string
 }
 
-export const LiveFeed2 = () => {
+export const LiveFeed = () => {
   const columnHelper = createColumnHelper<User>()
 
   const columns = [
