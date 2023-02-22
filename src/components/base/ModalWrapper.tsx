@@ -5,14 +5,15 @@ import Button from './Button'
 interface IModalWrapper {
   children: JSX.Element | JSX.Element[] | undefined
   closeModal: Function
+  modalClasses?: string
 
 }
 
-const ModalWrapper: FC<IModalWrapper> = ({ children, closeModal }) => {
+const ModalWrapper: FC<IModalWrapper> = ({ children, closeModal, modalClasses }) => {
   return (
         <div className="fixed inset-0 z-[50] h-screen w-screen flex flex-col justify-center items-center bg-blue-darken/75">
-          <div className="max-h-full w-full overflow-auto p-4">
-            <div className="pt-5 pb-9 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-xl w-full m-auto">
+          {/* <div className="max-h-full w-full overflow-auto p-4"> */}
+            <div className={modalClasses ?? 'pt-5 pb-9 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-xl w-full m-auto'}>
               <Button
                 text=''
                 buttonClasses='rounded w-7 h-7 leading-7 absolute top-4 right-6 text-center bg-blue-accent cursor-pointer'
@@ -21,7 +22,7 @@ const ModalWrapper: FC<IModalWrapper> = ({ children, closeModal }) => {
               </Button>
               {children}
             </div>
-        </div>
+        {/* </div> */}
     </div>
   )
 }
