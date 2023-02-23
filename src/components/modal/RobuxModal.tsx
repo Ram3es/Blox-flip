@@ -5,7 +5,7 @@ import { Button } from '../common/Button/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 import { GiftWithDiamond } from '../icons/GiftWithDiamond'
 
-const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: Function }) => {
+const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
   const [inputsValue, setInputValue] = useState({ promo: '', affiliate: '' })
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
