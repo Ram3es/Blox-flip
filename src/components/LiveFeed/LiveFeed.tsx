@@ -29,7 +29,7 @@ export const LiveFeed = () => {
 
   useEffect(() => {
     console.log(filter, '<<< Current filter')
-    setData([...users].slice(0, Math.random() * 30))
+    setData([...users])
   }, [filter])
 
   const columnHelper = createColumnHelper<ISecondUser>()
