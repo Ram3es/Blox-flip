@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
 interface MultiplierCellProps {
-  rate: number
+  multiplier: number
 }
 
-export const MultiplierCell: FC<MultiplierCellProps> = ({ rate }) => {
-  return <span className='text-white'>{rate}x</span>
+export const MultiplierCell: FC<MultiplierCellProps> = ({ multiplier }) => {
+  return <span className='text-white'>{multiplier}x</span>
 }

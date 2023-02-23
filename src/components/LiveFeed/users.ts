@@ -1,4 +1,6 @@
-export const users = [
+import { ISecondUser } from '../../types/User'
+
+export const users: ISecondUser[] = [
   {
     game: 'game 1',
     date: '2089-04-01T17:18:45.144Z',
