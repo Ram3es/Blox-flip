@@ -5,5 +5,5 @@ interface MultiplierCellProps {
 }
 
 export const MultiplierCell: FC<MultiplierCellProps> = ({ rate }) => {
-  return <span className='text-white'>{rate}</span>
+  return <span className='text-white'>{rate}x</span>
 }
