@@ -22,6 +22,7 @@ module.exports = {
         'blue-accent': 'rgba(41, 48, 77)',
         'blue-accent-secondary': 'rgba(47, 54, 86)',
         'blue-highlight': 'rgba(54, 62, 96)',
+        'blue-higlight-2': 'rgba(55, 64, 107, 0.15)',
         'blue-light': 'rgba(72, 81, 120)',
         'blue-light-primary': 'rgba(98, 111, 168)',
         'blue-light-secondary': 'rgba(108, 123, 188)',
@@ -41,6 +42,9 @@ module.exports = {
         'pink-primary': 'rgba(186, 102, 226)',
         'pink-secondary': 'rgba(188, 84, 252, 1)',
         'pink-accent': 'rgba(210, 137, 255)',
+        'purple-light': 'rgba(82, 95, 151)',
+        'purple-terms': 'rgba(118, 130, 177)',
+        'purple': 'rgba(157, 168, 222)',
         'orange-primary': 'rgba(245, 128, 17)',
         'orange-primary-light': 'rgba(255, 153, 0)',
         'orange-secondary': 'rgba(226, 162, 102)',
@@ -74,6 +78,7 @@ module.exports = {
         'green-primary-10': '0 0 10px rgba(44, 221, 104)',
         'green-20': '0 0 20px rgba(75, 251, 134, 0.35)',
         'dark-15': '0px 2px 10px rgba(0, 0, 0, 0.15)',
+        'dark-5' : '0px 0px 20px rgba(0, 0, 0, 0.05)',
         'orange-10': '0px 0px 10px #FF9900'
       },
       outlineWidth: {

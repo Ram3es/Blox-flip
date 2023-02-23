@@ -1,10 +1,11 @@
-import { LiveFeed } from '../../components/LiveFeed/LiveFeed'
+import GamesSection from '../../components/home-page/GamesSection'
+import SignInModal from '../../components/modal/SignInModal.'
 
 export const Home = () => {
   return (
     <div>
-      <LiveFeed />
-      <h1 className='text-red text-5xl'>Homepage</h1>
+      <GamesSection />
+      <SignInModal />
     </div>
   )
 }
