@@ -14,7 +14,8 @@ export const DiamondIcon: FC<DiamondIconProps> = ({
 }) => {
   const widthSvg = clsx('', {
     16: size === BaseSizes.LARGE,
-    15: size === BaseSizes.MEDIUM
+    15: size === BaseSizes.MEDIUM,
+    14.2: size === BaseSizes.SMALL
   })
 
   return (
