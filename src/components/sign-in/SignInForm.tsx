@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
 
@@ -10,7 +10,8 @@ interface IState {
 const SignInForm = ({ submitFunction }: { submitFunction?: Function }) => {
   const [inputValue, setInputValue] = useState<IState>({ userName: '', password: '' })
 
-  const onChange = (name: string, value: string) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
     setInputValue(prev => ({ ...prev, [name]: value }))
   }
   const onSubmit = () => {
@@ -24,7 +25,7 @@ const SignInForm = ({ submitFunction }: { submitFunction?: Function }) => {
         label='Username'
         placeholder="..."
         value={inputValue.userName}
-        changeFunction={onChange}
+        onChange={onChange}
       />
       <InputWithLabel
         type='text'
@@ -32,7 +33,7 @@ const SignInForm = ({ submitFunction }: { submitFunction?: Function }) => {
         label='Password'
         placeholder="..."
         value={inputValue.password}
-        changeFunction={onChange}
+        onChange={onChange}
       />
       <Submit submitFunction={onSubmit} />
     </>

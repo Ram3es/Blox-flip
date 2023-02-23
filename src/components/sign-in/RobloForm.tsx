@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
 
 const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
   const [inputValue, setInputValue] = useState({ code: '' })
 
-  const onChange = (name: string, value: string) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
     setInputValue(prev => ({ ...prev, [name]: value }))
   }
 
@@ -21,7 +22,7 @@ const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
           label='.Roblosecurity'
           value={inputValue.code}
           placeholder="..."
-          changeFunction={onChange}
+          onChange={onChange}
         />
         <Submit submitFunction={onSubmit} />
       </div>

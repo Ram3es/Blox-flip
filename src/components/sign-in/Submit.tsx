@@ -1,21 +1,22 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import Button from '../base/Button'
 import InputWithLabel from '../base/InputWithLabel'
 
 const Submit = ({ submitFunction }: { submitFunction: Function }) => {
   const [isChecked, setChecked] = useState({ policy: false })
 
-  const handleCheckBox = (name: string, isChecked: boolean) => {
-    setChecked(prev => ({ ...prev, [name]: isChecked }))
+  const handleCheckBox = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target
+    setChecked(prev => ({ ...prev, [name]: checked }))
   }
   return (
         <div className='flex justify-between items-center '>
         <div className='flex'>
           <InputWithLabel
             type='checkbox'
-            value={isChecked.policy}
+            checked={isChecked.policy}
             name='policy'
-            changeFunction={ handleCheckBox}
+            onChange={handleCheckBox}
             labelClasses='flex flex-row-reverse items-center'
             label='By checking this box you agree to our'
             titleClasses='text-purple-terms ml-3'
