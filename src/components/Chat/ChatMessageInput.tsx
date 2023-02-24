@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Button } from '../common/Button/Button'
+import { Button2 } from '../common/Button/Button2'
 import { Input } from '../common/Input/Input'
 
 const MailIcon = ({ className }: { className: string }) => {
@@ -49,9 +50,11 @@ export const ChatMessageInput = () => {
           variant='BASE'
         />
         <div className='absolute right-7 z-20 top-2/4 -mt-3.5'>
-          <Button variant='STANDARD' size='MEDIUM' type='submit'>
-            <MailIcon className='mr-0.5' />
-          </Button>
+          <Button2 color='green-primary'>
+            <p className='flex justify-center items-center w-7 h-7'>
+              <MailIcon className='mr-0.5' />
+            </p>
+          </Button2>
         </div>
       </form>
     </div>

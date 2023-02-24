@@ -5,7 +5,7 @@ export const Home = () => {
   return (
     <div>
       <GamesSection />
-      <SignInModal />
+      {/* <SignInModal /> */}
     </div>
   )
 }
