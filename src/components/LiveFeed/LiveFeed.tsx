@@ -24,10 +24,12 @@ const filtersVariants = {
 export const LiveFeed = () => {
   const [data, setData] = useState([...users])
   const [filter, setFilter] = useState(Object.keys(filtersVariants)[0])
+  const [globalFilter, setGlobalFilter] = useState('')
   const [sorting, setSorting] = useState<SortingState>([])
 
+  console.log(globalFilter)
+
   useEffect(() => {
-    console.log(filter, '<<< Current filter')
     setData([...users])
   }, [filter])
 
@@ -40,45 +42,60 @@ export const LiveFeed = () => {
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('game', {
+      id: 'game',
       header: () => 'Game',
       cell: (props) => <GameCell game={props.getValue()} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('date', {
+      id: 'date',
       header: () => 'Time',
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('bet', {
+      id: 'bet',
       header: () => 'Bet',
       cell: (props) => <QuantityCoins quantity={props.getValue()} />,
-      footer: (props) => props.column.id
+      footer: (props) => props.column.id,
+      filterFn: (row, _columnId, value) => {
+        return row.original.bet === +value
+      }
     }),
     columnHelper.accessor('rate', {
+      id: 'rate',
       header: () => 'Multiplier',
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('profit', {
+      id: 'profit',
       header: () => 'Profit',
       cell: (props: any) => <QuantityCoins quantity={props.getValue()} isActive={true} />,
+      filterFn: (row, _columnId, value) => {
+        return row.original.profit === +value
+      },
       footer: (props) => props.column.id
     })
   ]
 
   return (
     <div className='bg-blue-primary rounded-2xl px-4 md:px-9 py-5'>
-      <div className='flex flex-wrap justify-between border-b-2 border-blue-secondary mb-5 items-center'>
+      {/* <div className='flex flex-wrap justify-between border-b-2 border-blue-secondary mb-5 items-center'>
         <div className='text-17 whitespace-nowrap mb-5'>
           <span className='inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2'></span>
           Live feed
         </div>
         <RadioGroup value={filter} onChange={setFilter}>
           <div className='flex flex-wrap -ml-1 -mr-1 pb-4'>
-            {Object.keys(filtersVariants).map((item) => (
+            {Object.keys(filtersVariants).map((item, index, array) => (
               <RadioGroup.Option value={item} key={item}>
                 {({ checked }) => (
                   <button
+                    onClick={() => {
+                      console.log('hello im from filter')
+                      setFilter(array[index])
+                    }}
                     className={clsx(
                       'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
                       {
@@ -95,13 +112,16 @@ export const LiveFeed = () => {
             ))}
           </div>
         </RadioGroup>
-      </div>
+      </div> */}
       <Table
         {...{
           data,
           columns,
           sorting,
-          setSorting
+          setSorting,
+          setGlobalFilter,
+          filter,
+          setFilter
         }}
       />
     </div>
