@@ -4,12 +4,12 @@ import GiftCard from './GiftCard'
 import WelcomeCard from './WelcomeCard'
 
 const games = [
-  { name: 'Case Battles', path: '/case-battles' },
-  { name: 'Cases', path: '/cases' },
-  { name: 'Crash', path: '/crash' },
-  { name: 'King', path: '/king' },
-  { name: 'Mines', path: '/mines' },
-  { name: 'Wheel', path: '/wheel' }
+  { name: 'caseBattles', path: '/case-battles' },
+  { name: 'cases', path: '/cases' },
+  { name: 'crash', path: '/crash' },
+  { name: 'king', path: '/king' },
+  { name: 'mines', path: '/mines' },
+  { name: 'wheel', path: '/wheel' }
 ]
 
 const user = {

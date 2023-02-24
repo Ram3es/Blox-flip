@@ -10,8 +10,9 @@ import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/routes'
 import { Button } from '../common/Button/Button'
+import { useTranslation } from 'react-i18next'
 
-const GamesButton = () => {
+const GamesButton = ({ t }: { t: Function }) => {
   return (
     <div className='flex'>
       <img
@@ -23,7 +24,7 @@ const GamesButton = () => {
         decoding='async'
         className='mr-2'
       />
-      <span className='py-2 mr-2 font-bold hidden md:block'>Games</span>
+      <span className='py-2 mr-2 font-bold hidden md:block'>{t('header.games')}</span>
       <img src={ArrowWhiteIcon} alt='' width='7' height='4' loading='lazy' decoding='async' />
     </div>
   )
@@ -52,13 +53,14 @@ const UserWalletButton = () => {
 }
 
 const routesGames: RouteItem[] = [
-  { path: '/cases', name: 'Cases' },
-  { path: '/cups', name: 'Cups' },
-  { path: '/mines', name: 'Mines' },
-  { path: '/plinko', name: 'Plinko' }
+  { path: '/cases', name: 'cases' },
+  { path: '/cups', name: 'cups' },
+  { path: '/mines', name: 'mines' },
+  { path: '/plinko', name: 'plinko' }
 ]
 
 export const Header = () => {
+  const { t } = useTranslation()
   return (
     <div className='mb-8 md:mb-12 pl-4 xs:pl-8 flex flex-wrap justify-between bg-blue-accent rounded-lg relative z-50'>
       <div className='flex items-center py-1 xs:py-2 md:py-4'>
@@ -92,7 +94,7 @@ export const Header = () => {
           className='px-3 flex flex-row items-center h-8 xs:h-10 text-13 rounded bg-lightblue-secondary hover:bg-lightblue-wave relative'
         >
           <Menu.Button>
-            <GamesButton />
+            <GamesButton t={t} />
           </Menu.Button>
           <Menu.Items
             as='div'
@@ -106,7 +108,7 @@ export const Header = () => {
                   key={route.name}
                   className='block text-white text-13 py-1.5 leading-2 px-2.5 rounded bg-lightblue-secondary hover:bg-lightblue-wave mb-1.5 border border-blue-accent'
                 >
-                  {route.name}
+                  {t(`common.games.${route.name}`)}
                 </Menu.Item>
               ))}
             </div>
@@ -126,7 +128,7 @@ export const Header = () => {
             <span className='w-4 shrink-0 mx-auto relative text-white'>
               <DiamondIcon size='LARGE' />
             </span>
-            <span className='hidden md:block ml-2.5'>Free Diamonds</span>
+            <span className='hidden md:block ml-2.5'>{t('header.free')}</span>
           </Link>
         </button>
         <div className=' p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
@@ -144,14 +146,14 @@ export const Header = () => {
                   <span className='w-4 shrink-0 mr-2.5 flex text-white'>
                     <DiamondIcon />
                   </span>
-                  <span>Deposit</span>
+                  <span>{t('common.deposit')}</span>
                 </Menu.Item>
                 <Menu.Item
                   as={NavLink}
                   to='/withdraw'
                   className='block text-gray-primary hover:text-white h-8 text-13 leading-8 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent border border-blue-accent text-center'
                 >
-                  Withdraw
+                 {t('common.withdraw')}
                 </Menu.Item>
               </div>
             </Menu.Items>
