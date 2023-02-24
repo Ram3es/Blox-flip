@@ -10,7 +10,6 @@ import type { ColumnDef, SortingState, OnChangeFn } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { Button } from '../common/Button/Button'
 import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
-import { ArrowRightIcon } from '../ArrowRightIcon/ArrowRightIcon'
 
 interface ReactTableProps<T extends object> {
   data: T[]
@@ -103,7 +102,9 @@ export const Table = <T extends object>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          <ArrowRightIcon color={!table.getCanNextPage() ? 'gray' : 'white'} />
+          <p className='rotate-180'>
+            <ArrowLeftIcon color={!table.getCanNextPage() ? 'gray' : 'white'} />
+          </p>
         </Button>
       </div>
     </div>

@@ -4,9 +4,7 @@ import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { BetCell } from '../Table/BetCell'
 import { MultiplierCell } from '../Table/MultiplierCell'
-import { ProfitCell } from '../Table/ProfitCell'
 import { Table } from '../Table/Table'
 import { UserInfoCell } from '../Table/UserInfoCell'
 import { GameCell } from '../Table/GameCell'
@@ -14,6 +12,7 @@ import { TimeCell } from '../Table/TimeCell'
 
 import { users } from './users'
 import { ISecondUser } from '../../types/User'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 const filtersVariants = {
   'all bets': '/',
@@ -52,7 +51,7 @@ export const LiveFeed = () => {
     }),
     columnHelper.accessor('bet', {
       header: () => 'Bet',
-      cell: (props) => <BetCell bet={props.getValue()} />,
+      cell: (props) => <QuantityCoins quantity={props.getValue()} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('rate', {
@@ -62,7 +61,7 @@ export const LiveFeed = () => {
     }),
     columnHelper.accessor('profit', {
       header: () => 'Profit',
-      cell: (props: any) => <ProfitCell profit={props.getValue()} />,
+      cell: (props: any) => <QuantityCoins quantity={props.getValue()} isActive={true} />,
       footer: (props) => props.column.id
     })
   ]

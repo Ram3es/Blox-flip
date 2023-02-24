@@ -4,9 +4,9 @@ export const users: ISecondUser[] = [
   {
     game: 'game 1',
     date: '2089-04-01T17:18:45.144Z',
-    bet: 39591,
+    bet: 1.7,
     rate: 11256,
-    profit: 12884,
+    profit: 200.1,
     username: 'Audrey93',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/761.jpg',
@@ -16,9 +16,9 @@ export const users: ISecondUser[] = [
   {
     game: 'game 2',
     date: '2000-09-02T19:54:35.332Z',
-    bet: 79113,
+    bet: 20.48,
     rate: 92162,
-    profit: 50150,
+    profit: 50.6666666,
     username: 'Tressie.Johnson38',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/868.jpg',
@@ -28,9 +28,9 @@ export const users: ISecondUser[] = [
   {
     game: 'game 3',
     date: '2072-03-07T22:11:56.040Z',
-    bet: 95858,
+    bet: 30.8,
     rate: 91584,
-    profit: 80034,
+    profit: 1.011111,
     username: 'Heather_Wiza54',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/128.jpg',
@@ -64,7 +64,7 @@ export const users: ISecondUser[] = [
   {
     game: 'game 6',
     date: '2063-08-04T00:24:52.101Z',
-    bet: 75206,
+    bet: 5.1,
     rate: 72137,
     profit: 80635,
     username: 'Colton.McKenzie',
@@ -76,7 +76,7 @@ export const users: ISecondUser[] = [
   {
     game: 'game 7',
     date: '2068-03-05T18:54:16.892Z',
-    bet: 86786,
+    bet: 9.19,
     rate: 22582,
     profit: 64948,
     username: 'Helmer_Langworth24',
@@ -112,9 +112,9 @@ export const users: ISecondUser[] = [
   {
     game: 'game 10',
     date: '2071-04-29T23:38:24.295Z',
-    bet: 1633,
+    bet: 2.13,
     rate: 66611,
-    profit: 48718,
+    profit: 100.2,
     username: 'Linwood58',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/61.jpg',
@@ -124,7 +124,7 @@ export const users: ISecondUser[] = [
   {
     game: 'game 11',
     date: '2070-01-02T16:35:37.244Z',
-    bet: 26000,
+    bet: 2.08,
     rate: 29321,
     profit: 25785,
     username: 'Glenda.Ullrich16',
@@ -811,7 +811,7 @@ export const users: ISecondUser[] = [
     bet: 98035,
     rate: 96468,
     profit: 89504,
-    username: 'Marilou29',
+    username: 'Audrey93',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/455.jpg',
     level: 25372,
@@ -895,7 +895,7 @@ export const users: ISecondUser[] = [
     bet: 80156,
     rate: 2283,
     profit: 10377,
-    username: 'Bethel35',
+    username: 'Audrey93',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/142.jpg',
     level: 30171,
@@ -907,7 +907,7 @@ export const users: ISecondUser[] = [
     bet: 25045,
     rate: 97446,
     profit: 1979,
-    username: 'Lavinia37',
+    username: 'Audrey93',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/675.jpg',
     level: 80629,
@@ -943,7 +943,7 @@ export const users: ISecondUser[] = [
     bet: 94303,
     rate: 52086,
     profit: 32500,
-    username: 'Anahi.Lesch37',
+    username: 'Audrey93',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1212.jpg',
     level: 11125,
@@ -955,7 +955,7 @@ export const users: ISecondUser[] = [
     bet: 48981,
     rate: 95904,
     profit: 37462,
-    username: 'Kenna5',
+    username: 'Audrey93',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/581.jpg',
     level: 55061,
