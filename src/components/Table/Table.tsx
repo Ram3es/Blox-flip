@@ -42,12 +42,12 @@ export const Table = <T extends object>({
       sorting,
       columnFilters
     },
+    onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting
+    getFilteredRowModel: getFilteredRowModel()
   })
 
   const filteringColumn = useMemo(() => {
