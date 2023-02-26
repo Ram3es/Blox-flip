@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import {
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -19,20 +18,36 @@ interface ReactTableProps<T extends object> {
   columns: Array<ColumnDef<T>>
   sorting?: SortingState
   setSorting?: OnChangeFn<SortingState>
+  columnFilters: any
+  setColumnFilters: any
+  field: any
+  setField: any
+  searchValue: string
+  setSearchValue: any
+  filter: string
+  setFilter: (params: string) => void
+  handleSelectChange: any
+  filtersVariants: any
 }
 
 export const Table = <T extends object>({
   data,
   columns,
   sorting,
-  setSorting
+  setSorting,
+  columnFilters,
+  setColumnFilters,
+  field,
+  setField,
+  searchValue,
+  setSearchValue,
+  filter,
+  setFilter,
+  handleSelectChange,
+  filtersVariants
 }: ReactTableProps<T>) => {
   const memoizedData = useMemo(() => data, [data])
   const memoizedColumns = useMemo(() => columns, [columns])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [field, setField] = useState()
-  const [searchValue, setSearchValue] = useState('')
-  const [filter, setFilter] = useState('')
   const table = useReactTable({
     data: memoizedData,
     columns: memoizedColumns,
@@ -60,12 +75,6 @@ export const Table = <T extends object>({
     }
   }, [filteringColumn, searchValue])
 
-  const handleSelectChange = (str: any) => {
-    setColumnFilters([])
-    setSearchValue('')
-    setField(str)
-  }
-
   return (
     <>
       <div className='flex flex-wrap justify-between border-b-2 border-blue-secondary mb-5 items-center'>
@@ -75,90 +84,25 @@ export const Table = <T extends object>({
         </div>
         <RadioGroup value={filter} onChange={setFilter}>
           <div className='flex flex-wrap -ml-1 -mr-1 pb-4'>
-            <RadioGroup.Option value={'all bets'}>
-              {({ checked }) => (
-                <button
-                  onClick={() => {
-                    handleSelectChange('')
-                    setSearchValue('')
-                    console.log('all bets')
-                  }}
-                  className={clsx(
-                    'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
-                    {
-                      'bg-blue-accent border-blue-light text-white mb-1': checked,
-                      'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
-                        !checked
-                    }
-                  )}
-                >
-                  All bets
-                </button>
-              )}
-            </RadioGroup.Option>
-            <RadioGroup.Option value={'my bets'}>
-              {({ checked }) => (
-                <button
-                  onClick={() => {
-                    handleSelectChange('username')
-                    setSearchValue('Patrick36')
-                    console.log('user Patrick36 bets')
-                  }}
-                  className={clsx(
-                    'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
-                    {
-                      'bg-blue-accent border-blue-light text-white mb-1': checked,
-                      'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
-                        !checked
-                    }
-                  )}
-                >
-                  My bets
-                </button>
-              )}
-            </RadioGroup.Option>
-            <RadioGroup.Option value={'big bets'}>
-              {({ checked }) => (
-                <button
-                  onClick={() => {
-                    handleSelectChange('bet')
-                    setSearchValue('10000')
-                    console.log('big bets')
-                  }}
-                  className={clsx(
-                    'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
-                    {
-                      'bg-blue-accent border-blue-light text-white mb-1': checked,
-                      'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
-                        !checked
-                    }
-                  )}
-                >
-                  Big bets
-                </button>
-              )}
-            </RadioGroup.Option>
-            <RadioGroup.Option value={'lucky bets'}>
-              {({ checked }) => (
-                <button
-                  onClick={() => {
-                    handleSelectChange('profit')
-                    setSearchValue('90000')
-                    console.log('profit bets')
-                  }}
-                  className={clsx(
-                    'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
-                    {
-                      'bg-blue-accent border-blue-light text-white mb-1': checked,
-                      'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
-                        !checked
-                    }
-                  )}
-                >
-                  Lucky bets
-                </button>
-              )}
-            </RadioGroup.Option>
+            {filtersVariants.map((filter: any) => (
+              <RadioGroup.Option key={filter.name} value={filter.name}>
+                {({ checked }) => (
+                  <button
+                    onClick={filter.onClick}
+                    className={clsx(
+                      'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
+                      {
+                        'bg-blue-accent border-blue-light text-white mb-1': checked,
+                        'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
+                          !checked
+                      }
+                    )}
+                  >
+                    {filter.name}
+                  </button>
+                )}
+              </RadioGroup.Option>
+            ))}
           </div>
         </RadioGroup>
       </div>

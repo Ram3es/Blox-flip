@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { createColumnHelper } from '@tanstack/react-table'
+import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 
 import { MultiplierCell } from '../Table/MultiplierCell'
@@ -16,9 +16,55 @@ export const LiveFeed = () => {
   const [data, setData] = useState([...users])
   const [sorting, setSorting] = useState<SortingState>([])
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [field, setField] = useState()
+  const [searchValue, setSearchValue] = useState<string | number>('')
+  const [filter, setFilter] = useState('')
+
   useEffect(() => {
     setData([...users])
   }, [])
+
+  const handleSelectChange = (str: any) => {
+    setColumnFilters([])
+    setSearchValue('')
+    setField(str)
+  }
+
+  const filtersVariants = [
+    {
+      name: 'all bets',
+      onClick: () => {
+        handleSelectChange('')
+        setSearchValue('')
+        console.log('all bets')
+      }
+    },
+    {
+      name: 'my bets',
+      onClick: () => {
+        handleSelectChange('username')
+        setSearchValue('Heather_Wiza54')
+        console.log('my bets')
+      }
+    },
+    {
+      name: 'big bets',
+      onClick: () => {
+        handleSelectChange('bet')
+        setSearchValue('10000')
+        console.log('big bets')
+      }
+    },
+    {
+      name: 'lucky bets',
+      onClick: () => {
+        handleSelectChange('profit')
+        setSearchValue('90000')
+        console.log('profit bets')
+      }
+    }
+  ]
 
   const columnHelper = createColumnHelper<ISecondUser>()
   const columns: Array<ColumnDef<ISecondUser, any>> = [
@@ -76,7 +122,17 @@ export const LiveFeed = () => {
           data,
           columns,
           sorting,
-          setSorting
+          setSorting,
+          columnFilters,
+          setColumnFilters,
+          field,
+          setField,
+          searchValue,
+          setSearchValue,
+          filter,
+          setFilter,
+          handleSelectChange,
+          filtersVariants
         }}
       />
     </div>
