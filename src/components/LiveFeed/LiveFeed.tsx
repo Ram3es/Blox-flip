@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 
@@ -11,31 +11,27 @@ import { TimeCell } from '../Table/TimeCell'
 import { users } from './users'
 import { ISecondUser } from '../../types/User'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { FilterVariant } from '../../types/table'
 
 export const LiveFeed = () => {
-  const [data, setData] = useState([...users])
+  const [data, setData] = useState<ISecondUser[]>([...users])
   const [sorting, setSorting] = useState<SortingState>([])
-
+  
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [field, setField] = useState()
-  const [searchValue, setSearchValue] = useState<string | number>('')
-  const [filter, setFilter] = useState('')
+  const [currentColum, setCurrentColumn] = useState('')
+  const [searchValue, setSearchValue] = useState('')
 
-  useEffect(() => {
-    setData([...users])
-  }, [])
-
-  const handleSelectChange = (str: any) => {
+  const handleFilterByColumn = (column: string) => {
     setColumnFilters([])
     setSearchValue('')
-    setField(str)
+    setCurrentColumn(column)
   }
 
-  const filtersVariants = [
+  const filtersVariants: FilterVariant[] = [
     {
       name: 'all bets',
       onClick: () => {
-        handleSelectChange('')
+        handleFilterByColumn('')
         setSearchValue('')
         console.log('all bets')
       }
@@ -43,7 +39,7 @@ export const LiveFeed = () => {
     {
       name: 'my bets',
       onClick: () => {
-        handleSelectChange('username')
+        handleFilterByColumn('username')
         setSearchValue('Heather_Wiza54')
         console.log('my bets')
       }
@@ -51,7 +47,7 @@ export const LiveFeed = () => {
     {
       name: 'big bets',
       onClick: () => {
-        handleSelectChange('bet')
+        handleFilterByColumn('bet')
         setSearchValue('10000')
         console.log('big bets')
       }
@@ -59,7 +55,7 @@ export const LiveFeed = () => {
     {
       name: 'lucky bets',
       onClick: () => {
-        handleSelectChange('profit')
+        handleFilterByColumn('profit')
         setSearchValue('90000')
         console.log('profit bets')
       }
@@ -125,13 +121,8 @@ export const LiveFeed = () => {
           setSorting,
           columnFilters,
           setColumnFilters,
-          field,
-          setField,
+          currentColum,
           searchValue,
-          setSearchValue,
-          filter,
-          setFilter,
-          handleSelectChange,
           filtersVariants
         }}
       />

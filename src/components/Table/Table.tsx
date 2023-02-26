@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   flexRender,
   getCoreRowModel,
@@ -7,27 +7,23 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
-import type { ColumnDef, SortingState, OnChangeFn } from '@tanstack/react-table'
+import type { ColumnDef, SortingState, OnChangeFn, ColumnFilter } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { Button } from '../common/Button/Button'
 import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
 import { RadioGroup } from '@headlessui/react'
+import { FilterVariant } from '../../types/table'
 
 interface ReactTableProps<T extends object> {
   data: T[]
   columns: Array<ColumnDef<T>>
   sorting?: SortingState
   setSorting?: OnChangeFn<SortingState>
-  columnFilters: any
+  columnFilters: ColumnFilter[]
   setColumnFilters: any
-  field: any
-  setField: any
+  currentColum: string
   searchValue: string
-  setSearchValue: any
-  filter: string
-  setFilter: (params: string) => void
-  handleSelectChange: any
-  filtersVariants: any
+  filtersVariants: FilterVariant[]
 }
 
 export const Table = <T extends object>({
@@ -37,15 +33,11 @@ export const Table = <T extends object>({
   setSorting,
   columnFilters,
   setColumnFilters,
-  field,
-  setField,
+  currentColum,
   searchValue,
-  setSearchValue,
-  filter,
-  setFilter,
-  handleSelectChange,
   filtersVariants
 }: ReactTableProps<T>) => {
+  const [currentFilter, setCurrentFilter] = useState(filtersVariants[0].name ?? null)
   const memoizedData = useMemo(() => data, [data])
   const memoizedColumns = useMemo(() => columns, [columns])
   const table = useReactTable({
@@ -66,8 +58,8 @@ export const Table = <T extends object>({
   })
 
   const filteringColumn = useMemo(() => {
-    return table.getAllColumns().filter((col) => col.id === field)[0]
-  }, [field, table])
+    return table.getAllColumns().filter((col) => col.id === currentColum)[0]
+  }, [currentColum, table])
 
   useEffect(() => {
     if (filteringColumn) {
@@ -82,9 +74,9 @@ export const Table = <T extends object>({
           <span className='inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2'></span>
           Live feed
         </div>
-        <RadioGroup value={filter} onChange={setFilter}>
+        <RadioGroup value={currentFilter} onChange={setCurrentFilter}>
           <div className='flex flex-wrap -ml-1 -mr-1 pb-4'>
-            {filtersVariants.map((filter: any) => (
+            {filtersVariants.map((filter: FilterVariant) => (
               <RadioGroup.Option key={filter.name} value={filter.name}>
                 {({ checked }) => (
                   <button
