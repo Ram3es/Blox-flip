@@ -28,7 +28,7 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
     setInputValue(prev => ({ ...prev, [name]: value }))
   }
   const onSubmit = () => {
-    dispatch({ type: 'LOGIN', payload: { ...user, name: inputValue.userName } })
+    dispatch({ type: 'LOGIN', payload: { ...user, name: inputValue.userName || 'John Johnson' } })
     onClose()
   }
   return (
