@@ -1,10 +1,10 @@
 import { FC } from 'react'
-import { User } from '../LiveFeed/LiveFeed'
+import { ISecondUser } from '../../types/User'
 import { UserAvatar } from '../UserAvatar/UserAvatar'
 import { UserLevel } from '../UserLevel/UserLevel'
 
 interface UserInfoCellProps {
-  user: User
+  user: ISecondUser
 }
 
 export const UserInfoCell: FC<UserInfoCellProps> = ({ user }) => {
