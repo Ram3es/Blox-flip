@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Listbox } from '@headlessui/react'
 
 import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
@@ -6,17 +6,19 @@ import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
 import EnglandIcon from '../../assets/img/flag_en.svg'
 import SpainIcon from '../../assets/img/flag_spain.svg'
 import TurkishIcon from '../../assets/img/flag_turkish.svg'
+import { useTranslation } from 'react-i18next'
 
 interface countryItem {
   name: string
+  code: string
   icon: string
   usersOnline: number
 }
 
 const languageVariants: countryItem[] = [
-  { name: 'England', icon: EnglandIcon, usersOnline: 11 },
-  { name: 'Spanish', icon: SpainIcon, usersOnline: 17 },
-  { name: 'Turkish', icon: TurkishIcon, usersOnline: 31 }
+  { name: 'England', code: 'en', icon: EnglandIcon, usersOnline: 11 },
+  { name: 'Spanish', code: 'es', icon: SpainIcon, usersOnline: 17 },
+  { name: 'Turkish', code: 'tr', icon: TurkishIcon, usersOnline: 31 }
 ]
 
 interface ButtonChangeLangProps {
@@ -44,6 +46,11 @@ const ButtonChangeLang: FC<ButtonChangeLangProps> = ({ icon = EnglandIcon }) => 
 
 export const ChatChangeLang: FC = () => {
   const [selectedChatLanguage, setSelectedChatLanguage] = useState(languageVariants[0])
+  const { i18n } = useTranslation()
+
+  useEffect(() => {
+    void i18n.changeLanguage(selectedChatLanguage.code)
+  }, [selectedChatLanguage])
 
   return (
     <div className='bg-blue-secondary p-2 rounded flex items-center flex-nowrap'>
