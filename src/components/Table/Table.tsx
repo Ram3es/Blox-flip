@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import {
   flexRender,
   getCoreRowModel,
@@ -7,23 +7,31 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
-import type { ColumnDef, SortingState, OnChangeFn, ColumnFilter } from '@tanstack/react-table'
+import type {
+  ColumnDef,
+  SortingState,
+  OnChangeFn,
+  ColumnFilter,
+  ColumnFiltersState
+} from '@tanstack/react-table'
 import clsx from 'clsx'
+import { RadioGroup } from '@headlessui/react'
+
 import { Button } from '../common/Button/Button'
 import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
-import { RadioGroup } from '@headlessui/react'
-import { FilterVariant } from '../../types/table'
+import type { FilterVariant } from '../../types/table'
 
 interface ReactTableProps<T extends object> {
   data: T[]
   columns: Array<ColumnDef<T>>
   sorting?: SortingState
   setSorting?: OnChangeFn<SortingState>
-  columnFilters: ColumnFilter[]
-  setColumnFilters: any
-  currentColum: string
-  searchValue: string
-  filtersVariants: FilterVariant[]
+  columnFilters?: ColumnFilter[]
+  setColumnFilters?: OnChangeFn<ColumnFiltersState>
+  currentColum?: string
+  searchValue?: string
+  filtersVariants?: FilterVariant[]
+  tableHeader?: ReactNode
 }
 
 export const Table = <T extends object>({
@@ -35,9 +43,10 @@ export const Table = <T extends object>({
   setColumnFilters,
   currentColum,
   searchValue,
-  filtersVariants
+  filtersVariants,
+  tableHeader
 }: ReactTableProps<T>) => {
-  const [currentFilter, setCurrentFilter] = useState(filtersVariants[0].name ?? null)
+  const [currentFilter, setCurrentFilter] = useState<string | null>(null)
   const memoizedData = useMemo(() => data, [data])
   const memoizedColumns = useMemo(() => columns, [columns])
   const table = useReactTable({
@@ -62,6 +71,12 @@ export const Table = <T extends object>({
   }, [currentColum, table])
 
   useEffect(() => {
+    if (filtersVariants) {
+      setCurrentFilter(filtersVariants[0].name)
+    }
+  }, [])
+
+  useEffect(() => {
     if (filteringColumn) {
       filteringColumn.setFilterValue(searchValue)
     }
@@ -70,33 +85,34 @@ export const Table = <T extends object>({
   return (
     <>
       <div className='flex flex-wrap justify-between border-b-2 border-blue-secondary mb-5 items-center'>
-        <div className='text-17 whitespace-nowrap mb-5'>
-          <span className='inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2'></span>
-          Live feed
-        </div>
-        <RadioGroup value={currentFilter} onChange={setCurrentFilter}>
-          <div className='flex flex-wrap -ml-1 -mr-1 pb-4'>
-            {filtersVariants.map((filter: FilterVariant) => (
-              <RadioGroup.Option key={filter.name} value={filter.name}>
-                {({ checked }) => (
-                  <button
-                    onClick={filter.onClick}
-                    className={clsx(
-                      'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
-                      {
-                        'bg-blue-accent border-blue-light text-white mb-1': checked,
-                        'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
-                          !checked
-                      }
+        {columnFilters && setColumnFilters && filtersVariants && (
+          <>
+            {tableHeader}
+            <RadioGroup value={currentFilter} onChange={setCurrentFilter}>
+              <div className='flex flex-wrap -ml-1 -mr-1 pb-4'>
+                {filtersVariants?.map((filter: FilterVariant) => (
+                  <RadioGroup.Option key={filter.name} value={filter.name}>
+                    {({ checked }) => (
+                      <button
+                        onClick={filter.onClick}
+                        className={clsx(
+                          'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
+                          {
+                            'bg-blue-accent border-blue-light text-white mb-1': checked,
+                            'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
+                              !checked
+                          }
+                        )}
+                      >
+                        {filter.name}
+                      </button>
                     )}
-                  >
-                    {filter.name}
-                  </button>
-                )}
-              </RadioGroup.Option>
-            ))}
-          </div>
-        </RadioGroup>
+                  </RadioGroup.Option>
+                ))}
+              </div>
+            </RadioGroup>
+          </>
+        )}
       </div>
       <div className='overflow-auto max-w-full'>
         <table className='text-13 text-center table--even min-w-full'>

@@ -1,64 +1,65 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
+import { Table } from '../Table/Table'
 
 import { MultiplierCell } from '../Table/MultiplierCell'
-import { Table } from '../Table/Table'
 import { UserInfoCell } from '../Table/UserInfoCell'
 import { GameCell } from '../Table/GameCell'
 import { TimeCell } from '../Table/TimeCell'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { FilterHeader } from '../Table/FilterHeader'
 
 import { users } from './users'
-import { ISecondUser } from '../../types/User'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
-import { FilterVariant } from '../../types/table'
+import type { ISecondUser } from '../../types/User'
+import type { FilterVariant } from '../../types/table'
+
+const RedDotIcon = () => {
+  return (
+    <span className='inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2'></span>
+  )
+}
 
 export const LiveFeed = () => {
   const [data, setData] = useState<ISecondUser[]>([...users])
   const [sorting, setSorting] = useState<SortingState>([])
-  
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const handleFilterByColumn = (column: string) => {
-    setColumnFilters([])
-    setSearchValue('')
-    setCurrentColumn(column)
-  }
+  const handleFilterByColumn = useCallback(
+    (column: string) => {
+      setColumnFilters([])
+      setSearchValue('')
+      setCurrentColumn(column)
+    },
+    [columnFilters, currentColum]
+  )
+
+  const handleFilterByValue = useCallback(
+    (column: string, value: string) => {
+      handleFilterByColumn(column)
+      setSearchValue(value)
+    },
+    [columnFilters, currentColum, searchValue]
+  )
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all bets',
-      onClick: () => {
-        handleFilterByColumn('')
-        setSearchValue('')
-        console.log('all bets')
-      }
+      onClick: () => handleFilterByValue('', '')
     },
     {
       name: 'my bets',
-      onClick: () => {
-        handleFilterByColumn('username')
-        setSearchValue('Heather_Wiza54')
-        console.log('my bets')
-      }
+      onClick: () => handleFilterByValue('username', 'Heather_Wiza54')
     },
     {
       name: 'big bets',
-      onClick: () => {
-        handleFilterByColumn('bet')
-        setSearchValue('10000')
-        console.log('big bets')
-      }
+      onClick: () => handleFilterByValue('bet', '10000')
     },
     {
       name: 'lucky bets',
-      onClick: () => {
-        handleFilterByColumn('profit')
-        setSearchValue('90000')
-        console.log('profit bets')
-      }
+      onClick: () => handleFilterByValue('profit', '90000')
     }
   ]
 
@@ -114,17 +115,16 @@ export const LiveFeed = () => {
   return (
     <div className='bg-blue-primary rounded-2xl px-4 md:px-9 py-5'>
       <Table
-        {...{
-          data,
-          columns,
-          sorting,
-          setSorting,
-          columnFilters,
-          setColumnFilters,
-          currentColum,
-          searchValue,
-          filtersVariants
-        }}
+        data={data}
+        columns={columns}
+        sorting={sorting}
+        setSorting={setSorting}
+        columnFilters={columnFilters}
+        setColumnFilters={setColumnFilters}
+        currentColum={currentColum}
+        searchValue={searchValue}
+        filtersVariants={filtersVariants}
+        tableHeader={<FilterHeader label={<RedDotIcon />} text='Live feed' />}
       />
     </div>
   )
