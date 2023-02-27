@@ -1,5 +1,6 @@
 import { Popover } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
+import { Button } from '../base/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 import { ChatLotteryInput } from './ChatLotteryInput'
 
@@ -14,8 +15,8 @@ export const ChatLottery = () => {
         25, 500<span className='text-white/50'>.00</span>
       </span>
       <Popover>
-        <Popover.Button className='focus:outline-none flex-row flex items-center whitespace-nowrap leading-7 text-11 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-15 px-1.5'>
-          {t('chat.tip')}
+        <Popover.Button as={Button} color='GreenPrimary' variant='Gradient'>
+          <span className='px-1.5 leading-7 text-11'>{t('chat.tip')}</span>
         </Popover.Button>
         <Popover.Panel>
           <div className='pt-2 5 absolute z-20 left-0 right-0 top-full'>
