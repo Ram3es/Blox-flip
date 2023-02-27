@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, FC } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
 import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'
@@ -10,17 +10,17 @@ import ModalWrapper from '../base/ModalWrapper'
 
 const toggleOptions = ['Credentials', '.Roblosecurity']
 
-const SignInModal = ({ isAuth = true }: { isAuth?: boolean }) => {
-  const [isOpenModal, setOpenModal] = useState(false)
+interface ISignInModalProps {
+  onClose: Function
+  isOpen: boolean
+}
+
+const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
   const [currentLoginVariant, setCurrentVariant] = useState(toggleOptions[0])
 
-  useEffect(() => {
-    !isAuth && setOpenModal(true)
-  }, [isAuth])
-
-  return (isOpenModal
+  return (isOpen
     ? <ModalWrapper
-             closeModal={() => setOpenModal(false) }
+             closeModal={() => onClose()}
              modalClasses='relative grid grid-cols-3 rounded-2xl overflow-hidden gradient-blue-primary shadow-dark-15'
              closeBtnClasses='rounded w-7 h-7 leading-7 absolute top-4 left-4 z-[2] text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
              >
@@ -60,7 +60,7 @@ const SignInModal = ({ isAuth = true }: { isAuth?: boolean }) => {
                 </div>
                 {currentLoginVariant === '.Roblosecurity'
                   ? <RobloForm />
-                  : <SignInForm />}
+                  : <SignInForm onClose={() => onClose()} />}
               </div>
             </div>
           <div className='flex w-[600px] gradient-modal-video p-4'>

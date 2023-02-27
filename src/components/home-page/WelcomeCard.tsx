@@ -8,12 +8,14 @@ import Cowboy from '../../assets/img/welcome_r.png'
 import OrangeCloudLeft from '../../assets/img/welcome_l.svg'
 import OrangeCloudRight from '../../assets/img/welcome_r.svg'
 import { useTranslation } from 'react-i18next'
+import Button from '../base/Button'
 
 interface IWelcomeCardProps {
-  user: IUser
+  user?: IUser
+  openModal: Function
 }
 
-const WelcomeCard: FC<IWelcomeCardProps> = ({ user }) => {
+const WelcomeCard: FC<IWelcomeCardProps> = ({ user, openModal }) => {
   const { t } = useTranslation()
   return (
         <div className="px-3 mb-6 xs:mb-10 sm:mb-18 w-full xs:w-2/3 lg:w-4/6">
@@ -23,10 +25,21 @@ const WelcomeCard: FC<IWelcomeCardProps> = ({ user }) => {
                     <img src={ Astronaut } alt="astronaut" width="191" height="200" loading="lazy" decoding="async" className="relative z-30" />
                     <img src={ OrangeCloudLeft } alt="cloud" width="177" height="123" loading="lazy" decoding="async" className="absolute z-20 left-36 top-12" />
                 </div>
-                <div className="relative z-30 flex flex-col items-center w-1/3">
-                   <UserProgress user={user} />
+
+                    {user
+                      ? <div className="relative z-30 flex flex-col items-center w-1/3">
+                        <UserProgress user={user} />
+
                     <a href="#" className="font-xs text-orange-accent leading-4 py-2 px-10 rounded-full bg-orange-secondary/15 mb-4 text-center">{t('home.greeting')}</a>
-                </div>
+                    </div>
+                      : <div className='relative z-30 flex items-center' >
+                           <Button
+                             text='Sign in'
+                             submitFunction={() => openModal()}
+                             buttonClasses="flex items-center justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5"
+                              />
+                        </div> }
+
                 <div className="relative z-20 self-end -right-1.5 w-1/3 pt-6">
                     <img src={ Cowboy } alt="cowboy" width="164" height="192" loading="lazy" decoding="async" className="relative z-30 float-right" />
                     <img src={ OrangeCloudRight } alt="cloud" width="177" height="123" loading="lazy" decoding="async" className="absolute z-20 right-10 top-4" />
