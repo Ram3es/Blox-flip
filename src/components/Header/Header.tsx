@@ -12,7 +12,7 @@ import { RouteItem } from '../../types/routes'
 import { Button } from '../common/Button/Button'
 import { useTranslation } from 'react-i18next'
 
-const GamesButton = ({ t }: { t: Function }) => {
+const GamesButton = ({ title }: { title: string }) => {
   return (
     <div className='flex'>
       <img
@@ -24,7 +24,7 @@ const GamesButton = ({ t }: { t: Function }) => {
         decoding='async'
         className='mr-2'
       />
-      <span className='py-2 mr-2 font-bold hidden md:block'>{t('header.games')}</span>
+      <span className='py-2 mr-2 font-bold hidden md:block'>{ title }</span>
       <img src={ArrowWhiteIcon} alt='' width='7' height='4' loading='lazy' decoding='async' />
     </div>
   )
@@ -94,7 +94,7 @@ export const Header = () => {
           className='px-3 flex flex-row items-center h-8 xs:h-10 text-13 rounded bg-lightblue-secondary hover:bg-lightblue-wave relative'
         >
           <Menu.Button>
-            <GamesButton t={t} />
+            <GamesButton title={t('header.games')} />
           </Menu.Button>
           <Menu.Items
             as='div'
