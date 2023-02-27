@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '../common/Button/Button'
 import { Button2 } from '../common/Button/Button2'
 import { Input } from '../common/Input/Input'
@@ -28,6 +29,7 @@ const MailIcon = ({ className }: { className: string }) => {
 
 export const ChatMessageInput = () => {
   const [message, setMessage] = useState('')
+  const { t } = useTranslation()
 
   const handleMessage = (event: ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value)
@@ -43,7 +45,7 @@ export const ChatMessageInput = () => {
     <div className='absolute inset-0 top-auto z-50 p-4 bg-blue-primary'>
       <form onSubmit={handleSubmit}>
         <Input
-          placeholder='Send message...'
+          placeholder={`${t('chat.placeholder')}`}
           value={message}
           onChange={handleMessage}
           type='text'

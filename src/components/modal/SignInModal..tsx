@@ -1,34 +1,29 @@
-import React, { useState } from 'react'
-import Button from '../base/Button'
+import React, { useEffect, useState } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
 import SignInForm from '../sign-in/SignInForm'
-import CloseIcon from '../../assets/img/close.svg'
 import Mountains from '../../assets/img/bg-mountain.png'
 import Logo from '../../assets/img/logo.png'
 import Pilot from '../../assets/img/pilot.png'
 import VideoPlayer from '../../assets/img/videoPlayerImg.png'
 import RobloForm from '../sign-in/RobloForm'
+import ModalWrapper from '../base/ModalWrapper'
 
 const toggleOptions = ['Credentials', '.Roblosecurity']
 
-const SignInModal = () => {
+const SignInModal = ({ isAuth = true }: { isAuth?: boolean }) => {
+  const [isOpenModal, setOpenModal] = useState(false)
   const [currentLoginVariant, setCurrentVariant] = useState(toggleOptions[0])
 
-  const onSubmit = (value: any) => {
-    console.log(value)
-  }
+  useEffect(() => {
+    !isAuth && setOpenModal(true)
+  }, [isAuth])
 
-  return (
-    <div className="fixed inset-0 z-[50] flex flex-col justify-center items-center bg-blue-darken/75">
-      <div className="flex items-center  justify-center max-h-full w-full overflow-auto">
-        <div className='relative grid grid-cols-3 rounded-2xl overflow-hidden gradient-blue-primary shadow-dark-15' >
-          <Button
-            text=''
-            buttonClasses='rounded w-7 h-7 leading-7 absolute z-[40] top-4 left-4 text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
-            submitFunction={() => {}}
-            >
-            <img src={ CloseIcon } alt="close" width="10" height="10" loading="lazy" decoding="async" className="inline" />
-          </Button>
+  return (isOpenModal
+    ? <ModalWrapper
+             closeModal={() => setOpenModal(false) }
+             modalClasses='relative grid grid-cols-3 rounded-2xl overflow-hidden gradient-blue-primary shadow-dark-15'
+             closeBtnClasses='rounded w-7 h-7 leading-7 absolute top-4 left-4 z-[2] text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
+             >
            <div className='col-span-1 text-center relative'>
              <div className='absolute w-full h-full flex flex-col items-center  p-4 z-[1] '>
                <img
@@ -52,7 +47,7 @@ const SignInModal = () => {
              </div>
              <div className=' h-full w-full mix-blend-luminosity bg-cover' style={{ backgroundImage: `url(${Mountains})` }}>
                 <div className='h-full w-full  gradient-light-gray'>
-                    <div className='h-full w-full bg-blue-darken/75 '/>
+                    <div className='h-full w-full bg-blue-darken/75'/>
                 </div>
             </div>
           </div>
@@ -64,8 +59,8 @@ const SignInModal = () => {
                   <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peackFunction={setCurrentVariant} />
                 </div>
                 {currentLoginVariant === '.Roblosecurity'
-                  ? <RobloForm submitFunction={onSubmit} />
-                  : <SignInForm submitFunction={onSubmit} />}
+                  ? <RobloForm />
+                  : <SignInForm />}
               </div>
             </div>
           <div className='flex w-[600px] gradient-modal-video p-4'>
@@ -76,11 +71,8 @@ const SignInModal = () => {
            <img src={VideoPlayer} alt='mock' className='mx-auto my-auto h-[70px]'/>
           </div>
         </div>
-
-      </div>
-      </div>
-    </div>
-
+        </ModalWrapper>
+    : null
   )
 }
 
