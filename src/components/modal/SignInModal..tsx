@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
 import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'
@@ -10,12 +10,17 @@ import ModalWrapper from '../base/ModalWrapper'
 
 const toggleOptions = ['Credentials', '.Roblosecurity']
 
-const SignInModal = () => {
+const SignInModal = ({ isAuth = true }: { isAuth?: boolean }) => {
+  const [isOpenModal, setOpenModal] = useState(false)
   const [currentLoginVariant, setCurrentVariant] = useState(toggleOptions[0])
 
-  return (
-          <ModalWrapper
-             closeModal={() => { } }
+  useEffect(() => {
+    !isAuth && setOpenModal(true)
+  }, [isAuth])
+
+  return (isOpenModal
+    ? <ModalWrapper
+             closeModal={() => setOpenModal(false) }
              modalClasses='relative grid grid-cols-3 rounded-2xl overflow-hidden gradient-blue-primary shadow-dark-15'
              closeBtnClasses='rounded w-7 h-7 leading-7 absolute top-4 left-4 z-[2] text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
              >
@@ -67,6 +72,7 @@ const SignInModal = () => {
           </div>
         </div>
         </ModalWrapper>
+    : null
   )
 }
 
