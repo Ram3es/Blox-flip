@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../common/Button/Button'
+import { Button } from '../base/Button'
 import { Input } from '../common/Input/Input'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 
@@ -33,8 +33,10 @@ export const ChatLotteryInput = () => {
         value={tipCoins}
         onChange={handleTipRain}
       />
-      <Button variant='GRADIENT' size='SMALL' type='submit'>
-      {t('chat.tip')}
+      <Button variant='Gradient' color='GreenPrimary' type='submit'>
+        <span className='flex items-center justify-center w-14 whitespace-nowrap leading-7 text-11'>
+          {t('chat.tip')}
+        </span>
       </Button>
     </form>
   )
