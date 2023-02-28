@@ -1,0 +1,33 @@
+{
+    "header": {
+     "games": "Juegos",
+     "free": "Diamantes Gratis"
+    },
+     "common":{
+        "games": {
+            "caseBattles": "Batallas de Casos",
+            "cases": "Casos",
+            "crash": "Chocar",
+            "king": "Rey",
+            "mines": "Minas",
+            "wheel": "Rueda",
+            "cups": "Tazas",
+            "plinko": "Plinko"
+        },
+        "deposit":"Depósito",
+        "withdraw": "Retirar"
+
+    },
+    "home": {
+        "greeting": "Bienvenido de Nuevo",
+        "freeRobux": "quiero robux gratis?",
+        "press":"prensa",
+        "here": "aquí",
+        "rewards": "Recompensas & Faucets"
+    },
+    "chat":{
+        "tip":"Consejo",
+        "tipTitle": "Introduce la cantidad que quieres dar de propina",
+        "placeholder": "Enviar mensaje..."
+    }
+}

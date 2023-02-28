@@ -11,7 +11,7 @@ const UserProgress = ({ user }: { user: IUser }) => {
                     </div>
                     <div className="flex justify-center items-center font-extrabold mb-6">
                         <div className="text-11 border border-pink-primary rounded text-pink-primary px-1 leading-4 radial--blue">{user?.level}</div>
-                        <div className="mx-6">{user?.name}</div>
+                        <div className="mx-6 text-center">{user?.name}</div>
                         <div className="text-11 border border-pink-primary rounded text-pink-primary px-1 leading-4 radial--blue opacity-75 mix-blend-luminosity">{user?.level && user.level + 1 }</div>
                     </div>
                     <div className="bg-orange-secondary/25 border border-orange-secondary/25 rounded-full py-2 px-2.5 w-full mb-6">

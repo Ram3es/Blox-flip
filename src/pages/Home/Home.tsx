@@ -6,8 +6,8 @@ export const Home = () => {
   return (
     <div>
       <GamesSection />
-      <SignInModal />
       <LiveFeed />
+      <SignInModal />
     </div>
   )
 }
