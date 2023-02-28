@@ -7,12 +7,13 @@ import { MultiplierCell } from '../Table/MultiplierCell'
 import { UserInfoCell } from '../Table/UserInfoCell'
 import { GameCell } from '../Table/GameCell'
 import { TimeCell } from '../Table/TimeCell'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { FilterHeader } from '../Table/FilterHeader'
 
 import { users } from './users'
 import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/table'
+import { ProfitCell } from '../Table/ProfitCell'
+import { BetCell } from '../Table/BetCell'
 
 const RedDotIcon = () => {
   return (
@@ -51,15 +52,15 @@ export const LiveFeed = () => {
     },
     {
       name: 'my bets',
-      onClick: () => handleFilterByValue('username', 'Heather_Wiza54')
+      onClick: () => handleFilterByValue('username', 'Mark_Maggio')
     },
     {
       name: 'big bets',
-      onClick: () => handleFilterByValue('bet', '10000')
+      onClick: () => handleFilterByValue('bet', '90')
     },
     {
       name: 'lucky bets',
-      onClick: () => handleFilterByValue('profit', '90000')
+      onClick: () => handleFilterByValue('profit', '50')
     }
   ]
 
@@ -89,10 +90,10 @@ export const LiveFeed = () => {
     columnHelper.accessor('bet', {
       id: 'bet',
       header: () => 'Bet',
-      cell: (props) => <QuantityCoins quantity={props.getValue()} />,
+      cell: (props) => <BetCell quantity={props.getValue()} />,
       footer: (props) => props.column.id,
       filterFn: (row, _columnId, value) => {
-        return row.original.bet > 40000
+        return row.original.bet > value
       }
     }),
     columnHelper.accessor('rate', {
@@ -104,9 +105,9 @@ export const LiveFeed = () => {
     columnHelper.accessor('profit', {
       id: 'profit',
       header: () => 'Profit',
-      cell: (props: any) => <QuantityCoins quantity={props.getValue()} isActive={true} />,
+      cell: (props: any) => <ProfitCell quantity={props.getValue()} isActive={true} />,
       filterFn: (row, _columnId, value) => {
-        return row.original.profit > 89853
+        return row.original.profit > value
       },
       footer: (props) => props.column.id
     })
