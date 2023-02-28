@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
 
-interface QuantityCoinsProps {
+export interface QuantityCoinsProps {
   quantity: number
   isActive?: boolean
 }

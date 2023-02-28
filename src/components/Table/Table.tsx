@@ -115,7 +115,7 @@ export const Table = <T extends object>({
         )}
       </div>
       <div className='overflow-auto max-w-full'>
-        <table className='text-13 text-center table--even min-w-full'>
+        <table className='text-13 table--even min-w-full'>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -144,9 +144,23 @@ export const Table = <T extends object>({
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className='py-2 px-2 md:px-4'>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                {row.getVisibleCells().map((cell, index, array) => (
+                  <td
+                    key={cell.id}
+                    className={clsx('py-2 px-2 md:px-4', {
+                      '': index !== 0 && index !== array.length - 1,
+                      'rounded-l-md': index === 0,
+                      'rounded-r-md': array[index] === array.at(-1)
+                    })}
+                  >
+                    <div
+                      className={clsx('', {
+                        'w-36': index !== 0 && index !== array.length - 1,
+                        'w-64': index === 0
+                      })}
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </div>
                   </td>
                 ))}
               </tr>

@@ -5,5 +5,9 @@ interface MultiplierCellProps {
 }
 
 export const MultiplierCell: FC<MultiplierCellProps> = ({ multiplier }) => {
-  return <span className='text-white'>{multiplier}x</span>
+  return (
+    <div className='flex justify-start mx-16'>
+      <span className='text-white'>{multiplier}x</span>
+    </div>
+  )
 }
