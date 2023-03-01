@@ -98,10 +98,15 @@ export const History = () => {
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('multiplier', {
+    columnHelper.accessor((row: IHistory) => row, {
       id: 'multiplier',
       header: () => 'Multiplier',
-      cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
+      cell: (props) => (
+        <MultiplierCell
+          multiplier={props.getValue().multiplier}
+          isWinner={props.getValue().isWinner}
+        />
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('wager', {
