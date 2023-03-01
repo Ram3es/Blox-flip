@@ -8,7 +8,6 @@ import { UserInfoCell } from '../Table/UserInfoCell'
 import { GameCell } from '../Table/GameCell'
 import { TimeCell } from '../Table/TimeCell'
 import { FilterHeader } from '../Table/FilterHeader'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 import { users } from './users'
 import type { ISecondUser } from '../../types/User'

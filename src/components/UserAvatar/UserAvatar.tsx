@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import defaultAvatar from '../../assets/img/avatar_img.png'
-import { BaseSizes } from '../../types/sizes'
+import { BaseSize } from '../../types/enums'
 
 enum UserAvatarVariantEnum {
   ROUNDED = 'ROUNDED',
@@ -10,12 +10,12 @@ enum UserAvatarVariantEnum {
 
 interface UserAvatarProps {
   image?: string
-  size?: keyof typeof BaseSizes
+  size?: keyof typeof BaseSize
   variant?: keyof typeof UserAvatarVariantEnum
 }
 
 export const UserAvatar: FC<UserAvatarProps> = ({
-  size = BaseSizes.MEDIUM,
+  size = BaseSize.MEDIUM,
   variant = UserAvatarVariantEnum.ROUNDED,
   image = defaultAvatar
 }) => {

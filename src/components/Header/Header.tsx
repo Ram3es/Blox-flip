@@ -4,13 +4,13 @@ import { Menu } from '@headlessui/react'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 
 import Logo from '../../assets/img/logo.png'
-import PlusIcon from '../../assets/img/plus_ico.svg'
 import HomeIcon from '../../assets/img/home_ico.svg'
 import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/routes'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
+import { PlusIcon } from '../PlusIcon/PlusIcon'
 
 const GamesButton = ({ title }: { title: string }) => {
   return (
@@ -30,10 +30,6 @@ const GamesButton = ({ title }: { title: string }) => {
   )
 }
 
-const UserWalletIcon = () => {
-  return <img src={PlusIcon} alt='' width='11' height='11' loading='lazy' decoding='async' />
-}
-
 const UserWalletButton = () => {
   return (
     <div className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
@@ -46,7 +42,7 @@ const UserWalletButton = () => {
       <span>
         <Button variant='Standard' color='GreenPrimary'>
           <span className='w-6 h-6 flex items-center justify-center'>
-            <UserWalletIcon />
+            <PlusIcon />
           </span>
         </Button>
       </span>
