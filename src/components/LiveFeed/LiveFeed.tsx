@@ -22,7 +22,7 @@ const RedDotIcon = () => {
 }
 
 export const LiveFeed = () => {
-  const [data, setData] = useState<ISecondUser[]>([...users])
+  const [data] = useState<ISecondUser[]>([...users])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
