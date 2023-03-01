@@ -82,10 +82,10 @@ export const Transactions = () => {
       cell: (props) => <StatusCell status={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('amount', {
+    columnHelper.accessor((row: ITransaction) => row, {
       id: 'amount',
       header: () => 'Amount',
-      cell: (props) => <AmountCell amount={props.getValue()} />,
+      cell: (props) => <AmountCell data={props.getValue()} />,
       footer: (props) => props.column.id
     })
   ]

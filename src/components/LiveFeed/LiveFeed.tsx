@@ -102,10 +102,10 @@ export const LiveFeed = () => {
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('profit', {
+    columnHelper.accessor((row: ISecondUser) => row, {
       id: 'profit',
       header: () => 'Profit',
-      cell: (props: any) => <ProfitCell quantity={props.getValue()} isActive={true} />,
+      cell: (props) => <ProfitCell data={props.getValue()} />,
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value
       },

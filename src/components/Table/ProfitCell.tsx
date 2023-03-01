@@ -1,12 +1,15 @@
 import { FC } from 'react'
-import { QuantityCoins, QuantityCoinsProps } from '../common/QuantityCoins/QuantityCoins'
+import { IHistory } from '../../types/history'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
-interface ProfitCellProps extends QuantityCoinsProps {}
+interface ProfitCellProps {
+  data: IHistory
+}
 
-export const ProfitCell: FC<ProfitCellProps> = ({ quantity, isActive }) => {
+export const ProfitCell: FC<ProfitCellProps> = ({ data }) => {
   return (
     <div className='flex justify-items-start'>
-      <QuantityCoins {...{ quantity, isActive }} />
+      <QuantityCoins quantity={data.profit} color={data.isWinner ? 'green' : !data.isWinner ? 'red' : 'none'} />
     </div>
   )
 }

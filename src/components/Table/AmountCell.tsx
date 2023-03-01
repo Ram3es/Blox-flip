@@ -1,14 +1,15 @@
 import { FC } from 'react'
+import { ITransaction } from '../../types/transaction'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 interface AmountCellProps {
-  amount: number
+  data: ITransaction
 }
 
-export const AmountCell: FC<AmountCellProps> = ({ amount }) => {
+export const AmountCell: FC<AmountCellProps> = ({ data }) => {
   return (
     <div className='flex justify-start'>
-      <QuantityCoins quantity={amount} />
+      <QuantityCoins quantity={data.amount} isFailed={data.isError} />
     </div>
   )
 }

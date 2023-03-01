@@ -8,6 +8,7 @@ export interface IUser {
   }
 }
 export interface ISecondUser {
+  isWinner: boolean
   game: string
   date: string
   bet: number
@@ -17,4 +18,5 @@ export interface ISecondUser {
   avatar: string
   level: number
   id: string
+  isWin?: boolean
 }

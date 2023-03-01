@@ -1,34 +1,41 @@
 import { FC } from 'react'
 import clsx from 'clsx'
 import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
+import { formatNumber } from '../../../helpers/numberFormatter'
 
 export interface QuantityCoinsProps {
   quantity: number
-  isActive?: boolean
+  isFailed?: boolean
+  color?: 'red' | 'green' | 'none'
 }
 
-export const QuantityCoins: FC<QuantityCoinsProps> = ({ quantity, isActive = false }) => {
-  const quantityMainClasses = clsx('w-5 h-5 shrink-0 text-center leading-6 rounded relative mr-2 ', {
-    'bg-green-primary/20 text-green-primary': quantity > 0,
-    'bg-gray-secondary-darken/40 text-gray-primary': quantity === 0
+export const QuantityCoins: FC<QuantityCoinsProps> = ({ quantity, isFailed = false, color = 'none' }) => {
+  const iconClasses = clsx('w-5 h-5 shrink-0 text-center leading-6 rounded relative mr-2', {
+    'bg-green-primary/20 text-green-primary': !isFailed,
+    'bg-gray-secondary-darken/40 text-gray-primary': isFailed,
+    'bg-red-accent/20 text-red-accent': color === 'red',
+    'text-green-primary': color === 'green'
   })
-  const isActiveClasses = clsx('font-bold text-13 mr-2 whitespace-nowrap', {
-    'text-green-primary': isActive,
-    'text-white': !isActive
+  const quantityClasses = clsx('font-bold text-13 mr-2 whitespace-nowrap', {
+    'text-green-primary': color === 'green',
+    'text-red-accent': color === 'red',
+    'text-white': color === 'none'
   })
 
   const remainder = quantity % 1
 
   return (
     <div className='flex items-center'>
-      <span className={quantityMainClasses}>
+      <span className={iconClasses}>
         <DiamondIcon className='-inset-full absolute m-auto' />
       </span>
-      <span className={isActiveClasses}>{quantity === 0
-        ? ('-')
-        : remainder === 0
-          ? (<>{quantity}<span className='opacity-50'>.00</span></>)
-          : (<>{quantity.toFixed()}.{remainder.toFixed(2).slice(2)}</>)}
+      <span className={quantityClasses}>
+        {isFailed
+          ? <span className='text-white'>-</span>
+          : remainder === 0
+            ? (<>{formatNumber(quantity)}<span className='opacity-50'>.00</span></>)
+            : (<>{formatNumber(quantity, 2)}</>)
+          }
       </span>
     </div>
   )

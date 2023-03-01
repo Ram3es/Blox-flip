@@ -15,7 +15,7 @@ import { BetCell } from '../Table/BetCell'
 import { ProfitCell } from '../Table/ProfitCell'
 
 export const History = () => {
-  const [data, setData] = useState<IHistory[]>([...mockHistory])
+  const [data] = useState<IHistory[]>([...mockHistory])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
@@ -87,7 +87,10 @@ export const History = () => {
       id: 'game',
       header: () => 'Game',
       cell: (props) => <GameCell game={props.getValue()} />,
-      footer: (props) => props.column.id
+      footer: (props) => props.column.id,
+      filterFn: (row, _columnId, value) => {
+        return row.original.game.toLowerCase() === value.toLowerCase()
+      }
     }),
     columnHelper.accessor('date', {
       id: 'date',
@@ -107,10 +110,10 @@ export const History = () => {
       cell: (props) => <BetCell quantity={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('profit', {
+    columnHelper.accessor((row: IHistory) => row, {
       id: 'profit',
       header: () => 'Profit',
-      cell: (props) => <ProfitCell quantity={props.getValue()} isActive={true} />,
+      cell: (props) => <ProfitCell data={props.getValue()} />,
       footer: (props) => props.column.id
     })
   ]
