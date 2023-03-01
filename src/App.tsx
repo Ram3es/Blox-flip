@@ -12,6 +12,9 @@ import { Withdraw } from './pages/Withdraw/Withdraw'
 import Wheel from './pages/Wheel/Wheel'
 import King from './pages/King/King'
 import { Chat } from './components/Chat/Chat'
+import MyProfile from './pages/MyProfile/MyProfile'
+import HistoryUser from './pages/MyProfile/HistoryUser'
+import Transactions from './pages/MyProfile/Transactions'
 
 export const App = () => {
   return (
@@ -22,6 +25,10 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cases' element={<Cases />} />
+          <Route path='/profile' element={<MyProfile />} >
+            <Route path='transactions' element={<Transactions />} />
+            <Route path='history' element={<HistoryUser />} />
+          </Route>
           <Route path='/cups' element={<Cups />} />
           <Route path='/mines' element={<Mines />} />
           <Route path='/wheel' element={<Wheel />} />

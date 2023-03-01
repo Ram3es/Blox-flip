@@ -353,6 +353,21 @@ input{
     display: none;
     z-index: 200;
 }
+.profile--box{
+    background: #22273d;
+    position: relative;
+    &:before{
+        content:'';
+        width: 104px;;
+        height:51px;
+        background: url(./assets/img/profile_top.png) no-repeat;
+        position: absolute;
+        top:-50px;
+        left:50%;
+        margin-left: -52px;
+        z-index: 10;
+    }
+}
 .deposite--case{
     max-width: 200px;
 }
