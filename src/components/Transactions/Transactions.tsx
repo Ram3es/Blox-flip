@@ -15,7 +15,7 @@ import { FilterHeader } from '../Table/FilterHeader'
 import { ListIcon } from '../ListIcon/ListIcon'
 
 export const Transactions = () => {
-  const [data, setData] = useState<ITransaction[]>([...mockTransactions])
+  const [data] = useState<ITransaction[]>([...mockTransactions])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
