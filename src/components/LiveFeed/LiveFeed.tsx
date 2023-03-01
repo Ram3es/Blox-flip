@@ -8,7 +8,6 @@ import { UserInfoCell } from '../Table/UserInfoCell'
 import { GameCell } from '../Table/GameCell'
 import { TimeCell } from '../Table/TimeCell'
 import { FilterHeader } from '../Table/FilterHeader'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 import { users } from './users'
 import type { ISecondUser } from '../../types/User'
@@ -23,7 +22,7 @@ const RedDotIcon = () => {
 }
 
 export const LiveFeed = () => {
-  const [data, setData] = useState<ISecondUser[]>([...users])
+  const [data] = useState<ISecondUser[]>([...users])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
@@ -127,6 +126,7 @@ export const LiveFeed = () => {
         searchValue={searchValue}
         filtersVariants={filtersVariants}
         tableHeader={<FilterHeader label={<RedDotIcon />} text='Live feed' />}
+        variant='Feed'
       />
     </div>
   )

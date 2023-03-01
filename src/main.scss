@@ -594,6 +594,6 @@ input{
 }
 */
 /*------animation-------*/
-// a, button, input, textarea, div, span, *:before, *:after{
-//      transition: all 0.3s;
-// }
+a, button, input, textarea, div, span, *:before, *:after{
+     transition: all 0.3s;
+}

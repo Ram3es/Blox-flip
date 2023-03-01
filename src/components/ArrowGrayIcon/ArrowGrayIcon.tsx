@@ -1,26 +1,26 @@
 import { FC } from 'react'
 import clsx from 'clsx'
 
-import { BaseSizes } from '../../types/sizes'
+import { BaseSize } from '../../types/enums'
 
 interface ArrowGrayIconProps {
-  size?: keyof typeof BaseSizes
+  size?: keyof typeof BaseSize
 }
 
-export const ArrowGrayIcon: FC<ArrowGrayIconProps> = ({ size = BaseSizes.MEDIUM }) => {
+export const ArrowGrayIcon: FC<ArrowGrayIconProps> = ({ size = BaseSize.MEDIUM }) => {
   const iconClasses = clsx('bg-blue-accent shrink-0 rounded text-center', {
-    'w-6 h-6 leading-6': size === BaseSizes.MEDIUM,
-    'w-4 h-4 leading-4': size === BaseSizes.SMALL
+    'w-6 h-6 leading-6': size === BaseSize.MEDIUM,
+    'w-4 h-4 leading-4': size === BaseSize.SMALL
   })
 
   const svgWidth = clsx('', {
-    9: size === BaseSizes.MEDIUM,
-    7: size === BaseSizes.SMALL
+    9: size === BaseSize.MEDIUM,
+    7: size === BaseSize.SMALL
   })
 
   const svgHeight = clsx('', {
-    6: size === BaseSizes.MEDIUM,
-    4.66: size === BaseSizes.SMALL
+    6: size === BaseSize.MEDIUM,
+    4.66: size === BaseSize.SMALL
   })
 
   return (
