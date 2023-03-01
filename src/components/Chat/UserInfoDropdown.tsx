@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { RouteItem } from '../../types/routes'
 import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
+import { Button } from '../base/Button'
 
 const baseRoutes: RouteItem[] = [
   { path: '/profile', name: 'profile' },
@@ -16,10 +17,10 @@ const baseRoutes: RouteItem[] = [
 export const UserInfoDropdown: FC = () => {
   return (
     <Menu>
-      <Menu.Button as='button'>
-        <div className='bg-blue-accent w-6 h-6 shrink-0 rounded leading-6 text-center'>
+      <Menu.Button as={Button} color='BlueAccent' variant='Standard'>
+        <span className='w-6 h-6 shrink-0'>
           <ArrowGrayIcon />
-        </div>
+        </span>
       </Menu.Button>
       <Menu.Items className='absolute left-0 right-0 top-full pt-2.5 z-40' as='div'>
         <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>

@@ -1,4 +1,13 @@
-const ButtonsToggle = ({ options, currentSelect, peackFunction }: { options: string[], currentSelect: string, peackFunction: Function }) => {
+
+const ButtonsToggle = ({
+  options,
+  currentSelect,
+  peackFunction
+}: {
+  options: string[]
+  currentSelect: string
+  peackFunction: Function
+}) => {
   return (
         <div className="flex gap">
           {options.map((option, index) => <button

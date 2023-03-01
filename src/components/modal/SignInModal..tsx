@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
 import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'

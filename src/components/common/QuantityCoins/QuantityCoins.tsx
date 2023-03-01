@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
 
-interface QuantityCoinsProps {
+export interface QuantityCoinsProps {
   quantity: number
   isActive?: boolean
   children?: ReactNode

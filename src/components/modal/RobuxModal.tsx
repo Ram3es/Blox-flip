@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import ModalWrapper from '../base/ModalWrapper'
-import { Button } from '../common/Button/Button'
+import { Button } from '../base/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 import { GiftWithDiamond } from '../icons/GiftWithDiamond'
 
@@ -13,8 +13,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
   }
 
   return isOpen
-    ? (
-    <ModalWrapper closeModal={onClose}>
+    ? (<ModalWrapper closeModal={onClose}>
       <div className='flex border-b border-blue-highlight mb-6 pb-6 pr-8'>
         <div className='w-7 mr-2 shrink-0 text-green-primary'>
           <GiftWithDiamond />
@@ -31,9 +30,11 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button size='MEDIUM' variant='GRADIENT'>
-            <DiamondIcon />
-            Claim
+          <Button color='GreenPrimary' variant='Gradient'>
+            <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
+              <DiamondIcon />
+              Claim
+            </div>
           </Button>
         </div>
       </div>
@@ -47,14 +48,15 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button size='MEDIUM' variant='GRADIENT'>
-            <DiamondIcon />
-            Claim
+          <Button color='GreenPrimary' variant='Gradient'>
+            <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
+              <DiamondIcon />
+              Claim
+            </div>
           </Button>
         </div>
       </div>
-    </ModalWrapper>
-      )
+    </ModalWrapper>)
     : null
 }
 

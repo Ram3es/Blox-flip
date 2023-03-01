@@ -17,9 +17,9 @@ import type {
 import clsx from 'clsx'
 import { RadioGroup } from '@headlessui/react'
 
-import { Button } from '../common/Button/Button'
 import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
 import type { FilterVariant } from '../../types/table'
+import { Button } from '../base/Button'
 
 interface ReactTableProps<T extends object> {
   data: T[]
@@ -93,7 +93,7 @@ export const Table = <T extends object>({
                 {filtersVariants?.map((filter: FilterVariant) => (
                   <RadioGroup.Option key={filter.name} value={filter.name}>
                     {({ checked }) => (
-                      <button
+                      <Button
                         onClick={filter.onClick}
                         className={clsx(
                           'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
@@ -105,7 +105,7 @@ export const Table = <T extends object>({
                         )}
                       >
                         {filter.name}
-                      </button>
+                      </Button>
                     )}
                   </RadioGroup.Option>
                 ))}
@@ -115,7 +115,7 @@ export const Table = <T extends object>({
         )}
       </div>
       <div className='overflow-auto max-w-full'>
-        <table className='text-13 text-center table--even min-w-full'>
+        <table className='text-13 table--even min-w-full'>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -144,9 +144,23 @@ export const Table = <T extends object>({
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className='py-2 px-2 md:px-4'>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                {row.getVisibleCells().map((cell, index, array) => (
+                  <td
+                    key={cell.id}
+                    className={clsx('py-2 px-2 md:px-4', {
+                      '': index !== 0 && index !== array.length - 1,
+                      'rounded-l-md': index === 0,
+                      'rounded-r-md': array[index] === array.at(-1)
+                    })}
+                  >
+                    <div
+                      className={clsx('', {
+                        'w-36': index !== 0 && index !== array.length - 1,
+                        'w-64': index === 0
+                      })}
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </div>
                   </td>
                 ))}
               </tr>
@@ -155,13 +169,14 @@ export const Table = <T extends object>({
         </table>
         <div className='mt-5 flex items-center justify-between'>
           <Button
+            variant='Standard'
+            color='BlueAccent'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            size='XL'
-            variant='STANDARD'
-            color='BLUE'
           >
-            <ArrowLeftIcon color={!table.getCanPreviousPage() ? 'gray' : 'white'} />
+            <span className='flex items-center justify-center w-9 h-9'>
+              <ArrowLeftIcon color={!table.getCanPreviousPage() ? 'gray' : 'white'} />
+            </span>
           </Button>
           <div className='flex-grow border-blue-highlight border-t'></div>
           <span className='text-13 flex-shrink mx-6 text-gray-primary'>
@@ -170,15 +185,14 @@ export const Table = <T extends object>({
           </span>
           <div className='flex-grow border-blue-highlight border-t'></div>
           <Button
-            size='XL'
-            variant='STANDARD'
-            color='BLUE'
+            variant='Standard'
+            color='BlueAccent'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <p className='rotate-180'>
+            <span className='flex items-center justify-center w-9 h-9 rotate-180'>
               <ArrowLeftIcon color={!table.getCanNextPage() ? 'gray' : 'white'} />
-            </p>
+            </span>
           </Button>
         </div>
       </div>
