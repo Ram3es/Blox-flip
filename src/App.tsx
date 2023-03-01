@@ -32,6 +32,7 @@ export const App = () => {
           <Route path='/withdraw' element={<Withdraw />} />
           <Route path='/:profile' element={<UserProfile />} />
           <Route path='/:profile/transactions' element={<UserProfile />} />
+          <Route path='/:profile/history' element={<UserProfile />} />
         </Routes>
       </Container>
     </BrowserRouter>
