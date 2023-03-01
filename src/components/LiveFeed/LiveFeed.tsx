@@ -126,6 +126,7 @@ export const LiveFeed = () => {
         searchValue={searchValue}
         filtersVariants={filtersVariants}
         tableHeader={<FilterHeader label={<RedDotIcon />} text='Live feed' />}
+        variant='Feed'
       />
     </div>
   )

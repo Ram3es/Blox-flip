@@ -17,9 +17,9 @@ import type {
 import clsx from 'clsx'
 import { RadioGroup } from '@headlessui/react'
 
-import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
-import type { FilterVariant } from '../../types/table'
-import { Button } from '../base/Button'
+import { FilterVariant, TableVariant } from '../../types/table'
+import { TablePagination } from './TablePagination'
+import { FilterButton } from './FilterButton'
 
 interface ReactTableProps<T extends object> {
   data: T[]
@@ -32,6 +32,7 @@ interface ReactTableProps<T extends object> {
   searchValue?: string
   filtersVariants?: FilterVariant[]
   tableHeader?: ReactNode
+  variant: keyof typeof TableVariant
 }
 
 export const Table = <T extends object>({
@@ -44,7 +45,8 @@ export const Table = <T extends object>({
   currentColum,
   searchValue,
   filtersVariants,
-  tableHeader
+  tableHeader,
+  variant
 }: ReactTableProps<T>) => {
   const [currentFilter, setCurrentFilter] = useState<string | null>(null)
   const memoizedData = useMemo(() => data, [data])
@@ -84,7 +86,11 @@ export const Table = <T extends object>({
 
   return (
     <>
-      <div className='flex flex-wrap justify-between border-b-2 border-blue-secondary mb-5 items-center'>
+      <div
+        className={clsx('flex flex-wrap justify-between border-blue-secondary mb-5 items-center', {
+          'border-b-2': variant === TableVariant.Feed
+        })}
+      >
         {columnFilters && setColumnFilters && filtersVariants && (
           <>
             {tableHeader}
@@ -93,19 +99,11 @@ export const Table = <T extends object>({
                 {filtersVariants?.map((filter: FilterVariant) => (
                   <RadioGroup.Option key={filter.name} value={filter.name}>
                     {({ checked }) => (
-                      <Button
-                        onClick={filter.onClick}
-                        className={clsx(
-                          'capitalize text-13 py-1.5 leading-2 px-2 w-28 text-center rounded mx-1 border',
-                          {
-                            'bg-blue-accent border-blue-light text-white mb-1': checked,
-                            'text-gray-primary  bg-blue-secondary hover:bg-blue-accent border-blue-secondary mb-1':
-                              !checked
-                          }
-                        )}
-                      >
-                        {filter.name}
-                      </Button>
+                      <>
+                        <FilterButton onClick={filter.onClick} variant={variant} isActive={checked}>
+                          {filter.name}
+                        </FilterButton>
+                      </>
                     )}
                   </RadioGroup.Option>
                 ))}
@@ -114,7 +112,11 @@ export const Table = <T extends object>({
           </>
         )}
       </div>
-      <div className='overflow-auto max-w-full'>
+      <div
+        className={clsx('bg-blue-primary overflow-auto max-w-full', {
+          'rounded-2xl px-4 md:px-6 py-4': variant === TableVariant.History
+        })}
+      >
         <table className='text-13 table--even min-w-full'>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -147,16 +149,17 @@ export const Table = <T extends object>({
                 {row.getVisibleCells().map((cell, index, array) => (
                   <td
                     key={cell.id}
-                    className={clsx('py-2 px-2 md:px-4', {
-                      '': index !== 0 && index !== array.length - 1,
+                    className={clsx('px-2 md:px-4', {
                       'rounded-l-md': index === 0,
-                      'rounded-r-md': array[index] === array.at(-1)
+                      'rounded-r-md': array[index] === array.at(-1),
+                      'py-2': variant === TableVariant.Feed,
+                      'py-4': variant === TableVariant.History
                     })}
                   >
                     <div
                       className={clsx('', {
                         'w-36': index !== 0 && index !== array.length - 1,
-                        'w-64': index === 0
+                        'w-56': index === 0
                       })}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -167,34 +170,14 @@ export const Table = <T extends object>({
             ))}
           </tbody>
         </table>
-        <div className='mt-5 flex items-center justify-between'>
-          <Button
-            variant='Standard'
-            color='BlueAccent'
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className='flex items-center justify-center w-9 h-9'>
-              <ArrowLeftIcon color={!table.getCanPreviousPage() ? 'gray' : 'white'} />
-            </span>
-          </Button>
-          <div className='flex-grow border-blue-highlight border-t'></div>
-          <span className='text-13 flex-shrink mx-6 text-gray-primary'>
-            Page <span className='text-white'>{table.getState().pagination.pageIndex + 1}</span> /{' '}
-            {table.getPageCount()}
-          </span>
-          <div className='flex-grow border-blue-highlight border-t'></div>
-          <Button
-            variant='Standard'
-            color='BlueAccent'
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className='flex items-center justify-center w-9 h-9 rotate-180'>
-              <ArrowLeftIcon color={!table.getCanNextPage() ? 'gray' : 'white'} />
-            </span>
-          </Button>
-        </div>
+        <TablePagination
+          nextPage={() => table.nextPage()}
+          previousPage={() => table.previousPage()}
+          getCanNextPage={!table.getCanNextPage()}
+          getCanPreviousPage={!table.getCanPreviousPage()}
+          currentPage={table.getState().pagination.pageIndex + 1}
+          pageCount={table.getPageCount()}
+        />
       </div>
     </>
   )

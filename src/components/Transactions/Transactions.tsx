@@ -91,7 +91,7 @@ export const Transactions = () => {
   ]
 
   return (
-    <div className='bg-blue-primary rounded-2xl px-4 md:px-9 py-5'>
+    <div className='px-4 md:px-9 py-5'>
       <Table
         data={data}
         columns={columns}
@@ -102,7 +102,10 @@ export const Transactions = () => {
         currentColum={currentColum}
         searchValue={searchValue}
         filtersVariants={filtersVariants}
-        tableHeader={<FilterHeader label={<ListIcon />} text='My transactions' textColor='text-gray-primary' />}
+        tableHeader={
+          <FilterHeader label={<ListIcon />} text='My transactions' textColor='text-gray-primary' />
+        }
+        variant='History'
       />
     </div>
   )
