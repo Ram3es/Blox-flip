@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
@@ -15,6 +14,7 @@ import { Chat } from './components/Chat/Chat'
 import MyProfile from './pages/MyProfile/MyProfile'
 import HistoryUser from './pages/MyProfile/HistoryUser'
 import Transactions from './pages/MyProfile/Transactions'
+import { UserProfile } from './pages/UserProfile/UserProfile'
 
 export const App = () => {
   return (
@@ -37,6 +37,8 @@ export const App = () => {
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
           <Route path='/withdraw' element={<Withdraw />} />
+          <Route path='/:profile' element={<UserProfile />} />
+          <Route path='/:profile/transactions' element={<UserProfile />} />
         </Routes>
       </Container>
     </BrowserRouter>
