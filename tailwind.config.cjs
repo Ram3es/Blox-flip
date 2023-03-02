@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./_includes/*.*', './css/styles.css', './*.*', './index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './_includes/*.*',
+    './css/styles.css',
+    './*.*',
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}'
+  ],
   darkNode: 'class',
   theme: {
     extend: {
@@ -22,7 +28,6 @@ module.exports = {
         'blue-accent': 'rgba(41, 48, 77)',
         'blue-accent-secondary': 'rgba(47, 54, 86)',
         'blue-highlight': 'rgba(54, 62, 96)',
-        'blue-higlight-2': 'rgba(55, 64, 107, 0.15)',
         'blue-light': 'rgba(72, 81, 120)',
         'blue-light-primary': 'rgba(98, 111, 168)',
         'blue-light-secondary': 'rgba(108, 123, 188)',
@@ -31,26 +36,29 @@ module.exports = {
         'gray-secondary-darken': 'rgba(89, 97, 129)',
         'lightblue-darken': 'rgba(45, 56, 106)',
         'lightblue-primary': 'rgba(41, 199, 249)',
+        'lightblue-primary-darken': 'rgba(69, 177, 255)',
         'lightblue-secondary': 'rgba(71, 100, 214)',
         'lightblue-accent': 'rgba(141, 211, 240, 1)',
         'lightblue-wave': 'rgba(35, 123, 255)',
         'sky-primary': 'rgba(82, 154, 221)',
         'green-primary': 'rgba(44, 221, 104)',
+        'green-primary-light': 'rgba(82, 221, 121)',
         'green-secondary': 'rgba(0, 224, 76)',
         'green-aсcent': 'rgba(21, 94, 46)',
         'green-highlight': 'rgba(37, 246, 146)',
+        'pink-primary-darken': 'rgba(173, 0, 255, 1)',
         'pink-primary': 'rgba(186, 102, 226)',
         'pink-secondary': 'rgba(188, 84, 252, 1)',
         'pink-accent': 'rgba(210, 137, 255)',
-        'purple-light': 'rgba(82, 95, 151)',
-        'purple-terms': 'rgba(118, 130, 177)',
-        'purple': 'rgba(157, 168, 222)',
         'orange-primary': 'rgba(245, 128, 17)',
         'orange-primary-light': 'rgba(255, 153, 0)',
         'orange-secondary': 'rgba(226, 162, 102)',
         'orange-accent': 'rgba(255, 169, 89)',
+        'yellow-primary': 'rgba(255, 203, 69, 1)',
         'red-primary': 'rgba(255, 63, 63)',
-        'red-secondary': 'rgba(255, 77, 77)'
+        'red-secondary': 'rgba(255, 77, 77)',
+        'red-accent': 'rgba(239, 94, 94)',
+        'border-gray': 'rgba(152, 152, 152)'
       },
       gridTemplateColumns: {
         '5-auto': 'repeat(5, auto)'
@@ -58,7 +66,8 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(96.03% 96.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-radial-80': 'radial-gradient(80.03% 80.03% at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-radial-60': 'radial-gradient(60.03% 60.03% at 50% 50%, var(--tw-gradient-stops))'
+        'gradient-radial-60': 'radial-gradient(60.03% 60.03% at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-lvl': 'radial-gradient(83.82% 83.82% at 50% 91.09%, var(--tw-gradient-stops))'
       },
       margin: {
         18: '4.5rem' //72
@@ -73,36 +82,46 @@ module.exports = {
         '60%': '60%', //312px
         full: '100%'
       },
+      borderRadius: {
+        DEFAULT: '0.3125rem'
+      },
       boxShadow: {
         'green-15': '0 0 15px rgba(75, 251, 134, 0.35)',
         'green-primary-10': '0 0 10px rgba(44, 221, 104)',
         'green-20': '0 0 20px rgba(75, 251, 134, 0.35)',
         'dark-15': '0px 2px 10px rgba(0, 0, 0, 0.15)',
-        'dark-5' : '0px 0px 20px rgba(0, 0, 0, 0.05)',
         'orange-10': '0px 0px 10px #FF9900'
       },
       outlineWidth: {
         3: '0.1875rem' //3px
       },
       width: {
+        15: '3.75rem',
         18: '4.5rem', //72px
         21: '5.25rem', //84px
         '1/7': '14.28%',
+        '1/8': '11.11%',
         '1/9': '11.11%'
       },
       height: {
-        17: '4.25rem' //68
+        17: '4.25rem', //68
+        18: '4.5rem' //72px
       },
       screens: {
         xxs: '480px',
         xs: '768px',
         sm: '992px',
         md: '1200px',
-        lg: '1600px'
+        lg: '1600px',
+        '3xl': '1800px'
       },
       maxWidth: {
         1190: '1190px',
         1470: '1470px'
+      },
+      minWidth: {
+        '3xl': '768px',
+        sm: '1200px'
       }
     }
   },

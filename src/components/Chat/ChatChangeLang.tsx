@@ -7,6 +7,7 @@ import EnglandIcon from '../../assets/img/flag_en.svg'
 import SpainIcon from '../../assets/img/flag_spain.svg'
 import TurkishIcon from '../../assets/img/flag_turkish.svg'
 import { useTranslation } from 'react-i18next'
+import { Button } from '../base/Button'
 
 interface countryItem {
   name: string
@@ -21,29 +22,6 @@ const languageVariants: countryItem[] = [
   { name: 'Turkish', code: 'tr', icon: TurkishIcon, usersOnline: 31 }
 ]
 
-interface ButtonChangeLangProps {
-  icon: string
-}
-
-const ButtonChangeLang: FC<ButtonChangeLangProps> = ({ icon = EnglandIcon }) => {
-  return (
-    <>
-      <span className='w-7 shrink-0 rounded-sm overflow-hidden mr-2'>
-        <img
-          src={icon}
-          alt=''
-          width='27'
-          height='22'
-          loading='lazy'
-          decoding='async'
-          className='object-cover w-full h-full'
-        />
-      </span>
-      <ArrowGrayIcon size='SMALL' />
-    </>
-  )
-}
-
 export const ChatChangeLang: FC = () => {
   const [selectedChatLanguage, setSelectedChatLanguage] = useState(languageVariants[0])
   const { i18n } = useTranslation()
@@ -55,8 +33,19 @@ export const ChatChangeLang: FC = () => {
   return (
     <div className='bg-blue-secondary p-2 rounded flex items-center flex-nowrap'>
       <Listbox value={selectedChatLanguage} onChange={setSelectedChatLanguage}>
-        <Listbox.Button className='items-center flex'>
-          <ButtonChangeLang icon={selectedChatLanguage.icon} />
+        <Listbox.Button as={Button} color='BlueSecondary'>
+          <span className='w-7 shrink-0 rounded-sm overflow-hidden mr-2'>
+            <img
+              src={selectedChatLanguage.icon}
+              alt=''
+              width='27'
+              height='22'
+              loading='lazy'
+              decoding='async'
+              className='object-cover w-full h-full'
+            />
+          </span>
+          <ArrowGrayIcon size='SMALL' />
         </Listbox.Button>
         <Listbox.Options>
           <div className='absolute left-0 right-0 top-full pt-2.5'>

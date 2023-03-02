@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
@@ -12,6 +11,7 @@ import { Withdraw } from './pages/Withdraw/Withdraw'
 import Wheel from './pages/Wheel/Wheel'
 import King from './pages/King/King'
 import { Chat } from './components/Chat/Chat'
+import { UserProfile } from './pages/UserProfile/UserProfile'
 
 export const App = () => {
   return (
@@ -30,6 +30,8 @@ export const App = () => {
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
           <Route path='/withdraw' element={<Withdraw />} />
+          <Route path='/:profile' element={<UserProfile />} />
+          <Route path='/:profile/transactions' element={<UserProfile />} />
         </Routes>
       </Container>
     </BrowserRouter>

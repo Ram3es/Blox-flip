@@ -4,13 +4,13 @@ import { Menu } from '@headlessui/react'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 
 import Logo from '../../assets/img/logo.png'
-import PlusIcon from '../../assets/img/plus_ico.svg'
 import HomeIcon from '../../assets/img/home_ico.svg'
 import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/routes'
-import { Button } from '../common/Button/Button'
 import { useTranslation } from 'react-i18next'
+import { Button } from '../base/Button'
+import { PlusIcon } from '../PlusIcon/PlusIcon'
 
 const GamesButton = ({ title }: { title: string }) => {
   return (
@@ -24,14 +24,10 @@ const GamesButton = ({ title }: { title: string }) => {
         decoding='async'
         className='mr-2'
       />
-      <span className='py-2 mr-2 font-bold hidden md:block'>{ title }</span>
+      <span className='py-2 mr-2 font-bold hidden md:block'>{title}</span>
       <img src={ArrowWhiteIcon} alt='' width='7' height='4' loading='lazy' decoding='async' />
     </div>
   )
-}
-
-const UserWalletIcon = () => {
-  return <img src={PlusIcon} alt='' width='11' height='11' loading='lazy' decoding='async' />
 }
 
 const UserWalletButton = () => {
@@ -44,8 +40,10 @@ const UserWalletButton = () => {
         1,500<span className='text-white/50'>.00</span>
       </span>
       <span>
-        <Button size='SMALL' variant='STANDARD'>
-          <UserWalletIcon />
+        <Button variant='Standard' color='GreenPrimary'>
+          <span className='w-6 h-6 flex items-center justify-center'>
+            <PlusIcon />
+          </span>
         </Button>
       </span>
     </div>
@@ -120,7 +118,11 @@ export const Header = () => {
           <span className='w-1.5 h-1.5 bg-green-primary rounded-full outline outline-3 outline-green-primary/25 mr-1.5'></span>
           1545
         </div>
-        <button className='diamond--highlight mr-2 xs:mr-6 ml-2 xs:ml-6'>
+        <Button
+          variant='Gradient'
+          color='GreenPrimary'
+          className='diamond--highlight mr-2 xs:mr-6 ml-2 xs:ml-6'
+        >
           <Link
             to='/deposit'
             className='text-xs flex-row flex items-center w-8 h-8 xs:h-9 xs:w-auto xs:px-2.5 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20'
@@ -130,7 +132,7 @@ export const Header = () => {
             </span>
             <span className='hidden md:block ml-2.5'>{t('header.free')}</span>
           </Link>
-        </button>
+        </Button>
         <div className=' p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
           <Menu>
             <Menu.Button as='div'>
@@ -153,7 +155,7 @@ export const Header = () => {
                   to='/withdraw'
                   className='block text-gray-primary hover:text-white h-8 text-13 leading-8 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent border border-blue-accent text-center'
                 >
-                 {t('common.withdraw')}
+                  {t('common.withdraw')}
                 </Menu.Item>
               </div>
             </Menu.Items>
