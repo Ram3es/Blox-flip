@@ -8,11 +8,10 @@ interface DiamondIconProps {
   className?: string
 }
 
-export const DiamondIcon: FC<DiamondIconProps> = ({
-  size = BaseSizes.MEDIUM,
-  className = ''
-}) => {
+export const DiamondIcon: FC<DiamondIconProps> = ({ size = BaseSizes.MEDIUM, className = '' }) => {
   const widthSvg = clsx('', {
+    28: size === BaseSizes.XXL,
+    21: size === BaseSizes.XL,
     16: size === BaseSizes.LARGE,
     15: size === BaseSizes.MEDIUM,
     14.2: size === BaseSizes.SMALL
@@ -21,7 +20,6 @@ export const DiamondIcon: FC<DiamondIconProps> = ({
   return (
     <svg
       width={widthSvg}
-      height='12'
       viewBox='0 0 16 12'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
