@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ColumnFiltersState, createColumnHelper, reSplitAlphaNumeric } from '@tanstack/react-table'
+import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
 
@@ -12,8 +12,7 @@ import { FilterHeader } from '../Table/FilterHeader'
 import { users } from './users'
 import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/table'
-import { ProfitCell } from '../Table/ProfitCell'
-import { BetCell } from '../Table/BetCell'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 const RedDotIcon = () => {
   return (
@@ -90,7 +89,7 @@ export const LiveFeed = () => {
     columnHelper.accessor('bet', {
       id: 'bet',
       header: () => 'Bet',
-      cell: (props) => <BetCell quantity={props.getValue()} />,
+      cell: (props) => <QuantityCoins quantity={props.getValue()} />,
       footer: (props) => props.column.id,
       filterFn: (row, _columnId, value) => {
         return row.original.bet > value
@@ -102,10 +101,15 @@ export const LiveFeed = () => {
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('profit', {
+    columnHelper.accessor((row: ISecondUser) => row.profit, {
       id: 'profit',
       header: 'Profit',
-      cell: (props) => <ProfitCell quantity={props.getValue()} color='green' />,
+      cell: ({ row }) => (
+        <QuantityCoins
+          quantity={row.original.profit}
+          color={row.original.isWinner ? 'green' : 'red'}
+        />
+      ),
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value
       },

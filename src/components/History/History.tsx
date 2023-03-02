@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ColumnFiltersState, createColumnHelper, sortingFns } from '@tanstack/react-table'
+import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
 
@@ -11,8 +11,7 @@ import { mockHistory } from './mock'
 import { IHistory } from '../../types/history'
 import { GameCell } from '../Table/GameCell'
 import { MultiplierCell } from '../Table/MultiplierCell'
-import { BetCell } from '../Table/BetCell'
-import { ProfitCell } from '../Table/ProfitCell'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 export const History = () => {
   const [data] = useState<IHistory[]>([...mockHistory])
@@ -109,14 +108,14 @@ export const History = () => {
     columnHelper.accessor('wager', {
       id: 'wager',
       header: () => 'Wager',
-      cell: (props) => <BetCell quantity={props.getValue()} />,
+      cell: (props) => <QuantityCoins quantity={props.getValue()} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: IHistory) => row.profit, {
       id: 'profit',
       header: () => 'Profit',
       cell: ({ row }) => (
-        <ProfitCell
+        <QuantityCoins
           quantity={row.original.profit}
           color={row.original.isWinner ? 'green' : 'red'}
         />

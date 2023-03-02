@@ -10,9 +10,9 @@ import { TransactionTypeCell } from '../Table/TransactionTypeCell'
 import { TimeCell } from '../Table/TimeCell'
 import { PaymentMethodCell } from '../Table/PaymentMethodCell'
 import { StatusCell } from '../Table/StatusCell'
-import { AmountCell } from '../Table/AmountCell'
 import { FilterHeader } from '../Table/FilterHeader'
 import { ListIcon } from '../ListIcon/ListIcon'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -86,7 +86,7 @@ export const Transactions = () => {
       id: 'amount',
       header: () => 'Amount',
       cell: ({ row }) => (
-        <AmountCell quantity={row.original.amount} isFailed={row.original.isError} />
+        <QuantityCoins quantity={row.original.amount} isFailed={row.original.isError} />
       ),
       footer: (props) => props.column.id
     })
