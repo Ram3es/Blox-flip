@@ -15,7 +15,7 @@ const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
   }
   return (
     <>
-      <div className='min-h-[264px]'>
+      <div className='min-h-[278px]'>
         <InputWithLabel
           type='text'
           name='code'
