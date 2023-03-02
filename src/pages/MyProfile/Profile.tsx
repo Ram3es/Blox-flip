@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import ItemsIcon from '../../components/icons/ItemsIcon'
 import UserProgress from '../../components/user/UserProgress'
+import { Button } from '../../components/base/Button'
+import ItemCard from '../../components/base/ItemCard'
+import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 
 const user = {
   name: 'John Johnson',
@@ -24,9 +26,35 @@ const actions = [
 
 ]
 
+const cards = [
+  { id: '1', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1200 },
+  { id: '2', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1300 },
+  { id: '3', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1400 },
+  { id: '4', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1300 },
+  { id: '5', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500 }
+]
+
+interface ICard {
+  id: string
+  name: string
+  price: number
+}
+
 const cardsSorting = ['All', 'Active Items', 'Sold']
+
 const Profile = () => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[1])
+  const [selectedCard, setSelectedCard] = useState<ICard[]>([])
+
+  const handleSelectCard = (id: string) => {
+    const card = cards.find(item => item.id === id) as ICard
+
+    if (!selectedCard.some(item => item.id === card.id)) {
+      setSelectedCard(state => ([...state, card]))
+    } else {
+      setSelectedCard(state => ([...state.filter(el => el.id !== card.id)]))
+    }
+  }
   return (
     <>
     <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
@@ -35,16 +63,16 @@ const Profile = () => {
       </div>
       <div className="flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight">
         {actions.map(action => (
-          <div key={action.name} className="px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col ">
-            <div className="text-sm font-extrabold text-gray-primary mb-1.5 uppercase">{action.name}</div>
-            <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow cursor-pointer hover:bg-blue-accent">
-              <QuantityCoins
+          <div key={action.name} className="px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col group text-gray-primary hover:text-green-secondary">
+            <div className="text-sm font-extrabold  mb-1.5 uppercase">{action.name}</div>
+            <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow cursor-pointer border border-transparent group-hover:bg-green-primary/15 group-hover:border-green-primary">
+              <QuantityCoinsWithChildren
                 quantity={1500}
                 quantityClasses='flex items-center text-lg font-bold'>
                   <span className="w-8 h-8 shrink-0 text-center leading-8 bg-green-primary/20 rounded text-green-secondary relative mr-3">
                     <DiamondIcon className='w-[19px] h-[18px] -inset-full absolute m-auto' />
                   </span>
-              </QuantityCoins>
+              </QuantityCoinsWithChildren>
               {/* <a href="#"className="flex items-center uppercase leading-7 text-xs font-bold gradient-green rounded shadow-green-35 px-1.5">
                 <span className="w-4 shrink-0 mr-1.5">
                   <img src="img/diamond_white.svg" alt="" width="16" height="12" loading="lazy" decoding="async" />
@@ -56,34 +84,46 @@ const Profile = () => {
         ))}
       </div>
     </div>
-    <div className="flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-2 items-center">
+    <div className="flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center">
       <div className="flex flex-wrap items-center">
-        <div className="text-gray-primary mr-2.5 font-bold text-base mb-2 flex items-center">
+        <div className="text-gray-primary mr-2.5 font-bold text-base flex items-center">
           <div className="w-4 mr-2 5 shrink-0">
             <ItemsIcon />
           </div>
           My Items
+          <p className='ml-2'>-</p>
+          <p className="text-green-secondary font-normal text-sm min-w-[100px] leading-6 mx-2.5 ">{selectedCard.length } SELECTED</p>
           </div>
-          <div className="text-gray-primary mr-2.5 font-bold text-base mb-2">-</div>
-          <div className="text-green-secondary mr-2.5 mb-2">3 SELECTED</div>
-          <div className="flex items-center rounded mb-2 mr-2.5">
-            <QuantityCoins
+          <div className="flex items-center rounded mr-2.5">
+            <QuantityCoinsWithChildren
                 quantity={1500}
                 quantityClasses='flex items-center text-sm font-bold'>
                   <span className="w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-secondary">
                     <DiamondIcon className='-inset-full absolute m-auto' />
                   </span>
-            </QuantityCoins>
+            </QuantityCoinsWithChildren>
           </div>
-          <a href="#" className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded  mr-2.5">Sell items</a>
-          <a href="#" className="block text-gray-primary text-13 font-semibold py-1.5 leading-2 px-4 text-center rounded bg-blue-highlight border  border-blue-highlight  hover:text-white">Withdraw</a>
+          <Button
+            onClick={() => {}}
+            className='flex items-center justify-center text-sm font-bold rounded border border-green-primary bg-green-primary hover:bg-green-500 py-1.5 px-7'
+             >Sell items</Button>
+          <Button
+            onClick={() => {}}
+            className='flex items-center justify-center py-1.5 px-4 ml-3 text-gray-primary text-13 font-semibold rounded bg-blue-highlight border border-blue-highlight hover:text-white '
+             >Withdraw</Button>
           </div>
-      <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peackFunction={setCurrentCardsVariant} />
-      {/* <ul className="flex flex-wrap -ml-1 -mr-1">
-        <li className="group"><a href="#" className="block text-gray-primary text-13 py-1.5 leading-2 px-4 text-center rounded  mx-1 border mb-2 bg-blue-highlight border-blue-highlight group-[.is-active]:text-white hover:text-white group-[.is-active]:bg-blue-highlight/25">All</a></li>
-        <li className="group is-active"><a href="#" className="block text-gray-primary text-13 py-1.5 leading-2 px-4 text-center rounded  mx-1 border mb-2 bg-blue-highlight border-blue-highlight group-[.is-active]:text-white hover:text-white group-[.is-active]:bg-blue-highlight/25">Active items</a></li>
-        <li className="group"><a href="#" className="block text-gray-primary text-13 py-1.5 leading-2 px-4 text-center rounded  mx-1 border mb-2 bg-blue-highlight border-blue-highlight group-[.is-active]:text-white hover:text-white group-[.is-active]:bg-blue-highlight/25">Sold</a></li>
-      </ul> */}
+          <div className='mt-2 xs:mt-0'>
+            <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peackFunction={setCurrentCardsVariant} />
+          </div>
+    </div>
+    <div className="flex flex-wrap -mx-1 mb-8 md:mb-12 text-sm">
+      {cards.map(card => (
+        <ItemCard
+          key={card.id}
+          onSelect={handleSelectCard}
+          {...card}
+           />
+      )) }
     </div>
     </>
   )
