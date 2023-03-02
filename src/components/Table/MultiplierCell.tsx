@@ -7,7 +7,7 @@ interface MultiplierCellProps {
 
 export const MultiplierCell: FC<MultiplierCellProps> = ({ multiplier, isWinner = true }) => {
   return (
-    <div className='flex justify-start mx-16'>
+    <div className='flex'>
       <span className={isWinner ? 'text-white' : 'text-gray-primary'}>{multiplier}x</span>
     </div>
   )

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
+import { ColumnFiltersState, createColumnHelper, reSplitAlphaNumeric } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
 
@@ -66,10 +66,10 @@ export const LiveFeed = () => {
 
   const columnHelper = createColumnHelper<ISecondUser>()
   const columns: Array<ColumnDef<ISecondUser, any>> = [
-    columnHelper.accessor((row: ISecondUser) => row, {
+    columnHelper.accessor((row: ISecondUser) => row.username, {
       id: 'username',
       header: () => 'Username',
-      cell: (props) => <UserInfoCell user={props.getValue()} />,
+      cell: ({ row }) => <UserInfoCell user={row.original} />,
       footer: (props) => props.column.id,
       filterFn: (row, _columnId, value) => {
         return row.original.username === value
@@ -102,10 +102,10 @@ export const LiveFeed = () => {
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ISecondUser) => row, {
+    columnHelper.accessor('profit', {
       id: 'profit',
-      header: () => 'Profit',
-      cell: (props) => <ProfitCell data={props.getValue()} />,
+      header: 'Profit',
+      cell: (props) => <ProfitCell quantity={props.getValue()} color='green' />,
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value
       },

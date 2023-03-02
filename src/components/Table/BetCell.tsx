@@ -3,10 +3,10 @@ import { QuantityCoins, QuantityCoinsProps } from '../common/QuantityCoins/Quant
 
 interface BetCellProps extends QuantityCoinsProps {}
 
-export const BetCell: FC<BetCellProps> = ({ quantity, isActive }) => {
+export const BetCell: FC<BetCellProps> = ({ quantity }) => {
   return (
-    <div className='flex justify-start ml-9'>
-      <QuantityCoins {...{ quantity, isActive }} />
+    <div className='flex'>
+      <QuantityCoins {...{ quantity }} />
     </div>
   )
 }

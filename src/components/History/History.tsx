@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
+import { ColumnFiltersState, createColumnHelper, sortingFns } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
 
@@ -98,14 +98,11 @@ export const History = () => {
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: IHistory) => row, {
+    columnHelper.accessor((row: IHistory) => row.multiplier, {
       id: 'multiplier',
       header: () => 'Multiplier',
-      cell: (props) => (
-        <MultiplierCell
-          multiplier={props.getValue().multiplier}
-          isWinner={props.getValue().isWinner}
-        />
+      cell: ({ row }) => (
+        <MultiplierCell multiplier={row.original.multiplier} isWinner={row.original.isWinner} />
       ),
       footer: (props) => props.column.id
     }),
@@ -115,10 +112,15 @@ export const History = () => {
       cell: (props) => <BetCell quantity={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: IHistory) => row, {
+    columnHelper.accessor((row: IHistory) => row.profit, {
       id: 'profit',
       header: () => 'Profit',
-      cell: (props) => <ProfitCell data={props.getValue()} />,
+      cell: ({ row }) => (
+        <ProfitCell
+          quantity={row.original.profit}
+          color={row.original.isWinner ? 'green' : 'red'}
+        />
+      ),
       footer: (props) => props.column.id
     })
   ]

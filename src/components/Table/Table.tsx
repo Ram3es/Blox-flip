@@ -130,7 +130,7 @@ export const Table = <T extends object>({
                           'text-green-primary bg-green-primary/15 border border-green-primary':
                             header.column.getIsSorted(),
                           'text-gray-primary bg-blue-secondary': !header.column.getIsSorted(),
-                          'mx-auto': index !== 0 && index !== array.length - 1,
+                          '': index !== 0 && index !== array.length - 1,
                           'ml-0': index === 0,
                           'ml-auto': array[index] === array.at(-1)
                         })}
@@ -159,7 +159,7 @@ export const Table = <T extends object>({
                     <div
                       className={clsx('', {
                         'w-36': index !== 0 && index !== array.length - 1,
-                        'w-56': index === 0
+                        'w-60': index === 0
                       })}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
