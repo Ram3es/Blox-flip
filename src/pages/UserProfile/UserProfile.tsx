@@ -12,7 +12,7 @@ const navTabs = [
 const UserProfile = () => {
   const { pathname } = useLocation()
   return (
-      <div>
+      <>
         <div className='flex flex-wrap justify-between'>
           <div className="flex items-center text-base font-bold mr-2 mb-4 md:mb-0">
               <div className="shrink-0 w-4 mr-2.5 text-gray-primary">
@@ -35,8 +35,10 @@ const UserProfile = () => {
               >{tab.name}</NavLink>))}
           </div>
         </div>
-        {pathname === '/profile' ? <Profile /> : <Outlet/> }
-      </div>
+        <div className='min-h-screen'>
+          {pathname === '/profile' ? <Profile /> : <Outlet/> }
+        </div>
+      </>
   )
 }
 
