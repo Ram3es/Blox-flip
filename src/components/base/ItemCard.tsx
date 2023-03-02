@@ -1,7 +1,16 @@
-import React, { FC, useState } from 'react'
+import clsx from 'clsx'
+import React, { FC } from 'react'
 import { IMAGES } from '../../constants/Images'
 import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
 import SelectedIcon from '../icons/SelectedIcon'
+
+enum BorderColorEnum {
+  Red = 'Red',
+  Pink = 'Pink',
+  Orange = 'Orange',
+  Blue = 'Blue',
+  Green = 'Green'
+}
 
 interface IItemCardProps {
   id: string
@@ -9,19 +18,32 @@ interface IItemCardProps {
   price: number
   image: string
   onSelect: Function
+  isSelected?: boolean
+  color?: string
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect }) => {
-  const [isSelected, setSelected] = useState(false)
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color }) => {
+  const borderRadial = clsx('', {
+    'border--radial-orange': color === BorderColorEnum.Orange,
+    'border--radial-blue': color === BorderColorEnum.Blue,
+    'border--radial-green': color === BorderColorEnum.Green,
+    'border--radial-pink': color === BorderColorEnum.Pink,
+    'border--radial-red': color === BorderColorEnum.Red
+  })
 
-  const handleClick = () => {
-    setSelected(state => !state)
-    onSelect(id, isSelected)
-  }
+  const gradient = clsx('', {
+    'from-orange-primary-light/20 to-dark/0': color === BorderColorEnum.Orange,
+    'radial--blue-light': color === BorderColorEnum.Blue,
+    'from-green-primary-light/20 to-dark/0': color === BorderColorEnum.Green,
+    'from-pink-primary-darken/20 to-dark/0': color === BorderColorEnum.Pink,
+    'from-red-secondary/20 to-dark/0': color === BorderColorEnum.Red
+  })
+
+  console.log(borderRadial)
   return (
     <div className={`${isSelected ? ' is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item`}>
-      <div onClick={handleClick} className="border--mask border--radial-orange rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-transparent group-[.is-selected]/item:before:hidden cursor-pointer">
+      <div onClick={() => onSelect(id)} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>
         <div className="gradient-blue-secondary rounded h-full text-center relative z-20 group-[.is-selected]/item:border-0">
           <div className="absolute inset-0 rounded bg-dark/40 z-30 hidden group-[.is-selected]/item:block">
             <div className="flex items-center justify-center text-xs m-auto absolute w-full h-5 leading-5 -inset-full">
@@ -35,7 +57,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect }) => {
               </div>
             </div>
           </div>
-          <div className="bg-gradient-radial-60 from-orange-primary-light/20 to-dark/0 flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl">
+          <div className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl`}>
             <div className="mb-2 hidden group-[.is-percent]/item:block">1.5%</div>
             <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
             <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left"><span>{name}</span></div>

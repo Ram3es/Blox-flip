@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import ItemsIcon from '../../components/icons/ItemsIcon'
@@ -27,17 +27,25 @@ const actions = [
 ]
 
 const cards = [
-  { id: '1', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1200 },
-  { id: '2', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1300 },
-  { id: '3', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1400 },
-  { id: '4', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1300 },
-  { id: '5', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500 }
+  { id: '1', color: 'Orange', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1200, sold: true, active: false, isSelected: false },
+  { id: '2', color: 'Blue', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1300, sold: false, active: true, isSelected: false },
+  { id: '3', color: 'Pink', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1400, sold: true, active: false, isSelected: false },
+  { id: '4', color: 'Pink', image: 'redCrown', name: 'Fiery Horns of the Netherworld', price: 1300, sold: false, active: true, isSelected: false },
+  { id: '5', color: 'Blue', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: false, active: true, isSelected: false },
+  { id: '6', color: 'Pink', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
+  { id: '7', color: 'Red', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
+  { id: '8', color: 'Red', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
+  { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false }
 ]
 
 interface ICard {
   id: string
   name: string
   price: number
+  image: string
+  sold: boolean
+  active: boolean
+  isSelected: boolean
 }
 
 const cardsSorting = ['All', 'Active Items', 'Sold']
@@ -45,16 +53,47 @@ const cardsSorting = ['All', 'Active Items', 'Sold']
 const Profile = () => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[1])
   const [selectedCard, setSelectedCard] = useState<ICard[]>([])
+  const [sorted, setSorted] = useState<ICard[]>([])
+
+  const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
+
+  const filtered = useCallback(() => {
+    switch (currentCardsVariant) {
+      case 'Active Items': setSorted(cards.filter(card => card.active))
+        break
+      case 'Sold': setSorted(cards.filter(card => card.sold))
+        break
+      default: setSorted(cards)
+    }
+  }, [currentCardsVariant])
 
   const handleSelectCard = (id: string) => {
-    const card = cards.find(item => item.id === id) as ICard
+    const card = sorted.find(item => item.id === id) as ICard
 
     if (!selectedCard.some(item => item.id === card.id)) {
       setSelectedCard(state => ([...state, card]))
+      setSorted(state => [...state.map(elem => {
+        if (elem.id === id) {
+          return { ...elem, isSelected: true }
+        }
+        return elem
+      })])
     } else {
       setSelectedCard(state => ([...state.filter(el => el.id !== card.id)]))
+      setSorted(state => [...state.map(elem => {
+        if (elem.id === id) {
+          return { ...elem, isSelected: false }
+        }
+        return elem
+      })])
     }
   }
+
+  useEffect(() => {
+    setSelectedCard([])
+    filtered()
+  }, [currentCardsVariant])
+
   return (
     <>
     <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
@@ -96,7 +135,7 @@ const Profile = () => {
           </div>
           <div className="flex items-center rounded mr-2.5">
             <QuantityCoinsWithChildren
-                quantity={1500}
+                quantity={totalPriceSelected}
                 quantityClasses='flex items-center text-sm font-bold'>
                   <span className="w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-secondary">
                     <DiamondIcon className='-inset-full absolute m-auto' />
@@ -117,7 +156,7 @@ const Profile = () => {
           </div>
     </div>
     <div className="flex flex-wrap -mx-1 mb-8 md:mb-12 text-sm">
-      {cards.map(card => (
+      {sorted.map(card => (
         <ItemCard
           key={card.id}
           onSelect={handleSelectCard}

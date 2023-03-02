@@ -11,10 +11,9 @@ import { Withdraw } from './pages/Withdraw/Withdraw'
 import Wheel from './pages/Wheel/Wheel'
 import King from './pages/King/King'
 import { Chat } from './components/Chat/Chat'
-import MyProfile from './pages/MyProfile/MyProfile'
-import HistoryUser from './pages/MyProfile/HistoryUser'
-import Transactions from './pages/MyProfile/Transactions'
-import { UserProfile } from './pages/UserProfile/UserProfile'
+import HistoryUser from './pages/UserProfile/HistoryUser'
+import { Transactions } from './components/Transactions/Transactions'
+import UserProfile from './pages/UserProfile/UserProfile'
 
 export const App = () => {
   return (
@@ -25,7 +24,7 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cases' element={<Cases />} />
-          <Route path='/profile' element={<MyProfile />} >
+          <Route path='/profile' element={<UserProfile />} >
             <Route path='transactions' element={<Transactions />} />
             <Route path='history' element={<HistoryUser />} />
           </Route>
@@ -37,8 +36,6 @@ export const App = () => {
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
           <Route path='/withdraw' element={<Withdraw />} />
-          <Route path='/:profile' element={<UserProfile />} />
-          <Route path='/:profile/transactions' element={<UserProfile />} />
         </Routes>
       </Container>
     </BrowserRouter>

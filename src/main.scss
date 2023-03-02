@@ -108,6 +108,30 @@ body{
         background: radial-gradient(94.25% 94.25% at 50% 50%, #529ADD 0%, rgba(0, 0, 0, 0) 100%) border-box;
     }
 }
+.border--radial-orange{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 153, 0) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-red{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 58, 58) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-green{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(82, 221, 121) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-pink{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(173, 0, 255, 1) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
 .border--battle-green{
     &:before{
         background: radial-gradient(94.25% 94.25% at 50% 50%, #2CDD68 0%, rgba(0, 0, 0, 0) 100%) border-box;
@@ -119,17 +143,8 @@ body{
 .battle_td--radial-gray{
     background: radial-gradient(88.99% 230.56% at 50% 133.33%, rgba(108, 123, 188, 0.1275) 0%, rgba(47, 54, 86, 0) 100%), rgba(50, 56, 83, 0.1);
 }
-.border--radial-orange{
-    overflow: hidden;
-    &:before{
-        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 153, 0) 0%, rgba(0, 0, 0, 0) 100%);
-        z-index: 10;
-    }
-    .gradient-blue-secondary{
-        border-top:1px solid rgba(255, 153, 0, 0.3);
-        border-bottom:1px solid rgba(255, 153, 0, 0.3);
-    }
-}
+
+
 .chat--gradient{
     &:before{
         content:'';

@@ -2,7 +2,7 @@ import React from 'react'
 
 const HistoryUser = () => {
   return (
-        <div>
+        <div className='h-screen'>
             History
         </div>
   )
