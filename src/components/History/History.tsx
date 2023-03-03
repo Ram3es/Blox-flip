@@ -20,21 +20,22 @@ export const History = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const resetColumnFilters = useCallback((column: string) => {
+  const resetColumnFilters = useCallback(() => {
     setColumnFilters([])
-    setSearchValue('')
-    setCurrentColumn('')
-  }, [])
+  }, [columnFilters])
 
-  const handleFilterByValue = useCallback((column: string, value: string) => {
-    setCurrentColumn(column)
-    setSearchValue(value)
-  }, [])
+  const handleFilterByValue = useCallback(
+    (column: string, value: string) => {
+      setCurrentColumn(column)
+      setSearchValue(value)
+    },
+    [currentColum, searchValue]
+  )
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all',
-      onClick: () => resetColumnFilters('')
+      onClick: () => resetColumnFilters()
     },
     {
       name: 'crash',

@@ -21,27 +21,22 @@ export const Transactions = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const handleFilterByColumn = useCallback(
-    (column: string) => {
-      setColumnFilters([])
-      setSearchValue('')
-      setCurrentColumn(column)
-    },
-    [columnFilters, currentColum]
-  )
+  const resetColumnFilters = useCallback(() => {
+    setColumnFilters([])
+  }, [columnFilters])
 
   const handleFilterByValue = useCallback(
     (column: string, value: string) => {
-      handleFilterByColumn(column)
+      setCurrentColumn(column)
       setSearchValue(value)
     },
-    [columnFilters, currentColum, searchValue]
+    [currentColum, searchValue]
   )
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all',
-      onClick: () => handleFilterByValue('', '')
+      onClick: () => resetColumnFilters()
     },
     {
       name: 'crypto',

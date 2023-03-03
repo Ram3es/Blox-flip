@@ -29,7 +29,7 @@ interface ReactTableProps<T extends object> {
   columnFilters?: ColumnFilter[]
   setColumnFilters?: OnChangeFn<ColumnFiltersState>
   currentColum?: string
-  searchValue?: string
+  searchValue?: string | number
   filtersVariants?: FilterVariant[]
   tableHeader?: ReactNode
   variant: keyof typeof TableVariant

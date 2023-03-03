@@ -25,29 +25,27 @@ export const LiveFeed = () => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState<string | number>('')
 
-  const handleFilterByColumn = useCallback(
-    (column: string) => {
-      setColumnFilters([])
-      setSearchValue('')
-      setCurrentColumn(column)
-    },
-    [columnFilters, currentColum]
-  )
+  const resetColumnFilters = useCallback(() => {
+    setColumnFilters([])
+  }, [columnFilters])
 
   const handleFilterByValue = useCallback(
-    (column: string, value: string) => {
-      handleFilterByColumn(column)
+    (column: string, value: typeof searchValue) => {
+      setCurrentColumn(column)
       setSearchValue(value)
+      setColumnFilters([{ id: column, value }])
     },
-    [columnFilters, currentColum, searchValue]
+    [currentColum, searchValue]
   )
+
+  console.log(columnFilters)
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all bets',
-      onClick: () => handleFilterByValue('', '')
+      onClick: () => resetColumnFilters()
     },
     {
       name: 'my bets',
@@ -69,10 +67,8 @@ export const LiveFeed = () => {
       id: 'username',
       header: () => 'Username',
       cell: ({ row }) => <UserInfoCell user={row.original} />,
-      footer: (props) => props.column.id,
-      filterFn: (row, _columnId, value) => {
-        return row.original.username === value
-      }
+      filterFn: 'equalsString',
+      footer: (props) => props.column.id
     }),
     columnHelper.accessor('game', {
       id: 'game',
@@ -86,14 +82,14 @@ export const LiveFeed = () => {
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('bet', {
+    columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Bet',
-      cell: (props) => <QuantityCoins quantity={props.getValue()} />,
-      footer: (props) => props.column.id,
+      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
       filterFn: (row, _columnId, value) => {
         return row.original.bet > value
-      }
+      },
+      footer: (props) => props.column.id
     }),
     columnHelper.accessor('rate', {
       id: 'rate',
