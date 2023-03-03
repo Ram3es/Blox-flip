@@ -43,7 +43,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                  className='mt-10'
                 />
                 <h3 className="text-3xl font-extrabold text-white uppercase mt-5">Welcome to our site</h3>
-                <p className='mt-auto text-purple-light'>By logging in you acknowledge that you are at least 18 years of age, that any items you wager are not stolen, and that you agree with our Terms of conditions and our Privacy policy</p>
+                <p className='mt-auto text-blue-ocean'>By logging in you acknowledge that you are at least 18 years of age, that any items you wager are not stolen, and that you agree with our Terms of conditions and our Privacy policy</p>
              </div>
              <div className=' h-full w-full mix-blend-luminosity bg-cover' style={{ backgroundImage: `url(${Mountains})` }}>
                 <div className='h-full w-full  gradient-light-gray'>

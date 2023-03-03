@@ -14,6 +14,8 @@ import { Chat } from './components/Chat/Chat'
 import HistoryUser from './pages/UserProfile/HistoryUser'
 import { Transactions } from './components/Transactions/Transactions'
 import UserProfile from './pages/UserProfile/UserProfile'
+import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
+import Robux from './pages/Withdraw/Robux'
 
 export const App = () => {
   return (
@@ -35,7 +37,10 @@ export const App = () => {
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
-          <Route path='/withdraw' element={<Withdraw />} />
+          <Route path='/withdraw' element={<Withdraw />} >
+            <Route path='robux' element={<Robux />} />
+            <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
+          </Route>
         </Routes>
       </Container>
     </BrowserRouter>
