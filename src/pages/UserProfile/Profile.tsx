@@ -134,10 +134,10 @@ const Profile = () => {
           <p className='ml-2'>-</p>
           <p className="text-green-secondary font-normal text-sm min-w-[100px] leading-6 mx-2.5 ">{selectedCard.length } SELECTED</p>
           </div>
-          <div className="flex items-center rounded mr-2.5">
+          <div className="flex items-center rounded min-w-[100px] mr-2.5">
             <QuantityCoinsWithChildren
                 quantity={totalPriceSelected}
-                quantityClasses='flex items-center text-sm font-bold'>
+                quantityClasses='flex items-center text-sm font-bold '>
                   <span className="w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-secondary">
                     <DiamondIcon className='-inset-full absolute m-auto' />
                   </span>
