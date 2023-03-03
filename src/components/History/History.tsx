@@ -20,27 +20,21 @@ export const History = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const handleFilterByColumn = useCallback(
-    (column: string) => {
-      setColumnFilters([])
-      setSearchValue('')
-      setCurrentColumn(column)
-    },
-    [columnFilters, currentColum]
-  )
+  const resetColumnFilters = useCallback((column: string) => {
+    setColumnFilters([])
+    setSearchValue('')
+    setCurrentColumn('')
+  }, [])
 
-  const handleFilterByValue = useCallback(
-    (column: string, value: string) => {
-      handleFilterByColumn(column)
-      setSearchValue(value)
-    },
-    [columnFilters, currentColum, searchValue]
-  )
+  const handleFilterByValue = useCallback((column: string, value: string) => {
+    setCurrentColumn(column)
+    setSearchValue(value)
+  }, [])
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all',
-      onClick: () => handleFilterByValue('', '')
+      onClick: () => resetColumnFilters('')
     },
     {
       name: 'crash',
@@ -87,9 +81,7 @@ export const History = () => {
       header: () => 'Game',
       cell: (props) => <GameCell game={props.getValue()} />,
       footer: (props) => props.column.id,
-      filterFn: (row, _columnId, value) => {
-        return row.original.game.toLowerCase() === value.toLowerCase()
-      }
+      filterFn: 'equalsString'
     }),
     columnHelper.accessor('date', {
       id: 'date',
