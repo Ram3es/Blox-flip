@@ -22,6 +22,8 @@ export const Transactions = () => {
   const [searchValue, setSearchValue] = useState('')
 
   const resetColumnFilters = useCallback(() => {
+    setCurrentColumn('')
+    setSearchValue('')
     setColumnFilters([])
   }, [columnFilters])
 
@@ -88,7 +90,7 @@ export const Transactions = () => {
   ]
 
   return (
-    <div className='px-4 md:px-9 py-5'>
+    <div className='py-5'>
       <Table
         data={data}
         columns={columns}

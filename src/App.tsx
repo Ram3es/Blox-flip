@@ -36,8 +36,6 @@ export const App = () => {
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
           <Route path='/withdraw' element={<Withdraw />} />
-          <Route path='/:profile' element={<UserProfile />} />
-          <Route path='/:profile/transactions' element={<UserProfile />} />
         </Routes>
       </Container>
     </BrowserRouter>

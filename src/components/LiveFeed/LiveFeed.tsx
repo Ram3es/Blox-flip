@@ -28,6 +28,8 @@ export const LiveFeed = () => {
   const [searchValue, setSearchValue] = useState<string | number>('')
 
   const resetColumnFilters = useCallback(() => {
+    setCurrentColumn('')
+    setSearchValue('')
     setColumnFilters([])
   }, [columnFilters])
 
@@ -39,8 +41,6 @@ export const LiveFeed = () => {
     },
     [currentColum, searchValue]
   )
-
-  console.log(columnFilters)
 
   const filtersVariants: FilterVariant[] = [
     {
