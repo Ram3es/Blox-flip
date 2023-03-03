@@ -7,6 +7,7 @@ import UserProgress from '../../components/user/UserProgress'
 import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/base/ItemCard'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
+import { useNavigate } from 'react-router-dom'
 
 const user = {
   name: 'John Johnson',
@@ -55,6 +56,7 @@ const Profile = () => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
   const [selectedCard, setSelectedCard] = useState<ICard[]>([])
   const [sorted, setSorted] = useState<ICard[]>([])
+  const navigate = useNavigate()
 
   const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
 
@@ -148,7 +150,7 @@ const Profile = () => {
             className='flex items-center justify-center text-sm font-bold rounded border border-green-primary bg-green-primary hover:bg-green-500 py-1.5 px-7'
              >Sell items</Button>
           <Button
-            onClick={() => {}}
+            onClick={() => { navigate('/withdraw') }}
             className='flex items-center justify-center py-1.5 px-4 ml-3 text-gray-primary text-13 font-semibold rounded bg-blue-highlight border border-blue-highlight hover:text-white '
              >Withdraw</Button>
           </div>

@@ -6,7 +6,6 @@ export const Home = () => {
   return (
     <div>
       <GamesSection />
-      <SignInModal isAuth={false} />
       <LiveFeed />
     </div>
   )
