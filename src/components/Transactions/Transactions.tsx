@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
@@ -13,6 +13,7 @@ import { StatusCell } from '../Table/StatusCell'
 import { FilterHeader } from '../Table/FilterHeader'
 import { ListIcon } from '../ListIcon/ListIcon'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { handleFilterByValueHelper, resetColumnFilterHelper } from '../Table/helpers'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -21,32 +22,26 @@ export const Transactions = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const resetColumnFilters = useCallback(() => {
-    setCurrentColumn('')
-    setSearchValue('')
-    setColumnFilters([])
-  }, [columnFilters])
-
-  const handleFilterByValue = useCallback(
-    (column: string, value: string) => {
-      setCurrentColumn(column)
-      setSearchValue(value)
-    },
-    [currentColum, searchValue]
+  const resetFilter = resetColumnFilterHelper(
+    setCurrentColumn,
+    setSearchValue,
+    setColumnFilters,
+    columnFilters
   )
+  const filterByValue = handleFilterByValueHelper(setCurrentColumn, setSearchValue)
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all',
-      onClick: () => resetColumnFilters()
+      onClick: () => resetFilter()
     },
     {
       name: 'crypto',
-      onClick: () => handleFilterByValue('method', 'crypto')
+      onClick: () => filterByValue('method', 'crypto')
     },
     {
       name: 'roblox',
-      onClick: () => handleFilterByValue('method', 'robux')
+      onClick: () => filterByValue('method', 'robux')
     }
   ]
 

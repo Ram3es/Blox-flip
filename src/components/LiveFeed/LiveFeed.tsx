@@ -13,6 +13,7 @@ import { users } from './users'
 import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/table'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { resetColumnFilterHelper } from '../Table/helpers'
 
 const RedDotIcon = () => {
   return (
@@ -27,11 +28,12 @@ export const LiveFeed = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState<string | number>('')
 
-  const resetColumnFilters = useCallback(() => {
-    setCurrentColumn('')
-    setSearchValue('')
-    setColumnFilters([])
-  }, [columnFilters])
+  const resetFilter = resetColumnFilterHelper(
+    setCurrentColumn,
+    setSearchValue,
+    setColumnFilters,
+    columnFilters
+  )
 
   const handleFilterByValue = useCallback(
     (column: string, value: typeof searchValue) => {
@@ -45,7 +47,7 @@ export const LiveFeed = () => {
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all bets',
-      onClick: () => resetColumnFilters()
+      onClick: () => resetFilter()
     },
     {
       name: 'my bets',

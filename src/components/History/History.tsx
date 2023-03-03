@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
@@ -12,6 +12,7 @@ import { IHistory } from '../../types/history'
 import { GameCell } from '../Table/GameCell'
 import { MultiplierCell } from '../Table/MultiplierCell'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { handleFilterByValueHelper, resetColumnFilterHelper } from '../Table/helpers'
 
 export const History = () => {
   const [data] = useState<IHistory[]>([...mockHistory])
@@ -20,62 +21,54 @@ export const History = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const resetColumnFilters = useCallback(() => {
-    setCurrentColumn('')
-    setSearchValue('')
-    setColumnFilters([])
-  }, [columnFilters])
-
-  const handleFilterByValue = useCallback(
-    (column: string, value: string) => {
-      setCurrentColumn(column)
-      setSearchValue(value)
-    },
-    [currentColum, searchValue]
+  const resetFilter = resetColumnFilterHelper(
+    setCurrentColumn,
+    setSearchValue,
+    setColumnFilters,
+    columnFilters
   )
-
-  console.log(searchValue, currentColum)
+  const filterByValue = handleFilterByValueHelper(setCurrentColumn, setSearchValue)
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all',
-      onClick: () => resetColumnFilters()
+      onClick: () => resetFilter()
     },
     {
       name: 'crash',
-      onClick: () => handleFilterByValue('game', 'crash')
+      onClick: () => filterByValue('game', 'crash')
     },
     {
       name: 'king',
-      onClick: () => handleFilterByValue('game', 'king')
+      onClick: () => filterByValue('game', 'king')
     },
     {
       name: 'plinko',
-      onClick: () => handleFilterByValue('game', 'plinko')
+      onClick: () => filterByValue('game', 'plinko')
     },
     {
       name: 'jackpot',
-      onClick: () => handleFilterByValue('game', 'jackpot')
+      onClick: () => filterByValue('game', 'jackpot')
     },
     {
       name: 'coinflip',
-      onClick: () => handleFilterByValue('game', 'coinflip')
+      onClick: () => filterByValue('game', 'coinflip')
     },
     {
       name: 'mines',
-      onClick: () => handleFilterByValue('game', 'mines')
+      onClick: () => filterByValue('game', 'mines')
     },
     {
       name: 'wheel',
-      onClick: () => handleFilterByValue('game', 'wheel')
+      onClick: () => filterByValue('game', 'wheel')
     },
     {
       name: 'cases',
-      onClick: () => handleFilterByValue('game', 'cases')
+      onClick: () => filterByValue('game', 'cases')
     },
     {
       name: 'cases battles',
-      onClick: () => handleFilterByValue('game', 'cases battles')
+      onClick: () => filterByValue('game', 'cases battles')
     }
   ]
 
