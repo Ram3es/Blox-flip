@@ -40,12 +40,48 @@ const WelcomeCard: FC<IWelcomeCardProps> = ({ user, openModal }) => {
                               </Button>
                         </div> }
 
-                <div className="relative z-20 self-end -right-1.5 w-1/3 pt-6">
-                    <img src={ Cowboy } alt="cowboy" width="164" height="192" loading="lazy" decoding="async" className="relative z-30 float-right" />
-                    <img src={ OrangeCloudRight } alt="cloud" width="177" height="123" loading="lazy" decoding="async" className="absolute z-20 right-10 top-4" />
-                </div>
+        {user
+          ? (
+          <div className='relative z-30 flex flex-col items-center w-1/3'>
+            <UserProgress user={user} />
+            <a href='#'
+            className='font-xs text-orange-accent leading-4 py-2 px-10 rounded-full bg-orange-secondary/15 mb-4 text-center'>
+            {t('home.greeting')}</a>
+          </div>
+            )
+          : (
+            <div className='relative z-30 flex items-center'>
+              <Button
+                onClick={() => openModal()}
+                className='flex items-center justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5'
+              >
+                Sign in
+              </Button>
             </div>
+            )}
+
+        <div className='relative z-20 self-end -right-1.5 w-1/3 pt-6'>
+          <img
+            src={Cowboy}
+            alt='cowboy'
+            width='164'
+            height='192'
+            loading='lazy'
+            decoding='async'
+            className='relative z-30 float-right'
+          />
+          <img
+            src={OrangeCloudRight}
+            alt='cloud'
+            width='177'
+            height='123'
+            loading='lazy'
+            decoding='async'
+            className='absolute z-20 right-10 top-4'
+          />
         </div>
+      </div>
+    </div>
   )
 }
 

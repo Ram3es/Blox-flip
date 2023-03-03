@@ -2,11 +2,12 @@ import { ISecondUser } from '../../types/User'
 
 export const users: ISecondUser[] = [
   {
+    isWinner: true,
     game: 'game 1',
     date: '2075-10-08T16:49:56.486Z',
     bet: 38,
     rate: 5,
-    profit: 85,
+    profit: 33,
     username: 'Carmela_Botsford2',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
@@ -14,6 +15,7 @@ export const users: ISecondUser[] = [
     id: '1'
   },
   {
+    isWinner: true,
     game: 'game 2',
     date: '2048-10-11T08:58:47.076Z',
     bet: 61,
@@ -26,11 +28,12 @@ export const users: ISecondUser[] = [
     id: '2'
   },
   {
+    isWinner: true,
     game: 'game 3',
     date: '2032-07-12T23:46:58.567Z',
     bet: 78,
     rate: 91,
-    profit: 8,
+    profit: 8.08,
     username: 'Alexis35',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/367.jpg',
@@ -38,11 +41,12 @@ export const users: ISecondUser[] = [
     id: '3'
   },
   {
+    isWinner: true,
     game: 'game 4',
     date: '2091-05-09T21:05:50.793Z',
     bet: 66,
     rate: 88,
-    profit: 58,
+    profit: 58.8,
     username: 'Michele96',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/599.jpg',
@@ -50,6 +54,7 @@ export const users: ISecondUser[] = [
     id: '4'
   },
   {
+    isWinner: true,
     game: 'game 5',
     date: '2086-12-26T12:28:31.792Z',
     bet: 65,
@@ -62,6 +67,7 @@ export const users: ISecondUser[] = [
     id: '5'
   },
   {
+    isWinner: true,
     game: 'game 6',
     date: '2044-04-27T15:31:55.712Z',
     bet: 30,
@@ -74,6 +80,7 @@ export const users: ISecondUser[] = [
     id: '6'
   },
   {
+    isWinner: true,
     game: 'game 7',
     date: '2041-03-29T23:21:53.766Z',
     bet: 7,
@@ -86,6 +93,7 @@ export const users: ISecondUser[] = [
     id: '7'
   },
   {
+    isWinner: true,
     game: 'game 8',
     date: '1995-02-19T12:02:38.301Z',
     bet: 72,
@@ -98,6 +106,7 @@ export const users: ISecondUser[] = [
     id: '8'
   },
   {
+    isWinner: true,
     game: 'game 9',
     date: '2089-04-03T15:02:11.141Z',
     bet: 98,
@@ -110,6 +119,7 @@ export const users: ISecondUser[] = [
     id: '9'
   },
   {
+    isWinner: true,
     game: 'game 10',
     date: '2071-07-18T21:43:43.416Z',
     bet: 86,
@@ -122,6 +132,7 @@ export const users: ISecondUser[] = [
     id: '10'
   },
   {
+    isWinner: true,
     game: 'game 11',
     date: '2050-07-27T04:07:10.074Z',
     bet: 89,
@@ -134,6 +145,7 @@ export const users: ISecondUser[] = [
     id: '11'
   },
   {
+    isWinner: true,
     game: 'game 12',
     date: '2035-05-14T18:25:22.196Z',
     bet: 2,
@@ -146,6 +158,7 @@ export const users: ISecondUser[] = [
     id: '12'
   },
   {
+    isWinner: true,
     game: 'game 13',
     date: '1999-04-22T11:26:07.545Z',
     bet: 33,
@@ -158,6 +171,7 @@ export const users: ISecondUser[] = [
     id: '13'
   },
   {
+    isWinner: true,
     game: 'game 14',
     date: '2062-06-14T11:25:36.466Z',
     bet: 71,
@@ -170,6 +184,7 @@ export const users: ISecondUser[] = [
     id: '14'
   },
   {
+    isWinner: true,
     game: 'game 15',
     date: '2008-08-08T03:40:22.531Z',
     bet: 94,
@@ -182,6 +197,7 @@ export const users: ISecondUser[] = [
     id: '15'
   },
   {
+    isWinner: true,
     game: 'game 16',
     date: '2033-09-04T06:29:27.035Z',
     bet: 59,
@@ -194,6 +210,7 @@ export const users: ISecondUser[] = [
     id: '16'
   },
   {
+    isWinner: true,
     game: 'game 17',
     date: '1990-01-20T17:30:51.319Z',
     bet: 86,
@@ -206,6 +223,7 @@ export const users: ISecondUser[] = [
     id: '17'
   },
   {
+    isWinner: true,
     game: 'game 18',
     date: '2053-01-29T09:34:00.148Z',
     bet: 97,
@@ -218,6 +236,7 @@ export const users: ISecondUser[] = [
     id: '18'
   },
   {
+    isWinner: true,
     game: 'game 19',
     date: '2023-09-04T19:36:36.437Z',
     bet: 89,
@@ -230,6 +249,7 @@ export const users: ISecondUser[] = [
     id: '19'
   },
   {
+    isWinner: true,
     game: 'game 20',
     date: '2095-03-08T08:06:09.515Z',
     bet: 52,
@@ -242,6 +262,7 @@ export const users: ISecondUser[] = [
     id: '20'
   },
   {
+    isWinner: true,
     game: 'game 21',
     date: '1996-05-15T04:33:06.013Z',
     bet: 74,
@@ -254,6 +275,7 @@ export const users: ISecondUser[] = [
     id: '21'
   },
   {
+    isWinner: true,
     game: 'game 22',
     date: '2001-11-19T19:55:53.599Z',
     bet: 19,
@@ -266,6 +288,7 @@ export const users: ISecondUser[] = [
     id: '22'
   },
   {
+    isWinner: true,
     game: 'game 23',
     date: '2031-03-22T01:56:34.787Z',
     bet: 80,
@@ -278,6 +301,7 @@ export const users: ISecondUser[] = [
     id: '23'
   },
   {
+    isWinner: true,
     game: 'game 24',
     date: '2047-09-07T06:09:44.627Z',
     bet: 81,
@@ -290,6 +314,7 @@ export const users: ISecondUser[] = [
     id: '24'
   },
   {
+    isWinner: true,
     game: 'game 25',
     date: '2010-04-27T19:09:48.478Z',
     bet: 35,
@@ -302,6 +327,7 @@ export const users: ISecondUser[] = [
     id: '25'
   },
   {
+    isWinner: true,
     game: 'game 26',
     date: '2051-10-21T20:09:07.468Z',
     bet: 71,
@@ -314,6 +340,7 @@ export const users: ISecondUser[] = [
     id: '26'
   },
   {
+    isWinner: true,
     game: 'game 27',
     date: '2043-01-17T22:52:25.013Z',
     bet: 18,
@@ -326,6 +353,7 @@ export const users: ISecondUser[] = [
     id: '27'
   },
   {
+    isWinner: true,
     game: 'game 28',
     date: '2085-05-17T08:59:58.202Z',
     bet: 57,
@@ -338,6 +366,7 @@ export const users: ISecondUser[] = [
     id: '28'
   },
   {
+    isWinner: true,
     game: 'game 29',
     date: '2038-02-20T17:46:36.358Z',
     bet: 29,
@@ -350,6 +379,7 @@ export const users: ISecondUser[] = [
     id: '29'
   },
   {
+    isWinner: true,
     game: 'game 30',
     date: '2042-09-11T01:11:36.938Z',
     bet: 35,
@@ -362,6 +392,7 @@ export const users: ISecondUser[] = [
     id: '30'
   },
   {
+    isWinner: true,
     game: 'game 31',
     date: '1990-11-02T12:15:22.387Z',
     bet: 25,
@@ -374,6 +405,7 @@ export const users: ISecondUser[] = [
     id: '31'
   },
   {
+    isWinner: true,
     game: 'game 32',
     date: '2042-01-09T18:56:31.425Z',
     bet: 25,
@@ -386,6 +418,7 @@ export const users: ISecondUser[] = [
     id: '32'
   },
   {
+    isWinner: true,
     game: 'game 33',
     date: '2054-03-30T05:27:39.720Z',
     bet: 25,
@@ -398,6 +431,7 @@ export const users: ISecondUser[] = [
     id: '33'
   },
   {
+    isWinner: true,
     game: 'game 34',
     date: '1999-09-19T00:22:29.028Z',
     bet: 30,
@@ -410,6 +444,7 @@ export const users: ISecondUser[] = [
     id: '34'
   },
   {
+    isWinner: true,
     game: 'game 35',
     date: '2081-08-26T09:25:07.942Z',
     bet: 87,
@@ -422,6 +457,7 @@ export const users: ISecondUser[] = [
     id: '35'
   },
   {
+    isWinner: true,
     game: 'game 36',
     date: '2073-06-29T13:09:47.172Z',
     bet: 19,
@@ -434,6 +470,7 @@ export const users: ISecondUser[] = [
     id: '36'
   },
   {
+    isWinner: true,
     game: 'game 37',
     date: '2061-09-28T19:01:10.185Z',
     bet: 38,
@@ -446,6 +483,7 @@ export const users: ISecondUser[] = [
     id: '37'
   },
   {
+    isWinner: true,
     game: 'game 38',
     date: '2078-01-29T20:49:26.503Z',
     bet: 41,
@@ -458,6 +496,7 @@ export const users: ISecondUser[] = [
     id: '38'
   },
   {
+    isWinner: true,
     game: 'game 39',
     date: '2054-03-06T12:14:19.559Z',
     bet: 28,
@@ -470,6 +509,7 @@ export const users: ISecondUser[] = [
     id: '39'
   },
   {
+    isWinner: true,
     game: 'game 40',
     date: '2023-08-22T01:44:51.669Z',
     bet: 100,
@@ -482,6 +522,7 @@ export const users: ISecondUser[] = [
     id: '40'
   },
   {
+    isWinner: true,
     game: 'game 41',
     date: '2040-05-25T23:14:16.804Z',
     bet: 8,
@@ -494,6 +535,7 @@ export const users: ISecondUser[] = [
     id: '41'
   },
   {
+    isWinner: true,
     game: 'game 42',
     date: '2068-10-30T20:10:51.953Z',
     bet: 96,
@@ -506,6 +548,7 @@ export const users: ISecondUser[] = [
     id: '42'
   },
   {
+    isWinner: true,
     game: 'game 43',
     date: '2079-09-18T03:31:41.408Z',
     bet: 53,
@@ -518,6 +561,7 @@ export const users: ISecondUser[] = [
     id: '43'
   },
   {
+    isWinner: true,
     game: 'game 44',
     date: '2018-12-15T07:38:03.133Z',
     bet: 86,
@@ -530,6 +574,7 @@ export const users: ISecondUser[] = [
     id: '44'
   },
   {
+    isWinner: true,
     game: 'game 45',
     date: '2032-11-30T05:45:01.728Z',
     bet: 48,
@@ -542,6 +587,7 @@ export const users: ISecondUser[] = [
     id: '45'
   },
   {
+    isWinner: true,
     game: 'game 46',
     date: '2019-09-15T16:34:42.197Z',
     bet: 9,
@@ -554,6 +600,7 @@ export const users: ISecondUser[] = [
     id: '46'
   },
   {
+    isWinner: true,
     game: 'game 47',
     date: '2003-01-20T16:29:11.538Z',
     bet: 83,
@@ -566,6 +613,7 @@ export const users: ISecondUser[] = [
     id: '47'
   },
   {
+    isWinner: true,
     game: 'game 48',
     date: '2061-12-01T14:23:25.211Z',
     bet: 1,
@@ -578,6 +626,7 @@ export const users: ISecondUser[] = [
     id: '48'
   },
   {
+    isWinner: true,
     game: 'game 49',
     date: '2012-11-08T02:00:10.216Z',
     bet: 81,
@@ -590,6 +639,7 @@ export const users: ISecondUser[] = [
     id: '49'
   },
   {
+    isWinner: true,
     game: 'game 50',
     date: '2066-06-16T17:38:11.203Z',
     bet: 30,
@@ -602,6 +652,7 @@ export const users: ISecondUser[] = [
     id: '50'
   },
   {
+    isWinner: true,
     game: 'game 51',
     date: '2029-01-05T18:06:17.764Z',
     bet: 36,
@@ -614,6 +665,7 @@ export const users: ISecondUser[] = [
     id: '51'
   },
   {
+    isWinner: true,
     game: 'game 52',
     date: '2028-05-06T05:14:00.169Z',
     bet: 9,
@@ -626,6 +678,7 @@ export const users: ISecondUser[] = [
     id: '52'
   },
   {
+    isWinner: true,
     game: 'game 53',
     date: '2029-12-13T06:23:46.061Z',
     bet: 41,
@@ -638,6 +691,7 @@ export const users: ISecondUser[] = [
     id: '53'
   },
   {
+    isWinner: true,
     game: 'game 54',
     date: '2049-11-26T10:13:54.111Z',
     bet: 66,
@@ -650,6 +704,7 @@ export const users: ISecondUser[] = [
     id: '54'
   },
   {
+    isWinner: true,
     game: 'game 55',
     date: '2008-09-05T17:38:44.690Z',
     bet: 67,
@@ -662,6 +717,7 @@ export const users: ISecondUser[] = [
     id: '55'
   },
   {
+    isWinner: true,
     game: 'game 56',
     date: '2017-09-08T22:58:47.669Z',
     bet: 1,
@@ -674,11 +730,12 @@ export const users: ISecondUser[] = [
     id: '56'
   },
   {
+    isWinner: true,
     game: 'game 57',
     date: '2069-04-21T05:49:26.833Z',
     bet: 38,
     rate: 4,
-    profit: 0,
+    profit: 1.01,
     username: 'Vivien38',
     avatar:
       'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/998.jpg',
@@ -686,6 +743,7 @@ export const users: ISecondUser[] = [
     id: '57'
   },
   {
+    isWinner: true,
     game: 'game 58',
     date: '2053-01-20T15:01:26.686Z',
     bet: 37,
@@ -698,6 +756,7 @@ export const users: ISecondUser[] = [
     id: '58'
   },
   {
+    isWinner: true,
     game: 'game 59',
     date: '2088-04-08T18:45:00.077Z',
     bet: 67,
@@ -710,6 +769,7 @@ export const users: ISecondUser[] = [
     id: '59'
   },
   {
+    isWinner: true,
     game: 'game 60',
     date: '2024-08-01T13:03:58.275Z',
     bet: 94,
@@ -722,6 +782,7 @@ export const users: ISecondUser[] = [
     id: '60'
   },
   {
+    isWinner: true,
     game: 'game 61',
     date: '2051-01-24T06:42:14.975Z',
     bet: 19,
@@ -734,6 +795,7 @@ export const users: ISecondUser[] = [
     id: '61'
   },
   {
+    isWinner: true,
     game: 'game 62',
     date: '2037-11-04T13:31:05.688Z',
     bet: 49,
@@ -746,6 +808,7 @@ export const users: ISecondUser[] = [
     id: '62'
   },
   {
+    isWinner: true,
     game: 'game 63',
     date: '1990-11-18T10:00:28.582Z',
     bet: 34,
@@ -758,6 +821,7 @@ export const users: ISecondUser[] = [
     id: '63'
   },
   {
+    isWinner: true,
     game: 'game 64',
     date: '2047-06-14T19:24:08.234Z',
     bet: 52,
@@ -770,6 +834,7 @@ export const users: ISecondUser[] = [
     id: '64'
   },
   {
+    isWinner: true,
     game: 'game 65',
     date: '2095-12-21T20:40:59.350Z',
     bet: 67,
@@ -782,6 +847,7 @@ export const users: ISecondUser[] = [
     id: '65'
   },
   {
+    isWinner: true,
     game: 'game 66',
     date: '2097-05-15T01:01:40.197Z',
     bet: 97,
@@ -794,6 +860,7 @@ export const users: ISecondUser[] = [
     id: '66'
   },
   {
+    isWinner: true,
     game: 'game 67',
     date: '2087-11-29T15:41:40.136Z',
     bet: 8,
@@ -806,6 +873,7 @@ export const users: ISecondUser[] = [
     id: '67'
   },
   {
+    isWinner: true,
     game: 'game 68',
     date: '2098-02-15T03:54:04.668Z',
     bet: 81,
@@ -818,6 +886,7 @@ export const users: ISecondUser[] = [
     id: '68'
   },
   {
+    isWinner: true,
     game: 'game 69',
     date: '2006-11-04T16:59:25.635Z',
     bet: 3,
@@ -830,6 +899,7 @@ export const users: ISecondUser[] = [
     id: '69'
   },
   {
+    isWinner: true,
     game: 'game 70',
     date: '2023-10-25T16:06:42.389Z',
     bet: 34,
@@ -842,6 +912,7 @@ export const users: ISecondUser[] = [
     id: '70'
   },
   {
+    isWinner: true,
     game: 'game 71',
     date: '2049-08-16T14:03:04.232Z',
     bet: 9,
@@ -854,6 +925,7 @@ export const users: ISecondUser[] = [
     id: '71'
   },
   {
+    isWinner: true,
     game: 'game 72',
     date: '2025-07-27T20:44:28.893Z',
     bet: 80,
@@ -866,6 +938,7 @@ export const users: ISecondUser[] = [
     id: '72'
   },
   {
+    isWinner: true,
     game: 'game 73',
     date: '2093-06-25T05:02:55.206Z',
     bet: 74,
@@ -878,6 +951,7 @@ export const users: ISecondUser[] = [
     id: '73'
   },
   {
+    isWinner: true,
     game: 'game 74',
     date: '1998-10-23T21:46:15.089Z',
     bet: 71,
@@ -890,6 +964,7 @@ export const users: ISecondUser[] = [
     id: '74'
   },
   {
+    isWinner: true,
     game: 'game 75',
     date: '2089-07-19T17:49:00.586Z',
     bet: 74,
@@ -902,6 +977,7 @@ export const users: ISecondUser[] = [
     id: '75'
   },
   {
+    isWinner: true,
     game: 'game 76',
     date: '2035-01-22T13:07:32.345Z',
     bet: 49,
@@ -914,6 +990,7 @@ export const users: ISecondUser[] = [
     id: '76'
   },
   {
+    isWinner: true,
     game: 'game 77',
     date: '1996-07-14T09:32:23.370Z',
     bet: 46,
@@ -926,6 +1003,7 @@ export const users: ISecondUser[] = [
     id: '77'
   },
   {
+    isWinner: true,
     game: 'game 78',
     date: '2083-07-31T21:21:16.357Z',
     bet: 4,
@@ -938,6 +1016,7 @@ export const users: ISecondUser[] = [
     id: '78'
   },
   {
+    isWinner: true,
     game: 'game 79',
     date: '1996-07-22T19:06:55.583Z',
     bet: 99,
@@ -950,6 +1029,7 @@ export const users: ISecondUser[] = [
     id: '79'
   },
   {
+    isWinner: true,
     game: 'game 80',
     date: '2034-03-08T00:02:48.767Z',
     bet: 56,
@@ -962,6 +1042,7 @@ export const users: ISecondUser[] = [
     id: '80'
   },
   {
+    isWinner: true,
     game: 'game 81',
     date: '2034-04-14T02:22:21.670Z',
     bet: 44,
@@ -974,6 +1055,7 @@ export const users: ISecondUser[] = [
     id: '81'
   },
   {
+    isWinner: true,
     game: 'game 82',
     date: '2050-07-24T22:19:19.557Z',
     bet: 47,
@@ -986,6 +1068,7 @@ export const users: ISecondUser[] = [
     id: '82'
   },
   {
+    isWinner: true,
     game: 'game 83',
     date: '2060-08-14T01:50:24.436Z',
     bet: 26,
@@ -998,6 +1081,7 @@ export const users: ISecondUser[] = [
     id: '83'
   },
   {
+    isWinner: true,
     game: 'game 84',
     date: '2047-07-08T13:20:03.188Z',
     bet: 11,
@@ -1010,6 +1094,7 @@ export const users: ISecondUser[] = [
     id: '84'
   },
   {
+    isWinner: true,
     game: 'game 85',
     date: '2085-12-13T14:23:20.884Z',
     bet: 76,
@@ -1022,6 +1107,7 @@ export const users: ISecondUser[] = [
     id: '85'
   },
   {
+    isWinner: true,
     game: 'game 86',
     date: '2070-07-07T05:15:43.837Z',
     bet: 9,
@@ -1034,6 +1120,7 @@ export const users: ISecondUser[] = [
     id: '86'
   },
   {
+    isWinner: true,
     game: 'game 87',
     date: '2009-09-01T21:12:33.389Z',
     bet: 50,
@@ -1046,6 +1133,7 @@ export const users: ISecondUser[] = [
     id: '87'
   },
   {
+    isWinner: true,
     game: 'game 88',
     date: '2029-12-04T21:23:24.310Z',
     bet: 69,
@@ -1058,6 +1146,7 @@ export const users: ISecondUser[] = [
     id: '88'
   },
   {
+    isWinner: true,
     game: 'game 89',
     date: '2032-11-25T06:32:19.985Z',
     bet: 84,
@@ -1070,6 +1159,7 @@ export const users: ISecondUser[] = [
     id: '89'
   },
   {
+    isWinner: true,
     game: 'game 90',
     date: '2041-10-19T17:27:31.394Z',
     bet: 12,
@@ -1082,6 +1172,7 @@ export const users: ISecondUser[] = [
     id: '90'
   },
   {
+    isWinner: true,
     game: 'game 91',
     date: '2094-04-12T03:24:14.043Z',
     bet: 77,
@@ -1094,6 +1185,7 @@ export const users: ISecondUser[] = [
     id: '91'
   },
   {
+    isWinner: true,
     game: 'game 92',
     date: '2061-04-15T14:10:58.664Z',
     bet: 96,
@@ -1106,6 +1198,7 @@ export const users: ISecondUser[] = [
     id: '92'
   },
   {
+    isWinner: true,
     game: 'game 93',
     date: '2099-08-16T06:43:33.553Z',
     bet: 65,
@@ -1118,6 +1211,7 @@ export const users: ISecondUser[] = [
     id: '93'
   },
   {
+    isWinner: true,
     game: 'game 94',
     date: '2070-08-22T00:26:44.486Z',
     bet: 59,
@@ -1130,6 +1224,7 @@ export const users: ISecondUser[] = [
     id: '94'
   },
   {
+    isWinner: true,
     game: 'game 95',
     date: '2015-11-15T15:06:49.160Z',
     bet: 78,
@@ -1142,6 +1237,7 @@ export const users: ISecondUser[] = [
     id: '95'
   },
   {
+    isWinner: true,
     game: 'game 96',
     date: '2018-09-04T12:25:04.572Z',
     bet: 81,
@@ -1154,6 +1250,7 @@ export const users: ISecondUser[] = [
     id: '96'
   },
   {
+    isWinner: true,
     game: 'game 97',
     date: '2026-09-17T02:15:01.683Z',
     bet: 32,
@@ -1166,6 +1263,7 @@ export const users: ISecondUser[] = [
     id: '97'
   },
   {
+    isWinner: true,
     game: 'game 98',
     date: '2076-04-20T02:19:20.815Z',
     bet: 59,
@@ -1178,6 +1276,7 @@ export const users: ISecondUser[] = [
     id: '98'
   },
   {
+    isWinner: true,
     game: 'game 99',
     date: '2027-04-22T21:31:09.528Z',
     bet: 95,
@@ -1190,6 +1289,7 @@ export const users: ISecondUser[] = [
     id: '99'
   },
   {
+    isWinner: true,
     game: 'game 100',
     date: '2054-04-06T06:44:45.171Z',
     bet: 44,

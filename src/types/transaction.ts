@@ -4,4 +4,6 @@ export interface ITransaction {
   paymentMethod: 'Crypto' | 'Robux' | 'Limiteds'
   status: 'Confirmed' | 'Pending' | 'Failed'
   amount: number
+  isError?: boolean
+  isWinner?: boolean
 }

@@ -9,7 +9,7 @@ interface StatusCellProps {
 export const StatusCell: FC<StatusCellProps> = ({ status }) => {
   return (
     <div
-      className={clsx('flex items-center justify-start ml-12', {
+      className={clsx('flex', {
         'text-green-primary': status === StatusCode.Confirmed,
         'text-orange-secondary': status === StatusCode.Pending,
         'text-red-accent': status === StatusCode.Failed

@@ -6,7 +6,7 @@ interface GameCellProps {
 
 export const GameCell: FC<GameCellProps> = ({ game }) => {
   return (
-    <div className='flex justify-start ml-12'>
+    <div className='flex capitalize'>
       <div className='text-bold inline-block'>{game}</div>
     </div>
   )
