@@ -6,37 +6,23 @@ import MoneyIcon from '../../assets/img/deposit2_small.png'
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { Formik, Field, ErrorMessage, FormikValues, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 interface FormValues {
-  amount: number
+  amount: null | number
 }
 
 export const Withdraw = () => {
   const navigate = useNavigate()
-  const handleSubmit = (values: FormikValues, { resetForm }: { resetForm: any }) => {
-    const x = 100 // replace with actual value
-    if (values.number <= 0 || values.number.toString().charAt(0) === '0' || values.number > x) {
-      console.log('Form is poorly filled out')
-    } else {
-      console.log('Form submitted successfully')
-      resetForm()
-    }
-  }
   const validationSchema = Yup.object().shape({
-    number: Yup.number()
-      .positive('Number must be positive')
-      .integer('Number must be an integer')
-      .test('startsWithZero', 'Number cannot start with zero', (value) => {
-        return value !== undefined && value.toString().charAt(0) !== '0'
-      })
+    number: Yup.number().positive('Number must be positive').integer('Number must be an integer')
   })
-  const initialValues: FormValues = { amount: 0 }
+  const initialValues: FormValues = { amount: null }
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: handleSubmit
+    onSubmit: () => console.log('hello')
   })
 
   return (
@@ -83,21 +69,10 @@ export const Withdraw = () => {
                   name='amount'
                   label='Input robux amount'
                   value={formik.values.amount}
-                  onChange={(e: any) => {
-                    let value = parseInt(e.target.value)
-                    if (isNaN(value)) {
-                      value = 0
-                    } else if (value.toString().charAt(0) === '0') {
-                      value = parseInt(value.toString().substring(1))
-                    }
-                    formik.setFieldValue('amount', value)
-                  }}
+                  onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder='00.00'
                 />
-                {formik.touched.amount && formik.errors.amount
-                  ? (<div>{formik.errors.amount}</div>)
-                  : null}
               </div>
               <div className='flex flex-col items-center'>
                 <div className='text-gray-primary mb-2 font-bold uppercase'>
