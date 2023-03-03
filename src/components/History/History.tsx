@@ -12,7 +12,7 @@ import { IHistory } from '../../types/history'
 import { GameCell } from '../Table/GameCell'
 import { MultiplierCell } from '../Table/MultiplierCell'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
-import { handleFilterByValueHelper, resetColumnFilterHelper } from '../Table/helpers'
+import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 export const History = () => {
   const [data] = useState<IHistory[]>([...mockHistory])

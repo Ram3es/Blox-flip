@@ -13,7 +13,7 @@ import { StatusCell } from '../Table/StatusCell'
 import { FilterHeader } from '../Table/FilterHeader'
 import { ListIcon } from '../ListIcon/ListIcon'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
-import { handleFilterByValueHelper, resetColumnFilterHelper } from '../Table/helpers'
+import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
