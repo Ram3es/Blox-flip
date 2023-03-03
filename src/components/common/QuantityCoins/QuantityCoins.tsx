@@ -7,6 +7,7 @@ export interface QuantityCoinsProps {
   quantity: number
   isFailed?: boolean
   color?: 'red' | 'green' | 'none'
+  quantityClasses?: string
 }
 
 export const QuantityCoins: FC<QuantityCoinsProps> = ({ quantity, isFailed = false, color = 'none' }) => {
