@@ -84,10 +84,10 @@ body{
         left: 0;
         right: 0;
         bottom: 0;
-        border-radius: 4px; 
+        border-radius: 6px; 
         border: 1px solid transparent;
-        border-top:0;
-        border-bottom:0;
+        // border-top:0;
+        // border-bottom:0;
         -webkit-mask:
             linear-gradient(#fff 0 0) padding-box, 
             linear-gradient(#fff 0 0);
@@ -106,6 +106,31 @@ body{
 .border--radial-blue{
     &:before{
         background: radial-gradient(94.25% 94.25% at 50% 50%, #529ADD 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-orange{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 153, 0) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-red{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 58, 58) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-green{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(82, 221, 121) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
+    }
+}
+.border--radial-pink{
+    &:before{
+        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(173, 0, 255, 1) 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
     }
 }
 .border--battle-green{
@@ -119,17 +144,8 @@ body{
 .battle_td--radial-gray{
     background: radial-gradient(88.99% 230.56% at 50% 133.33%, rgba(108, 123, 188, 0.1275) 0%, rgba(47, 54, 86, 0) 100%), rgba(50, 56, 83, 0.1);
 }
-.border--radial-orange{
-    overflow: hidden;
-    &:before{
-        background: radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 153, 0) 0%, rgba(0, 0, 0, 0) 100%);
-        z-index: 10;
-    }
-    .gradient-blue-secondary{
-        border-top:1px solid rgba(255, 153, 0, 0.3);
-        border-bottom:1px solid rgba(255, 153, 0, 0.3);
-    }
-}
+
+
 .chat--gradient{
     &:before{
         content:'';
@@ -352,6 +368,21 @@ input{
 .popup{
     display: none;
     z-index: 200;
+}
+.profile--box{
+    background: #22273d;
+    position: relative;
+    &:before{
+        content:'';
+        width: 104px;;
+        height:51px;
+        background: url(./assets/img/profile_top.png) no-repeat;
+        position: absolute;
+        top:-50px;
+        left:50%;
+        margin-left: -52px;
+        z-index: 10;
+    }
 }
 .deposite--case{
     max-width: 200px;

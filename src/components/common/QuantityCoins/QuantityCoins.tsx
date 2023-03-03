@@ -5,6 +5,7 @@ import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
 export interface QuantityCoinsProps {
   quantity: number
   isActive?: boolean
+  quantityClasses?: string
 }
 
 export const QuantityCoins: FC<QuantityCoinsProps> = ({ quantity, isActive = false }) => {

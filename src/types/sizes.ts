@@ -1,5 +1,6 @@
 export enum BaseSizes {
   SMALL = 'SMALL',
   MEDIUM = 'MEDIUM',
-  LARGE = 'LARGE'
+  LARGE = 'LARGE',
+  XL = 'XL',
 }
