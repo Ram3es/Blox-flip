@@ -29,6 +29,7 @@ module.exports = {
         'blue-accent-secondary': 'rgba(47, 54, 86)',
         'blue-highlight': 'rgba(54, 62, 96)',
         'blue-light': 'rgba(72, 81, 120)',
+        'blue-ocean': 'rgba(82, 95, 151)',
         'blue-light-primary': 'rgba(98, 111, 168)',
         'blue-light-secondary': 'rgba(108, 123, 188)',
         'gray-primary': 'rgba(147, 155, 185)',

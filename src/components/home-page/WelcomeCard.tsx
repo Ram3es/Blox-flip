@@ -8,8 +8,7 @@ import Cowboy from '../../assets/img/welcome_r.png'
 import OrangeCloudLeft from '../../assets/img/welcome_l.svg'
 import OrangeCloudRight from '../../assets/img/welcome_r.svg'
 import { useTranslation } from 'react-i18next'
-import Button from '../base/Button'
-
+import { Button } from '../base/Button'
 interface IWelcomeCardProps {
   user?: IUser
   openModal: Function
@@ -34,10 +33,11 @@ const WelcomeCard: FC<IWelcomeCardProps> = ({ user, openModal }) => {
                     </div>
                       : <div className='relative z-30 flex items-center' >
                            <Button
-                             text='Sign in'
-                             submitFunction={() => openModal()}
-                             buttonClasses="flex items-center justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5"
-                              />
+                             onClick={() => openModal()}
+                             className="flex items-center justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5"
+                              >
+                                Sign in
+                              </Button>
                         </div> }
 
                 <div className="relative z-20 self-end -right-1.5 w-1/3 pt-6">

@@ -1,3 +1,5 @@
+import { Outlet } from 'react-router-dom'
+
 export const Withdraw = () => {
   return (
     <div>
@@ -14,6 +16,7 @@ export const Withdraw = () => {
         similique, quia, necessitatibus repudiandae ad commodi architecto aliquam molestiae adipisci
         voluptates nesciunt esse magnam est delectus, iure nulla.
       </p>
+      <Outlet/>
     </div>
   )
 }

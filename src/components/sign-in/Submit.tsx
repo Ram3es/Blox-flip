@@ -32,7 +32,7 @@ const Submit = ({ submitFunction }: { submitFunction: Function }) => {
       </div>
       <Button
         className='flex items-center justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5'
-        onSubmit={() => submitFunction()}
+        onClick={() => submitFunction()}
       >
         Sign in
       </Button>
