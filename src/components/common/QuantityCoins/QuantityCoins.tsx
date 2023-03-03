@@ -8,10 +8,19 @@ export interface QuantityCoinsProps {
   isFailed?: boolean
   color?: 'red' | 'green' | 'none'
   textSize?: string
+  iconWidth?: string
+  iconHeight?: string
 }
 
-export const QuantityCoins: FC<QuantityCoinsProps> = ({ quantity, isFailed = false, color = 'none', textSize = 'text-13' }) => {
-  const iconClasses = clsx('w-5 h-5 shrink-0 text-center leading-6 rounded relative mr-2', {
+export const QuantityCoins: FC<QuantityCoinsProps> = ({
+  quantity,
+  isFailed = false,
+  color = 'none',
+  textSize = 'text-13',
+  iconWidth = '5',
+  iconHeight = '5'
+}) => {
+  const iconClasses = clsx(`w-${iconWidth} h-${iconHeight} shrink-0 text-center leading-6 rounded relative mr-2`, {
     'bg-green-primary/20 text-green-primary': !isFailed,
     'bg-gray-secondary-darken/40 text-gray-primary': isFailed,
     'bg-red-accent/20 text-red-accent': color === 'red',

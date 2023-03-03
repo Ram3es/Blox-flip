@@ -38,7 +38,7 @@ const InputWithLabel: FC<IInputWithLabelProps> = ({
               value={inputProps.value}
               onChange={inputProps.onChange}
               placeholder={inputProps.placeholder}
-              className='grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none'
+              className={inputClasses ?? 'grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none'}
             />
           </div>
         </div>
