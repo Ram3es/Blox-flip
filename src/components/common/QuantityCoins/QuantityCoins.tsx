@@ -5,7 +5,6 @@ import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
 export interface QuantityCoinsProps {
   quantity: number
   isActive?: boolean
-  children?: ReactNode
   quantityClasses?: string
 }
 

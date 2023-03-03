@@ -34,13 +34,12 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
 
   const gradient = clsx('', {
     'from-orange-primary-light/20 to-dark/0': color === BorderColorEnum.Orange,
-    'radial--blue-light': color === BorderColorEnum.Blue,
+    'from-sky-primary/20 to-dark/0': color === BorderColorEnum.Blue,
     'from-green-primary-light/20 to-dark/0': color === BorderColorEnum.Green,
     'from-pink-primary-darken/20 to-dark/0': color === BorderColorEnum.Pink,
     'from-red-secondary/20 to-dark/0': color === BorderColorEnum.Red
   })
 
-  console.log(borderRadial)
   return (
     <div className={`${isSelected ? ' is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item`}>
       <div onClick={() => onSelect(id)} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>

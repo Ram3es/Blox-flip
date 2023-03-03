@@ -35,7 +35,8 @@ const cards = [
   { id: '6', color: 'Pink', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
   { id: '7', color: 'Red', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
   { id: '8', color: 'Red', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
-  { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false }
+  { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
+  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Horns of the Netherworld', price: 1300, sold: false, active: true, isSelected: false }
 ]
 
 interface ICard {
@@ -51,7 +52,7 @@ interface ICard {
 const cardsSorting = ['All', 'Active Items', 'Sold']
 
 const Profile = () => {
-  const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[1])
+  const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
   const [selectedCard, setSelectedCard] = useState<ICard[]>([])
   const [sorted, setSorted] = useState<ICard[]>([])
 
@@ -106,7 +107,7 @@ const Profile = () => {
             <div className="text-sm font-extrabold  mb-1.5 uppercase">{action.name}</div>
             <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow cursor-pointer border border-transparent group-hover:bg-green-primary/15 group-hover:border-green-primary">
               <QuantityCoinsWithChildren
-                quantity={1500}
+                quantity={-1500.233534853}
                 quantityClasses='flex items-center text-lg font-bold'>
                   <span className="w-8 h-8 shrink-0 text-center leading-8 bg-green-primary/20 rounded text-green-secondary relative mr-3">
                     <DiamondIcon className='w-[19px] h-[18px] -inset-full absolute m-auto' />

@@ -84,10 +84,10 @@ body{
         left: 0;
         right: 0;
         bottom: 0;
-        border-radius: 4px; 
+        border-radius: 6px; 
         border: 1px solid transparent;
-        border-top:0;
-        border-bottom:0;
+        // border-top:0;
+        // border-bottom:0;
         -webkit-mask:
             linear-gradient(#fff 0 0) padding-box, 
             linear-gradient(#fff 0 0);
@@ -106,6 +106,7 @@ body{
 .border--radial-blue{
     &:before{
         background: radial-gradient(94.25% 94.25% at 50% 50%, #529ADD 0%, rgba(0, 0, 0, 0) 100%) border-box;
+        z-index: 10;
     }
 }
 .border--radial-orange{
