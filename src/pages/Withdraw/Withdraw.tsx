@@ -3,7 +3,8 @@ import { ArrowGrayIcon } from '../../components/ArrowGrayIcon/ArrowGrayIcon'
 import { Button } from '../../components/base/Button'
 import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
 import MoneyIcon from '../../assets/img/deposit2_small.png'
-import { WithdrawForm } from './WithdrawMethod'
+import { WithdrawForm } from './WithdrawForm'
+import { WithdrawList } from './WithdrawList'
 
 export const Withdraw = () => {
   const navigate = useNavigate()
@@ -28,6 +29,7 @@ export const Withdraw = () => {
           </div>
           <span className='text-2xl font-bold'>Withdraw</span>
         </div>
+
         <div className='flex flex-wrap xxs:flex-nowrap items-center xs:text-base mb-4'>
           <span className='mr-3 font-semibold'>You have selected</span>
           <span className='bg-blue-accent-secondary text-gray-primary font-semibold py-1 px-3 rounded flex items-center'>
@@ -38,6 +40,7 @@ export const Withdraw = () => {
           </span>
         </div>
       </div>
+      <WithdrawList />
       <WithdrawForm />
     </div>
   )
