@@ -1,5 +1,12 @@
+import { ChangeEvent, FormEvent, useState, useCallback } from 'react'
+
 import { useNavigate } from 'react-router-dom'
-import * as Yup from 'yup'
+
+import { localeStringToNumber } from '../../helpers/numbersFormatter'
+import { defaultAmountSchema } from '../../helpers/yupSchema'
+
+import { WithdrawInputState } from '../../types/form'
+
 import { Button } from '../../components/base/Button'
 import { WithdrawList } from './WithdrawList'
 import { WithdrawForm } from './WithdrawForm'
@@ -10,13 +17,31 @@ import MoneyIcon from '../../assets/img/deposit2_small.png'
 
 export const Withdraw = () => {
   const navigate = useNavigate()
+  const [values, setValues] = useState<WithdrawInputState>({ amountString: '', amountNumber: 0 })
 
-  const numberSchema = Yup.object().shape({
-    amountNumber: Yup.number()
-      .moreThan(99, 'Allowed to withdraw a minimum of 100 coins')
-      .lessThan(100001, 'Allowed to withdraw a maximum of 100000 coins')
-      .required('Enter the amount in order to withdraw it')
-  })
+  const handleAmountChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
+      setValues({ amountString: value, amountNumber: Number(localeStringToNumber(value, 'en-US')) })
+    },
+    [values]
+  )
+
+  const handleFormSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      defaultAmountSchema('amountNumber')
+        .validate(values, { abortEarly: false })
+        .then(() => {
+          console.log('Validation successful')
+          setValues({ amountString: '', amountNumber: 0 })
+        })
+        .catch((error) => {
+          console.log(error.message)
+        })
+    },
+    [values]
+  )
 
   return (
     <div className='max-w-1190 w-full mx-auto'>
@@ -50,8 +75,12 @@ export const Withdraw = () => {
         </div>
       </div>
       <WithdrawList />
-      <WithdrawForm methodName='Input robox amount' schema={numberSchema} />
-      <WithdrawForm methodName='Input roblox amount' />
+      <WithdrawForm
+        methodName='Input robox amount'
+        onSubmit={handleFormSubmit}
+        onChange={handleAmountChange}
+        values={values}
+      />
     </div>
   )
 }

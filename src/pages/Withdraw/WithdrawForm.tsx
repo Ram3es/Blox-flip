@@ -1,5 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useRef, useState } from 'react'
-import * as Yup from 'yup'
+import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { Button } from '../../components/base/Button'
@@ -8,43 +7,23 @@ import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from '../../components/base/InputWithLabel'
 
-import { formatNumber, localeStringToNumber } from '../../helpers/numbersFormatter'
-import { defaultAmountSchema } from '../../helpers/yupSchema'
+import { formatNumber } from '../../helpers/numbersFormatter'
+import { WithdrawInputState } from '../../types/form'
 
 interface WithdrawFormProps {
   methodName: string
-  schema?: Yup.ObjectSchema<any>
-}
-
-interface ValuesInterface {
-  amountString: string
-  amountNumber: number
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
+  values: WithdrawInputState
 }
 
 export const WithdrawForm: FC<WithdrawFormProps> = ({
   methodName = 'Input amount',
-  schema = defaultAmountSchema('amountNumber')
+  onSubmit,
+  onChange,
+  values
 }) => {
-  const [values, setValues] = useState<ValuesInterface>({ amountString: '', amountNumber: 0 })
   const formRef = useRef<HTMLFormElement>(null)
-
-  const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    setValues({ amountString: value, amountNumber: Number(localeStringToNumber(value, 'en-US')) })
-  }
-
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    schema
-      .validate(values, { abortEarly: false })
-      .then(() => {
-        console.log('Validation successful')
-        setValues({ amountString: '', amountNumber: 0 })
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
-  }
 
   const handleKeyPress = (event: KeyboardEvent) => {
     if (!/[0-9]/.test(event.key)) {
@@ -72,8 +51,8 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
         <div className='relative z-20'>
           <form
             ref={formRef}
-            onSubmit={handleFormSubmit}
-            onKeyDown={(event) => event.key === 'Enter' && handleFormSubmit(event)}
+            onSubmit={onSubmit}
+            onKeyDown={(event) => event.key === 'Enter' && onSubmit(event)}
           >
             <div>
               <InputWithLabel
@@ -91,7 +70,7 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
                     ? values.amountString
                     : formatNumber(values.amountNumber)
                 }
-                onChange={handleAmountChange}
+                onChange={onChange}
                 placeholder='00.00'
               />
               <div className='w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded mr-2 text-green-primary absolute top-14 left-4'>
