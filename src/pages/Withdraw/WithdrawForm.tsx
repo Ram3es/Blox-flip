@@ -1,18 +1,19 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
-import { Button } from '../../components/base/Button'
+
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { Button } from '../../components/base/Button'
 import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
+
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from '../../components/base/InputWithLabel'
+
 import { formatNumber, localeStringToNumber } from '../../helpers/numbersFormatter'
+import { defaultAmountSchema } from '../../helpers/yupSchema'
 
 interface WithdrawFormProps {
   methodName: string
-  minValue: number
-  maxValue: number
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => void
+  schema?: Yup.ObjectSchema<any>
 }
 
 interface ValuesInterface {
@@ -20,25 +21,21 @@ interface ValuesInterface {
   amountNumber: number
 }
 
-export const WithdrawForm: FC<WithdrawFormProps> = ({ methodName }) => {
+export const WithdrawForm: FC<WithdrawFormProps> = ({
+  methodName = 'Input amount',
+  schema = defaultAmountSchema('amountNumber')
+}) => {
   const [values, setValues] = useState<ValuesInterface>({ amountString: '', amountNumber: 0 })
   const formRef = useRef<HTMLFormElement>(null)
 
-  const numberSchema = Yup.object().shape({
-    amountNumber: Yup.number()
-      .moreThan(99, 'Allowed to withdraw a minimum of 100 coins')
-      .lessThan(100001, 'Allowed to withdraw a maximum of 100000 coins')
-      .required('Enter the amount in order to withdraw it')
-  })
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setValues({ amountString: value, amountNumber: Number(localeStringToNumber(value, 'en-US')) })
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    numberSchema
+    schema
       .validate(values, { abortEarly: false })
       .then(() => {
         console.log('Validation successful')
@@ -75,8 +72,8 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({ methodName }) => {
         <div className='relative z-20'>
           <form
             ref={formRef}
-            onSubmit={handleSubmit}
-            onKeyDown={(event) => event.key === 'Enter' && handleSubmit(event)}
+            onSubmit={handleFormSubmit}
+            onKeyDown={(event) => event.key === 'Enter' && handleFormSubmit(event)}
           >
             <div>
               <InputWithLabel
@@ -88,13 +85,13 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({ methodName }) => {
                 type='text'
                 id='amount'
                 name='amount'
-                label='Input robux amount'
+                label={methodName}
                 value={
                   values.amountNumber === 0
                     ? values.amountString
                     : formatNumber(values.amountNumber)
                 }
-                onChange={handleChange}
+                onChange={handleAmountChange}
                 placeholder='00.00'
               />
               <div className='w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded mr-2 text-green-primary absolute top-14 left-4'>

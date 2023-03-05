@@ -1,13 +1,22 @@
 import { useNavigate } from 'react-router-dom'
-import { ArrowGrayIcon } from '../../components/ArrowGrayIcon/ArrowGrayIcon'
+import * as Yup from 'yup'
 import { Button } from '../../components/base/Button'
+import { WithdrawList } from './WithdrawList'
+import { WithdrawForm } from './WithdrawForm'
+
+import { ArrowGrayIcon } from '../../components/ArrowGrayIcon/ArrowGrayIcon'
 import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
 import MoneyIcon from '../../assets/img/deposit2_small.png'
-import { WithdrawForm } from './WithdrawForm'
-import { WithdrawList } from './WithdrawList'
 
 export const Withdraw = () => {
   const navigate = useNavigate()
+
+  const numberSchema = Yup.object().shape({
+    amountNumber: Yup.number()
+      .moreThan(99, 'Allowed to withdraw a minimum of 100 coins')
+      .lessThan(100001, 'Allowed to withdraw a maximum of 100000 coins')
+      .required('Enter the amount in order to withdraw it')
+  })
 
   return (
     <div className='max-w-1190 w-full mx-auto'>
@@ -41,7 +50,8 @@ export const Withdraw = () => {
         </div>
       </div>
       <WithdrawList />
-      <WithdrawForm />
+      <WithdrawForm methodName='Input robox amount' schema={numberSchema} />
+      <WithdrawForm methodName='Input roblox amount' />
     </div>
   )
 }
