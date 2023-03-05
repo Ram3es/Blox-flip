@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
@@ -22,6 +22,8 @@ interface ValuesInterface {
 
 export const WithdrawForm: FC<WithdrawFormProps> = ({ methodName }) => {
   const [values, setValues] = useState<ValuesInterface>({ amountString: '', amountNumber: 0 })
+  const formRef = useRef<HTMLFormElement>(null)
+
   const numberSchema = Yup.object().shape({
     amountNumber: Yup.number()
       .moreThan(99, 'Allowed to withdraw a minimum of 100 coins')
@@ -47,25 +49,35 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({ methodName }) => {
       })
   }
 
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (!/[0-9]/.test(event.key)) {
-        event.preventDefault()
-      }
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (!/[0-9]/.test(event.key)) {
+      event.preventDefault()
     }
+  }
 
-    document.addEventListener('keypress', handleKeyPress)
+  useEffect(() => {
+    const form = formRef.current
+
+    if (form) {
+      form.addEventListener('keypress', handleKeyPress)
+    }
 
     return () => {
-      document.removeEventListener('keypress', handleKeyPress)
+      if (form) {
+        form.removeEventListener('keypress', handleKeyPress)
+      }
     }
-  }, [])
+  }, [formRef])
 
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
       <div className='border--mask border--radial-blue bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm px-3 xxs:px-6 py-9 overflow-hidden relative'>
         <div className='relative z-20'>
-          <form onSubmit={handleSubmit}>
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            onKeyDown={(event) => event.key === 'Enter' && handleSubmit(event)}
+          >
             <div>
               <InputWithLabel
                 autoComplete='off'
@@ -74,7 +86,6 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({ methodName }) => {
                 inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
                 inputClasses='grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none pl-8'
                 type='text'
-                pattern='[0-9]*'
                 id='amount'
                 name='amount'
                 label='Input robux amount'
