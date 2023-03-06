@@ -9,7 +9,7 @@ interface PaymentMethodCellProps {
 export const PaymentMethodCell: FC<PaymentMethodCellProps> = ({ paymentMethod }) => {
   return (
     <div
-      className={clsx('flex items-center justify-start ml-16', {
+      className={clsx('flex', {
         'text-yellow-primary': paymentMethod === PaymentMethod.Crypto,
         'text-lightblue-secondary': paymentMethod === PaymentMethod.Robux,
         'text-lightblue-primary-darken': paymentMethod === PaymentMethod.Limiteds

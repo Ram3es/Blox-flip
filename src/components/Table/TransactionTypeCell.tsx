@@ -10,7 +10,7 @@ interface TypeCellProps {
 export const TransactionTypeCell: FC<TypeCellProps> = ({ type }) => {
   return (
     <div
-      className={clsx('flex items-center', {
+      className={clsx('flex', {
         'text-green-primary': type === TransactionVariant.Deposit,
         'text-gray-primary': type === TransactionVariant.Withdraw
       })}

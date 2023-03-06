@@ -12,8 +12,8 @@ import { FilterHeader } from '../Table/FilterHeader'
 import { users } from './users'
 import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/table'
-import { ProfitCell } from '../Table/ProfitCell'
-import { BetCell } from '../Table/BetCell'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 const RedDotIcon = () => {
   return (
@@ -26,29 +26,28 @@ export const LiveFeed = () => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState<string | number>('')
 
-  const handleFilterByColumn = useCallback(
-    (column: string) => {
-      setColumnFilters([])
-      setSearchValue('')
-      setCurrentColumn(column)
-    },
-    [columnFilters, currentColum]
+  const resetFilter = resetColumnFilterHelper(
+    setCurrentColumn,
+    setSearchValue,
+    setColumnFilters,
+    columnFilters
   )
 
   const handleFilterByValue = useCallback(
-    (column: string, value: string) => {
-      handleFilterByColumn(column)
+    (column: string, value: typeof searchValue) => {
+      setCurrentColumn(column)
       setSearchValue(value)
+      setColumnFilters([{ id: column, value }])
     },
-    [columnFilters, currentColum, searchValue]
+    [currentColum, searchValue]
   )
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all bets',
-      onClick: () => handleFilterByValue('', '')
+      onClick: () => resetFilter()
     },
     {
       name: 'my bets',
@@ -66,14 +65,12 @@ export const LiveFeed = () => {
 
   const columnHelper = createColumnHelper<ISecondUser>()
   const columns: Array<ColumnDef<ISecondUser, any>> = [
-    columnHelper.accessor((row: ISecondUser) => row, {
+    columnHelper.accessor((row: ISecondUser) => row.username, {
       id: 'username',
       header: () => 'Username',
-      cell: (props) => <UserInfoCell user={props.getValue()} />,
-      footer: (props) => props.column.id,
-      filterFn: (row, _columnId, value) => {
-        return row.original.username === value
-      }
+      cell: ({ row }) => <UserInfoCell user={row.original} />,
+      filterFn: 'equalsString',
+      footer: (props) => props.column.id
     }),
     columnHelper.accessor('game', {
       id: 'game',
@@ -87,14 +84,14 @@ export const LiveFeed = () => {
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('bet', {
+    columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Bet',
-      cell: (props) => <BetCell quantity={props.getValue()} />,
-      footer: (props) => props.column.id,
+      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
       filterFn: (row, _columnId, value) => {
         return row.original.bet > value
-      }
+      },
+      footer: (props) => props.column.id
     }),
     columnHelper.accessor('rate', {
       id: 'rate',
@@ -102,10 +99,15 @@ export const LiveFeed = () => {
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('profit', {
+    columnHelper.accessor((row: ISecondUser) => row.profit, {
       id: 'profit',
-      header: () => 'Profit',
-      cell: (props: any) => <ProfitCell quantity={props.getValue()} isActive={true} />,
+      header: 'Profit',
+      cell: ({ row }) => (
+        <QuantityCoins
+          quantity={row.original.profit}
+          color={row.original.isWinner ? 'green' : 'red'}
+        />
+      ),
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value
       },

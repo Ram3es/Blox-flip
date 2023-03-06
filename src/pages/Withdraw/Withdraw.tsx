@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState, useCallback } from 'react'
 
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { localeStringToNumber } from '../../helpers/numbersFormatter'
 import { defaultAmountSchema } from '../../helpers/yupSchema'
@@ -81,6 +81,7 @@ export const Withdraw = () => {
         onChange={handleAmountChange}
         values={values}
       />
+      <Outlet />
     </div>
   )
 }

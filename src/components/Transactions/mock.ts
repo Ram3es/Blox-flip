@@ -6,7 +6,7 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Crypto',
     status: 'Confirmed',
-    amount: 1500
+    amount: 12.02
   },
   {
     type: 'Deposit',
@@ -48,7 +48,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -69,7 +70,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -90,7 +92,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -111,7 +114,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -132,7 +136,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -153,7 +158,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -174,7 +180,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -195,7 +202,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -216,7 +224,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -258,7 +267,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -279,7 +289,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -300,7 +311,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -321,7 +333,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -342,7 +355,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -363,7 +377,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -384,7 +399,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -405,7 +421,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -426,7 +443,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -468,7 +486,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -489,7 +508,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -510,7 +530,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -531,7 +552,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2022-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -552,7 +574,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2022-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -573,7 +596,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2022-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -594,7 +618,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2022-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -615,7 +640,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2022-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -636,7 +662,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2021-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -678,7 +705,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2021-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -699,7 +727,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2021-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -720,7 +749,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2021-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -741,7 +771,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2018-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -762,7 +793,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2018-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -783,7 +815,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2018-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -804,7 +837,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2018-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -825,7 +859,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2018-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -846,7 +881,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2018-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -888,7 +924,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2023-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -909,7 +946,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2023-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -930,7 +968,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2023-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -951,7 +990,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2023-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -972,7 +1012,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2023-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -993,7 +1034,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2023-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -1014,7 +1056,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -1035,7 +1078,8 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   },
   {
     type: 'Deposit',
@@ -1056,6 +1100,7 @@ export const mockTransactions: ITransaction[] = [
     date: '2032-07-12T23:46:58.567Z',
     paymentMethod: 'Limiteds',
     status: 'Failed',
-    amount: 0
+    amount: 0,
+    isError: true
   }
 ]

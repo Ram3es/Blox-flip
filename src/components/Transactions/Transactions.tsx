@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../Table/Table'
@@ -10,9 +10,10 @@ import { TransactionTypeCell } from '../Table/TransactionTypeCell'
 import { TimeCell } from '../Table/TimeCell'
 import { PaymentMethodCell } from '../Table/PaymentMethodCell'
 import { StatusCell } from '../Table/StatusCell'
-import { AmountCell } from '../Table/AmountCell'
 import { FilterHeader } from '../Table/FilterHeader'
 import { ListIcon } from '../ListIcon/ListIcon'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -21,35 +22,26 @@ export const Transactions = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const handleFilterByColumn = useCallback(
-    (column: string) => {
-      setColumnFilters([])
-      setSearchValue('')
-      setCurrentColumn(column)
-    },
-    [columnFilters, currentColum]
+  const resetFilter = resetColumnFilterHelper(
+    setCurrentColumn,
+    setSearchValue,
+    setColumnFilters,
+    columnFilters
   )
-
-  const handleFilterByValue = useCallback(
-    (column: string, value: string) => {
-      handleFilterByColumn(column)
-      setSearchValue(value)
-    },
-    [columnFilters, currentColum, searchValue]
-  )
+  const filterByValue = handleFilterByValueHelper(setCurrentColumn, setSearchValue)
 
   const filtersVariants: FilterVariant[] = [
     {
       name: 'all',
-      onClick: () => handleFilterByValue('', '')
+      onClick: () => resetFilter()
     },
     {
       name: 'crypto',
-      onClick: () => handleFilterByValue('method', 'crypto')
+      onClick: () => filterByValue('method', 'crypto')
     },
     {
       name: 'roblox',
-      onClick: () => handleFilterByValue('method', 'robux')
+      onClick: () => filterByValue('method', 'robux')
     }
   ]
 
@@ -82,16 +74,18 @@ export const Transactions = () => {
       cell: (props) => <StatusCell status={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('amount', {
+    columnHelper.accessor((row: ITransaction) => row.amount, {
       id: 'amount',
       header: () => 'Amount',
-      cell: (props) => <AmountCell amount={props.getValue()} />,
+      cell: ({ row }) => (
+        <QuantityCoins quantity={row.original.amount} isFailed={row.original.isError} />
+      ),
       footer: (props) => props.column.id
     })
   ]
 
   return (
-    <div className='px-4 md:px-9 py-5'>
+    <div className='py-5'>
       <Table
         data={data}
         columns={columns}

@@ -7,7 +7,7 @@ import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
 import { Button } from '../base/Button'
 
 const baseRoutes: RouteItem[] = [
-  { path: '/john', name: 'profile' },
+  { path: '/profile', name: 'profile' },
   { path: '/affiliates', name: 'affiliates' },
   { path: '/leaderboard', name: 'leaderboard' },
   { path: '/trivia', name: 'trivia' },
