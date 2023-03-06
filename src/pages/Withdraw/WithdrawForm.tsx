@@ -70,7 +70,7 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
             placeholder='00.00'
           />
           <div className='w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded mr-2 text-green-primary absolute top-14 left-4'>
-            <DiamondIcon size='LARGE' className='-inset-full absolute m-auto' />
+            <DiamondIcon className='-inset-full absolute m-auto' />
           </div>
         </div>
         <div className='flex flex-col items-center'>
@@ -79,8 +79,10 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
             <QuantityCoins
               quantity={values.amountNumber}
               textSize='text-base'
-              iconHeight='6'
-              iconWidth='6'
+              iconBgHeight='6'
+              iconBgWidth='6'
+              iconHeight='12'
+              iconWidth='14'
             />
           </div>
           <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
@@ -89,7 +91,7 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
             className='pointer-events-auto flex justify-center items-center leading-9 text-gray-primary text-base font-bold rounded px-2.5 py-1 bg-blue-highlight hover:bg-blue-accent w-64 shrink-0'
           >
             <span className='min-w-fit shrink-0 mr-1.5'>
-              <DiamondIcon size='XL' />
+              <DiamondIcon width='20' height='17' />
             </span>
             Withdraw
           </Button>
