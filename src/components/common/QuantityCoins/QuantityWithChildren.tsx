@@ -13,7 +13,7 @@ export const QuantityCoinsWithChildren: FC<QuantityCoinsProps> = ({ quantity, is
     <div className={quantityClasses ?? 'flex items-center text-13 font-bold'}>
       {children ??
        <span className='w-5 h-5 shrink-0 text-center leading-6 bg-green-primary/20 rounded relative mr-2 text-green-primary'>
-        <DiamondIcon className='-inset-full absolute m-auto' />
+        <DiamondIcon className='-inset-full absolute m-auto' width='15' height='12' />
        </span>}
 
       <span

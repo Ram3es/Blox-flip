@@ -32,7 +32,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
         <div className='absolute z-20 inset-y-[42px] right-2'>
           <Button color='GreenPrimary' variant='Gradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
-              <DiamondIcon />
+              <DiamondIcon width='15' height='13' />
               Claim
             </div>
           </Button>
@@ -50,7 +50,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
         <div className='absolute z-20 inset-y-[42px] right-2'>
           <Button color='GreenPrimary' variant='Gradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
-              <DiamondIcon />
+              <DiamondIcon width='15' height='13' />
               Claim
             </div>
           </Button>

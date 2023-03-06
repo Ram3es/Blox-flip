@@ -113,11 +113,17 @@ export const Table = <T extends object>({
         )}
       </div>
       <div
-        className={clsx('bg-blue-primary overflow-auto max-w-full', {
-          'rounded-2xl px-4 md:px-6 py-4': variant === TableVariant.History
+        className={clsx(' overflow-auto max-w-full', {
+          'bg-blue-primary rounded-2xl px-4 md:px-6 py-4': variant === TableVariant.History,
+          'bg-blue-primary': variant === TableVariant.Feed
         })}
       >
-        <table className='text-13 table--even min-w-full'>
+        <table
+          className={clsx('text-13 min-w-full', {
+            'table--even': variant === TableVariant.History || variant === TableVariant.Feed,
+            'border-separate border-spacing-y-1': variant === TableVariant.Stats
+          })}
+        >
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -126,7 +132,7 @@ export const Table = <T extends object>({
                     <th key={header.id} className='pb-4 font-medium'>
                       <div
                         onClick={header.column.getToggleSortingHandler()}
-                        className={clsx('cursor-pointer leading-2 px-1 w-21 py-1 rounded', {
+                        className={clsx('cursor-pointer leading-2 px-1 w-24 py-1 rounded', {
                           'text-green-primary bg-green-primary/15 border border-green-primary':
                             header.column.getIsSorted(),
                           'text-gray-primary bg-blue-secondary': !header.column.getIsSorted(),
@@ -153,7 +159,8 @@ export const Table = <T extends object>({
                       'rounded-l-md': index === 0,
                       'rounded-r-md': array[index] === array.at(-1),
                       'py-2': variant === TableVariant.Feed,
-                      'py-4': variant === TableVariant.History
+                      'py-4': variant === TableVariant.History,
+                      'text-gray-primary bg-blue-secondary py-2': variant === TableVariant.Stats
                     })}
                   >
                     <div
@@ -170,14 +177,16 @@ export const Table = <T extends object>({
             ))}
           </tbody>
         </table>
-        <TablePagination
-          nextPage={() => table.nextPage()}
-          previousPage={() => table.previousPage()}
-          getCanNextPage={!table.getCanNextPage()}
-          getCanPreviousPage={!table.getCanPreviousPage()}
-          currentPage={table.getState().pagination.pageIndex + 1}
-          pageCount={table.getPageCount()}
-        />
+        {data.length > 10 && (
+          <TablePagination
+            nextPage={() => table.nextPage()}
+            previousPage={() => table.previousPage()}
+            getCanNextPage={!table.getCanNextPage()}
+            getCanPreviousPage={!table.getCanPreviousPage()}
+            currentPage={table.getState().pagination.pageIndex + 1}
+            pageCount={table.getPageCount()}
+          />
+        )}
       </div>
     </>
   )
