@@ -29,7 +29,7 @@ export const AffiliatesTable = () => {
     }),
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
-      header: () => '	Wagered',
+      header: () => 'Wagered',
       cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
       footer: (props) => props.column.id
     }),

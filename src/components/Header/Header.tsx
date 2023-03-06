@@ -34,7 +34,7 @@ const UserWalletButton = () => {
   return (
     <div className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
       <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
-        <DiamondIcon size='SMALL' className='-inset-full absolute m-auto' />
+        <DiamondIcon size='SMALL' className='-inset-full absolute m-auto' width='14.2' height='14' />
       </span>
       <span className='font-bold text-sm whitespace-nowrap mr-7 hidden xs:block'>
         1,500<span className='text-white/50'>.00</span>
@@ -128,7 +128,7 @@ export const Header = () => {
             className='text-xs flex-row flex items-center w-8 h-8 xs:h-9 xs:w-auto xs:px-2.5 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20'
           >
             <span className='w-4 shrink-0 mx-auto relative text-white'>
-              <DiamondIcon size='LARGE' />
+              <DiamondIcon size='LARGE' width='16' height='12' />
             </span>
             <span className='hidden md:block ml-2.5'>{t('header.free')}</span>
           </Link>
@@ -146,7 +146,7 @@ export const Header = () => {
                   className='relative z-20 text-xs flex-row flex justify-center items-center h-8 px-2.5 leading-8 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20 mb-2'
                 >
                   <span className='w-4 shrink-0 mr-2.5 flex text-white'>
-                    <DiamondIcon />
+                    <DiamondIcon width='15' height='13' />
                   </span>
                   <span>{t('common.deposit')}</span>
                 </Menu.Item>
