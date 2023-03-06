@@ -84,6 +84,7 @@ body{
 .border--mask, .border--mask-hover{
     position: relative;
     &:before{
+        pointer-events: none;
         z-index: 0;
         content: "";
         position: absolute;

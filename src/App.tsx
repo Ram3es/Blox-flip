@@ -14,8 +14,9 @@ import { Chat } from './components/Chat/Chat'
 import HistoryUser from './pages/UserProfile/HistoryUser'
 import { Transactions } from './components/Transactions/Transactions'
 import UserProfile from './pages/UserProfile/UserProfile'
-import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
-import Robux from './pages/Withdraw/Robux'
+import { RobloxLimiteds } from './pages/Withdraw/RobloxLimiteds'
+import { Robux } from './pages/Withdraw/Robux'
+import { WithdrawLayout } from './pages/Withdraw/WithdrawLayout'
 
 export const App = () => {
   return (
@@ -26,7 +27,7 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/cases' element={<Cases />} />
-          <Route path='/profile' element={<UserProfile />} >
+          <Route path='/profile' element={<UserProfile />}>
             <Route path='transactions' element={<Transactions />} />
             <Route path='history' element={<HistoryUser />} />
           </Route>
@@ -37,7 +38,7 @@ export const App = () => {
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
-          <Route path='/withdraw' element={<Withdraw />} >
+          <Route path='/withdraw' element={<WithdrawLayout />}>
             <Route path='robux' element={<Robux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
