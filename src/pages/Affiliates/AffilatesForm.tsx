@@ -54,7 +54,7 @@ export const AffiliatesForm = () => {
               labelClasses='flex flex-col w-full mb-4 items-center'
               titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
               inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
-              inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 whitespace-nowrap mr-10'
+              inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate'
               value={referralLink}
               placeholder='...'
               readOnly
@@ -74,16 +74,14 @@ export const AffiliatesForm = () => {
               labelClasses='flex flex-col w-full mb-4 items-center'
               titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
               inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
-              inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4'
+              inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-28 truncate'
               value={props.values.referralCode}
               placeholder='...'
               onChange={props.handleChange}
             />
-            <div className='absolute z-20 top-[53px] right-7'>
+            <div className='absolute z-20 top-[52px] right-7'>
               <Button color='GreenPrimary' variant='Gradient' type='submit'>
-                <p className='text-xs font-bold gradient-green shadow-green-35 rounded px-4 py-3'>
-                  Change
-                </p>
+                <p className='text-sm font-bold px-4 py-2.5'>Change</p>
               </Button>
             </div>
           </div>

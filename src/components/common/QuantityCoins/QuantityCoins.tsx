@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import clsx from 'clsx'
 import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
-import { formatNumber } from '../../../helpers/numberFormatter'
+import { formatNumber } from '../../../helpers/numbersFormatter'
 
 export interface QuantityCoinsProps {
   quantity: number

@@ -45,7 +45,9 @@ export const ChatChangeLang: FC = () => {
               className='object-cover w-full h-full'
             />
           </span>
-          <ArrowGrayIcon size='SMALL' />
+          <span className='bg-blue-accent shrink-0 rounded text-center w-4 h-4 leading-4 text-gray-secondary'>
+            <ArrowGrayIcon size='SMALL' />
+          </span>
         </Listbox.Button>
         <Listbox.Options>
           <div className='absolute left-0 right-0 top-full pt-2.5'>
