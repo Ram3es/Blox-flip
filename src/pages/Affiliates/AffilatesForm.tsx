@@ -70,6 +70,7 @@ export const AffiliatesForm = () => {
               type='text'
               id='referralCode'
               name='referralCode'
+              autoComplete='off'
               label='Your referral code'
               labelClasses='flex flex-col w-full mb-4 items-center'
               titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
