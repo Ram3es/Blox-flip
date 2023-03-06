@@ -44,6 +44,13 @@
   body {
     @apply min-h-screen;
   }
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
 }
 
 body{
@@ -77,6 +84,7 @@ body{
 .border--mask, .border--mask-hover{
     position: relative;
     &:before{
+        pointer-events: none;
         z-index: 0;
         content: "";
         position: absolute;
