@@ -5,7 +5,7 @@ import FighterSecondIcon from '../../assets/img/leaderboard2.png'
 import { LeaderboardPodium } from './LeaderboardPodium'
 import { LeaderboardTable } from './LeaderboardTable'
 
-export const LeaderBoard = () => {
+export const Leaderboard = () => {
   return (
     <div className='max-w-5xl w-full mx-auto'>
       <div className='flex flex-wrap xxs:flex-nowrap items-end relative'>
