@@ -62,7 +62,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
             <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
             <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left"><span>{name}</span></div>
             <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start">
-              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:w-2/5">
+              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5">
                 <img src={IMAGES[image]} alt="@T" className="absolute object-contain w-full h-full" />
               </div>
               <div className="flex items-center justify-center relative z-40">

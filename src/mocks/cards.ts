@@ -1,5 +1,5 @@
 export const cards = [
-  { id: '1', color: 'Orange', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1200, sold: true, active: false, isSelected: false },
+  { id: '1', color: 'Orange', image: 'horns', name: ' Horns ', price: 1200, sold: true, active: false, isSelected: false },
   { id: '2', color: 'Blue', image: 'helmet', name: 'Fiery Helmet of the Netherworld', price: 600, sold: false, active: true, isSelected: false },
   { id: '3', color: 'Pink', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 2400, sold: true, active: false, isSelected: false },
   { id: '4', color: 'Pink', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 2300, sold: false, active: true, isSelected: false },
