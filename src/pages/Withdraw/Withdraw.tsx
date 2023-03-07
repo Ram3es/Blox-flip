@@ -100,7 +100,7 @@ export const Withdraw = () => {
           {endPath === 'roblox-limiteds' && <div className='flex items-end  lg:ml-5 lg:items-start pb-8'>
            <Button
               onClick={() => console.log(selectedCards)}
-              className='w-[254px] flex items-center h-fit py-1 justify-center text-gray-primary text-13 leading-8 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent border border-blue-accent text-center'
+              className='pointer-events-auto flex justify-center items-center leading-9 text-gray-primary text-base font-bold rounded px-2.5 py-1 bg-blue-highlight hover:bg-blue-accent w-64 shrink-0'
               >
                 <DiamondIcon className='w-[21px] h-[17px] mr-2' />
                 <span>Withdraw</span></Button>
