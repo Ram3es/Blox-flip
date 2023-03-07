@@ -7,7 +7,7 @@ import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
 import { searchData } from '../../helpers/searchData'
 import { sortData } from '../../helpers/sortData'
 import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/item-card'
+import { IItemCard } from '../../types/itemCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<IItemCard[]>(cards)

@@ -8,7 +8,7 @@ import SearchIcon from '../../components/icons/SearchIcon'
 import GreenTipSelect from '../../components/common/GreenTipSelect'
 import WithdrawMethod from './WithdrawMethod'
 import { useDebounce } from '../../helpers/hooks/useDebounce'
-import { IItemCard } from '../../types/item-card'
+import { IItemCard } from '../../types/itemCard'
 import { ISortOptions } from '../../types/sortOptions'
 import SortSelect from '../../components/common/SortSelect'
 

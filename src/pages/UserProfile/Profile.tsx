@@ -9,7 +9,7 @@ import ItemCard from '../../components/base/ItemCard'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import { useNavigate } from 'react-router-dom'
 import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/item-card'
+import { IItemCard } from '../../types/itemCard'
 
 const user = {
   name: 'John Johnson',
