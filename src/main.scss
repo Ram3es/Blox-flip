@@ -34,6 +34,14 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'Rubik';
+    src: url('./assets/fonts/Rubik-Black.woff') format('woff'),
+         url('./assets/fonts/Rubik-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
 
 /*Rubik
 
@@ -69,6 +77,9 @@ body{
 }
 .radial--blue{
     background: radial-gradient(192.16% 94.08% at 50% 83.67%, rgba(102, 159, 226, 0.07) 0%, rgba(0, 0, 0, 0) 100%), rgba(34, 41, 68, 0.55);
+}
+.radial--blue-full{
+    background: radial-gradient(192.16% 94.08% at 50% 83.67%, rgba(102, 159, 226, 0.07) 0%, rgba(0, 0, 0, 0) 100%), rgba(31, 36, 56, 1);
 }
 .radial--blue-light{
     border-top:1px solid rgba(82, 154, 221, 0.4);
