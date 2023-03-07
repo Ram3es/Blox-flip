@@ -9,7 +9,7 @@ interface UserInfoCellProps {
 
 export const UserInfoCell: FC<UserInfoCellProps> = ({ user }) => {
   return (
-    <div className='flex justify-between items-center'>
+    <div className='flex justify-between items-center w-60'>
       <div className='flex'>
         <div className='w-8 h-8 shrink-0 border border-blue-highlight rounded-full overflow-hidden radial--gray mr-2.5'>
           <UserAvatar image={user.avatar} />
