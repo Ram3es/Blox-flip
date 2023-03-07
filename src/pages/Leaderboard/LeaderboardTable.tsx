@@ -26,7 +26,6 @@ export const LeaderboardTable = () => {
       id: 'username',
       header: () => 'User',
       cell: ({ row }) => <UserInfoCell user={row.original} />,
-      filterFn: 'equalsString',
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: ISecondUser) => row.bet, {
