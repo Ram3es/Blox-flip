@@ -19,11 +19,12 @@ interface IItemCardProps {
   image: string
   onSelect: Function
   isSelected?: boolean
-  color?: string
+  color: string
+  itemClasses?: string
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color }) => {
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color, itemClasses }) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -41,7 +42,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
   })
 
   return (
-    <div className={`${isSelected ? ' is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item`}>
+    <div className={itemClasses ?? `${isSelected ? ' is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item`}>
       <div onClick={() => onSelect(id)} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>
         <div className="gradient-blue-secondary rounded h-full text-center relative z-20 group-[.is-selected]/item:border-0">
           <div className="absolute inset-0 rounded bg-dark/40 z-30 hidden group-[.is-selected]/item:block">
@@ -70,7 +71,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
             </div>
           </div>
         </div>
-      </div>
+        </div>
     </div>
   )
 }

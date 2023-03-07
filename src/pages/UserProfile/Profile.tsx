@@ -8,6 +8,8 @@ import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/base/ItemCard'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import { useNavigate } from 'react-router-dom'
+import { cards } from '../../mocks/cards'
+import { IItemCard } from '../../types/item-card'
 
 const user = {
   name: 'John Johnson',
@@ -27,35 +29,12 @@ const actions = [
 
 ]
 
-const cards = [
-  { id: '1', color: 'Orange', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1200, sold: true, active: false, isSelected: false },
-  { id: '2', color: 'Blue', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1300, sold: false, active: true, isSelected: false },
-  { id: '3', color: 'Pink', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 1400, sold: true, active: false, isSelected: false },
-  { id: '4', color: 'Pink', image: 'redCrown', name: 'Fiery Horns of the Netherworld', price: 1300, sold: false, active: true, isSelected: false },
-  { id: '5', color: 'Blue', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: false, active: true, isSelected: false },
-  { id: '6', color: 'Pink', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
-  { id: '7', color: 'Red', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
-  { id: '8', color: 'Red', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
-  { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Horns of the Netherworld', price: 1500, sold: true, active: false, isSelected: false },
-  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Horns of the Netherworld', price: 1300, sold: false, active: true, isSelected: false }
-]
-
-interface ICard {
-  id: string
-  name: string
-  price: number
-  image: string
-  sold: boolean
-  active: boolean
-  isSelected: boolean
-}
-
 const cardsSorting = ['All', 'Active Items', 'Sold']
 
 const Profile = () => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
-  const [selectedCard, setSelectedCard] = useState<ICard[]>([])
-  const [sorted, setSorted] = useState<ICard[]>([])
+  const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
+  const [sorted, setSorted] = useState<IItemCard[]>([])
   const navigate = useNavigate()
 
   const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
@@ -71,7 +50,7 @@ const Profile = () => {
   }, [currentCardsVariant])
 
   const handleSelectCard = (id: string) => {
-    const card = sorted.find(item => item.id === id) as ICard
+    const card = sorted.find(item => item.id === id) as IItemCard
 
     if (!selectedCard.some(item => item.id === card.id)) {
       setSelectedCard(state => ([...state, card]))
