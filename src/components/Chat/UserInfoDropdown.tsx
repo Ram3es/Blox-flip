@@ -18,7 +18,7 @@ export const UserInfoDropdown: FC = () => {
   return (
     <Menu>
       <Menu.Button as={Button} color='BlueAccent' variant='Standard'>
-        <span className='w-6 h-6 shrink-0'>
+        <span className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-center text-gray-secondary'>
           <ArrowGrayIcon />
         </span>
       </Menu.Button>

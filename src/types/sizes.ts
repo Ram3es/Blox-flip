@@ -3,4 +3,5 @@ export enum BaseSizes {
   MEDIUM = 'MEDIUM',
   LARGE = 'LARGE',
   XL = 'XL',
+  XXL = 'XXL'
 }

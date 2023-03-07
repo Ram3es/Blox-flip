@@ -1,4 +1,4 @@
-export const PlusIcon = ({ width = 11, height = 11, className = '' }: { width?: number, height?: number, className: string }) => {
+export const PlusIcon = ({ width = 11, height = 11, className = '' }: { width?: number, height?: number, className?: string }) => {
   return (
     <svg className={className} width={width} height={height} viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
