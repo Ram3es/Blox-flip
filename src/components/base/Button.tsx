@@ -28,7 +28,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     })
 
     const variantClasses = clsx('font-bold flex items-center rounded', {
-      'gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 shadow-green-20': variant === VariantEnum.Gradient
+      'gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 shadow-green-20': variant === VariantEnum.Gradient,
+      'text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary  ': variant === VariantEnum.Outlined
     })
 
     return (
