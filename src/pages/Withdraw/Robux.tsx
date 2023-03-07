@@ -33,11 +33,13 @@ export const Robux = () => {
     [values]
   )
   return (
-    <WithdrawForm
-      methodName='Input robox amount'
-      onSubmit={handleFormSubmit}
-      onChange={handleAmountChange}
-      values={values}
+    <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm p-5 xs:p-9 overflow-hidden relative'>
+      <WithdrawForm
+        methodName='Input robox amount'
+        onSubmit={handleFormSubmit}
+        onChange={handleAmountChange}
+        values={values}
     />
+    </div>
   )
 }

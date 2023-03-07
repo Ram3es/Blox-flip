@@ -1,32 +1,36 @@
-import { Link } from 'react-router-dom'
-import { IWithdrawMethod } from '../../types/withdraw'
+import React from 'react'
+import MethodCard from '../../components/common/Cards/MethodCard'
 
-export const WithdrawMethod = ({ icon, link }: IWithdrawMethod) => {
+const methods = [
+  {
+    path: 'roblox-limiteds',
+    title: 'Roblox Methods',
+    image: 'robloxDeposite'
+  },
+  {
+    path: 'robux',
+    title: 'Robux',
+    image: 'robuxDeposite'
+  }
+]
+
+const WithdrawMethod = () => {
   return (
-    <div className='px-1.5 pb-3 w-1/2 xxs:w-1/3 md:w-1/2 deposite--case'>
-      <Link
-        to={link}
-        className='border--mask-hover border--radial-blue rounded h-full overflow-hidden text-sm group'
-      >
-        <div className='bg-gradient--blue-darken from-blue-accent-secondary/20 hover:bg-transparent hover:bg-gradient-radial-80 hover:from-blue-light-secondary/30 hover:to-blue-accent-secondary/0 rounded h-full text-center relative z-20 border-y border-y-transparent group-hover:border-y-sky-primary/40'>
-          <div className='flex flex-col items-center justify-between rounded h-full py-4 px-2'>
-            <div className='bg-blue-primary/30 rounded px-2 w-10/12 py-1 leading-4 font-semibold text-gray-primary mb-5 flex flex-col justify-center group-hover:bg-blue-highlight'>
-              Roblox Limiteds
+    <div className="border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9">
+    <div className="border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm p-5 xs:p-9 overflow-hidden relative">
+        <div className="flex flex-wrap -mx-6 relative z-20">
+            <div className="px-6 w-full md:w-2/5 flex flex-col">
+                <div className="text-gray-primary font-bold text-lg mb-6">Roblox Methods</div>
+                <div className="flex flex-wrap -mx-1.5 grow">
+                    {methods.map(method => (
+                        <MethodCard key={method.path} {...method} />
+                    ))}
+                </div>
             </div>
-            <div className='w-full pb-60% h-0 relative mb-2'>
-              <img
-                src={icon}
-                alt=''
-                width='158'
-                height='114'
-                loading='lazy'
-                decoding='async'
-                className='absolute -inset-full m-auto'
-              />
-            </div>
-          </div>
         </div>
-      </Link>
     </div>
+</div>
   )
 }
+
+export default WithdrawMethod

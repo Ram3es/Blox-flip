@@ -19,11 +19,12 @@ interface IItemCardProps {
   image: string
   onSelect: Function
   isSelected?: boolean
-  color?: string
+  color: string
+  itemClasses?: string
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color }) => {
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color, itemClasses }) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -40,8 +41,10 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
     'from-red-secondary/20 to-dark/0': color === BorderColorEnum.Red
   })
 
+  // ${isSelected ? ' is-selected' : ''}
+
   return (
-    <div className={`${isSelected ? ' is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item`}>
+    <div className={`${itemClasses ?? 'px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item'}${isSelected ? ' is-selected' : ''} `}>
       <div onClick={() => onSelect(id)} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>
         <div className="gradient-blue-secondary rounded h-full text-center relative z-20 group-[.is-selected]/item:border-0">
           <div className="absolute inset-0 rounded bg-dark/40 z-30 hidden group-[.is-selected]/item:block">
@@ -61,7 +64,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
             <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
             <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left"><span>{name}</span></div>
             <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start">
-              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:w-2/5">
+              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5">
                 <img src={IMAGES[image]} alt="@T" className="absolute object-contain w-full h-full" />
               </div>
               <div className="flex items-center justify-center relative z-40">
@@ -70,7 +73,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
             </div>
           </div>
         </div>
-      </div>
+        </div>
     </div>
   )
 }
