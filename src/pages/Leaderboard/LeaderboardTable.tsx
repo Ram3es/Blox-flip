@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
+
 import { ISecondUser } from '../../types/User'
 import { users } from './mock'
+
 import { Table } from '../../components/Table/Table'
 import { UserInfoCell } from '../../components/Table/UserInfoCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'

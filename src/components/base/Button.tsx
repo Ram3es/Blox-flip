@@ -30,10 +30,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'bg-blue-highlight': color === ColorEnum.BlueHighlight
     })
 
-    const variantClasses = clsx('font-bold flex items-center rounded', {
-      'gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 shadow-green-20': variant === VariantEnum.Gradient,
-      'text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary ': variant === VariantEnum.Outlined,
-      'text-gray-primary font-semibold rounded bg-blue-highlight border border-blue-highlight hover:text-white': variant === VariantEnum.Highlight
+    const variantClasses = clsx('flex items-center rounded', {
+      'font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 shadow-green-20':
+        variant === VariantEnum.Gradient,
+      'text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary ':
+        variant === VariantEnum.Outlined,
+      'text-gray-primary rounded bg-blue-highlight border border-blue-highlight hover:text-white':
+        variant === VariantEnum.Highlight
     })
 
     return (

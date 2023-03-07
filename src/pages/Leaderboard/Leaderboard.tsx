@@ -51,9 +51,7 @@ export const LeaderBoard = () => {
           />
         </div>
       </div>
-
       <LeaderboardPodium />
-
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
       <LeaderboardTable />
     </div>
