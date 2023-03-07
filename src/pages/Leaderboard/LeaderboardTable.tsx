@@ -9,9 +9,10 @@ import { Table } from '../../components/Table/Table'
 import { UserInfoCell } from '../../components/Table/UserInfoCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { PlaceCell } from '../../components/Table/PlaceCell'
+import { getSortedUsersByField } from '../../helpers/leaderboardHelpers'
 
 export const LeaderboardTable = () => {
-  const [data] = useState<ISecondUser[]>([...users])
+  const [data] = useState<ISecondUser[]>([...getSortedUsersByField(users, 'level').slice(3)])
   const [sorting, setSorting] = useState<SortingState>([])
 
   const columnHelper = createColumnHelper<ISecondUser>()
@@ -19,7 +20,7 @@ export const LeaderboardTable = () => {
     columnHelper.accessor((row: ISecondUser) => row.id, {
       id: 'place',
       header: () => 'Place',
-      cell: ({ row }) => <PlaceCell place={Number(row.original.id)} />,
+      cell: ({ row }) => <PlaceCell place={Number(row.index + 4)} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: ISecondUser) => row.username, {
