@@ -17,6 +17,7 @@ import { RobloxLimiteds } from './pages/Withdraw/RobloxLimiteds'
 import { Robux } from './pages/Withdraw/Robux'
 import { WithdrawLayout } from './pages/Withdraw/WithdrawLayout'
 import { Affiliates } from './pages/Affiliates/Affiliates'
+import Unboxing from './pages/Unboxing/Unboxing'
 
 export const App = () => {
   return (
@@ -43,6 +44,7 @@ export const App = () => {
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
+          <Route path='/unboxing' element={<Unboxing />} />
         </Routes>
       </Container>
     </BrowserRouter>
