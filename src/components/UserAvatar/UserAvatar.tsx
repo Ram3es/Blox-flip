@@ -1,35 +1,28 @@
 import { FC } from 'react'
-
 import defaultAvatar from '../../assets/img/avatar_img.png'
-import { BaseSize } from '../../types/enums'
-
-enum UserAvatarVariantEnum {
-  ROUNDED = 'ROUNDED',
-  CIRCLE = 'CIRCLE'
-}
 
 interface UserAvatarProps {
   image?: string
-  size?: keyof typeof BaseSize
-  variant?: keyof typeof UserAvatarVariantEnum
+  width?: string // px
+  height?: string // px
+  className?: string
 }
 
 export const UserAvatar: FC<UserAvatarProps> = ({
-  size = BaseSize.MEDIUM,
-  variant = UserAvatarVariantEnum.ROUNDED,
-  image = defaultAvatar
+  image = defaultAvatar,
+  width = '40',
+  height = '37',
+  className = 'object-cover w-full h-full'
 }) => {
   return (
-    <>
-      <img
-        src={image}
-        alt=''
-        width='40'
-        height='37'
-        loading='lazy'
-        decoding='async'
-        className='object-cover w-full h-full'
-      />
-    </>
+    <img
+      src={image}
+      alt=''
+      width={width}
+      height={height}
+      loading='lazy'
+      decoding='async'
+      className={className}
+    />
   )
 }
