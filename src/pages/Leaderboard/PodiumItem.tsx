@@ -73,7 +73,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
                 }
               )}
             >
-              <UserAvatar width='73' height='68' className='object-cover w-full h-full' />
+              <UserAvatar image={user.avatar} width='73' height='68' className='object-cover w-full h-full' />
             </div>
             <div className='mb-3 font-bold'>{user.username}</div>
             <div className='flex justify-center mb-3'>
