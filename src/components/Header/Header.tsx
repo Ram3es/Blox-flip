@@ -51,7 +51,7 @@ const UserWalletButton = () => {
 }
 
 const routesGames: RouteItem[] = [
-  { path: '/cases', name: 'cases' },
+  { path: '/unboxing', name: 'cases' },
   { path: '/cups', name: 'cups' },
   { path: '/mines', name: 'mines' },
   { path: '/plinko', name: 'plinko' }

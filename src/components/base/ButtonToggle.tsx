@@ -2,16 +2,20 @@
 const ButtonsToggle = ({
   options,
   currentSelect,
-  peackFunction
+  peackFunction,
+  activeClasses,
+  btnClasses
 }: {
   options: string[]
   currentSelect: string
   peackFunction: Function
+  activeClasses?: string
+  btnClasses?: string
 }) => {
   return (
-        <div className="flex gap">
+        <div className= 'flex gap'>
           {options.map((option, index) => <button
-            className={`text-gray-primary text-13 py-1.5 leading-2 px-4 text-center rounded  mx-1 border bg-blue-highlight border-blue-highlight ${option === currentSelect ? 'text-white border bg-blue-highlight/25 cursor-default' : ' bg-blue-highlight shadow-dark-5 border-transparent hover:text-white'}`}
+            className={`${btnClasses ?? 'text-gray-primary text-13 py-1.5 leading-2 px-4 text-center rounded  mx-1 border bg-blue-highlight border-blue-highlight shadow-dark-5 border-transparent hover:text-white'}${option === currentSelect ? activeClasses ?? 'text-white border bg-blue-highlight/25 cursor-default' : ''}`}
             onClick={() => peackFunction(option)}
             key={index}>{option}</button>)}
         </div>
