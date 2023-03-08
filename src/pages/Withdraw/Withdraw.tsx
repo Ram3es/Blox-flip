@@ -12,7 +12,7 @@ import { IItemCard } from '../../types/itemCard'
 import { ISortOptions } from '../../types/sortOptions'
 import SortSelect from '../../components/common/SortSelect'
 
-const sortingVariants: ISortOptions [] = [{ title: 'High to low', direction: 'DESC' }, { title: 'Low to high', direction: 'ASC' }]
+const sortingVariants: ISortOptions [] = [{ title: 'High to low', value: 'DESC' }, { title: 'Low to high', value: 'ASC' }]
 
 export const Withdraw = () => {
   const [sortOptions, setSortOptions] = useState<ISortOptions>(sortingVariants[0])
@@ -22,11 +22,11 @@ export const Withdraw = () => {
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const debounce = useDebounce(500)
+  const debounce = useDebounce()
 
   const endPath = pathname.split('/')[2]
 
-  const contextOutlet = useMemo(() => ({ direction: sortOptions.direction, searchBy, selectedCards, setSelectedCard }), [searchBy, sortOptions, selectedCards])
+  const contextOutlet = useMemo(() => ({ direction: sortOptions.value, searchBy, selectedCards, setSelectedCard }), [searchBy, sortOptions, selectedCards])
 
   useEffect(() => {
     debounce(() => setSearchBy(inputSearchValue))
@@ -38,9 +38,9 @@ export const Withdraw = () => {
         return (<>
         <div className='flex flex-wrap gap-x-3'>
           <div className=' relative mb-8'>
-            <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions}/>
+            <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions.title}/>
           </div>
-          <GreenTipSelect onSelect={() => []} />
+          <GreenTipSelect onSelect={() => []} selectClasses='h-fit relative mb-8 xxs:mb-0' />
           <div className=" bg-blue-accent-secondary/25 border border-blue-highlight rounded text-gray-primary w-full xxs:w-40 flex items-center h-[34px] py-1 px-2  mr-2.5">
             <div className="mr-2 w-3.5 shrink-0">
               <SearchIcon/>
