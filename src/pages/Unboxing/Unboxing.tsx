@@ -41,7 +41,7 @@ const Unboxing = () => {
   return (
     <div className="flex flex-col min-h-full text-sm ">
       <div className="max-w-1190 w-full m-auto">
-        <div className="flex flex-wrap  mb-8 md:mb-12 text-xs">
+        <div className="flex overflow-hidden mb-8 md:mb-12 text-xs ">
           {cards.map(card => (
             <ItemCard
               key={card.id}
@@ -51,7 +51,7 @@ const Unboxing = () => {
               image={card.image}
               color={card.color}
               onSelect={() => {}}
-              itemClasses='px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/7 shrink-0 lg:w-1/9 mb-2'
+              itemClasses='px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/7 shrink-0 lg:w-1/9 mb-2 overflow-hidden'
                />
           ))}
         </div>
