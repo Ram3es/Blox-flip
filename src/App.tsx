@@ -18,6 +18,7 @@ import { Affiliates } from './pages/Affiliates/Affiliates'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
+import BattleLobby from './pages/Battle/BattleLobby'
 
 export const App = () => {
   return (
@@ -45,6 +46,7 @@ export const App = () => {
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
+          <Route path='/battles-lobby' element={<BattleLobby />} />
         </Routes>
       </Container>
     </BrowserRouter>
