@@ -16,7 +16,7 @@ export const UserAvatar: FC<UserAvatarProps> = ({
 }) => {
   return (
     <img
-      src={image}
+      src={image === null || image === '' ? defaultAvatar : image}
       alt=''
       width={width}
       height={height}
