@@ -26,11 +26,12 @@ interface IItemCardProps {
   onSelect?: Function
   isSelected?: boolean
   color?: string
+  itemClasses?: string
   variant?: keyof typeof ItemCardVariantEnum
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, variant = ItemCardVariantEnum.Standard }) => {
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, itemClasses, variant = ItemCardVariantEnum.Standard }) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -53,7 +54,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect
   })
 
   return (
-    <div className={variantClasses}>
+    <div className={itemClasses ?? variantClasses}>
       <div onClick={() => (onSelect ? onSelect(id) : '')} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>
         <div className="gradient-blue-secondary rounded h-full text-center relative z-20 group-[.is-selected]/item:border-0">
           <div className="absolute inset-0 rounded bg-dark/40 z-30 hidden group-[.is-selected]/item:block">
