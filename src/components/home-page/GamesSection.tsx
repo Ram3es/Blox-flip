@@ -6,8 +6,8 @@ import GiftCard from './GiftCard'
 import WelcomeCard from './WelcomeCard'
 
 const games = [
-  { name: 'caseBattles', path: '/case-battles' },
-  { name: 'cases', path: '/cases' },
+  { name: 'caseBattles', path: '/battles-lobby' },
+  { name: 'cases', path: '/unboxing' },
   { name: 'crash', path: '/crash' },
   { name: 'king', path: '/king' },
   { name: 'mines', path: '/mines' },

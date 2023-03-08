@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const useDebounce = (dealy: number) => {
+export const useDebounce = (dealy = 500) => {
   const [typeTimemout, setTypeTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const debounce = (args: Function) => {

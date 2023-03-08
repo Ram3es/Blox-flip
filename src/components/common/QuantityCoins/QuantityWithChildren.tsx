@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import { formatNumber } from '../../../helpers/numbersFormatter'
 import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
 
 export interface QuantityCoinsProps {
@@ -21,7 +22,7 @@ export const QuantityCoinsWithChildren: FC<QuantityCoinsProps> = ({ quantity, is
           isActive ? 'text-green-primary' : 'text-white'
         }`}
       >
-        {quantity.toFixed()}
+        {formatNumber(quantity, 0)}
         <span className='opacity-50'>{Number.isInteger(quantity) ? '.00' : quantity.toFixed(2).slice(-3) }</span>
       </span>
     </div>
