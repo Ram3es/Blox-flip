@@ -49,7 +49,7 @@ export const WithdrawLayout = () => {
         <div className='flex grow items-center mb-4'>
           <div className='min-w-fit mr-3'>
             <span className='text-green-primary'>
-              <DiamondIcon size='XXL' />
+              <DiamondIcon width='28' height='24' />
             </span>
           </div>
           <span className='text-2xl font-bold'>Withdraw</span>

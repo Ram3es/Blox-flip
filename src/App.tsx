@@ -13,10 +13,11 @@ import { Chat } from './components/Chat/Chat'
 import HistoryUser from './pages/UserProfile/HistoryUser'
 import { Transactions } from './components/Transactions/Transactions'
 import UserProfile from './pages/UserProfile/UserProfile'
-import { RobloxLimiteds } from './pages/Withdraw/RobloxLimiteds'
 import { Robux } from './pages/Withdraw/Robux'
-import { WithdrawLayout } from './pages/Withdraw/WithdrawLayout'
 import { Affiliates } from './pages/Affiliates/Affiliates'
+import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
+import { Withdraw } from './pages/Withdraw/Withdraw'
+import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 
 export const App = () => {
   return (
@@ -38,11 +39,12 @@ export const App = () => {
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} />
-          <Route path='/withdraw' element={<WithdrawLayout />}>
+          <Route path='/withdraw' element={<Withdraw />}>
             <Route path='robux' element={<Robux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
+          <Route path='/leaderboard' element={<Leaderboard />} />
         </Routes>
       </Container>
     </BrowserRouter>
