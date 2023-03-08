@@ -66,7 +66,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
           <div className='relative z-20'>
             <div
               className={clsx(
-                'border border-blue-highlight radial--blue-full mb-3 mx-auto shrink-0',
+                'border border-blue-highlight rounded-lg radial--blue-full mb-3 mx-auto shrink-0',
                 {
                   'w-20 h-18': place === 1,
                   'w-15 h-14': place === 2 || place === 3
