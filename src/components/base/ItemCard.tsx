@@ -22,6 +22,7 @@ interface IItemCardProps {
   name: string
   price: number
   image: string
+  chance?: number
   onSelect?: Function
   isSelected?: boolean
   color?: string
@@ -29,7 +30,7 @@ interface IItemCardProps {
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color, variant = ItemCardVariantEnum.Standard }) => {
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, variant = ItemCardVariantEnum.Standard }) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -68,7 +69,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
             </div>
           </div>
           <div className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl`}>
-            <div className="mb-2 hidden group-[.is-percent]/item:block">1.5%</div>
+            <div className="mb-2 hidden group-[.is-percent]/item:block">{chance ? <>{chance}%</> : <>1.5%</> }</div>
             <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
             <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left"><span>{name}</span></div>
             <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start">

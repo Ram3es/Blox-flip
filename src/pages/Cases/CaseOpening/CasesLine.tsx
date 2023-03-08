@@ -17,7 +17,7 @@ export const CasesLine: FC<CasesLineProps> = ({ items }) => {
         <div className='absolute left-1/2 -ml-0.5 bottom-0 z-20 rotate-180 w-0.5 xs:w-1'>
           <OpeningLineIcon />
         </div>
-        {Array.from({ length: 13 }).map((_, i) => (
+        {Array.from({ length: 100 }).map((_, i) => (
           <CasesLineItem key={i} />
         ))}
       </div>

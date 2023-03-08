@@ -5,14 +5,15 @@ import { FairIcon } from '../../../components/icons/FairIcon'
 import { UnboxingIcon } from '../../../components/icons/UnboxingIcon'
 
 import ItemBig from '../../../assets/img/item_big1.png'
-import FirstCase from '../../../assets/img/case1.png'
-import SecondCase from '../../../assets/img/case2.png'
-import { DoubleRombIcon } from '../../../components/icons/DoubleRombIcon'
-import SelectedIcon from '../../../components/icons/SelectedIcon'
 import { CasesLine } from './CasesLine'
 import { PotentialDrops } from './PotentialDrops'
+import { useState } from 'react'
+import { RadioGroup } from '@headlessui/react'
+import clsx from 'clsx'
 
 export const CaseOpening = () => {
+  const [lineCount, setLineCount] = useState<number>(1)
+
   return (
     <div className='max-w-1190 w-full m-auto'>
       <div className='flex flex-wrap justify-between mb-5'>
@@ -45,22 +46,29 @@ export const CaseOpening = () => {
                 <QuantityCoins quantity={1500} />
               </div>
               <Button className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded mb-2'>
-                Create
+                Open case
               </Button>
             </div>
             <div className='flex flex-wrap items-center justify-center xs:justify-end sm:justify-end -mx-0.5 text-center leading-10 text-gray-primary font-semibold xs:ml-auto min-w-fit xs:min-w-0 xs:w-1/3 z-20 relative'>
-              <Button className='mx-0.5 mb-1 w-10 h-10 rounded bg-blue-accent-secondary border border-blue-accent-secondary hover:bg-blue-accent-secondary/30 hover:text-white pag--active'>
-                1
-              </Button>
-              <Button className='mx-0.5 mb-1 w-10 h-10 rounded bg-blue-accent-secondary border border-blue-accent-secondary hover:bg-blue-accent-secondary/30 hover:text-white pag--active'>
-                2
-              </Button>
-              <Button className='mx-0.5 mb-1 w-10 h-10 rounded bg-blue-accent-secondary border border-blue-accent-secondary hover:bg-blue-accent-secondary/30 hover:text-white pag--active'>
-                3
-              </Button>
-              <Button className='mx-0.5 mb-1 w-10 h-10 rounded bg-blue-accent-secondary border border-blue-accent-secondary hover:bg-blue-accent-secondary/30 hover:text-white pag--active'>
-                4
-              </Button>
+              <RadioGroup className='flex' value={lineCount} onChange={setLineCount}>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <RadioGroup.Option value={i + 1} key={i + 1}>
+                    {({ checked }) => (
+                      <>
+                        <Button
+                          className={clsx('mx-0.5 mb-1 w-10 h-10 rounded border', {
+                            'hover:bg-blue-accent-secondary/30 hover:text-white pag--active':
+                              checked,
+                            'bg-blue-accent-secondary border-blue-accent-secondary': !checked
+                          })}
+                        >
+                          {i + 1}
+                        </Button>
+                      </>
+                    )}
+                  </RadioGroup.Option>
+                ))}
+              </RadioGroup>
             </div>
             <div className='xs:-mt-18 min-w-full flex items-center relative z-10'>
               <div className='bg-gradient-to-l from:bg-blue-highlight/0 to-bg-blue-highlight h-px grow'></div>
@@ -80,10 +88,9 @@ export const CaseOpening = () => {
               <div className='bg-gradient-to-r from:bg-blue-highlight/0 to-bg-blue-highlight h-px grow'></div>
             </div>
           </div>
-          <CasesLine />
-          <CasesLine />
-          <CasesLine />
-          <CasesLine />
+          {Array.from({ length: lineCount }).map((_, i) => (
+            <CasesLine key={i} />
+          ))}
         </div>
       </div>
       <PotentialDrops />

@@ -10,7 +10,8 @@ const cards = [
     price: 1200,
     sold: true,
     active: false,
-    isSelected: false
+    isSelected: false,
+    chance: 1.5
   },
   {
     id: '2',
@@ -20,7 +21,8 @@ const cards = [
     price: 1300,
     sold: false,
     active: true,
-    isSelected: false
+    isSelected: false,
+    chance: 1.5
   },
   {
     id: '3',
@@ -30,7 +32,8 @@ const cards = [
     price: 1400,
     sold: true,
     active: false,
-    isSelected: false
+    isSelected: false,
+    chance: 1.5
   },
   {
     id: '4',
@@ -40,7 +43,8 @@ const cards = [
     price: 1300,
     sold: false,
     active: true,
-    isSelected: false
+    isSelected: false,
+    chance: 2.5
   },
   {
     id: '5',
@@ -50,7 +54,8 @@ const cards = [
     price: 1500,
     sold: false,
     active: true,
-    isSelected: false
+    isSelected: false,
+    chance: 5
   },
   {
     id: '6',
@@ -60,7 +65,8 @@ const cards = [
     price: 1500,
     sold: true,
     active: false,
-    isSelected: false
+    isSelected: false,
+    chance: 0
   },
   {
     id: '7',
@@ -70,7 +76,8 @@ const cards = [
     price: 1500,
     sold: true,
     active: false,
-    isSelected: false
+    isSelected: false,
+    chance: 0.1
   },
   {
     id: '8',
@@ -80,7 +87,8 @@ const cards = [
     price: 1500,
     sold: true,
     active: false,
-    isSelected: false
+    isSelected: false,
+    chance: 0.5
   },
   {
     id: '9',
@@ -90,7 +98,8 @@ const cards = [
     price: 1500,
     sold: true,
     active: false,
-    isSelected: false
+    isSelected: false,
+    chance: 10.5
   },
   {
     id: '10',
@@ -100,7 +109,8 @@ const cards = [
     price: 1300,
     sold: false,
     active: true,
-    isSelected: false
+    isSelected: false,
+    chance: 2.5
   }
 ]
 
