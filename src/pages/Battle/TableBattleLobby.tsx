@@ -1,66 +1,69 @@
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { createColumnHelper, flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table'
 import clsx from 'clsx'
-import React from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { IBattlesInfo } from '../../mocks/battle'
+import BattleModeCell from './Table/BattleModeCell'
+import ButtonsCell from './Table/ButtonsCell'
+import CasesCell from './Table/CasesCell'
 import RoundCell from './Table/RoundCell'
-
-interface IBattlesInfo {
-  round: number
-  cases: number
-  mode: number
-  price: number
-  active: string
-
-}
-
-const dataTable = [
-  { round: 5, cases: 3, mode: 1, price: 25000, active: 'dcdvvd' },
-  { round: 3, cases: 2, mode: 3, price: 25000, active: 'dcdvvd' },
-  { round: 6, cases: 4, mode: 2, price: 25000, active: 'dcdvvd' },
-  { round: 6, cases: 7, mode: 2, price: 25000, active: 'dcdvvd' }
-]
 
 const columnHelper = createColumnHelper<IBattlesInfo>()
 const columnsMemo = [
   columnHelper.accessor('round', {
-    id: 'rounds',
+    id: 'round',
     header: () => 'Rounds',
-    cell: ({ row }) => <RoundCell round={row.original.round} mode={row.original.mode} />,
+    cell: ({ row }) => <RoundCell round={row.original.round} mode={row.original.mode} isActive={row.original.active.isRunning} />,
     footer: (props) => props.column.id
   }),
   columnHelper.accessor('cases', {
     id: 'cases',
     header: () => 'Cases',
-    cell: () => '',
+    cell: ({ row }) => <CasesCell isActive ={row.original.active.isRunning} currentRound={row.original.active?.currentRound} isFinished={row.original.active.finished}/>,
     footer: (props) => props.column.id
   }),
   columnHelper.accessor('mode', {
     id: 'mode',
     header: () => 'Mode',
-    cell: () => '',
+    cell: ({ row }) => <BattleModeCell mode={row.original.mode} isFinished={row.original.active.finished} />,
     footer: (props) => props.column.id
   }),
   columnHelper.accessor('price', {
     id: 'price',
     header: () => 'Price',
-    cell: () => '',
+    cell: ({ row }) => <QuantityCoins quantity={row.original.price} iconHeight='12' iconWidth='15' iconBgHeight='5' iconBgWidth='5' textSize='text-sm' />,
     footer: (props) => props.column.id
   }),
   columnHelper.accessor('active', {
     id: 'active',
     header: () => 'Active',
-    cell: () => '',
+    cell: ({ row }) => <ButtonsCell isActive ={row.original.active.isRunning} isFinished={row.original.active.finished} />,
     footer: (props) => props.column.id
   })
 
 ]
 
-const TableBattleLobby = () => {
+interface ITableProps {
+  data: IBattlesInfo[]
+  sortBy: string
+}
+
+const TableBattleLobby: FC<ITableProps> = ({ data, sortBy }) => {
+  const [sorting, setSorting] = useState<SortingState>([{ id: sortBy, desc: false }])
+  const memoizedData = useMemo(() => data, [data])
   const table = useReactTable({
-    enableFilters: true,
-    data: dataTable,
+    state: {
+      sorting
+    },
+    data: memoizedData,
     columns: columnsMemo,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel()
   })
+
+  useEffect(() => {
+    sortBy && setSorting([{ id: sortBy, desc: false }])
+  }, [sortBy])
 
   return (
     <>
@@ -71,7 +74,7 @@ const TableBattleLobby = () => {
                 {headerGroup.headers.map((header, i, a) => {
                   return (
                         <th key={header.id} className='pb-5'>
-                            <div className={`${(a.length - 1) === i ? 'text-right' : 'text-left'}`}>
+                            <div className={`${(a.length - 1) === i ? 'text-right ' : 'text-left'}`}>
                                 {flexRender(header.column.columnDef.header, header.getContext())}
                             </div>
                         </th>)
@@ -83,21 +86,32 @@ const TableBattleLobby = () => {
             {table.getRowModel().rows.map(row => (
                <tr
                  key={row.id}
-                 className='battle_td--radial-green overflow-hidden relative'
+                 className={clsx('', {
+                   'battle_td--radial-green overflow-hidden relative': !row.original.active.finished,
+                   'battle_td--radial-gray overflow-hidden relative': row.original.active.finished
+                 })}
                  >
-                {row.getVisibleCells().map((cell, i, a) => (
+                {row.getVisibleCells().map((cell, i, a) => {
+                  const isActive = cell.row.original.active.isRunning
+                  return (
                     <td
-                      className={clsx('border border-blue-highlight py-6 pl-5 pr-5', {
-                        'border-r-0 rounded-l': i === 0,
-                        'border-l-0 rounded-r': i === (a.length - 1),
-                        'border-l-0 border-r-0 ': i !== 0 && i !== (a.length - 1)
+                      className={clsx('border py-2.5 px-2', {
+                        'border-r-0 rounded-l pl-5 pr-3': i === 0,
+                        'border-l-0 rounded-r pr-5': i === (a.length - 1),
+                        'border-l-0 border-r-0 ': i !== 0 && i !== (a.length - 1),
+                        'relative overflow-hidden': i === 2,
+                        'border-green-primary/40': isActive,
+                        'border-blue-highlight': !isActive
                       })}
                       key={cell.id}>
-                        <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
-                ))}
+                  )
+                }
+                )}
                </tr>
-            ))}
+            )
+            )}
         </tbody>
     </table>
     </>)

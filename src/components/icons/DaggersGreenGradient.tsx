@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DaggersIcon = ({ iconClasses }: { iconClasses?: string }) => {
+const DaggersGreenGradient = ({ iconClasses }: { iconClasses?: string }) => {
   return (
     <svg className={iconClasses ?? ''} width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18.1816 27.1489L12.438 22.3081L11.248 23.7201C10.5448 23.3153 9.75297 23.0817 8.91868 23.0817C7.66438 23.0817 6.48797 23.5681 5.60446 24.4515L15.5482 34.3953C17.077 32.8665 17.3086 30.5426 16.2799 28.7515L18.1816 27.1489Z" fill="url(#paint0_linear_205_2924)"/>
@@ -34,4 +34,4 @@ const DaggersIcon = ({ iconClasses }: { iconClasses?: string }) => {
   )
 }
 
-export default DaggersIcon
+export default DaggersGreenGradient
