@@ -7,7 +7,7 @@ import runningIcon from '../../../assets/img/running.svg'
 
 const ButtonsCell = ({ isFinished, isActive }: { isFinished: boolean, isActive: boolean }) => {
   return (
-        <div className='flex items-center'>
+        <div className='flex items-center justify-end'>
            {isFinished
              ? (
               <Button

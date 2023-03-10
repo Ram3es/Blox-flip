@@ -13,22 +13,25 @@ const GreenLink = ({ to, title, amount }: { to: string, title: string, amount: n
     <span>{title}</span>
   </NavLink>)
 
-const filterOptions = ['Round', 'Price']
+const filterOptions = ['Date', 'Price']
 
 const BattleLobby = () => {
   const [currentFilterOptions, setOptions] = useState(filterOptions[0])
   const navigate = useNavigate()
 
+  const activeBattle = dataTable.filter(battle => battle.active.isRunning).length
+  const joinableBattle = dataTable.filter(battle => !battle.active.isRunning && !battle.active.finished).length
+
   return (
-    <div className=' h-screen'>
+    <div className=' h-full'>
       <div className="max-w-1190 w-full m-auto">
         <div className="flex flex-wrap justify-between border-b border-blue-highlight mb-5">
           <div className="flex flex-wrap items-center">
             <div className="w-10 shrink-0 mr-6 mb-4">
               <DaggersGreenGradient />
             </div>
-            <GreenLink to={''} title='Active battles' amount={5} />
-            <GreenLink to={''} title='Joinable battles' amount={0} />
+            <GreenLink to={''} title='Active battles' amount={activeBattle} />
+            <GreenLink to={''} title='Joinable battles' amount={joinableBattle} />
           </div>
           <div className='flex flex-wrap items-center'>
             <div className="flex flex-wrap items-center mb-4 mr-5">

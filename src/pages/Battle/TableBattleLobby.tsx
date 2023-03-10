@@ -34,13 +34,19 @@ const columnsMemo = [
     cell: ({ row }) => <QuantityCoins quantity={row.original.price} iconHeight='12' iconWidth='15' iconBgHeight='5' iconBgWidth='5' textSize='text-sm' />,
     footer: (props) => props.column.id
   }),
+  columnHelper.accessor('date', {
+    id: 'date',
+    header: () => '',
+    cell: () => '',
+    enableHiding: true,
+    footer: (props) => props.column.id
+  }),
   columnHelper.accessor('active', {
     id: 'active',
     header: () => 'Active',
     cell: ({ row }) => <ButtonsCell isActive ={row.original.active.isRunning} isFinished={row.original.active.finished} />,
     footer: (props) => props.column.id
   })
-
 ]
 
 interface ITableProps {
@@ -52,17 +58,23 @@ const TableBattleLobby: FC<ITableProps> = ({ data, sortBy }) => {
   const [sorting, setSorting] = useState<SortingState>([{ id: sortBy, desc: false }])
   const memoizedData = useMemo(() => data, [data])
   const table = useReactTable({
-    state: {
-      sorting
-    },
+    enableHiding: true,
     data: memoizedData,
     columns: columnsMemo,
+    state: {
+      sorting,
+      columnVisibility: { date: false }
+    },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel()
   })
 
   useEffect(() => {
-    sortBy && setSorting([{ id: sortBy, desc: false }])
+    if (sortBy && sortBy === 'date') {
+      sortBy && setSorting([{ id: sortBy, desc: true }])
+    } else {
+      sortBy && setSorting([{ id: sortBy, desc: false }])
+    }
   }, [sortBy])
 
   return (
