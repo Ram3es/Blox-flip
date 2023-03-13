@@ -5,18 +5,16 @@ import { ICaseItem } from '../../../types/cases'
 import { CasesLineItem } from './CasesLineItem'
 
 interface CasesLineProps {
-  items?: any[]
+  items?: ICaseItem[]
   transitionDuration: number
 }
 
-export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => {
+export const CasesLine: FC<CasesLineProps> = ({ items = [], transitionDuration }) => {
   const [rouletteItems, setRouletteItems] = useState<ICaseItem[]>(items)
-  const [itemPrizeId, setItemPrizeId] = useState<number>()
   const [isReplay, setIsReplay] = useState<boolean>(false)
   const [isSpin, setIsSpin] = useState<boolean>(false)
   const [isSpinEnd, setIsSpinEnd] = useState<boolean>(false)
-
-  const rouletteContainerRef = useRef<HTMLDivElement>(null)
+  console.log(rouletteItems, 'rouletteItems <<<<')
   const itemsRef = useRef<HTMLDivElement>(null)
 
   const transitionEndHandler = () => {
@@ -24,26 +22,46 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
     setIsSpinEnd(true)
   }
 
+  const randomItems = () => {
+    const randomItems: ICaseItem[] = []
+    for (let i = 0; i < 100; i++) {
+      const object = {
+        itemName: `Random item, index${i}`,
+        rarity: '100',
+        image: '',
+        id: i
+      }
+      randomItems.push(object)
+    }
+    return randomItems
+  }
+
   const prepare = () => {
-    itemsRef.current!.style.transition = 'none'
-    itemsRef.current!.style.left = '0px'
+    if (itemsRef.current) {
+      itemsRef.current.style.transition = 'none'
+      itemsRef.current.style.left = '0px'
+    }
+    console.log(isSpin)
+    setRouletteItems(randomItems())
   }
 
   const spin = () => {
-    itemsRef.current.style.transition = `left ${transitionDuration}s ease-out`
+    if (itemsRef.current) {
+      itemsRef.current.style.transition = `left ${transitionDuration}s ease-out`
+    }
 
     setTimeout(() => {
-      itemsRef!.current.style.left = `-${556}rem`
-    }, 100)
-
-    return itemPrizeId
+      if (itemsRef.current) {
+        itemsRef.current.style.left = `-${556}rem`
+      }
+    }, 1000)
   }
 
   const load = () => {
-    let winner = { itemName: 'Winner item', rarity: '100', image: '', id: 88 }
+    const winner = { itemName: 'Winner item', rarity: '100', image: '', id: 88 }
 
-    setRouletteItems((prev) => {
-      const newItems = [...prev]
+    setRouletteItems(() => {
+      const newItems = [...rouletteItems]
       newItems[87] = winner
       return newItems
     })
@@ -52,25 +70,18 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
   const play = () => {
     if (isReplay) {
       prepare()
+      console.log('reply')
     }
-    setIsSpin(true)
 
     load()
     spin()
 
-    setTimeout(() => {
-      setIsSpin(true)
-      setItemPrizeId(87)
-      setIsReplay(true)
-    }, 1000)
+    setIsSpin(true)
+    setIsReplay(true)
   }
 
-  // overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full
   return (
-    <div
-      className='relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded'
-      ref={rouletteContainerRef}
-    >
+    <div className='relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded'>
       <button disabled={isSpin} onClick={play}>
         Start game
       </button>

@@ -15,7 +15,6 @@ import items from './items.json'
 export const CaseOpening = () => {
   const [lineCount, setLineCount] = useState<number>(1)
   const transitionDuration = 8
-  console.log(items)
 
   return (
     <div className='max-w-1190 w-full m-auto'>
