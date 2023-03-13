@@ -16,7 +16,6 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
   const [isReplay, setIsReplay] = useState<boolean>(false)
   const [isSpin, setIsSpin] = useState<boolean>(false)
   const [isSpinEnd, setIsSpinEnd] = useState<boolean>(false)
-  console.log('itemPrizeId', itemPrizeId)
 
   const rouletteContainerRef = useRef<HTMLDivElement>(null)
   const itemsRef = useRef<HTMLDivElement>(null)
@@ -32,14 +31,14 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
   }
 
   const load = () => {
-    let winner = { itemName: 'Test item', rarity: '100', image: '', id: 87 }
+    let winner = { itemName: 'Test item', rarity: '100', image: '', id: '88' }
 
     const roulette = new Roulette({
       winner,
       items,
       rouletteContainerRef,
       itemsRef,
-      itemsCount: 10,
+      itemsCount: 100,
       transitionDuration
     })
 
@@ -64,7 +63,7 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
     }, 1000)
   }
 
-  // overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full 
+  // overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full
 
   return (
     <div
@@ -74,7 +73,7 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
       <button disabled={isSpin} onClick={play}>
         Start game
       </button>
-      <div className='flexpy-3'>
+      <div className='flex py-3 overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
         <div className='absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1'>
           <OpeningLineIcon />
         </div>
@@ -86,21 +85,8 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
           ref={itemsRef}
           onTransitionEnd={transitionEndHandler}
         >
-          {/* {rouletteItems?.map((item, index, array) => (
-            <div key={index}>
-            {item.id === 87
-              ? (<div key={index} className='bg-slate-100'><CasesLineItem itemName={item.itemName} /></div>)
-              : (<div key={index}><CasesLineItem /></div>)
-            }
-          </div>
-          ))} */}
           {rouletteItems?.map((item, index, array) => (
-            <div key={index}>
-            {item.id === 87
-              ? (<div key={index} className='bg-slate-100'><CasesLineItem itemName={item.itemName} /></div>)
-              : (<div key={index}><CasesLineItem /></div>)
-            }
-          </div>
+            <CasesLineItem key={index} itemName={item.itemName} />
           ))}
         </div>
       </div>
