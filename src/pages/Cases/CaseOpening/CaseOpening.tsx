@@ -1,20 +1,81 @@
-import { ArrowGrayIcon } from '../../../components/ArrowGrayIcon/ArrowGrayIcon'
-import { Button } from '../../../components/base/Button'
-import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
-import { FairIcon } from '../../../components/icons/FairIcon'
-import { UnboxingIcon } from '../../../components/icons/UnboxingIcon'
-
-import ItemBig from '../../../assets/img/item_big1.png'
-import { CasesLine } from './CasesLine'
-import { PotentialDrops } from './PotentialDrops'
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
-import items from './items.json'
+
+import { ICaseItem } from '../../../types/cases'
+import { randomItems } from '../../../helpers/casesHelpers'
+
+import { Button } from '../../../components/base/Button'
+import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
+import { CasesLineItem } from './CasesLineItem'
+import { PotentialDrops } from './PotentialDrops'
+
+import { ArrowGrayIcon } from '../../../components/ArrowGrayIcon/ArrowGrayIcon'
+import { FairIcon } from '../../../components/icons/FairIcon'
+import { UnboxingIcon } from '../../../components/icons/UnboxingIcon'
+import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
+import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {
   const [lineCount, setLineCount] = useState<number>(1)
-  const transitionDuration = 8
+
+  const [rouletteItems, setRouletteItems] = useState(randomItems(100))
+  const [isReplay, setIsReplay] = useState(false)
+  const [isSpin, setIsSpin] = useState(false)
+  const itemsRef = useRef<HTMLDivElement[]>([])
+
+  console.log('rerender')
+
+  const transitionEndHandler = useCallback(() => {
+    setIsSpin(false)
+  }, [isSpin])
+
+  const reset = () => {
+    if (itemsRef.current) {
+      itemsRef.current.forEach((item) => {
+        item.style.transition = 'none'
+        item.style.left = '0px'
+      })
+    }
+  }
+
+  const spin = (time: number) => {
+    if (itemsRef.current) {
+      itemsRef.current.forEach((item) => {
+        item.style.transition = `left ${time}s ease-out`
+      })
+    }
+
+    setTimeout(() => {
+      if (itemsRef.current) {
+        itemsRef.current.forEach((item) => {
+          item.style.left = `-${556}rem`
+        })
+      }
+    }, 1000)
+  }
+
+  const load = () => {
+    const winner = { itemName: 'Winning item', rarity: '100', image: '', id: 88 }
+
+    setRouletteItems(() => {
+      const newItems = [...rouletteItems]
+      newItems[87] = winner
+      return newItems
+    })
+  }
+
+  const play = () => {
+    if (isReplay) {
+      reset()
+    }
+
+    load()
+    spin(5)
+
+    setIsSpin(true)
+    setIsReplay(true)
+  }
 
   return (
     <div className='max-w-1190 w-full m-auto'>
@@ -47,7 +108,11 @@ export const CaseOpening = () => {
               <div className='bg-green-primary/15 flex items-center px-1 pr-4 rounded mr-2.5 mb-2'>
                 <QuantityCoins quantity={1500} />
               </div>
-              <Button className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded mb-2'>
+              <Button
+                disabled={isSpin}
+                onClick={play}
+                className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded mb-2'
+              >
                 Open case
               </Button>
             </div>
@@ -90,8 +155,33 @@ export const CaseOpening = () => {
               <div className='bg-gradient-to-r from:bg-blue-highlight/0 to-bg-blue-highlight h-px grow'></div>
             </div>
           </div>
-          {Array.from({ length: lineCount }).map((_, i) => (
-            <CasesLine items={items} transitionDuration={transitionDuration} key={i} />
+          {Array.from({ length: lineCount }).map((_, index) => (
+            <div
+              key={index + 1}
+              className='relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded'
+            >
+              <div className='flex py-3'>
+                <div className='absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1'>
+                  <OpeningLineIcon />
+                </div>
+                <div className='absolute left-1/2 -ml-0.5 bottom-0 z-20 rotate-180 w-0.5 xs:w-1'>
+                  <OpeningLineIcon />
+                </div>
+                <div
+                  className='whitespace-nowrap relative left-0 flex'
+                  ref={(item) => {
+                    if (item !== null) {
+                      itemsRef.current[index] = item
+                    }
+                  }}
+                  onTransitionEnd={transitionEndHandler}
+                >
+                  {rouletteItems?.map((item: ICaseItem) => (
+                    <CasesLineItem key={item.itemName} itemName={item.itemName} />
+                  ))}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
