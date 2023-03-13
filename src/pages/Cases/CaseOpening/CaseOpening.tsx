@@ -13,34 +13,6 @@ import clsx from 'clsx'
 
 export const CaseOpening = () => {
   const [lineCount, setLineCount] = useState<number>(1)
-  const [isRollTicketShown, setIsRollTicketShown] = useState(false);
-  let spinner: any
-  let wonItem: any
-  let wonPrice: any
-
-  let spin = (time: any) => {
-    if (spinner && spinner.style) {
-      spinner.style.transform = 'translateX(0rem)'
-      spinner.style.transitionTimingFunction = 'cubic-bezier(0.12, 0.8, 0.38, 1)'
-      spinner.style.transitionDuration = '0s'
-    }
-
-    setTimeout(() => {
-      if (spinner && spinner.style) {
-        spinner.style.transform = `translateX(${-8 * 78 - 10}rem)`
-        spinner.style.transitionTimingFunction = 'cubic-bezier(0.12, 0.8, 0.38, 1)'
-        spinner.style.transitionDuration = `${time / 1000}s`
-        wonPrice.classList.remove('block')
-        wonPrice.classList.add('hidden')
-        setTimeout(() => {
-          wonItem.style.opacity = 1
-          wonPrice.classList.remove('hidden')
-          wonPrice.classList.add('block')
-          setIsRollTicketShown(true)
-        }, 8000)
-      }
-    }, 10)
-  }
 
   return (
     <div className='max-w-1190 w-full m-auto'>
