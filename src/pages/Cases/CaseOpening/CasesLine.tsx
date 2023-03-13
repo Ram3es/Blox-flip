@@ -1,9 +1,8 @@
 import { FC, useRef, useState } from 'react'
 
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
+import { ICaseItem } from '../../../types/cases'
 import { CasesLineItem } from './CasesLineItem'
-
-import { itemAttributes, Roulette } from './classes'
 
 interface CasesLineProps {
   items?: any[]
@@ -11,7 +10,7 @@ interface CasesLineProps {
 }
 
 export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => {
-  const [rouletteItems, setRouletteItems] = useState<itemAttributes[]>(items)
+  const [rouletteItems, setRouletteItems] = useState<ICaseItem[]>(items)
   const [itemPrizeId, setItemPrizeId] = useState<number>()
   const [isReplay, setIsReplay] = useState<boolean>(false)
   const [isSpin, setIsSpin] = useState<boolean>(false)
@@ -30,22 +29,24 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
     itemsRef.current!.style.left = '0px'
   }
 
+  const spin = () => {
+    itemsRef.current.style.transition = `left ${transitionDuration}s ease-out`
+
+    setTimeout(() => {
+      itemsRef!.current.style.left = `-${556}rem`
+    }, 100)
+
+    return itemPrizeId
+  }
+
   const load = () => {
-    let winner = { itemName: 'Test item', rarity: '100', image: '', id: '88' }
+    let winner = { itemName: 'Winner item', rarity: '100', image: '', id: 88 }
 
-    const roulette = new Roulette({
-      winner,
-      items,
-      rouletteContainerRef,
-      itemsRef,
-      itemsCount: 100,
-      transitionDuration
+    setRouletteItems((prev) => {
+      const newItems = [...prev]
+      newItems[87] = winner
+      return newItems
     })
-
-    roulette.set_items()
-    setRouletteItems(roulette.items)
-
-    return roulette
   }
 
   const play = () => {
@@ -54,17 +55,17 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
     }
     setIsSpin(true)
 
-    const roulette = load()
+    load()
+    spin()
 
     setTimeout(() => {
       setIsSpin(true)
-      setItemPrizeId(roulette.spin())
+      setItemPrizeId(87)
       setIsReplay(true)
     }, 1000)
   }
 
   // overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full
-
   return (
     <div
       className='relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded'
@@ -73,7 +74,7 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
       <button disabled={isSpin} onClick={play}>
         Start game
       </button>
-      <div className='flex py-3 overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+      <div className='flex py-3'>
         <div className='absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1'>
           <OpeningLineIcon />
         </div>
@@ -85,8 +86,8 @@ export const CasesLine: FC<CasesLineProps> = ({ items, transitionDuration }) => 
           ref={itemsRef}
           onTransitionEnd={transitionEndHandler}
         >
-          {rouletteItems?.map((item, index, array) => (
-            <CasesLineItem key={index} itemName={item.itemName} />
+          {rouletteItems?.map((item) => (
+            <CasesLineItem key={item.itemName} itemName={item.itemName} />
           ))}
         </div>
       </div>
