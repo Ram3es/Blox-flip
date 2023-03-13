@@ -1,4 +1,5 @@
 export interface ISortOptions {
   title: string
-  value: any
+  direction: 'ASC' | 'DESC'
+  value: string
 }

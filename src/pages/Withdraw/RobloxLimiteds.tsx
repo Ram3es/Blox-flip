@@ -11,10 +11,10 @@ import { IItemCard } from '../../types/itemCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<IItemCard[]>(cards)
-  const { direction, searchBy, selectedCards, setSelectedCard } = useOutletContext<{ searchBy: string, direction: 'ASC' | 'DESC', selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
+  const { sortBy, direction, searchBy, selectedCards, setSelectedCard } = useOutletContext<{ sortBy: string, searchBy: string, direction: 'ASC' | 'DESC', selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
 
   const filtered = useMemo(() => searchData(allCards, 'name', searchBy), [searchBy, allCards])
-  const sorted = useMemo(() => sortData(filtered, 'price', direction), [direction, filtered])
+  const sorted = useMemo(() => sortData(filtered, sortBy as keyof IItemCard, direction), [direction, filtered, sortBy])
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
 
   const addToSelectedCard = (card: IItemCard) => {

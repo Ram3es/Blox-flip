@@ -29,7 +29,7 @@ const SortSelect: FC<ISortSelectProps> = ({ options, currentOptions, onSelect })
                 key={`${variant.title} - ${idx}`}
                 as={Button}
                 onClick={() => onSelect(variant)}
-                className='w-full capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+                className='text-start w-full capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
               >
                 {variant.title}
               </Menu.Item>))}

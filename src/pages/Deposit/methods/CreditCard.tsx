@@ -1,11 +1,11 @@
 import React from 'react'
 
-const RobloxLimiteds = () => {
+const CreditCard = () => {
   return (
         <div>
-
+            Credit
         </div>
   )
 }
 
-export default RobloxLimiteds
+export default CreditCard

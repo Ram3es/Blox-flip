@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Robux = () => {
+const RobuxDeposit = () => {
   return (
         <div>
             Robux
@@ -8,4 +8,4 @@ const Robux = () => {
   )
 }
 
-export default Robux
+export default RobuxDeposit
