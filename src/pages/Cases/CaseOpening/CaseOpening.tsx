@@ -10,9 +10,12 @@ import { PotentialDrops } from './PotentialDrops'
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
+import items from './items.json'
 
 export const CaseOpening = () => {
   const [lineCount, setLineCount] = useState<number>(1)
+  const transitionDuration = 15
+  console.log(items)
 
   return (
     <div className='max-w-1190 w-full m-auto'>
@@ -89,7 +92,7 @@ export const CaseOpening = () => {
             </div>
           </div>
           {Array.from({ length: lineCount }).map((_, i) => (
-            <CasesLine key={i} />
+            <CasesLine items={items} transitionDuration={transitionDuration} key={i} />
           ))}
         </div>
       </div>
