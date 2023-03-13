@@ -4,7 +4,7 @@ export const randomItems = (count: number) => {
   const randomItems: ICaseItem[] = []
   for (let i = 0; i < 100; i++) {
     const object = {
-      itemName: `Random item, index${i}`,
+      itemName: `item ${i + 1}`,
       rarity: '100',
       image: '',
       id: i

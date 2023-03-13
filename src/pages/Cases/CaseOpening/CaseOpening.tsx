@@ -24,7 +24,7 @@ export const CaseOpening = () => {
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
 
-  console.log('rerender')
+  console.log(rouletteItems)
 
   const transitionEndHandler = useCallback(() => {
     setIsSpin(false)
@@ -49,14 +49,14 @@ export const CaseOpening = () => {
     setTimeout(() => {
       if (itemsRef.current) {
         itemsRef.current.forEach((item) => {
-          item.style.left = `-${556}rem`
+          item.style.left = `-${6.2 * 88 + 87 * 0.375}rem`
         })
       }
     }, 1000)
   }
 
   const load = () => {
-    const winner = { itemName: 'Winning item', rarity: '100', image: '', id: 88 }
+    const winner = { itemName: 'Winning item', rarity: '100', image: '', id: 87 }
 
     setRouletteItems(() => {
       const newItems = [...rouletteItems]
@@ -71,7 +71,7 @@ export const CaseOpening = () => {
     }
 
     load()
-    spin(5)
+    spin(8)
 
     setIsSpin(true)
     setIsReplay(true)
@@ -106,12 +106,19 @@ export const CaseOpening = () => {
           <div className='flex flex-wrap justify-center relative items-start z-10 mb-4 px-4 sm:px-12 -mx-4 sm:-mx-12'>
             <div className='flex flex-wrap justify-center sm:justify-start min-w-fit mb-5 z-20 relative'>
               <div className='bg-green-primary/15 flex items-center px-1 pr-4 rounded mr-2.5 mb-2'>
-                <QuantityCoins quantity={1500} />
+                <QuantityCoins
+                  quantity={1500}
+                  iconBgHeight='6'
+                  iconBgWidth='6'
+                  iconWidth='15.4'
+                  iconHeight='13'
+                  textSize='text-base'
+                />
               </div>
               <Button
                 disabled={isSpin}
                 onClick={play}
-                className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded mb-2'
+                className='bg-green-primary hover:bg-green-500 border border-green-primary py-2 px-4 leading-4 rounded mb-2'
               >
                 Open case
               </Button>
@@ -123,6 +130,7 @@ export const CaseOpening = () => {
                     {({ checked }) => (
                       <>
                         <Button
+                          disabled={isSpin}
                           className={clsx('mx-0.5 mb-1 w-10 h-10 rounded border', {
                             'hover:bg-blue-accent-secondary/30 hover:text-white pag--active':
                               checked,
@@ -177,7 +185,11 @@ export const CaseOpening = () => {
                   onTransitionEnd={transitionEndHandler}
                 >
                   {rouletteItems?.map((item: ICaseItem) => (
-                    <CasesLineItem key={item.itemName} itemName={item.itemName} />
+                    <CasesLineItem
+                      key={item.itemName}
+                      itemName={item.itemName}
+                      itsWinning={item.id === 87}
+                    />
                   ))}
                 </div>
               </div>
@@ -189,3 +201,5 @@ export const CaseOpening = () => {
     </div>
   )
 }
+
+// overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full
