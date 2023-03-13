@@ -5,6 +5,7 @@ import { Button } from '../../components/base/Button'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
 import { dataTable } from '../../mocks/battle'
+import { GameStatus } from '../../types/enums'
 import TableBattleLobby from './TableBattleLobby'
 
 const GreenLink = ({ to, title, amount }: { to: string, title: string, amount: number }) => (
@@ -19,8 +20,8 @@ const BattleLobby = () => {
   const [currentFilterOptions, setOptions] = useState(filterOptions[0])
   const navigate = useNavigate()
 
-  const activeBattle = dataTable.filter(battle => battle.active.isRunning).length
-  const joinableBattle = dataTable.filter(battle => !battle.active.isRunning && !battle.active.finished).length
+  const activeBattle = dataTable.filter(battle => battle.status === GameStatus.Running).length
+  const joinableBattle = dataTable.filter(battle => battle.status === GameStatus.Created).length
 
   return (
     <div className=' h-full'>
@@ -44,7 +45,7 @@ const BattleLobby = () => {
             >Create Battle</Button>
           </div>
         </div>
-        <div className="pl-2 overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full py-3">
+        <div className="pl-2.5 overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full py-3">
             <TableBattleLobby data={dataTable} sortBy={currentFilterOptions.toLowerCase()} />
         </div>
       </div>

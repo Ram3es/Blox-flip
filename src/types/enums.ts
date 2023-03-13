@@ -20,3 +20,9 @@ export enum BaseSize {
   MEDIUM = 'MEDIUM',
   LARGE = 'LARGE'
 }
+
+export enum GameStatus {
+  Created = 'created',
+  Running = 'running',
+  Ended = 'ended'
+}

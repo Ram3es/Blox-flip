@@ -3,35 +3,37 @@ import clsx from 'clsx'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { IBattlesInfo } from '../../mocks/battle'
+import { GameStatus } from '../../types/enums'
+
 import BattleModeCell from './Table/BattleModeCell'
 import ButtonsCell from './Table/ButtonsCell'
 import CasesCell from './Table/CasesCell'
 import RoundCell from './Table/RoundCell'
 
-const columnHelper = createColumnHelper<IBattlesInfo>()
+const columnHelper = createColumnHelper<Pick<IBattlesInfo, 'status' | 'date' | 'gameSetting' | 'players' >>()
 const columnsMemo = [
-  columnHelper.accessor('round', {
-    id: 'round',
+  columnHelper.accessor(({ gameSetting }) => gameSetting.rounds, {
+    id: 'rounds',
     header: () => 'Rounds',
-    cell: ({ row }) => <RoundCell round={row.original.round} mode={row.original.mode} isActive={row.original.active.isRunning} />,
+    cell: ({ row: { original } }) => <RoundCell round={original.gameSetting.rounds} mode={original.gameSetting.mode} status={original.status} />,
     footer: (props) => props.column.id
   }),
-  columnHelper.accessor('cases', {
+  columnHelper.accessor(({ gameSetting }) => gameSetting.rounds, {
     id: 'cases',
     header: () => 'Cases',
-    cell: ({ row }) => <CasesCell isActive ={row.original.active.isRunning} currentRound={row.original.active?.currentRound} isFinished={row.original.active.finished}/>,
+    cell: ({ row: { original } }) => <CasesCell status={original.status} totalRounds={original.gameSetting.rounds} currentRound={original.gameSetting?.currentRound} />,
     footer: (props) => props.column.id
   }),
-  columnHelper.accessor('mode', {
+  columnHelper.accessor(({ gameSetting }) => gameSetting.mode, {
     id: 'mode',
     header: () => 'Mode',
-    cell: ({ row }) => <BattleModeCell mode={row.original.mode} isFinished={row.original.active.finished} />,
+    cell: ({ row: { original } }) => <BattleModeCell status={original.status} mode={original.gameSetting.mode} users={original.players} />,
     footer: (props) => props.column.id
   }),
-  columnHelper.accessor('price', {
+  columnHelper.accessor(({ gameSetting }) => gameSetting.price, {
     id: 'price',
     header: () => 'Price',
-    cell: ({ row }) => <QuantityCoins quantity={row.original.price} iconHeight='12' iconWidth='15' iconBgHeight='5' iconBgWidth='5' textSize='text-sm' />,
+    cell: ({ row: { original } }) => <QuantityCoins quantity={original.gameSetting.price} iconHeight='12' iconWidth='15' iconBgHeight='5' iconBgWidth='5' textSize='text-sm' />,
     footer: (props) => props.column.id
   }),
   columnHelper.accessor('date', {
@@ -41,10 +43,10 @@ const columnsMemo = [
     enableHiding: true,
     footer: (props) => props.column.id
   }),
-  columnHelper.accessor('active', {
+  columnHelper.accessor(({ gameSetting }) => gameSetting, {
     id: 'active',
     header: () => 'Active',
-    cell: ({ row }) => <ButtonsCell isActive ={row.original.active.isRunning} isFinished={row.original.active.finished} />,
+    cell: ({ row: { original } }) => <ButtonsCell status={ original.status} />,
     footer: (props) => props.column.id
   })
 ]
@@ -70,11 +72,7 @@ const TableBattleLobby: FC<ITableProps> = ({ data, sortBy }) => {
   })
 
   useEffect(() => {
-    if (sortBy && sortBy === 'date') {
-      sortBy && setSorting([{ id: sortBy, desc: true }])
-    } else {
-      sortBy && setSorting([{ id: sortBy, desc: false }])
-    }
+    sortBy && setSorting([{ id: sortBy, desc: true }])
   }, [sortBy])
 
   return (
@@ -99,12 +97,12 @@ const TableBattleLobby: FC<ITableProps> = ({ data, sortBy }) => {
                <tr
                  key={row.id}
                  className={clsx('', {
-                   'battle_td--radial-green overflow-hidden relative': !row.original.active.finished,
-                   'battle_td--radial-gray overflow-hidden relative': row.original.active.finished
+                   'battle_td--radial-green overflow-hidden relative': Boolean(row.original.status !== GameStatus.Ended),
+                   'battle_td--radial-gray overflow-hidden relative': Boolean(row.original.status === GameStatus.Ended)
                  })}
                  >
                 {row.getVisibleCells().map((cell, i, a) => {
-                  const isActive = cell.row.original.active.isRunning
+                  const isActive = cell.row.original.status === GameStatus.Running
                   return (
                     <td
                       className={clsx('border py-2.5 px-2', {
