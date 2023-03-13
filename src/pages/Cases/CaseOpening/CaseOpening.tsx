@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
@@ -20,15 +20,15 @@ export const CaseOpening = () => {
   const [lineCount, setLineCount] = useState<number>(1)
 
   const [rouletteItems, setRouletteItems] = useState(randomItems(100))
-  const [isReplay, setIsReplay] = useState(false)
+  const [isReply, setIsReply] = useState(false)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
-
-  console.log(rouletteItems)
 
   const transitionEndHandler = useCallback(() => {
     setIsSpin(false)
   }, [isSpin])
+
+  console.log(isReply)
 
   const reset = () => {
     if (itemsRef.current) {
@@ -42,7 +42,7 @@ export const CaseOpening = () => {
   const spin = (time: number) => {
     if (itemsRef.current) {
       itemsRef.current.forEach((item) => {
-        item.style.transition = `left ${time}s ease-out`
+        item.style.transition = `left ${time}s cubic-bezier(0.12, 0.8, 0.38, 1)`
       })
     }
 
@@ -56,7 +56,7 @@ export const CaseOpening = () => {
   }
 
   const load = () => {
-    const winner = { itemName: 'Winning item', rarity: '100', image: '', id: 87 }
+    const winner = { itemName: `Winning item ${Math.random()}`, rarity: '100', image: '', id: 87 }
 
     setRouletteItems(() => {
       const newItems = [...rouletteItems]
@@ -66,16 +66,23 @@ export const CaseOpening = () => {
   }
 
   const play = () => {
-    if (isReplay) {
+    if (isReply) {
+      load()
       reset()
     }
 
     load()
     spin(8)
-
     setIsSpin(true)
-    setIsReplay(true)
+    setIsReply(true)
   }
+
+  useEffect(() => {
+    if (isReply) {
+      load()
+      reset()
+    }
+  }, [lineCount])
 
   return (
     <div className='max-w-1190 w-full m-auto'>
@@ -184,12 +191,8 @@ export const CaseOpening = () => {
                   }}
                   onTransitionEnd={transitionEndHandler}
                 >
-                  {rouletteItems?.map((item: ICaseItem) => (
-                    <CasesLineItem
-                      key={item.itemName}
-                      itemName={item.itemName}
-                      itsWinning={item.id === 87}
-                    />
+                  {rouletteItems.map((item: ICaseItem) => (
+                    <CasesLineItem key={item.itemName} itsWinning={item.id === 87} />
                   ))}
                 </div>
               </div>
@@ -201,5 +204,3 @@ export const CaseOpening = () => {
     </div>
   )
 }
-
-// overflow-x-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full
