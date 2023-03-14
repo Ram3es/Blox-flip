@@ -12,17 +12,36 @@ import { PotentialDrops } from './PotentialDrops'
 
 import { ArrowGrayIcon } from '../../../components/ArrowGrayIcon/ArrowGrayIcon'
 import { FairIcon } from '../../../components/icons/FairIcon'
-import UnboxingIcon from '../../../components/icons/UnboxingIcon'
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
+import UnboxingIcon from '../../../components/icons/UnboxingIcon'
 import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {
   const [lineCount, setLineCount] = useState<number>(1)
-
-  const [rouletteItems, setRouletteItems] = useState(randomItems(100))
   const [isReply, setIsReply] = useState(false)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
+
+  const [rouletteItems, setRouletteItems] = useState([{ items: randomItems(100) }])
+
+  const refreshLinesByCount = (count: number) => {
+    const localLineCount = Math.min(count, 4)
+    setRouletteItems((prevItems) => {
+      const newItems = [...prevItems]
+      if (newItems.length > localLineCount) {
+        newItems.splice(localLineCount)
+      } else if (newItems.length < localLineCount) {
+        for (let i = newItems.length; i < localLineCount; i++) {
+          newItems.push({ items: randomItems(100) })
+        }
+      }
+      return newItems
+    })
+  }
+
+  useEffect(() => {
+    refreshLinesByCount(lineCount)
+  }, [lineCount])
 
   const transitionEndHandler = useCallback(() => {
     setIsSpin(false)
@@ -54,16 +73,18 @@ export const CaseOpening = () => {
   }
 
   const load = () => {
-    const winner = {
-      itemName: 'Winning item',
-      rarity: '100',
-      image: imageVariants[Math.floor(Math.random() * imageVariants.length)],
-      id: 87 * Math.random()
-    }
-
-    setRouletteItems(() => {
-      const newItems = [...rouletteItems]
-      newItems[87] = winner
+    setRouletteItems((prevItems) => {
+      const newItems = [...prevItems]
+      for (let i = 0; i < newItems.length; i++) {
+        const newItem = [...newItems[i].items]
+        newItem[87] = {
+          itemName: 'Winning item',
+          rarity: '100',
+          image: imageVariants[Math.floor(Math.random() * imageVariants.length)],
+          id: 87 * Math.random()
+        }
+        newItems[i] = { items: newItem }
+      }
       return newItems
     })
   }
@@ -173,7 +194,7 @@ export const CaseOpening = () => {
               <div className='bg-gradient-to-r from:bg-blue-highlight/0 to-bg-blue-highlight h-px grow'></div>
             </div>
           </div>
-          {Array.from({ length: lineCount }).map((_, index) => (
+          {rouletteItems.map((item, index) => (
             <div
               key={index + 1}
               className='flex py-3 relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded justify-center'
@@ -194,7 +215,7 @@ export const CaseOpening = () => {
                   }}
                   onTransitionEnd={transitionEndHandler}
                 >
-                  {rouletteItems.map((item: ICaseItem, index) => (
+                  {item.items.map((item: ICaseItem, index) => (
                     <CasesLineItem key={item.id} itsWinning={index === 87} image={item.image} />
                   ))}
                 </div>

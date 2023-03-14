@@ -4,7 +4,7 @@ export const imageVariants = ['helmet', 'redCrown', 'horns']
 
 export const randomItems = (count: number) => {
   const randomItems: ICaseItem[] = []
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < count; i++) {
     const object = {
       itemName: `item ${i + 1}`,
       rarity: '100',
