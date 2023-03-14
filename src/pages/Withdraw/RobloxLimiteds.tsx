@@ -20,7 +20,7 @@ const RobloxLimiteds = () => {
     setSelectedCard
   } = useOutletContext<{ sortBy?: string, searchBy: string, direction?: 'ASC' | 'DESC', priceRange: { from: number, to: number }, selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
 
-  const ranged = useMemo(() => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange])
+  const ranged = useMemo(() => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, allCards])
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, allCards, ranged])
   const sorted = useMemo(() => {
     if (sortBy && direction) {

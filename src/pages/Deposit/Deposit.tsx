@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import ToolBar from '../../components/common/ToolBar'
 import NavHeader from '../../components/Navigate/NavHeader'
-import { sortingVariants } from '../../constants/Sorting'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import Methods from './methods/Methods'
 
@@ -17,7 +16,7 @@ export const Deposit = () => {
     sortOptions,
     setPriceRange,
     setSortOptions
-  } = useToolbarState(sortingVariants)
+  } = useToolbarState()
 
   const contextOutlet = useMemo(() => ({
     searchBy,

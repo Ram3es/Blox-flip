@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import ItemCard from '../../components/base/ItemCard'
 import UnboxingCard from '../../components/base/UnboxingCard'
@@ -6,38 +6,39 @@ import GreenTipSelect from '../../components/common/GreenTipSelect'
 import SearchInput from '../../components/common/SearchInput'
 import SortSelect from '../../components/common/SortSelect'
 import UnboxingIcon from '../../components/icons/UnboxingIcon'
-import { useDebounce } from '../../helpers/hooks/useDebounce'
+import { sortingVariants } from '../../constants/Sorting'
+import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import { searchData } from '../../helpers/searchData'
 import { cards, unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/itemCard'
-
-const sortOptions = [{ title: 'Recomended', value: 'all' }, { title: 'Best Price', value: 'cheap' }]
+import { sortData } from '../../helpers/sortData'
 
 const tabs = ['Hot', 'Featured', 'New', 'Creator']
 
-const filterBy = (data: IItemCard[], filterBy: any) => {
-  switch (filterBy) {
-    case 'cheap':
-      return data.filter(item => item.price < 1000)
-    case 'all':
-      return data
-    default: return data
-  }
-}
 const Unboxing = () => {
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
-  const [sortingVariant, setSortVariant] = useState(sortOptions[0])
-  const [inputSearchValue, setSearchValue] = useState('')
-  const [searchBy, setSearchBy] = useState('')
 
-  const debounce = useDebounce()
+  const {
+    value,
+    searchBy,
+    onChange,
+    sortOptions,
+    priceRange,
+    setPriceRange,
+    setSortOptions
+  } = useToolbarState()
 
-  const sorted = useMemo(() => filterBy(unboxCard, sortingVariant.value), [sortingVariant])
-  const filtered = useMemo(() => searchData(sorted, 'name', searchBy), [searchBy, sorted])
+  const ranged = useMemo(() => unboxCard.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, unboxCard])
+  const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, ranged])
+  const sorted = useMemo(() => {
+    if (sortOptions) {
+      const { direction, sortBy } = sortOptions
+      return sortData(filtered, sortBy as keyof IItemCard, direction)
+    } else {
+      return filtered
+    }
+  }, [sortOptions, filtered])
 
-  useEffect(() => {
-    debounce(() => setSearchBy(inputSearchValue))
-  }, [inputSearchValue])
   return (
     <div className="flex flex-col min-h-full text-sm ">
       <div className="max-w-1190 w-full m-auto">
@@ -63,9 +64,9 @@ const Unboxing = () => {
               <h3 className="font-extrabold text-2xl mr-2">Case unboxing</h3>
             </div>
             <div className="flex flex-wrap items-center gap-2 -mx-1 py-2 order-2 lg:order-3">
-              <SortSelect options={sortOptions} onSelect={setSortVariant} currentOptions={sortingVariant.title} />
-              <GreenTipSelect onSelect={() => {}} />
-              <SearchInput value={inputSearchValue} onChange={setSearchValue} />
+              <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions?.title} />
+              <GreenTipSelect onSelect={setPriceRange} />
+              <SearchInput value={value} onChange={onChange} />
 
             </div>
             <div className="flex flex-wrap items-center min-w-full order-3 lg:min-w-0 lg:order-2 text-17 font-semibold">
@@ -80,7 +81,7 @@ const Unboxing = () => {
         </div>
         <div className="flex flex-wrap items-center -mx-1 py-2 order-2 lg:order-3"></div>
         <div className="flex flex-wrap -mx-2 mb-8 md:mb-12">
-          {filtered.map(card => (
+          {sorted.map(card => (
             <UnboxingCard
               key={card.id}
               name={card.name}

@@ -3,7 +3,7 @@ import { selectItem } from '../../constants/Sorting'
 import { ISortOptions } from '../../types/sortOptions'
 import { useDebounce } from './useDebounce'
 
-export const useToolbarState = (sorting: ISortOptions[]) => {
+export const useToolbarState = () => {
   const [value, onChange] = useState('')
   const [searchBy, setSearchBy] = useState('')
   const [priceRange, setPriceRange] = useState(selectItem[0])

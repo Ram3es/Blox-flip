@@ -22,13 +22,13 @@ export const Withdraw = () => {
     priceRange,
     setPriceRange,
     setSortOptions
-  } = useToolbarState(sortingVariants)
+  } = useToolbarState()
 
   const currentPath = pathname.split('/')[2]
 
   const contextOutlet = useMemo(() => ({
     searchBy,
-    sortBy: sortOptions?.value,
+    sortBy: sortOptions?.sortBy,
     direction: sortOptions?.direction,
     priceRange,
     selectedCards,

@@ -1,9 +1,9 @@
 import { ISortOptions } from '../types/sortOptions'
 
 export const sortingVariants: ISortOptions [] = [
-  { title: 'A - Z', value: 'name', direction: 'ASC' },
-  { title: 'High to low', value: 'price', direction: 'DESC' },
-  { title: 'Low to high', value: 'price', direction: 'ASC' }
+  { title: 'A - Z', sortBy: 'name', direction: 'ASC' },
+  { title: 'High to low', sortBy: 'price', direction: 'DESC' },
+  { title: 'Low to high', sortBy: 'price', direction: 'ASC' }
 
 ]
 
