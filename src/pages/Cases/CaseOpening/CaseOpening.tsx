@@ -3,7 +3,7 @@ import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { ICaseItem } from '../../../types/cases'
-import { randomItems } from '../../../helpers/casesHelpers'
+import { imageVariants, randomItems } from '../../../helpers/casesHelpers'
 
 import { Button } from '../../../components/base/Button'
 import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
@@ -54,7 +54,12 @@ export const CaseOpening = () => {
   }
 
   const load = () => {
-    const winner = { itemName: 'Winning item', rarity: '100', image: '', id: 87 * Math.random() }
+    const winner = {
+      itemName: 'Winning item',
+      rarity: '100',
+      image: imageVariants[Math.floor(Math.random() * imageVariants.length)],
+      id: 87 * Math.random()
+    }
 
     setRouletteItems(() => {
       const newItems = [...rouletteItems]
@@ -95,7 +100,7 @@ export const CaseOpening = () => {
         </div>
         <div className='flex items-center mb-4 mx-2'>
           <div className='w-6 shrink-0 mr-3 text-blue-golf'>
-            <UnboxingIcon iconClasses='w-6 h-6 '/>
+            <UnboxingIcon iconClasses='w-6 h-6 ' />
           </div>
           <span className='text-2xl font-bold'>Diamond Case</span>
         </div>
@@ -190,7 +195,7 @@ export const CaseOpening = () => {
                   onTransitionEnd={transitionEndHandler}
                 >
                   {rouletteItems.map((item: ICaseItem, index) => (
-                    <CasesLineItem key={item.id} itsWinning={index === 87} />
+                    <CasesLineItem key={item.id} itsWinning={index === 87} image={item.image} />
                   ))}
                 </div>
               </div>
