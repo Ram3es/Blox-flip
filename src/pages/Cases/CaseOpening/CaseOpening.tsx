@@ -12,7 +12,7 @@ import { PotentialDrops } from './PotentialDrops'
 
 import { ArrowGrayIcon } from '../../../components/ArrowGrayIcon/ArrowGrayIcon'
 import { FairIcon } from '../../../components/icons/FairIcon'
-import { UnboxingIcon } from '../../../components/icons/UnboxingIcon'
+import UnboxingIcon from '../../../components/icons/UnboxingIcon'
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import ItemBig from '../../../assets/img/item_big1.png'
 
@@ -94,8 +94,8 @@ export const CaseOpening = () => {
           </Button>
         </div>
         <div className='flex items-center mb-4 mx-2'>
-          <div className='w-6 shrink-0 mr-3'>
-            <UnboxingIcon />
+          <div className='w-6 shrink-0 mr-3 text-blue-golf'>
+            <UnboxingIcon iconClasses='w-6 h-6 '/>
           </div>
           <span className='text-2xl font-bold'>Diamond Case</span>
         </div>
