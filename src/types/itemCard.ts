@@ -4,7 +4,8 @@ export interface IItemCard {
   price: number
   image: string
   sold: boolean
-  active: boolean
+  active?: boolean
   color: string
-  isSelected: boolean
+  isSelected?: boolean
+  hot?: boolean
 }

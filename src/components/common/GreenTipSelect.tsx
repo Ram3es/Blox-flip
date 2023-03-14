@@ -7,13 +7,14 @@ import TriangleArrow from '../icons/TriangleArrow'
 
 interface IGreenSelectProps {
   onSelect: Function
+  selectClasses?: string
 }
 
 const selectItem = [{ title: 'Tip Rain Tip RainTip Rain', value: '77777' }, { title: 'Tip Rain', value: '5555' }]
 
-const GreenTipSelect: FC<IGreenSelectProps> = ({ onSelect }) => {
+const GreenTipSelect: FC<IGreenSelectProps> = ({ onSelect, selectClasses }) => {
   return (
-    <div className='h-fit relative mb-8 xss:mb-0'>
+    <div className={selectClasses ?? 'h-fit relative'}>
     <Menu>
     <Menu.Button
       as={Button}
