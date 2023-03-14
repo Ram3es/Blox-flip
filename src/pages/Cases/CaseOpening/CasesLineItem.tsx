@@ -3,15 +3,18 @@ import FirstCase from '../../../assets/img/case1.png'
 
 interface CaseLineItemProps {
   itsWinning: boolean
+  itemName: string
 }
 
-export const CasesLineItem: FC<CaseLineItemProps> = ({ itsWinning }) => {
+export const CasesLineItem: FC<CaseLineItemProps> = ({ itsWinning, itemName }) => {
   const itemRef = useRef<HTMLDivElement>(null)
   if (itsWinning) {
     if (itemRef.current) {
       itemRef.current.style.opacity = '1'
     }
   }
+
+  //mx-1.5 w-16 h-16 xxs:w-20 xxs:h-20 xs:w-24 xs:h-24 shrink-0 relative z-10
 
   return (
     <div
@@ -30,6 +33,7 @@ export const CasesLineItem: FC<CaseLineItemProps> = ({ itsWinning }) => {
               decoding='async'
               className='absolute object-contain w-full h-full'
             />
+            {itemName}
           </div>
         </div>
       </div>

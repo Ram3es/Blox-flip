@@ -28,8 +28,6 @@ export const CaseOpening = () => {
     setIsSpin(false)
   }, [isSpin])
 
-  console.log(isReply)
-
   const reset = () => {
     if (itemsRef.current) {
       itemsRef.current.forEach((item) => {
@@ -43,13 +41,20 @@ export const CaseOpening = () => {
     if (itemsRef.current) {
       itemsRef.current.forEach((item) => {
         item.style.transition = `left ${time}s cubic-bezier(0.12, 0.8, 0.38, 1)`
+        // item.style.transform = 'translateX(0rem)'
+        // item.style.transitionTimingFunction = 'cubic-bezier(0.12, 0.8, 0.38, 1)'
+        // item.style.transitionDuration = '0s'
       })
     }
 
     setTimeout(() => {
       if (itemsRef.current) {
         itemsRef.current.forEach((item) => {
-          item.style.left = `-${6.2 * 88 + 87 * 0.375}rem`
+          item.style.left = `-${6.2 * 88 + 87 * 0.375}rem` // + 24
+          // item.style.left = `-${342}rem` // 320 x 484
+          // item.style.transform = `translateX(${-8 * 78 - 10}rem)`
+          // item.style.transitionTimingFunction = 'cubic-bezier(0.12, 0.8, 0.38, 1)'
+          // item.style.transitionDuration = `${time}s`
         })
       }
     }, 1000)
@@ -173,28 +178,30 @@ export const CaseOpening = () => {
           {Array.from({ length: lineCount }).map((_, index) => (
             <div
               key={index + 1}
-              className='relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded'
+              className='flex py-3 relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded'
             >
-              <div className='flex py-3'>
-                <div className='absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1'>
-                  <OpeningLineIcon />
-                </div>
-                <div className='absolute left-1/2 -ml-0.5 bottom-0 z-20 rotate-180 w-0.5 xs:w-1'>
-                  <OpeningLineIcon />
-                </div>
-                <div
-                  className='whitespace-nowrap relative left-0 flex'
-                  ref={(item) => {
-                    if (item !== null) {
-                      itemsRef.current[index] = item
-                    }
-                  }}
-                  onTransitionEnd={transitionEndHandler}
-                >
-                  {rouletteItems.map((item: ICaseItem) => (
-                    <CasesLineItem key={item.itemName} itsWinning={item.id === 87} />
-                  ))}
-                </div>
+              <div className='absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1'>
+                <OpeningLineIcon />
+              </div>
+              <div className='absolute left-1/2 -ml-0.5 bottom-0 z-20 rotate-180 w-0.5 xs:w-1'>
+                <OpeningLineIcon />
+              </div>
+              <div
+                className='whitespace-nowrap relative left-0 flex'
+                ref={(item) => {
+                  if (item !== null) {
+                    itemsRef.current[index] = item
+                  }
+                }}
+                onTransitionEnd={transitionEndHandler}
+              >
+                {rouletteItems.map((item: ICaseItem) => (
+                  <CasesLineItem
+                    key={item.itemName}
+                    itsWinning={item.id === 87}
+                    itemName={item.itemName}
+                  />
+                ))}
               </div>
             </div>
           ))}
