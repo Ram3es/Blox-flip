@@ -13,20 +13,28 @@ export const Deposit = () => {
     value,
     searchBy,
     onChange,
+    priceRange,
     sortOptions,
+    setPriceRange,
     setSortOptions
   } = useToolbarState(sortingVariants)
 
   const contextOutlet = useMemo(() => ({
     searchBy,
-    sortBy: sortOptions
-  }), [searchBy, sortOptions])
+    sortBy: sortOptions,
+    priceRange
+  }), [searchBy, sortOptions, priceRange])
 
   return (
     <div className="max-w-1190 w-full mx-auto">
       <NavHeader title='Deposit' path={currentPath} >
       {currentPath === 'roblox-limiteds' && (
-        <ToolBar value={value} onChange={onChange} setSortOptions={setSortOptions} currentOption={sortOptions.title} />
+        <ToolBar
+          value={value}
+          onChange={onChange}
+          setSortOptions={setSortOptions}
+          currentOption={sortOptions?.title}
+          setPriceRange={setPriceRange} />
       ) }
       </NavHeader>
       { pathname === '/deposit' ? <Methods /> : <Outlet context={contextOutlet}/>}

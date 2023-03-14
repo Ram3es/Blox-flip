@@ -19,6 +19,8 @@ export const Withdraw = () => {
     searchBy,
     onChange,
     sortOptions,
+    priceRange,
+    setPriceRange,
     setSortOptions
   } = useToolbarState(sortingVariants)
 
@@ -26,11 +28,12 @@ export const Withdraw = () => {
 
   const contextOutlet = useMemo(() => ({
     searchBy,
-    sortBy: sortOptions.value,
-    direction: sortOptions.direction,
+    sortBy: sortOptions?.value,
+    direction: sortOptions?.direction,
+    priceRange,
     selectedCards,
     setSelectedCard
-  }), [searchBy, sortOptions, selectedCards])
+  }), [searchBy, sortOptions, selectedCards, priceRange])
 
   return (
       <div className=' w-full'>
@@ -38,8 +41,8 @@ export const Withdraw = () => {
           <NavHeader title='Withdraw' path={currentPath} >
             {currentPath === 'roblox-limiteds' && (
                 <div className='flex flex-wrap gap-x-3 gap-y-8 mb-8' >
-                  <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions.title} />
-                  <GreenTipSelect onSelect={() => {}} />
+                  <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions?.title} />
+                  <GreenTipSelect onSelect={setPriceRange} />
                   <SearchInput value={ value } onChange={onChange} />
                 </div>
             ) }

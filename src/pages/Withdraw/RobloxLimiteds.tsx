@@ -11,10 +11,24 @@ import { IItemCard } from '../../types/itemCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<IItemCard[]>(cards)
-  const { sortBy, direction, searchBy, selectedCards, setSelectedCard } = useOutletContext<{ sortBy: string, searchBy: string, direction: 'ASC' | 'DESC', selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
+  const {
+    sortBy,
+    direction,
+    searchBy,
+    priceRange,
+    selectedCards,
+    setSelectedCard
+  } = useOutletContext<{ sortBy?: string, searchBy: string, direction?: 'ASC' | 'DESC', priceRange: { from: number, to: number }, selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
 
-  const filtered = useMemo(() => searchData(allCards, 'name', searchBy), [searchBy, allCards])
-  const sorted = useMemo(() => sortData(filtered, sortBy as keyof IItemCard, direction), [direction, filtered, sortBy])
+  const ranged = useMemo(() => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange])
+  const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, allCards, ranged])
+  const sorted = useMemo(() => {
+    if (sortBy && direction) {
+      return sortData(filtered, sortBy as keyof IItemCard, direction)
+    } else {
+      return filtered
+    }
+  }, [direction, filtered, sortBy])
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
 
   const addToSelectedCard = (card: IItemCard) => {

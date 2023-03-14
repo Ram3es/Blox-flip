@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
+import { selectItem } from '../../constants/Sorting'
 import { ISortOptions } from '../../types/sortOptions'
 import { useDebounce } from './useDebounce'
 
 export const useToolbarState = (sorting: ISortOptions[]) => {
   const [value, onChange] = useState('')
   const [searchBy, setSearchBy] = useState('')
-  const [sortOptions, setSortOptions] = useState<ISortOptions>(sorting[0])
+  const [priceRange, setPriceRange] = useState(selectItem[0])
+  const [sortOptions, setSortOptions] = useState<ISortOptions | null>(null)
 
   const debounce = useDebounce()
 
@@ -17,7 +19,9 @@ export const useToolbarState = (sorting: ISortOptions[]) => {
     onChange,
     sortOptions,
     setSortOptions,
-    searchBy
+    searchBy,
+    priceRange: priceRange.value,
+    setPriceRange
 
   }
 }

@@ -2,12 +2,13 @@ import React from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 const RobloxLimitedsDeposit = () => {
-  const { searchBy, sortBy } = useOutletContext<any>()
+  const { priceRange, searchBy, sortBy } = useOutletContext<any>()
+  console.log(priceRange)
   return (
         <div>
           {searchBy}
-          {sortBy.direction}
-          {sortBy.value}
+          {sortBy?.direction}
+          {sortBy?.value}
         </div>
   )
 }

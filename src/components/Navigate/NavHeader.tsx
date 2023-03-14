@@ -8,6 +8,8 @@ import PageLabel from './PageLabel'
 const pageLabels: Record<string, { title: string, image: string }> = {
   robux: { title: 'Robux', image: 'robuxDeposite' },
   bitcoin: { title: 'Bitcoin', image: 'bitcoinSmall' },
+  ethereum: { title: 'Ethereum', image: 'ethereum' },
+  litecoin: { title: 'Litecoin', image: 'litecoin' },
   g2a: { title: 'G2A', image: 'g2a' },
   kinguin: { title: 'Kinguin', image: 'kinguinSmall' },
   'credit-card': { title: 'Credit Card', image: 'creditCard' },
