@@ -7,8 +7,8 @@ import { GameStatus } from '../../../types/enums'
 
 const CasesCell = ({ status, totalRounds, currentRound }: { status: string, totalRounds: number, currentRound?: number }) => {
   return (
-    <div className=" min-w-[480px] flex items-center ">
-      <div className='flex items-center justify-start rounded border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10 p-1'>
+    <div className=" min-w-[485px] flex items-center  ">
+      <div className={`${totalRounds > 7 ? 'pb-5 scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full' : ''}  flex items-center justify-start rounded border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10 p-1  `}>
           {Array.from(Array(totalRounds)).map((_, i) => (
             <div key={i} className=" relative px-1.5 py-3 w-17 shrink-0">
               <img src={IMAGES.greenBox} alt=""

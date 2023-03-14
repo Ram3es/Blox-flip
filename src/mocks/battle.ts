@@ -39,7 +39,7 @@ export const dataTable: IBattlesInfo[] = [
     status: 'running',
     players: [{ id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }],
     gameSetting: {
-      rounds: 7,
+      rounds: 12,
       price: 17000,
       mode: { variant: '1v1v1', requiredPlayers: 3 },
       currentRound: 4

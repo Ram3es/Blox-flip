@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { Button } from '../../../components/base/Button'
+import Loader from '../../../components/base/Loader'
 import DaggersIcons from '../../../components/icons/DaggersIcons'
 import PreviewIcon from '../../../components/icons/PreviewIcon'
 import SelectedIcon from '../../../components/icons/SelectedIcon'
-import Spiner from '../../../components/icons/Spiner'
 import { GameStatus } from '../../../types/enums'
 
 const ButtonsCell = ({ status }: { status: string }) => {
@@ -25,7 +25,7 @@ const ButtonsCell = ({ status }: { status: string }) => {
             onClick={() => { console.log('Stats') }}
             className='grow rounded px-4 py-2 leading-6 flex items-center justify-center bg-green-primary/30 border border-green-primary text-green-primary whitespace-nowrap'
               >
-               <Spiner />
+               <Loader />
               <span className='ml-2'>Running</span>
               </Button>
         )
