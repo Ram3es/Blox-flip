@@ -6,6 +6,7 @@ import robloxDeposite from '../assets/img/deposit1.png'
 import robuxDeposite from '../assets/img/deposit2.png'
 import emeraldsDeposite from '../assets/img/deposit2_small.png'
 import hatsDeposite from '../assets/img/deposit1_small.png'
+import avatar from '../assets/img/avatar_img.png'
 
 export const IMAGES: Record<string, string> = {
   horns,
@@ -15,5 +16,6 @@ export const IMAGES: Record<string, string> = {
   robloxDeposite,
   robuxDeposite,
   emeraldsDeposite,
-  hatsDeposite
+  hatsDeposite,
+  avatar
 }
