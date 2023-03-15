@@ -136,7 +136,7 @@ export const CaseOpening = () => {
           <div className='w-6 shrink-0 mr-3 text-blue-golf'>
             <UnboxingIcon iconClasses='w-6 h-6 ' />
           </div>
-          <span className='text-2xl font-bold'>{`Diamond Case ${id}`}</span>
+          <span className='text-2xl font-bold'>{`Diamond Case ${String(id)}`}</span>
         </div>
         <Button className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-3.5 py-1 leading-6 cursor-pointer mb-4 flex items-center'>
           <div className='w-4 shrink-0 mr-2.5'>
