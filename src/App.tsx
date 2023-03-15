@@ -19,6 +19,7 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
+import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 
 export const App = () => {
   return (
@@ -46,6 +47,7 @@ export const App = () => {
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
           <Route path='/unboxing' element={<Unboxing />} />
+          <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
         </Routes>
       </Container>

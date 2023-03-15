@@ -16,5 +16,4 @@ export const IMAGES: Record<string, string> = {
   robuxDeposite,
   emeraldsDeposite,
   hatsDeposite
-
 }
