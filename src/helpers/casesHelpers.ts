@@ -1,7 +1,5 @@
-import { ICaseItem } from '../types/cases'
-
-export const getRandomCards = (count: number, availableCards: ICaseItem[]) => {
-  const cards: ICaseItem[] = []
+export const getRandomCards = <T extends object>(count: number, availableCards: T[]): T[] => {
+  const cards: T[] = []
 
   for (let i = 0; i < count; i++) {
     const randomCardIndex = Math.floor(Math.random() * availableCards.length)
