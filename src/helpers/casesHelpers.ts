@@ -1,11 +1,11 @@
 import { ICaseItem } from '../types/cases'
 
-export const getRandomCards = (count: number, availableItems: ICaseItem[]) => {
+export const getRandomCards = (count: number, availableCards: ICaseItem[]) => {
   const cards: ICaseItem[] = []
 
   for (let i = 0; i < count; i++) {
-    const randomCardIndex = Math.floor(Math.random() * availableItems.length)
-    const randomCard = availableItems[randomCardIndex]
+    const randomCardIndex = Math.floor(Math.random() * availableCards.length)
+    const randomCard = availableCards[randomCardIndex]
 
     const card = {
       itemName: randomCard.itemName,
