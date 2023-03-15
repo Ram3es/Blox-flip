@@ -105,7 +105,12 @@ export const CaseOpening = () => {
   const play = () => {
     if (isReply) {
       reset()
-      load()
+      setTimeout(() => {
+        load()
+        spin(8)
+        setIsSpin(true)
+      }, 10)
+      return
     }
 
     load()
