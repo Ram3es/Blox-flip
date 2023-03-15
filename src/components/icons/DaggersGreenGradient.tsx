@@ -1,0 +1,37 @@
+import React from 'react'
+
+const DaggersGreenGradient = ({ iconClasses }: { iconClasses?: string }) => {
+  return (
+    <svg className={iconClasses ?? ''} width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.1816 27.1489L12.438 22.3081L11.248 23.7201C10.5448 23.3153 9.75297 23.0817 8.91868 23.0817C7.66438 23.0817 6.48797 23.5681 5.60446 24.4515L15.5482 34.3953C17.077 32.8665 17.3086 30.5426 16.2799 28.7515L18.1816 27.1489Z" fill="url(#paint0_linear_205_2924)"/>
+    <path d="M31.0801 23.0819C30.2483 23.0819 29.4588 23.3143 28.7576 23.7169L8.74211 0H0V8.74211L23.717 28.7576C22.692 30.5479 22.9247 32.8684 24.4517 34.3955L34.3955 24.4518C33.512 23.5683 32.3344 23.0819 31.0801 23.0819ZM12.5419 14.199L4.1782 5.83531L5.83531 4.1782L14.199 12.5419L12.5419 14.199Z" fill="url(#paint1_linear_205_2924)"/>
+    <path d="M36.2828 32.9689L32.7383 29.4233L29.4232 32.7384L32.9687 36.2828V40.0001H40V32.9689H36.2828Z" fill="url(#paint2_linear_205_2924)"/>
+    <path d="M7.26172 29.4233L3.71734 32.9689H0V40.0001H7.03125V36.2829L10.5768 32.7384L7.26172 29.4233Z" fill="url(#paint3_linear_205_2924)"/>
+    <path d="M31.2521 0L21.5325 11.5178L27.8438 19.0059L40 8.74789V0H31.2521ZM27.4581 14.199L25.801 12.5419L34.1647 4.1782L35.8218 5.83531L27.4581 14.199Z" fill="url(#paint4_linear_205_2924)"/>
+    <defs>
+    <linearGradient id="paint0_linear_205_2924" x1="11.893" y1="22.3081" x2="11.893" y2="34.3953" gradientUnits="userSpaceOnUse">
+    <stop stopColor="#6DFF9F"/>
+    <stop offset="1" stopColor="#00FF56"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear_205_2924" x1="17.1977" y1="0" x2="17.1977" y2="34.3955" gradientUnits="userSpaceOnUse">
+    <stop stopColor="#6DFF9F"/>
+    <stop offset="1" stopColor="#00FF56"/>
+    </linearGradient>
+    <linearGradient id="paint2_linear_205_2924" x1="34.7116" y1="29.4233" x2="34.7116" y2="40.0001" gradientUnits="userSpaceOnUse">
+    <stop stopColor="#6DFF9F"/>
+    <stop offset="1" stopColor="#00FF56"/>
+    </linearGradient>
+    <linearGradient id="paint3_linear_205_2924" x1="5.2884" y1="29.4233" x2="5.2884" y2="40.0001" gradientUnits="userSpaceOnUse">
+    <stop stopColor="#6DFF9F"/>
+    <stop offset="1" stopColor="#00FF56"/>
+    </linearGradient>
+    <linearGradient id="paint4_linear_205_2924" x1="30.7663" y1="0" x2="30.7663" y2="19.0059" gradientUnits="userSpaceOnUse">
+    <stop stopColor="#6DFF9F"/>
+    <stop offset="1" stopColor="#00FF56"/>
+    </linearGradient>
+    </defs>
+    </svg>
+  )
+}
+
+export default DaggersGreenGradient
