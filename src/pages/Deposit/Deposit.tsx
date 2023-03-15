@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { RobuxTransactionForm } from '../../components/base/RobuxTransactionForm'
+
 import { localeStringToNumber } from '../../helpers/numbersFormatter'
 import { defaultAmountSchema } from '../../helpers/yupSchema'
 import { WithdrawInputState } from '../../types/form'
@@ -31,7 +32,7 @@ export const Deposit = () => {
     [values]
   )
   return (
-    <>
+    <div className='space-y-10'>
       <RobuxTransactionForm
         methodName='Input robox amount'
         onSubmit={handleFormSubmit}
@@ -39,6 +40,20 @@ export const Deposit = () => {
         values={values}
         variant='Deposit'
       />
-    </>
+      <RobuxTransactionForm
+        methodName='Input robox amount'
+        onSubmit={handleFormSubmit}
+        onChange={handleAmountChange}
+        values={values}
+        variant='Withdraw'
+      />
+      <RobuxTransactionForm
+        methodName='Redeem Gift Card'
+        onSubmit={handleFormSubmit}
+        onChange={handleAmountChange}
+        values={values}
+        variant='Gift'
+      />
+    </div>
   )
 }
