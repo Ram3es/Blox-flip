@@ -1,3 +1,5 @@
+import { IMAGES } from './Images'
+
 export const METHODS = {
   roblox: {
     name: 'Roblox Methods',
@@ -5,12 +7,12 @@ export const METHODS = {
       {
         path: 'roblox-limiteds',
         title: 'Roblox',
-        image: 'robloxDeposite'
+        image: IMAGES.robloxDeposite
       },
       {
         path: 'robux',
         title: 'Robux',
-        image: 'robuxDeposite'
+        image: IMAGES.robuxDeposite
       }
     ]
   },
@@ -20,17 +22,17 @@ export const METHODS = {
       {
         path: 'bitcoin',
         title: 'Bitcoin',
-        image: 'bitcoin'
+        image: IMAGES.bitcoin
       },
       {
         path: 'ethereum',
         title: 'Ethereum',
-        image: 'ethereum'
+        image: IMAGES.ethereum
       },
       {
         path: 'litecoin',
         title: 'Litecoin',
-        image: 'litecoin'
+        image: IMAGES.litecoin
       }
     ]
   },
@@ -40,17 +42,17 @@ export const METHODS = {
       {
         path: 'credit-card',
         title: 'Credit Card',
-        image: 'creditCard'
+        image: IMAGES.creditCard
       },
       {
         path: 'g2a',
         title: 'G2A',
-        image: 'g2a'
+        image: IMAGES.g2a
       },
       {
         path: 'kinguin',
         title: 'Kinguin',
-        image: 'kinguin'
+        image: IMAGES.kinguin
       }
     ]
   }

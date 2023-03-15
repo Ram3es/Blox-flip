@@ -16,11 +16,6 @@ const pageLabels: Record<string, { title: string, image: string }> = {
   'roblox-limiteds': { title: ' Roblox Limiteds', image: 'robloxDeposite' }
 }
 
-// interface IToolBarProps {
-//   value: string
-//   onChange: Function
-// }
-
 const NavHeader = ({ title, path, children }: { title: string, path: string, children?: ReactNode }) => {
   const navigate = useNavigate()
   return (

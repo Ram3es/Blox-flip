@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { IMAGES } from '../../../constants/Images'
 
 interface IMethodCardProps {
   path: string
@@ -17,7 +16,7 @@ const MethodCard: FC<IMethodCardProps> = ({ path, title, image }) => {
             <div className="flex flex-col items-center justify-between rounded h-full py-4 px-2">
                 <div className="bg-blue-primary/30 rounded px-2 w-10/12 py-1 leading-4 font-semibold text-gray-primary mb-5 flex flex-col justify-center group-hover:bg-blue-highlight">{title}</div>
                 <div className="w-full pb-60% h-0 relative mb-2">
-                    <img src={IMAGES[image]} loading="lazy" decoding="async" className="absolute -inset-full m-auto" />
+                    <img src={image} loading="lazy" decoding="async" className="absolute -inset-full m-auto" />
                 </div>
             </div>
         </div>
