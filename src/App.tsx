@@ -18,6 +18,8 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
+import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
+import BattleLobby from './pages/Battle/BattleLobby'
 
 export const App = () => {
   return (
@@ -43,7 +45,7 @@ export const App = () => {
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
-          <Route path='/unboxing' element={<Unboxing />}></Route>
+          <Route path='/unboxing' element={<Unboxing />} />
           <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
