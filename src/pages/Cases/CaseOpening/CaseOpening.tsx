@@ -20,9 +20,9 @@ import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {
   const { id } = useParams()
-  const [cards] = useState(caseCards)
+  const [cards] = useState<ICaseItem[]>(caseCards)
 
-  const [lineCount, setLineCount] = useState<number>(1)
+  const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
   const [isReply, setIsReply] = useState(false)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
