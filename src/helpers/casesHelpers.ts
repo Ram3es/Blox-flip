@@ -1,17 +1,23 @@
 import { ICaseItem } from '../types/cases'
 
-export const imageVariants = ['helmet', 'redCrown', 'horns']
+export const getRandomCards = (count: number, availableItems: ICaseItem[]) => {
+  const cards: ICaseItem[] = []
 
-export const randomItems = (count: number) => {
-  const randomItems: ICaseItem[] = []
   for (let i = 0; i < count; i++) {
-    const object = {
-      itemName: `item ${i + 1}`,
-      rarity: '100',
-      image: imageVariants[Math.floor(Math.random() * imageVariants.length)],
-      id: i
+    const randomCardIndex = Math.floor(Math.random() * availableItems.length)
+    const randomCard = availableItems[randomCardIndex]
+
+    const card = {
+      itemName: randomCard.itemName,
+      rarity: randomCard.rarity,
+      image: randomCard.image,
+      id: `${i}`,
+      color: randomCard.color,
+      chance: randomCard.chance,
+      price: randomCard.price
     }
-    randomItems.push(object)
+
+    cards.push(card)
   }
-  return randomItems
+  return cards
 }

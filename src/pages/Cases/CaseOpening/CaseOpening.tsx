@@ -3,7 +3,8 @@ import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { ICaseItem } from '../../../types/cases'
-import { imageVariants, randomItems } from '../../../helpers/casesHelpers'
+import { getRandomCards } from '../../../helpers/casesHelpers'
+import { caseCards } from './mock'
 
 import { Button } from '../../../components/base/Button'
 import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
@@ -17,22 +18,28 @@ import UnboxingIcon from '../../../components/icons/UnboxingIcon'
 import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {
+  const [cards] = useState(caseCards)
+
   const [lineCount, setLineCount] = useState<number>(1)
   const [isReply, setIsReply] = useState(false)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
 
-  const [rouletteItems, setRouletteItems] = useState([{ items: randomItems(100) }])
+  const [rouletteItems, setRouletteItems] = useState<Array<{ items: ICaseItem[] }>>([
+    { items: getRandomCards(100, cards) }
+  ])
 
   const refreshLinesByCount = (count: number) => {
     const localLineCount = Math.min(count, 4)
+
     setRouletteItems((prevItems) => {
       const newItems = [...prevItems]
+
       if (newItems.length > localLineCount) {
         newItems.splice(localLineCount)
       } else if (newItems.length < localLineCount) {
         for (let i = newItems.length; i < localLineCount; i++) {
-          newItems.push({ items: randomItems(100) })
+          newItems.push({ items: getRandomCards(100, cards) })
         }
       }
       return newItems
@@ -74,18 +81,27 @@ export const CaseOpening = () => {
 
   const load = () => {
     setRouletteItems((prevItems) => {
-      const newItems = [...prevItems]
-      for (let i = 0; i < newItems.length; i++) {
-        const newItem = [...newItems[i].items]
-        newItem[87] = {
-          itemName: 'Winning item',
-          rarity: '100',
-          image: imageVariants[Math.floor(Math.random() * imageVariants.length)],
-          id: 87 * Math.random()
+      const rouletteItems = [...prevItems]
+
+      for (let i = 0; i < rouletteItems.length; i++) {
+        const rouletteItem = [...rouletteItems[i].items]
+
+        const randomCardIndex = Math.floor(Math.random() * cards.length)
+        const randomCard = cards[randomCardIndex]
+
+        rouletteItem[87] = {
+          itemName: randomCard.itemName,
+          rarity: randomCard.rarity,
+          image: randomCard.image,
+          id: `${randomCard.id} ${new Date().getTime()}`,
+          color: randomCard.color,
+          chance: randomCard.chance,
+          price: randomCard.price
         }
-        newItems[i] = { items: newItem }
+
+        rouletteItems[i] = { items: rouletteItem }
       }
-      return newItems
+      return rouletteItems
     })
   }
 
@@ -224,7 +240,7 @@ export const CaseOpening = () => {
           ))}
         </div>
       </div>
-      <PotentialDrops />
+      <PotentialDrops cards={cards} />
     </div>
   )
 }

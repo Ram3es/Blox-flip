@@ -2,5 +2,8 @@ export interface ICaseItem {
   itemName: string
   rarity: string
   image: string
-  id: number
+  id: string
+  color: string
+  chance: number
+  price: number
 }

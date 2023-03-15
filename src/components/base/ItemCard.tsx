@@ -17,7 +17,7 @@ enum ItemCardVariantEnum {
   CaseOpening = 'CaseOpening'
 }
 
-interface IItemCardProps {
+export interface IItemCardProps {
   id: string
   name: string
   price: number
