@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState, useCallback } from 'react'
 
-import { WithdrawForm } from './WithdrawForm'
+import { RobuxTransactionForm } from '../../components/base/RobuxTransactionForm'
 import { WithdrawInputState } from '../../types/form'
 
 import { localeStringToNumber } from '../../helpers/numbersFormatter'
@@ -34,12 +34,13 @@ export const Robux = () => {
   )
   return (
     <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm p-5 xs:p-9 overflow-hidden relative'>
-      <WithdrawForm
+      <RobuxTransactionForm
         methodName='Input robox amount'
         onSubmit={handleFormSubmit}
         onChange={handleAmountChange}
         values={values}
-    />
+        variant='Withdraw'
+      />
     </div>
   )
 }
