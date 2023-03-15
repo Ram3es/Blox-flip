@@ -14,6 +14,7 @@ import g2a from '../assets/img/deposit_g2a.png'
 import kinguin from '../assets/img/deposit_king.png'
 import kinguinSmall from '../assets/img/kinguinSmall.svg'
 import bitcoinSmall from '../assets/img/deposit_bitcoin_small.png'
+import avatar from '../assets/img/avatar_img.png'
 
 export const IMAGES: Record<string, string> = {
   horns,
@@ -31,6 +32,6 @@ export const IMAGES: Record<string, string> = {
   creditCard,
   g2a,
   kinguin,
-  kinguinSmall
-
+  kinguinSmall,
+  avatar
 }

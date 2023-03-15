@@ -24,6 +24,7 @@ import RobloxLimitedsDeposit from './pages/Deposit/methods/RobloxLimitedsDeposit
 import Bitcoin from './pages/Deposit/methods/Bitcoin'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import GiftCards from './pages/Deposit/methods/GiftCards'
+import BattleLobby from './pages/Battle/BattleLobby'
 
 export const App = () => {
   return (
@@ -61,6 +62,7 @@ export const App = () => {
           <Route path='/affiliates' element={<Affiliates />} />
           <Route path='/unboxing' element={<Unboxing />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
+          <Route path='/battles-lobby' element={<BattleLobby />} />
         </Routes>
       </Container>
     </BrowserRouter>
