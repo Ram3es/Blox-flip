@@ -90,13 +90,8 @@ export const CaseOpening = () => {
         const randomCard = cards[randomCardIndex]
 
         rouletteItem[87] = {
-          itemName: randomCard.itemName,
-          rarity: randomCard.rarity,
-          image: randomCard.image,
-          id: `${randomCard.id} ${new Date().getTime()}`,
-          color: randomCard.color,
-          chance: randomCard.chance,
-          price: randomCard.price
+          ...randomCard,
+          id: `${randomCard.id} ${new Date().getTime()}`
         }
 
         rouletteItems[i] = { items: rouletteItem }

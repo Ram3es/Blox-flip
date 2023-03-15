@@ -8,13 +8,8 @@ export const getRandomCards = (count: number, availableCards: ICaseItem[]) => {
     const randomCard = availableCards[randomCardIndex]
 
     const card = {
-      itemName: randomCard.itemName,
-      rarity: randomCard.rarity,
-      image: randomCard.image,
-      id: `${i}`,
-      color: randomCard.color,
-      chance: randomCard.chance,
-      price: randomCard.price
+      ...randomCard,
+      id: `${i}`
     }
 
     cards.push(card)
