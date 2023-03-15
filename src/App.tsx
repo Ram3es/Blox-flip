@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
-import { Cases } from './pages/Cases/Cases'
 import { Cups } from './pages/Cups/Cups'
 import { Home } from './pages/Home/Home'
 import { Mines } from './pages/Mines/Mines'
@@ -29,7 +28,6 @@ export const App = () => {
         <Chat />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/cases' element={<Cases />} />
           <Route path='/profile' element={<UserProfile />}>
             <Route path='transactions' element={<Transactions />} />
             <Route path='history' element={<HistoryUser />} />
@@ -46,7 +44,7 @@ export const App = () => {
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
-          <Route path='/unboxing' element={<Unboxing />} />
+          <Route path='/unboxing' element={<Unboxing />}></Route>
           <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
         </Routes>
