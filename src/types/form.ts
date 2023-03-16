@@ -1,4 +1,4 @@
-export interface WithdrawInputState {
+export interface IAmountState {
   amountString: string
   amountNumber: number
 }

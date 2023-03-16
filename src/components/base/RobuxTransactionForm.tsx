@@ -8,7 +8,7 @@ import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from './InputWithLabel'
 
 import { formatNumber } from '../../helpers/numbersFormatter'
-import { WithdrawInputState } from '../../types/form'
+import { IAmountState } from '../../types/form'
 
 enum VariantEnum {
   Deposit = 'Deposit',
@@ -20,7 +20,7 @@ interface RobuxTransactionFormProps {
   methodName: string
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
-  values: WithdrawInputState
+  values: IAmountState | string
   variant: keyof typeof VariantEnum
 }
 
@@ -38,6 +38,13 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
       event.preventDefault()
     }
   }
+
+  const inputValue =
+    typeof values === 'string'
+      ? values
+      : values.amountNumber === 0
+        ? values.amountString
+        : formatNumber(values.amountNumber)
 
   useEffect(() => {
     const form = formRef.current
@@ -66,14 +73,14 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
             labelClasses='flex flex-col w-full mb-8 items-center'
             titleClasses='gradient-blue-secondary text-gray-primary text-sm px-4 py-3 leading-4 rounded-t-xl inline-block'
             inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
-            inputClasses={`grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none ${variant !== VariantEnum.Gift ? 'pl-8' : ''}`}
+            inputClasses={`grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none ${
+              variant !== VariantEnum.Gift ? 'pl-8' : ''
+            }`}
             type='text'
             id='amount'
             name='amount'
             label={methodName}
-            value={
-              values.amountNumber === 0 ? values.amountString : formatNumber(values.amountNumber)
-            }
+            value={inputValue}
             onChange={onChange}
             placeholder={variant !== VariantEnum.Gift ? '00.00' : 'XXXX-XXXX-XXXX-XXXX-XXXX'}
           />
@@ -91,7 +98,7 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
               </div>
               <div className='text-17 flex items-center mx-auto mb-7'>
                 <QuantityCoins
-                  quantity={values.amountNumber}
+                  quantity={typeof values === 'string' ? 0 : values.amountNumber}
                   textSize='text-base'
                   iconBgHeight='6'
                   iconBgWidth='6'
