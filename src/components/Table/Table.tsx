@@ -165,7 +165,7 @@ export const Table = <T extends object>({
                   >
                     <div
                       className={clsx('', {
-                        'w-36': index !== 0 && index !== array.length - 1,
+                        'w-36': index !== 0 && index !== array.length - 1
                       })}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
