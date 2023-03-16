@@ -41,8 +41,8 @@ export const App = () => {
           <Route path='/crash' element={<Wheel />} />
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
-          <Route path='deposit' element={<Deposit />}>
-            <Route path='robux2' element={<DepositRobux />} />
+          <Route path='/deposit' element={<Deposit />}>
+            <Route path='robux' element={<DepositRobux />} />
           </Route>
           <Route path='/withdraw' element={<Withdraw />}>
             <Route path='robux' element={<Robux />} />
