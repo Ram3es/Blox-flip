@@ -10,6 +10,9 @@ module.exports = {
   darkNode: 'class',
   theme: {
     extend: {
+      animation: {
+        'spin-slow': 'spin 2s linear infinite',
+      },
       fontSize: {
         10: '0.625rem', //10px
         11: '0.6875rem', //11px
@@ -125,6 +128,15 @@ module.exports = {
       minWidth: {
         '3xl': '768px',
         sm: '1200px'
+      },
+
+      keyframes : {
+        ping: {
+        '75%, 100%' : {
+            transform: 'scale(2.4)',
+            opacity: 0
+          }
+        } 
       }
     }
   },
