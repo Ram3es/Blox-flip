@@ -5,7 +5,8 @@ enum VariantEnum {
   Standard = 'Standard',
   Gradient = 'Gradient',
   Outlined = 'Outlined',
-  Highlight = 'Highlight'
+  Highlight = 'Highlight',
+  HighlightDarken = 'HighlightDarken'
 }
 
 enum ColorEnum {
@@ -35,8 +36,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         variant === VariantEnum.Gradient,
       'text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary ':
         variant === VariantEnum.Outlined,
-      'text-gray-primary rounded bg-blue-highlight border border-blue-highlight hover:text-white':
-        variant === VariantEnum.Highlight
+      'text-gray-primary bg-blue-highlight border border-blue-highlight hover:text-white':
+        variant === VariantEnum.Highlight,
+      'text-gray-primary blue-highlight hover:bg-blue-accent':
+        variant === VariantEnum.HighlightDarken
     })
 
     return (

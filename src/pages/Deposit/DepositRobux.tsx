@@ -1,12 +1,10 @@
-import { ChangeEvent, FormEvent, useState, useCallback } from 'react'
-
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { RobuxTransactionForm } from '../../components/base/RobuxTransactionForm'
-import { WithdrawInputState } from '../../types/form'
-
 import { localeStringToNumber } from '../../helpers/numbersFormatter'
 import { defaultAmountSchema } from '../../helpers/yupSchema'
+import { WithdrawInputState } from '../../types/form'
 
-export const Robux = () => {
+export const DepositRobux = () => {
   const [values, setValues] = useState<WithdrawInputState>({ amountString: '', amountNumber: 0 })
 
   const handleAmountChange = useCallback(
@@ -33,14 +31,14 @@ export const Robux = () => {
     [values]
   )
   return (
-    <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm p-5 xs:p-9 overflow-hidden relative'>
+    <>
       <RobuxTransactionForm
         methodName='Input robox amount'
         onSubmit={handleFormSubmit}
         onChange={handleAmountChange}
         values={values}
-        variant='Withdraw'
+        variant='Deposit'
       />
-    </div>
+    </>
   )
 }

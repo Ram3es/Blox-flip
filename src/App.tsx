@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
-import { Cases } from './pages/Cases/Cases'
 import { Cups } from './pages/Cups/Cups'
 import { Home } from './pages/Home/Home'
 import { Mines } from './pages/Mines/Mines'
@@ -19,8 +18,8 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
-import { DepositCrypto } from './pages/Deposit/DepositCrypto'
 import BattleLobby from './pages/Battle/BattleLobby'
+import { DepositRobux } from './pages/Deposit/DepositRobux'
 
 export const App = () => {
   return (
@@ -30,7 +29,6 @@ export const App = () => {
         <Chat />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/cases' element={<Cases />} />
           <Route path='/profile' element={<UserProfile />}>
             <Route path='transactions' element={<Transactions />} />
             <Route path='history' element={<HistoryUser />} />
@@ -41,15 +39,14 @@ export const App = () => {
           <Route path='/crash' element={<Wheel />} />
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
-          <Route path='/deposit' element={<Deposit />}>
-            <Route path='crypto' element={<DepositCrypto />} />
-          </Route>
+          <Route path='/deposit' element={<Deposit />} />
           <Route path='/withdraw' element={<Withdraw />}>
             <Route path='robux' element={<Robux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
           <Route path='/unboxing' element={<Unboxing />} />
+          <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
         </Routes>
