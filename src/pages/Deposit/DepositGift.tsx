@@ -1,20 +1,13 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
-
 import * as Yup from 'yup'
 
-import { DepositGiftForm } from './DepositGiftForm'
+import InputWithLabel from '../../components/base/InputWithLabel'
+import { Button } from '../../components/base/Button'
 import { DepositGiftList } from './DepositGiftList'
+import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
 
 export const DepositGift = () => {
   const [giftCode, setGiftCode] = useState('')
-
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value
-      setGiftCode(value)
-    },
-    [giftCode]
-  )
 
   const giftCodeSchema = Yup.string()
     .required('Code is required')
@@ -38,16 +31,51 @@ export const DepositGift = () => {
     },
     [giftCode]
   )
+
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      let value = event.target.value.toUpperCase()
+
+      value = value.replace(/[^A-Z0-9]/g, '')
+      value = value.slice(0, 20)
+      value = value.replace(/(.{4})/g, '$1-')
+      value = value.replace(/-$/, '')
+
+      setGiftCode(value)
+    },
+    [giftCode]
+  )
+
   return (
     <div>
       <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
         <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm px-3 xxs:px-6 py-9 overflow-hidden relative'>
-          <DepositGiftForm
-            labelName='Redeem gift card'
-            onSubmit={handleFormSubmit}
-            onChange={handleChange}
-            value={giftCode}
-          />
+          <form onSubmit={handleFormSubmit}>
+            <div className='relative'>
+              <InputWithLabel
+                autoComplete='off'
+                labelClasses='flex flex-col w-full mb-8 items-center'
+                titleClasses='gradient-blue-secondary text-gray-primary text-sm px-10 py-3 leading-4 rounded-t-xl inline-block'
+                inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
+                inputClasses='grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none'
+                type='text'
+                label='Redeem gift card'
+                value={giftCode}
+                onChange={handleChange}
+                placeholder='XXXX-XXXX-XXXX-XXXX-XXXX'
+              />
+            </div>
+            <div className='flex flex-col items-center'>
+              <Button type='submit' variant='Gradient' color='GreenPrimary'>
+                <div className='flex items-center justify-center px-24 py-3 text-15'>
+                  <span className='min-w-fit shrink-0 mr-1.5'>
+                    <DiamondIcon width='20' height='17' />
+                  </span>
+                  Redeem
+                </div>
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
       <div className='border-[0.5px] border-sky-primary/40 rounded'>
