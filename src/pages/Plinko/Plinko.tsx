@@ -1,12 +1,12 @@
+import { BetActions } from './BetActions'
+
 export const Plinko = () => {
   return (
-    <div>
-      <h1 className='text-red text-5xl'>Plinko</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus inventore ipsa fugiat
-        similique, quia, necessitatibus repudiandae ad commodi architecto aliquam molestiae adipisci
-        voluptates nesciunt esse magnam est delectus, iure nulla.
-      </p>
+    <div className='flex justify-center'>
+      <div className='bg-blue-accent rounded-lg w-1/4 h-[49.125rem] mr-4'>
+        <BetActions />
+      </div>
+      <div className='bg-blue-primary rounded-lg w-3/4'>game</div>
     </div>
   )
 }
