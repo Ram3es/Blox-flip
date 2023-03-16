@@ -29,25 +29,6 @@ const UnboxingCard: FC<IUnboxingCardProps> = ({ id, name, price, onSelect }) => 
                      </span>
                     </QuantityCoinsWithChildren>
               </div>
-              <div className='w-full pb-60% h-0 relative mb-5'>
-                <img
-                  src={IMAGES.greenBox}
-                  alt='greenbox'
-                  width='93'
-                  height='101'
-                  loading='lazy'
-                  decoding='async'
-                  className='absolute object-contain w-full h-full'
-                />
-              </div>
-              <QuantityCoinsWithChildren
-                quantity={price}
-                quantityClasses='flex items-center text-sm font-bold '
-              >
-                <span className='w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-primary'>
-                  <DiamondIcon className='-inset-full absolute m-auto' />
-                </span>
-              </QuantityCoinsWithChildren>
             </div>
           </div>
         </div>
