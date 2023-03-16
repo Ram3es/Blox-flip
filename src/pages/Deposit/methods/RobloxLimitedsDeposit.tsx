@@ -1,15 +1,9 @@
 import React from 'react'
-import { useOutletContext } from 'react-router-dom'
+import RobloxLimiteds from '../../Withdraw/RobloxLimiteds'
 
 const RobloxLimitedsDeposit = () => {
-  const { priceRange, searchBy, sortBy } = useOutletContext<any>()
-  console.log(priceRange)
   return (
-        <div>
-          {searchBy}
-          {sortBy?.direction}
-          {sortBy?.value}
-        </div>
+    < RobloxLimiteds />
   )
 }
 
