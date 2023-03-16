@@ -20,6 +20,8 @@ import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
+import { DepositRobux } from './pages/Deposit/DepositRobux'
+import { DepositGift } from './pages/Deposit/DepositGift'
 
 export const App = () => {
   return (
@@ -40,6 +42,7 @@ export const App = () => {
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />}>
+            <Route path='robux' element={<DepositRobux />} />
             <Route path='gift' element={<DepositGift />}>
               <Route path='g2a' element={<DepositGift />} />
               <Route path='kinguin' element={<DepositGift />} />
