@@ -7,11 +7,7 @@ import BitcoinIconSmall from '../../assets/img/deposit_bitcoin_small.png'
 import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
 import { CryptoCalculator } from '../../components/common/CryptoCalculator'
 
-interface DepositCryptoProps {
-  any?: any
-}
-
-export const DepositCrypto: FC<DepositCryptoProps> = () => {
+export const DepositCrypto: FC = () => {
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
       <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm px-3 xxs:px-6 py-9 overflow-hidden relative'>
