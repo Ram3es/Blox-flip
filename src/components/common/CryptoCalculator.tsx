@@ -18,11 +18,7 @@ const BridgeComponent = () => {
   )
 }
 
-interface CryptoCalculatorProps {
-  any?: any
-}
-
-export const CryptoCalculator: FC<CryptoCalculatorProps> = () => {
+export const CryptoCalculator: FC = () => {
   return (
     <div className='flex flex-wrap mb-5 z-20'>
       <div className='w-full xs:w-1/3 grow mb-4 relative'>
