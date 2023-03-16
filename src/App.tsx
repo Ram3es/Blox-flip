@@ -19,6 +19,8 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
+import { DepositCrypto } from './pages/Deposit/DepositCrypto'
+import BattleLobby from './pages/Battle/BattleLobby'
 
 export const App = () => {
   return (
