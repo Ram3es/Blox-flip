@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/base/Button'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
+import BattleModal from '../../components/modal/BattleModal'
 import { dataTable } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 import TableBattleLobby from './TableBattleLobby'
@@ -49,6 +50,7 @@ const BattleLobby = () => {
             <TableBattleLobby data={dataTable} sortBy={currentFilterOptions.toLowerCase()} />
         </div>
       </div>
+      <BattleModal isOpen={true} onClose={() => ''} />
     </div>
   )
 }
