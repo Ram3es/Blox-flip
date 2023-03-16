@@ -20,6 +20,7 @@ import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 import BattleLobby from './pages/Battle/BattleLobby'
+import { DepositRobux } from './pages/Deposit/DepositRobux'
 
 export const App = () => {
   return (
@@ -40,7 +41,9 @@ export const App = () => {
           <Route path='/crash' element={<Wheel />} />
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
-          <Route path='/deposit' element={<Deposit />} />
+          <Route path='deposit' element={<Deposit />}>
+            <Route path='robux2' element={<DepositRobux />} />
+          </Route>
           <Route path='/withdraw' element={<Withdraw />}>
             <Route path='robux' element={<Robux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
