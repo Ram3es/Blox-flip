@@ -39,15 +39,21 @@ export const DepositGift = () => {
     [giftCode]
   )
   return (
-    <div className='space-y-20'>
-      <DepositGiftForm
-        labelName='Redeem gift card'
-        onSubmit={handleFormSubmit}
-        onChange={handleChange}
-        value={giftCode}
-      />
-      <div className='flex items-center justify-center'>
-        <DepositGiftList />
+    <div>
+      <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
+        <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm px-3 xxs:px-6 py-9 overflow-hidden relative'>
+          <DepositGiftForm
+            labelName='Redeem gift card'
+            onSubmit={handleFormSubmit}
+            onChange={handleChange}
+            value={giftCode}
+          />
+        </div>
+      </div>
+      <div className='border-[0.5px] border-sky-primary/40 rounded'>
+        <div className='bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm py-4 overflow-hidden relative flex items-center justify-center'>
+          <DepositGiftList />
+        </div>
       </div>
     </div>
   )
