@@ -12,19 +12,26 @@ enum BorderColorEnum {
   Green = 'Green'
 }
 
-interface IItemCardProps {
+enum ItemCardVariantEnum {
+  Standard = 'Standard',
+  CaseOpening = 'CaseOpening'
+}
+
+export interface IItemCardProps {
   id: string
   name: string
   price: number
   image: string
-  onSelect: Function
+  chance?: number
+  onSelect?: Function
   isSelected?: boolean
-  color: string
+  color?: string
   itemClasses?: string
+  variant?: keyof typeof ItemCardVariantEnum
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSelected, color, itemClasses }) => {
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, itemClasses, variant = ItemCardVariantEnum.Standard }) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -41,11 +48,14 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
     'from-red-secondary/20 to-dark/0': color === BorderColorEnum.Red
   })
 
-  // ${isSelected ? ' is-selected' : ''}
+  const variantClasses = clsx(`${isSelected ? 'is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 shrink-0 mb-2 group/item`, {
+    'md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
+    'md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening
+  })
 
   return (
-    <div className={`${itemClasses ?? 'px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/6 shrink-0 lg:w-1/7 mb-2 group/item'}${isSelected ? ' is-selected' : ''} `}>
-      <div onClick={() => onSelect(id)} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>
+    <div className={itemClasses ?? variantClasses}>
+      <div onClick={() => (onSelect ? onSelect(id) : '')} className={`border--mask ${borderRadial} rounded h-full overflow-hidden relative z-20 group-[.is-selected]/item:border-0 group-[.is-selected]/item:before:hidden cursor-pointer`}>
         <div className="gradient-blue-secondary rounded h-full text-center relative z-20 group-[.is-selected]/item:border-0">
           <div className="absolute inset-0 rounded bg-dark/40 z-30 hidden group-[.is-selected]/item:block">
             <div className="flex items-center justify-center text-xs m-auto absolute w-full h-5 leading-5 -inset-full">
@@ -60,7 +70,7 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, onSelect, isSele
             </div>
           </div>
           <div className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl`}>
-            <div className="mb-2 hidden group-[.is-percent]/item:block">1.5%</div>
+            <div className="mb-2 hidden group-[.is-percent]/item:block">{chance ? <>{chance}%</> : <>1.5%</> }</div>
             <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
             <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left"><span>{name}</span></div>
             <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start">

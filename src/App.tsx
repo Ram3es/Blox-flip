@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
-import { Cases } from './pages/Cases/Cases'
 import { Cups } from './pages/Cups/Cups'
 import { Home } from './pages/Home/Home'
 import { Mines } from './pages/Mines/Mines'
@@ -19,6 +18,7 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
+import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
 
 export const App = () => {
@@ -29,7 +29,6 @@ export const App = () => {
         <Chat />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/cases' element={<Cases />} />
           <Route path='/profile' element={<UserProfile />}>
             <Route path='transactions' element={<Transactions />} />
             <Route path='history' element={<HistoryUser />} />
@@ -47,6 +46,7 @@ export const App = () => {
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
           <Route path='/unboxing' element={<Unboxing />} />
+          <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
         </Routes>
