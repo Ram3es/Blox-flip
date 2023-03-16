@@ -10,18 +10,25 @@ import InputWithLabel from '../../components/base/InputWithLabel'
 import { formatNumber } from '../../helpers/numbersFormatter'
 import { WithdrawInputState } from '../../types/form'
 
-interface WithdrawFormProps {
+enum VariantEnum {
+  Deposit = 'Deposit',
+  Withdraw = 'Withdraw'
+}
+
+interface RobuxTransactionFormProps {
   methodName: string
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   values: WithdrawInputState
+  variant: keyof typeof VariantEnum
 }
 
-export const WithdrawForm: FC<WithdrawFormProps> = ({
+export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
   methodName = 'Input amount',
   onSubmit,
   onChange,
-  values
+  values,
+  variant
 }) => {
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -74,7 +81,9 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
           </div>
         </div>
         <div className='flex flex-col items-center'>
-          <div className='text-gray-primary mb-2 font-bold uppercase'>YOU ARE WITHdrawing</div>
+          <div className='text-gray-primary mb-2 font-bold uppercase'>
+            YOU ARE {variant === 'Deposit' ? 'DEPOSITING' : 'WITHDRAWING'}
+          </div>
           <div className='text-17 flex items-center mx-auto mb-7'>
             <QuantityCoins
               quantity={values.amountNumber}
@@ -88,28 +97,35 @@ export const WithdrawForm: FC<WithdrawFormProps> = ({
           <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
           <Button
             type='submit'
-            className='pointer-events-auto flex justify-center items-center leading-9 text-gray-primary text-base font-bold rounded px-2.5 py-1 bg-blue-highlight hover:bg-blue-accent w-64 shrink-0'
+            variant={variant === VariantEnum.Deposit ? 'Gradient' : 'HighlightDarken'}
+            color={variant === VariantEnum.Deposit ? 'GreenPrimary' : 'BlueHighlight'}
           >
-            <span className='min-w-fit shrink-0 mr-1.5'>
-              <DiamondIcon width='20' height='17' />
-            </span>
-            Withdraw
+            <div className='flex items-center justify-center px-24 py-3 text-15'>
+              <span className='min-w-fit shrink-0 mr-1.5'>
+                <DiamondIcon width='20' height='17' />
+              </span>
+              {variant === VariantEnum.Deposit ? VariantEnum.Deposit : VariantEnum.Withdraw}
+            </div>
           </Button>
         </div>
       </form>
-      <img
-        src={SeparatorGrayIcon}
-        alt=''
-        width='300'
-        height=''
-        loading='lazy'
-        decoding='async'
-        className='mx-auto my-7'
-      />
-      <div className='font-semibold text-center text-gray-primary mx-auto'>
-        Roblox imposes a 30% fee on every transaction. We do not have any way to stop it,{' '}
-        <br className='hidden xs:inline' /> and will not receive any of this fee.
-      </div>
+      {variant === VariantEnum.Withdraw && (
+        <>
+          <img
+            src={SeparatorGrayIcon}
+            alt=''
+            width='300'
+            height=''
+            loading='lazy'
+            decoding='async'
+            className='mx-auto my-7'
+          />
+          <div className='font-semibold text-center text-gray-primary mx-auto'>
+            Roblox imposes a 30% fee on every transaction. We do not have any way to stop it,{' '}
+            <br className='hidden xs:inline' /> and will not receive any of this fee.
+          </div>
+        </>
+      )}
     </>
   )
 }

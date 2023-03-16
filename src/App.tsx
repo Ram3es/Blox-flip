@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Container } from './components/Container/Container'
 import { Header } from './components/Header/Header'
-import { Cases } from './pages/Cases/Cases'
 import { Cups } from './pages/Cups/Cups'
 import { Home } from './pages/Home/Home'
 import { Mines } from './pages/Mines/Mines'
@@ -24,7 +23,9 @@ import RobuxDeposit from './pages/Deposit/methods/RobuxDeposit'
 import Bitcoin from './pages/Deposit/methods/Bitcoin'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import GiftCards from './pages/Deposit/methods/GiftCards'
+import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
+import { DepositRobux } from './pages/Deposit/DepositRobux'
 
 export const App = () => {
   return (
@@ -34,7 +35,6 @@ export const App = () => {
         <Chat />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/cases' element={<Cases />} />
           <Route path='/profile' element={<UserProfile />}>
             <Route path='transactions' element={<Transactions />} />
             <Route path='history' element={<HistoryUser />} />
@@ -46,7 +46,7 @@ export const App = () => {
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />} >
-            <Route path='robux' element={<RobuxDeposit />} />
+            <Route path='robux' element={<DepositRobux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
             <Route path='litecoin' element={<Bitcoin />} />
             <Route path='bitcoin' element={<Bitcoin />} />
@@ -61,6 +61,7 @@ export const App = () => {
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
           <Route path='/unboxing' element={<Unboxing />} />
+          <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
         </Routes>
