@@ -19,6 +19,7 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
+import { DepositCrypto } from './pages/Deposit/DepositCrypto'
 
 export const App = () => {
   return (
@@ -39,7 +40,9 @@ export const App = () => {
           <Route path='/crash' element={<Wheel />} />
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
-          <Route path='/deposit' element={<Deposit />} />
+          <Route path='/deposit' element={<Deposit />}>
+            <Route path='crypto' element={<DepositCrypto />} />
+          </Route>
           <Route path='/withdraw' element={<Withdraw />}>
             <Route path='robux' element={<Robux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
