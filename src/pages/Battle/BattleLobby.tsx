@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/base/Button'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
-import BattleModal from '../../components/modal/BattleModal'
 import { dataTable } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 import TableBattleLobby from './TableBattleLobby'
@@ -41,7 +40,7 @@ const BattleLobby = () => {
               <ButtonsToggle options={filterOptions} currentSelect={currentFilterOptions} peackFunction={setOptions} />
             </div>
             <Button
-              onClick={() => navigate('/') }
+              onClick={() => navigate('/create-battle') }
               className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-4 leading-4 rounded mb-4'
             >Create Battle</Button>
           </div>
@@ -50,7 +49,6 @@ const BattleLobby = () => {
             <TableBattleLobby data={dataTable} sortBy={currentFilterOptions.toLowerCase()} />
         </div>
       </div>
-      <BattleModal isOpen={true} onClose={() => ''} />
     </div>
   )
 }

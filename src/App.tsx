@@ -20,6 +20,7 @@ import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 import BattleLobby from './pages/Battle/BattleLobby'
+import CreateBattle from './pages/Battle/CreateBattle'
 
 export const App = () => {
   return (
@@ -49,6 +50,7 @@ export const App = () => {
           <Route path='/unboxing' element={<Unboxing />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
+          <Route path='/create-battle' element={<CreateBattle />} />
         </Routes>
       </Container>
     </BrowserRouter>
