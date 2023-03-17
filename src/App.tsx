@@ -20,7 +20,10 @@ import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
-import { DepositRobux } from './pages/Deposit/DepositRobux'
+import CreditCard from './pages/Deposit/methods/CreditCard'
+import { DepositGift } from './pages/Deposit/methods/DepositGift'
+import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
+import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 
 export const App = () => {
   return (
@@ -42,6 +45,13 @@ export const App = () => {
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/deposit' element={<Deposit />}>
             <Route path='robux' element={<DepositRobux />} />
+            <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
+            <Route path='litecoin' element={<DepositCrypto />} />
+            <Route path='bitcoin' element={<DepositCrypto />} />
+            <Route path='ethereum' element={<DepositCrypto />} />
+            <Route path='credit-card' element={<CreditCard />} />
+            <Route path='g2a' element={<DepositGift />} />
+            <Route path='kinguin' element={<DepositGift />} />
           </Route>
           <Route path='/withdraw' element={<Withdraw />}>
             <Route path='robux' element={<Robux />} />

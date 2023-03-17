@@ -2,52 +2,20 @@ export const CopyIcon = ({ iconClasses }: { iconClasses?: string }) => {
   return (
     <svg
       className={iconClasses}
-      width='29'
-      height='28'
-      viewBox='0 0 29 28'
-      fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      width='19'
+      height='21'
+      viewBox='0 0 19 21'
+      fill='none'
     >
-      <g filter='url(#filter0_d_142_1667)'>
-        <path
-          d='M11.1941 15.8506C9.26771 15.8506 7.69979 14.2826 7.69979 12.3563V3.92908H6.26103C5.01377 3.92908 4 4.9427 4 6.18996V17.2893C4 18.5366 5.01377 19.5504 6.26103 19.5504H16.5381C17.7854 19.5504 18.7992 18.5366 18.7992 17.2893V15.8506H11.1941Z'
-          fill='#939BB9'
-        />
-        <path
-          d='M24.1548 2.26103C24.1548 1.01211 23.1426 0 21.8939 0H13.261C12.0121 0 11 1.01211 11 2.26103V12.5381C11 13.787 12.0121 14.7992 13.261 14.7992H21.8939C23.1426 14.7992 24.1548 13.787 24.1548 12.5381V2.26103Z'
-          fill='#939BB9'
-        />
-      </g>
-      <defs>
-        <filter
-          id='filter0_d_142_1667'
-          x='0'
-          y='0'
-          width='28.1547'
-          height='27.5504'
-          filterUnits='userSpaceOnUse'
-          colorInterpolationFilters='sRGB'
-        >
-          <feFlood floodOpacity='0' result='BackgroundImageFix' />
-          <feColorMatrix
-            in='SourceAlpha'
-            type='matrix'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
-            result='hardAlpha'
-          />
-          <feOffset dy='4' />
-          <feGaussianBlur stdDeviation='2' />
-          <feComposite in2='hardAlpha' operator='out' />
-          <feColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0' />
-          <feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_142_1667' />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow_142_1667'
-            result='shape'
-          />
-        </filter>
-      </defs>
+      <path
+        d='M7.19408 16.8506C5.26771 16.8506 3.69979 15.2826 3.69979 13.3563V4.92908H2.26103C1.01377 4.92908 0 5.9427 0 7.18996V18.2893C0 19.5366 1.01377 20.5504 2.26103 20.5504H12.5381C13.7854 20.5504 14.7992 19.5366 14.7992 18.2893V16.8506H7.19408Z'
+        fill='#939BB9'
+      />
+      <path
+        d='M18.0872 3.07927C18.0872 1.83035 17.0751 0.818237 15.8263 0.818237H7.19347C5.94455 0.818237 4.93243 1.83035 4.93243 3.07927V13.3564C4.93243 14.6053 5.94455 15.6174 7.19347 15.6174H15.8263C17.0751 15.6174 18.0872 14.6053 18.0872 13.3564V3.07927Z'
+        fill='#939BB9'
+      />
     </svg>
   )
 }
