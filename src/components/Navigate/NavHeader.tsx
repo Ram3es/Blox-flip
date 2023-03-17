@@ -1,22 +1,15 @@
 import React, { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { METHODS } from '../../constants/PaymentMethods'
+import { IMethodLabel } from '../../types/payments-methods'
 import { Button } from '../base/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 import TriangleArrow from '../icons/TriangleArrow'
 import PageLabel from './PageLabel'
 
-const pageLabels: Record<string, { title: string, image: string }> = {
-  robux: { title: 'Robux', image: 'robuxDeposite' },
-  bitcoin: { title: 'Bitcoin', image: 'bitcoinSmall' },
-  ethereum: { title: 'Ethereum', image: 'ethereum' },
-  litecoin: { title: 'Litecoin', image: 'litecoin' },
-  g2a: { title: 'G2A', image: 'g2a' },
-  kinguin: { title: 'Kinguin', image: 'kinguinSmall' },
-  'credit-card': { title: 'Credit Card', image: 'creditCard' },
-  'roblox-limiteds': { title: ' Roblox Limiteds', image: 'robloxDeposite' }
-}
+const labelProps = Object.values(METHODS).reduce<IMethodLabel[]>((acc, method) => acc.concat(method.methods), [])
 
-const NavHeader = ({ title, path, children }: { title: string, path: string, children?: ReactNode }) => {
+const NavHeader = ({ title, pathName, children }: { title: string, pathName: string, children?: ReactNode }) => {
   const navigate = useNavigate()
   return (
     <div className=' w-full flex flex-wrap justify-between mb-8'>
@@ -32,7 +25,7 @@ const NavHeader = ({ title, path, children }: { title: string, path: string, chi
       <h3 className='text-2xl font-bold mr-6 md:mr-0'>{title}</h3>
     </div>
      { children }
-     {path && <PageLabel {...pageLabels[path]}/> }
+     {pathName && <PageLabel {...labelProps.find(method => method.path === pathName) as IMethodLabel } /> }
   </div>
   )
 }

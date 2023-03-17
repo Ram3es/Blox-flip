@@ -34,7 +34,7 @@ export const Deposit = () => {
   return (
     <div className="max-w-[1470px] w-full mx-auto">
       <div className='flex flex-col xs:flex-row'>
-      <NavHeader title='Deposit' path={currentPath} >
+      <NavHeader title='Deposit' pathName={currentPath} >
       {currentPath === 'roblox-limiteds' && (
         <ToolBar
           value={value}

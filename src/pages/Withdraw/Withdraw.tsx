@@ -38,7 +38,7 @@ export const Withdraw = () => {
   return (
       <div className=' w-full'>
         <div className='flex flex-col xs:flex-row max-w-[1470px] mx-auto'>
-          <NavHeader title='Withdraw' path={currentPath} >
+          <NavHeader title='Withdraw' pathName={currentPath} >
             {currentPath === 'roblox-limiteds' && (
                 <div className='flex flex-wrap gap-x-3 gap-y-8 mb-8' >
                   <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions?.title} />

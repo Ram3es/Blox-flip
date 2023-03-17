@@ -18,14 +18,12 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
-import RobuxDeposit from './pages/Deposit/methods/RobuxDeposit'
-
 import Bitcoin from './pages/Deposit/methods/Bitcoin'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import GiftCards from './pages/Deposit/methods/GiftCards'
 import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
-import { DepositRobux } from './pages/Deposit/DepositRobux'
+import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 
 export const App = () => {
   return (

@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useRef, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
 import { QuantityCoinsWithChildren } from '../../../components/common/QuantityCoins/QuantityWithChildren'
-import MethodsContainer from '../../../components/Container/MethodContainer'
+import MethodsContainer from '../../../components/Container/PaymentMethodContainer'
 import { DiamondIcon } from '../../../components/DiamondIcon/DiamondIcon'
 
 const CreditCardForm = () => {
@@ -11,7 +11,7 @@ const CreditCardForm = () => {
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    if (validateNumber(value) || value === '') {
+    if (isValidInput(value) || value === '') {
       if (name === 'cash') {
         setValue(prev => ({ ...prev, [name]: value, diamond: value !== '' ? ((Number(value) * 3.255).toFixed(2)).toString() : '' }))
       } else {
@@ -20,13 +20,13 @@ const CreditCardForm = () => {
     }
   }
 
-  function validateNumber (elem: string) {
-    const validNumber = /^0$|^[1-9]\d*$|^\.\d+$|^0\.\d*$|^[1-9]\d*\.\d*$/
-    return Boolean(validNumber.test(elem))
+  const isValidInput = (elem: string): boolean => {
+    const decimalNum = /^0$|^[1-9]\d*$|^\.\d+$|^0\.\d*$|^[1-9]\d*\.\d*$/
+    return Boolean(decimalNum.test(elem))
   }
 
-  const onSubmit = (event: any) => {
-    console.log(event)
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
   }
 
   return (
