@@ -9,7 +9,7 @@ import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/routes'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../Base/Button'
+import { Button } from '../base/Button'
 import { PlusIcon } from '../PlusIcon/PlusIcon'
 
 const GamesButton = ({ title }: { title: string }) => {

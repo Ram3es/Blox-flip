@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import React, { FC } from 'react'
 import { IMAGES } from '../../constants/Images'
-import { QuantityCoinsWithChildren } from '../Common/QuantityCoins/QuantityWithChildren'
-import SelectedIcon from '../Icons/SelectedIcon'
+import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
+import SelectedIcon from '../icons/SelectedIcon'
 
 enum BorderColorEnum {
   Red = 'Red',

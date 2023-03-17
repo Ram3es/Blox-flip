@@ -2,9 +2,9 @@ import { Menu } from '@headlessui/react'
 import React, { FC } from 'react'
 import { selectItem } from '../../constants/Sorting'
 // import { Link } from 'react-router-dom'
-import { Button } from '../Base/Button'
+import { Button } from '../base/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
-import TriangleArrow from '../Icons/TriangleArrow'
+import TriangleArrow from '../icons/TriangleArrow'
 
 interface IGreenSelectProps {
   onSelect: Function
