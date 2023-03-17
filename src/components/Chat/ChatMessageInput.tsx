@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../Base/Button'
-import { Input } from '../Common/Input/Input'
+import { Input } from '../common/Input/Input'
 
 const MailIcon = ({ className }: { className: string }) => {
   return (

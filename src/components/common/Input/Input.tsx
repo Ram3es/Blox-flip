@@ -3,25 +3,21 @@ import clsx from 'clsx'
 
 enum InputVariantEnum {
   BASE = 'BASE',
-  CHAT = 'CHAT',
-  OUTLINED = 'OUTLINED'
+  OUTLINED = 'OUTLINED',
+  FORM = 'FORM'
 }
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string
   variant?: keyof typeof InputVariantEnum
 }
 
-export const Input: FC<InputProps> = ({
-  label,
-  variant = InputVariantEnum.BASE,
-  ...inputProps
-}) => {
-  const inputClasses = clsx('relative z-10', {
+export const Input: FC<InputProps> = ({ variant = InputVariantEnum.BASE, ...inputProps }) => {
+  const inputClasses = clsx('relative z-10 outline-none', {
     'rounded p-3 pl-4 pr-14 bg-blue-secondary text-gray_96 w-full text-13 focus:outline focus:outline-pink-primary':
       variant === InputVariantEnum.BASE,
-    'group grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none appearance-none m-0 w-full':
-      variant === InputVariantEnum.OUTLINED
+    'group grow w-0 mr-2 bg-transparent bg-none border-none shadow-none appearance-none m-0 w-full':
+      variant === InputVariantEnum.OUTLINED,
+    'rounded-xl gradient-blue-secondary min-h-[57px] w-full pl-11': variant === InputVariantEnum.FORM
   })
 
   return (

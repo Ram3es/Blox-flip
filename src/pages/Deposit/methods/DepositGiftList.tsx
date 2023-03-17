@@ -1,4 +1,4 @@
-import GiftCardImage from '../../assets/img/gift1.png'
+import GiftCardImage from '../../../assets/img/gift1.png'
 
 const GiftCard = () => {
   return (
