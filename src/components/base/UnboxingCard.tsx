@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { IMAGES } from '../../constants/Images'
-import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
-import DiamondIcon from '../icons/DiamondIcon'
+import { QuantityCoinsWithChildren } from '../Common/QuantityCoins/QuantityWithChildren'
+import DiamondIcon from '../Icons/DiamondIcon'
 interface IUnboxingCardProps {
   name: string
   price: number

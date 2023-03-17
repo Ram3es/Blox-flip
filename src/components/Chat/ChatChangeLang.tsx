@@ -7,7 +7,7 @@ import EnglandIcon from '../../assets/img/flag_en.svg'
 import SpainIcon from '../../assets/img/flag_spain.svg'
 import TurkishIcon from '../../assets/img/flag_turkish.svg'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 
 interface countryItem {
   name: string

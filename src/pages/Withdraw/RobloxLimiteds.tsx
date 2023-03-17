@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-import ItemCard from '../../components/base/ItemCard'
-import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
+import ItemCard from '../../components/Base/ItemCard'
+import { QuantityCoinsWithChildren } from '../../components/Common/QuantityCoins/QuantityWithChildren'
+import DiamondIcon from '../../components/Icons/DiamondIcon'
+import RemoveArrowBold from '../../components/Icons/RemoveArrowBold'
 import { searchData } from '../../helpers/searchData'
 import { sortData } from '../../helpers/sortData'
 import { cards } from '../../mocks/cards'
@@ -11,10 +11,24 @@ import { IItemCard } from '../../types/itemCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<IItemCard[]>(cards)
-  const { direction, searchBy, selectedCards, setSelectedCard } = useOutletContext<{ searchBy: string, direction: 'ASC' | 'DESC', selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
+  const {
+    sortBy,
+    direction,
+    searchBy,
+    priceRange,
+    selectedCards,
+    setSelectedCard
+  } = useOutletContext<{ sortBy?: string, searchBy: string, direction?: 'ASC' | 'DESC', priceRange: { from: number, to: number }, selectedCards: IItemCard[], setSelectedCard: Dispatch<SetStateAction<IItemCard[]>> }>()
 
-  const filtered = useMemo(() => searchData(allCards, 'name', searchBy), [searchBy, allCards])
-  const sorted = useMemo(() => sortData(filtered, 'price', direction), [direction, filtered])
+  const ranged = useMemo(() => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, allCards])
+  const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, allCards, ranged])
+  const sorted = useMemo(() => {
+    if (sortBy && direction) {
+      return sortData(filtered, sortBy as keyof IItemCard, direction)
+    } else {
+      return filtered
+    }
+  }, [direction, filtered, sortBy])
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
 
   const addToSelectedCard = (card: IItemCard) => {

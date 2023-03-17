@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { IUser } from '../../types/User'
-import UserProgress from '../user/UserProgress'
+import UserProgress from '../User/UserProgress'
 
 import line from '../../assets/img/welcome_line.svg'
 import Astronaut from '../../assets/img/welcome_l.png'
@@ -8,7 +8,7 @@ import Cowboy from '../../assets/img/welcome_r.png'
 import OrangeCloudLeft from '../../assets/img/welcome_l.svg'
 import OrangeCloudRight from '../../assets/img/welcome_r.svg'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 interface IWelcomeCardProps {
   user?: IUser
   openModal: Function

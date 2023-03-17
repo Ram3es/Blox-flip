@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import clsx from 'clsx'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 
 interface ChatFabProps {
   onClick: () => void
