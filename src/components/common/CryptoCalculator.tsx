@@ -31,33 +31,30 @@ export const CryptoCalculator = () => {
     usd: 100
   })
 
-  const handleChange = (fieldName: string, value: number) => {
-    const newCoinAmount =
-      fieldName === 'coin'
-        ? value
-        : fieldName === 'usd'
-          ? value * (rates.coin / rates.usd)
-          : fieldName === 'bitcoin'
-            ? value * (rates.coin / rates.bitcoin)
-            : amounts.coin
+  const handleChange = (fieldName: string, value: number): void => {
+    let newCoinAmount, newUsdAmount, newBtcAmount
 
-    const newUsdAmount =
-      fieldName === 'usd'
-        ? value
-        : fieldName === 'coin'
-          ? value * (rates.usd / rates.coin)
-          : fieldName === 'bitcoin'
-            ? value * (rates.usd / rates.bitcoin)
-            : amounts.usd
-
-    const newBtcAmount =
-      fieldName === 'bitcoin'
-        ? value
-        : fieldName === 'coin'
-          ? value * (rates.bitcoin / rates.coin)
-          : fieldName === 'usd'
-            ? value * (rates.bitcoin / rates.usd)
-            : amounts.bitcoin
+    switch (fieldName) {
+      case 'coin':
+        newCoinAmount = value
+        newUsdAmount = value * (rates.usd / rates.coin)
+        newBtcAmount = value * (rates.bitcoin / rates.coin)
+        break
+      case 'usd':
+        newCoinAmount = value * (rates.coin / rates.usd)
+        newUsdAmount = value
+        newBtcAmount = value * (rates.bitcoin / rates.usd)
+        break
+      case 'bitcoin':
+        newCoinAmount = value * (rates.coin / rates.bitcoin)
+        newUsdAmount = value * (rates.usd / rates.bitcoin)
+        newBtcAmount = value
+        break
+      default:
+        newCoinAmount = amounts.coin
+        newUsdAmount = amounts.usd
+        newBtcAmount = amounts.bitcoin
+    }
 
     setAmounts({
       coin: Number(newCoinAmount.toFixed(2)),
