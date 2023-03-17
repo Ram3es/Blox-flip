@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react'
 import ButtonsToggle from '../../components/Base/ButtonToggle'
 import ItemCard from '../../components/Base/ItemCard'
-import GreenTipSelect from '../../components/Common/GreenTipSelect'
-import SearchInput from '../../components/Common/SearchInput'
-import SortSelect from '../../components/Common/SortSelect'
+import GreenTipSelect from '../../components/common/GreenTipSelect'
+import SearchInput from '../../components/common/SearchInput'
+import SortSelect from '../../components/common/SortSelect'
 import { sortingVariants } from '../../constants/Sorting'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import { searchData } from '../../helpers/searchData'
@@ -11,8 +11,8 @@ import { cards, unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/itemCard'
 import { sortData } from '../../helpers/sortData'
 import { useNavigate } from 'react-router-dom'
-import UnboxingCard from '../../components/base/UnboxingCard'
-import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
+import UnboxingCard from '../../components/Base/UnboxingCard'
+import UnboxingIconTitle from '../../components/Icons/UnboxingIconTitle'
 
 const tabs = ['Hot', 'Featured', 'New', 'Creator']
 

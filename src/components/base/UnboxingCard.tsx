@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { IMAGES } from '../../constants/Images'
-import { QuantityCoinsWithChildren } from '../Common/QuantityCoins/QuantityWithChildren'
+import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
 import DiamondIcon from '../Icons/DiamondIcon'
 interface IUnboxingCardProps {
   id: string
