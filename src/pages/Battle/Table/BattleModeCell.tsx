@@ -1,15 +1,15 @@
 
 import React, { useMemo } from 'react'
-import DaggersGreenGradient from '../../../components/icons/DaggersGreenGradient'
-import DaggersIcons from '../../../components/icons/DaggersIcons'
-import GreenLineLeftBattleLeft from '../../../components/icons/GreenLineBattleLeft'
-import GreenLineBattleRight from '../../../components/icons/GreenLineBattleRight'
+import DaggersGreenGradient from '../../../components/Icons/DaggersGreenGradient'
+import DaggersIcons from '../../../components/Icons/DaggersIcons'
+import GreenLineLeftBattleLeft from '../../../components/Icons/GreenLineBattleLeft'
+import GreenLineBattleRight from '../../../components/Icons/GreenLineBattleRight'
 import { UserAvatar } from '../../../components/UserAvatar/UserAvatar'
 import { IModeGame, TBattleUser } from '../../../mocks/battle'
 import { GameStatus } from '../../../types/enums'
 import question from '../../../assets/img/question-mark-circle-1.svg'
-import YellowLine from '../../../components/icons/YellowLine'
-import BlueLine from '../../../components/icons/BlueLine'
+import YellowLine from '../../../components/Icons/YellowLine'
+import BlueLine from '../../../components/Icons/BlueLine'
 
 const BattleModeCell = ({ mode, status, users }: { mode: IModeGame, status: string, users: TBattleUser[] }) => {
   const getCell = (value: IModeGame) => {

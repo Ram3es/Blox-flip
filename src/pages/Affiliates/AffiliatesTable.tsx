@@ -5,7 +5,7 @@ import { ISecondUser } from '../../types/User'
 import { users } from './mock'
 import { Table } from '../../components/Table/Table'
 import { UserInfoCell } from '../../components/Table/UserInfoCell'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
 import { TimeCell } from '../../components/Table/TimeCell'
 
 export const AffiliatesTable = () => {

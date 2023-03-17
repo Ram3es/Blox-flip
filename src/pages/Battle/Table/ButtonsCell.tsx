@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
-import { Button } from '../../../components/base/Button'
-import Loader from '../../../components/base/Loader'
-import DaggersIcons from '../../../components/icons/DaggersIcons'
-import PreviewIcon from '../../../components/icons/PreviewIcon'
-import SelectedIcon from '../../../components/icons/SelectedIcon'
+import { Button } from '../../../components/Base/Button'
+import Loader from '../../../components/Base/Loader'
+import DaggersIcons from '../../../components/Icons/DaggersIcons'
+import PreviewIcon from '../../../components/Icons/PreviewIcon'
+import SelectedIcon from '../../../components/Icons/SelectedIcon'
 import { GameStatus } from '../../../types/enums'
 
 const ButtonsCell = ({ status }: { status: string }) => {
