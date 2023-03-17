@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import ItemCard from '../../components/Base/ItemCard'
-import { QuantityCoinsWithChildren } from '../../components/Common/QuantityCoins/QuantityWithChildren'
+import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import DiamondIcon from '../../components/Icons/DiamondIcon'
 import RemoveArrowBold from '../../components/Icons/RemoveArrowBold'
 import { searchData } from '../../helpers/searchData'

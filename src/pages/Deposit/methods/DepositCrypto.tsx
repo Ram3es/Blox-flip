@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { CopyIconSecond } from '../../../components/icons/CopyIconSecond'
+import { CopyIconSecond } from '../../../components/Icons/CopyIconSecond'
 import QRCodePlaceHolder from '../../../assets/img/qr-kod.png'
 import { CryptoCalculator } from '../../../components/common/CryptoCalculator'
 import { Button } from '../../../components/Base/Button'

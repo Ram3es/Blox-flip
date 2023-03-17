@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Button } from '../../components/Base/Button'
-import ToolBar from '../../components/Common/ToolBar'
+import ToolBar from '../../components/common/ToolBar'
 import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
 import NavHeader from '../../components/Navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'

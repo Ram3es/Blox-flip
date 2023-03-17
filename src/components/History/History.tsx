@@ -11,7 +11,7 @@ import { mockHistory } from './mock'
 import { IHistory } from '../../types/history'
 import { GameCell } from '../Table/GameCell'
 import { MultiplierCell } from '../Table/MultiplierCell'
-import { QuantityCoins } from '../Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 export const History = () => {

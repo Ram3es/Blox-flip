@@ -12,7 +12,7 @@ import { FilterHeader } from '../Table/FilterHeader'
 import { users } from './users'
 import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/table'
-import { QuantityCoins } from '../Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 const RedDotIcon = () => {

@@ -1,4 +1,4 @@
-const UnboxingIcon = ({ iconClasses }: { iconClasses?: string }) => {
+const UnboxingIconTitle = ({ iconClasses }: { iconClasses?: string }) => {
   return (
     <svg
       className={iconClasses ?? ''}
@@ -32,4 +32,4 @@ const UnboxingIcon = ({ iconClasses }: { iconClasses?: string }) => {
   )
 }
 
-export default UnboxingIcon
+export default UnboxingIconTitle

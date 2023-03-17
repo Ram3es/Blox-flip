@@ -40,7 +40,7 @@ const BattleLobby = () => {
               <ButtonsToggle options={filterOptions} currentSelect={currentFilterOptions} peackFunction={setOptions} />
             </div>
             <Button
-              onClick={() => navigate('/') }
+              onClick={() => navigate('/create-battle') }
               className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-4 leading-4 rounded mb-4'
             >Create Battle</Button>
           </div>

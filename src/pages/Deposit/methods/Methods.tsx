@@ -1,5 +1,5 @@
 import React from 'react'
-import MethodCard from '../../../components/Common/Cards/MethodCard'
+import MethodCard from '../../../components/common/Cards/MethodCard'
 import PaymentMethodContainer from '../../../components/Container/PaymentMethodContainer'
 import { METHODS } from '../../../constants/PaymentMethods'
 

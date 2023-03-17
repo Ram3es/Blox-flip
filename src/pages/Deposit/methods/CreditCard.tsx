@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { Button } from '../../../components/Base/Button'
 import InputWithLabel from '../../../components/Base/InputWithLabel'
-import { QuantityCoinsWithChildren } from '../../../components/Common/QuantityCoins/QuantityWithChildren'
+import { QuantityCoinsWithChildren } from '../../../components/common/QuantityCoins/QuantityWithChildren'
 import MethodsContainer from '../../../components/Container/PaymentMethodContainer'
 import { DiamondIcon } from '../../../components/DiamondIcon/DiamondIcon'
 
