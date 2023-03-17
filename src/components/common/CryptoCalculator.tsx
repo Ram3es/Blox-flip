@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import BitcoinIconSmall from '../../assets/img/deposit_bitcoin_small.png'
 import InputWithLabel from '../Base/InputWithLabel'
 
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 import { Input } from './Input'
+import { getIconByPathName } from '../../helpers/iconsHelper'
 
 const BridgeComponent = () => {
   return (
@@ -33,12 +34,13 @@ export const CryptoCalculator = () => {
     bitcoin: 10,
     usd: 100
   })
-
   const [amounts, setAmounts] = useState<AmountState>({
     coin: 1000,
     bitcoin: 10,
     usd: 100
   })
+
+  const { pathname } = useLocation()
 
   const handleChange = (fieldName: string, value: number): void => {
     let newCoinAmount, newUsdAmount, newBtcAmount
@@ -123,7 +125,7 @@ export const CryptoCalculator = () => {
         </div>
         <span className='min-w-fit shrink-0 absolute left-4 top-[59px]'>
           <img
-            src={BitcoinIconSmall}
+            src={getIconByPathName(pathname.split('/')[2])}
             alt='bitcoin'
             width='18'
             height='18'

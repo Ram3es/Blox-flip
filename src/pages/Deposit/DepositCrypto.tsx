@@ -1,13 +1,15 @@
 import { FC, useState } from 'react'
 import { CopyIconSecond } from '../../components/icons/CopyIconSecond'
-import BitcoinIconSmall from '../../assets/img/deposit_bitcoin_small.png'
 import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
 import { CryptoCalculator } from '../../components/common/CryptoCalculator'
 import { Button } from '../../components/Base/Button'
 import InputWithLabel from '../../components/Base/InputWithLabel'
+import { useLocation } from 'react-router-dom'
+import { getIconByPathName } from '../../helpers/iconsHelper'
 
 export const DepositCrypto: FC = () => {
   const [sendAmount, setSendAmount] = useState(100)
+  const { pathname } = useLocation()
 
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
@@ -49,7 +51,7 @@ export const DepositCrypto: FC = () => {
               />
               <span className='min-w-fit shrink-0 absolute top-[59px] left-6'>
                 <img
-                  src={BitcoinIconSmall}
+                  src={getIconByPathName(pathname.split('/')[2])}
                   alt='bitcoin'
                   width='18'
                   height='18'
