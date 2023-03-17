@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import InputWithLabel from '../base/InputWithLabel'
+import InputWithLabel from '../Base/InputWithLabel'
 import Submit from './Submit'
 
 const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {

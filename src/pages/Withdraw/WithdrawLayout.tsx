@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router'
 
-import { Button } from '../../components/base/Button'
+import { Button } from '../../components/Base/Button'
 import { WithdrawList } from './WithdrawList'
 
 import { IWithdrawMethod } from '../../types/withdraw'

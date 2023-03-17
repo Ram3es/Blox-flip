@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../base/Button'
-import { Input } from '../common/Input/Input'
+import { Button } from '../Base/Button'
+import { Input } from '../Common/Input/Input'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
 
 export const ChatLotteryInput = () => {

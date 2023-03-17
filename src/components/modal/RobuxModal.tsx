@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from 'react'
-import InputWithLabel from '../base/InputWithLabel'
-import ModalWrapper from '../base/ModalWrapper'
-import { Button } from '../base/Button'
+import InputWithLabel from '../Base/InputWithLabel'
+import ModalWrapper from '../Base/ModalWrapper'
+import { Button } from '../Base/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
-import { GiftWithDiamond } from '../icons/GiftWithDiamond'
+import { GiftWithDiamond } from '../Icons/GiftWithDiamond'
 
 const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
   const [inputsValue, setInputValue] = useState({ promo: '', affiliate: '' })

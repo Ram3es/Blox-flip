@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import clsx from 'clsx'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 import { TableVariant } from '../../types/table'
 
 interface FilterButtonProps {

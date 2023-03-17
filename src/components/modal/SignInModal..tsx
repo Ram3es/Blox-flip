@@ -1,12 +1,12 @@
 import React, { useState, FC } from 'react'
-import ButtonsToggle from '../base/ButtonToggle'
+import ButtonsToggle from '../Base/ButtonToggle'
 import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'
 import Logo from '../../assets/img/logo.png'
 import Pilot from '../../assets/img/pilot.png'
 import VideoPlayer from '../../assets/img/videoPlayerImg.png'
 import RobloForm from '../sign-in/RobloForm'
-import ModalWrapper from '../base/ModalWrapper'
+import ModalWrapper from '../Base/ModalWrapper'
 
 const toggleOptions = ['Credentials', '.Roblosecurity']
 
