@@ -8,14 +8,14 @@ import { getRandomCards } from '../../../helpers/casesHelpers'
 import { caseCards } from '../../../mocks/caseOpeningMock'
 
 import { Button } from '../../../components/Base/Button'
-import { QuantityCoins } from '../../../components/Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
 import { CasesLineItem } from '../../../components/Common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
 import { ArrowGrayIcon } from '../../../components/Icons/ArrowGrayIcon'
 import { FairIcon } from '../../../components/Icons/FairIcon'
 import { OpeningLineIcon } from '../../../components/Icons/OpeningLineIcon'
-import UnboxingIcon from '../../../components/Icons/UnboxingIcon'
+import UnboxingIcon from '../../../components/Icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import clsx from 'clsx'
 
 import { Button } from '../../components/Base/Button'
-import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { UserAvatar } from '../../components/User/UserAvatar'
 
 import FirstPlaceIcon from '../../assets/img/coin1.svg'

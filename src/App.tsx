@@ -20,6 +20,7 @@ import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
+import CreateBattle from './pages/Battle/CreateBattle'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import { DepositGift } from './pages/Deposit/methods/DepositGift'
 import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
@@ -62,6 +63,7 @@ export const App = () => {
           <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
+          <Route path='/create-battle' element={<CreateBattle />} />
         </Routes>
       </Container>
     </BrowserRouter>

@@ -3,9 +3,12 @@ export interface IItemCard {
   name: string
   price: number
   image: string
-  sold: boolean
+  sold?: boolean
   active?: boolean
   color: string
   isSelected?: boolean
   hot?: boolean
+}
+export interface IUnboxCard extends IItemCard {
+  status: string
 }

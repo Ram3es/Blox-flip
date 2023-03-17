@@ -7,7 +7,7 @@ import { users } from '../../mocks/leaderboardMock'
 
 import { Table } from '../../components/Table/Table'
 import { UserInfoCell } from '../../components/Table/CellFormaters/UserInfoCell'
-import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { PlaceCell } from '../../components/Table/CellFormaters/PlaceCell'
 import { getSortedUsersByField } from '../../helpers/leaderboardHelpers'
 
