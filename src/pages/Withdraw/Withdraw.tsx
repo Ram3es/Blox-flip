@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { Button } from '../../components/base/Button'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import TriangleArrow from '../../components/icons/TriangleArrow'
+import { Button } from '../../components/Base/Button'
+import DiamondIcon from '../../components/Icons/DiamondIcon'
+import TriangleArrow from '../../components/Icons/TriangleArrow'
 import { IMAGES } from '../../constants/Images'
-import SearchIcon from '../../components/icons/SearchIcon'
-import GreenTipSelect from '../../components/common/GreenTipSelect'
+import SearchIcon from '../../components/Icons/SearchIcon'
+import GreenTipSelect from '../../components/Common/GreenTipSelect'
 import WithdrawMethod from './WithdrawMethod'
 import { useDebounce } from '../../helpers/hooks/useDebounce'
 import { IItemCard } from '../../types/itemCard'
 import { ISortOptions } from '../../types/sortOptions'
-import SortSelect from '../../components/common/SortSelect'
+import SortSelect from '../../components/Common/SortSelect'
 
 const sortingVariants: ISortOptions [] = [{ title: 'High to low', value: 'DESC' }, { title: 'Low to high', value: 'ASC' }]
 

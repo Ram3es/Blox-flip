@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import { Menu } from '@headlessui/react'
 
-import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
+import DiamondIcon from '../Icons/DiamondIcon'
 
 import Logo from '../../assets/img/logo.png'
 import HomeIcon from '../../assets/img/home_ico.svg'
@@ -9,8 +9,8 @@ import GamesIcon from '../../assets/img/games_ico.svg'
 import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/routes'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../base/Button'
-import { PlusIcon } from '../PlusIcon/PlusIcon'
+import { Button } from '../Base/Button'
+import { PlusIcon } from '../Icons/PlusIcon'
 
 const GamesButton = ({ title }: { title: string }) => {
   return (

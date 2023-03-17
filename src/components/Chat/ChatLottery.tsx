@@ -1,7 +1,7 @@
 import { Popover } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '../base/Button'
-import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
+import { Button } from '../Base/Button'
+import DiamondIcon from '../Icons/DiamondIcon'
 import { ChatLotteryInput } from './ChatLotteryInput'
 
 export const ChatLottery = () => {

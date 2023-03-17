@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
-import { Button } from '../base/Button'
+import { ArrowLeftIcon } from '../Icons/ArrowLeftIcon'
+import { Button } from '../Base/Button'
 
 interface TablePaginationProps {
   nextPage: () => void

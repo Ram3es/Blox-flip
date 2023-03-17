@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import clsx from 'clsx'
-import { DiamondIcon } from '../../DiamondIcon/DiamondIcon'
+import DiamondIcon from '../../Icons/DiamondIcon'
 import { formatNumber } from '../../../helpers/numbersFormatter'
 
 export interface QuantityCoinsProps {

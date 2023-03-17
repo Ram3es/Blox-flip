@@ -5,17 +5,17 @@ import clsx from 'clsx'
 
 import { ICaseItem } from '../../../types/cases'
 import { getRandomCards } from '../../../helpers/casesHelpers'
-import { caseCards } from './mock'
+import { caseCards } from '../../../mocks/caseOpeningMock'
 
-import { Button } from '../../../components/base/Button'
-import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
-import { CasesLineItem } from './CasesLineItem'
+import { Button } from '../../../components/Base/Button'
+import { QuantityCoins } from '../../../components/Common/QuantityCoins/QuantityCoins'
+import { CasesLineItem } from '../../../components/Common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
-import { ArrowGrayIcon } from '../../../components/ArrowGrayIcon/ArrowGrayIcon'
-import { FairIcon } from '../../../components/icons/FairIcon'
-import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
-import UnboxingIcon from '../../../components/icons/UnboxingIcon'
+import { ArrowGrayIcon } from '../../../components/Icons/ArrowGrayIcon'
+import { FairIcon } from '../../../components/Icons/FairIcon'
+import { OpeningLineIcon } from '../../../components/Icons/OpeningLineIcon'
+import UnboxingIcon from '../../../components/Icons/UnboxingIcon'
 import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {

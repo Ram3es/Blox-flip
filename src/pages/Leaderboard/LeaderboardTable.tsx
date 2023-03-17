@@ -3,12 +3,12 @@ import { createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 
 import { ISecondUser } from '../../types/User'
-import { users } from './mock'
+import { users } from '../../mocks/leaderboardMock'
 
 import { Table } from '../../components/Table/Table'
-import { UserInfoCell } from '../../components/Table/UserInfoCell'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { PlaceCell } from '../../components/Table/PlaceCell'
+import { UserInfoCell } from '../../components/Table/CellFormaters/UserInfoCell'
+import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
+import { PlaceCell } from '../../components/Table/CellFormaters/PlaceCell'
 import { getSortedUsersByField } from '../../helpers/leaderboardHelpers'
 
 export const LeaderboardTable = () => {

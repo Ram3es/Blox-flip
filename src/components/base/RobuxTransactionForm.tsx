@@ -1,11 +1,11 @@
 import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { Button } from '../../components/base/Button'
-import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
+import { QuantityCoins } from '../Common/QuantityCoins/QuantityCoins'
+import { Button } from './Button'
+import DiamondIcon from '../Icons/DiamondIcon'
 
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
-import InputWithLabel from '../../components/base/InputWithLabel'
+import InputWithLabel from './InputWithLabel'
 
 import { formatNumber } from '../../helpers/numbersFormatter'
 import { WithdrawInputState } from '../../types/form'

@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
-import InputWithLabel from '../../components/base/InputWithLabel'
-import { Button } from '../../components/base/Button'
-import { CopyIcon } from '../../components/icons/CopyIcon'
+import InputWithLabel from '../../components/Base/InputWithLabel'
+import { Button } from '../../components/Base/Button'
+import { CopyIcon } from '../../components/Icons/CopyIcon'
 
 const baseUrl = 'https://robloxsite.com/?a/'
 

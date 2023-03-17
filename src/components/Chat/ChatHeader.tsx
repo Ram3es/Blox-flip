@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 
 import { IUser } from '../../types/User'
 
-import { UserAvatar } from '../UserAvatar/UserAvatar'
-import { UserLevel } from '../UserLevel/UserLevel'
+import { UserAvatar } from '../User/UserAvatar'
+import { UserLevel } from '../User/UserLevel'
 import { UserInfoDropdown } from './UserInfoDropdown'
 
 export const ChatHeader: FC<Pick<IUser, 'name' | 'avatar' | 'level'>> = ({

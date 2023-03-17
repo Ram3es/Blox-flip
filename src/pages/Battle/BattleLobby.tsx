@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Button } from '../../components/base/Button'
-import ButtonsToggle from '../../components/base/ButtonToggle'
-import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
+import { Button } from '../../components/Base/Button'
+import ButtonsToggle from '../../components/Base/ButtonToggle'
+import DaggersGreenGradient from '../../components/Icons/DaggersGreenGradient'
 import { dataTable } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 import TableBattleLobby from './TableBattleLobby'

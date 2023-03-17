@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Container } from './components/Container/Container'
+import { Container } from './components/Containers/Container'
 import { Header } from './components/Header/Header'
 import { Cups } from './pages/Cups/Cups'
 import { Home } from './pages/Home/Home'
