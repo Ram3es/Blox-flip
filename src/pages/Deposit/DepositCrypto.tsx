@@ -1,11 +1,10 @@
 import { FC, useState } from 'react'
-import { Button } from '../../components/base/Button'
 import { CopyIconSecond } from '../../components/icons/CopyIconSecond'
-
-import InputWithLabel from '../../components/base/InputWithLabel'
 import BitcoinIconSmall from '../../assets/img/deposit_bitcoin_small.png'
 import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
 import { CryptoCalculator } from '../../components/common/CryptoCalculator'
+import { Button } from '../../components/Base/Button'
+import InputWithLabel from '../../components/Base/InputWithLabel'
 
 export const DepositCrypto: FC = () => {
   const [sendAmount, setSendAmount] = useState(100)

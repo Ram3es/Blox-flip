@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Input } from './Input/Input'
 
 import BitcoinIconSmall from '../../assets/img/deposit_bitcoin_small.png'
-import InputWithLabel from '../base/InputWithLabel'
+import InputWithLabel from '../Base/InputWithLabel'
+
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
+import { Input } from './Input'
 
 const BridgeComponent = () => {
   return (
