@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import * as Yup from 'yup'
 
-import InputWithLabel from '../../components/base/InputWithLabel'
-import { Button } from '../../components/base/Button'
+import InputWithLabel from '../../components/Base/InputWithLabel'
+import { Button } from '../../components/Base/Button'
 import { DepositGiftList } from './DepositGiftList'
 import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
 

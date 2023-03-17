@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { RouteItem } from '../../types/routes'
 import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 
 const baseRoutes: RouteItem[] = [
   { path: '/profile', name: 'profile' },

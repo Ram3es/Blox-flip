@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
-import InputWithLabel from '../base/InputWithLabel'
-import { Button } from '../base/Button'
+import InputWithLabel from '../Base/InputWithLabel'
+import { Button } from '../Base/Button'
 
 const Submit = ({ submitFunction }: { submitFunction: Function }) => {
   const [isChecked, setChecked] = useState({ policy: false })

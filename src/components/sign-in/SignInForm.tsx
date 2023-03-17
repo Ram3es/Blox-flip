@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState, useContext } from 'react'
 import { Context } from '../../store/Store'
-import InputWithLabel from '../base/InputWithLabel'
+import InputWithLabel from '../Base/InputWithLabel'
 import Submit from './Submit'
 
 interface IState {

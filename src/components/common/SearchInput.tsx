@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchIcon from '../icons/SearchIcon'
+import SearchIcon from '../Icons/SearchIcon'
 
 const SearchInput = ({ value, onChange }: { value: string, onChange: Function }) => {
   return (
