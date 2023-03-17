@@ -6,6 +6,7 @@ interface IInputWithLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   inputClasses?: string
   titleClasses?: string
   inputWrapperClasses?: string
+  inputSecondWrapperClasses?: string
 }
 
 const InputWithLabel: FC<IInputWithLabelProps> = ({
@@ -14,6 +15,7 @@ const InputWithLabel: FC<IInputWithLabelProps> = ({
   inputClasses,
   titleClasses,
   inputWrapperClasses,
+  inputSecondWrapperClasses,
   ...inputProps
 }) => {
   return (
@@ -31,7 +33,7 @@ const InputWithLabel: FC<IInputWithLabelProps> = ({
       {inputProps.type === 'text' || inputProps.type === 'number'
         ? (
         <div className={inputWrapperClasses ?? 'bg-dark/25 rounded-xl rounded-tl-none overflow-hidden'}>
-          <div className='relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-4 pr-3'>
+          <div className={inputSecondWrapperClasses ?? 'relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-4 pr-3'}>
             <input
               type={inputProps.type}
               name={inputProps.name}

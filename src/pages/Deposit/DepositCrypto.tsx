@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Button } from '../../components/base/Button'
 import { CopyIconSecond } from '../../components/icons/CopyIconSecond'
 
@@ -8,6 +8,8 @@ import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
 import { CryptoCalculator } from '../../components/common/CryptoCalculator'
 
 export const DepositCrypto: FC = () => {
+  const [sendAmount, setSendAmount] = useState(100)
+
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
       <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm px-3 xxs:px-6 py-9 overflow-hidden relative'>
@@ -32,22 +34,24 @@ export const DepositCrypto: FC = () => {
                 </Button>
               </div>
             </div>
-            <div className='relative px-2 w-full xs:w-1/2 md:w-auto grow shrink-0 mb-4'>
+            <div className='relative px-2 xs:w-1/2 md:w-auto grow shrink-0 mb-4'>
               <InputWithLabel
-                type='text'
+                type='number'
                 autoComplete='off'
                 label='Send Amount'
                 labelClasses='flex flex-col w-full mb-4 items-center'
                 titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 text-center w-52 inline-block'
                 inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
-                inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-2 ml-7 mr-28 truncate'
+                inputSecondWrapperClasses='relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-10 pr-3'
+                inputClasses='grow bg-transparent bg-dark/25 border-none outline-none leading-5 mr-28 truncate'
                 placeholder='...'
-                value='0.1398582'
+                value={sendAmount}
+                onChange={(event) => setSendAmount(Number(event.target.value))}
               />
               <span className='min-w-fit shrink-0 absolute top-[59px] left-6'>
                 <img
                   src={BitcoinIconSmall}
-                  alt=''
+                  alt='bitcoin'
                   width='18'
                   height='18'
                   loading='lazy'
