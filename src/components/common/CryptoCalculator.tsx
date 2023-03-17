@@ -18,14 +18,22 @@ const BridgeComponent = () => {
   )
 }
 
+interface ExchangeRateState {
+  coin: number
+  bitcoin: number
+  usd: number
+}
+
+interface AmountState extends ExchangeRateState {}
+
 export const CryptoCalculator = () => {
-  const [rates] = useState({
+  const [rates] = useState<ExchangeRateState>({
     coin: 1000,
     bitcoin: 10,
     usd: 100
   })
 
-  const [amounts, setAmounts] = useState({
+  const [amounts, setAmounts] = useState<AmountState>({
     coin: 1000,
     bitcoin: 10,
     usd: 100
