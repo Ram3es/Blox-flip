@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 
 import InputWithLabel from '../Base/InputWithLabel'
 
-import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
-import { Input } from './Input/Input'
+import DiamondIcon from '../Icons/DiamondIcon'
+import { Input } from '../Base/Input'
 import { getIconByPathName } from '../../helpers/iconsHelper'
 
 const BridgeComponent = () => {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { METHODS } from '../../constants/PaymentMethods'
 import { IMethodLabel } from '../../types/payments-methods'
 import { Button } from '../Base/Button'
-import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
+import DiamondIcon from '../Icons/DiamondIcon'
 import TriangleArrow from '../Icons/TriangleArrow'
 import PageLabel from './PageLabel'
 
