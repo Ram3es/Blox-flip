@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/itemCard'
 import { Button } from '../base/Button'
-import { searchData } from '../../helpers/searchData'
+// import { searchData } from '../../helpers/searchData'
 import ModalWrapper from '../base/ModalWrapper'
 import UnboxingCard from '../base/UnboxingCard'
 import GreenTipSelect from '../common/GreenTipSelect'
@@ -13,11 +13,11 @@ import DaggersGreenGradient from '../icons/DaggersGreenGradient'
 const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
   const [unboxCards, setAllCards] = useState<IItemCard[]>(unboxCard)
   const [selectedCards, setSelected] = useState<IItemCard[]>([])
-  const { priceRange, searchBy } = useToolbarState()
+  // const { priceRange, searchBy } = useToolbarState()
 
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
-  const ranged = useMemo(() => unboxCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, unboxCards])
-  const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, unboxCards, ranged])
+  // const ranged = useMemo(() => unboxCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, unboxCards])
+  // const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, unboxCards, ranged])
 
   const onSelect = (card: IItemCard) => {
     setSelected(state => ([...state, card]))
@@ -41,7 +41,7 @@ const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }
         </div>
         <div className=" border-b border-blue-accent-secondary" />
         <div className='w-full max-h-[calc(100vh_-_210px)]  mt-5 mb-[34px] flex flex-wrap  overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full  pr-3 -mr-2 '>
-            {filtered.map((card) => (
+            {unboxCards.map((card) => (
                 <UnboxingCard
                    key={card.id}
                    id={card.id}

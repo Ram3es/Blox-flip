@@ -88,7 +88,7 @@ const Unboxing = () => {
         <div className='flex flex-wrap items-center -mx-1 py-2 order-2 lg:order-3'></div>
         <div className='flex flex-wrap -mx-2 mb-8 md:mb-12'>
           {filtered.map((card) => (
-            <UnboxingCard key={card.id} {...card} />
+            <UnboxingCard key={card.id} {...card} onSelect={() => {}} />
           ))}
         </div>
       </div>
