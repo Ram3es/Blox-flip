@@ -1,11 +1,11 @@
 import { FC, useState } from 'react'
-import { CopyIconSecond } from '../../components/icons/CopyIconSecond'
-import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
-import { CryptoCalculator } from '../../components/common/CryptoCalculator'
-import { Button } from '../../components/Base/Button'
-import InputWithLabel from '../../components/Base/InputWithLabel'
+import { CopyIconSecond } from '../../../components/icons/CopyIconSecond'
+import QRCodePlaceHolder from '../../../assets/img/qr-kod.png'
+import { CryptoCalculator } from '../../../components/common/CryptoCalculator'
+import { Button } from '../../../components/Base/Button'
+import InputWithLabel from '../../../components/Base/InputWithLabel'
 import { useLocation } from 'react-router-dom'
-import { getIconByPathName } from '../../helpers/iconsHelper'
+import { getIconByPathName } from '../../../helpers/iconsHelper'
 
 export const DepositCrypto: FC = () => {
   const [sendAmount, setSendAmount] = useState(100)

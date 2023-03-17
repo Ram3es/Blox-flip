@@ -21,8 +21,8 @@ import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
 import CreditCard from './pages/Deposit/methods/CreditCard'
-import { DepositGift } from './pages/Deposit/DepositGift'
-import { DepositCrypto } from './pages/Deposit/DepositCrypto'
+import { DepositGift } from './pages/Deposit/methods/DepositGift'
+import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 
 export const App = () => {
