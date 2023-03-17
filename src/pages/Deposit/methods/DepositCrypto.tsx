@@ -8,8 +8,15 @@ import { useLocation } from 'react-router-dom'
 import { getIconByPathName } from '../../../helpers/iconsHelper'
 
 export const DepositCrypto: FC = () => {
+  const [bitcoinAddress] = useState('0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25')
   const [sendAmount, setSendAmount] = useState(100)
   const { pathname } = useLocation()
+
+  const handleCopyBitcoinAddress = () => {
+    navigator.clipboard.writeText(bitcoinAddress).catch((error) => {
+      console.log(error)
+    })
+  }
 
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
@@ -27,10 +34,10 @@ export const DepositCrypto: FC = () => {
                 inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-2 mr-12 truncate'
                 placeholder='...'
                 readOnly
-                value='0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25'
+                value={bitcoinAddress}
               />
               <div className='absolute z-20 top-[60px] right-4'>
-                <Button className='w-7 shrink-0' type='button'>
+                <Button onClick={handleCopyBitcoinAddress} className='w-7 shrink-0' type='button'>
                   <CopyIconSecond />
                 </Button>
               </div>
