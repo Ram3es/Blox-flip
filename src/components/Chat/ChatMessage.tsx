@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { IUser } from '../../types/User'
-import { UserCard } from '../UserCard/UserCard'
+import { UserCard } from '../Common/Cards/UserCard'
 import { UserInfoDropdown } from './UserInfoDropdown'
 
 interface UserMessageProps extends IUser {

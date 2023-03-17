@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { selectItem } from '../../constants/Sorting'
 // import { Link } from 'react-router-dom'
 import { Button } from '../Base/Button'
-import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
+import DiamondIcon from '../Icons/DiamondIcon'
 import TriangleArrow from '../Icons/TriangleArrow'
 
 interface IGreenSelectProps {
@@ -26,7 +26,7 @@ const GreenTipSelect: FC<IGreenSelectProps> = ({ onSelect, selectClasses }) => {
         <span className=' min-w-[80px] mr-2'>Price range</span>
         <TriangleArrow iconClasses={open ? 'rotate-180' : '' } />
     </Menu.Button>
-    <Menu.Items className=' absolute z-40 right-0 top-full pt-2.5' as='div'>
+    <Menu.Items className=' absolute z-[100] right-0 top-full pt-2.5' as='div'>
       <div className='relative p-2 rounded popup--bg-green  whitespace-normal popup--corner-tr-green'>
         {selectItem.map((variant) => (
           <Menu.Item

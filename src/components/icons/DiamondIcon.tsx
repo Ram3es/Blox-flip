@@ -1,14 +1,24 @@
-import React from 'react'
+import { FC } from 'react'
 
-const DiamondIcon = ({ className }: { className?: string }) => {
+interface DiamondIconProps {
+  className?: string
+  width?: string
+  height?: string
+}
+
+const DiamondIcon: FC<DiamondIconProps> = ({
+  className = '',
+  width = '14',
+  height = '12'
+}) => {
   return (
     <svg
-      width='16'
-      height='12'
+      width={width}
+      height={height}
       viewBox='0 0 16 12'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      className={className ?? ''}
+      className={className}
     >
       <path d='M11.345 3.15243L8.70325 11.5179L15.0874 3.15243H11.345Z' fill='currentColor' />
       <path d='M2.97057 0.193363L0.942505 2.62704H4.39022L2.97057 0.193363Z' fill='currentColor' />

@@ -5,10 +5,10 @@ import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoi
 import { IBattlesInfo } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 
-import BattleModeCell from './Table/BattleModeCell'
-import ButtonsCell from './Table/ButtonsCell'
-import CasesCell from './Table/CasesCell'
-import RoundCell from './Table/RoundCell'
+import BattleModeCell from '../../components/Table/CellFormaters/BattleModeCell'
+import ButtonsCell from '../../components/Table/CellFormaters/ButtonsCell'
+import CasesCell from '../../components/Table/CellFormaters/CasesCell'
+import RoundCell from '../../components/Table/CellFormaters/RoundCell'
 
 const columnHelper = createColumnHelper<Pick<IBattlesInfo, 'status' | 'date' | 'gameSetting' | 'players' >>()
 const columnsMemo = [

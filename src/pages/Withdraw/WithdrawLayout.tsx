@@ -5,8 +5,8 @@ import { WithdrawList } from './WithdrawList'
 
 import { IWithdrawMethod } from '../../types/withdraw'
 
-import { ArrowGrayIcon } from '../../components/ArrowGrayIcon/ArrowGrayIcon'
-import { DiamondIcon } from '../../components/DiamondIcon/DiamondIcon'
+import { ArrowGrayIcon } from '../../components/Icons/ArrowGrayIcon'
+import DiamondIcon from '../../components/Icons/DiamondIcon'
 import MoneyIcon from '../../assets/img/deposit2_small.png'
 import RobuxIcon from '../../assets/img/deposit2.png'
 import RobloxIcon from '../../assets/img/deposit1.png'

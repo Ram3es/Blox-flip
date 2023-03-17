@@ -4,7 +4,7 @@ export const useDebounce = (dealy = 500) => {
   const [typeTimemout, setTypeTimeout] = useState<number>()
 
   const debounce = (args: Function) => {
-    clearTimeout(typeTimemout)
+    typeTimemout && clearTimeout(typeTimemout)
 
     const timeout = setTimeout(() => args(), dealy)
 

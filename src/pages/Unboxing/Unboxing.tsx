@@ -1,22 +1,24 @@
 import React, { useMemo, useState } from 'react'
 import ButtonsToggle from '../../components/Base/ButtonToggle'
-import ItemCard from '../../components/Base/ItemCard'
-import UnboxingCard from '../../components/Base/UnboxingCard'
+import ItemCard from '../../components/Common/Cards/ItemCard'
 import GreenTipSelect from '../../components/Common/GreenTipSelect'
 import SearchInput from '../../components/Common/SearchInput'
 import SortSelect from '../../components/Common/SortSelect'
-import UnboxingIcon from '../../components/Icons/UnboxingIcon'
 import { sortingVariants } from '../../constants/Sorting'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import { searchData } from '../../helpers/searchData'
 import { cards, unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/itemCard'
 import { sortData } from '../../helpers/sortData'
+import { useNavigate } from 'react-router-dom'
+import UnboxingCard from '../../components/Common/Cards/UnboxingCard'
+import UnboxingIconTitle from '../../components/Icons/UnboxingIconTitle'
 
 const tabs = ['Hot', 'Featured', 'New', 'Creator']
 
 const Unboxing = () => {
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
+  const navigate = useNavigate()
 
   const {
     value,
@@ -59,7 +61,7 @@ const Unboxing = () => {
         <div className='flex flex-wrap justify-between items-center mb-6 border-b border-blue-accent-secondary'>
           <div className='flex items-center mb-3 xs:mb-2 order-1'>
             <div className='w-7 shrink-0 mr-2 text-blue-golf'>
-              <UnboxingIcon />
+              <UnboxingIconTitle />
             </div>
               <h3 className="font-extrabold text-2xl mr-2">Case unboxing</h3>
             </div>
@@ -86,7 +88,9 @@ const Unboxing = () => {
               key={card.id}
               id={card.id}
               name={card.name}
-              price={card.price}/>
+              price={card.price}
+              onSelect={() => navigate(`unboxing/${card.id}`)}
+              />
           )
           )}
           </div>

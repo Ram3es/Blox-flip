@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import ItemCard from '../../../components/Base/ItemCard'
+import ItemCard from '../../../components/Common/Cards/ItemCard'
 
 import { ICaseItem } from '../../../types/cases'
 

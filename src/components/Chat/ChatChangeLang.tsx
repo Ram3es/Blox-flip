@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Listbox } from '@headlessui/react'
 
-import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
+import { ArrowGrayIcon } from '../Icons/ArrowGrayIcon'
 
 import EnglandIcon from '../../assets/img/flag_en.svg'
 import SpainIcon from '../../assets/img/flag_spain.svg'

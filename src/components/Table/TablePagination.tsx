@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ArrowLeftIcon } from '../ArrowLeftIcon/ArrowLeftIcon'
+import { ArrowLeftIcon } from '../Icons/ArrowLeftIcon'
 import { Button } from '../Base/Button'
 
 interface TablePaginationProps {

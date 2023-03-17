@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 import { Button } from '../../components/Base/Button'
 import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/UserAvatar/UserAvatar'
+import { UserAvatar } from '../../components/User/UserAvatar'
 
 import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'

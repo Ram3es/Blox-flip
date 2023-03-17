@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../Base/Button'
-import { Input } from '../Common/Input/Input'
-import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
+import { Input } from '../Base/Input'
+import DiamondIcon from '../Icons/DiamondIcon'
 
 export const ChatLotteryInput = () => {
   const [tipCoins, setTipCoins] = useState('')

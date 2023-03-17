@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { getPlaceByIndex, getTopThreeUsers } from '../../helpers/leaderboardHelpers'
 import { ISecondUser } from '../../types/User'
-import { users } from './mock'
+import { users } from '../../mocks/leaderboardMock'
 import { PodiumItem } from './PodiumItem'
 
 export const LeaderboardPodium = () => {

@@ -3,7 +3,7 @@ import { Menu } from '@headlessui/react'
 import { Link } from 'react-router-dom'
 
 import { RouteItem } from '../../types/routes'
-import { ArrowGrayIcon } from '../ArrowGrayIcon/ArrowGrayIcon'
+import { ArrowGrayIcon } from '../Icons/ArrowGrayIcon'
 import { Button } from '../Base/Button'
 
 const baseRoutes: RouteItem[] = [
