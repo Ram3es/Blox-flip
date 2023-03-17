@@ -18,13 +18,13 @@ import Unboxing from './pages/Unboxing/Unboxing'
 import RobloxLimiteds from './pages/Withdraw/RobloxLimiteds'
 import { Withdraw } from './pages/Withdraw/Withdraw'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
-import Bitcoin from './pages/Deposit/methods/Bitcoin'
-import CreditCard from './pages/Deposit/methods/CreditCard'
 import { CaseOpening } from './pages/Cases/CaseOpening/CaseOpening'
 import BattleLobby from './pages/Battle/BattleLobby'
 import CreateBattle from './pages/Battle/CreateBattle'
+import CreditCard from './pages/Deposit/methods/CreditCard'
+import { DepositGift } from './pages/Deposit/methods/DepositGift'
+import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
-import { DepositGift } from './pages/Deposit/DepositGift'
 
 export const App = () => {
   return (
@@ -44,12 +44,12 @@ export const App = () => {
           <Route path='/crash' element={<Wheel />} />
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
-          <Route path='/deposit' element={<Deposit />} >
+          <Route path='/deposit' element={<Deposit />}>
             <Route path='robux' element={<DepositRobux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
-            <Route path='litecoin' element={<Bitcoin />} />
-            <Route path='bitcoin' element={<Bitcoin />} />
-            <Route path='ethereum' element={<Bitcoin />} />
+            <Route path='litecoin' element={<DepositCrypto />} />
+            <Route path='bitcoin' element={<DepositCrypto />} />
+            <Route path='ethereum' element={<DepositCrypto />} />
             <Route path='credit-card' element={<CreditCard />} />
             <Route path='g2a' element={<DepositGift />} />
             <Route path='kinguin' element={<DepositGift />} />
