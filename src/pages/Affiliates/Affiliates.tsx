@@ -1,7 +1,7 @@
 import AffiliatesLeftTopIcon from '../../assets/img/affiliates_l_t.png'
 import AffiliatesLeftIcon from '../../assets/img/affiliates_l.png'
 import GiftIcon from '../../assets/img/gift.png'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
 import DiamondIcon from '../../components/Icons/DiamondIcon'
 import { Button } from '../../components/Base/Button'
 import { AffiliatesTable } from './AffiliatesTable'

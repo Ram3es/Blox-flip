@@ -12,7 +12,7 @@ import { PaymentMethodCell } from '../Table/PaymentMethodCell'
 import { StatusCell } from '../Table/CellFormaters/StatusCell'
 import { FilterHeader } from '../Table/FilterHeader'
 import { ListIcon } from '../Icons/ListIcon'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../Common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
 export const Transactions = () => {

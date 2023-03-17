@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BattleModal from '../../components/modal/BattleModal'
+import BattleModal from '../../components/Containers/BattleModal'
 
 const CreateBattle = () => {
   const [isOpenModal, setOpenModal] = useState(true)

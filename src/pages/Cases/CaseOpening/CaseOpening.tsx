@@ -8,7 +8,7 @@ import { getRandomCards } from '../../../helpers/casesHelpers'
 import { caseCards } from '../../../mocks/caseOpeningMock'
 
 import { Button } from '../../../components/Base/Button'
-import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../../components/Common/QuantityCoins/QuantityCoins'
 import { CasesLineItem } from '../../../components/Common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 

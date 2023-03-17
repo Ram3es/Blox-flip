@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { sortingVariants } from '../../constants/Sorting'
-import GreenTipSelect from '../common/GreenTipSelect'
-import SearchInput from '../common/SearchInput'
-import SortSelect from '../common/SortSelect'
+import GreenTipSelect from '../Common/GreenTipSelect'
+import SearchInput from '../Common/SearchInput'
+import SortSelect from '../Common/SortSelect'
 
 interface IToolBarProps {
   value: string

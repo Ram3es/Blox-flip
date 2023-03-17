@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../Common/QuantityCoins/QuantityCoins'
 import { Button } from './Button'
 import DiamondIcon from '../Icons/DiamondIcon'
 

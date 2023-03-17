@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export const useDebounce = (dealy = 500) => {
-  const [typeTimemout, setTypeTimeout] = useState<NodeJS.Timeout>()
+  const [typeTimemout, setTypeTimeout] = useState<number>()
 
   const debounce = (args: Function) => {
     typeTimemout && clearTimeout(typeTimemout)
