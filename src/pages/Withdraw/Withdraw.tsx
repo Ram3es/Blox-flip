@@ -1,15 +1,15 @@
 import { useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { Button } from '../../components/base/Button'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import GreenTipSelect from '../../components/common/GreenTipSelect'
+import { Button } from '../../components/Base/Button'
+import DiamondIcon from '../../components/Icons/DiamondIcon'
+import GreenTipSelect from '../../components/Common/GreenTipSelect'
 import WithdrawMethod from './WithdrawMethod'
 import { IItemCard } from '../../types/itemCard'
-import SortSelect from '../../components/common/SortSelect'
+import SortSelect from '../../components/Common/SortSelect'
 import { sortingVariants } from '../../constants/Sorting'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import NavHeader from '../../components/Navigate/NavHeader'
-import SearchInput from '../../components/common/SearchInput'
+import SearchInput from '../../components/Common/SearchInput'
 
 export const Withdraw = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])

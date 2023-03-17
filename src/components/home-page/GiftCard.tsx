@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Gift from '../../assets/img/gift.png'
 import Outline from '../../assets/img/gift_btn_outline.svg'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 import RobuxModal from '../modal/RobuxModal'
 
 const GiftCard = () => {

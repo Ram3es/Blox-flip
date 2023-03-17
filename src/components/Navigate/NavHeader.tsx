@@ -2,9 +2,9 @@ import React, { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { METHODS } from '../../constants/PaymentMethods'
 import { IMethodLabel } from '../../types/payments-methods'
-import { Button } from '../base/Button'
+import { Button } from '../Base/Button'
 import { DiamondIcon } from '../DiamondIcon/DiamondIcon'
-import TriangleArrow from '../icons/TriangleArrow'
+import TriangleArrow from '../Icons/TriangleArrow'
 import PageLabel from './PageLabel'
 
 const labelProps = Object.values(METHODS).reduce<IMethodLabel[]>((acc, method) => acc.concat(method.methods), [])
