@@ -61,6 +61,17 @@
   }
 }
 
+input[type='range']::-webkit-slider-thumb {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #fff;
+  box-shadow: -405px 0 0 400px rgba(44, 221, 104);
+}
+
+
 body {
   color: #fff;
   font-family: 'Rubik';

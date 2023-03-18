@@ -1,38 +1,38 @@
-import { InputHTMLAttributes, memo, useEffect, useState } from 'react'
+import { ChangeEvent, InputHTMLAttributes, memo, useEffect, useState } from 'react'
 
 interface RangeSliderProps extends InputHTMLAttributes<HTMLInputElement> {
-  onChange: () => void
+  sliderValueChanged: (value: number) => void
   value: number
 }
 
-const RangeSlider = memo(({ onChange, value, ...inputProps }: RangeSliderProps) => {
-  const [sliderVal, setSliderVal] = useState(0)
-  const [mouseState, setMouseState] = useState(null)
+const RangeSlider = memo(({ sliderValueChanged, value, ...inputProps }: RangeSliderProps) => {
+  const [sliderValue, setSliderValue] = useState(value || 0)
+  const [mouseState, setMouseState] = useState<string>('')
 
   useEffect(() => {
-    setSliderVal(value)
+    setSliderValue(value)
   }, [value])
 
-  const changeCallback = (e: any) => {
-    setSliderVal(e.target.value)
+  const changeCallback = (event: ChangeEvent<HTMLInputElement>) => {
+    setSliderValue(Number(event.target.value))
   }
 
   useEffect(() => {
     if (mouseState === 'up') {
-      onChange(sliderVal)
+      sliderValueChanged(sliderValue)
     }
   }, [mouseState])
 
   return (
     <div className='range-slider'>
       <input
-        className='bg-green-primary'
+        className='rounded-lg overflow-hidden appearance-none bg-blue-accent-third h-3 w-full'
         type='range'
-        value={sliderVal}
-        id='myRange'
+        value={value}
         onChange={changeCallback}
-        onMouseDown={() => console.log('hi')}
-        onMouseUp={() => console.log('hi')}
+        onMouseDown={() => setMouseState('down')}
+        onMouseUp={() => setMouseState('up')}
+        {...inputProps}
       />
     </div>
   )
