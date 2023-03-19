@@ -4,14 +4,14 @@ import { IItemCard } from '../../types/itemCard'
 import { Button } from '../Base/Button'
 import ModalWrapper from '../Containers/ModalWrapper'
 import { searchData } from '../../helpers/searchData'
-import UnboxingCard from '../Common/Cards/UnboxingCard'
+import UnboxingCard from '../common/Cards/UnboxingCard'
 import GreenTipSelect from '../Common/GreenTipSelect'
 import { QuantityCoinsWithChildren } from '../Common/QuantityCoins/QuantityWithChildren'
 import SearchInput from '../Common/SearchInput'
 import DaggersGreenGradient from '../Icons/DaggersGreenGradient'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 
-const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
+const BattleModal = ({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: Function, onSubmit: Function }) => {
   const [unboxCards, setAllCards] = useState<IItemCard[]>(unboxCard)
   const [selectedCards, setSelected] = useState<IItemCard[]>([])
   const {
@@ -21,7 +21,6 @@ const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }
     onChange,
     setPriceRange
   } = useToolbarState()
-  console.log(priceRange, priceRange)
 
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
   const ranged = useMemo(() => unboxCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, unboxCards])
@@ -66,7 +65,7 @@ const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }
               </div>
             </div>
             <Button
-              onClick={() => onClose() }
+              onClick={() => { onSubmit(selectedCards); onClose() } }
               className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-4 leading-4 rounded '
             >
                 Complete

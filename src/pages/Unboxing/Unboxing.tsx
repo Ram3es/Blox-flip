@@ -11,8 +11,8 @@ import { cards, unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/itemCard'
 import { sortData } from '../../helpers/sortData'
 import { useNavigate } from 'react-router-dom'
-import UnboxingCard from '../../components/Common/Cards/UnboxingCard'
 import UnboxingIconTitle from '../../components/Icons/UnboxingIconTitle'
+import UnboxingCard from '../../components/common/Cards/UnboxingCard'
 
 const tabs = ['Hot', 'Featured', 'New', 'Creator']
 
@@ -89,7 +89,7 @@ const Unboxing = () => {
               id={card.id}
               name={card.name}
               price={card.price}
-              onSelect={() => navigate(`unboxing/${card.id}`)}
+              onSelect={() => navigate(`/unboxing/${card.id}`)}
               />
           )
           )}

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Button } from '../../components/Base/Button'
-import ToolBar from '../../components/Common/ToolBar'
+import ToolBar from '../../components/common/ToolBar'
 import DiamondIcon from '../../components/Icons/DiamondIcon'
 import NavHeader from '../../components/Navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
@@ -34,7 +34,7 @@ export const Deposit = () => {
   return (
     <div className="max-w-[1470px] w-full mx-auto">
       <div className='flex flex-col xs:flex-row'>
-      <NavHeader title='Deposit' pathName={currentPath} >
+      <NavHeader title='Deposit' pathName={currentPath} renderIcon={() => <DiamondIcon className='w-[29px] h-[25px] text-green-secondary ml-2' /> } >
       {currentPath === 'roblox-limiteds' && (
         <ToolBar
           value={value}
