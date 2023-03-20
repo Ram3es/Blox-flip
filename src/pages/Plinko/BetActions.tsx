@@ -35,7 +35,7 @@ const betVariants: IBetVariant[] = [
 
 const rowOptions: number[] = [14, 15, 16]
 
-export const BetActions = () => {
+export default function BetActions() {
   const [betAmount, setBetAmount] = useState(2900)
   const [selectedBet, setSelectedBet] = useState<IBetVariant | null>(null)
   const [selectedRow, setSelectedRow] = useState(16)
@@ -74,7 +74,7 @@ export const BetActions = () => {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel className='flex flex-col space-y-4 mt-4'>
-            <div className=''>
+            <div>
               <div className='relative'>
                 <InputWithLabel
                   type='number'
@@ -92,7 +92,7 @@ export const BetActions = () => {
                 sliderValueChanged={sliderValueChanged}
               />
             </div>
-            <div className=''>
+            <div>
               <RadioGroup value={selectedBet} onChange={setSelectedBet}>
                 <div className='flex items-center justify-between'>
                   <Button color='BlueHighlight' onClick={() => setSelectedBet(null)}>
@@ -122,10 +122,10 @@ export const BetActions = () => {
                 </div>
               </RadioGroup>
             </div>
-            <div className='flex'>
+            <div>
               <Listbox value={selectedRow} onChange={setSelectedRow}>
-                <Listbox.Button className='basis-full'>
-                  <div className='flex items-center justify-between bg-blue-highlight rounded h-12 w-full pl-2.5'>
+                <Listbox.Button>
+                  <div className='flex items-center justify-between w-80 bg-blue-highlight rounded h-12 pl-2.5'>
                     <div className='flex items-center space-y-2'>
                       <div
                         className='bg-blue-light rounded px-2 py-1 items-center flex font-bold text-15 text-gray-primary'
@@ -140,9 +140,9 @@ export const BetActions = () => {
                     </div>
                   </div>
                 </Listbox.Button>
-                <Listbox.Options className='absolute basis-full pt-2.5'>
-                  <div className='absolute pt-12'>
-                    <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr w-[264px]'>
+                <Listbox.Options>
+                  <div className='pt-2.5 z-40 left-0 right-0 top-full'>
+                    <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
                       {rowOptions.map((row) => (
                         <Listbox.Option key={row} value={row}>
                           <div className='text-gray-primary text-13 cursor-pointer py-1.5 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'>
@@ -155,7 +155,7 @@ export const BetActions = () => {
                 </Listbox.Options>
               </Listbox>
             </div>
-            <div className=''>
+            <div>
               <div className='flex items-start justify-between text-17'>
                 <div className='bg-blue-highlight rounded px-3 py-1 items-center flex font-bold  text-gray-primary'>
                   <span className='gradient-gold-yellow-text font-bold'>Risk</span>
@@ -176,7 +176,7 @@ export const BetActions = () => {
                 </div>
               </div>
             </div>
-            <div className=''>
+            <div>
               <InputWithLabel
                 type='number'
                 name='numberOfBets'
