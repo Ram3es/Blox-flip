@@ -89,7 +89,7 @@ const Unboxing = () => {
               id={card.id}
               name={card.name}
               price={card.price}
-              onSelect={() => navigate(`unboxing/${card.id}`)}
+              onSelect={() => navigate(`${card.id}`)}
               />
           )
           )}
