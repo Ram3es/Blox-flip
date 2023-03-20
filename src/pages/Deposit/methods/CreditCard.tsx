@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
 import { QuantityCoinsWithChildren } from '../../../components/common/QuantityCoins/QuantityWithChildren'
-import MethodsContainer from '../../../components/Containers/PaymentMethodContainer'
+import MethodsContainer from '../../../components/containers/PaymentMethodContainer'
 import DiamondIcon from '../../../components/icons/DiamondIcon'
 
 const CreditCardForm = () => {

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { IMAGES } from '../../../constants/Images'
-import Counter from '../../Base/Counter'
+import Counter from '../../base/Counter'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 
 interface IUnboxingCounterCardProps {

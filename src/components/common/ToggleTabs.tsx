@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ButtonsToggle from '../Base/ButtonToggle'
+import ButtonsToggle from '../base/ButtonToggle'
 
 interface IToggleTabsProps<T extends { variant: string }> {
   label?: string

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Gift from '../../assets/img/gift.png'
 import Outline from '../../assets/img/gift_btn_outline.svg'
 import { Button } from '../base/Button'
-import RobuxModal from '../Containers/RobuxModal'
+import RobuxModal from '../containers/RobuxModal'
 
 const GiftCard = () => {
   const [isOpenModal, setOpenModal] = useState(false)

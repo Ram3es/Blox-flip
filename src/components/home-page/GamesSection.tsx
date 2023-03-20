@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../../store/Store'
-import SignInModal from '../Containers/SignInModal.'
+import SignInModal from '../containers/SignInModal.'
 import GameCard from './GameCard'
 import GiftCard from './GiftCard'
 import WelcomeCard from './WelcomeCard'

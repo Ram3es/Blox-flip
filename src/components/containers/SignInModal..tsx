@@ -1,14 +1,14 @@
 import React, { useState, FC } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
-import SignInForm from '../signIn/SignInForm'
+import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'
 import Logo from '../../assets/img/logo.png'
 import Pilot from '../../assets/img/pilot.png'
 import VideoPlayer from '../../assets/img/videoPlayerImg.png'
-import RobloForm from '../signIn/RobloForm'
+import RobloForm from '../sign-in/RobloForm'
 import ModalWrapper from './ModalWrapper'
 
-const toggleOptions = ['Credentials', '.Roblosecurity']
+const toggleOptions = [{ variant: 'Credentials' }, { variant: '.Roblosecurity' }]
 
 interface ISignInModalProps {
   onClose: Function
@@ -58,7 +58,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                   <h3 className="text-3xl font-extrabold text-lightblue-secondary uppercase">Sign in</h3>
                   <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peackFunction={setCurrentVariant} />
                 </div>
-                {currentLoginVariant === '.Roblosecurity'
+                {currentLoginVariant.variant === '.Roblosecurity'
                   ? <RobloForm />
                   : <SignInForm onClose={() => onClose()} />}
               </div>
