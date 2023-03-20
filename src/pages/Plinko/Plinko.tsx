@@ -1,6 +1,6 @@
-import BetActions from './BetActions'
+import BetActions from './BetActions/BetActions'
 
-export default function Plinko () {
+export default function Plinko() {
   return (
     <div className='flex justify-center'>
       <div className='bg-blue-accent rounded-lg w-1/4 h-[49.125rem] mr-4'>
