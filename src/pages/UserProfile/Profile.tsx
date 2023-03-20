@@ -30,7 +30,7 @@ const actions = [
 
 ]
 
-const cardsSorting = ['All', 'Active Items', 'Sold']
+const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
 
 const Profile = () => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
@@ -41,7 +41,7 @@ const Profile = () => {
   const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
 
   const filtered = useCallback(() => {
-    switch (currentCardsVariant) {
+    switch (currentCardsVariant.variant) {
       case 'Active Items': setSorted(cards.filter(card => card.active))
         break
       case 'Sold': setSorted(cards.filter(card => card.sold))

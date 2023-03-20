@@ -12,3 +12,7 @@ export interface IItemCard {
 export interface IUnboxCard extends IItemCard {
   status: string
 }
+
+export interface IUnboxCardCounter extends IItemCard {
+  amount: number
+}

@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import UnboxingIconTitle from '../../components/Icons/UnboxingIconTitle'
 import UnboxingCard from '../../components/common/Cards/UnboxingCard'
 
-const tabs = ['Hot', 'Featured', 'New', 'Creator']
+const tabs = [{ variant: 'Hot' }, { variant: 'Featured' }, { variant: 'New' }, { variant: 'Creator' }]
 
 const Unboxing = () => {
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
@@ -89,7 +89,7 @@ const Unboxing = () => {
               id={card.id}
               name={card.name}
               price={card.price}
-              onSelect={() => navigate(`/unboxing/${card.id}`)}
+              onSelect={() => navigate(card.id)}
               />
           )
           )}

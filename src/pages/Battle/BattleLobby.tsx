@@ -14,7 +14,7 @@ const GreenLink = ({ to, title, amount }: { to: string, title: string, amount: n
     <span>{title}</span>
   </NavLink>)
 
-const filterOptions = ['Date', 'Price']
+const filterOptions = [{ variant: 'Date' }, { variant: 'Price' }]
 
 const BattleLobby = () => {
   const [currentFilterOptions, setOptions] = useState(filterOptions[0])
@@ -46,7 +46,7 @@ const BattleLobby = () => {
           </div>
         </div>
         <div className="pl-2.5 overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full py-3">
-            <TableBattleLobby data={dataTable} sortBy={currentFilterOptions.toLowerCase()} />
+            <TableBattleLobby data={dataTable} sortBy={currentFilterOptions.variant.toLowerCase()} />
         </div>
       </div>
     </div>

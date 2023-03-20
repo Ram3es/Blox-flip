@@ -27,7 +27,7 @@ const BattleModal = ({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: 
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, unboxCards, ranged])
 
   const onSelect = (card: IItemCard) => {
-    setSelected(state => ([...state, card]))
+    setSelected(state => ([...state, { ...card, amount: 1 }]))
     setAllCards(state => ([...state.filter(orgCard => orgCard.id !== card.id)]))
   }
   return isOpen
