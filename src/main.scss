@@ -71,7 +71,6 @@ input[type='range']::-webkit-slider-thumb {
   box-shadow: -405px 0 0 400px rgba(44, 221, 104);
 }
 
-
 body {
   color: #fff;
   font-family: 'Rubik';
@@ -391,6 +390,12 @@ body {
 }
 .gradient-yellow-text {
   background-image: linear-gradient(268.73deg, #ffc24b -38.14%, #ff9900 129.02%);
+}
+.gradient-gold-yellow-text {
+  background: linear-gradient(257.4deg, #ff8125 -30.88%, #ffe144 199.8%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .gradient-gray-text {
   background-image: linear-gradient(268.73deg, #dfdfdf -38.14%, #6d6d6d 129.02%);
