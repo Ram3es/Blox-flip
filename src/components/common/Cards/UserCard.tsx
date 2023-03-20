@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { IUser } from '../../../types/User'
-import { UserAvatar } from '../../User/UserAvatar'
-import { UserLevel } from '../../User/UserLevel'
+import { UserAvatar } from '../../user/UserAvatar'
+import { UserLevel } from '../../user/UserLevel'
 
 export const UserCard: FC<Pick<IUser, 'name' | 'avatar' | 'level'>> = ({
   name = 'User',

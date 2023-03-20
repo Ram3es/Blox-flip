@@ -1,9 +1,9 @@
 import { FC, useState } from 'react'
-import { CopyIconSecond } from '../../../components/Icons/CopyIconSecond'
+import { CopyIconSecond } from '../../../components/icons/CopyIconSecond'
 import QRCodePlaceHolder from '../../../assets/img/qr-kod.png'
-import { CryptoCalculator } from '../../../components/Common/CryptoCalculator'
-import { Button } from '../../../components/Base/Button'
-import InputWithLabel from '../../../components/Base/InputWithLabel'
+import { CryptoCalculator } from '../../../components/common/CryptoCalculator'
+import { Button } from '../../../components/base/Button'
+import InputWithLabel from '../../../components/base/InputWithLabel'
 import { useLocation } from 'react-router-dom'
 import { getIconByPathName } from '../../../helpers/iconsHelper'
 

@@ -1,4 +1,4 @@
-import { ICaseItem } from '../types/cases'
+import { ICaseItem } from '../types/Cases'
 
 export const caseCards: ICaseItem[] = [
   {

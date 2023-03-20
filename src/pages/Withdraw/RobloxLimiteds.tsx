@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-import ItemCard from '../../components/Common/Cards/ItemCard'
-import { QuantityCoinsWithChildren } from '../../components/Common/QuantityCoins/QuantityWithChildren'
-import DiamondIcon from '../../components/Icons/DiamondIcon'
-import RemoveArrowBold from '../../components/Icons/RemoveArrowBold'
+import ItemCard from '../../components/common/Cards/ItemCard'
+import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
 import { searchData } from '../../helpers/searchData'
 import { sortData } from '../../helpers/sortData'
 import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/itemCard'
+import { IItemCard } from '../../types/ItemCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<IItemCard[]>(cards)

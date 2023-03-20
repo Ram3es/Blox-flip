@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react'
-import { IMAGES } from '../../../constants/Images'
+import { IMAGES } from '../../../constants/images'
 
 interface CaseLineItemProps {
   itsWinning: boolean

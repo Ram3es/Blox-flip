@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { formatNumber } from '../../../helpers/numbersFormatter'
-import DiamondIcon from '../../Icons/DiamondIcon'
+import DiamondIcon from '../../icons/DiamondIcon'
 
 export interface QuantityCoinsProps {
   quantity: number

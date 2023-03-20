@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchIcon from '../Icons/SearchIcon'
+import SearchIcon from '../icons/SearchIcon'
 
 const SearchInput = ({ value, onChange, placeholder = 'Search item' }: { value: string, onChange: Function, placeholder?: string }) => {
   return (
