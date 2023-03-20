@@ -1,9 +1,9 @@
 import { FC } from 'react'
-import ItemCard from '../../../components/Common/Cards/ItemCard'
+import ItemCard from '../../../components/common/Cards/ItemCard'
 
-import { ICaseItem } from '../../../types/cases'
+import { ICaseItem } from '../../../types/Cases'
 
-import { DoubleRombIcon } from '../../../components/Icons/DoubleRombIcon'
+import { DoubleRombIcon } from '../../../components/icons/DoubleRombIcon'
 
 interface PotentialDropsProps {
   cards: ICaseItem[]

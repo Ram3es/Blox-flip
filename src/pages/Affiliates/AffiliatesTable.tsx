@@ -3,10 +3,10 @@ import { createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { ISecondUser } from '../../types/User'
 import { users } from '../../mocks/affiliatesMock'
-import { Table } from '../../components/Table/Table'
-import { UserInfoCell } from '../../components/Table/CellFormaters/UserInfoCell'
-import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
-import { TimeCell } from '../../components/Table/CellFormaters/TimeCell'
+import { Table } from '../../components/table/Table'
+import { UserInfoCell } from '../../components/table/CellFormaters/UserInfoCell'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { TimeCell } from '../../components/table/CellFormaters/TimeCell'
 
 export const AffiliatesTable = () => {
   const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])

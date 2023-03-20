@@ -1,14 +1,14 @@
 import { createColumnHelper, flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table'
 import clsx from 'clsx'
 import React, { FC, useEffect, useMemo, useState } from 'react'
-import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { IBattlesInfo } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 
-import BattleModeCell from '../../components/Table/CellFormaters/BattleModeCell'
-import ButtonsCell from '../../components/Table/CellFormaters/ButtonsCell'
-import CasesCell from '../../components/Table/CellFormaters/CasesCell'
-import RoundCell from '../../components/Table/CellFormaters/RoundCell'
+import BattleModeCell from '../../components/table/CellFormaters/BattleModeCell'
+import ButtonsCell from '../../components/table/CellFormaters/ButtonsCell'
+import CasesCell from '../../components/table/CellFormaters/CasesCell'
+import RoundCell from '../../components/table/CellFormaters/RoundCell'
 
 const columnHelper = createColumnHelper<Pick<IBattlesInfo, 'status' | 'date' | 'gameSetting' | 'players' >>()
 const columnsMemo = [

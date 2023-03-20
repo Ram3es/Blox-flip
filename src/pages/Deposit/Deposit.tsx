@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { Button } from '../../components/Base/Button'
+import { Button } from '../../components/base/Button'
 import ToolBar from '../../components/common/ToolBar'
-import DiamondIcon from '../../components/Icons/DiamondIcon'
+import DiamondIcon from '../../components/icons/DiamondIcon'
 import NavHeader from '../../components/Navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
-import { IItemCard } from '../../types/itemCard'
+import { IItemCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 
 export const Deposit = () => {

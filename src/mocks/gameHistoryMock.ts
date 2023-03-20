@@ -1,4 +1,4 @@
-import { IHistory } from '../types/history'
+import { IHistory } from '../types/History'
 
 export const mockHistory: IHistory[] = [
   {

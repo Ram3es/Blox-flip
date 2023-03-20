@@ -1,5 +1,5 @@
 // import { WithdrawMethod } from './WithdrawMethod'
-import { IWithdrawMethod } from '../../types/withdraw'
+import { IWithdrawMethod } from '../../types/Withdraw'
 
 export const WithdrawList = ({ list }: { list: IWithdrawMethod[] }) => {
   return (

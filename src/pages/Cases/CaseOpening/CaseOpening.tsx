@@ -3,19 +3,19 @@ import { useParams } from 'react-router-dom'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { ICaseItem } from '../../../types/cases'
+import { ICaseItem } from '../../../types/Cases'
 import { getRandomCards } from '../../../helpers/casesHelpers'
 import { caseCards } from '../../../mocks/caseOpeningMock'
 
-import { Button } from '../../../components/Base/Button'
-import { QuantityCoins } from '../../../components/Common/QuantityCoins/QuantityCoins'
-import { CasesLineItem } from '../../../components/Common/Cards/CasesLineItem'
+import { Button } from '../../../components/base/Button'
+import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
+import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
-import { ArrowGrayIcon } from '../../../components/Icons/ArrowGrayIcon'
-import { FairIcon } from '../../../components/Icons/FairIcon'
-import { OpeningLineIcon } from '../../../components/Icons/OpeningLineIcon'
-import UnboxingIcon from '../../../components/Icons/UnboxingIconTitle'
+import { ArrowGrayIcon } from '../../../components/icons/ArrowGrayIcon'
+import { FairIcon } from '../../../components/icons/FairIcon'
+import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
+import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
 
 export const CaseOpening = () => {

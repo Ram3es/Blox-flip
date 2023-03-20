@@ -1,4 +1,4 @@
-import { ITransaction } from '../types/transaction'
+import { ITransaction } from '../types/Transaction'
 
 export const mockTransactions: ITransaction[] = [
   {

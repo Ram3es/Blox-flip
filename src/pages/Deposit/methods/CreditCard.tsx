@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react'
-import { Button } from '../../../components/Base/Button'
-import InputWithLabel from '../../../components/Base/InputWithLabel'
-import { QuantityCoinsWithChildren } from '../../../components/Common/QuantityCoins/QuantityWithChildren'
+import { Button } from '../../../components/base/Button'
+import InputWithLabel from '../../../components/base/InputWithLabel'
+import { QuantityCoinsWithChildren } from '../../../components/common/QuantityCoins/QuantityWithChildren'
 import MethodsContainer from '../../../components/Containers/PaymentMethodContainer'
-import DiamondIcon from '../../../components/Icons/DiamondIcon'
+import DiamondIcon from '../../../components/icons/DiamondIcon'
 
 const CreditCardForm = () => {
   const [values, setValue] = useState({ cash: '', diamond: '' })

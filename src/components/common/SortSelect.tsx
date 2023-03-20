@@ -1,8 +1,8 @@
 import { Menu } from '@headlessui/react'
 import React, { FC } from 'react'
-import { ISortOptions } from '../../types/sortOptions'
-import { Button } from '../Base/Button'
-import TriangleArrow from '../Icons/TriangleArrow'
+import { ISortOptions } from '../../types/SortOptions'
+import { Button } from '../base/Button'
+import TriangleArrow from '../icons/TriangleArrow'
 
 interface ISortSelectProps {
   options: ISortOptions[]

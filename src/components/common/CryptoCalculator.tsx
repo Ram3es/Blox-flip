@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import InputWithLabel from '../Base/InputWithLabel'
+import InputWithLabel from '../base/InputWithLabel'
 
-import DiamondIcon from '../Icons/DiamondIcon'
-import { Input } from '../Base/Input'
+import DiamondIcon from '../icons/DiamondIcon'
+import { Input } from '../base/Input'
 import { getIconByPathName } from '../../helpers/iconsHelper'
 
 const BridgeComponent = () => {
