@@ -1,109 +1,85 @@
 import { useEffect, useRef, useState } from 'react'
-import Matter, { Engine, Render, Runner, Bodies, Composite } from 'matter-js'
+import Matter, { Engine, Render, Runner, Bodies, Composite, World } from 'matter-js'
+import { config } from './config'
+import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
-export default function GamePlinko() {
-  const worldWidth = 800
-  const startPins = 5
-  const pinLines = 25
-  const pinSize = 3
-  const pinGap = 30
-  const ballSize = 5
-  const ballElastity = 0.75
-
-  const plinkoRef = useRef(null)
-  const [isMounted, setIsMounted] = useState(false)
-
-  // useEffect(() => {
-  //   engine.gravity.y = 1.0
-  //   const element = document.getElementById('plinko')
-  //   const render = Render.create({
-  //     element: element!,
-  //     bounds: {
-  //       max: {
-  //         y: worldHeight,
-  //         x: worldWidth
-  //       },
-  //       min: {
-  //         y: 0,
-  //         x: 0
-  //       }
-  //     },
-  //     options: {
-  //       background: colors.background,
-  //       hasBounds: true,
-  //       width: worldWidth,
-  //       height: worldHeight,
-  //       wireframes: false
-  //     },
-  //     engine
-  //   })
-  //   const runner = Runner.create()
-  //   Runner.run(runner, engine)
-  //   Render.run(render)
-  //   return () => {
-  //     World.clear(engine.world, true)
-  //     Engine.clear(engine)
-  //     render.canvas.remove()
-  //     render.textures = {}
-  //   }
-  // }, [lines])
+const GamePlinko = () => {
+  const plinkoRef = useRef<null | HTMLDivElement>(null)
+  const engine = Engine.create()
+  const { pins: pinsConfig, ball: ballConfig, engine: engineConfig, world: worldConfig } = config
+  const worldWidth: number = worldConfig.width
+  const worldHeight: number = worldConfig.height
 
   useEffect(() => {
-    setIsMounted(true)
+    if (!plinkoRef.current) {
+      return
+    }
+    engine.gravity.y = 1.0
+
+    const render = Render.create({
+      element: plinkoRef.current,
+      bounds: {
+        max: {
+          y: worldWidth,
+          x: worldHeight
+        },
+        min: {
+          y: 0,
+          x: 0
+        }
+      },
+      options: {
+        background: 'rgba(29, 33, 53)',
+        hasBounds: true,
+        width: worldWidth,
+        height: worldHeight,
+        wireframes: false
+      },
+      engine
+    })
+    const runner = Runner.create()
+    Runner.run(runner, engine)
+    Render.run(render)
+    return () => {
+      World.clear(engine.world, true)
+      Engine.clear(engine)
+      render.canvas.remove()
+      render.textures = {}
+    }
   }, [])
 
-  useEffect(() => {
-    if (isMounted && plinkoRef.current) {
-      // create an engine
-      let engine = Engine.create()
+  const pins: Body[] = []
 
-      // create a renderer
-      let render = Render.create({
-        element: plinkoRef.current,
-        engine
+  for (let l = 0; l < 16; l++) {
+    const linePins = pinsConfig.startPins + l
+    const lineWidth = linePins * pinsConfig.pinGap
+    for (let i = 0; i < linePins; i++) {
+      const pinX = worldWidth / 2 - lineWidth / 2 + i * pinsConfig.pinGap + pinsConfig.pinGap / 2
+
+      const pinY = worldWidth / 16 + l * pinsConfig.pinGap + pinsConfig.pinGap
+
+      const pin = Bodies.circle(pinX, pinY, pinsConfig.pinSize, {
+        label: `pin-${i}`,
+        render: {
+          fillStyle: '#4F5988'
+        },
+        isStatic: true
       })
-
-      const pins = []
-      for (let l = 0; l < pinLines; l++) {
-        const linePins = startPins + l
-        const lineWidth = linePins * pinGap
-        for (let i = 0; i < linePins; i++) {
-          const pin = Bodies.circle(
-            worldWidth / 2 - lineWidth / 2 + i * pinGap,
-            100 + l * pinGap,
-            pinSize,
-            {
-              isStatic: true
-            }
-          )
-          pins.push(pin)
-        }
-      }
-      Composite.add(engine.world, pins)
-
-      const ball = Bodies.circle(worldWidth / 2, 0, ballSize, {
-        restitution: ballElastity
-      })
-      Composite.add(engine.world, [ball])
-
-      // run the renderer
-      Render.run(render)
-
-      // create runner
-      let runner = Runner.create()
-
-      // run the engine
-      Runner.run(runner, engine)
-
-      return () => {
-        // cleanup
-        Render.stop(render)
-        Runner.stop(runner)
-        Matter.Composite.clear(engine.world)
-        Matter.Engine.clear(engine)
-      }
+      pins.push(pin)
     }
-  }, [isMounted])
+  }
 
-  return <div className='bg-blue-primary' id='plinko' ref={plinkoRef} />
+  const floor = Bodies.rectangle(0, worldWidth + 10, worldWidth * 10, 40, {
+    label: 'block-1',
+    render: {
+      visible: false
+    },
+    isStatic: true
+  })
+
+  Composite.add(engine.world, [...pins, floor])
+
+  return <div ref={plinkoRef} />
 }
+
+export default GamePlinko
