@@ -9,10 +9,10 @@ import BattleModal from '../../components/containers/BattleModal'
 import PaymentMethodContainer from '../../components/containers/PaymentMethodContainer'
 import { CopyIcon } from '../../components/icons/CopyIcon'
 import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
-import UnboxingIconTitle from '../../components/Icons/UnboxingIconTitle'
+import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
 import VerticalDivider from '../../components/icons/VerticalDivider'
 import NavHeader from '../../components/navigate/NavHeader'
-import { battleSettingVariants } from '../../constants/battle'
+import { gameSettings } from '../../constants/battle'
 import { IUnboxCardCounter } from '../../types/ItemCard'
 
 const battleInitState = {
@@ -53,8 +53,6 @@ const CreateBattle = () => {
     }, { amountCases: 0, totalCost: 0 })
     : { amountCases: 0, totalCost: 0 }
 
-  const onSubmitModal = useCallback((cards: IUnboxCardCounter[]) => setCasesToBet(cards), [])
-
   const handleReferralLinkCopy = () => {
     navigator.clipboard.writeText(referralLink).catch((error) => {
       console.log(error)
@@ -70,6 +68,11 @@ const CreateBattle = () => {
         })
     }
   }, [batlleSettings])
+
+  const onSubmitModal = useCallback((cards: IUnboxCardCounter[]) => setCasesToBet(cards), [])
+  const createGame = () => {
+    console.log({ ...batlleSettings, rounds: amountCases, price: totalCost })
+  }
   return (
         <div className ="max-w-1190 w-full mx-auto">
           <NavHeader
@@ -100,7 +103,7 @@ const CreateBattle = () => {
                     </div>
                     <div className=' w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0 '>
                       <Button
-                        onClick={() => []}
+                        onClick={createGame}
                         className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
                         >Create
                       </Button>
@@ -121,15 +124,15 @@ const CreateBattle = () => {
                 decrement={() => decrementCounter(card.id)} />
             )) }
           </PaymentMethodContainer>
-          {battleSettingVariants.map(variant => (
+          {gameSettings.map(setting => (
             <ToggleTabs
-              key={variant.label}
-              label={variant.label}
-              options={variant.tabs}
-              onSelect={(option) => setSetting(state => ({ ...state, [variant.name]: option }))}
+              key={setting.label}
+              label={setting.label}
+              options={setting.tabs}
+              onSelect={(option) => setSetting(state => ({ ...state, [setting.name]: option }))}
               />))}
               {batlleSettings.privacy.variant === 'Private' && (
-                  <div ref={fieldWithLinkRef} className='relative px-2 w-full xs:w-1/2 md:w-auto grow shrink-0 mb-4'>
+                  <div ref={fieldWithLinkRef} className='relative px-2 w-full grow shrink-0 mb-4'>
                   <InputWithLabel
                     type='text'
                     name='affiliate'
@@ -137,7 +140,7 @@ const CreateBattle = () => {
                     labelClasses='flex flex-col w-full mb-4 items-center'
                     titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
                     inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
-                    inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate'
+                    inputClasses='overflow-ellipsis grow w-0 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate'
                     value={referralLink}
                     placeholder='...'
                     readOnly

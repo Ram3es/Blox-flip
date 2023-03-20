@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { IMAGES } from '../../../constants/Images'
+import { IMAGES } from '../../../constants/images'
 import Counter from '../../base/Counter'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 

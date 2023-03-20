@@ -1,4 +1,4 @@
-export const battleSettingVariants: Array<{ label: string, name: string, tabs: Array<{ variant: string, requiredPlayers?: number }> }> = [
+export const gameSettings: Array<{ label: string, name: string, tabs: Array<{ variant: string, requiredPlayers?: number }> }> = [
   {
     label: 'Players :',
     name: 'mode',
