@@ -14,19 +14,19 @@ import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
 import { getColorByMultiplier, multipliersVariants } from './multipiliers'
 import { MultiplierValues } from './types'
+import { RowVariant } from '../../../types/Plinko'
 
 interface GamePlinkoProps {
   risk?: 'low' | 'medium' | 'high'
-  row?: 8 | 10 | 12 | 14 | 16
+  rows: RowVariant
 }
 
-const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', row = 16 }) => {
+const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
   const plinkoRef = useRef<null | HTMLDivElement>(null)
   const engine = Engine.create()
   const { pins: pinsConfig, ball: ballConfig, engine: engineConfig, world: worldConfig } = config
   const worldWidth: number = worldConfig.width
   const worldHeight: number = worldConfig.height
-  const lines = row
   const { world } = engine
 
   useEffect(() => {
@@ -69,13 +69,13 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', row = 16 }) => {
 
   const pins: Body[] = []
 
-  for (let l = 0; l < lines; l++) {
+  for (let l = 0; l < rows; l++) {
     const linePins = pinsConfig.startPins + l
     const lineWidth = linePins * pinsConfig.pinGap
     for (let i = 0; i < linePins; i++) {
       const pinX = worldWidth / 2 - lineWidth / 2 + i * pinsConfig.pinGap + pinsConfig.pinGap / 2
 
-      const pinY = worldWidth / lines + l * pinsConfig.pinGap + pinsConfig.pinGap
+      const pinY = worldWidth / rows + l * pinsConfig.pinGap + pinsConfig.pinGap
 
       const pin = Bodies.circle(pinX, pinY, pinsConfig.pinSize, {
         label: `pin-${i}`,
@@ -173,7 +173,7 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', row = 16 }) => {
           </div>
         ))}
       </div>
-      <button onClick={() => addPlinko()}>btn</button>
+      <button onClick={addPlinko}>btn</button>
     </div>
   )
 }
