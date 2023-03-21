@@ -1,5 +1,5 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
-import Matter, {
+import { FC, useEffect, useRef } from 'react'
+import {
   Engine,
   Render,
   Runner,
@@ -12,20 +12,21 @@ import Matter, {
 import { config } from './config'
 import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
-import { getColorByMultiplier, getMultiplierByLinesQnt, multipliersVariants } from './multipiliers'
+import { getColorByMultiplier, multipliersVariants } from './multipiliers'
 import { MultiplierValues } from './types'
 
 interface GamePlinkoProps {
   risk?: 'low' | 'medium' | 'high'
+  row?: 8 | 10 | 12 | 14 | 16
 }
 
-const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high' }) => {
+const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', row = 16 }) => {
   const plinkoRef = useRef<null | HTMLDivElement>(null)
   const engine = Engine.create()
   const { pins: pinsConfig, ball: ballConfig, engine: engineConfig, world: worldConfig } = config
   const worldWidth: number = worldConfig.width
   const worldHeight: number = worldConfig.height
-  const lines = 16
+  const lines = row
   const { world } = engine
 
   useEffect(() => {
