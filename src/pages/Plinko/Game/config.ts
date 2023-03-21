@@ -1,7 +1,7 @@
 const pins = {
   startPins: 3,
-  pinSize: 4,
-  pinGap: 30
+  pinSize: 6,
+  pinGap: 40
 }
 
 const ball = {
