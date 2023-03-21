@@ -9,10 +9,10 @@ import PageLabel from './PageLabel'
 
 const labelProps = Object.values(METHODS).reduce<IMethodLabel[]>((acc, method) => acc.concat(method.methods), [])
 
-const NavHeader = ({ title, pathName, children }: { title: string, pathName: string, children?: ReactNode }) => {
+const NavHeader = ({ title, pathName, children, wrapperClasses }: { title: string, pathName?: string, children?: ReactNode, wrapperClasses?: string }) => {
   const navigate = useNavigate()
   return (
-    <div className=' w-full flex flex-wrap justify-between mb-8'>
+    <div className={wrapperClasses ?? ' w-full flex flex-wrap justify-between mb-8'}>
     <div className="flex items-center gap-4 mb-8">
       <Button
         onClick={() => navigate(-1)}
@@ -21,8 +21,8 @@ const NavHeader = ({ title, pathName, children }: { title: string, pathName: str
         <TriangleArrow iconClasses='rotate-90' />
         <span className='group-hover:text-white'>Back</span>
       </Button>
-      <DiamondIcon className='w-[29px] h-[25px] text-green-secondary ml-2' />
-      <h3 className='text-2xl font-bold mr-6 md:mr-0'>{title}</h3>
+      <DiamondIcon className='w-[29px] h-[25px] text-green-secondary ml-2 ' />
+      <h3 className='text-2xl font-bold mr-6 md:mr-0 '>{title}</h3>
     </div>
      { children }
      {pathName && <PageLabel {...labelProps.find(method => method.path === pathName) as IMethodLabel } /> }
