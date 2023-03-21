@@ -121,7 +121,7 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high' }) => {
     })
   }
 
-  const addPlinko = (path) => {
+  const addPlinko = (path: number[]) => {
     const plinko = makePlinko()
 
     paths[plinko.id] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

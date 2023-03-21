@@ -117,8 +117,7 @@ export const getColorByMultiplier = (multiplier: number): string => {
     return 'bg-lightblue-primary-secondary'
   }
   if (multiplier > 100) {
-    return 'bg-pink-primary'
+    return 'bg-pink-third'
   }
-
   return 'bg-green-primary'
 }
