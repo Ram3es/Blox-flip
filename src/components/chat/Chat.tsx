@@ -1,13 +1,12 @@
 import { useCallback, useState } from 'react'
 import clsx from 'clsx'
 
+import { user } from '../../mocks'
 import { ChatHeader } from './ChatHeader'
 import { ChatTools } from './ChatTools'
 import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
-
-import { user } from '../../mocks'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)

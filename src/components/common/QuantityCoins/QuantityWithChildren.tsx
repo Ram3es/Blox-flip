@@ -10,6 +10,9 @@ export interface QuantityCoinsProps {
 }
 
 export const QuantityCoinsWithChildren: FC<QuantityCoinsProps> = ({ quantity, isActive = false, children, quantityClasses }) => {
+  const integerNumFormated = (number: number): string => {
+    return Number.isInteger(number) ? formatNumber(quantity, 0) : formatNumber(Number(quantity.toString().split('.')[0]))
+  }
   return (
     <div className={quantityClasses ?? 'flex items-center text-13 font-bold '}>
       {children ??
@@ -22,8 +25,7 @@ export const QuantityCoinsWithChildren: FC<QuantityCoinsProps> = ({ quantity, is
           isActive ? 'text-green-primary' : 'text-white'
         }`}
       >
-
-        {formatNumber(quantity, 0)}
+        {integerNumFormated(quantity)}
         <span className='opacity-50'>{Number.isInteger(quantity) ? '.00' : quantity.toFixed(2).slice(-3) }</span>
       </span>
     </div>
