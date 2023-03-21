@@ -1,9 +1,19 @@
-import { FC, useEffect, useRef, useState } from 'react'
-import Matter, { Engine, Render, Runner, Bodies, Composite, World } from 'matter-js'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import Matter, {
+  Engine,
+  Render,
+  Runner,
+  Bodies,
+  Composite,
+  World,
+  Events,
+  IEventCollision
+} from 'matter-js'
 import { config } from './config'
 import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
 import { getColorByMultiplier, getMultiplierByLinesQnt, multipliersVariants } from './multipiliers'
+import { MultiplierValues } from './types'
 
 interface GamePlinkoProps {
   risk?: 'low' | 'medium' | 'high'
@@ -16,6 +26,7 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high' }) => {
   const worldWidth: number = worldConfig.width
   const worldHeight: number = worldConfig.height
   const lines = 16
+  const { world } = engine
 
   useEffect(() => {
     if (!plinkoRef.current) {
@@ -76,44 +87,75 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high' }) => {
     }
   }
 
-  const leftWall = Bodies.rectangle(
-    worldWidth / 3 - pinsConfig.pinSize * pinsConfig.pinGap - pinsConfig.pinGap,
-    worldWidth / 2 - pinsConfig.pinSize,
-    worldWidth * 2,
-    40,
-    {
-      angle: 90,
-      render: {
-        visible: false
-      },
-      isStatic: true
-    }
-  )
-  const rightWall = Bodies.rectangle(
-    worldWidth - pinsConfig.pinSize * pinsConfig.pinGap - pinsConfig.pinGap - pinsConfig.pinGap / 2,
-    worldWidth / 2 - pinsConfig.pinSize,
-    worldWidth * 2,
-    40,
-    {
-      angle: -90,
-      render: {
-        visible: false
-      },
-      isStatic: true
-    }
-  )
+  const paths = {}
 
-  const floor = Bodies.rectangle(0, worldWidth + 10, worldWidth * 10, 40, {
-    label: 'block-1',
-    render: {
-      visible: false
-    },
-    isStatic: true
-  })
+  const rowSettings = {
+    pegSize: 2,
+    plinkoSize: 4.5,
+    yForce: -0.0019 * 0.95,
+    xForce: 0.00075 * 0.7465
+  }
+
+  const makePlinko = () => {
+    const x = Math.round(worldWidth / 2)
+    const y = -5
+    let r = rowSettings.plinkoSize
+
+    return Bodies.circle(x, y, r, {
+      restitution: 0,
+      friction: 1,
+      mass: 0.23805846,
+      inverseMass: 1 / 0.23805846,
+      collisionFilter: {
+        group: -1
+      },
+      render: {
+        // fillStyle:"white"
+        sprite: {
+          texture: PlinkoBall,
+          xScale: rowSettings.plinkoSize / 9,
+          yScale: rowSettings.plinkoSize / 9
+        }
+      },
+      label: 'plinko'
+    })
+  }
+
+  const addPlinko = (path) => {
+    const plinko = makePlinko()
+
+    paths[plinko.id] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    // paths[plinko.id] = path
+    World.add(world, plinko)
+  }
 
   const multipliers = multipliersVariants.high[16]
 
-  Composite.add(engine.world, [...pins, rightWall, leftWall, floor])
+  Composite.add(engine.world, [...pins])
+
+  async function onCollideWithMultiplier(ball: Body, multiplier: Body) {
+    ball.collisionFilter.group = 2
+    World.remove(engine.world, ball)
+    // removeInGameBall()
+    const ballValue = ball.label.split('-')[1]
+    const multiplierValue = +multiplier.label.split('-')[1] as MultiplierValues
+
+    if (+ballValue <= 0) return
+
+    const newBalance = +ballValue * multiplierValue
+    // await incrementCurrentBalance(newBalance)
+  }
+  async function onBodyCollision(event: IEventCollision<Engine>) {
+    const pairs = event.pairs
+    for (const pair of pairs) {
+      const { bodyA, bodyB } = pair
+      if (bodyB.label.includes('ball') && bodyA.label.includes('block'))
+        await onCollideWithMultiplier(bodyB, bodyA)
+    }
+  }
+
+  Events.on(engine, 'collisionActive', onBodyCollision)
 
   return (
     <div className='flex items-center flex-col space-y-2'>
@@ -122,12 +164,15 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high' }) => {
         {multipliers.map((multiplier) => (
           <div
             key={multiplier + new Date().getTime() * Math.random()}
-            className={`${getColorByMultiplier(multiplier)} h-5 m-0.5 rounded text-11 px-2`}
+            className={`${getColorByMultiplier(
+              multiplier
+            )} flex items-center justify-center h-5 m-0.5 rounded text-11 px-2`}
           >
             {multiplier}
           </div>
         ))}
       </div>
+      <button onClick={() => addPlinko()}>btn</button>
     </div>
   )
 }
