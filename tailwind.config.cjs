@@ -33,6 +33,7 @@ module.exports = {
         'blue-accent-secondary': 'rgba(47, 54, 86)',
         'blue-accent-third': 'rgba(33, 40, 65, 1)',
         'blue-accent-fourth': 'rgba(52, 61, 97, 1)',
+        'blue-accent-five': 'rgba(79, 89, 136, 1)',
         'blue-highlight': 'rgba(54, 62, 96)',
         'blue-light': 'rgba(72, 81, 120)',
         'blue-ocean': 'rgba(82, 95, 151)',
@@ -44,6 +45,7 @@ module.exports = {
         'gray-secondary-darken': 'rgba(89, 97, 129)',
         'lightblue-darken': 'rgba(45, 56, 106)',
         'lightblue-primary': 'rgba(41, 199, 249)',
+        'lightblue-primary-secondary': 'rgba(92, 160, 223, 1)',
         'lightblue-primary-darken': 'rgba(69, 177, 255)',
         'lightblue-secondary': 'rgba(71, 100, 214)',
         'lightblue-accent': 'rgba(141, 211, 240, 1)',
@@ -66,7 +68,8 @@ module.exports = {
         'red-primary': 'rgba(255, 63, 63)',
         'red-secondary': 'rgba(255, 77, 77)',
         'red-accent': 'rgba(239, 94, 94)',
-        'border-gray': 'rgba(152, 152, 152)'
+        'border-gray': 'rgba(152, 152, 152)',
+        'pink-primary': 'rgba(238, 62, 168, 1)'
       },
       gridTemplateColumns: {
         '5-auto': 'repeat(5, auto)'
