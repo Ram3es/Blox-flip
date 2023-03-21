@@ -16,7 +16,7 @@ const NavHeader = ({ title, pathName, children, wrapperClasses }: { title: strin
     <div className="flex items-center gap-4 mb-8">
       <Button
         onClick={() => navigate(-1)}
-        className='flex items-center justify-center font-semibold p-2 leading-4 gap-1.5 group text-gray-primary rounded bg-blue-accent-secondary hover:bg-blue-accent border border-transparent '
+        className='flex items-center justify-center font-semibold p-2 leading-4 gap-1.5 group text-gray-primary rounded bg-blue-accent-secondary hover:bg-blue-accent'
       >
         <TriangleArrow iconClasses='rotate-90' />
         <span className='group-hover:text-white'>Back</span>
