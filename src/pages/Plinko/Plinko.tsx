@@ -159,7 +159,7 @@ const Plinko = () => {
               </div>
               <div className='border-b-2 border-b-blue-accent-fourth pb-6'>
                 <div className='flex items-start justify-between text-17'>
-                  <div className='bg-blue-highlight rounded px-3 py-1 items-center flex font-bold  text-gray-primary'>
+                  <div className='bg-blue-highlight rounded px-3 py-1 items-center flex font-bold text-gray-primary'>
                     <span className='gradient-gold-yellow-text font-bold'>Risk</span>
                   </div>
                   <div className='flex flex-col items-center space-y-2'>

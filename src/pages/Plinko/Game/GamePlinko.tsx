@@ -1,33 +1,34 @@
-import { FC, useEffect, useRef } from 'react'
-import {
-  Engine,
-  Render,
-  Runner,
-  Bodies,
-  Composite,
-  World,
-  Events,
-  IEventCollision
-} from 'matter-js'
+import { FC, useEffect, useRef, useState } from 'react'
+import { Engine, Body, Render, Runner, Bodies, Composite, World, Events } from 'matter-js'
 import { config } from './config'
 import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
 import { getColorByMultiplier, multipliersVariants } from './multipiliers'
-import { MultiplierValues } from './types'
 import { RowVariant } from '../../../types/Plinko'
+import { Button } from '../../../components/Base/Button'
+import { MultiplierValues } from './types'
 
 interface GamePlinkoProps {
   risk?: 'low' | 'medium' | 'high'
   rows: RowVariant
 }
 
-const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
+export default function GamePlinko({ risk = 'high', rows }: GamePlinkoProps) {
+  // const [plinkoPaths, setPlinkoPaths] = useState<Record<string, number[]>>({})
   const plinkoRef = useRef<null | HTMLDivElement>(null)
   const engine = Engine.create()
   const { pins: pinsConfig, ball: ballConfig, engine: engineConfig, world: worldConfig } = config
   const worldWidth: number = worldConfig.width
   const worldHeight: number = worldConfig.height
   const { world } = engine
+
+  const padding = 133.33333333333334
+  const contourSize = 50
+  let columnSize = Math.round(worldWidth / (rows + 2))
+  const paths: any = {}
+  let forceCache = []
+  let ballCache = {}
+  let rowSize = worldHeight / rows
 
   useEffect(() => {
     if (!plinkoRef.current) {
@@ -65,7 +66,37 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
       render.canvas.remove()
       render.textures = {}
     }
-  }, [])
+  }, [rows])
+
+  const leftWall = Bodies.rectangle(0, 0, padding / 2, worldHeight * 2, {
+    isStatic: true,
+    label: 'leftWall',
+    render: {
+      fillStyle: 'transparent'
+    }
+  })
+  const rightWall = Bodies.rectangle(worldWidth, 0, padding / 2, worldHeight * 2, {
+    isStatic: true,
+    label: 'rightWall',
+    render: {
+      fillStyle: 'transparent'
+    }
+  })
+
+  const bottomWall = Bodies.rectangle(
+    worldWidth / 2,
+    worldHeight + contourSize / 2,
+    worldWidth,
+    contourSize,
+    {
+      isStatic: true,
+      label: 'bottomWall',
+      render: {
+        fillStyle: 'red',
+        visible: true
+      }
+    }
+  )
 
   const pins: Body[] = []
 
@@ -78,7 +109,7 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
       const pinY = worldWidth / rows + l * pinsConfig.pinGap + pinsConfig.pinGap
 
       const pin = Bodies.circle(pinX, pinY, pinsConfig.pinSize, {
-        label: `pin-${i}`,
+        label: `pin-${Math.random()}`,
         render: {
           fillStyle: '#4F5988'
         },
@@ -87,8 +118,6 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
       pins.push(pin)
     }
   }
-
-  const paths = {}
 
   const rowSettings = {
     pegSize: 2,
@@ -111,7 +140,6 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
         group: -1
       },
       render: {
-        // fillStyle:"white"
         sprite: {
           texture: PlinkoBall,
           xScale: rowSettings.plinkoSize / 9,
@@ -122,60 +150,125 @@ const GamePlinko: FC<GamePlinkoProps> = ({ risk = 'high', rows }) => {
     })
   }
 
-  const addPlinko = (path: number[]) => {
+  const addPlinko = () => {
     const plinko = makePlinko()
 
-    paths[plinko.id] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
+    paths[plinko.id] = generateRandomArray(rows)
     // paths[plinko.id] = path
     World.add(world, plinko)
   }
 
+  const handleCollision = (event: any) => {
+    const { pairs } = event
+    pairs.forEach((pair: any, i: number) => {
+      const { bodyA, bodyB } = pair
+      const { label: labelA } = bodyA
+      const { label: labelB } = bodyB
+      console.log(bodyA, 'bodyA')
+      console.log(bodyB, 'bodyB')
+
+
+      if (labelA !== labelB) {
+        if (labelB === 'plinko') {
+          if (!ballCache[bodyB.id]) {
+            ballCache[bodyB.id] = 0
+          }
+          ballCache[bodyB.id]++
+
+          // const shiftedX = (worldWidth / 2 - bodyB.position.x) % (columnSize / 2)
+          // Body.translate(bodyB, {
+          //   x:
+          //     Math.abs(shiftedX) < columnSize / 3
+          //       ? shiftedX
+          //       : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1),
+          //   y:
+          //     (-bodyB.position.y + (rows - (rowSettings.pegSize + rowSettings.plinkoSize))) %
+          //     rowSize
+          // })
+
+
+          // console.log(pair, 'PAIR')
+
+          // Body.setStatic(bodyB, true)
+
+          Body.translate(bodyB, {
+            x: Math.random(),
+            y: Math.random()
+          })
+          // Body.setStatic(bodyB, true)
+
+          forceCache.push({
+            body: bodyB,
+            force: {
+              x: rowSettings.xForce * (paths[bodyB.id][ballCache[bodyB.id] - 1] === 1 ? 1 : -1),
+              y: rowSettings.yForce
+            }
+          })
+
+          if (
+            labelA === 'bottomWall' ||
+            labelA === 'Rectangle Body' ||
+            labelA === 'leftWall' ||
+            labelA === 'rightWall'
+          ) {
+            const rights = paths[bodyB.id].filter((val: any) => val === 1).length
+            const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
+            const multiplierBox = document.getElementById(`mult_${i}`)
+
+            if (multiplierBox?.style) {
+              multiplierBox.style.transform = 'translateY(15px)'
+              // multiplierBox.style.filter = 'brightness(1.5)'
+
+              setTimeout(() => {
+                // multiplierBox.style.transform = 'translateY(0px)'
+                // multiplierBox.style.filter = 'brightness(1)'
+              }, 1000)
+            }
+
+            World.remove(world, bodyB)
+            delete paths[bodyB.id]
+
+            return
+          }
+        }
+      }
+    })
+  }
+
+  Events.on(engine, 'collisionStart', handleCollision)
+
   const multipliers = multipliersVariants.high[16]
 
-  Composite.add(engine.world, [...pins])
-
-  async function onCollideWithMultiplier(ball: Body, multiplier: Body) {
-    ball.collisionFilter.group = 2
-    World.remove(engine.world, ball)
-    // removeInGameBall()
-    const ballValue = ball.label.split('-')[1]
-    const multiplierValue = +multiplier.label.split('-')[1] as MultiplierValues
-
-    if (+ballValue <= 0) return
-
-    const newBalance = +ballValue * multiplierValue
-    // await incrementCurrentBalance(newBalance)
-  }
-  async function onBodyCollision(event: IEventCollision<Engine>) {
-    const pairs = event.pairs
-    for (const pair of pairs) {
-      const { bodyA, bodyB } = pair
-      if (bodyB.label.includes('ball') && bodyA.label.includes('block'))
-        await onCollideWithMultiplier(bodyB, bodyA)
-    }
-  }
-
-  Events.on(engine, 'collisionActive', onBodyCollision)
+  Composite.add(engine.world, [...pins, leftWall, rightWall, bottomWall])
 
   return (
-    <div className='flex items-center flex-col space-y-2'>
+    <div className='flex items-center flex-col'>
       <div ref={plinkoRef} />
       <div className='flex justify-center items-center'>
-        {multipliers.map((multiplier) => (
+        {multipliers.map((multiplier, i) => (
           <div
             key={multiplier + new Date().getTime() * Math.random()}
             className={`${getColorByMultiplier(
               multiplier
             )} flex items-center justify-center h-5 m-0.5 rounded text-11 px-2`}
+            id={`mult_${i}`}
           >
             {multiplier}
           </div>
         ))}
       </div>
-      <button onClick={addPlinko}>btn</button>
+      <Button color='GreenPrimary' onClick={() => addPlinko()}>
+        Start
+      </Button>
     </div>
   )
 }
 
-export default GamePlinko
+const generateRandomArray = (rows: number): number[] => {
+  const result = []
+  for (let i = 0; i < rows; i++) {
+    const randomBit = Math.round(Math.random())
+    result.push(randomBit)
+  }
+  return result
+}
