@@ -75,15 +75,26 @@ body {
   font-family: 'Rubik';
   font-weight: 500;
 }
-.accent-green{
-    accent-color: #2CDD68;
+.accent-green {
+  accent-color: #2cdd68;
 }
-.page--bg{ 
-    background: radial-gradient(47.16% 83.84% at 73.93% 100%, rgba(194, 102, 226, 0.19) 0%, rgba(0, 0, 0, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(12.71% 22.59% at 5.55% 51.3%, rgba(0, 117, 254, 0.11) 0%, rgba(0, 0, 0, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, #1F2438;
+.page--bg {
+  background: radial-gradient(
+        47.16% 83.84% at 73.93% 100%,
+        rgba(194, 102, 226, 0.19) 0%,
+        rgba(0, 0, 0, 0) 100%
+      )
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    radial-gradient(12.71% 22.59% at 5.55% 51.3%, rgba(0, 117, 254, 0.11) 0%, rgba(0, 0, 0, 0) 100%)
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    #1f2438;
 }
 .bg-gradient--blue-darken {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #2f3656;
+}
+.bg-blue-golf {
+  background: linear-gradient(0deg, rgba(71, 100, 214, 0.17) 17%, rgba(71, 100, 214, 0) 100%);
 }
 .radial--blue {
   background: radial-gradient(
@@ -348,32 +359,48 @@ body {
     filter: drop-shadow(0px 0px 20px rgba(75, 251, 134, 0.35));
   }
 }
-.gradient-green{
-    background: linear-gradient(267.7deg, #2CDD68 2.41%, #00E04C 108.2%);
+.gradient-green {
+  background: linear-gradient(267.7deg, #2cdd68 2.41%, #00e04c 108.2%);
 }
-.gradient-blue-primary{
-    background: linear-gradient(228.46deg, #1C2447 2.2%, #252C49 99.81%);
+.gradient-blue-primary {
+  background: linear-gradient(228.46deg, #1c2447 2.2%, #252c49 99.81%);
 }
-.gradient-blue-secondary{
-    background: linear-gradient(228.46deg, rgba(64, 73, 112, 0.1) 2.2%, rgba(82, 101, 181, 0.1) 99.81%);
+.gradient-blue-secondary {
+  background: linear-gradient(
+    228.46deg,
+    rgba(64, 73, 112, 0.1) 2.2%,
+    rgba(82, 101, 181, 0.1) 99.81%
+  );
 }
-.gradient-blue-dark{
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.24)), linear-gradient(228.46deg, rgba(64, 73, 112, 0.1) 2.2%, rgba(82, 101, 181, 0.1) 99.81%), #21263A;
+.gradient-blue-dark {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.24)),
+    linear-gradient(228.46deg, rgba(64, 73, 112, 0.1) 2.2%, rgba(82, 101, 181, 0.1) 99.81%), #21263a;
 }
-.gradient-affiliate-text{
-    background-image: linear-gradient(268.73deg, #4BA1FF -38.14%, #00E7FF 129.02%);
+.gradient-affiliate-text {
+  background-image: linear-gradient(268.73deg, #4ba1ff -38.14%, #00e7ff 129.02%);
 }
-.gradient-violet-text{
-    background-image: radial-gradient(94.25% 94.25% at 50% 50%, rgba(82, 154, 221, 0.2) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(228.46deg, #404970 2.2%, #5265B5 99.81%);
+.gradient-violet-text {
+  background-image: radial-gradient(
+      94.25% 94.25% at 50% 50%,
+      rgba(82, 154, 221, 0.2) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    linear-gradient(228.46deg, #404970 2.2%, #5265b5 99.81%);
 }
-.gradient-yellow-text{
-    background-image: linear-gradient(268.73deg, #FFC24B -38.14%, #FF9900 129.02%);
+.gradient-yellow-text {
+  background-image: linear-gradient(268.73deg, #ffc24b -38.14%, #ff9900 129.02%);
 }
 .gradient-gray-text {
   background-image: linear-gradient(268.73deg, #dfdfdf -38.14%, #6d6d6d 129.02%);
 }
 .gradient-brown-text {
   background-image: linear-gradient(268.73deg, #cf9988 -38.14%, #a78b62 129.02%);
+}
+.gradient-gold-yellow-text {
+  background: linear-gradient(257.4deg, #ff8125 -30.88%, #ffe144 199.8%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .yellow--shadow {
   filter: drop-shadow(0px 4px 100px #ffae26);
@@ -491,26 +518,26 @@ input {
 .popup--green-gradient {
   background: linear-gradient(0deg, rgba(44, 221, 104, 0.15), rgba(44, 221, 104, 0.15)), #2f3656;
 }
-.popup--corner-tr{
-    border-top-right-radius: 0;
-    &:before{
-        content:'';
-        border:7px solid transparent;
-        border-right:10px solid rgba(36, 42, 66);
-        position: absolute;
-        right:0;
-        top:-5px;
-        z-index: 10;
-    }
-    &:after{
-        content:'';
-        z-index: 9;
-        border:7px solid transparent;
-        border-right:10px solid rgba(54, 62, 96);
-        position: absolute;
-        right:-1px;
-        top:-7px;
-    }
+.popup--corner-tr {
+  border-top-right-radius: 0;
+  &:before {
+    content: '';
+    border: 7px solid transparent;
+    border-right: 10px solid rgba(36, 42, 66);
+    position: absolute;
+    right: 0;
+    top: -5px;
+    z-index: 10;
+  }
+  &:after {
+    content: '';
+    z-index: 9;
+    border: 7px solid transparent;
+    border-right: 10px solid rgba(54, 62, 96);
+    position: absolute;
+    right: -1px;
+    top: -7px;
+  }
 }
 .popup--corner-tr-green {
   border-top-right-radius: 0;
@@ -831,6 +858,13 @@ input {
 }
 */
 /*------animation-------*/
-a, button, input, textarea, div, span, *:before, *:after{
-     transition: all 0.3s;
+a,
+button,
+input,
+textarea,
+div,
+span,
+*:before,
+*:after {
+  transition: all 0.3s;
 }
