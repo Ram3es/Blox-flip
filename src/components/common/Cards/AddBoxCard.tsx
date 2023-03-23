@@ -1,5 +1,5 @@
 import React from 'react'
-import { PlusIcon } from '../../Icons/PlusIcon'
+import { PlusIcon } from '../../icons/PlusIcon'
 
 const AddBoxCard = ({ openModal }: { openModal: Function }) => {
   return (
