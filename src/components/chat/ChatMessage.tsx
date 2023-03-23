@@ -15,7 +15,7 @@ export const ChatMessage: FC<UserMessageProps> = ({ message, ...user }) => {
 
   return (
     <div className='relative'>
-      <ChatUserCard routes={routes} {...user} />
+      <ChatUserCard routes={routes} user={user} />
       <div className='text-xs text-gray-secondary bg-blue-secondary/30 border border-blue-highlight rounded p-2 mb-4 break-words'>
         {message.repeat(50)}
       </div>

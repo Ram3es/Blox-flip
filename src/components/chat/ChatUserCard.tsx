@@ -3,22 +3,23 @@ import { Link } from 'react-router-dom'
 import { Menu } from '@headlessui/react'
 import clsx from 'clsx'
 import { RouteItem } from '../../types/Routes'
-import { IUser } from '../../types/User'
 import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
 import { UserAvatar } from '../user/UserAvatar'
 import { UserLevel } from '../user/UserLevel'
+import { IUser } from '../../types/User'
 
 enum ChatUserCardVariant {
   Base = 'Base',
   Header = 'Header'
 }
 
-interface ChatUserCardProps extends Pick<IUser, 'name' | 'avatar' | 'level'> {
+interface ChatUserCardProps {
+  user: IUser
   routes: RouteItem[]
   variant?: keyof typeof ChatUserCardVariant
 }
 
-const ChatUserCard: FC<ChatUserCardProps> = ({ name, avatar, level, routes, variant = 'Base' }) => {
+const ChatUserCard: FC<ChatUserCardProps> = ({ user, routes, variant = 'Base' }) => {
   return (
     <Menu>
       <Menu.Button as='div' className='w-full'>
@@ -37,9 +38,9 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ name, avatar, level, routes, vari
                 'text-white': variant === ChatUserCardVariant.Base
               })}
             >
-              {name}
+              {user ? user.name : ''}
             </span>
-            <UserLevel level={level} />
+            <UserLevel level={user ? user.level : 0} />
           </div>
 
           <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
