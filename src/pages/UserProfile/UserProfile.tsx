@@ -1,7 +1,7 @@
 
 import clsx from 'clsx'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import IconProfile from '../../components/Icons/IconProfile'
+import IconProfile from '../../components/icons/IconProfile'
 import Profile from './Profile'
 
 const navTabs = [

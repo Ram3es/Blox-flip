@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 
-import { QuantityCoins } from '../Common/QuantityCoins/QuantityCoins'
+import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { Button } from './Button'
-import DiamondIcon from '../Icons/DiamondIcon'
+import DiamondIcon from '../icons/DiamondIcon'
 
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from './InputWithLabel'
 
 import { formatNumber } from '../../helpers/numbersFormatter'
-import { IAmountState } from '../../types/form'
+import { IAmountState } from '../../types/Form'
 
 enum VariantEnum {
   Deposit = 'Deposit',

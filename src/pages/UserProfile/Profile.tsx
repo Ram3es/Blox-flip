@@ -1,15 +1,15 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
-import ButtonsToggle from '../../components/Base/ButtonToggle'
-import DiamondIcon from '../../components/Icons/DiamondIcon'
-import ItemsIcon from '../../components/Icons/ItemsIcon'
-import UserProgress from '../../components/User/UserProgress'
-import { Button } from '../../components/Base/Button'
-import ItemCard from '../../components/Common/Cards/ItemCard'
-import { QuantityCoinsWithChildren } from '../../components/Common/QuantityCoins/QuantityWithChildren'
+import ButtonsToggle from '../../components/base/ButtonToggle'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import ItemsIcon from '../../components/icons/ItemsIcon'
+import UserProgress from '../../components/user/UserProgress'
+import { Button } from '../../components/base/Button'
+import ItemCard from '../../components/common/Cards/ItemCard'
+import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import { useNavigate } from 'react-router-dom'
 import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/itemCard'
+import { IItemCard } from '../../types/ItemCard'
 
 const user = {
   name: 'John Johnson',
@@ -30,7 +30,7 @@ const actions = [
 
 ]
 
-const cardsSorting = ['All', 'Active Items', 'Sold']
+const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
 
 const Profile = () => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
@@ -41,7 +41,7 @@ const Profile = () => {
   const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
 
   const filtered = useCallback(() => {
-    switch (currentCardsVariant) {
+    switch (currentCardsVariant.variant) {
       case 'Active Items': setSorted(cards.filter(card => card.active))
         break
       case 'Sold': setSorted(cards.filter(card => card.sold))

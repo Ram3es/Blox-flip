@@ -1,4 +1,4 @@
-import { IMAGES } from '../constants/Images'
+import { IMAGES } from '../constants/images'
 
 export const getIconByPathName = (pathname: string): string => {
   if (pathname === 'ethereum') {

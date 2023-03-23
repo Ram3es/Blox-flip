@@ -1,7 +1,7 @@
 import React from 'react'
-import MethodCard from '../../../components/Common/Cards/MethodCard'
-import PaymentMethodContainer from '../../../components/Containers/PaymentMethodContainer'
-import { METHODS } from '../../../constants/PaymentMethods'
+import MethodCard from '../../../components/common/Cards/MethodCard'
+import PaymentMethodContainer from '../../../components/containers/PaymentMethodContainer'
+import { METHODS } from '../../../constants/paymentMethods'
 
 const Methods = () => {
   return (

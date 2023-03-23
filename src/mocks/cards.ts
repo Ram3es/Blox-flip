@@ -1,4 +1,4 @@
-import { IUnboxCard } from '../types/itemCard'
+import { IUnboxCard } from '../types/ItemCard'
 
 export const cards = [
   { id: '1', color: 'Orange', image: 'horns', name: 'Fiery Horns ', price: 1200, sold: true, active: false, isSelected: false },

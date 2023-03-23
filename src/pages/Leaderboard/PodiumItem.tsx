@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import clsx from 'clsx'
 
-import { Button } from '../../components/Base/Button'
-import { QuantityCoins } from '../../components/Common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/User/UserAvatar'
+import { Button } from '../../components/base/Button'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { UserAvatar } from '../../components/user/UserAvatar'
 
 import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'

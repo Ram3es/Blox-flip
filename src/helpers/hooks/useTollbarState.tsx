@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { selectItem } from '../../constants/Sorting'
-import { ISortOptions } from '../../types/sortOptions'
+import { selectItem } from '../../constants/sorting'
+import { ISortOptions } from '../../types/SortOptions'
 import { useDebounce } from './useDebounce'
 
 export const useToolbarState = () => {

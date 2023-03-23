@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { IMAGES } from '../../../constants/Images'
+import { IMAGES } from '../../../constants/images'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
-import DiamondIcon from '../../Icons/DiamondIcon'
+import DiamondIcon from '../../icons/DiamondIcon'
 interface IUnboxingCardProps {
   id: string
   name: string

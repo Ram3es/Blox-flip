@@ -1,20 +1,20 @@
 import React, { useMemo, useState } from 'react'
-import ButtonsToggle from '../../components/Base/ButtonToggle'
-import ItemCard from '../../components/Common/Cards/ItemCard'
-import GreenTipSelect from '../../components/Common/GreenTipSelect'
-import SearchInput from '../../components/Common/SearchInput'
-import SortSelect from '../../components/Common/SortSelect'
-import { sortingVariants } from '../../constants/Sorting'
+import ButtonsToggle from '../../components/base/ButtonToggle'
+import ItemCard from '../../components/common/Cards/ItemCard'
+import GreenTipSelect from '../../components/common/GreenTipSelect'
+import SearchInput from '../../components/common/SearchInput'
+import SortSelect from '../../components/common/SortSelect'
+import { sortingVariants } from '../../constants/sorting'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import { searchData } from '../../helpers/searchData'
 import { cards, unboxCard } from '../../mocks/cards'
-import { IItemCard } from '../../types/itemCard'
+import { IItemCard } from '../../types/ItemCard'
 import { sortData } from '../../helpers/sortData'
 import { useNavigate } from 'react-router-dom'
-import UnboxingCard from '../../components/Common/Cards/UnboxingCard'
-import UnboxingIconTitle from '../../components/Icons/UnboxingIconTitle'
+import UnboxingCard from '../../components/common/Cards/UnboxingCard'
+import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
 
-const tabs = ['Hot', 'Featured', 'New', 'Creator']
+const tabs = [{ variant: 'Hot' }, { variant: 'Featured' }, { variant: 'New' }, { variant: 'Creator' }]
 
 const Unboxing = () => {
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
@@ -89,7 +89,7 @@ const Unboxing = () => {
               id={card.id}
               name={card.name}
               price={card.price}
-              onSelect={() => navigate(`unboxing/${card.id}`)}
+              onSelect={() => navigate(card.id)}
               />
           )
           )}
