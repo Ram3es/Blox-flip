@@ -2,16 +2,16 @@ import React, { useMemo, useState } from 'react'
 import { unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/ItemCard'
 import { Button } from '../base/Button'
-import ModalWrapper from '../containers/ModalWrapper'
 import { searchData } from '../../helpers/searchData'
 import UnboxingCard from '../common/Cards/UnboxingCard'
 import GreenTipSelect from '../common/GreenTipSelect'
-import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
 import SearchInput from '../common/SearchInput'
 import DaggersGreenGradient from '../icons/DaggersGreenGradient'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
+import ModalWrapper from './ModalWrapper'
+import { QuantityCoinsWithChildren } from '../Common/QuantityCoins/QuantityWithChildren'
 
-const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
+const BattleModal = ({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: Function, onSubmit: Function }) => {
   const [unboxCards, setAllCards] = useState<IItemCard[]>(unboxCard)
   const [selectedCards, setSelected] = useState<IItemCard[]>([])
   const {
@@ -21,14 +21,13 @@ const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }
     onChange,
     setPriceRange
   } = useToolbarState()
-  console.log(priceRange, priceRange)
 
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
   const ranged = useMemo(() => unboxCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, unboxCards])
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, unboxCards, ranged])
 
   const onSelect = (card: IItemCard) => {
-    setSelected(state => ([...state, card]))
+    setSelected(state => ([...state, { ...card, amount: 1 }]))
     setAllCards(state => ([...state.filter(orgCard => orgCard.id !== card.id)]))
   }
   return isOpen
@@ -66,7 +65,7 @@ const BattleModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }
               </div>
             </div>
             <Button
-              onClick={() => onClose() }
+              onClick={() => { onSubmit(selectedCards); onClose() } }
               className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-4 leading-4 rounded '
             >
                 Complete

@@ -7,8 +7,6 @@ import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
 
-import { user } from '../../mocks'
-
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
 
@@ -27,7 +25,7 @@ export const Chat = () => {
   return (
     <>
       <div className={chatClasses}>
-        <ChatHeader {...user} />
+        <ChatHeader />
         <ChatTools />
         <ChatMessageList />
         <ChatMessageInput />
