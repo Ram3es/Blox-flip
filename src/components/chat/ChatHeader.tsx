@@ -9,7 +9,7 @@ import ChatUserCard from './ChatUserCard'
 
 export const ChatHeader: FC = () => {
   const [isOpenSignInModal, setIsOpenModal] = useState(false)
-  const [state] = useContext(Context)
+  const { state } = useContext(Context)
 
   const routes: RouteItem[] = [
     { path: '/profile', name: 'profile' },
