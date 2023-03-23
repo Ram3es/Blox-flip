@@ -518,6 +518,36 @@ input {
 .popup--green-gradient {
   background: linear-gradient(0deg, rgba(44, 221, 104, 0.15), rgba(44, 221, 104, 0.15)), #2f3656;
 }
+.popup--corner-tl {
+  border-top-left-radius: 0;
+  &:before {
+    content: '';
+    border: 7px solid transparent;
+    border-left: 10px solid rgba(44, 221, 104, 0.15);
+    position: absolute;
+    left: 0;
+    top: -5px;
+    z-index: 10;
+  }
+  &:after {
+    content: '';
+    z-index: 9;
+    border: 7px solid transparent;
+    border-left: 10px solid rgba(44, 221, 104, 0.15);
+    position: absolute;
+    left: -1px;
+    top: -7px;
+  }
+  &.popup--bg-green {
+    background: #1b1f33;
+    &:before {
+      border-left: 10px solid #1b1f33;
+    }
+    &:after {
+      border-left: 10px solid rgba(44, 221, 104);
+    }
+  }
+}
 .popup--corner-tr {
   border-top-right-radius: 0;
   &:before {
