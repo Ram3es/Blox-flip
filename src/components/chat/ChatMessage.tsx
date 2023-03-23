@@ -8,14 +8,14 @@ interface UserMessageProps extends IUser {
 }
 
 export const ChatMessage: FC<UserMessageProps> = ({ message, ...user }) => {
-  const routes: RouteItem[] = [
+  const userRoutes: RouteItem[] = [
     { path: '/profile', name: 'profile' },
     { path: '/message', name: 'message' }
   ]
 
   return (
     <div className='relative'>
-      <ChatUserCard routes={routes} user={user} />
+      <ChatUserCard routes={userRoutes} user={user} />
       <div className='text-xs text-gray-secondary bg-blue-secondary/30 border border-blue-highlight rounded p-2 mb-4 break-words'>
         {message.repeat(50)}
       </div>
