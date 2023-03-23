@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import clsx from 'clsx'
 
-import { user } from '../../mocks'
 import { ChatHeader } from './ChatHeader'
 import { ChatTools } from './ChatTools'
 import { ChatMessageList } from './ChatMessagesList'
@@ -26,7 +25,7 @@ export const Chat = () => {
   return (
     <>
       <div className={chatClasses}>
-        <ChatHeader {...user} />
+        <ChatHeader />
         <ChatTools />
         <ChatMessageList />
         <ChatMessageInput />

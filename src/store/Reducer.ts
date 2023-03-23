@@ -1,4 +1,3 @@
-
 export const Reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'LOGIN':
