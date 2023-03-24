@@ -2,7 +2,7 @@ import { BetMode, RowVariant } from '../../types/Plinko'
 import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
 import clsx from 'clsx'
 
-import GamePlinko from './Game/GamePlinko'
+import GamePlinko from './Plinko/GamePlinko'
 import { Button } from '../../components/base/Button'
 import RangeSlider from '../../components/common/RangeSlider'
 import InputWithLabel from '../../components/base/InputWithLabel'
@@ -11,6 +11,7 @@ import { BetToolkit } from '../../types/Bets'
 import { RiskVariant } from '../../types/enums'
 import ToggleRisk from '../../components/common/ToggleRisk'
 import ToggleRows from '../../components/common/ToggleRows'
+import PlinkoGame2 from './Plinko2/PlinkoGame2'
 
 const Plinko = () => {
   const [mode, setMode] = useState<keyof typeof BetMode>(BetMode.Manual)
@@ -138,7 +139,8 @@ const Plinko = () => {
         </div>
       </div>
       <div className='bg-blue-primary rounded-lg md:w-3/4 w-full flex items-start justify-center'>
-        <GamePlinko rows={selectedRow} />
+        {/* <GamePlinko rows={selectedRow} /> */}
+        <PlinkoGame2 numberOfBets={numberOfBets} risk={risk} rows={selectedRow} />
       </div>
     </div>
   )

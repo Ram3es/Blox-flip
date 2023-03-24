@@ -72,14 +72,14 @@ export default function GamePlinko({ risk = 'high', rows }: GamePlinkoProps) {
     isStatic: true,
     label: 'leftWall',
     render: {
-      fillStyle: 'transparent'
+      fillStyle: 'red'
     }
   })
   const rightWall = Bodies.rectangle(worldWidth, 0, padding / 2, worldHeight * 2, {
     isStatic: true,
     label: 'rightWall',
     render: {
-      fillStyle: 'transparent'
+      fillStyle: 'red'
     }
   })
 
