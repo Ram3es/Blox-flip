@@ -107,9 +107,9 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
               // multiplierBox.style.filter = 'brightness(1.5)'
 
               setTimeout(() => {
-                // multiplierBox.style.transform = 'translateY(0px)'
+                multiplierBox.style.transform = 'translateY(0px)'
                 // multiplierBox.style.filter = 'brightness(1)'
-              }, 200)
+              }, 1000)
             }
 
             World.remove(engine.world, bodyB)
@@ -245,7 +245,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     const plinko = makePlinko()
     const path = getPathByRows(rows)
     console.log(path)
-    paths[plinko.id] = path
+    paths[plinko.id] = [0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0]
     World.add(engine.world, plinko)
   }
   const makePeg = (x: number, y: number) => {
@@ -305,7 +305,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
               key={multiplier + new Date().getTime() * Math.random()}
               className={`${getColorByMultiplier(
                 multiplier
-              )} flex items-center justify-center h-5 m-0.5 rounded text-12`}
+              )} flex items-center justify-center h-5 rounded text-12 px-3`}
               id={`mult_${i}`}
             >
               {multiplier}
