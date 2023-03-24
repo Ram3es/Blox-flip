@@ -31,6 +31,12 @@ export const wheelBets: WheelBetRwcord = {
         'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
       bet: 2000,
       username: 'Carmela_Botsford2'
+    },
+    {
+      avatar:
+        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+      bet: 500,
+      username: 'Carmela'
     }
   ],
   [possibleBets.RED]: [
@@ -39,6 +45,12 @@ export const wheelBets: WheelBetRwcord = {
         'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
       bet: 3000,
       username: 'Carmela_Botsford3'
+    },
+    {
+      avatar:
+        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+      bet: 4000,
+      username: 'Carmela_Botsford4'
     }
   ]
 }

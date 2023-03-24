@@ -2,10 +2,21 @@ import { getItemColorByName } from '../../../helpers/wheelHelpers'
 import { IWheelBet } from '../../../mocks/wheelBets'
 import { possibleBets } from '../../../types/Wheel'
 import TeamGroupIcon from '../../icons/TeamGroupIcon'
+import { UserAvatar } from '../../user/UserAvatar'
+import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 
 interface IWheelBetCard {
   color: possibleBets
   bets: IWheelBet[]
+}
+
+const cutString = (s: string): string => {
+  if (s.length > 13) {
+    const cuttedString = s.slice(0, 10)
+    return cuttedString + '...'
+  } else {
+    return s
+  }
 }
 
 const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
@@ -38,8 +49,32 @@ const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
           </span>
         </div>
         <div className={`grow text-center uppercase text-15 font-extrabold ${color === possibleBets.RED ? 'text-gradient-red' : ''}`}>
-          BET color 2X
+          BET {color} {color === possibleBets.GREY ? '2' : color === possibleBets.YELLOW ? '3' : color === possibleBets.BLUE ? '5' : '50'}X
         </div>
+      </div>
+      <div className='flex flex-col'>
+        {bets.map((bet, index) => (
+          <div
+            key={color + 'bet' + bet.username}
+            className="px-2 py-1 relative flex justify-between"
+          >
+            <div
+              className={`rounded absolute left-0 top-0 w-full h-full -z-10 ${index % 2 === 0 ? 'opacity-10' : 'opacity-5'}`}
+              style={{
+                background: getItemColorByName(color, false)
+              }}
+            />
+            <div className='flex items-center'>
+              <div className='w-8 h-8 shrink-0 border border-blue-highlight rounded-full overflow-hidden radial--gray mr-2.5'>
+                <UserAvatar image={bet.avatar} />
+              </div>
+              <span className='font-bold relative py-1 text-white text-13'>
+                {cutString(bet.username)}
+              </span>
+            </div>
+            <QuantityCoinsWithChildren quantity={bet.bet} />
+          </div>
+        ))}
       </div>
     </div>
   )
