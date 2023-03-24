@@ -61,14 +61,25 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
           ballCache[bodyB.id]++
 
           const shiftedX = (mainConfig.width / 2 - bodyB.position.x) % (columnSize / 2)
+          const shiftedY =
+            (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
+          const newX =
+            Math.abs(shiftedX) < columnSize / 4
+              ? shiftedX
+              : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
 
-          Body.translate(bodyB, {
-            x:
-              Math.abs(shiftedX) < columnSize / 4
-                ? shiftedX
-                : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1),
-            // y: ((2 - bodyB.position.y)) % (rowSize)
-            y: (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
+          const newY = shiftedY
+          // Body.translate(bodyB, {
+          //   x:
+          //     Math.abs(shiftedX) < columnSize / 4
+          //       ? shiftedX
+          //       : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1),
+          //   // y: ((2 - bodyB.position.y)) % (rowSize)
+          //   y: (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
+          // })
+          Body.setPosition(bodyB, {
+            x: bodyB.position.x + newX,
+            y: bodyB.position.y + newY
           })
           // Body.setStatic(bodyB, true)
 
@@ -179,13 +190,19 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       fillStyle: 'transparent'
     }
   })
-  const rightWall = Bodies.rectangle(mainConfig.width, 0, 133.33333333333334 / 2, mainConfig.width * 2, {
-    isStatic: true,
-    label: 'RightWall',
-    render: {
-      fillStyle: 'transparent'
+  const rightWall = Bodies.rectangle(
+    mainConfig.width,
+    0,
+    133.33333333333334 / 2,
+    mainConfig.width * 2,
+    {
+      isStatic: true,
+      label: 'RightWall',
+      render: {
+        fillStyle: 'transparent'
+      }
     }
-  })
+  )
   const bottomWall = Bodies.rectangle(
     mainConfig.width / 2,
     mainConfig.height + mainConfig.contour / 2,
