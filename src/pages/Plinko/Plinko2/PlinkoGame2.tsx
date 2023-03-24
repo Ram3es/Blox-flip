@@ -1,8 +1,9 @@
 import { Bodies, Body, Engine, Render, Runner, World } from 'matter-js'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { RiskVariant } from '../../../types/enums'
 import { RowVariant } from '../../../types/Plinko'
 import PlinkoBall from '../../../assets/img/plinko_ball.png'
+import { Button } from '../../../components/base/Button'
 
 const mainConfig = {
   width: 500,
@@ -18,11 +19,12 @@ interface PlinkoGame2Props {
 }
 
 const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
-  const [columnSize, setColumnSize] = useState<number>(Math.round(mainConfig.width / (rows + 2)))
-  const [rowSize, setRowSize] = useState<number>(mainConfig.height / rows)
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<HTMLDivElement[]>([])
   const engine = Engine.create()
+
+  let columnSize = Math.round(mainConfig.width / (rows + 2))
+  let rowSize = mainConfig.height / rows
 
   useEffect(() => {
     if (!plinkoGameRef.current) return
@@ -49,12 +51,15 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       }
     })
 
+    columnSize = Math.round(mainConfig.width / (rows + 2))
+    rowSize = mainConfig.height / rows
+
     const Runners = Runner.create({
       isFixed: true
     })
 
-    setColumnSize(Math.round(mainConfig.width / (rows + 2)))
-    setRowSize(mainConfig.height / rows)
+    Runner.run(Runners, engine)
+    Render.run(render)
 
     const pegs: Body[] = []
     for (let row = 0; row < rows; row++) {
@@ -69,8 +74,6 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     }
 
     World.add(engine.world, [...pegs])
-    Runner.run(Runners, engine)
-    Render.run(render)
 
     return () => {
       World.clear(engine.world, true)
@@ -136,7 +139,10 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       label: 'plinko'
     })
   }
-
+  const addPlinko = () => {
+    const plinko = makePlinko()
+    World.add(engine.world, plinko)
+  }
   const makePeg = (x: number, y: number) => {
     const radius = getRowSettings(rows).pegSize
 
@@ -147,8 +153,10 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       label: 'peg'
     })
   }
-
-  const getCurrentMultiplier = (risk: keyof typeof RiskVariant, row: RowVariant): [] | number[] => {
+  const getMultipliersByProps = (
+    risk: keyof typeof RiskVariant,
+    row: RowVariant
+  ): [] | number[] => {
     const multipliers = {
       Low: {
         8: [0.48, 0.96, 1.06, 2.01, 5.37],
@@ -183,10 +191,10 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     <div className='flex items-center flex-col'>
       <div ref={plinkoGameRef} />
       <div className='flex justify-center items-center'>
-        {getCurrentMultiplier(risk, rows)
+        {getMultipliersByProps(risk, rows)
           .slice(1)
           .reverse()
-          .concat(getCurrentMultiplier(risk, rows))
+          .concat(getMultipliersByProps(risk, rows))
           .map((multiplier) => (
             <div
               key={multiplier + new Date().getTime() * Math.random()}
@@ -198,6 +206,9 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
             </div>
           ))}
       </div>
+      <Button color='GreenPrimary' onClick={() => addPlinko()}>
+        Start
+      </Button>
     </div>
   )
 }
@@ -266,4 +277,12 @@ const getColorByMultiplier = (multiplier: number): string => {
     return 'bg-pink-third'
   }
   return 'bg-green-primary'
+}
+const generateRandomArray = (rows: number): number[] => {
+  const result = []
+  for (let i = 0; i < rows; i++) {
+    const randomBit = Math.round(Math.random())
+    result.push(randomBit)
+  }
+  return result
 }
