@@ -8,8 +8,8 @@ import PlinkoBall from '../../../assets/img/plinko_ball.png'
 import { Button } from '../../../components/base/Button'
 
 const mainConfig = {
-  width: 700,
-  height: 700,
+  width: 500,
+  height: 500,
   contour: 50,
   startPins: 3
 }
@@ -104,11 +104,11 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
 
             if (multiplierBox?.style) {
               multiplierBox.style.transform = 'translateY(3px)'
-              multiplierBox.style.filter = 'brightness(1.5)'
+              // multiplierBox.style.filter = 'brightness(1.5)'
 
               setTimeout(() => {
-                multiplierBox.style.transform = 'translateY(0px)'
-                multiplierBox.style.filter = 'brightness(1)'
+                // multiplierBox.style.transform = 'translateY(0px)'
+                // multiplierBox.style.filter = 'brightness(1)'
               }, 200)
             }
 
@@ -228,7 +228,6 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       restitution: 0,
       friction: 1,
       mass: 0.23805846,
-      inverseMass: 1 / 0.23805846,
       collisionFilter: {
         group: -1
       },
@@ -244,7 +243,9 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   }
   const addPlinko = () => {
     const plinko = makePlinko()
-    paths[plinko.id] = getPathByRows(rows)
+    const path = getPathByRows(rows)
+    console.log(path)
+    paths[plinko.id] = path
     World.add(engine.world, plinko)
   }
   const makePeg = (x: number, y: number) => {
@@ -304,7 +305,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
               key={multiplier + new Date().getTime() * Math.random()}
               className={`${getColorByMultiplier(
                 multiplier
-              )} flex items-center justify-center h-5 m-0.5 rounded text-11 px-2`}
+              )} flex items-center justify-center h-5 m-0.5 rounded text-12`}
               id={`mult_${i}`}
             >
               {multiplier}
