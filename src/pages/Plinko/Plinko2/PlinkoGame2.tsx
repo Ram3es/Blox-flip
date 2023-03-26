@@ -245,7 +245,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     const plinko = makePlinko()
     const path = getPathByRows(rows)
     console.log(path)
-    paths[plinko.id] = [0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0]
+    paths[plinko.id] = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     World.add(engine.world, plinko)
   }
   const makePeg = (x: number, y: number) => {
@@ -374,15 +374,15 @@ const getRowSettings = (rows: number) => {
 }
 const getColorByMultiplier = (multiplier: number): string => {
   if (multiplier < 1) {
-    return 'bg-blue-accent-five'
+    return 'bg-blue-accent-five blue-accent-five--shadow'
   }
   if (multiplier < 10) {
-    return 'bg-lightblue-primary-secondary'
+    return 'bg-lightblue-primary-secondary light-blue-primary-secondary--shadow'
   }
   if (multiplier > 100) {
-    return 'bg-pink-third'
+    return 'bg-pink-third pink-third--shadow'
   }
-  return 'bg-green-primary'
+  return 'bg-green-primary green-primary--shadow'
 }
 const getPathByRows = (rows: number): number[] => {
   const result = []

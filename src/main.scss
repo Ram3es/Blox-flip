@@ -405,7 +405,22 @@ body {
 .yellow--shadow {
   filter: drop-shadow(0px 4px 100px #ffae26);
 }
-
+.pink-third--shadow {
+  box-shadow: 0px 2.2963px 0px #912766, 0px 0px 18.3704px rgba(238, 62, 168, 0.35);
+  border-radius: 4.59259px;
+}
+.green-primary--shadow {
+  box-shadow: 0px 2.2963px 0px #1b8c42, 0px 0px 18.3704px rgba(44, 221, 104, 0.35);
+  border-radius: 4.59259px;
+}
+.light-blue-primary-secondary--shadow {
+  box-shadow: 0px 2.2963px 0px #2c6192, 0px 0px 18.3704px rgba(92, 160, 223, 0.35);
+  border-radius: 4.59259px;
+}
+.blue-accent-five--shadow {
+  box-shadow: 0px 2.2963px 0px #394064;
+  border-radius: 4.59259px;
+}
 .gradient--battle-tr {
   position: relative;
   &:before {
