@@ -4,7 +4,7 @@ import { BetMode, RowVariant } from '../../types/Plinko'
 import { BetToolkit } from '../../types/Bets'
 import { RiskVariant } from '../../types/enums'
 
-import PlinkoGame2 from './Plinko2/PlinkoGame2'
+import PlinkoGame2 from './Plinko/PlinkoGame'
 import RangeSlider from '../../components/common/RangeSlider'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'

@@ -1,11 +1,9 @@
+import { PlinkoConfig } from '../constants/plinko'
 import { RiskVariant } from '../types/enums'
 import { RowVariant } from '../types/Plinko'
 
 export const getRowSettingsByRows = (rows: number) => {
-  const PEG_SIZE = 5
-  const PLINKO_SIZE = 9
-  const Y_FORCE_BASE = -0.0019
-  const X_FORCE_BASE = 0.00075
+  const { PEG_SIZE, PLINKO_SIZE, Y_FORCE_BASE, X_FORCE_BASE } = PlinkoConfig
 
   switch (rows) {
     case 8:

@@ -12,17 +12,11 @@ import {
   getMultipliersByProps,
   getRandomPathByRows,
   getRowSettingsByRows
-} from '../../../helpers/plinko'
+} from '../../../helpers/plinkoHelpers'
 
 import PlinkoBall from '../../../assets/img/plinko_ball.png'
+import { PlinkoConfig } from '../../../constants/plinko'
 
-const mainConfig = {
-  width: 500,
-  height: 500,
-  contour: 50,
-  startPins: 3,
-  padding: 130
-}
 type PathMap = Record<number, number[] | undefined>
 
 interface PlinkoGame2Props {
@@ -35,8 +29,8 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
   const engine = Engine.create()
-  let columnSize = Math.round(mainConfig.width / (rows + 2))
-  let rowSize = mainConfig.height / rows
+  let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
+  let rowSize = PlinkoConfig.HEIGHT / rows
 
   const paths: PathMap = {}
 
@@ -69,7 +63,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
           }
           ballCache[bodyB.id]++
 
-          const shiftedX = (mainConfig.width / 2 - bodyB.position.x) % (columnSize / 2)
+          const shiftedX = (PlinkoConfig.WIDTH / 2 - bodyB.position.x) % (columnSize / 2)
           const shiftedY =
             (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
           const newX =
@@ -127,8 +121,8 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       engine,
       bounds: {
         max: {
-          y: mainConfig.height,
-          x: mainConfig.width
+          y: PlinkoConfig.HEIGHT,
+          x: PlinkoConfig.WIDTH
         },
         min: {
           y: 0,
@@ -139,13 +133,13 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
         hasBounds: true,
         wireframes: false,
         background: 'transparent',
-        width: mainConfig.width,
-        height: mainConfig.height
+        width: PlinkoConfig.WIDTH,
+        height: PlinkoConfig.HEIGHT
       }
     })
 
-    columnSize = Math.round(mainConfig.width / (rows + 2))
-    rowSize = mainConfig.height / rows
+    columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
+    rowSize = PlinkoConfig.HEIGHT / rows
 
     const Runners = Runner.create({
       isFixed: true
@@ -156,10 +150,10 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
 
     const pegs: Body[] = []
     for (let row = 0; row < rows; row++) {
-      const rowPins = mainConfig.startPins + row
+      const rowPins = PlinkoConfig.START_PINS + row
       const dx = -row * (columnSize / 2)
       for (let column = 0; column < rowPins; column++) {
-        const x = columnSize * column + dx + (mainConfig.width / 2 - columnSize)
+        const x = columnSize * column + dx + (PlinkoConfig.WIDTH / 2 - columnSize)
         const y = rowSize * row + 16
         const pin = makePeg(x, y)
         pegs.push(pin)
@@ -180,7 +174,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     }
   }, [risk, rows])
 
-  const leftWall = Bodies.rectangle(0, 0, mainConfig.padding / 2, mainConfig.width * 2, {
+  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
     isStatic: true,
     label: 'LeftWall',
     render: {
@@ -188,10 +182,10 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     }
   })
   const rightWall = Bodies.rectangle(
-    mainConfig.width,
+    PlinkoConfig.WIDTH,
     0,
-    mainConfig.padding / 2,
-    mainConfig.width * 2,
+    PlinkoConfig.PADDING / 2,
+    PlinkoConfig.WIDTH * 2,
     {
       isStatic: true,
       label: 'RightWall',
@@ -201,10 +195,10 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     }
   )
   const bottomWall = Bodies.rectangle(
-    mainConfig.width / 2,
-    mainConfig.height + mainConfig.contour / 2,
-    mainConfig.width,
-    mainConfig.contour,
+    PlinkoConfig.WIDTH / 2,
+    PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
+    PlinkoConfig.WIDTH,
+    PlinkoConfig.CONTOUR,
     {
       isStatic: true,
       label: 'BottomWall',
@@ -217,7 +211,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   World.add(engine.world, [...contours])
 
   const makePlinko = () => {
-    const x = Math.round(mainConfig.width / 2)
+    const x = Math.round(PlinkoConfig.WIDTH / 2)
     const y = -5
     const radius = rowSettings.plinkoSize
 
@@ -287,6 +281,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
             </div>
           ))}
       </div>
+      <button onClick={() => addPlinko()}>start</button>
     </div>
   )
 }
