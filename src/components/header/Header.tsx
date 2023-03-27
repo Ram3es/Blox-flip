@@ -32,7 +32,7 @@ const GamesButton = ({ title }: { title: string }) => {
 
 const UserWalletButton = () => {
   return (
-    <div className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5'>
+    <div className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5 cursor-pointer'>
       <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
         <DiamondIcon className='-inset-full absolute m-auto' width='14.2' height='14' />
       </span>
@@ -96,7 +96,7 @@ export const Header = () => {
           </Menu.Button>
           <Menu.Items
             as='div'
-            className='absolute mx-auto max-w-xs -left-full -right-full top-full pt-2.5'
+            className='absolute mx-auto max-w-xs -left-full -right-full top-full pt-2.5 z-50'
           >
             <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary'>
               {routesGames.map((route) => (

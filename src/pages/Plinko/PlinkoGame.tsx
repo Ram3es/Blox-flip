@@ -1,6 +1,4 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import clsx from 'clsx'
@@ -86,10 +84,11 @@ const PlinkoGame = () => {
             labelA === 'LeftWall' ||
             labelA === 'RightWall'
           ) {
+            console.log('aga')
             const rights = paths[bodyB.id].filter((val: number) => val === 1).length
             const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
             const multiplierBox2 = multiplierRefs.current[i]
-
+            console.log(multiplierBox2)
             if (multiplierBox2?.style) {
               multiplierBox2.style.transform = 'translateY(10px)'
 
@@ -261,34 +260,36 @@ const PlinkoGame = () => {
   }, [isStarted])
 
   return (
-    <div className='flex items-center flex-col justify-center'>
-      <div ref={plinkoGameRef} />
-      <div className='flex justify-center items-center'>
-        {getMultipliersByProps(risk, rows)
-          .slice(1)
-          .reverse()
-          .concat(getMultipliersByProps(risk, rows))
-          .map((multiplier, index) => (
-            <div
-              key={multiplier + new Date().getTime() * Math.random()}
-              className={clsx(
-                `${getColorByMultiplier(
-                  multiplier
-                )} flex items-center justify-center rounded mx-0.5`,
-                {
-                  'h-4 text-[8px] w-7': rows === 16,
-                  'h-4 text-10 w-8': rows === 14,
-                  'h-5 text-11 w-9': rows === 12,
-                  'h-7 text-13 w-11': rows === 10,
-                  'h-8 text-14 w-14': rows === 8
-                }
-              )}
-              id={`mult_${index}`}
-              ref={(ref) => (multiplierRefs.current[index] = ref)}
-            >
-              {multiplier}
-            </div>
-          ))}
+    <div className='bg-blue-primary rounded-lg md:w-3/4 flex justify-center'>
+      <div className='flex items-center flex-col justify-center'>
+        <div ref={plinkoGameRef} />
+        <div className='flex justify-center items-center'>
+          {getMultipliersByProps(risk, rows)
+            .slice(1)
+            .reverse()
+            .concat(getMultipliersByProps(risk, rows))
+            .map((multiplier, index) => (
+              <div
+                key={multiplier + new Date().getTime() * Math.random()}
+                className={clsx(
+                  `${getColorByMultiplier(
+                    multiplier
+                  )} flex items-center justify-center rounded mx-0.5`,
+                  {
+                    'h-4 text-[8px] w-7': rows === 16,
+                    'h-4 text-10 w-8': rows === 14,
+                    'h-5 text-11 w-9': rows === 12,
+                    'h-7 text-13 w-11': rows === 10,
+                    'h-8 text-14 w-14': rows === 8
+                  }
+                )}
+                id={`mult_${index}`}
+                ref={(ref) => (multiplierRefs.current[index] = ref)}
+              >
+                {multiplier}
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   )
