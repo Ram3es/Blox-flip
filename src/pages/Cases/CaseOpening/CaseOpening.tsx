@@ -52,7 +52,9 @@ export const CaseOpening = () => {
     refreshLinesByCount(lineCount)
   }, [lineCount])
 
-  const transitionEndHandler = useCallback(() => {
+  const transitionEndHandler = useCallback((e: any) => {
+    console.log(e, 'ebebeb')
+
     setIsSpin(false)
   }, [isSpin])
 

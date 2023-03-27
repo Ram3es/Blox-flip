@@ -17,9 +17,14 @@ import bitcoinSmall from '../assets/img/deposit_bitcoin_small.png'
 import avatar from '../assets/img/avatar_img.png'
 import pointGreen from '../assets/img/point_green.svg'
 import pointBlue from '../assets/img/point_blue.svg'
+import greenBackdrop from '../assets/img/lvl_green_empty.png'
+import grayBackdrop from '../assets/img/lvl_blue_empty.png'
+import graySeparator from '../assets/img/separator-lvl.png'
+import yellowGuy from '../assets/img/lvl1.png'
 
 export const IMAGES: Record<string, string> = {
   horns,
+  yellowGuy,
   helmet,
   redCrown,
   greenBox,
@@ -37,5 +42,8 @@ export const IMAGES: Record<string, string> = {
   kinguinSmall,
   avatar,
   pointGreen,
-  pointBlue
+  pointBlue,
+  greenBackdrop,
+  grayBackdrop,
+  graySeparator
 }

@@ -8,6 +8,7 @@ interface CaseLineItemProps {
 
 export const CasesLineItem: FC<CaseLineItemProps> = ({ itsWinning, image }) => {
   const itemRef = useRef<HTMLDivElement>(null)
+
   if (itsWinning) {
     if (itemRef.current) {
       itemRef.current.style.opacity = '1'
