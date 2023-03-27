@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import clsx from 'clsx'
 
-import { RowVariant } from '../../types/Plinko'
-import { RiskVariant } from '../../types/enums'
 import {
   getColorByMultiplier,
   getMultipliersByProps,
@@ -16,16 +14,12 @@ import {
 
 import PlinkoBall from '../../assets/img/plinko_ball.png'
 import { PlinkoConfig } from '../../constants/plinko'
+import { usePlinko } from '../../store/PlinkoStore'
 
 type PathMap = Record<number, number[] | undefined>
 
-interface PlinkoGame2Props {
-  rows: RowVariant
-  risk: keyof typeof RiskVariant
-  numberOfBets: number
-}
-
-const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
+const PlinkoGame = () => {
+  const { selectedRow: rows, risk, numberOfBets, mode, setIsStarted, isStarted } = usePlinko()
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
   const engine = Engine.create()
@@ -50,6 +44,7 @@ const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
 
   const handleCollision = (event: IEventCollision<Engine>) => {
     const { pairs } = event
+
     for (let index = 0; index < pairs.length; index++) {
       const pair = pairs[index]
       const { bodyA, bodyB } = pair
@@ -105,7 +100,7 @@ const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
 
             World.remove(engine.world, bodyB)
             delete paths[bodyB.id]
-
+            setIsStarted(false)
             return
           }
         }
@@ -172,7 +167,7 @@ const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       render.canvas.remove()
       render.textures = {}
     }
-  }, [risk, rows])
+  }, [risk, rows, isStarted])
 
   const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
     isStatic: true,
@@ -236,7 +231,6 @@ const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   const addPlinko = () => {
     const plinko = makePlinko()
     const path = getRandomPathByRows(rows)
-    console.log(path)
     paths[plinko.id] = path
     World.add(engine.world, plinko)
   }
@@ -250,6 +244,21 @@ const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       label: 'peg'
     })
   }
+
+  useEffect(() => {
+    if (isStarted) {
+      if (mode === 'Manual') {
+        setIsStarted(true)
+        addPlinko()
+      }
+      if (mode === 'Automatic') {
+        setIsStarted(true)
+        for (let index = 0; index < numberOfBets; index++) {
+          addPlinko()
+        }
+      }
+    }
+  }, [isStarted])
 
   return (
     <div className='flex items-center flex-col justify-center'>
@@ -281,7 +290,6 @@ const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
             </div>
           ))}
       </div>
-      <button onClick={() => addPlinko()}>start</button>
     </div>
   )
 }

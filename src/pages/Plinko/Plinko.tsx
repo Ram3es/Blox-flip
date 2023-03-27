@@ -7,14 +7,13 @@ import ToggleRows from '../../components/common/BetActions/ToggleRows'
 import { Button } from '../../components/base/Button'
 import BetActions from '../../components/common/BetActions/BetActionsContainer'
 import ToggleMode from '../../components/common/BetActions/ToggleMode'
-import { usePlinko } from '../../store/Plinko'
+import { usePlinko } from '../../store/PlinkoStore'
 
 const Plinko = () => {
   const {
     betAmount,
     handleChangeBetAmount,
     handleChangeBetMode,
-    handleStartGame,
     numberOfBets,
     mode,
     risk,
@@ -25,7 +24,8 @@ const Plinko = () => {
     setRisk,
     setSelectedBet,
     setSelectedRow,
-    setNumberOfBets
+    setNumberOfBets,
+    setIsStarted
   } = usePlinko()
 
   return (
@@ -72,14 +72,17 @@ const Plinko = () => {
             </div>
           )}
           <div className='flex'>
-            <Button onClick={handleStartGame} className='w-full bg-green-primary rounded h-11'>
+            <Button
+              onClick={() => setIsStarted(true)}
+              className='w-full bg-green-primary rounded h-11'
+            >
               Place Bet
             </Button>
           </div>
         </div>
       </BetActions>
       <div className='bg-blue-primary rounded-lg md:w-3/4 flex justify-center'>
-        <PlinkoGame numberOfBets={numberOfBets} risk={risk} rows={selectedRow} />
+        <PlinkoGame />
       </div>
     </div>
   )

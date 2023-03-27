@@ -34,7 +34,6 @@ interface IPlinkoContext extends PlinkoState {
   setRisk: (value: keyof typeof RiskVariant) => void
   handleChangeBetAmount: (eventOrValue: ChangeEvent<HTMLInputElement> | number) => void
   handleChangeBetMode: MouseEventHandler<HTMLButtonElement>
-  handleStartGame: () => void
   setNumberOfBets: (value: number) => void
   betToolkit: () => BetToolkit[]
 }
@@ -65,17 +64,6 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
   const [numberOfBets, setNumberOfBets] = useState(1)
   const [risk, setRisk] = useState<keyof typeof RiskVariant>(RiskVariant.Low)
   const rowOptions: RowVariant[] = [8, 10, 12, 14, 16]
-
-  const handleStartGame = () => {
-    if (mode === 'Manual') {
-      setIsStarted(true)
-      console.log('Manual')
-    }
-    if (mode === 'Automatic') {
-      setIsStarted(true)
-      console.log('Automatic')
-    }
-  }
 
   const handleChangeBetAmount = (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {
     if (typeof eventOrValue === 'number') {
@@ -125,7 +113,6 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
       value={{
         handleChangeBetAmount,
         handleChangeBetMode,
-        handleStartGame,
         isStarted,
         setIsStarted,
         mode,

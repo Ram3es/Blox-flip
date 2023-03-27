@@ -1,6 +1,6 @@
 import React, { createContext, FC, PropsWithChildren, useReducer } from 'react'
 import { IUser } from '../types/User'
-import { PlinkoProvider } from './Plinko'
+import { PlinkoProvider } from './PlinkoStore'
 import { Reducer, IAction } from './Reducer'
 
 export interface IState {
