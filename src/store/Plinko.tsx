@@ -35,6 +35,8 @@ interface IPlinkoContext extends PlinkoState {
   handleChangeBetAmount: (eventOrValue: ChangeEvent<HTMLInputElement> | number) => void
   handleChangeBetMode: MouseEventHandler<HTMLButtonElement>
   handleStartGame: () => void
+  setNumberOfBets: (value: number) => void
+  betToolkit: () => BetToolkit[]
 }
 
 const initialState: PlinkoState = {
@@ -93,6 +95,31 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
     setMode(mode)
   }
 
+  const betToolkit = (): BetToolkit[] => {
+    return [
+      {
+        label: 'Clear',
+        function: () => setBetAmount(200)
+      },
+      {
+        label: '1/2',
+        function: () => setBetAmount((prev) => Number((prev / 2).toFixed()))
+      },
+      {
+        label: '2x',
+        function: () => setBetAmount((prev) => Number((prev * 2).toFixed()))
+      },
+      {
+        label: 'Min',
+        function: () => setBetAmount(50)
+      },
+      {
+        label: 'Max',
+        function: () => setBetAmount(1500)
+      }
+    ]
+  }
+
   return (
     <PlinkoContext.Provider
       value={{
@@ -110,9 +137,11 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
         selectedRow,
         setSelectedRow,
         numberOfBets,
+        setNumberOfBets,
         risk,
         setRisk,
-        rowOptions
+        rowOptions,
+        betToolkit
       }}
     >
       {children}
