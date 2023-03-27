@@ -84,14 +84,11 @@ const PlinkoGame = () => {
             labelA === 'LeftWall' ||
             labelA === 'RightWall'
           ) {
-            console.log('aga')
             const rights = paths[bodyB.id].filter((val: number) => val === 1).length
             const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
             const multiplierBox2 = multiplierRefs.current[i]
-            console.log(multiplierBox2)
             if (multiplierBox2?.style) {
               multiplierBox2.style.transform = 'translateY(10px)'
-
               setTimeout(() => {
                 multiplierBox2.style.transform = 'translateY(0px)'
               }, 1000)
@@ -260,7 +257,7 @@ const PlinkoGame = () => {
   }, [isStarted])
 
   return (
-    <div className='bg-blue-primary rounded-lg md:w-3/4 flex justify-center'>
+    <div className='bg-blue-primary rounded-lg flex justify-center'>
       <div className='flex items-center flex-col justify-center'>
         <div ref={plinkoGameRef} />
         <div className='flex justify-center items-center'>
@@ -283,7 +280,6 @@ const PlinkoGame = () => {
                     'h-8 text-14 w-14': rows === 8
                   }
                 )}
-                id={`mult_${index}`}
                 ref={(ref) => (multiplierRefs.current[index] = ref)}
               >
                 {multiplier}
