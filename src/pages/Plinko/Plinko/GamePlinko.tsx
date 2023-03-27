@@ -136,6 +136,7 @@ export default function GamePlinko({ risk = 'high', rows }: GamePlinkoProps) {
       friction: 1,
       mass: 0.23805846,
       inverseMass: 1 / 0.23805846,
+      // frictionAir: 0.05,
       collisionFilter: {
         group: -1
       },

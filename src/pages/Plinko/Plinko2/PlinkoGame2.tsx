@@ -14,14 +14,14 @@ import {
   getRowSettingsByRows
 } from '../../../helpers/plinko'
 
-import { Button } from '../../../components/base/Button'
 import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
 const mainConfig = {
   width: 500,
   height: 500,
   contour: 50,
-  startPins: 3
+  startPins: 3,
+  padding: 130
 }
 type PathMap = Record<number, number[] | undefined>
 
@@ -32,8 +32,6 @@ interface PlinkoGame2Props {
 }
 
 const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
-  // const [ballCache, setBallCache] = useState<PathMap>({})
-
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
   const engine = Engine.create()
@@ -41,7 +39,6 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   let rowSize = mainConfig.height / rows
 
   const paths: PathMap = {}
-  // const [paths, setPaths] = useState<PathMap>({})
 
   let forceCache: any = []
   let ballCache: PathMap = {}
@@ -59,8 +56,8 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
 
   const handleCollision = (event: IEventCollision<Engine>) => {
     const { pairs } = event
-
-    pairs.forEach((pair, i) => {
+    for (let index = 0; index < pairs.length; index++) {
+      const pair = pairs[index]
       const { bodyA, bodyB } = pair
       const { label: labelA } = bodyA
       const { label: labelB } = bodyB
@@ -119,7 +116,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
           }
         }
       }
-    })
+    }
   }
 
   useEffect(() => {
@@ -183,23 +180,23 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     }
   }, [risk, rows])
 
-  const leftWall = Bodies.rectangle(0, 0, 133.33333333333334 / 2, mainConfig.width * 2, {
+  const leftWall = Bodies.rectangle(0, 0, mainConfig.padding / 2, mainConfig.width * 2, {
     isStatic: true,
     label: 'LeftWall',
     render: {
-      fillStyle: 'red'
+      fillStyle: 'transparent'
     }
   })
   const rightWall = Bodies.rectangle(
     mainConfig.width,
     0,
-    133.33333333333334 / 2,
+    mainConfig.padding / 2,
     mainConfig.width * 2,
     {
       isStatic: true,
       label: 'RightWall',
       render: {
-        fillStyle: 'red'
+        fillStyle: 'transparent'
       }
     }
   )
@@ -212,7 +209,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       isStatic: true,
       label: 'BottomWall',
       render: {
-        fillStyle: 'red'
+        fillStyle: 'transparent'
       }
     }
   )
@@ -290,9 +287,6 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
             </div>
           ))}
       </div>
-      <Button color='GreenPrimary' onClick={() => addPlinko()}>
-        Start
-      </Button>
     </div>
   )
 }

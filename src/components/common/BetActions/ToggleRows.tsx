@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react'
-import { RowVariant } from '../../types/Plinko'
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import { RowVariant } from '../../../types/Plinko'
+import { ArrowGrayIcon } from '../../icons/ArrowGrayIcon'
 
 interface ToggleRowsProps {
   value: RowVariant

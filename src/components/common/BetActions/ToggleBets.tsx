@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
-import { Button } from '../base/Button'
-import { BetToolkit } from '../../types/Bets'
+import { Button } from '../../base/Button'
+import { BetToolkit } from '../../../types/Bets'
 
 type BetToolkitOrNull = BetToolkit | null
 interface ToggleBetsProps {

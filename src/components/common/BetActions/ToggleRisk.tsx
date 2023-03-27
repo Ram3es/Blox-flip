@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { RiskVariant } from '../../types/enums'
-import { GreenRhombusIcon } from '../icons/GreenRhombusIcon'
-import { RhombusIcon } from '../icons/RhombusIcon'
+import { RiskVariant } from '../../../types/enums'
+import { GreenRhombusIcon } from '../../icons/GreenRhombusIcon'
+import { RhombusIcon } from '../../icons/RhombusIcon'
 
 interface ToggleRiskProps {
   value: keyof typeof RiskVariant
