@@ -1,11 +1,20 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import { useEffect, useRef } from 'react'
-import { RiskVariant } from '../../../types/enums'
+
+import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
+import clsx from 'clsx'
+
 import { RowVariant } from '../../../types/Plinko'
-import PlinkoBall from '../../../assets/img/plinko_ball.png'
+import { RiskVariant } from '../../../types/enums'
+import {
+  getColorByMultiplier,
+  getRandomPathByRows,
+  getRowSettingsByRows
+} from '../../../helpers/plinko'
+
 import { Button } from '../../../components/base/Button'
+import PlinkoBall from '../../../assets/img/plinko_ball.png'
 
 const mainConfig = {
   width: 500,
@@ -23,9 +32,9 @@ interface PlinkoGame2Props {
 
 const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
-  const multiplierRefs = useRef<HTMLDivElement[]>([])
+  const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
   const engine = Engine.create()
-
+  console.log(multiplierRefs)
   let columnSize = Math.round(mainConfig.width / (rows + 2))
   let rowSize = mainConfig.height / rows
 
@@ -34,7 +43,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   let forceCache: any = []
   let ballCache: PathMap = {}
 
-  const rowSettings = getRowSettings(rows)
+  const rowSettings = getRowSettingsByRows(rows)
 
   const applyForce = () => {
     for (let ball of forceCache) {
@@ -43,83 +52,6 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       Body.setStatic(ball.body, false)
     }
     forceCache = []
-  }
-
-  const handleCollision = (event: IEventCollision<Engine>) => {
-    const { pairs } = event
-
-    pairs.forEach((pair, i) => {
-      const { bodyA, bodyB } = pair
-      const { label: labelA } = bodyA
-      const { label: labelB } = bodyB
-
-      if (labelA !== labelB) {
-        if (labelB === 'plinko') {
-          if (!ballCache[bodyB.id]) {
-            ballCache[bodyB.id] = 0
-          }
-          ballCache[bodyB.id]++
-
-          const shiftedX = (mainConfig.width / 2 - bodyB.position.x) % (columnSize / 2)
-          const shiftedY =
-            (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
-          const newX =
-            Math.abs(shiftedX) < columnSize / 4
-              ? shiftedX
-              : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
-
-          const newY = shiftedY
-          // Body.translate(bodyB, {
-          //   x:
-          //     Math.abs(shiftedX) < columnSize / 4
-          //       ? shiftedX
-          //       : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1),
-          //   // y: ((2 - bodyB.position.y)) % (rowSize)
-          //   y: (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
-          // })
-          Body.setPosition(bodyB, {
-            x: bodyB.position.x + newX,
-            y: bodyB.position.y + newY
-          })
-          // Body.setStatic(bodyB, true)
-
-          forceCache.push({
-            body: bodyB,
-            force: {
-              x: rowSettings.xForce * (paths[bodyB.id][ballCache[bodyB.id] - 1] === 1 ? 1 : -1),
-              y: rowSettings.yForce
-            }
-          })
-
-          if (
-            labelA === 'BottomWall' ||
-            labelA === 'Rectangle Body' ||
-            labelA === 'LeftWall' ||
-            labelA === 'RightWall'
-          ) {
-            const rights = paths[bodyB.id].filter((val) => val == 1).length
-            const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
-
-            const multiplierBox = document.getElementById(`mult_${i}`)
-
-            if (multiplierBox?.style) {
-              multiplierBox.style.transform = 'translateY(3px)'
-              // multiplierBox.style.filter = 'brightness(1.5)'
-
-              setTimeout(() => {
-                multiplierBox.style.transform = 'translateY(0px)'
-                // multiplierBox.style.filter = 'brightness(1)'
-              }, 1000)
-            }
-
-            World.remove(engine.world, bodyB)
-            delete paths[bodyB.id]
-
-            return
-          }
-        }
-      }
-    })
   }
 
   useEffect(() => {
@@ -187,7 +119,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     isStatic: true,
     label: 'LeftWall',
     render: {
-      fillStyle: 'transparent'
+      fillStyle: 'red'
     }
   })
   const rightWall = Bodies.rectangle(
@@ -199,7 +131,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       isStatic: true,
       label: 'RightWall',
       render: {
-        fillStyle: 'transparent'
+        fillStyle: 'red'
       }
     }
   )
@@ -212,7 +144,7 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
       isStatic: true,
       label: 'BottomWall',
       render: {
-        fillStyle: 'transparent'
+        fillStyle: 'red'
       }
     }
   )
@@ -243,9 +175,12 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   }
   const addPlinko = () => {
     const plinko = makePlinko()
-    const path = getPathByRows(rows)
+    const path = getRandomPathByRows(rows)
     console.log(path)
-    paths[plinko.id] = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    paths[plinko.id] = path
+    // paths[plinko.id] = [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0] // 12
+    // paths[plinko.id] = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // 16
+
     World.add(engine.world, plinko)
   }
   const makePeg = (x: number, y: number) => {
@@ -291,22 +226,95 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
     }
     return []
   }
+  const handleCollision = (event: IEventCollision<Engine>) => {
+    const { pairs } = event
+
+    pairs.forEach((pair, i) => {
+      const { bodyA, bodyB } = pair
+      const { label: labelA } = bodyA
+      const { label: labelB } = bodyB
+
+      if (labelA !== labelB) {
+        if (labelB === 'plinko') {
+          if (!ballCache[bodyB.id]) {
+            ballCache[bodyB.id] = 0
+          }
+          ballCache[bodyB.id]++
+
+          const shiftedX = (mainConfig.width / 2 - bodyB.position.x) % (columnSize / 2)
+          const shiftedY =
+            (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
+          const newX =
+            Math.abs(shiftedX) < columnSize / 4
+              ? shiftedX
+              : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
+
+          const newY = shiftedY
+          Body.setPosition(bodyB, {
+            x: bodyB.position.x + newX,
+            y: bodyB.position.y + newY
+          })
+
+          forceCache.push({
+            body: bodyB,
+            force: {
+              x: rowSettings.xForce * (paths[bodyB.id][ballCache[bodyB.id] - 1] === 1 ? 1 : -1),
+              y: rowSettings.yForce
+            }
+          })
+
+          if (
+            labelA === 'BottomWall' ||
+            labelA === 'Rectangle Body' ||
+            labelA === 'LeftWall' ||
+            labelA === 'RightWall'
+          ) {
+            const rights = paths[bodyB.id].filter((val: number) => val === 1).length
+            const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
+            const multiplierBox2 = multiplierRefs.current[i]
+            console.log(multiplierBox2)
+
+            if (multiplierBox2?.style) {
+              multiplierBox2.style.transform = 'translateY(10px)'
+
+              setTimeout(() => {
+                multiplierBox2.style.transform = 'translateY(0px)'
+              }, 1000)
+            }
+
+            World.remove(engine.world, bodyB)
+            delete paths[bodyB.id]
+
+            return
+          }
+        }
+      }
+    })
+  }
 
   return (
-    <div className='flex items-center flex-col'>
+    <div className='flex items-center flex-col justify-center'>
       <div ref={plinkoGameRef} />
       <div className='flex justify-center items-center'>
         {getMultipliersByProps(risk, rows)
           .slice(1)
           .reverse()
           .concat(getMultipliersByProps(risk, rows))
-          .map((multiplier, i) => (
+          .map((multiplier, index) => (
             <div
               key={multiplier + new Date().getTime() * Math.random()}
-              className={`${getColorByMultiplier(
-                multiplier
-              )} flex items-center justify-center h-5 rounded text-12 px-3`}
-              id={`mult_${i}`}
+              className={clsx(
+                `${getColorByMultiplier(multiplier)} flex items-center justify-center  rounded`,
+                {
+                  'h-4 text-[8px] px-1.5 mx-0.5': rows === 16,
+                  'h-4 text-10 px-1.5 mx-0.5': rows === 14,
+                  'h-5 text-11 px-2 mx-0.5': rows === 12,
+                  'h-7 text-14 px-2 mx-0.5': rows === 10,
+                  'h-8 text-14 px-3 mx-1': rows === 8
+                }
+              )}
+              id={`mult_${index}`}
+              ref={(ref) => (multiplierRefs.current[index] = ref)}
             >
               {multiplier}
             </div>
@@ -320,75 +328,3 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
 }
 
 export default PlinkoGame2
-
-const getRowSettings = (rows: number) => {
-  const PEG_SIZE = 5
-  const PLINKO_SIZE = 9
-  const Y_FORCE_BASE = -0.0019
-  const X_FORCE_BASE = 0.00075
-
-  switch (rows) {
-    case 8:
-      return {
-        pegSize: PEG_SIZE,
-        plinkoSize: PLINKO_SIZE,
-        yForce: Y_FORCE_BASE * 1.2 * -1,
-        xForce: X_FORCE_BASE * 1.02
-      }
-    case 10:
-      return {
-        pegSize: PEG_SIZE,
-        plinkoSize: PLINKO_SIZE,
-        yForce: Y_FORCE_BASE * 1.05 * -1,
-        xForce: X_FORCE_BASE * 0.95
-      }
-    case 12:
-      return {
-        pegSize: 4,
-        plinkoSize: 8,
-        yForce: Y_FORCE_BASE * 1.05 * -1,
-        xForce: X_FORCE_BASE * 0.84
-      }
-    case 14:
-      return {
-        pegSize: 3.5,
-        plinkoSize: 5,
-        yForce: Y_FORCE_BASE * 0.967 * -1,
-        xForce: X_FORCE_BASE * 0.7757
-      }
-    case 16:
-      return {
-        pegSize: 2,
-        plinkoSize: 4.5,
-        yForce: Y_FORCE_BASE * 0.95 * -1,
-        xForce: X_FORCE_BASE * 0.7465
-      }
-    default:
-      return {
-        pegSize: PEG_SIZE,
-        plinkoSize: PLINKO_SIZE,
-        yForce: Y_FORCE_BASE * -1,
-        xForce: X_FORCE_BASE
-      }
-  }
-}
-const getColorByMultiplier = (multiplier: number): string => {
-  if (multiplier < 1) {
-    return 'bg-blue-accent-five blue-accent-five--shadow'
-  }
-  if (multiplier < 10) {
-    return 'bg-lightblue-primary-secondary light-blue-primary-secondary--shadow'
-  }
-  if (multiplier > 100) {
-    return 'bg-pink-third pink-third--shadow'
-  }
-  return 'bg-green-primary green-primary--shadow'
-}
-const getPathByRows = (rows: number): number[] => {
-  const result = []
-  for (let i = 0; i < rows; i++) {
-    const randomBit = Math.round(Math.random())
-    result.push(randomBit)
-  }
-  return result
-}

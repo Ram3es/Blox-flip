@@ -138,7 +138,7 @@ const Plinko = () => {
           </div>
         </div>
       </div>
-      <div className='bg-blue-primary rounded-lg md:w-3/4 w-full flex items-start justify-center'>
+      <div className='bg-blue-primary rounded-lg md:w-3/4 flex justify-center'>
         {/* <GamePlinko rows={selectedRow} /> */}
         <PlinkoGame2 numberOfBets={numberOfBets} risk={risk} rows={selectedRow} />
       </div>
