@@ -5,17 +5,17 @@ import { useEffect, useRef, useState } from 'react'
 import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import clsx from 'clsx'
 
-import { RowVariant } from '../../../types/Plinko'
-import { RiskVariant } from '../../../types/enums'
+import { RowVariant } from '../../types/Plinko'
+import { RiskVariant } from '../../types/enums'
 import {
   getColorByMultiplier,
   getMultipliersByProps,
   getRandomPathByRows,
   getRowSettingsByRows
-} from '../../../helpers/plinkoHelpers'
+} from '../../helpers/plinkoHelpers'
 
-import PlinkoBall from '../../../assets/img/plinko_ball.png'
-import { PlinkoConfig } from '../../../constants/plinko'
+import PlinkoBall from '../../assets/img/plinko_ball.png'
+import { PlinkoConfig } from '../../constants/plinko'
 
 type PathMap = Record<number, number[] | undefined>
 
@@ -25,7 +25,7 @@ interface PlinkoGame2Props {
   numberOfBets: number
 }
 
-const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
+const PlinkoGame = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
   const engine = Engine.create()
@@ -286,4 +286,4 @@ const PlinkoGame2 = ({ rows, risk, numberOfBets }: PlinkoGame2Props) => {
   )
 }
 
-export default PlinkoGame2
+export default PlinkoGame

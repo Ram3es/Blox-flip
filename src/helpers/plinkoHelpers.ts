@@ -82,15 +82,18 @@ export const getMultipliersByProps = (
   if (multipliers?.[risk] && multipliers?.[risk]?.[row]) {
     return multipliers[risk][row]
   }
+
   return []
 }
 
 export const getRandomPathByRows = (rows: number): number[] => {
   const result = []
+
   for (let i = 0; i < rows; i++) {
     const randomBit = Math.round(Math.random())
     result.push(randomBit)
   }
+
   return result
 }
 
@@ -98,11 +101,14 @@ export const getColorByMultiplier = (multiplier: number): string => {
   if (multiplier < 1) {
     return 'bg-blue-accent-five blue-accent-five--shadow'
   }
+
   if (multiplier < 10) {
     return 'bg-lightblue-primary-secondary light-blue-primary-secondary--shadow'
   }
+
   if (multiplier > 100) {
     return 'bg-pink-third pink-third--shadow'
   }
+
   return 'bg-green-primary green-primary--shadow'
 }
