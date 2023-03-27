@@ -60,7 +60,7 @@ const routesGames: RouteItem[] = [
 export const Header = () => {
   const { t } = useTranslation()
   return (
-    <div className='mb-8 md:mb-12 pl-4 xs:pl-8 flex flex-wrap justify-between bg-blue-accent rounded-lg relative z-50'>
+    <div className='mb-8 md:mb-12 pl-4 xs:pl-8 flex flex-wrap justify-between bg-blue-accent rounded-lg relative'>
       <div className='flex items-center py-1 xs:py-2 md:py-4'>
         <Link to='/' className='mr-4 xs:mr-8 overflow-hidden w-[47px] xs:w-auto'>
           <img
@@ -133,12 +133,12 @@ export const Header = () => {
             <span className='hidden md:block ml-2.5'>{t('header.free')}</span>
           </Link>
         </Button>
-        <div className=' p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
+        <div className='p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
           <Menu>
             <Menu.Button as='div'>
               <UserWalletButton />
             </Menu.Button>
-            <Menu.Items as='div' className='absolute w-full right-0 top-full pt-2.5'>
+            <Menu.Items as='div' className='absolute xs:w-full right-0 top-full pt-2.5 z-50'>
               <div className='relative min-w-fit p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary'>
                 <Menu.Item
                   as={NavLink}
