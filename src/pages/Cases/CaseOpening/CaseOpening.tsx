@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
@@ -18,43 +18,30 @@ import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
 
+const SPIN_TIME = 9000
+
 export const CaseOpening = () => {
   const { id } = useParams()
   const [cards] = useState<ICaseItem[]>(caseCards)
 
   const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
-  const [isReply, setIsReply] = useState(false)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
 
   const [rouletteItems, setRouletteItems] = useState<Array<{ items: ICaseItem[] }>>([
     { items: getRandomCards(100, cards) }
   ])
+  const [wonItem, setWonItem] = useState<ICaseItem[]>()
 
   const refreshLinesByCount = (count: number) => {
-    const localLineCount = Math.min(count, 4)
-
-    setRouletteItems((prevItems) => {
-      const newItems = [...prevItems]
-
-      if (newItems.length > localLineCount) {
-        newItems.splice(localLineCount)
-      } else if (newItems.length < localLineCount) {
-        for (let i = newItems.length; i < localLineCount; i++) {
-          newItems.push({ items: getRandomCards(100, cards) })
-        }
+    setRouletteItems(() => {
+      const newItems = []
+      for (let i = 0; i < count; i++) {
+        newItems.push({ items: getRandomCards(100, cards) })
       }
       return newItems
     })
   }
-
-  useEffect(() => {
-    refreshLinesByCount(lineCount)
-  }, [lineCount])
-
-  const transitionEndHandler = useCallback(() => {
-    setIsSpin(false)
-  }, [isSpin])
 
   const reset = () => {
     if (itemsRef.current) {
@@ -66,64 +53,53 @@ export const CaseOpening = () => {
   }
 
   const spin = (time: number) => {
-    if (itemsRef.current) {
-      itemsRef.current.forEach((item) => {
-        item.style.transition = `left ${time}s cubic-bezier(0.12, 0.8, 0.38, 1)`
-      })
-    }
-
     setTimeout(() => {
       if (itemsRef.current) {
         itemsRef.current.forEach((item) => {
+          item.style.transition = `left ${time}s cubic-bezier(0.12, 0.8, 0.38, 1)`
           item.style.left = `-${6.2 * 88 + 87 * 0.375}rem`
         })
       }
     }, 1000)
+    setTimeout(() => {
+      setIsSpin(false)
+    }, SPIN_TIME)
   }
 
   const load = () => {
+    const wonItemsArray: ICaseItem[] = []
+    for (let i = 0; i < rouletteItems.length; i++) {
+      const randomCardIndex = Math.floor(Math.random() * cards.length)
+      const randomCard = cards[randomCardIndex]
+      const itemWon = {
+        ...randomCard,
+        id: `${randomCard.id} ${new Date().getTime()}`
+      }
+      wonItemsArray.push(itemWon)
+    }
     setRouletteItems((prevItems) => {
       const rouletteItems = [...prevItems]
-
       for (let i = 0; i < rouletteItems.length; i++) {
         const rouletteItem = [...rouletteItems[i].items]
-
-        const randomCardIndex = Math.floor(Math.random() * cards.length)
-        const randomCard = cards[randomCardIndex]
-
-        rouletteItem[87] = {
-          ...randomCard,
-          id: `${randomCard.id} ${new Date().getTime()}`
-        }
-
+        rouletteItem[87] = wonItemsArray[i]
         rouletteItems[i] = { items: rouletteItem }
       }
       return rouletteItems
     })
+    setWonItem(() => wonItemsArray)
   }
 
   const play = () => {
-    if (isReply) {
-      reset()
-      setTimeout(() => {
-        load()
-        spin(8)
-        setIsSpin(true)
-      }, 10)
-      return
-    }
-
+    reset()
     load()
     spin(8)
     setIsSpin(true)
-    setIsReply(true)
   }
 
   useEffect(() => {
-    if (isReply) {
-      load()
-      reset()
-    }
+    load()
+    reset()
+    refreshLinesByCount(lineCount)
   }, [lineCount])
 
   return (
@@ -231,10 +207,9 @@ export const CaseOpening = () => {
                       itemsRef.current[index] = item
                     }
                   }}
-                  onTransitionEnd={transitionEndHandler}
                 >
-                  {item.items.map((item: ICaseItem, index) => (
-                    <CasesLineItem key={item.id} itsWinning={index === 87} image={item.image} />
+                  {item.items.map((item: ICaseItem) => (
+                    <CasesLineItem key={item.id} timeoutToShow={SPIN_TIME} itsWinning={!!wonItem && item.id === wonItem[index]?.id} image={item.image} />
                   ))}
                 </div>
               </div>
