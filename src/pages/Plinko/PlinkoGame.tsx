@@ -17,13 +17,13 @@ import { usePlinko } from '../../store/PlinkoStore'
 type PathMap = Record<number, number[] | undefined>
 
 const PlinkoGame = () => {
-  const { selectedRow: rows, risk, numberOfBets, mode, setIsStarted, isStarted } = usePlinko()
+  const { selectedRow: rows, risk } = usePlinko()
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
   const engine = Engine.create()
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
-
+  
   const paths: PathMap = {}
 
   let forceCache: any = []
@@ -42,7 +42,6 @@ const PlinkoGame = () => {
 
   const handleCollision = (event: IEventCollision<Engine>) => {
     const { pairs } = event
-
     for (let index = 0; index < pairs.length; index++) {
       const pair = pairs[index]
       const { bodyA, bodyB } = pair
@@ -86,17 +85,16 @@ const PlinkoGame = () => {
           ) {
             const rights = paths[bodyB.id].filter((val: number) => val === 1).length
             const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
-            const multiplierBox2 = multiplierRefs.current[i]
-            if (multiplierBox2?.style) {
-              multiplierBox2.style.transform = 'translateY(10px)'
+            const multiplierBox = multiplierRefs.current[i]
+            if (multiplierBox?.style) {
+              multiplierBox.style.transform = 'translateY(10px)'
               setTimeout(() => {
-                multiplierBox2.style.transform = 'translateY(0px)'
+                multiplierBox.style.transform = 'translateY(0px)'
               }, 1000)
             }
 
             World.remove(engine.world, bodyB)
             delete paths[bodyB.id]
-            setIsStarted(false)
             return
           }
         }
@@ -163,7 +161,7 @@ const PlinkoGame = () => {
       render.canvas.remove()
       render.textures = {}
     }
-  }, [risk, rows, isStarted])
+  }, [risk, rows])
 
   const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
     isStatic: true,
@@ -172,6 +170,7 @@ const PlinkoGame = () => {
       fillStyle: 'transparent'
     }
   })
+
   const rightWall = Bodies.rectangle(
     PlinkoConfig.WIDTH,
     0,
@@ -185,6 +184,7 @@ const PlinkoGame = () => {
       }
     }
   )
+
   const bottomWall = Bodies.rectangle(
     PlinkoConfig.WIDTH / 2,
     PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
@@ -198,10 +198,12 @@ const PlinkoGame = () => {
       }
     }
   )
+
   const contours = [leftWall, rightWall, bottomWall]
+
   World.add(engine.world, [...contours])
 
-  const makePlinko = () => {
+  const makePlinkoBall = () => {
     const x = Math.round(PlinkoConfig.WIDTH / 2)
     const y = -5
     const radius = rowSettings.plinkoSize
@@ -224,12 +226,14 @@ const PlinkoGame = () => {
       label: 'plinko'
     })
   }
-  const addPlinko = () => {
-    const plinko = makePlinko()
+
+  const addPlinkoBall = () => {
+    const plinko = makePlinkoBall()
     const path = getRandomPathByRows(rows)
     paths[plinko.id] = path
     World.add(engine.world, plinko)
   }
+
   const makePeg = (x: number, y: number) => {
     const radius = rowSettings.pegSize
 
@@ -240,21 +244,6 @@ const PlinkoGame = () => {
       label: 'peg'
     })
   }
-
-  useEffect(() => {
-    if (isStarted) {
-      if (mode === 'Manual') {
-        setIsStarted(true)
-        addPlinko()
-      }
-      if (mode === 'Automatic') {
-        setIsStarted(true)
-        for (let index = 0; index < numberOfBets; index++) {
-          addPlinko()
-        }
-      }
-    }
-  }, [isStarted])
 
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
@@ -286,6 +275,7 @@ const PlinkoGame = () => {
               </div>
             ))}
         </div>
+        <button className='h-8 px-52 text-15' onClick={() => addPlinkoBall()}>start game</button>
       </div>
     </div>
   )
