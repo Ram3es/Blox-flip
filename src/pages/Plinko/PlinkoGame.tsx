@@ -23,7 +23,7 @@ const PlinkoGame = () => {
   const engine = Engine.create()
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
-  
+
   const paths: PathMap = {}
 
   let forceCache: any = []
