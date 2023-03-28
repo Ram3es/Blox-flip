@@ -257,7 +257,7 @@ const PlinkoGame = () => {
   }, [isStarted])
 
   return (
-    <div className='bg-blue-primary rounded-lg flex justify-center'>
+    <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
       <div className='flex items-center flex-col justify-center'>
         <div ref={plinkoGameRef} />
         <div className='flex justify-center items-center'>

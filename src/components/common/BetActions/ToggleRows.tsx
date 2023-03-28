@@ -25,8 +25,8 @@ const ToggleRows = ({ value, handleChange, rowOptions }: ToggleRowsProps) => {
         </div>
       </Listbox.Button>
       <Listbox.Options>
-        <div className='pt-2.5 z-40 left-0 right-0 top-full'>
-          <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
+        <div className='z-40 relative top-full'>
+          <div className='absolute mt-2 w-full p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
             {rowOptions.map((row) => (
               <Listbox.Option key={row} value={row}>
                 <div className='text-gray-primary text-13 cursor-pointer py-1.5 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'>
