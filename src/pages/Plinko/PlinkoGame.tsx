@@ -14,7 +14,6 @@ import PlinkoBall from '../../assets/img/plinko_ball.png'
 import { PlinkoConfig } from '../../constants/plinko'
 import { usePlinko } from '../../store/PlinkoStore'
 
-type PathItem = Record<number, any>
 interface ForceCacheItem {
   body: Body
   force: {
@@ -30,12 +29,13 @@ const PlinkoGame = () => {
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
 
   const rowSettings = getRowSettingsByRows(rows)
-  const paths: PathItem = {}
 
-  let engine = Engine.create()
+  const paths: Map<number, any> = new Map()
+  const ballCache: Map<number, any> = new Map()
 
   let forceCache: ForceCacheItem[] = []
-  let ballCache: PathItem = {}
+
+  let engine = Engine.create()
 
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
@@ -59,10 +59,10 @@ const PlinkoGame = () => {
 
       if (labelA !== labelB) {
         if (labelB === 'plinko') {
-          if (!ballCache[bodyB.id]) {
-            ballCache[bodyB.id] = 0
+          if (!ballCache.has(bodyB.id)) {
+            ballCache.set(bodyB.id, 0)
           }
-          ballCache[bodyB.id]++
+          ballCache.set(bodyB.id, parseInt(ballCache.get(bodyB.id)) + 1)
           const shiftedX = (PlinkoConfig.WIDTH / 2 - bodyB.position.x) % (columnSize / 2)
           const shiftedY =
             (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
@@ -81,7 +81,9 @@ const PlinkoGame = () => {
           forceCache.push({
             body: bodyB,
             force: {
-              x: rowSettings.xForce * (paths[bodyB.id][ballCache[bodyB.id] - 1] === 1 ? 1 : -1),
+              x:
+                rowSettings.xForce *
+                (paths.get(bodyB.id)[ballCache.get(bodyB.id) - 1] === 1 ? 1 : -1),
               y: rowSettings.yForce
             }
           })
@@ -92,8 +94,9 @@ const PlinkoGame = () => {
             labelA === 'LeftWall' ||
             labelA === 'RightWall'
           ) {
-            const rights = paths[bodyB.id].filter((value: number) => value === 1).length
-            const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
+            const rights = paths.get(bodyB.id).filter((value: number) => value === 1).length
+            const i =
+              (rights - (paths.get(bodyB.id).length - rights)) / 2 + paths.get(bodyB.id).length / 2
             const multiplierBox = multiplierRefs.current[i]
             if (multiplierBox?.style) {
               multiplierBox.style.transform = 'translateY(10px)'
@@ -103,7 +106,7 @@ const PlinkoGame = () => {
             }
 
             World.remove(engine.world, bodyB)
-            delete paths[bodyB.id]
+            paths.delete(bodyB.id)
             return
           }
         }
@@ -138,7 +141,7 @@ const PlinkoGame = () => {
   const addPlinkoBall = () => {
     const plinko = makePlinkoBall()
     const path = getRandomPathByRows(rows)
-    paths[plinko.id] = path
+    paths.set(plinko.id, path)
     World.add(engine.world, plinko)
   }
 
@@ -238,7 +241,7 @@ const PlinkoGame = () => {
 
     return () => {
       forceCache = []
-      ballCache = {}
+      ballCache.clear()
       World.clear(engine.world, true)
       Engine.clear(engine)
       render.canvas.remove()
