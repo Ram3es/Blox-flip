@@ -20,7 +20,7 @@ const PlinkoGame = () => {
   const { selectedRow: rows, risk } = usePlinko()
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
-  const engine = Engine.create()
+  let engine = Engine.create()
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
 
@@ -102,9 +102,89 @@ const PlinkoGame = () => {
     }
   }
 
+  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
+    isStatic: true,
+    label: 'LeftWall',
+    render: {
+      fillStyle: 'transparent'
+    }
+  })
+
+  const rightWall = Bodies.rectangle(
+    PlinkoConfig.WIDTH,
+    0,
+    PlinkoConfig.PADDING / 2,
+    PlinkoConfig.WIDTH * 2,
+    {
+      isStatic: true,
+      label: 'RightWall',
+      render: {
+        fillStyle: 'transparent'
+      }
+    }
+  )
+
+  const bottomWall = Bodies.rectangle(
+    PlinkoConfig.WIDTH / 2,
+    PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
+    PlinkoConfig.WIDTH,
+    PlinkoConfig.CONTOUR,
+    {
+      isStatic: true,
+      label: 'BottomWall',
+      render: {
+        fillStyle: 'transparent'
+      }
+    }
+  )
+
+  const contours = [leftWall, rightWall, bottomWall]
+
+  const makePlinkoBall = () => {
+    const x = Math.round(PlinkoConfig.WIDTH / 2)
+    const y = -5
+    const radius = rowSettings.plinkoSize
+
+    return Bodies.circle(x, y, radius, {
+      restitution: 0,
+      friction: 1,
+      mass: 0.23805846,
+      inverseMass: 1 / 0.23805846,
+      collisionFilter: {
+        group: -1
+      },
+      render: {
+        sprite: {
+          texture: PlinkoBall,
+          xScale: rowSettings.plinkoSize / 9,
+          yScale: rowSettings.plinkoSize / 9
+        }
+      },
+      label: 'plinko'
+    })
+  }
+
+  const addPlinkoBall = () => {
+    const plinko = makePlinkoBall()
+    const path = getRandomPathByRows(rows)
+    paths[plinko.id] = path
+    World.add(engine.world, plinko)
+  }
+
+  const makePeg = (x: number, y: number) => {
+    const radius = rowSettings.pegSize
+
+    return Bodies.circle(x, y, radius, {
+      isStatic: true,
+      friction: 1,
+      render: { fillStyle: '#4F5677' },
+      label: 'peg'
+    })
+  }
+
   useEffect(() => {
     if (!plinkoGameRef.current) return
-
+    engine = Engine.create()
     const render = Render.create({
       element: plinkoGameRef.current,
       engine,
@@ -149,6 +229,7 @@ const PlinkoGame = () => {
       }
     }
 
+    World.add(engine.world, [...contours])
     World.add(engine.world, [...pegs])
     Events.on(engine, 'collisionStart', handleCollision)
     Events.on(engine, 'beforeUpdate', applyForce)
@@ -162,88 +243,6 @@ const PlinkoGame = () => {
       render.textures = {}
     }
   }, [risk, rows])
-
-  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
-    isStatic: true,
-    label: 'LeftWall',
-    render: {
-      fillStyle: 'transparent'
-    }
-  })
-
-  const rightWall = Bodies.rectangle(
-    PlinkoConfig.WIDTH,
-    0,
-    PlinkoConfig.PADDING / 2,
-    PlinkoConfig.WIDTH * 2,
-    {
-      isStatic: true,
-      label: 'RightWall',
-      render: {
-        fillStyle: 'transparent'
-      }
-    }
-  )
-
-  const bottomWall = Bodies.rectangle(
-    PlinkoConfig.WIDTH / 2,
-    PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
-    PlinkoConfig.WIDTH,
-    PlinkoConfig.CONTOUR,
-    {
-      isStatic: true,
-      label: 'BottomWall',
-      render: {
-        fillStyle: 'transparent'
-      }
-    }
-  )
-
-  const contours = [leftWall, rightWall, bottomWall]
-
-  World.add(engine.world, [...contours])
-
-  const makePlinkoBall = () => {
-    const x = Math.round(PlinkoConfig.WIDTH / 2)
-    const y = -5
-    const radius = rowSettings.plinkoSize
-
-    return Bodies.circle(x, y, radius, {
-      restitution: 0,
-      friction: 1,
-      mass: 0.23805846,
-      inverseMass: 1 / 0.23805846,
-      collisionFilter: {
-        group: -1
-      },
-      render: {
-        sprite: {
-          texture: PlinkoBall,
-          xScale: rowSettings.plinkoSize / 9,
-          yScale: rowSettings.plinkoSize / 9
-        }
-      },
-      label: 'plinko'
-    })
-  }
-
-  const addPlinkoBall = () => {
-    const plinko = makePlinkoBall()
-    const path = getRandomPathByRows(rows)
-    paths[plinko.id] = path
-    World.add(engine.world, plinko)
-  }
-
-  const makePeg = (x: number, y: number) => {
-    const radius = rowSettings.pegSize
-
-    return Bodies.circle(x, y, radius, {
-      isStatic: true,
-      friction: 1,
-      render: { fillStyle: '#4F5677' },
-      label: 'peg'
-    })
-  }
 
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
