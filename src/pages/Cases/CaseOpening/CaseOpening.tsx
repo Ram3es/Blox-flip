@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
@@ -23,6 +23,7 @@ const SPIN_TIME = 9000
 export const CaseOpening = () => {
   const { id } = useParams()
   const [cards] = useState<ICaseItem[]>(caseCards)
+  const navigate = useNavigate()
 
   const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
   const [isSpin, setIsSpin] = useState(false)
@@ -33,16 +34,6 @@ export const CaseOpening = () => {
   ])
   const [wonItem, setWonItem] = useState<ICaseItem[]>()
 
-  const refreshLinesByCount = (count: number) => {
-    setRouletteItems(() => {
-      const newItems = []
-      for (let i = 0; i < count; i++) {
-        newItems.push({ items: getRandomCards(100, cards) })
-      }
-      return newItems
-    })
-  }
-
   const reset = () => {
     if (itemsRef.current) {
       itemsRef.current.forEach((item) => {
@@ -50,6 +41,13 @@ export const CaseOpening = () => {
         item.style.left = '0px'
       })
     }
+    setRouletteItems(() => {
+      const newItems = []
+      for (let i = 0; i < lineCount; i++) {
+        newItems.push({ items: getRandomCards(100, cards) })
+      }
+      return newItems
+    })
   }
 
   const spin = (time: number) => {
@@ -66,9 +64,9 @@ export const CaseOpening = () => {
     }, SPIN_TIME)
   }
 
-  const load = () => {
+  const addWonItemInLines = () => {
     const wonItemsArray: ICaseItem[] = []
-    for (let i = 0; i < rouletteItems.length; i++) {
+    for (let i = 0; i < lineCount; i++) {
       const randomCardIndex = Math.floor(Math.random() * cards.length)
       const randomCard = cards[randomCardIndex]
       const itemWon = {
@@ -79,7 +77,7 @@ export const CaseOpening = () => {
     }
     setRouletteItems((prevItems) => {
       const rouletteItems = [...prevItems]
-      for (let i = 0; i < rouletteItems.length; i++) {
+      for (let i = 0; i < lineCount; i++) {
         const rouletteItem = [...rouletteItems[i].items]
         rouletteItem[87] = wonItemsArray[i]
         rouletteItems[i] = { items: rouletteItem }
@@ -91,22 +89,24 @@ export const CaseOpening = () => {
 
   const play = () => {
     reset()
-    load()
+    addWonItemInLines()
     spin(8)
     setIsSpin(true)
   }
 
   useEffect(() => {
-    load()
     reset()
-    refreshLinesByCount(lineCount)
+    addWonItemInLines()
   }, [lineCount])
 
   return (
     <div className='max-w-1190 w-full m-auto'>
       <div className='flex flex-wrap justify-between mb-5'>
         <div className='w-36 flex'>
-          <Button className='rounded p-2 leading-4 text-gray-primary font-semibold flex  items-center bg-blue-accent-secondary hover:bg-blue-accent hover:text-white mb-4 mr-auto'>
+          <Button
+            onClick={() => navigate(-1)}
+            className='rounded p-2 leading-4 text-gray-primary font-semibold flex  items-center bg-blue-accent-secondary hover:bg-blue-accent hover:text-white mb-4 mr-auto'
+          >
             <span className='mr-1.5 rotate-90'>
               <ArrowGrayIcon />
             </span>
