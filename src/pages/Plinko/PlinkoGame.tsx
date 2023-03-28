@@ -138,8 +138,7 @@ const PlinkoGame = () => {
   const addPlinkoBall = () => {
     const plinko = makePlinkoBall()
     const path = getRandomPathByRows(rows)
-    // paths[plinko.id] = path
-    paths[plinko.id] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    paths[plinko.id] = path
     World.add(engine.world, plinko)
   }
 
@@ -158,7 +157,7 @@ const PlinkoGame = () => {
     isStatic: true,
     label: 'LeftWall',
     render: {
-      fillStyle: 'red'
+      fillStyle: 'transparent'
     }
   })
 
@@ -176,20 +175,13 @@ const PlinkoGame = () => {
     }
   )
 
-  const bottomWall = Bodies.rectangle(
-    PlinkoConfig.WIDTH / 2,
-    PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
-    PlinkoConfig.WIDTH,
-    PlinkoConfig.CONTOUR,
-    {
-      isStatic: true,
-      label: 'BottomWall',
-      render: {
-        visible: true,
-        fillStyle: 'red'
-      }
+  const bottomWall = Bodies.rectangle(0, PlinkoConfig.WIDTH + 10, PlinkoConfig.WIDTH * 10, 40, {
+    isStatic: true,
+    label: 'BottomWall',
+    render: {
+      fillStyle: 'transparent'
     }
-  )
+  })
 
   useEffect(() => {
     if (!plinkoGameRef.current) return
@@ -274,8 +266,8 @@ const PlinkoGame = () => {
                     'h-4 text-[8px] w-6': rows === 16,
                     'h-4 text-10 w-7': rows === 14,
                     'h-5 text-11 w-8': rows === 12,
-                    'h-7 text-13 w-11': rows === 10,
-                    'h-8 text-14 w-14': rows === 8
+                    'h-7 text-13 w-10': rows === 10,
+                    'h-8 text-14 w-12': rows === 8
                   }
                 )}
                 ref={(ref) => (multiplierRefs.current[index] = ref)}

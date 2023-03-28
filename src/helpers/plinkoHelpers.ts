@@ -23,8 +23,8 @@ export const getRowSettingsByRows = (rows: number) => {
     case 12:
       return {
         pegSize: 4,
-        plinkoSize: 8,
-        yForce: Y_FORCE_BASE * 1.05,
+        plinkoSize: 7,
+        yForce: Y_FORCE_BASE * 1.1,
         xForce: X_FORCE_BASE * 0.84
       }
     case 14:
