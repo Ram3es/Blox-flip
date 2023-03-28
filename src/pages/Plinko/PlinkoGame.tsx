@@ -14,25 +14,34 @@ import PlinkoBall from '../../assets/img/plinko_ball.png'
 import { PlinkoConfig } from '../../constants/plinko'
 import { usePlinko } from '../../store/PlinkoStore'
 
-type PathMap = Record<number, number[] | undefined>
+type PathItem = Record<number, any>
+interface ForceCacheItem {
+  body: Body
+  force: {
+    x: number
+    y: number
+  }
+}
 
 const PlinkoGame = () => {
   const { selectedRow: rows, risk } = usePlinko()
+
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
+
+  const rowSettings = getRowSettingsByRows(rows)
+  const paths: PathItem = {}
+
   let engine = Engine.create()
+
+  let forceCache: ForceCacheItem[] = []
+  let ballCache: PathItem = {}
+
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
 
-  const paths: PathMap = {}
-
-  let forceCache: any = []
-  let ballCache: PathMap = {}
-
-  const rowSettings = getRowSettingsByRows(rows)
-
   const applyForce = () => {
-    for (let ball of forceCache) {
+    for (const ball of forceCache) {
       Body.setVelocity(ball.body, { x: 0, y: 0 })
       Body.applyForce(ball.body, ball.body.position, ball.force)
       Body.setStatic(ball.body, false)
@@ -54,16 +63,16 @@ const PlinkoGame = () => {
             ballCache[bodyB.id] = 0
           }
           ballCache[bodyB.id]++
-
           const shiftedX = (PlinkoConfig.WIDTH / 2 - bodyB.position.x) % (columnSize / 2)
           const shiftedY =
             (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
+
           const newX =
             Math.abs(shiftedX) < columnSize / 4
               ? shiftedX
               : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
-
           const newY = shiftedY
+
           Body.setPosition(bodyB, {
             x: bodyB.position.x + newX,
             y: bodyB.position.y + newY
@@ -83,14 +92,14 @@ const PlinkoGame = () => {
             labelA === 'LeftWall' ||
             labelA === 'RightWall'
           ) {
-            const rights = paths[bodyB.id].filter((val: number) => val === 1).length
+            const rights = paths[bodyB.id].filter((value: number) => value === 1).length
             const i = (rights - (paths[bodyB.id].length - rights)) / 2 + paths[bodyB.id].length / 2
             const multiplierBox = multiplierRefs.current[i]
             if (multiplierBox?.style) {
               multiplierBox.style.transform = 'translateY(10px)'
               setTimeout(() => {
                 multiplierBox.style.transform = 'translateY(0px)'
-              }, 1000)
+              }, 3000)
             }
 
             World.remove(engine.world, bodyB)
@@ -101,44 +110,6 @@ const PlinkoGame = () => {
       }
     }
   }
-
-  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
-    isStatic: true,
-    label: 'LeftWall',
-    render: {
-      fillStyle: 'transparent'
-    }
-  })
-
-  const rightWall = Bodies.rectangle(
-    PlinkoConfig.WIDTH,
-    0,
-    PlinkoConfig.PADDING / 2,
-    PlinkoConfig.WIDTH * 2,
-    {
-      isStatic: true,
-      label: 'RightWall',
-      render: {
-        fillStyle: 'transparent'
-      }
-    }
-  )
-
-  const bottomWall = Bodies.rectangle(
-    PlinkoConfig.WIDTH / 2,
-    PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
-    PlinkoConfig.WIDTH,
-    PlinkoConfig.CONTOUR,
-    {
-      isStatic: true,
-      label: 'BottomWall',
-      render: {
-        fillStyle: 'transparent'
-      }
-    }
-  )
-
-  const contours = [leftWall, rightWall, bottomWall]
 
   const makePlinkoBall = () => {
     const x = Math.round(PlinkoConfig.WIDTH / 2)
@@ -167,7 +138,8 @@ const PlinkoGame = () => {
   const addPlinkoBall = () => {
     const plinko = makePlinkoBall()
     const path = getRandomPathByRows(rows)
-    paths[plinko.id] = path
+    // paths[plinko.id] = path
+    paths[plinko.id] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     World.add(engine.world, plinko)
   }
 
@@ -182,9 +154,48 @@ const PlinkoGame = () => {
     })
   }
 
+  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
+    isStatic: true,
+    label: 'LeftWall',
+    render: {
+      fillStyle: 'red'
+    }
+  })
+
+  const rightWall = Bodies.rectangle(
+    PlinkoConfig.WIDTH,
+    0,
+    PlinkoConfig.PADDING / 2,
+    PlinkoConfig.WIDTH * 2,
+    {
+      isStatic: true,
+      label: 'RightWall',
+      render: {
+        fillStyle: 'transparent'
+      }
+    }
+  )
+
+  const bottomWall = Bodies.rectangle(
+    PlinkoConfig.WIDTH / 2,
+    PlinkoConfig.HEIGHT + PlinkoConfig.CONTOUR / 2,
+    PlinkoConfig.WIDTH,
+    PlinkoConfig.CONTOUR,
+    {
+      isStatic: true,
+      label: 'BottomWall',
+      render: {
+        visible: true,
+        fillStyle: 'red'
+      }
+    }
+  )
+
   useEffect(() => {
     if (!plinkoGameRef.current) return
+
     engine = Engine.create()
+
     const render = Render.create({
       element: plinkoGameRef.current,
       engine,
@@ -229,8 +240,7 @@ const PlinkoGame = () => {
       }
     }
 
-    World.add(engine.world, [...contours])
-    World.add(engine.world, [...pegs])
+    World.add(engine.world, [...pegs, leftWall, rightWall, bottomWall])
     Events.on(engine, 'collisionStart', handleCollision)
     Events.on(engine, 'beforeUpdate', applyForce)
 
@@ -261,9 +271,9 @@ const PlinkoGame = () => {
                     multiplier
                   )} flex items-center justify-center rounded mx-0.5`,
                   {
-                    'h-4 text-[8px] w-7': rows === 16,
-                    'h-4 text-10 w-8': rows === 14,
-                    'h-5 text-11 w-9': rows === 12,
+                    'h-4 text-[8px] w-6': rows === 16,
+                    'h-4 text-10 w-7': rows === 14,
+                    'h-5 text-11 w-8': rows === 12,
                     'h-7 text-13 w-11': rows === 10,
                     'h-8 text-14 w-14': rows === 8
                   }
@@ -274,7 +284,9 @@ const PlinkoGame = () => {
               </div>
             ))}
         </div>
-        <button className='h-8 px-52 text-15' onClick={() => addPlinkoBall()}>start game</button>
+        <button className='h-8 px-52 text-15' onClick={() => addPlinkoBall()}>
+          start game
+        </button>
       </div>
     </div>
   )
