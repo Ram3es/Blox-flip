@@ -73,8 +73,8 @@ const Wheel = () => {
   }, [wonTicket])
 
   return (
-    <div className='max-w-1190 mx-auto flex flex-col gap-9'>
-      <div className='flex items-stretch gap-12 w-full'>
+    <div className='w-1190 max-w-[100%] mx-auto flex flex-col gap-9'>
+      <div className='flex flex-col sm:flex-row xl:items-stretch items-start gap-12 w-full'>
         <WheelGamesHistory gamesHistory={lastTwentyGames ?? []} betsHistory={lastThousandBets ?? []} />
         <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} />
       </div>

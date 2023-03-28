@@ -63,38 +63,40 @@ const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: num
   return (
     <>
       <div
-        className='relative p-3 rounded-full wheel-wrapper'
+        className='relative flex w-full min-h-[500px]'
       >
-        <svg ref={ref} width="680" height="680">
-          <defs>
-            <linearGradient id="MaxWinGradient">
-              <stop offset="25%" stopColor="#FE4747" />
-              <stop offset="95%" stopColor="#FFC700" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <div className='absolute bottom-[5.5px] left-1/2 transform -translate-x-1/2 w-1 h-6 bg-white rounded-3xl'>
-          <RoundedArrow classes='absolute -right-5 -top-4 transform rotate-[125deg]' />
-          <RoundedArrow classes='absolute -left-5 -top-4 transform rotate-[55deg]'/>
-          <RoundedArrow classes='absolute -right-5 -bottom-4 transform -rotate-[125deg]' />
-          <RoundedArrow classes='absolute -left-5 -bottom-4 transform -rotate-[55deg]' />
-        </div>
-        <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient--blue-darken pr-4 py-3 pl-16 flex flex-col gap-1 items-center'>
-          <div className='flex gap-1 items-center'>
-            <ClocksIcon />
-            <div className='text-white text-[22px]'>{count}s</div>
+        <div className='transform absolute lg:relative left-1/2 top-1/2 lg:left-0 lg:top-0 -translate-x-1/2 -translate-y-1/2 lg:translate-y-0 lg:translate-x-0 xl:scale-75 scale-50 2xl:scale-100 wheel-wrapper p-3 rounded-full'>
+          <svg ref={ref} width="680" height="680">
+            <defs>
+              <linearGradient id="MaxWinGradient">
+                <stop offset="25%" stopColor="#FE4747" />
+                <stop offset="95%" stopColor="#FFC700" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div className='absolute bottom-[5.5px] left-1/2 transform -translate-x-1/2 w-1 h-6 bg-white rounded-3xl'>
+            <RoundedArrow classes='absolute -right-5 -top-4 transform rotate-[125deg]' />
+            <RoundedArrow classes='absolute -left-5 -top-4 transform rotate-[55deg]'/>
+            <RoundedArrow classes='absolute -right-5 -bottom-4 transform -rotate-[125deg]' />
+            <RoundedArrow classes='absolute -left-5 -bottom-4 transform -rotate-[55deg]' />
           </div>
-          <div className='text-gray-primary uppercase text-15'>
-            ROLLING IN
+          <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient--blue-darken pr-4 py-3 pl-16 flex flex-col gap-1 items-center'>
+            <div className='flex gap-1 items-center'>
+              <ClocksIcon />
+              <div className='text-white text-[22px] w-11'>{count}s</div>
+            </div>
+            <div className='text-gray-primary uppercase text-15'>
+              ROLLING IN
+            </div>
+            <img
+              src={WheelRobot}
+              alt='WheelRobot'
+              width='140'
+              loading='lazy'
+              decoding='async'
+              className='absolute z-10 -left-14 -top-11'
+            />
           </div>
-          <img
-            src={WheelRobot}
-            alt='WheelRobot'
-            width='140'
-            loading='lazy'
-            decoding='async'
-            className='absolute z-10 -left-14 -top-11'
-          />
         </div>
       </div>
     </>
