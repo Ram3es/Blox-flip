@@ -27,7 +27,7 @@ const ToggleBets = ({ value, handleChange, betToolkit }: ToggleBetsProps) => {
                 <span
                   className={clsx('px-2 py-2.5 items-center flex font-bold text-15', {
                     'text-green-primary': checked && toolkit.label !== 'Clear',
-                    'text-gray-primary': !checked
+                    'text-gray-primary': !checked || toolkit.label === 'Clear'
                   })}
                 >
                   {toolkit.label}
