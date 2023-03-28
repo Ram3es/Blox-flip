@@ -16,6 +16,7 @@ const BattleCases = () => {
   }
 
   const updateRewards = (userId: string, card: IItemCard) => {
+    console.log(card)
     setState(state => ({
       ...state,
       players: [...state.players.map(player => {
