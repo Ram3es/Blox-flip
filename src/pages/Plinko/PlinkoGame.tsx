@@ -277,8 +277,8 @@ const PlinkoGame = () => {
   }, [isStarted])
 
   return (
-    <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
-      <div className='flex items-center flex-col justify-center'>
+    <div className='bg-blue-primary rounded-lg flex justify-center h-full mt-4 md:mt-0 '>
+      <div className='scale-[0.58] sm:scale-100 flex items-center flex-col justify-center'>
         <div ref={plinkoGameRef} />
         <div className='flex justify-center items-center'>
           {getMultipliersByProps(risk, rows)
