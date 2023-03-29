@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
 import { usePlinko } from '../../store/PlinkoStore'
 
 import RangeSlider from '../../components/common/RangeSlider'
@@ -11,23 +11,24 @@ import ToggleMode from '../../components/common/BetActions/ToggleMode'
 import { Button } from '../../components/base/Button'
 
 import { BetToolkit } from '../../types/Bets'
+import { BetMode } from '../../types/Plinko'
 
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
   const {
-    betAmount,
     isStarted,
-    setBetAmount,
-    handleChangeBetMode,
-    numberOfBets,
     mode,
+    betAmount,
+    numberOfBets,
     risk,
-    rowOptions,
     selectedRow,
-    setRisk,
-    setSelectedRow,
+    rowOptions,
+    setIsStarted,
+    setMode,
+    setBetAmount,
     setNumberOfBets,
-    setIsStarted
+    setRisk,
+    setSelectedRow
   } = usePlinko()
 
   const handleChangeBetAmount = useCallback(
@@ -39,6 +40,19 @@ const PlinkoActions = () => {
       }
     },
     [betAmount]
+  )
+
+  const handleChangeBetMode: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (event) => {
+      const mode = event.currentTarget.textContent as BetMode
+
+      if (mode === BetMode.Manual) {
+        setNumberOfBets(1)
+      }
+
+      setMode(mode)
+    },
+    [mode]
   )
 
   const betToolkit: BetToolkit[] = [

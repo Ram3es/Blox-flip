@@ -1,10 +1,8 @@
 import {
   createContext,
   Dispatch,
-  MouseEventHandler,
   ReactNode,
   SetStateAction,
-  useCallback,
   useContext,
   useState
 } from 'react'
@@ -24,7 +22,7 @@ interface IPlinkoContext {
   selectedRow: RowVariant
   rowOptions: RowVariant[]
   setIsStarted: Dispatch<SetStateAction<boolean>>
-  handleChangeBetMode: MouseEventHandler<HTMLButtonElement>
+  setMode: Dispatch<SetStateAction<keyof typeof BetMode>>
   setBetAmount: Dispatch<SetStateAction<number>>
   setNumberOfBets: Dispatch<SetStateAction<number>>
   setRisk: Dispatch<SetStateAction<keyof typeof RiskVariant>>
@@ -47,19 +45,6 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
   const [selectedRow, setSelectedRow] = useState<RowVariant>(16)
   const rowOptions: RowVariant[] = [8, 10, 12, 14, 16]
 
-  const handleChangeBetMode: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      const mode = event.currentTarget.textContent as BetMode
-
-      if (mode === BetMode.Manual) {
-        setNumberOfBets(1)
-      }
-
-      setMode(mode)
-    },
-    [mode]
-  )
-
   return (
     <PlinkoContext.Provider
       value={{
@@ -71,7 +56,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
         selectedRow,
         rowOptions,
         setIsStarted,
-        handleChangeBetMode,
+        setMode,
         setBetAmount,
         setNumberOfBets,
         setRisk,

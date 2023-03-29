@@ -37,6 +37,7 @@ const PlinkoGame = () => {
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
 
   const rowSettings = getRowSettingsByRows(rows)
+  const endGameTimeout = numberOfBets * 300
 
   const paths: Map<number, any> = new Map()
   const ballCache: Map<number, any> = new Map()
@@ -71,6 +72,7 @@ const PlinkoGame = () => {
             ballCache.set(bodyB.id, 0)
           }
           ballCache.set(bodyB.id, parseInt(ballCache.get(bodyB.id)) + 1)
+
           const shiftedX = (PlinkoConfig.WIDTH / 2 - bodyB.position.x) % (columnSize / 2)
           const shiftedY =
             (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
@@ -115,6 +117,9 @@ const PlinkoGame = () => {
 
             World.remove(engine.world, bodyB)
             paths.delete(bodyB.id)
+
+            setTimeout(() => setIsStarted(false), endGameTimeout)
+
             return
           }
         }
@@ -268,8 +273,6 @@ const PlinkoGame = () => {
           }, index * 200)
         }
       }
-
-      setTimeout(() => setIsStarted(false), 8000)
     }
   }, [isStarted])
 
@@ -303,12 +306,6 @@ const PlinkoGame = () => {
               </div>
             ))}
         </div>
-        {/* <button className='h-8 px-52 text-15' onClick={() => {
-          addPlinkoBall()
-          setIsStarted(false)
-        }}>
-          start game
-        </button> */}
       </div>
     </div>
   )
