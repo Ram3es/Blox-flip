@@ -8,14 +8,14 @@ type BetToolkitOrNull = BetToolkit | null
 interface ToggleBetsProps {
   value: BetToolkitOrNull
   handleChange: (value: BetToolkitOrNull) => void
-  betToolkit: () => BetToolkit[]
+  betToolkit: BetToolkit[]
 }
 
 const ToggleBets = ({ value, handleChange, betToolkit }: ToggleBetsProps) => {
   return (
     <RadioGroup value={value} onChange={handleChange}>
       <div className='flex items-center justify-between'>
-        {betToolkit().map((toolkit: BetToolkit) => (
+        {betToolkit.map((toolkit: BetToolkit) => (
           <RadioGroup.Option key={toolkit.label} value={toolkit.label}>
             {({ checked }) => (
               <Button

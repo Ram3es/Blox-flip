@@ -1,31 +1,68 @@
+import { ChangeEvent, useCallback, useState } from 'react'
+import { usePlinko } from '../../store/PlinkoStore'
+
 import RangeSlider from '../../components/common/RangeSlider'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import ToggleRisk from '../../components/common/BetActions/ToggleRisk'
 import ToggleRows from '../../components/common/BetActions/ToggleRows'
-import { Button } from '../../components/base/Button'
 import BetActions from '../../components/common/BetActions/BetActionsContainer'
 import ToggleMode from '../../components/common/BetActions/ToggleMode'
-import { usePlinko } from '../../store/PlinkoStore'
+import { Button } from '../../components/base/Button'
+
+import { BetToolkit } from '../../types/Bets'
 
 const PlinkoActions = () => {
+  const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
   const {
     betAmount,
-    handleChangeBetAmount,
+    setBetAmount,
     handleChangeBetMode,
     numberOfBets,
     mode,
     risk,
     rowOptions,
-    selectedBet,
     selectedRow,
-    betToolkit,
     setRisk,
-    setSelectedBet,
     setSelectedRow,
     setNumberOfBets,
     setIsStarted
   } = usePlinko()
+
+  const handleChangeBetAmount = useCallback(
+    (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {
+      if (typeof eventOrValue === 'number') {
+        setBetAmount(eventOrValue)
+      } else {
+        setBetAmount(Number(eventOrValue.target.value))
+      }
+    },
+    [betAmount]
+  )
+
+  const betToolkit: BetToolkit[] = [
+    {
+      label: 'Clear',
+      function: () => setBetAmount(200)
+    },
+    {
+      label: '1/2',
+      function: () => setBetAmount((prev) => Number((prev / 2).toFixed()))
+    },
+    {
+      label: '2x',
+      function: () => setBetAmount((prev) => Number((prev * 2).toFixed()))
+    },
+    {
+      label: 'Min',
+      function: () => setBetAmount(50)
+    },
+    {
+      label: 'Max',
+      function: () => setBetAmount(1500)
+    }
+  ]
+
   return (
     <BetActions>
       <ToggleMode mode={mode} handleChange={handleChangeBetMode} />

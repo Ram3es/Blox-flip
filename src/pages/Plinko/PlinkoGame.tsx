@@ -107,6 +107,7 @@ const PlinkoGame = () => {
 
             World.remove(engine.world, bodyB)
             paths.delete(bodyB.id)
+            paths.clear()
             return
           }
         }
