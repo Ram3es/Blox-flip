@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 
 import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import clsx from 'clsx'
@@ -23,7 +23,7 @@ interface ForceCacheItem {
 }
 
 const PlinkoGame = () => {
-  const { selectedRow: rows, risk } = usePlinko()
+  const { selectedRow: rows, risk, isStarted, mode, numberOfBets, betAmount } = usePlinko()
 
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
@@ -248,7 +248,7 @@ const PlinkoGame = () => {
       render.canvas.remove()
       render.textures = {}
     }
-  }, [risk, rows])
+  }, [risk, rows, isStarted, mode, numberOfBets, betAmount])
 
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
@@ -288,4 +288,4 @@ const PlinkoGame = () => {
   )
 }
 
-export default PlinkoGame
+export default memo(PlinkoGame)
