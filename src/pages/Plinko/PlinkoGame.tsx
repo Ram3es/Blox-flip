@@ -37,7 +37,7 @@ const PlinkoGame = () => {
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
 
   const rowSettings = getRowSettingsByRows(rows)
-  const endGameTimeout = numberOfBets * 300
+  const endGameTimeout = numberOfBets * 200 + 3000
 
   const paths: Map<number, any> = new Map()
   const ballCache: Map<number, any> = new Map()
