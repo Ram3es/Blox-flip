@@ -146,7 +146,7 @@ const PlinkoGame = () => {
     })
   }
 
-  const addPlinkoBall = async (path: number[]) => {
+  const addPlinkoBall = (path: number[]) => {
     const plinko = makePlinkoBall()
     paths.set(plinko.id, path)
     World.add(engine.world, plinko)
@@ -263,13 +263,15 @@ const PlinkoGame = () => {
       }
       if (numberOfBets > 1) {
         for (let index = 0; index < numberOfBets; index++) {
-          addPlinkoBall(getRandomPathByRows(rows))
+          setTimeout(() => {
+            addPlinkoBall(getRandomPathByRows(rows))
+          }, index * 200)
         }
       }
 
       setTimeout(() => setIsStarted(false), 8000)
     }
-  }, [risk, rows, isStarted, mode, numberOfBets, betAmount])
+  }, [isStarted])
 
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
