@@ -112,7 +112,7 @@ const PlinkoGame = () => {
               multiplierBox.style.transform = 'translateY(10px)'
               setTimeout(() => {
                 multiplierBox.style.transform = 'translateY(0px)'
-              }, 3000)
+              }, 500)
             }
 
             World.remove(engine.world, bodyB)
