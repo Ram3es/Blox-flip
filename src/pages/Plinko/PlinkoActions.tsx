@@ -12,10 +12,13 @@ import { Button } from '../../components/base/Button'
 
 import { BetToolkit } from '../../types/Bets'
 import { BetMode } from '../../types/Plinko'
+import { useDebouncedCallback } from '../../helpers/hooks/useDebounceCallback'
+import { getRandomPathByRows } from '../../helpers/plinkoHelpers'
 
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
   const {
+    paths,
     isStarted,
     mode,
     betAmount,
@@ -23,7 +26,7 @@ const PlinkoActions = () => {
     risk,
     selectedRow,
     rowOptions,
-    setIsStarted,
+    setPaths,
     setMode,
     setBetAmount,
     setNumberOfBets,
@@ -48,6 +51,7 @@ const PlinkoActions = () => {
 
       if (mode === BetMode.Manual) {
         setNumberOfBets(1)
+        setPaths([])
       }
 
       setMode(mode)
@@ -77,6 +81,15 @@ const PlinkoActions = () => {
       function: () => setBetAmount(1500)
     }
   ]
+
+  const handlePlaceBet = useDebouncedCallback(() => {
+    if (numberOfBets >= 1) {
+      setPaths([])
+      for (let index = 0; index < numberOfBets; index++) {
+        setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
+      }
+    }
+  }, 500)
 
   return (
     <BetActions isBlocked={isStarted}>
@@ -121,10 +134,7 @@ const PlinkoActions = () => {
           </div>
         )}
         <div className='flex'>
-          <Button
-            onClick={() => setIsStarted(true)}
-            className='w-full bg-green-primary rounded h-11'
-          >
+          <Button onClick={handlePlaceBet} className='w-full bg-green-primary rounded h-11'>
             Place Bet
           </Button>
         </div>

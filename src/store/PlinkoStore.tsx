@@ -1,11 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useState
-} from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
 import { RiskVariant } from '../types/enums'
 import { BetMode, RowVariant } from '../types/Plinko'
 
@@ -14,6 +7,7 @@ interface PlinkoProviderProps {
 }
 
 interface IPlinkoContext {
+  paths: any
   isStarted: boolean
   mode: keyof typeof BetMode
   betAmount: number
@@ -21,6 +15,7 @@ interface IPlinkoContext {
   risk: keyof typeof RiskVariant
   selectedRow: RowVariant
   rowOptions: RowVariant[]
+  setPaths: any
   setIsStarted: Dispatch<SetStateAction<boolean>>
   setMode: Dispatch<SetStateAction<keyof typeof BetMode>>
   setBetAmount: Dispatch<SetStateAction<number>>
@@ -37,6 +32,7 @@ export const usePlinko = () => {
 }
 
 export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
+  const [paths, setPaths] = useState([])
   const [isStarted, setIsStarted] = useState(false)
   const [mode, setMode] = useState<keyof typeof BetMode>(BetMode.Manual)
   const [betAmount, setBetAmount] = useState(200)
@@ -48,6 +44,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
   return (
     <PlinkoContext.Provider
       value={{
+        paths,
         isStarted,
         mode,
         betAmount,
@@ -55,6 +52,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
         risk,
         selectedRow,
         rowOptions,
+        setPaths,
         setIsStarted,
         setMode,
         setBetAmount,
