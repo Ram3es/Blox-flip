@@ -23,7 +23,15 @@ interface ForceCacheItem {
 }
 
 const PlinkoGame = () => {
-  const { selectedRow: rows, risk, isStarted, mode, numberOfBets, betAmount } = usePlinko()
+  const {
+    selectedRow: rows,
+    risk,
+    isStarted,
+    mode,
+    numberOfBets,
+    betAmount,
+    setIsStarted
+  } = usePlinko()
 
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
@@ -107,7 +115,6 @@ const PlinkoGame = () => {
 
             World.remove(engine.world, bodyB)
             paths.delete(bodyB.id)
-            paths.clear()
             return
           }
         }
@@ -139,9 +146,8 @@ const PlinkoGame = () => {
     })
   }
 
-  const addPlinkoBall = () => {
+  const addPlinkoBall = async (path: number[]) => {
     const plinko = makePlinkoBall()
-    const path = getRandomPathByRows(rows)
     paths.set(plinko.id, path)
     World.add(engine.world, plinko)
   }
@@ -250,6 +256,21 @@ const PlinkoGame = () => {
     }
   }, [risk, rows, isStarted, mode, numberOfBets, betAmount])
 
+  useEffect(() => {
+    if (isStarted) {
+      if (numberOfBets === 1) {
+        addPlinkoBall(getRandomPathByRows(rows))
+      }
+      if (numberOfBets > 1) {
+        for (let index = 0; index < numberOfBets; index++) {
+          addPlinkoBall(getRandomPathByRows(rows))
+        }
+      }
+
+      setTimeout(() => setIsStarted(false), 8000)
+    }
+  }, [risk, rows, isStarted, mode, numberOfBets, betAmount])
+
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full'>
       <div className='flex items-center flex-col justify-center'>
@@ -280,9 +301,12 @@ const PlinkoGame = () => {
               </div>
             ))}
         </div>
-        <button className='h-8 px-52 text-15' onClick={() => addPlinkoBall()}>
+        {/* <button className='h-8 px-52 text-15' onClick={() => {
+          addPlinkoBall()
+          setIsStarted(false)
+        }}>
           start game
-        </button>
+        </button> */}
       </div>
     </div>
   )

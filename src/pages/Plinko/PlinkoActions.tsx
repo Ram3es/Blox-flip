@@ -16,6 +16,7 @@ const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
   const {
     betAmount,
+    isStarted,
     setBetAmount,
     handleChangeBetMode,
     numberOfBets,
@@ -64,7 +65,7 @@ const PlinkoActions = () => {
   ]
 
   return (
-    <BetActions>
+    <BetActions isBlocked={isStarted}>
       <ToggleMode mode={mode} handleChange={handleChangeBetMode} />
       <div className='flex flex-col space-y-7 mt-4'>
         <div className='border-b-2 border-b-blue-accent-fourth pb-6'>
