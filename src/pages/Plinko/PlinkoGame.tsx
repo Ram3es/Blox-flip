@@ -49,7 +49,41 @@ const PlinkoGame = () => {
     forceCache = []
   }
 
-  const handleCollision = (event: IEventCollision<Engine>) => {
+  const incrementBallCache = (bodyId: number): void => {
+    if (!ballCache.has(bodyId)) {
+      ballCache.set(bodyId, 0)
+    }
+    ballCache.set(bodyId, parseInt(ballCache.get(bodyId)) + 1)
+  }
+
+  const updateBallPosition = (body: Body): void => {
+    const shiftedX = (PlinkoConfig.WIDTH / 2 - body.position.x) % (columnSize / 2)
+    const shiftedY =
+      (-body.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
+
+    const newX =
+      Math.abs(shiftedX) < columnSize / 4
+        ? shiftedX
+        : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
+    const newY = shiftedY
+
+    Body.setPosition(body, {
+      x: body.position.x + newX,
+      y: body.position.y + newY
+    })
+  }
+
+  const pushToApplyForce = (body: Body): void => {
+    forceCache.push({
+      body,
+      force: {
+        x: rowSettings.xForce * (paths.get(body.id)[ballCache.get(body.id) - 1] === 1 ? 1 : -1),
+        y: rowSettings.yForce
+      }
+    })
+  }
+
+  const handleCollision = (event: IEventCollision<Engine>): void => {
     const { pairs } = event
 
     for (const pair of pairs) {
@@ -57,35 +91,9 @@ const PlinkoGame = () => {
 
       if (bodyA.label !== bodyB.label) {
         if (bodyB.label.includes('plinko')) {
-          if (!ballCache.has(bodyB.id)) {
-            ballCache.set(bodyB.id, 0)
-          }
-          ballCache.set(bodyB.id, parseInt(ballCache.get(bodyB.id)) + 1)
-
-          const shiftedX = (PlinkoConfig.WIDTH / 2 - bodyB.position.x) % (columnSize / 2)
-          const shiftedY =
-            (-bodyB.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
-
-          const newX =
-            Math.abs(shiftedX) < columnSize / 4
-              ? shiftedX
-              : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
-          const newY = shiftedY
-
-          Body.setPosition(bodyB, {
-            x: bodyB.position.x + newX,
-            y: bodyB.position.y + newY
-          })
-
-          forceCache.push({
-            body: bodyB,
-            force: {
-              x:
-                rowSettings.xForce *
-                (paths.get(bodyB.id)[ballCache.get(bodyB.id) - 1] === 1 ? 1 : -1),
-              y: rowSettings.yForce
-            }
-          })
+          incrementBallCache(bodyB.id)
+          updateBallPosition(bodyB)
+          pushToApplyForce(bodyB)
 
           if (
             bodyA.label === 'BottomWall' ||
@@ -94,9 +102,12 @@ const PlinkoGame = () => {
             bodyA.label === 'RightWall'
           ) {
             const rights = paths.get(bodyB.id).filter((value: number) => value === 1).length
-            const i =
+
+            const multiplierIndex =
               (rights - (paths.get(bodyB.id).length - rights)) / 2 + paths.get(bodyB.id).length / 2
-            const multiplierBox = multiplierRefs.current[i]
+
+            const multiplierBox = multiplierRefs.current[multiplierIndex]
+
             if (multiplierBox?.style) {
               multiplierBox.style.transform = 'translateY(10px)'
               setTimeout(() => {
@@ -115,7 +126,7 @@ const PlinkoGame = () => {
     }
   }
 
-  const makePlinkoBall = () => {
+  const makePlinkoBall = (): Body => {
     const x = Math.round(PlinkoConfig.WIDTH / 2)
     const y = -5
     const radius = rowSettings.plinkoSize
@@ -154,6 +165,26 @@ const PlinkoGame = () => {
       render: { fillStyle: '#4F5677' },
       label: 'peg'
     })
+  }
+
+  const makeGridPegs = (rows: number): Body[] => {
+    const pegs: Body[] = []
+
+    for (let row = 0; row < rows; row++) {
+      const rowPins = PlinkoConfig.START_PINS + row
+      const dx = -row * (columnSize / 2)
+
+      for (let column = 0; column < rowPins; column++) {
+        const x = columnSize * column + dx + (PlinkoConfig.WIDTH / 2 - columnSize)
+        const y = rowSize * row + 16
+
+        const pin = makePeg(x, y)
+
+        pegs.push(pin)
+      }
+    }
+
+    return pegs
   }
 
   const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
@@ -221,17 +252,7 @@ const PlinkoGame = () => {
     Runner.run(Runners, engine)
     Render.run(render)
 
-    const pegs: Body[] = []
-    for (let row = 0; row < rows; row++) {
-      const rowPins = PlinkoConfig.START_PINS + row
-      const dx = -row * (columnSize / 2)
-      for (let column = 0; column < rowPins; column++) {
-        const x = columnSize * column + dx + (PlinkoConfig.WIDTH / 2 - columnSize)
-        const y = rowSize * row + 16
-        const pin = makePeg(x, y)
-        pegs.push(pin)
-      }
-    }
+    const pegs = makeGridPegs(rows)
 
     World.add(engine.world, [...pegs, leftWall, rightWall, bottomWall])
 
