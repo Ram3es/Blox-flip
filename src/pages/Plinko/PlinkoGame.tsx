@@ -1,6 +1,15 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
+import Matter, {
+  Bodies,
+  Body,
+  Composite,
+  Engine,
+  Events,
+  IEventCollision,
+  Render,
+  Runner
+} from 'matter-js'
 import clsx from 'clsx'
 
 import {
@@ -28,25 +37,23 @@ const PlinkoGame = () => {
   const [engine, setEngine] = useState(Engine.create())
 
   const { selectedRow: rows, risk, paths: newPaths, setInGameBalls } = usePlinko()
-
   const rowSettings = getRowSettingsByRows(rows)
 
   const paths: Map<number, any> = useMemo(() => new Map(), [])
   const ballCache: Map<number, any> = new Map()
-
-  let forceCache: ForceCacheItem[] = []
+  const forceCache: Map<Body, ForceCacheItem> = new Map()
 
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
 
   const applyForce = () => {
-    for (const ball of forceCache) {
-      Body.setVelocity(ball.body, { x: 0, y: 0 })
-      Body.applyForce(ball.body, ball.body.position, ball.force)
-      Body.setStatic(ball.body, false)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [ball, forceData] of forceCache.entries()) {
+      Body.setVelocity(forceData.body, { x: 0, y: 0 })
+      Body.applyForce(forceData.body, forceData.body.position, forceData.force)
     }
 
-    forceCache = []
+    forceCache.clear()
   }
 
   const incrementBallCache = (bodyId: number): void => {
@@ -73,8 +80,8 @@ const PlinkoGame = () => {
     })
   }
 
-  const pushToApplyForce = (body: Body): void => {
-    forceCache.push({
+  const setToApplyForce = (body: Body): void => {
+    forceCache.set(body, {
       body,
       force: {
         x: rowSettings.xForce * (paths.get(body.id)[ballCache.get(body.id) - 1] === 1 ? 1 : -1),
@@ -90,10 +97,10 @@ const PlinkoGame = () => {
       const { bodyA, bodyB } = pair
 
       if (bodyA.label !== bodyB.label) {
-        if (bodyB.label.includes('plinko')) {
+        if (bodyB.label === 'plinko') {
           incrementBallCache(bodyB.id)
           updateBallPosition(bodyB)
-          pushToApplyForce(bodyB)
+          setToApplyForce(bodyB)
 
           if (
             bodyA.label === 'BottomWall' ||
@@ -110,13 +117,14 @@ const PlinkoGame = () => {
 
             if (multiplierBox?.style) {
               multiplierBox.style.transform = 'translateY(10px)'
+
               setTimeout(() => {
                 multiplierBox.style.transform = 'translateY(0px)'
                 setInGameBalls((prev) => prev - 1)
               }, 500)
             }
 
-            World.remove(engine.world, bodyB)
+            Composite.remove(engine.world, bodyB)
             paths.delete(bodyB.id)
 
             return
@@ -124,36 +132,6 @@ const PlinkoGame = () => {
         }
       }
     }
-  }
-
-  const makePlinkoBall = (): Body => {
-    const x = Math.round(PlinkoConfig.WIDTH / 2)
-    const y = -5
-    const radius = rowSettings.plinkoSize
-
-    return Bodies.circle(x, y, radius, {
-      restitution: 0,
-      friction: 1,
-      mass: 0.23805846,
-      inverseMass: 1 / 0.23805846,
-      collisionFilter: {
-        group: -1
-      },
-      render: {
-        sprite: {
-          texture: PlinkoBall,
-          xScale: rowSettings.plinkoSize / 9,
-          yScale: rowSettings.plinkoSize / 9
-        }
-      },
-      label: 'plinko'
-    })
-  }
-
-  const addPlinkoBall = (path: number[]) => {
-    const plinko = makePlinkoBall()
-    paths.set(plinko.id, path)
-    World.add(engine.world, plinko)
   }
 
   const makePeg = (x: number, y: number) => {
@@ -187,7 +165,37 @@ const PlinkoGame = () => {
     return pegs
   }
 
-  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.WIDTH * 2, {
+  const makePlinkoBall = (): Body => {
+    const x = Math.round(PlinkoConfig.WIDTH / 2)
+    const y = -5
+    const radius = rowSettings.plinkoSize
+
+    return Bodies.circle(x, y, radius, {
+      restitution: 0,
+      friction: 1,
+      mass: 0.23805846,
+      inverseMass: 1 / 0.23805846,
+      collisionFilter: {
+        group: -1
+      },
+      render: {
+        sprite: {
+          texture: PlinkoBall,
+          xScale: rowSettings.plinkoSize / 9,
+          yScale: rowSettings.plinkoSize / 9
+        }
+      },
+      label: 'plinko'
+    })
+  }
+
+  const addPlinkoBall = (path: number[]) => {
+    const plinko = makePlinkoBall()
+    paths.set(plinko.id, path)
+    Composite.add(engine.world, plinko)
+  }
+
+  const leftWall = Bodies.rectangle(0, 0, PlinkoConfig.PADDING / 2, PlinkoConfig.HEIGHT * 2, {
     isStatic: true,
     label: 'LeftWall',
     render: {
@@ -199,7 +207,7 @@ const PlinkoGame = () => {
     PlinkoConfig.WIDTH,
     0,
     PlinkoConfig.PADDING / 2,
-    PlinkoConfig.WIDTH * 2,
+    PlinkoConfig.HEIGHT * 2,
     {
       isStatic: true,
       label: 'RightWall',
@@ -223,18 +231,7 @@ const PlinkoGame = () => {
     const render = Render.create({
       element: plinkoGameRef.current,
       engine,
-      bounds: {
-        max: {
-          y: PlinkoConfig.HEIGHT,
-          x: PlinkoConfig.WIDTH
-        },
-        min: {
-          y: 0,
-          x: 0
-        }
-      },
       options: {
-        hasBounds: true,
         wireframes: false,
         background: 'transparent',
         width: PlinkoConfig.WIDTH,
@@ -249,20 +246,20 @@ const PlinkoGame = () => {
       isFixed: true
     })
 
-    Runner.run(Runners, engine)
+    Matter.Runner.run(Runners, engine)
     Render.run(render)
 
     const pegs = makeGridPegs(rows)
 
-    World.add(engine.world, [...pegs, leftWall, rightWall, bottomWall])
+    Composite.add(engine.world, [...pegs, leftWall, rightWall, bottomWall])
 
     Events.on(engine, 'collisionStart', handleCollision)
     Events.on(engine, 'beforeUpdate', applyForce)
 
     return () => {
-      forceCache = []
       ballCache.clear()
-      World.clear(engine.world, true)
+      forceCache.clear()
+      Composite.clear(engine.world, true)
       Engine.clear(engine)
       render.canvas.remove()
       render.textures = {}
