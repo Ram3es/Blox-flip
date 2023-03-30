@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
+import { ChangeEvent, MouseEventHandler, useCallback, useEffect, useState } from 'react'
 import { usePlinko } from '../../store/PlinkoStore'
 
 import RangeSlider from '../../components/common/RangeSlider'
@@ -19,6 +19,8 @@ const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
   const {
     isStarted,
+    inGameBalls,
+    setInGameBalls,
     setIsStarted,
     mode,
     betAmount,
@@ -85,8 +87,9 @@ const PlinkoActions = () => {
   const handlePlaceBet = useCallback(
     useDebouncedCallback(() => {
       if (numberOfBets >= 1) {
+        setInGameBalls((prev) => (numberOfBets > 1 ? (prev += numberOfBets) : prev + 1))
         setPaths([])
-        setIsStarted(false)
+        setIsStarted(true)
         for (let index = 0; index < numberOfBets; index++) {
           setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
         }
@@ -94,6 +97,12 @@ const PlinkoActions = () => {
     }, 500),
     [numberOfBets, isStarted, selectedRow]
   )
+
+  useEffect(() => {
+    if (inGameBalls === 0) {
+      setIsStarted(false)
+    }
+  }, [isStarted, inGameBalls])
 
   return (
     <BetActions>

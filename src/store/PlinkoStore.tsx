@@ -7,7 +7,8 @@ interface PlinkoProviderProps {
 }
 
 interface IPlinkoContext {
-  paths: any
+  inGameBalls: number
+  paths: number[][]
   isStarted: boolean
   mode: keyof typeof BetMode
   betAmount: number
@@ -15,13 +16,14 @@ interface IPlinkoContext {
   risk: keyof typeof RiskVariant
   selectedRow: RowVariant
   rowOptions: RowVariant[]
-  setPaths: any
+  setPaths: Dispatch<SetStateAction<number[][]>>
   setIsStarted: Dispatch<SetStateAction<boolean>>
   setMode: Dispatch<SetStateAction<keyof typeof BetMode>>
   setBetAmount: Dispatch<SetStateAction<number>>
   setNumberOfBets: Dispatch<SetStateAction<number>>
   setRisk: Dispatch<SetStateAction<keyof typeof RiskVariant>>
   setSelectedRow: Dispatch<SetStateAction<RowVariant>>
+  setInGameBalls: Dispatch<SetStateAction<number>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -32,7 +34,8 @@ export const usePlinko = () => {
 }
 
 export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
-  const [paths, setPaths] = useState([])
+  const [inGameBalls, setInGameBalls] = useState(0)
+  const [paths, setPaths] = useState<number[][]>([])
   const [isStarted, setIsStarted] = useState(false)
   const [mode, setMode] = useState<keyof typeof BetMode>(BetMode.Manual)
   const [betAmount, setBetAmount] = useState(200)
@@ -45,6 +48,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
     <PlinkoContext.Provider
       value={{
         paths,
+        inGameBalls,
         isStarted,
         mode,
         betAmount,
@@ -53,6 +57,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
         selectedRow,
         rowOptions,
         setPaths,
+        setInGameBalls,
         setIsStarted,
         setMode,
         setBetAmount,

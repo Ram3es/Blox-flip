@@ -22,12 +22,12 @@ interface ForceCacheItem {
 }
 
 const PlinkoGame = () => {
-  const [engine, setEngine] = useState(Engine.create())
-
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
 
-  const { selectedRow: rows, risk, paths: newPaths, setIsStarted } = usePlinko()
+  const [engine, setEngine] = useState(Engine.create())
+
+  const { selectedRow: rows, risk, paths: newPaths, setInGameBalls, inGameBalls } = usePlinko()
 
   const rowSettings = getRowSettingsByRows(rows)
 
@@ -101,6 +101,7 @@ const PlinkoGame = () => {
               multiplierBox.style.transform = 'translateY(10px)'
               setTimeout(() => {
                 multiplierBox.style.transform = 'translateY(0px)'
+                setInGameBalls((prev) => prev - 1)
               }, 500)
             }
 
