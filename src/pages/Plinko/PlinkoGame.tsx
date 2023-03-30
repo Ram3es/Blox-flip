@@ -188,7 +188,7 @@ const PlinkoGame = () => {
 
   const addPlinkoBall = (path: number[]) => {
     const plinko = makePlinkoBall()
-    paths.set(plinko.id, [0, 0, 0, 0, 1, 1, 1, 0])
+    paths.set(plinko.id, path)
     Composite.add(engine.world, plinko)
   }
 
