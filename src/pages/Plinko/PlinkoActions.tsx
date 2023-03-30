@@ -101,6 +101,7 @@ const PlinkoActions = () => {
 
         setInGameBalls((prev) => (numberOfBets > 1 ? (prev += numberOfBets) : prev + 1))
         setPaths([])
+        setIsStarted(true)
 
         for (let index = 0; index < numberOfBets; index++) {
           setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
@@ -111,7 +112,7 @@ const PlinkoActions = () => {
   )
 
   useEffect(() => {
-    if (inGameBalls === 0) {
+    if (inGameBalls <= 1 && !!isStarted) {
       setIsStarted(false)
     }
   }, [isStarted, inGameBalls])
