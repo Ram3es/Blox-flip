@@ -10,13 +10,17 @@ import { IItemCard, IUnboxCard } from '../../types/ItemCard'
 const BattleCases = () => {
   const location = useLocation()
   const [gameState, setState] = useState<IBattlesInfo>(location.state)
+  const [usersFinishedRound, setFinishedRound] = useState<Record<string, number>>({})
+
+  const updateRound = (userId: string) => {
+    setFinishedRound(state => ({ ...state, [userId]: state[userId] + 1 || 1 }))
+  }
 
   const joinBattle = (idx: number, player: IBattleUser) => {
     setState(state => ({ ...state, players: [...state.players.slice(0, idx), player, ...state.players.slice(idx + 1)] }))
   }
 
   const updateRewards = (userId: string, card: IItemCard) => {
-    console.log(card)
     setState(state => ({
       ...state,
       players: [...state.players.map(player => {
@@ -29,18 +33,33 @@ const BattleCases = () => {
   }
 
   useEffect(() => {
-    if (gameState.players.every(item => item !== undefined)) {
+    if (gameState.players.every(item => item !== undefined) && !gameState.gameSetting.currentRound) {
       setState(state => ({
         ...state,
         status: 'running',
         gameSetting: { ...state.gameSetting, currentRound: 1 }
       }))
+      return
     }
-  }, [gameState.players])
+    if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
+      setState(state =>
+        ({ ...state, status: 'ended' })
+      )
+    }
+  }, [gameState.players, gameState.gameSetting.currentRound])
+
+  useEffect(() => {
+    if (usersFinishedRound && Object.values(usersFinishedRound).every(val => val === gameState.gameSetting.currentRound) && gameState.gameSetting.currentRound) {
+      setState(state => ({
+        ...state,
+        gameSetting: { ...state.gameSetting, currentRound: state.gameSetting.currentRound as number + 1 }
+      }))
+    }
+  }, [usersFinishedRound])
 
   const getCurrentBoxPrice = (cases: IUnboxCard[]): number => {
-    if (gameState.status === 'running' && gameState.gameSetting.currentRound) {
-      return cases[gameState.gameSetting.currentRound - 1].price
+    if (gameState.status !== 'created' && gameState.gameSetting.currentRound) {
+      return cases[(gameState.gameSetting.currentRound - 1)].price
     }
     return 0
   }
@@ -67,6 +86,7 @@ const BattleCases = () => {
                 onJoinUser={joinBattle}
                 mode={gameState.gameSetting.mode}
                 updateRewards={updateRewards}
+                updateRound={updateRound}
                 />
             </BattleLayout>
         </div>

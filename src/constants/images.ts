@@ -19,6 +19,8 @@ import pointGreen from '../assets/img/point_green.svg'
 import pointBlue from '../assets/img/point_blue.svg'
 import greenBackdrop from '../assets/img/lvl_green_empty.png'
 import grayBackdrop from '../assets/img/lvl_blue_empty.png'
+import redStarBacdrop from '../assets/img/lvl-red.png'
+import orangeStarBacdrop from '../assets/img/lvl-orange.png'
 import graySeparator from '../assets/img/separator-lvl.png'
 import yellowGuy from '../assets/img/lvl1.png'
 
@@ -45,5 +47,7 @@ export const IMAGES: Record<string, string> = {
   pointBlue,
   greenBackdrop,
   grayBackdrop,
+  redStarBacdrop,
+  orangeStarBacdrop,
   graySeparator
 }

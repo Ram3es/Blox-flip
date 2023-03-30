@@ -73,6 +73,15 @@ const CreateBattle = () => {
 
   const onSubmitModal = useCallback((cards: IUnboxCardCounter[]) => setCasesToBet(cards), [])
 
+  const convertAmountBoxes = (): IUnboxCardCounter[] => {
+    let converted = [] as IUnboxCardCounter[]
+    casesBetted.forEach(box => {
+      const multiplyed: IUnboxCardCounter[] = Array.from(Array(box.amount).fill(box))
+      converted = converted.concat(multiplyed)
+    })
+    return converted
+  }
+
   const createGame = () => {
     console.log({
       ...batlleSettings,
@@ -87,7 +96,7 @@ const CreateBattle = () => {
         rounds: amountCases,
         price: totalCost
       },
-      cases: casesBetted,
+      cases: convertAmountBoxes(),
       players: [
         {
           id: new Date().getTime().toString(),
