@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 
 import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import clsx from 'clsx'
@@ -22,6 +22,8 @@ interface ForceCacheItem {
   }
 }
 
+const paths: Map<number, any> = new Map()
+
 const PlinkoGame = () => {
   const { selectedRow: rows, risk, mode, numberOfBets, betAmount, paths: newPaths } = usePlinko()
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
@@ -29,12 +31,10 @@ const PlinkoGame = () => {
 
   const rowSettings = getRowSettingsByRows(rows)
 
-  const paths: Map<number, any> = new Map()
   const ballCache: Map<number, any> = new Map()
 
   let forceCache: ForceCacheItem[] = []
-
-  let engine = Engine.create()
+  const [engine, setEngine] = useState(Engine.create())
 
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
@@ -77,7 +77,6 @@ const PlinkoGame = () => {
             x: bodyB.position.x + newX,
             y: bodyB.position.y + newY
           })
-
           forceCache.push({
             body: bodyB,
             force: {
@@ -188,9 +187,7 @@ const PlinkoGame = () => {
 
   useEffect(() => {
     if (!plinkoGameRef.current) return
-
-    engine = Engine.create()
-
+    console.log('here', engine.world)
     const render = Render.create({
       element: plinkoGameRef.current,
       engine,
@@ -247,17 +244,22 @@ const PlinkoGame = () => {
       render.canvas.remove()
       render.textures = {}
     }
-  }, [risk, rows, mode, numberOfBets, betAmount, newPaths])
+  }, [engine])
 
   useEffect(() => {
     console.log(newPaths)
 
     if (newPaths) {
       newPaths.forEach((item: number[], index: number) => {
-        setTimeout(() => addPlinkoBall(item), 200 * index)
+        // setTimeout(() => addPlinkoBall(item), 200 * index)
+        addPlinkoBall(item)
       })
     }
   }, [newPaths])
+
+  useEffect(() => {
+    setEngine(Engine.create())
+  }, [risk, rows, mode, numberOfBets, betAmount])
 
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full mt-4 md:mt-0 '>
