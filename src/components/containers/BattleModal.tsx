@@ -9,7 +9,7 @@ import SearchInput from '../common/SearchInput'
 import DaggersGreenGradient from '../icons/DaggersGreenGradient'
 import { useToolbarState } from '../../helpers/hooks/useTollbarState'
 import ModalWrapper from './ModalWrapper'
-import { QuantityCoinsWithChildren } from '../Common/QuantityCoins/QuantityWithChildren'
+import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
 
 const BattleModal = ({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: Function, onSubmit: Function }) => {
   const [unboxCards, setAllCards] = useState<IItemCard[]>(unboxCard)

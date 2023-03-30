@@ -112,7 +112,7 @@ const PlinkoActions = () => {
   )
 
   useEffect(() => {
-    if (inGameBalls <= 1 && isStarted) {
+    if (inGameBalls < 1 && isStarted) {
       setIsStarted(false)
     }
   }, [isStarted, inGameBalls])
