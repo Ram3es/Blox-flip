@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-export const useDebouncedCallback = <A extends any[]>(
-  callback: (...args: A) => void,
+export const useDebouncedCallback = <T extends any[]>(
+  callback: (...args: T) => void,
   wait: number
 ) => {
-  const argsRef = useRef<A>()
+  const argsRef = useRef<T>()
   const timeout = useRef<ReturnType<typeof setTimeout>>()
 
   const cleanup = () => {
@@ -15,7 +15,7 @@ export const useDebouncedCallback = <A extends any[]>(
 
   useEffect(() => cleanup, [])
 
-  return function debouncedCallback(...args: A) {
+  const debouncedCallback = (...args: T) => {
     argsRef.current = args
 
     cleanup()
@@ -27,4 +27,5 @@ export const useDebouncedCallback = <A extends any[]>(
       }
     }, wait)
   }
+  return debouncedCallback
 }
