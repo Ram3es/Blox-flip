@@ -20,12 +20,11 @@ const user = {
 
 const SignInForm = ({ onClose }: { onClose: Function }) => {
   const [inputValue, setInputValue] = useState<IState>({ userName: '', password: '' })
-  /** @ts-expect-error */
-  const [, dispatch] = useContext(Context)
+  const { dispatch } = useContext(Context)
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    setInputValue(prev => ({ ...prev, [name]: value }))
+    setInputValue((prev) => ({ ...prev, [name]: value }))
   }
   const onSubmit = () => {
     dispatch({ type: 'LOGIN', payload: { ...user, name: inputValue.userName || 'John Johnson' } })
@@ -37,7 +36,7 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
         type='text'
         name='userName'
         label='Username'
-        placeholder="..."
+        placeholder='...'
         value={inputValue.userName}
         onChange={onChange}
       />
@@ -45,7 +44,7 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
         type='text'
         name='password'
         label='Password'
-        placeholder="..."
+        placeholder='...'
         value={inputValue.password}
         onChange={onChange}
       />

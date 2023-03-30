@@ -1,29 +1,41 @@
-import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { FC, useContext, useState } from 'react'
+import clsx from 'clsx'
+import { Context } from '../../store/Store'
+import { RouteItem } from '../../types/Routes'
 
-import { IUser } from '../../types/User'
+import { Button } from '../base/Button'
+import SignInModal from '../containers/SignInModal.'
+import ChatUserCard from './ChatUserCard'
 
-import { UserAvatar } from '../user/UserAvatar'
-import { UserLevel } from '../user/UserLevel'
-import { UserInfoDropdown } from './UserInfoDropdown'
+export const ChatHeader: FC = () => {
+  const [isOpenSignInModal, setIsOpenModal] = useState(false)
+  const { state } = useContext(Context)
 
-export const ChatHeader: FC<Pick<IUser, 'name' | 'avatar' | 'level'>> = ({
-  name,
-  avatar,
-  level
-}) => {
+  const routes: RouteItem[] = [
+    { path: '/profile', name: 'profile' },
+    { path: '/affiliates', name: 'affiliates' },
+    { path: '/leaderboard', name: 'leaderboard' },
+    { path: '/trivia', name: 'trivia' },
+    { path: '/megadrop', name: 'megadrop' }
+  ]
+
   return (
-    <div className='flex py-2 px-3 border border-blue-highlight rounded-lg radial--blue items-center justify-between mb-8 relative z-30'>
-      <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
-        <NavLink to='profile'>
-          <UserAvatar />
-        </NavLink>
+    <>
+      <div
+        className={clsx(
+          'cursor-pointer border border-blue-highlight rounded-lg radial--blue mb-8 relative z-30',
+          {
+            'px-3 pt-2': state.user,
+            'px-2 py-3 flex items-center justify-center': !state.user
+          }
+        )}
+      >
+        {state.user
+          ? (<ChatUserCard routes={routes} variant='Header' user={state.user} />)
+          : (<Button color='GreenPrimary' variant='Gradient' onClick={() => setIsOpenModal(true)}><span className='px-24 py-2'>Login</span></Button>)
+        }
       </div>
-      <div className='flex'>
-        <span className='font-bold mr-2 text-gray-primary'>{name ?? 'User'}</span>
-        <UserLevel level={level} />
-      </div>
-      <UserInfoDropdown />
-    </div>
+      <SignInModal isOpen={isOpenSignInModal} onClose={() => setIsOpenModal(false)} />
+    </>
   )
 }

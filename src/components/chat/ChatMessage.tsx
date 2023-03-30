@@ -1,19 +1,21 @@
 import { FC } from 'react'
+import { RouteItem } from '../../types/Routes'
 import { IUser } from '../../types/User'
-import { UserCard } from '../common/Cards/UserCard'
-import { UserInfoDropdown } from './UserInfoDropdown'
+import ChatUserCard from './ChatUserCard'
 
 interface UserMessageProps extends IUser {
   message: string
 }
 
 export const ChatMessage: FC<UserMessageProps> = ({ message, ...user }) => {
+  const userRoutes: RouteItem[] = [
+    { path: '/profile', name: 'profile' },
+    { path: '/message', name: 'message' }
+  ]
+
   return (
     <div className='relative'>
-      <div className='flex items-center justify-between mb-2 relative'>
-        <UserCard {...user} />
-        <UserInfoDropdown />
-      </div>
+      <ChatUserCard routes={userRoutes} user={user} />
       <div className='text-xs text-gray-secondary bg-blue-secondary/30 border border-blue-highlight rounded p-2 mb-4 break-words'>
         {message.repeat(50)}
       </div>
