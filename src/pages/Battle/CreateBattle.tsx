@@ -143,6 +143,7 @@ const CreateBattle = () => {
                     </div>
                     <div className=' w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0 '>
                       <Button
+                        disabled={!casesBetted.length}
                         onClick={createGame}
                         className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
                         >Create
