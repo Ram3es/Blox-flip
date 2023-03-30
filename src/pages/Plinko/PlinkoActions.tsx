@@ -17,6 +17,8 @@ import { getRandomPathByRows } from '../../helpers/plinkoHelpers'
 
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+
   const {
     isStarted,
     inGameBalls,
@@ -35,6 +37,8 @@ const PlinkoActions = () => {
     setRisk,
     setSelectedRow
   } = usePlinko()
+
+  const BUTTON_DISABLED_DELAY = selectedRow * 400
 
   const handleChangeBetAmount = useCallback(
     (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {
@@ -84,12 +88,19 @@ const PlinkoActions = () => {
     }
   ]
 
+  const buttonDisabled = () => {
+    setIsButtonDisabled(true)
+    setTimeout(() => setIsButtonDisabled(false), BUTTON_DISABLED_DELAY)
+  }
+
   const handlePlaceBet = useCallback(
     useDebouncedCallback(() => {
       if (numberOfBets >= 1) {
+        mode === 'Automatic' && buttonDisabled()
+
         setInGameBalls((prev) => (numberOfBets > 1 ? (prev += numberOfBets) : prev + 1))
         setPaths([])
-        setIsStarted(true)
+
         for (let index = 0; index < numberOfBets; index++) {
           setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
         }
@@ -152,7 +163,11 @@ const PlinkoActions = () => {
           </div>
         )}
         <div className='flex'>
-          <Button onClick={handlePlaceBet} className='w-full bg-green-primary rounded h-11'>
+          <Button
+            disabled={isButtonDisabled}
+            onClick={handlePlaceBet}
+            className='w-full bg-green-primary rounded h-11'
+          >
             Place Bet
           </Button>
         </div>
