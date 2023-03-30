@@ -27,7 +27,7 @@ const PlinkoGame = () => {
 
   const [engine, setEngine] = useState(Engine.create())
 
-  const { selectedRow: rows, risk, paths: newPaths, setInGameBalls, inGameBalls } = usePlinko()
+  const { selectedRow: rows, risk, paths: newPaths, setInGameBalls } = usePlinko()
 
   const rowSettings = getRowSettingsByRows(rows)
 
