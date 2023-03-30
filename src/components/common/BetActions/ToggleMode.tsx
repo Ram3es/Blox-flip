@@ -6,11 +6,14 @@ import { Button } from '../../base/Button'
 interface ToggleModeProps {
   mode: keyof typeof BetMode
   handleChange: MouseEventHandler<HTMLButtonElement>
+  isBlocked?: boolean
 }
 
-const ToggleMode = ({ mode, handleChange }: ToggleModeProps) => {
+const ToggleMode = ({ mode, handleChange, isBlocked = false }: ToggleModeProps) => {
   return (
-    <div className='flex items-center'>
+    <div
+      className={`${isBlocked ? 'pointer-events-none' : 'pointer-event-auto'} flex items-center`}
+    >
       {Object.keys(BetMode).map((tab) => (
         <Button
           key={tab}

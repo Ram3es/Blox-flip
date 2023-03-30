@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Bodies, Body, Engine, Events, IEventCollision, Render, Runner, World } from 'matter-js'
 import clsx from 'clsx'
@@ -6,7 +6,6 @@ import clsx from 'clsx'
 import {
   getColorByMultiplier,
   getMultipliersByProps,
-  getRandomPathByRows,
   getRowSettingsByRows
 } from '../../helpers/plinkoHelpers'
 
@@ -22,19 +21,20 @@ interface ForceCacheItem {
   }
 }
 
-const paths: Map<number, any> = new Map()
-
 const PlinkoGame = () => {
-  const { selectedRow: rows, risk, mode, numberOfBets, betAmount, paths: newPaths } = usePlinko()
+  const [engine, setEngine] = useState(Engine.create())
+
   const plinkoGameRef = useRef<HTMLDivElement | null>(null)
   const multiplierRefs = useRef<Array<HTMLDivElement | null>>([])
 
+  const { selectedRow: rows, risk, paths: newPaths, setIsStarted } = usePlinko()
+
   const rowSettings = getRowSettingsByRows(rows)
 
+  const paths: Map<number, any> = useMemo(() => new Map(), [])
   const ballCache: Map<number, any> = new Map()
 
   let forceCache: ForceCacheItem[] = []
-  const [engine, setEngine] = useState(Engine.create())
 
   let columnSize = Math.round(PlinkoConfig.WIDTH / (rows + 2))
   let rowSize = PlinkoConfig.HEIGHT / rows
@@ -45,19 +45,18 @@ const PlinkoGame = () => {
       Body.applyForce(ball.body, ball.body.position, ball.force)
       Body.setStatic(ball.body, false)
     }
+
     forceCache = []
   }
 
   const handleCollision = (event: IEventCollision<Engine>) => {
     const { pairs } = event
-    for (let index = 0; index < pairs.length; index++) {
-      const pair = pairs[index]
-      const { bodyA, bodyB } = pair
-      const { label: labelA } = bodyA
-      const { label: labelB } = bodyB
 
-      if (labelA !== labelB) {
-        if (labelB === 'plinko') {
+    for (const pair of pairs) {
+      const { bodyA, bodyB } = pair
+
+      if (bodyA.label !== bodyB.label) {
+        if (bodyB.label.includes('plinko')) {
           if (!ballCache.has(bodyB.id)) {
             ballCache.set(bodyB.id, 0)
           }
@@ -77,6 +76,7 @@ const PlinkoGame = () => {
             x: bodyB.position.x + newX,
             y: bodyB.position.y + newY
           })
+
           forceCache.push({
             body: bodyB,
             force: {
@@ -88,10 +88,10 @@ const PlinkoGame = () => {
           })
 
           if (
-            labelA === 'BottomWall' ||
-            labelA === 'Rectangle Body' ||
-            labelA === 'LeftWall' ||
-            labelA === 'RightWall'
+            bodyA.label === 'BottomWall' ||
+            bodyA.label === 'Rectangle Body' ||
+            bodyA.label === 'LeftWall' ||
+            bodyA.label === 'RightWall'
           ) {
             const rights = paths.get(bodyB.id).filter((value: number) => value === 1).length
             const i =
@@ -187,7 +187,7 @@ const PlinkoGame = () => {
 
   useEffect(() => {
     if (!plinkoGameRef.current) return
-    console.log('here', engine.world)
+
     const render = Render.create({
       element: plinkoGameRef.current,
       engine,
@@ -233,6 +233,7 @@ const PlinkoGame = () => {
     }
 
     World.add(engine.world, [...pegs, leftWall, rightWall, bottomWall])
+
     Events.on(engine, 'collisionStart', handleCollision)
     Events.on(engine, 'beforeUpdate', applyForce)
 
@@ -243,23 +244,22 @@ const PlinkoGame = () => {
       Engine.clear(engine)
       render.canvas.remove()
       render.textures = {}
+      Events.off(engine, 'collisionStart', handleCollision)
+      Events.off(engine, 'beforeUpdate', applyForce)
     }
   }, [engine])
 
   useEffect(() => {
-    console.log(newPaths)
-
     if (newPaths) {
       newPaths.forEach((item: number[], index: number) => {
-        // setTimeout(() => addPlinkoBall(item), 200 * index)
-        addPlinkoBall(item)
+        setTimeout(() => addPlinkoBall(item), 300 * index)
       })
     }
   }, [newPaths])
 
   useEffect(() => {
     setEngine(Engine.create())
-  }, [risk, rows, mode, numberOfBets, betAmount])
+  }, [risk, rows])
 
   return (
     <div className='bg-blue-primary rounded-lg flex justify-center h-full mt-4 md:mt-0 '>

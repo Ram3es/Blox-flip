@@ -6,11 +6,16 @@ import { RhombusIcon } from '../../icons/RhombusIcon'
 interface ToggleRiskProps {
   value: keyof typeof RiskVariant
   handleChange: (value: keyof typeof RiskVariant) => void
+  isBlocked?: boolean
 }
 
-const ToggleRisk = ({ value, handleChange }: ToggleRiskProps) => {
+const ToggleRisk = ({ value, handleChange, isBlocked = false }: ToggleRiskProps) => {
   return (
-    <div className='flex items-start justify-between text-17'>
+    <div
+      className={`${
+        isBlocked ? 'pointer-events-none' : 'pointer-event-auto'
+      } flex items-start justify-between text-17`}
+    >
       <div className='bg-blue-highlight rounded px-3 py-1 items-center flex font-bold text-gray-primary'>
         <span className='gradient-gold-yellow-text font-bold'>Risk</span>
       </div>

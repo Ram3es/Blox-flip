@@ -6,12 +6,13 @@ interface ToggleRowsProps {
   value: RowVariant
   handleChange: (value: RowVariant) => void
   rowOptions: RowVariant[]
+  isBlocked?: boolean
 }
 
-const ToggleRows = ({ value, handleChange, rowOptions }: ToggleRowsProps) => {
+const ToggleRows = ({ value, handleChange, rowOptions, isBlocked = false }: ToggleRowsProps) => {
   return (
     <Listbox value={value} onChange={handleChange}>
-      <Listbox.Button>
+      <Listbox.Button className={`${isBlocked ? 'pointer-events-none' : 'pointer-event-auto'}`}>
         <div className='flex items-center justify-between bg-blue-highlight rounded h-12 pl-2.5'>
           <div className='flex items-center space-y-2'>
             <div className='bg-blue-light rounded px-2 py-1 items-center flex font-bold text-15 text-gray-primary'>

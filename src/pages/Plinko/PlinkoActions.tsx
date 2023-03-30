@@ -18,8 +18,8 @@ import { getRandomPathByRows } from '../../helpers/plinkoHelpers'
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
   const {
-    paths,
     isStarted,
+    setIsStarted,
     mode,
     betAmount,
     numberOfBets,
@@ -82,18 +82,22 @@ const PlinkoActions = () => {
     }
   ]
 
-  const handlePlaceBet = useDebouncedCallback(() => {
-    if (numberOfBets >= 1) {
-      setPaths([])
-      for (let index = 0; index < numberOfBets; index++) {
-        setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
+  const handlePlaceBet = useCallback(
+    useDebouncedCallback(() => {
+      if (numberOfBets >= 1) {
+        setPaths([])
+        setIsStarted(false)
+        for (let index = 0; index < numberOfBets; index++) {
+          setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
+        }
       }
-    }
-  }, 500)
+    }, 500),
+    [numberOfBets, isStarted, selectedRow]
+  )
 
   return (
-    <BetActions isBlocked={isStarted}>
-      <ToggleMode mode={mode} handleChange={handleChangeBetMode} />
+    <BetActions>
+      <ToggleMode isBlocked={isStarted} mode={mode} handleChange={handleChangeBetMode} />
       <div className='flex flex-col space-y-7 mt-4'>
         <div className='border-b-2 border-b-blue-accent-fourth pb-6'>
           <div className='relative'>
@@ -116,10 +120,15 @@ const PlinkoActions = () => {
           <ToggleBets value={selectedBet} handleChange={setSelectedBet} betToolkit={betToolkit} />
         </div>
         <div className='border-b-2 border-b-blue-accent-fourth flex flex-col w-full pb-6'>
-          <ToggleRows value={selectedRow} handleChange={setSelectedRow} rowOptions={rowOptions} />
+          <ToggleRows
+            isBlocked={isStarted}
+            value={selectedRow}
+            handleChange={setSelectedRow}
+            rowOptions={rowOptions}
+          />
         </div>
         <div className='border-b-2 border-b-blue-accent-fourth pb-6'>
-          <ToggleRisk value={risk} handleChange={setRisk} />
+          <ToggleRisk isBlocked={isStarted} value={risk} handleChange={setRisk} />
         </div>
         {mode === 'Automatic' && (
           <div className='border-b-2 border-b-blue-accent-fourth'>
