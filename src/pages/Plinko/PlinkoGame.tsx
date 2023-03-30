@@ -51,6 +51,7 @@ const PlinkoGame = () => {
     for (const [ball, forceData] of forceCache.entries()) {
       Body.setVelocity(forceData.body, { x: 0, y: 0 })
       Body.applyForce(forceData.body, forceData.body.position, forceData.force)
+      Body.setStatic(forceData.body, false)
     }
 
     forceCache.clear()
@@ -65,19 +66,15 @@ const PlinkoGame = () => {
 
   const updateBallPosition = (body: Body): void => {
     const shiftedX = (PlinkoConfig.WIDTH / 2 - body.position.x) % (columnSize / 2)
-    const shiftedY =
-      (-body.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
 
-    const newX =
-      Math.abs(shiftedX) < columnSize / 4
-        ? shiftedX
-        : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1)
-    const newY = shiftedY
-
-    Body.setPosition(body, {
-      x: body.position.x + newX,
-      y: body.position.y + newY
+    Body.translate(body, {
+      x:
+        Math.abs(shiftedX) < columnSize / 4
+          ? shiftedX
+          : columnSize / 2 + shiftedX * (shiftedX < 0 ? 1 : -1),
+      y: (-body.position.y + (16 - (rowSettings.pegSize + rowSettings.plinkoSize))) % rowSize
     })
+    Body.setStatic(body, true)
   }
 
   const setToApplyForce = (body: Body): void => {
@@ -191,7 +188,7 @@ const PlinkoGame = () => {
 
   const addPlinkoBall = (path: number[]) => {
     const plinko = makePlinkoBall()
-    paths.set(plinko.id, path)
+    paths.set(plinko.id, [0, 0, 0, 0, 1, 1, 1, 0])
     Composite.add(engine.world, plinko)
   }
 
