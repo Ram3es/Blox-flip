@@ -14,6 +14,7 @@ import { BetToolkit } from '../../types/Bets'
 import { BetMode } from '../../types/Plinko'
 import { useDebouncedCallback } from '../../helpers/hooks/useDebounceCallback'
 import { getRandomPathByRows } from '../../helpers/plinkoHelpers'
+import { PlinkoConfig } from '../../constants/plinko'
 
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
@@ -38,7 +39,7 @@ const PlinkoActions = () => {
     setSelectedRow
   } = usePlinko()
 
-  const BUTTON_DISABLED_DELAY = selectedRow * 400
+  const BUTTON_DISABLED_DELAY = selectedRow * PlinkoConfig.DELAY_BALL_DROP
 
   const handleChangeBetAmount = useCallback(
     (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {

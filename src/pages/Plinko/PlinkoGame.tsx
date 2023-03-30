@@ -268,7 +268,7 @@ const PlinkoGame = () => {
   useEffect(() => {
     if (newPaths) {
       newPaths.forEach((item: number[], index: number) => {
-        setTimeout(() => addPlinkoBall(item), 400 * index)
+        setTimeout(() => addPlinkoBall(item), PlinkoConfig.DELAY_BALL_DROP * index)
       })
     }
   }, [newPaths])

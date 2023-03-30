@@ -7,5 +7,6 @@ export const PlinkoConfig = {
   PEG_SIZE: 5,
   PLINKO_SIZE: 9,
   Y_FORCE_BASE: -0.0019,
-  X_FORCE_BASE: 0.00075
+  X_FORCE_BASE: 0.00075,
+  DELAY_BALL_DROP: 400
 }
