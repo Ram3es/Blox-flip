@@ -12,7 +12,7 @@ import { Button } from '../../components/base/Button'
 
 import { BetToolkit } from '../../types/Bets'
 import { BetMode } from '../../types/Plinko'
-import { useDebouncedCallback } from '../../helpers/hooks/useDebounceCallback'
+import { debounce } from '../../helpers/hooks/useDebounceCallback'
 import { getRandomPathByRows } from '../../helpers/plinkoHelpers'
 import { PlinkoConfig } from '../../constants/plinko'
 
@@ -95,11 +95,11 @@ const PlinkoActions = () => {
   }
 
   const handlePlaceBet = useCallback(
-    useDebouncedCallback(() => {
+    debounce(() => {
       if (numberOfBets >= 1) {
         mode === 'Automatic' && buttonDisabled()
 
-        setInGameBalls((prev) => (numberOfBets > 1 ? (prev += numberOfBets) : prev + 1))
+        setInGameBalls((prev: number) => (numberOfBets > 1 ? (prev += numberOfBets) : prev + 1))
         setPaths([])
         setIsStarted(true)
 
@@ -107,7 +107,7 @@ const PlinkoActions = () => {
           setPaths((prev: any) => [...prev, getRandomPathByRows(selectedRow)])
         }
       }
-    }, 500),
+    }, 400),
     [numberOfBets, isStarted, selectedRow]
   )
 
