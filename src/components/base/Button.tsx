@@ -11,6 +11,7 @@ enum VariantEnum {
 
 enum ColorEnum {
   GreenPrimary = 'GreenPrimary',
+  GreenPrimaryOpacity = 'GreenPrimaryOpacity',
   BlueSecondary = 'BlueSecondary',
   BlueAccent = 'BlueAccent',
   BlueHighlight = 'BlueHighlight'
@@ -26,6 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ color, variant = VariantEnum.Standard, children, ...buttonProps }, ref) => {
     const colorClasses = clsx('', {
       'bg-green-primary': color === ColorEnum.GreenPrimary,
+      'bg-green-primary/20': color === ColorEnum.GreenPrimaryOpacity,
       'bg-blue-secondary': color === ColorEnum.BlueSecondary,
       'bg-blue-accent': color === ColorEnum.BlueAccent,
       'bg-blue-highlight': color === ColorEnum.BlueHighlight

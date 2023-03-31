@@ -1,12 +1,17 @@
-export const Plinko = () => {
+import PlinkoGame from './PlinkoGame'
+import PlinkoActions from './PlinkoActions'
+
+const Plinko = () => {
   return (
-    <div>
-      <h1 className='text-red text-5xl'>Plinko</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus inventore ipsa fugiat
-        similique, quia, necessitatibus repudiandae ad commodi architecto aliquam molestiae adipisci
-        voluptates nesciunt esse magnam est delectus, iure nulla.
-      </p>
+    <div className='flex flex-col md:flex-row justify-center md:space-y-0 md:space-x-4'>
+      <div className='md:w-1/4 w-full'>
+        <PlinkoActions />
+      </div>
+      <div className='md:w-3/4 w-full'>
+        <PlinkoGame />
+      </div>
     </div>
   )
 }
+
+export default Plinko
