@@ -54,11 +54,6 @@ export const CaseOpening = () => {
     refreshLinesByCount(lineCount)
   }, [lineCount])
 
-  const transitionEndHandler = useCallback((e: any) => {
-    console.log(e, 'ebebeb')
-
-    setIsSpin(false)
-  }, [isSpin])
   const [wonItem, setWonItem] = useState<ICaseItem[]>()
 
   const reset = () => {

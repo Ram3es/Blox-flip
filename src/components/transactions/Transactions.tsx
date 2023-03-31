@@ -12,9 +12,9 @@ import { FilterHeader } from '../table/FilterHeader'
 import { ListIcon } from '../icons/ListIcon'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
-import { TransactionTypeCell } from '../Table/CellFormaters/TransactionTypeCell'
-import { PaymentMethodCell } from '../Table/PaymentMethodCell'
-import { StatusCell } from '../Table/CellFormaters/StatusCell'
+import { TransactionTypeCell } from '../table/CellFormaters/TransactionTypeCell'
+import { PaymentMethodCell } from '../table/PaymentMethodCell'
+import { StatusCell } from '../table/CellFormaters/StatusCell'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])

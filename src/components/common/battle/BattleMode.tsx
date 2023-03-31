@@ -107,7 +107,12 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
   return (
         <div className='flex -mx-2'>
           {playersInGame.map((_, i) => (
-            <div key={i} className={`w-1/${mode.requiredPlayers} px-1 mb-9 relative`}>
+            <div key={i} className={clsx('px-1 mb-9 relative', {
+              'w-1/2': mode.requiredPlayers === 2,
+              'w-1/3': mode.requiredPlayers === 3,
+              'w-1/4': mode.requiredPlayers === 4
+
+            })}>
               <UserBar
                  user={players[i]}
                  amountPlayers={mode.requiredPlayers}

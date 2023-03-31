@@ -18,7 +18,7 @@ const SpinItems: FC<ISpinGameProps> = ({ status, updateRewards, playerId, update
   const [randomItems, setRandomItems] = useState<IItemCard[]>(getRandomCards(100, cards))
   const [winningCard, setWinningCard] = useState<IItemCard>()
   const [isRespin, setRespin] = useState(false)
-  const refInterval = useRef<NodeJS.Timeout>()
+  const refInterval = useRef <ReturnType<typeof setInterval>>()
 
   const itemsRef = useRef<HTMLDivElement>(null)
 
