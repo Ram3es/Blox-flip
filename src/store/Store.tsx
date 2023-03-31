@@ -1,5 +1,6 @@
 import React, { createContext, FC, PropsWithChildren, useReducer } from 'react'
 import { IUser } from '../types/User'
+import { PlinkoProvider } from './PlinkoStore'
 import { Reducer, IAction } from './Reducer'
 
 export interface IState {
@@ -17,7 +18,11 @@ export const Context = createContext<IContext>({ state: initialState, dispatch: 
 
 const Store: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)
-  return <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+  return (
+    <Context.Provider value={{ state, dispatch }}>
+      <PlinkoProvider>{children}</PlinkoProvider>
+    </Context.Provider>
+  )
 }
 
 export default Store

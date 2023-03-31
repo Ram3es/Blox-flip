@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'spin-slow': 'spin 2s linear infinite',
+        'spin-slow': 'spin 2s linear infinite'
       },
       fontSize: {
         10: '0.625rem', //10px
@@ -31,17 +31,21 @@ module.exports = {
         'blue-secondary': 'rgba(36, 42, 66)',
         'blue-accent': 'rgba(41, 48, 77)',
         'blue-accent-secondary': 'rgba(47, 54, 86)',
+        'blue-accent-third': 'rgba(33, 40, 65, 1)',
+        'blue-accent-fourth': 'rgba(52, 61, 97, 1)',
+        'blue-accent-five': 'rgba(79, 89, 136, 1)',
         'blue-highlight': 'rgba(54, 62, 96)',
         'blue-light': 'rgba(72, 81, 120)',
         'blue-ocean': 'rgba(82, 95, 151)',
         'blue-light-primary': 'rgba(98, 111, 168)',
         'blue-light-secondary': 'rgba(108, 123, 188)',
-        'blue-golf':'rgba(71, 100, 214)',
+        'blue-golf': 'rgba(71, 100, 214)',
         'gray-primary': 'rgba(147, 155, 185)',
         'gray-secondary': 'rgba(116, 123, 151)',
         'gray-secondary-darken': 'rgba(89, 97, 129)',
         'lightblue-darken': 'rgba(45, 56, 106)',
         'lightblue-primary': 'rgba(41, 199, 249)',
+        'lightblue-primary-secondary': 'rgba(92, 160, 223, 1)',
         'lightblue-primary-darken': 'rgba(69, 177, 255)',
         'lightblue-secondary': 'rgba(71, 100, 214)',
         'lightblue-accent': 'rgba(141, 211, 240, 1)',
@@ -55,6 +59,7 @@ module.exports = {
         'pink-primary-darken': 'rgba(173, 0, 255, 1)',
         'pink-primary': 'rgba(186, 102, 226)',
         'pink-secondary': 'rgba(188, 84, 252, 1)',
+        'pink-third': 'rgba(238, 62, 168, 1)',
         'pink-accent': 'rgba(210, 137, 255)',
         'orange-primary': 'rgba(245, 128, 17)',
         'orange-primary-light': 'rgba(255, 153, 0)',
@@ -131,13 +136,13 @@ module.exports = {
         sm: '1200px'
       },
 
-      keyframes : {
+      keyframes: {
         ping: {
-        '75%, 100%' : {
+          '75%, 100%': {
             transform: 'scale(2.4)',
             opacity: 0
           }
-        } 
+        }
       }
     }
   },

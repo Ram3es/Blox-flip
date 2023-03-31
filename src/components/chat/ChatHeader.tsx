@@ -23,7 +23,7 @@ export const ChatHeader: FC = () => {
     <>
       <div
         className={clsx(
-          'cursor-pointer border border-blue-highlight rounded-lg radial--blue mb-8 relative z-30',
+          'border border-blue-highlight rounded-lg radial--blue mb-8 relative z-30',
           {
             'px-3 pt-2': state.user,
             'px-2 py-3 flex items-center justify-center': !state.user

@@ -26,3 +26,9 @@ export enum GameStatus {
   Running = 'running',
   Ended = 'ended'
 }
+
+export enum RiskVariant {
+  Low = 'Low',
+  Medium = 'Medium',
+  High = 'High'
+}
