@@ -32,6 +32,28 @@ export const CaseOpening = () => {
   const [rouletteItems, setRouletteItems] = useState<Array<{ items: ICaseItem[] }>>([
     { items: getRandomCards(100, cards) }
   ])
+
+  const refreshLinesByCount = (count: number) => {
+    const localLineCount = Math.min(count, 4)
+
+    setRouletteItems((prevItems) => {
+      const newItems = [...prevItems]
+
+      if (newItems.length > localLineCount) {
+        newItems.splice(localLineCount)
+      } else if (newItems.length < localLineCount) {
+        for (let i = newItems.length; i < localLineCount; i++) {
+          newItems.push({ items: getRandomCards(100, cards) })
+        }
+      }
+      return newItems
+    })
+  }
+
+  useEffect(() => {
+    refreshLinesByCount(lineCount)
+  }, [lineCount])
+
   const [wonItem, setWonItem] = useState<ICaseItem[]>()
 
   const reset = () => {

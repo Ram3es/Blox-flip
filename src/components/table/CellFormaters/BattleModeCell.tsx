@@ -5,13 +5,13 @@ import DaggersIcons from '../../icons/DaggersIcons'
 import GreenLineLeftBattleLeft from '../../icons/GreenLineBattleLeft'
 import GreenLineBattleRight from '../../icons/GreenLineBattleRight'
 import { UserAvatar } from '../../user/UserAvatar'
-import { IModeGame, TBattleUser } from '../../../mocks/battle'
+import { IModeGame, IBattleUser } from '../../../mocks/battle'
 import { GameStatus } from '../../../types/enums'
 import question from '../../../assets/img/question-mark-circle-1.svg'
 import YellowLine from '../../icons/YellowLine'
 import BlueLine from '../../icons/BlueLine'
 
-const BattleModeCell = ({ mode, status, users }: { mode: IModeGame, status: string, users: TBattleUser[] }) => {
+const BattleModeCell = ({ mode, status, users }: { mode: IModeGame, status: string, users: IBattleUser[] }) => {
   const getCell = (value: IModeGame) => {
     const isFinished = Boolean(status === GameStatus.Ended)
     switch (value.variant) {
