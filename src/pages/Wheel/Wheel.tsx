@@ -16,16 +16,25 @@ const Wheel = () => {
   const [wonTicket, setWonTicket] = useState<number>()
 
   const setHistoryData = () => {
-    setLastTwentyGames(() => Array.from({ length: 20 }, (_, i) => ({ ticket: Math.floor(Math.random() * 54), gameId: i })))
-    setLastThousandBets(() => Array.from({ length: 100 }, (_, i) => {
-      const keys = Object.keys(possibleBets)
-      return { betColor: possibleBets[keys[Math.floor(Math.random() * 4)] as keyof typeof possibleBets] as possibleBets, betId: i }
-    }))
+    setLastTwentyGames(() =>
+      Array.from({ length: 20 }, (_, i) => ({ ticket: Math.floor(Math.random() * 54), gameId: i }))
+    )
+    setLastThousandBets(() =>
+      Array.from({ length: 100 }, (_, i) => {
+        const keys = Object.keys(possibleBets)
+        return {
+          betColor: possibleBets[
+            keys[Math.floor(Math.random() * 4)] as keyof typeof possibleBets
+          ] as possibleBets,
+          betId: i
+        }
+      })
+    )
   }
 
   const addGameToLastTwenty = (wonTicket: number) => {
     const newGameId = Math.floor(Math.random() * 10000)
-    setLastTwentyGames(prevArray => {
+    setLastTwentyGames((prevArray) => {
       const newArray = [...prevArray]
       newArray.unshift({ ticket: wonTicket, gameId: newGameId })
       newArray.pop()
@@ -74,11 +83,20 @@ const Wheel = () => {
   }, [wonTicket])
 
   return (
-    <div className='w-1190 max-w-[100%] mx-auto flex flex-col gap-9'>
-      <div className='flex flex-col sm:flex-row xl:items-stretch items-center gap-12 w-full'>
-        <WheelGamesHistory gamesHistory={lastTwentyGames ?? []} betsHistory={lastThousandBets ?? []} />
-        <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} />
+    <div className='flex flex-col gap-9'>
+      <div className='flex flex-col md:flex-row md:gap-x-6'>
+        <div className='md:w-1/6'>
+          <WheelGamesHistory
+            gamesHistory={lastTwentyGames ?? []}
+            betsHistory={lastThousandBets ?? []}
+          />
+        </div>
+        <div className='md:w-4/6'>
+          <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} />
+        </div>
+        <div className='md:w-1/6'>
           <WheelBetActions />
+        </div>
       </div>
       <WheelBetPeacker onPeack={peackBet} bets={wheelBets} />
     </div>

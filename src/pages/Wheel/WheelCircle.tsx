@@ -65,7 +65,7 @@ const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: num
       <div
         className='relative flex w-full min-h-[500px]'
       >
-        <div className='transform absolute lg:relative left-1/2 top-1/2 lg:left-0 lg:top-0 -translate-x-1/2 -translate-y-1/2 lg:translate-y-0 lg:translate-x-0 xl:scale-75 scale-50 2xl:scale-100 wheel-wrapper p-3 rounded-full'>
+        <div className='transform absolute ls:relative left-1/2 top-1/2 ls:left-0 ls:top-0 -translate-x-1/2 -translate-y-1/2 ls:translate-y-0 ls:translate-x-0 xl:scale-75 scale-50 2xl:scale-100 wheel-wrapper p-3 rounded-full'>
           <svg ref={ref} width="680" height="680">
             <defs>
               <linearGradient id="MaxWinGradient">
