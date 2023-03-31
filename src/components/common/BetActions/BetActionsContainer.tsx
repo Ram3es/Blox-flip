@@ -1,12 +1,12 @@
 import { ReactNode } from 'react'
 import VerifyIcon from '../../icons/VerifyIcon'
 
-interface BetActionsInterface {
+interface BetActionsContainerInterface {
   isBlocked?: boolean
   children?: ReactNode
 }
 
-const BetActions = ({ children, isBlocked = false }: BetActionsInterface) => {
+const BetActionsContainer = ({ children, isBlocked = false }: BetActionsContainerInterface) => {
   return (
     <div
       className={`${
@@ -22,4 +22,4 @@ const BetActions = ({ children, isBlocked = false }: BetActionsInterface) => {
   )
 }
 
-export default BetActions
+export default BetActionsContainer

@@ -6,7 +6,7 @@ import InputWithLabel from '../../components/base/InputWithLabel'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import ToggleRisk from '../../components/common/BetActions/ToggleRisk'
 import ToggleRows from '../../components/common/BetActions/ToggleRows'
-import BetActions from '../../components/common/BetActions/BetActionsContainer'
+import BetActionsContainer from '../../components/common/BetActions/BetActionsContainer'
 import ToggleMode from '../../components/common/BetActions/ToggleMode'
 import { Button } from '../../components/base/Button'
 
@@ -118,7 +118,7 @@ const PlinkoActions = () => {
   }, [isStarted, inGameBalls])
 
   return (
-    <BetActions>
+    <BetActionsContainer>
       <ToggleMode mode={mode} handleChange={handleChangeBetMode} />
       <div className='flex flex-col space-y-7 mt-4'>
         <div className='border-b-2 border-b-blue-accent-fourth pb-6'>
@@ -174,7 +174,7 @@ const PlinkoActions = () => {
           </Button>
         </div>
       </div>
-    </BetActions>
+    </BetActionsContainer>
   )
 }
 
