@@ -4,6 +4,7 @@ import { IWheelBetHistory, IWheelGameHistory, possibleBets } from '../../types/W
 import WheelBetPeacker from './WheelBetPeacker'
 import WheelCircle from './WheelCircle'
 import WheelGamesHistory from './WheelGamesHistory'
+import WheelBetActions from './WheelBetActions'
 
 const RALL_TIME = 1500
 let interval: any
@@ -74,9 +75,10 @@ const Wheel = () => {
 
   return (
     <div className='w-1190 max-w-[100%] mx-auto flex flex-col gap-9'>
-      <div className='flex flex-col sm:flex-row xl:items-stretch items-start gap-12 w-full'>
+      <div className='flex flex-col sm:flex-row xl:items-stretch items-center gap-12 w-full'>
         <WheelGamesHistory gamesHistory={lastTwentyGames ?? []} betsHistory={lastThousandBets ?? []} />
         <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} />
+          <WheelBetActions />
       </div>
       <WheelBetPeacker onPeack={peackBet} bets={wheelBets} />
     </div>

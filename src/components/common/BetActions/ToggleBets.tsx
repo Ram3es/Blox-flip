@@ -14,7 +14,7 @@ interface ToggleBetsProps {
 const ToggleBets = ({ value, handleChange, betToolkit }: ToggleBetsProps) => {
   return (
     <RadioGroup value={value} onChange={handleChange}>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between space-x-2'>
         {betToolkit.map((toolkit: BetToolkit) => (
           <RadioGroup.Option key={toolkit.label} value={toolkit.label}>
             {({ checked }) => (
