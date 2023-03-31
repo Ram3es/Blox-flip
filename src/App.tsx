@@ -4,7 +4,7 @@ import { Header } from './components/header/Header'
 import { Cups } from './pages/Cups/Cups'
 import { Home } from './pages/Home/Home'
 import { Mines } from './pages/Mines/Mines'
-import { Plinko } from './pages/Plinko/Plinko'
+import Plinko from './pages/Plinko/Plinko'
 import { Deposit } from './pages/Deposit/Deposit'
 import Wheel from './pages/Wheel/Wheel'
 import King from './pages/King/King'
@@ -26,6 +26,7 @@ import { DepositGift } from './pages/Deposit/methods/DepositGift'
 import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 import Jackpot from './pages/Jackpot/Jackpot'
+import BattleCases from './pages/Battle/BattleCases'
 
 export const App = () => {
   return (
@@ -66,6 +67,7 @@ export const App = () => {
           <Route path='/battles-lobby' element={<BattleLobby />} />
           <Route path='/create-battle' element={<CreateBattle />} />
           <Route path='/jackpot' element={<Jackpot />} />
+          <Route path='/battle/:id' element={<BattleCases />} />
         </Routes>
       </Container>
     </BrowserRouter>

@@ -23,7 +23,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, routes, variant = 'Base' })
   return (
     <Menu>
       <Menu.Button as='div' className='w-full'>
-        <div className='flex items-center justify-between mb-2 relative'>
+        <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
           <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
             <UserAvatar />
           </div>
