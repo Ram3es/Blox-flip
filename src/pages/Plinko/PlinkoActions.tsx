@@ -6,7 +6,7 @@ import InputWithLabel from '../../components/base/InputWithLabel'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import ToggleRisk from '../../components/common/BetActions/ToggleRisk'
 import ToggleRows from '../../components/common/BetActions/ToggleRows'
-import BetActions from '../../components/common/BetActions/BetActionsContainer'
+import BetActionsContainer from '../../components/common/BetActions/BetActionsContainer'
 import ToggleMode from '../../components/common/BetActions/ToggleMode'
 import { Button } from '../../components/base/Button'
 
@@ -15,6 +15,7 @@ import { BetMode } from '../../types/Plinko'
 import { debounce } from '../../helpers/hooks/useDebounceCallback'
 import { getRandomPathByRows } from '../../helpers/plinkoHelpers'
 import { PlinkoConfig } from '../../constants/plinko'
+import DiamondIcon from '../../components/icons/DiamondIcon'
 
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
@@ -118,18 +119,25 @@ const PlinkoActions = () => {
   }, [isStarted, inGameBalls])
 
   return (
-    <BetActions>
+    <BetActionsContainer>
       <ToggleMode mode={mode} handleChange={handleChangeBetMode} />
       <div className='flex flex-col space-y-7 mt-4'>
         <div className='border-b-2 border-b-blue-accent-fourth pb-6'>
           <div className='relative'>
             <InputWithLabel
               type='number'
+              labelClasses='flex flex-col w-full mb-8 items-start'
+              titleClasses='gradient-blue-secondary text-gray-primary text-sm px-4 py-3 leading-4 rounded-t-xl inline-block'
+              inputWrapperClasses='bg-dark/25 rounded-b-xl rounded-tr-xl overflow-hidden w-full'
+              inputClasses='grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none pl-8'
               name='password'
               label='Bet amount'
               value={betAmount}
               onChange={handleChangeBetAmount}
             />
+            <div className='w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded mr-2 text-green-primary absolute top-14 left-4'>
+              <DiamondIcon className='-inset-full absolute m-auto' />
+            </div>
           </div>
           <RangeSlider
             value={betAmount}
@@ -164,7 +172,7 @@ const PlinkoActions = () => {
             />
           </div>
         )}
-        <div className='flex'>
+        <div className='flex pb-6'>
           <Button
             disabled={isButtonDisabled}
             onClick={handlePlaceBet}
@@ -174,7 +182,7 @@ const PlinkoActions = () => {
           </Button>
         </div>
       </div>
-    </BetActions>
+    </BetActionsContainer>
   )
 }
 
