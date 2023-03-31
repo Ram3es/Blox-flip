@@ -84,19 +84,17 @@ const Wheel = () => {
 
   return (
     <div className='flex flex-col gap-9'>
-      <div className='flex flex-col md:flex-row md:gap-x-6'>
-        <div className='md:w-1/6'>
+      <div className='flex flex-col md:flex-row 2xl:gap-x-6 justify-between flex-wrap'>
+
           <WheelGamesHistory
             gamesHistory={lastTwentyGames ?? []}
             betsHistory={lastThousandBets ?? []}
           />
-        </div>
-        <div className='md:w-4/6'>
           <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} />
-        </div>
-        <div className='md:w-1/6'>
-          <WheelBetActions />
-        </div>
+
+          <div className='w-full xl:w-auto h-full'>
+            <WheelBetActions />
+          </div>
       </div>
       <WheelBetPeacker onPeack={peackBet} bets={wheelBets} />
     </div>

@@ -29,10 +29,10 @@ const WheelGamesHistory = ({ gamesHistory, betsHistory }: IWheelGamesHistory) =>
   }, [betsHistory])
 
   return (
-    <div className='flex flex-col sm:flex-row gap-4 w-full sm:w-auto overflow-hidden sm:overflow-visible'>
-      <div className='flex flex-row sm:flex-col gap-5'>
+    <div className='flex flex-col md:flex-row gap-4 w-full md:w-auto overflow-hidden md:overflow-visible'>
+      <div className='flex flex-row md:flex-col gap-5'>
         <LabelList>Last 20</LabelList>
-        <div className='flex flex-row sm:flex-col gap-2'>
+        <div className='flex flex-row md:flex-col gap-2'>
           {gamesHistory?.map(game => (
             <div
               key={`lats-20-games-${game.gameId}`}
@@ -42,9 +42,9 @@ const WheelGamesHistory = ({ gamesHistory, betsHistory }: IWheelGamesHistory) =>
           ))}
         </div>
       </div>
-      <div className='flex flex-row sm:flex-col gap-5 items-start'>
+      <div className='flex flex-row md:flex-col gap-5 items-start'>
         <LabelList>Last 100</LabelList>
-        <div className='flex flex-row sm:flex-col'>
+        <div className='flex flex-row md:flex-col'>
           {Object.keys(sortedBetsHistory).map((game, i) => (
             <div
               key={`bet-history-${i}`}
