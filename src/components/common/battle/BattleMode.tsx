@@ -51,8 +51,8 @@ const getIcons = (type: string, index: number) => {
 
 const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, casesBox, updateRewards, updateRound }) => {
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
-  const [winnerPlayerRound, setWinnerPlayer] = useState<IWiningPlayerCard>()
-  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser>()
+  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>()
+  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>()
   const [allwinningCard, setallWinningCard] = useState<Record<string, IItemCard>>({})
   const [isEndGame, setShowEnd] = useState(false)
 
@@ -73,20 +73,31 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
     setWinningCard(state => ({ ...state, [playerId]: card }))
   }
 
+  const isWinners = (playerId: string): boolean | undefined => {
+    if (currentRoundWinners?.length) {
+      return currentRoundWinners.map(items => items[0])?.includes(playerId)
+    }
+    if (gameWinnerPlayer?.length) {
+      return gameWinnerPlayer.map(player => player.id)?.includes(playerId)
+    }
+  }
+
   useEffect(() => {
     const userWinningCards = Object.entries(winningCard)
     if (userWinningCards.length === players.length) {
-      const [userId, card] = userWinningCards.reduce((acc, card) => {
+      const wonCard = userWinningCards.reduce((acc, card) => {
         if (card[1].price > acc[1].price) {
           acc = card
         }
         return acc
       })
-      setWinnerPlayer({ id: userId, card })
+      const winnersPlayer = userWinningCards.filter(item => item[1].price === wonCard[1].price)
+
+      setCurrentRoundWinners(winnersPlayer)
       setallWinningCard(winningCard)
 
       setTimeout(() => {
-        setWinnerPlayer(undefined)
+        setCurrentRoundWinners(undefined)
         setallWinningCard({})
       }, 2800)
     }
@@ -94,13 +105,14 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
 
   useEffect(() => {
     if (isEndGame) {
-      const playerWinGame = players.reduce((acc, player) => {
+      const { wonDiamonds } = players.reduce((acc, player) => {
         if (acc.wonDiamonds < player.wonDiamonds) {
           acc = player
         }
         return acc
       })
-      setGameWinnerPlayer(playerWinGame)
+      const winnersGame = players.filter(player => player.wonDiamonds === wonDiamonds)
+      setGameWinnerPlayer(winnersGame)
     }
   }, [isEndGame])
 
@@ -117,12 +129,13 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
                  user={players[i]}
                  amountPlayers={mode.requiredPlayers}
                  onJoinGame={() => handleJoinUser(i)}
-                 winUserId={gameWinnerPlayer?.id}
+                 isPlayerGameWinners={isWinners(players[i]?.id)}
+                 isEndGame={isEndGame}
 
               />
               <div className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-                'bg-gradient-lvl from-green-primary/30': Boolean(winnerPlayerRound && winnerPlayerRound?.id === players[i]?.id) || Boolean(gameWinnerPlayer && gameWinnerPlayer?.id === players[i]?.id),
-                'bg-gradient-lvl from-red-accent/30 to-dark/0': Boolean(winnerPlayerRound && winnerPlayerRound?.id !== players[i]?.id) || Boolean(gameWinnerPlayer && gameWinnerPlayer?.id !== players[i]?.id)
+                'bg-gradient-lvl from-green-primary/30': !!isWinners(players[i]?.id),
+                'bg-gradient-lvl from-red-accent/30 to-dark/0': isWinners(players[i]?.id) !== undefined && !isWinners(players[i]?.id)
 
               })}>
                     {i !== playersInGame.length - 1 && (
@@ -141,8 +154,8 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
                     isEndGame={isEndGame}
                     />
                    <RoundWinBorderBottomEffect
-                     isShown={Boolean(winnerPlayerRound) || Boolean(gameWinnerPlayer) }
-                     isAddWinClass={players[i]?.id === winnerPlayerRound?.id || players[i]?.id === gameWinnerPlayer?.id}
+                     isShown={!!currentRoundWinners || !!gameWinnerPlayer }
+                     isAddWinClass={!!isWinners(players[i]?.id)}
                     />
                 </div>
                 {status === 'created' &&
@@ -172,8 +185,8 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
                   {status === 'ended' &&
                    isEndGame &&
                      <PlayerStatusGame
-                       isPlayerGameWinner={gameWinnerPlayer?.id === players[i].id}
-                       wonDiamonds={gameWinnerPlayer?.wonDiamonds}
+                       isPlayerGameWinner={!!isWinners(players[i]?.id)}
+                       wonDiamonds={players[i]?.wonDiamonds}
                         />
                  }
                 <div className="grow rotate-180 translate-y-[-2px]">

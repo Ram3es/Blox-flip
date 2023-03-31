@@ -8,8 +8,8 @@ import { UserAvatar } from '../../user/UserAvatar'
 import { UserLevel } from '../../user/UserLevel'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 
-const UserBar = ({ user, onJoinGame, amountPlayers, winUserId }: { user: IBattleUser, onJoinGame: Function, amountPlayers: number, winUserId?: string }) => {
-  const isLostGame = user && winUserId && user.id !== winUserId
+const UserBar = ({ user, onJoinGame, amountPlayers, isPlayerGameWinners, isEndGame }: { user: IBattleUser, onJoinGame: Function, amountPlayers: number, isPlayerGameWinners?: boolean, isEndGame: boolean }) => {
+  const isLostGame = isEndGame && !isPlayerGameWinners
   return (
     <div className={`${user ? 'justify-between' : 'justify-center'} flex ${amountPlayers !== 2 ? 'flex-col w-fit px-2' : 'flex-row w-full px-4'} flex-wrap items-center  z-10  py-1 rounded-t bg-blue-accent-secondary w-full`}>
     {user
