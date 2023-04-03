@@ -44,12 +44,14 @@ const CoinFlipBetActions = () => {
   const coins: Coin[] = [0, 1]
 
   return (
-    <div className='flex items-center space-x-4'>
-      <div className='bg-dark/25 rounded flex items-center justify-between space-x-4 p-2'>
-        <div className='gradient-blue-secondary text-gray-primary text-13 px-4 py-1.5 leading-4 rounded'>
-          Bet amount
+    <div className='flex space-x-3'>
+      <div className='flex items-center justify-between bg-dark/25 rounded h-11 px-2'>
+        <div className='flex space-x-2 min-w-[210px]'>
+          <div className='gradient-blue-secondary text-gray-primary text-13 rounded p-1'>
+            Bet amount
+          </div>
+          <QuantityCoins quantity={betAmount} />
         </div>
-        <QuantityCoins quantity={betAmount} />
         <ToggleBets
           value={selectedBet}
           handleChange={setSelectedBet}
@@ -57,14 +59,13 @@ const CoinFlipBetActions = () => {
           buttonSize='SMALL'
         />
       </div>
-      <div className='flex space-x-4'>
+      <div className='flex items-center space-x-2'>
         {coins.map((coin) => (
           <img
             key={coin}
             onClick={handleChangeCoin}
-            className={clsx('', {
-              'grayscale-[75%]': selectedCoin !== coin,
-              '': selectedCoin === coin
+            className={clsx('w-7 h-7 sm:w-11 sm:h-11 cursor-pointer', {
+              'grayscale-[75%]': selectedCoin !== coin
             })}
             src={coin === 0 ? CoinFlipHead : CoinFlipTail}
             alt='tail'
@@ -72,11 +73,9 @@ const CoinFlipBetActions = () => {
         ))}
       </div>
       <Button variant='Gradient'>
-        <div className='flex items-center justify-between px-3 py-2.5'>
-          <span className='w-4 shrink-0 mx-auto relative text-white'>
-            <DiamondIcon width='16' height='12' />
-          </span>
-          <span className='pl-2'>Create new</span>
+        <div className='flex items-center justify-between px-2'>
+          <DiamondIcon width='16' height='12' />
+          <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
         </div>
       </Button>
     </div>
