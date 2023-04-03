@@ -9,17 +9,13 @@ interface CFUserInfoCellProps {
 
 const CFUserInfoCell = ({ userAvatar = '', coin }: CFUserInfoCellProps) => {
   return (
-    <div className='relative'>
+    <div className='relative min-w-[6rem]'>
       <UserAvatar
         image={userAvatar}
-        className='h-14 w-14 border border-blue-highlight rounded overflow-hidden radial--blue'
+        className='h-14 w-14 border border-blue-highlight rounded radial--blue'
       />
       <div className='absolute top-[0.46875rem] left-[3.25rem]'>
-        {
-        coin === 0
-          ? (<img className='h-[2.5625rem] w-[2.5625rem]' src={CoinFlipHead} alt='head' />)
-          : (<img className='h-[2.5625rem] w-[2.5625rem]' src={CoinFlipTail} alt='tail' />)
-        }
+        <img src={coin === 0 ? CoinFlipHead : CoinFlipTail} alt={coin === 0 ? 'head' : 'tail'} />
       </div>
     </div>
   )

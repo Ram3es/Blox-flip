@@ -2,6 +2,7 @@ import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinFlipBetActions from './CoinFlipBetActions'
 
 const CoinFlipHeader = () => {
   return (
@@ -22,14 +23,8 @@ const CoinFlipHeader = () => {
         </div>
       </div>
       <div>
-        <Button variant='Gradient'>
-          <div className='flex items-center justify-between px-5 py-2.5'>
-            <span className='w-4 shrink-0 mx-auto relative text-white'>
-              <DiamondIcon width='16' height='12' />
-            </span>
-            <span className='pl-2'>Create new</span>
-          </div>
-        </Button>
+        <CoinFlipBetActions />
+
       </div>
     </div>
   )

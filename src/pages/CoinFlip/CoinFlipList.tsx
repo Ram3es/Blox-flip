@@ -13,7 +13,7 @@ import { CoinFlipGame } from '../../types/CoinFlip'
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
 import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import ButtonsCell from '../../components/table/CellFormatters/ButtonsCell'
+import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
 
 const CoinFlipList = () => {
   const [games, setGames] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -37,7 +37,7 @@ const CoinFlipList = () => {
       header: () => 'Total',
       cell: (props) => (
         <div className='border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded p-2.5 max-w-[120px]'>
-          <QuantityCoins quantity={props.getValue()} />
+          <QuantityCoins quantity={14214.51} />
         </div>
       ),
       footer: (props) => props.column.id
@@ -45,9 +45,7 @@ const CoinFlipList = () => {
     columnHelper.accessor('status', {
       id: 'status',
       header: () => 'Status',
-      cell: (props) => (
-        <ButtonsCell status={'created'} />
-      ),
+      cell: (props) => <CFStatusCell status={'Ended'} />,
       footer: (props) => props.column.id
     })
   ]
@@ -60,14 +58,19 @@ const CoinFlipList = () => {
 
   return (
     <div className='overflow-auto max-w-full py-4'>
-      <table className='min-w-full border-separate border-spacing-y-1'>
+      <table className='min-w-full border-separate border-spacing-y-2.5'>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header, index, array) => {
                 return (
-                  <th key={header.id} className='pb-4'>
-                    <div className='text-gray-primary font-semibold text-base'>
+                  <th key={header.id} className='pb-4 border-blue-highlight/50 border-b'>
+                    <div
+                      className={clsx('text-left text-gray-primary font-semibold text-base', {
+                        'text-right': array[index] === array.at(-1),
+                        '': index === 1
+                      })}
+                    >
                       {flexRender(header.column.columnDef.header, header.getContext())}
                     </div>
                   </th>
@@ -78,18 +81,16 @@ const CoinFlipList = () => {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className=''>
+            <tr key={row.id}>
               {row.getVisibleCells().map((cell, index, array) => (
                 <td
                   key={cell.id}
                   className={clsx('bg-blue-accent', {
-                    'rounded-l-md': index === 0,
-                    'rounded-r-md': array[index] === array.at(-1)
+                    'rounded-l-md pl-4': index === 0,
+                    'rounded-r-md pr-4': array[index] === array.at(-1)
                   })}
                 >
-                  <div className={clsx('mx-2', {})}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </div>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
             </tr>

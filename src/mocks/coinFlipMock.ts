@@ -5,12 +5,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 0,
       items: cards
     },
     status: 'Created'
@@ -23,20 +23,7 @@ export const coinFlipMock: CoinFlipGame[] = [
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
-      items: cards
-    },
-    status: 'Created'
-  },
-  {
-    firstPlayer: {
-      username: 'test1',
-      coin: 23535.32,
-      items: cards
-    },
-    secondPlayer: {
-      username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -49,7 +36,7 @@ export const coinFlipMock: CoinFlipGame[] = [
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -57,12 +44,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 0,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -70,12 +57,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -83,12 +70,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 0,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -96,12 +83,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -109,12 +96,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -122,12 +109,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 0,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     status: 'Created'
@@ -135,12 +122,12 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 0,
       items: cards
     },
     status: 'Created'
@@ -148,12 +135,25 @@ export const coinFlipMock: CoinFlipGame[] = [
   {
     firstPlayer: {
       username: 'test1',
-      coin: 23535.32,
+      coin: 1,
       items: cards
     },
     secondPlayer: {
       username: 'test2',
-      coin: 23535.32,
+      coin: 1,
+      items: cards
+    },
+    status: 'Created'
+  },
+  {
+    firstPlayer: {
+      username: 'test1',
+      coin: 1,
+      items: cards
+    },
+    secondPlayer: {
+      username: 'test2',
+      coin: 0,
       items: cards
     },
     status: 'Created'
