@@ -10,9 +10,10 @@ import {
 import clsx from 'clsx'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
 import { CoinFlipGame } from '../../types/CoinFlip'
-import CFUserInfoCell from '../../components/table/CellFormaters/CFUserInfoCell'
-import ItemsListCell from '../../components/table/CellFormaters/ItemsListCell'
+import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
+import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import ButtonsCell from '../../components/table/CellFormatters/ButtonsCell'
 
 const CoinFlipList = () => {
   const [games, setGames] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -38,6 +39,14 @@ const CoinFlipList = () => {
         <div className='border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded p-2.5 max-w-[120px]'>
           <QuantityCoins quantity={props.getValue()} />
         </div>
+      ),
+      footer: (props) => props.column.id
+    }),
+    columnHelper.accessor('status', {
+      id: 'status',
+      header: () => 'Status',
+      cell: (props) => (
+        <ButtonsCell status={'created'} />
       ),
       footer: (props) => props.column.id
     })
@@ -69,7 +78,7 @@ const CoinFlipList = () => {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className=''>
               {row.getVisibleCells().map((cell, index, array) => (
                 <td
                   key={cell.id}
@@ -78,7 +87,7 @@ const CoinFlipList = () => {
                     'rounded-r-md': array[index] === array.at(-1)
                   })}
                 >
-                  <div className={clsx('', {})}>
+                  <div className={clsx('mx-2', {})}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </div>
                 </td>
