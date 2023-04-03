@@ -362,6 +362,22 @@ body {
 .gradient-green {
   background: linear-gradient(267.7deg, #2cdd68 2.41%, #00e04c 108.2%);
 }
+.gradient-green-secondary {
+  background: radial-gradient(
+      94.25% 94.25% at 50% 50%,
+      rgba(44, 221, 104, 0.2) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    rgba(54, 62, 96, 0.15);
+}
+.gradient-yellow {
+  background: radial-gradient(
+      94.25% 94.25% at 50% 50%,
+      rgba(255, 153, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    rgba(54, 62, 96, 0.15);
+}
 .gradient-blue-primary {
   background: linear-gradient(228.46deg, #1c2447 2.2%, #252c49 99.81%);
 }
@@ -667,16 +683,20 @@ input {
 }
 
 .wheel-wrapper {
-    background: radial-gradient(57.62% 57.62% at 50% 50%, rgba(71, 100, 214, 0.16) 0%, rgba(0, 0, 0, 0) 100%);
-    border: 1px solid rgba(147, 155, 185, 0.12);
+  background: radial-gradient(
+    57.62% 57.62% at 50% 50%,
+    rgba(71, 100, 214, 0.16) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border: 1px solid rgba(147, 155, 185, 0.12);
 }
 
 .text-gradient-red {
-    background: linear-gradient(9.63deg, #FE4747 4.2%, #FFC700 166.04%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+  background: linear-gradient(9.63deg, #fe4747 4.2%, #ffc700 166.04%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 /*-----media----*/
