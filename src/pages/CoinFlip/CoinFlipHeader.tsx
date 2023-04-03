@@ -1,7 +1,6 @@
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
-import DiamondIcon from '../../components/icons/DiamondIcon'
 import CoinFlipBetActions from './CoinFlipBetActions'
 
 const CoinFlipHeader = () => {
@@ -24,7 +23,6 @@ const CoinFlipHeader = () => {
       </div>
       <div>
         <CoinFlipBetActions />
-
       </div>
     </div>
   )

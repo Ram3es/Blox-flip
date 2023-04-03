@@ -6,11 +6,14 @@ import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
+import { useCoinFlip } from '../../store/CoinFlipStore'
+import clsx from 'clsx'
+import { Coin } from '../../types/CoinFlip'
 
 const CoinFlipBetActions = () => {
-  const [betAmount, setBetAmount] = useState(200)
-  const [selectedCoin, setSelectedCoin] = useState<'HEADS' | 'TAILS'>('HEADS')
+  const { betAmount, setBetAmount, selectedCoin, setSelectedCoin } = useCoinFlip()
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
+
   const betToolkit: BetToolkit[] = [
     {
       label: 'Clear',
@@ -34,6 +37,12 @@ const CoinFlipBetActions = () => {
     }
   ]
 
+  const handleChangeCoin = () => {
+    setSelectedCoin((prev) => (prev === 0 ? 1 : 0))
+  }
+
+  const coins: Coin[] = [0, 1]
+
   return (
     <div className='flex items-center space-x-4'>
       <div className='bg-dark/25 rounded flex items-center justify-between space-x-4 p-2'>
@@ -49,11 +58,21 @@ const CoinFlipBetActions = () => {
         />
       </div>
       <div className='flex space-x-4'>
-        <img src={CoinFlipHead} alt='head' />
-        <img className='grayscale-[75%]' src={CoinFlipTail} alt='tail' />
+        {coins.map((coin) => (
+          <img
+            key={coin}
+            onClick={handleChangeCoin}
+            className={clsx('', {
+              'grayscale-[75%]': selectedCoin !== coin,
+              '': selectedCoin === coin
+            })}
+            src={coin === 0 ? CoinFlipHead : CoinFlipTail}
+            alt='tail'
+          />
+        ))}
       </div>
       <Button variant='Gradient'>
-        <div className='flex items-center justify-between px-5 py-2.5'>
+        <div className='flex items-center justify-between px-3 py-2.5'>
           <span className='w-4 shrink-0 mx-auto relative text-white'>
             <DiamondIcon width='16' height='12' />
           </span>
