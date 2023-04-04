@@ -14,44 +14,37 @@ interface CoinFlipCreateModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
 }
 
+type UpdateArrayBySelectedItem = (
+  items: IItemCard[],
+  id: string,
+  isSelected: boolean
+) => IItemCard[]
+type IsItemSelected = (items: IItemCard[], id: string) => boolean
+type HandleSelectCard = (id: string) => void
+
 const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
-  const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
-  const [userItems, setUserItems] = useState<IItemCard[]>([])
+  const [items, setItems] = useState<IItemCard[]>([])
 
-  const toggleItemSelection = (
-    items: IItemCard[],
-    id: string,
-    isSelected: boolean
-  ): IItemCard[] => {
-    return items.map((item) => {
-      if (item.id === id) {
-        return { ...item, isSelected }
-      }
-      return item
-    })
+  const updateArrayBySelectedItem: UpdateArrayBySelectedItem = (items, id, isSelected) => {
+    return items.map((item) => (item.id === id ? { ...item, isSelected } : item))
   }
 
-  const isCardSelected = (selectedCards: IItemCard[], id: string): boolean => {
-    return selectedCards.some((card) => card.id === id)
+  const isItemSelected: IsItemSelected = (items, id) => {
+    return items.some((item) => item.id === id && item.isSelected)
   }
 
-  const handleSelectCard = (id: string): void => {
-    const card = userItems.find((item) => item.id === id)
+  const handleSelectCard: HandleSelectCard = (id) => {
+    const item = items.find((item) => item.id === id)
 
-    if (!card) return
+    if (!item) return
 
-    const isSelected = isCardSelected(selectedCard, card.id)
+    const isSelected = isItemSelected(items, item.id)
 
-    setSelectedCard((prevSate) => {
-      return isSelected ? prevSate.filter((el) => el.id !== card.id) : [...prevSate, card]
-    })
-
-    setUserItems((state) => toggleItemSelection(state, id, !isSelected))
+    setItems((prev) => updateArrayBySelectedItem(prev, id, !isSelected))
   }
 
   useEffect(() => {
-    setUserItems(cards)
-    setSelectedCard([])
+    setItems(cards.map((card) => ({ ...card, isSelected: false })))
   }, [])
 
   return (
@@ -84,7 +77,7 @@ const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
         </div>
       </div>
       <div className='flex flex-wrap mb-8 text-sm'>
-        {userItems.map((item) => (
+        {items.map((item) => (
           <ItemCard key={Number(item.id) * Math.random()} onSelect={handleSelectCard} {...item} />
         ))}
       </div>
