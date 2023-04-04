@@ -43,4 +43,3 @@ const ItemsListCell = ({ items }: ItemsListCellProps) => {
 }
 
 export default ItemsListCell
-// from-dark/20 to-blue-highlight/10 p-1

@@ -38,7 +38,7 @@ const CoinFlipHeader = () => {
           )}
         </div>
         <div className='flex items-center'>
-          {state.user && <CoinFlipBetActions />}
+          {!state.user && <CoinFlipBetActions />}
           {!state.user && (
             <Button variant='Gradient' onClick={() => setIsOpenModal(true)}>
               <div className='flex items-center justify-between px-20 xs:px-3 py-3'>

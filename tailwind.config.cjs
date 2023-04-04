@@ -37,6 +37,7 @@ module.exports = {
         'blue-highlight': 'rgba(54, 62, 96)',
         'blue-light': 'rgba(72, 81, 120)',
         'blue-ocean': 'rgba(82, 95, 151)',
+        'blue-ocean-secondary': 'rgba(90, 103, 163)',
         'blue-light-primary': 'rgba(98, 111, 168)',
         'blue-light-secondary': 'rgba(108, 123, 188)',
         'blue-golf': 'rgba(71, 100, 214)',
