@@ -1,11 +1,13 @@
 import { useContext, useState } from 'react'
-import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { Context } from '../../store/Store'
+
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import CoinFlipBetActions from './CoinFlipBetActions'
-import { Context } from '../../store/Store'
+import SignInModal from '../../components/containers/SignInModal'
 import DiamondIcon from '../../components/icons/DiamondIcon'
-import SignInModal from '../../components/containers/SignInModal.'
+
+import { Button } from '../../components/base/Button'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
 const CoinFlipHeader = () => {
   const [isOpenSignInModal, setIsOpenModal] = useState(false)

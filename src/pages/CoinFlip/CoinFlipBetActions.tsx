@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import ToggleBets from '../../components/common/BetActions/ToggleBets'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { BetToolkit } from '../../types/Bets'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import { Button } from '../../components/base/Button'
-import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
-import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 import clsx from 'clsx'
+
+import ToggleBets from '../../components/common/BetActions/ToggleBets'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import { Button } from '../../components/base/Button'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+
+import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
+import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
+
+import { BetToolkit } from '../../types/Bets'
 import { Coin } from '../../types/CoinFlip'
 
 const CoinFlipBetActions = () => {
