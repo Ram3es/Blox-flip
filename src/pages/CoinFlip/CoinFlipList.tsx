@@ -8,12 +8,14 @@ import {
 } from '@tanstack/react-table'
 
 import clsx from 'clsx'
-import { coinFlipMock } from '../../mocks/coinFlipMock'
-import { CoinFlipGame } from '../../types/CoinFlip'
+
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
 import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+
+import { CoinFlipGame } from '../../types/CoinFlip'
+import { coinFlipMock } from '../../mocks/coinFlipMock'
 
 const CoinFlipList = () => {
   const [games, setGames] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -36,7 +38,7 @@ const CoinFlipList = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <div className='border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded p-2.5 max-w-[120px]'>
+        <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded py-2.5 px-2'>
           <QuantityCoins quantity={14214.51} />
         </div>
       ),
@@ -79,7 +81,7 @@ const CoinFlipList = () => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className='before:content-["@"] before:text-transparent'>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell, index, array) => (

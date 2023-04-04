@@ -22,17 +22,17 @@ const CoinFlipHeader = () => {
             <span className='pl-3 text-lg hidden md:block'>Games</span>
           </div>
           <Button variant='YellowOutlined'>
-            <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-4 md:py-2 flex items-center justify-center'>
+            <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
               7 <span className='hidden md:block'>&nbsp;Games</span>
             </span>
           </Button>
           <Button variant='GreenOutlinedSecondary'>
-            <span className='text-green-primary text-13 font-medium px-3 py-1.5 md:px-4 md:py-2 flex items-center justify-center'>
+            <span className='text-green-primary text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
               3 <span className='hidden md:block'>&nbsp;Joinable</span>
             </span>
           </Button>
           {!state.user && (
-            <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2'>
+            <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
               <QuantityCoins quantity={23535.32} />
             </div>
           )}
