@@ -44,10 +44,10 @@ const CoinFlipBetActions = () => {
   const coins: Coin[] = [0, 1]
 
   return (
-    <div className='flex space-x-3'>
-      <div className='flex items-center justify-between bg-dark/25 rounded h-11 px-2'>
-        <div className='flex space-x-2 min-w-[210px]'>
-          <div className='gradient-blue-secondary text-gray-primary text-13 rounded p-1'>
+    <div className='flex flex-col items-center space-y-4 xs:space-y-0 xs:flex-row xs:space-x-3'>
+      <div className='flex items-center justify-center md:justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2 bg-dark/25 rounded py-2 md:h-11 px-2'>
+        <div className='flex md:space-x-2 md:min-w-[210px]'>
+          <div className='hidden md:block gradient-blue-secondary text-gray-primary text-13 rounded p-1'>
             Bet amount
           </div>
           <QuantityCoins quantity={betAmount} />
@@ -73,7 +73,7 @@ const CoinFlipBetActions = () => {
         ))}
       </div>
       <Button variant='Gradient'>
-        <div className='flex items-center justify-between px-2'>
+        <div className='flex items-center justify-between py-2 px-2'>
           <DiamondIcon width='16' height='12' />
           <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
         </div>
