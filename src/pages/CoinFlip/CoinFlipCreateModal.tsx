@@ -71,20 +71,19 @@ const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
       closeModal={onClose}
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
     >
-      <div className='flex justify-between items-center space-x-4 border-b border-lightblue-darken/50 pb-4 pr-10'>
+      <div className='flex justify-between items-center space-x-4 border-b border-lightblue-darken/50 pb-4 xs:pr-10 pt-5 xs:pt-3'>
         <div className='flex items-center justify-center'>
           <CoinFlipLogoIcon />
-          <span className='pl-3 text-lg hidden md:block'>Create Coinflip</span>
+          <span className='pl-3 text-lg hidden xxs:block'>Create Coinflip</span>
         </div>
-        <div className='flex justify-center items-center space-x-4'>
+        <div className='flex justify-between items-center md:space-x-4 space-x-2'>
           <Button variant='YellowOutlined'>
             <span className=' text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
-              {items.length}{' '}
-              <span className='hidden md:block text-orange-primary-light'>&nbsp;Items</span>
+              {items.length} <span className='text-orange-primary-light'>&nbsp;Items</span>
             </span>
           </Button>
-          <div className='flex items-center space-x-2'>
-            <span className='font-medium text-13 leading-4 text-blue-ocean-secondary'>
+          <div className='flex items-center gap-2'>
+            <span className='font-medium text-13 leading-4 text-blue-ocean-secondary hidden xxs:block'>
               Inventory value
             </span>
             <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
@@ -96,24 +95,30 @@ const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
           </Button>
         </div>
       </div>
-      <div className='w-full min-h-[232px] max-h-[calc(100vh_-_210px)] flex flex-wrap overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full  pr-3 -mr-2 '>
+      <div className='w-full min-h-[276px] xs:min-h-[362px] max-h-[calc(100vh_-_100%)] sm:max-h-[calc(100vh_-_85%)] ls:max-h-[calc(100vh_-_125%)] lg:max-h-[calc(100vh_-_135%)] 3xl:max-h-[calc(100vh_-_268%)] flex flex-wrap overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-3 -mr-2 '>
         {items.map((item) => (
-          <ItemCard key={item.id} onSelect={handleSelectItem} {...item} />
+          <ItemCard variant='CoinFlip' key={item.id} onSelect={handleSelectItem} {...item} />
         ))}
       </div>
-      <div className='absolute z-[50] bottom-0 left-0 w-full flex items-center justify-between py-2.5 px-6 bg-blue-highlight-secondary'>
-        <div className='flex items-center space-x-2'>
-          <span className='text-gray-primary text-sm font-semibold'>Total selected</span>
-          <div className='h-9 bg-blue-ocean-secondary/25 border-2 border-blue-ocean-secondary/50 px-3  md:px-4 rounded font-bold text-sm flex items-center justify-between'>
-            {selectedItems.length}/<span className='text-white/60'>{items.length}</span>
-            <span className='text-gray-primary uppercase font-semibold text-xs'>&nbsp;skins</span>
+      <div className='absolute z-[50] bottom-0 left-0 w-full flex flex-col space-y-2 xs:space-y-0 xs:flex-row items-center justify-between py-2.5 px-6 bg-blue-highlight-secondary'>
+        <div className='flex flex-col xs:flex-row items-center space-x-2'>
+          <div className='flex items-center justify-between gap-2'>
+            <span className='text-gray-primary text-sm font-semibold hidden xs:block'>
+              Total selected
+            </span>
+            <div className='h-9 bg-blue-ocean-secondary/25 border-2 border-blue-ocean-secondary/50 px-3  md:px-4 rounded font-bold text-sm flex items-center justify-between'>
+              {selectedItems.length}/<span className='text-white/60'>{items.length}</span>
+              <span className='text-gray-primary uppercase font-semibold text-xs hidden xs:block'>
+                &nbsp;skins
+              </span>
+            </div>
+            <div className='h-9 flex items-center border-2 border-green-primary/40 gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
+              <QuantityCoins textSize='text-base' quantity={getCostInSelectedItems()} />
+            </div>
           </div>
-          <div className='h-9 flex items-center border-2 border-green-primary/40 gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
-            <QuantityCoins textSize='text-base' quantity={getCostInSelectedItems()} />
-          </div>
-          <div className='h-9 flex items-center gradient-green-secondary shadow-green-primary-20 rounded px-3 md:px-4'>
-            <QuantityCoins textSize='text-sm' quantity={23535.32} />
-          </div>
+        </div>
+        <div className='h-9 flex items-center gradient-green-secondary shadow-green-primary-20 rounded px-3 md:px-4'>
+          <QuantityCoins textSize='text-sm' quantity={23535.32} />
         </div>
         <div className='flex items-center justify-between space-x-4'>
           <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
