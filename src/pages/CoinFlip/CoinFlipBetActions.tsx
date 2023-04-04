@@ -73,7 +73,7 @@ const CoinFlipBetActions = () => {
         ))}
       </div>
       <Button variant='Gradient'>
-        <div className='flex items-center justify-between py-2 px-2'>
+        <div className='flex items-center justify-between md:py-3.5 py-2 px-2'>
           <DiamondIcon width='16' height='12' />
           <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
         </div>
