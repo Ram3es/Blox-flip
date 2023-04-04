@@ -5,7 +5,7 @@ interface PlinkoProviderProps {
   children: ReactNode
 }
 
-interface ICoinFlipContext {
+export interface ICoinFlipContext {
   betAmount: number
   setBetAmount: Dispatch<SetStateAction<number>>
   selectedCoin: Coin

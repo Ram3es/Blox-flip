@@ -7,7 +7,7 @@ import DiamondIcon from '../icons/DiamondIcon'
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from './InputWithLabel'
 
-import { formatNumber } from '../../helpers/numbersFormatter'
+import { formatNumber } from '../../helpers/numbers'
 import { IAmountState } from '../../types/Form'
 
 enum VariantEnum {

@@ -10,7 +10,17 @@ export const cards = [
   { id: '7', color: 'Red', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 1600, sold: true, active: false, isSelected: false },
   { id: '8', color: 'Red', image: 'helmet', name: 'Zafira Helemet of the Netherworld', price: 1600, sold: true, active: false, isSelected: false },
   { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 1000, sold: true, active: false, isSelected: false },
-  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 300, sold: false, active: true, isSelected: false }
+  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 300, sold: false, active: true, isSelected: false },
+  { id: '1x4124', color: 'Orange', image: 'horns', name: 'Fiery Horns ', price: 1200, sold: true, active: false, isSelected: false },
+  { id: '241qxr24', color: 'Blue', image: 'helmet', name: 'Fiery Helmet of the Netherworld', price: 600, sold: false, active: true, isSelected: false },
+  { id: '344qxr124', color: 'Pink', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 2400, sold: true, active: false, isSelected: false },
+  { id: '441rqxwr24', color: 'Pink', image: 'redCrown', name: 'Almond Crown of the Netherworld', price: 2300, sold: false, active: true, isSelected: false },
+  { id: '54xqr124', color: 'Blue', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 500, sold: false, active: true, isSelected: false },
+  { id: '6qqwrx44124', color: 'Pink', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 2500, sold: true, active: false, isSelected: false },
+  { id: '741rqx24', color: 'Red', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 1600, sold: true, active: false, isSelected: false },
+  { id: '814wr124', color: 'Red', image: 'helmet', name: 'Zafira Helemet of the Netherworld', price: 1600, sold: true, active: false, isSelected: false },
+  { id: '941qx24', color: 'Orange', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 1000, sold: true, active: false, isSelected: false },
+  { id: '104wrq124', color: 'Green', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 300, sold: false, active: true, isSelected: false }
 ]
 
 export const unboxCard: IUnboxCard[] = [

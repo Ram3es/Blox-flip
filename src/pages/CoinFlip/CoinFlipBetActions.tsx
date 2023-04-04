@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
-import clsx from 'clsx'
 
 import CoinFlipCreateModal from './CoinFlipCreateModal'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
@@ -8,11 +7,8 @@ import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
-import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
-import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
-
 import { BetToolkit } from '../../types/Bets'
-import { Coin } from '../../types/CoinFlip'
+import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin } = useCoinFlip()
@@ -42,12 +38,6 @@ const CoinFlipBetActions = () => {
     }
   ]
 
-  const handleChangeCoin = () => {
-    setSelectedCoin((prev) => (prev === 0 ? 1 : 0))
-  }
-
-  const coins: Coin[] = [0, 1]
-
   return (
     <>
       <div className='flex flex-col items-center space-y-4 xs:space-y-0 xs:flex-row xs:space-x-3'>
@@ -65,19 +55,7 @@ const CoinFlipBetActions = () => {
             buttonSize='SMALL'
           />
         </div>
-        <div className='flex items-center space-x-2'>
-          {coins.map((coin) => (
-            <img
-              key={coin}
-              onClick={handleChangeCoin}
-              className={clsx('w-7 h-7 sm:w-11 sm:h-11 cursor-pointer', {
-                'grayscale-[75%]': selectedCoin !== coin
-              })}
-              src={coin === 0 ? CoinFlipHead : CoinFlipTail}
-              alt='tail'
-            />
-          ))}
-        </div>
+        <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
         <Button variant='Gradient' onClick={() => setIsOpenCreateCF(true)}>
           <div className='flex items-center justify-between md:py-3.5 py-2 px-2'>
             <DiamondIcon width='16' height='12' />

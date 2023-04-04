@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState, useCallback } from 'react'
 import { RobuxTransactionForm } from '../../components/base/RobuxTransactionForm'
 import { IAmountState } from '../../types/Form'
 
-import { localeStringToNumber } from '../../helpers/numbersFormatter'
+import { localeStringToNumber } from '../../helpers/numbers'
 import { defaultAmountSchema } from '../../helpers/yupSchema'
 
 export const Robux = () => {
