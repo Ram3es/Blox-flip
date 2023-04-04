@@ -13,7 +13,7 @@ import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin } = useCoinFlip()
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
-  const [isOpenCreateCF, setIsOpenCreateCF] = useState(true)
+  const [isOpenCreateCF, setIsOpenCreateCF] = useState(false)
 
   const betToolkit: BetToolkit[] = [
     {
