@@ -18,7 +18,7 @@ import { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
 
 const CoinFlipList = () => {
-  const [games, setGames] = useState<CoinFlipGame[]>(coinFlipMock)
+  const [games] = useState<CoinFlipGame[]>(coinFlipMock)
 
   const columnHelper = createColumnHelper<CoinFlipGame>()
   const gameColumns: Array<ColumnDef<CoinFlipGame, any>> = [

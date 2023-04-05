@@ -66,6 +66,8 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
         </Button>
       )
     }
+
+    return <ButtonWithTimer />
   }
 
   return (
@@ -76,7 +78,7 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
           <PreviewIcon iconClasses='mx-auto my-auto' />
         </Button>
       </div>
-      {isOpenJoinCF ? <CoinFlipLobby isCreated={true} onClose={() => setIsOpenJoinCF(false)} /> : null}
+      {isOpenJoinCF ? (<CoinFlipLobby isCreated={true} onClose={() => setIsOpenJoinCF(false)} />) : null}
     </>
   )
 }

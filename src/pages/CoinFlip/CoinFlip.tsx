@@ -1,3 +1,4 @@
+import CoinFlipGame from './CoinFlipGame'
 import CoinFlipHeader from './CoinFlipHeader'
 import CoinFlipList from './CoinFlipList'
 
@@ -6,6 +7,7 @@ const CoinFlip = () => {
     <div>
       <CoinFlipHeader />
       <CoinFlipList />
+      <CoinFlipGame />
     </div>
   )
 }

@@ -15,7 +15,8 @@ enum BorderColorEnum {
 enum ItemCardVariantEnum {
   Standard = 'Standard',
   CaseOpening = 'CaseOpening',
-  CoinFlip = 'CoinFlip'
+  CoinFlip = 'CoinFlip',
+  CoinFlipSmall = 'CoinFlipSmall'
 }
 
 export interface IItemCardProps {
@@ -64,7 +65,8 @@ const ItemCard: FC<IItemCardProps> = ({
     {
       'md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
       'md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
-      'lg:w-3/9 md:h-40 is-default': variant === ItemCardVariantEnum.CoinFlip
+      'lg:w-3/9 md:h-40 is-default': variant === ItemCardVariantEnum.CoinFlip,
+      'lg:w-1/4 text-xs is-default': variant === ItemCardVariantEnum.CoinFlipSmall
     }
   )
 
