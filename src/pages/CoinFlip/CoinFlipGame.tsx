@@ -130,7 +130,3 @@ const CoinFlipGame = ({ gameId, onClose }: CoinFlipGameProps) => {
 }
 
 export default CoinFlipGame
-
-// {items.map((item) => (
-//   <ItemCard variant='CoinFlip' key={item.id} {...item} />
-// ))}
