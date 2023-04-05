@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 
-import CoinFlipCreateModal from './CoinFlipCreateModal'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
@@ -9,6 +8,7 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 
 import { BetToolkit } from '../../types/Bets'
 import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
+import CoinFlipLobby from './CoinFlipLobby'
 
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin } = useCoinFlip()
@@ -63,7 +63,7 @@ const CoinFlipBetActions = () => {
           </div>
         </Button>
       </div>
-      {isOpenCreateCF ? <CoinFlipCreateModal onClose={() => setIsOpenCreateCF(false)} /> : null}
+      {isOpenCreateCF ? <CoinFlipLobby isCreated={false} onClose={() => setIsOpenCreateCF(false)} /> : null}
     </>
   )
 }

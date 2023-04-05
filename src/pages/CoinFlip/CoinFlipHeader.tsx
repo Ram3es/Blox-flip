@@ -10,7 +10,7 @@ import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
 const CoinFlipHeader = () => {
-  const [isOpenSignInModal, setIsOpenModal] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const { state } = useContext(Context)
 
   return (
@@ -49,7 +49,7 @@ const CoinFlipHeader = () => {
           )}
         </div>
       </div>
-      <SignInModal isOpen={isOpenSignInModal} onClose={() => setIsOpenModal(false)} />
+      <SignInModal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
     </>
   )
 }

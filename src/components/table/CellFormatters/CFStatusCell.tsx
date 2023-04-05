@@ -5,6 +5,8 @@ import PreviewIcon from '../../icons/PreviewIcon'
 import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
 import { UserAvatar } from '../../user/UserAvatar'
+import { useState } from 'react'
+import CoinFlipLobby from '../../../pages/CoinFlip/CoinFlipLobby'
 
 interface CFStatusCellProps {
   status: keyof typeof GameStatus
@@ -27,6 +29,8 @@ const ButtonWithTimer = () => {
 }
 
 const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
+  const [isOpenJoinCF, setIsOpenJoinCF] = useState(false)
+
   const getCurrentButtonByStatus = () => {
     if (status === 'Created') {
       return (
@@ -54,7 +58,7 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
 
     if (status === 'Ended' && coin === 1) {
       return (
-        <Button variant='BlueOutlined'>
+        <Button variant='BlueOutlined' onClick={() => setIsOpenJoinCF(true)}>
           <div className='flex items-center justify-center px-5 py-2'>
             <img className='h-6 w-6' src={CoinFlipTail} alt='head' />
             <span className='text-blue-golf text-sm font-bold pl-2'>Winner</span>
@@ -65,12 +69,15 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
   }
 
   return (
-    <div className='flex items-center justify-end'>
-      {getCurrentButtonByStatus()}
-      <Button className=' leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'>
-        <PreviewIcon iconClasses='mx-auto my-auto' />
-      </Button>
-    </div>
+    <>
+      <div className='flex items-center justify-end'>
+        {getCurrentButtonByStatus()}
+        <Button className=' leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'>
+          <PreviewIcon iconClasses='mx-auto my-auto' />
+        </Button>
+      </div>
+      {isOpenJoinCF ? <CoinFlipLobby isCreated={true} onClose={() => setIsOpenJoinCF(false)} /> : null}
+    </>
   )
 }
 

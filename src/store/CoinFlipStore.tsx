@@ -8,8 +8,8 @@ interface PlinkoProviderProps {
 export interface ICoinFlipContext {
   betAmount: number
   setBetAmount: Dispatch<SetStateAction<number>>
-  selectedCoin: Coin
-  setSelectedCoin: Dispatch<SetStateAction<Coin>>
+  selectedCoin: Coin | null
+  setSelectedCoin: Dispatch<SetStateAction<Coin | null>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -21,7 +21,7 @@ export const useCoinFlip = () => {
 
 export const CoinFlipProvider = ({ children }: PlinkoProviderProps) => {
   const [betAmount, setBetAmount] = useState(200)
-  const [selectedCoin, setSelectedCoin] = useState<Coin>(0)
+  const [selectedCoin, setSelectedCoin] = useState<ICoinFlipContext['selectedCoin']>(null)
 
   return (
     <CoinFlipContext.Provider value={{ betAmount, setBetAmount, selectedCoin, setSelectedCoin }}>

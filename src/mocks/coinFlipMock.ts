@@ -26,7 +26,7 @@ export const coinFlipMock: CoinFlipGame[] = [
       coin: 1,
       items: cards
     },
-    status: 'Created'
+    status: 'Ended'
   },
   {
     firstPlayer: {
@@ -39,51 +39,12 @@ export const coinFlipMock: CoinFlipGame[] = [
       coin: 1,
       items: cards
     },
-    status: 'Created'
+    status: 'Running'
   },
   {
     firstPlayer: {
       username: 'test1',
       coin: 0,
-      items: cards
-    },
-    secondPlayer: {
-      username: 'test2',
-      coin: 1,
-      items: cards
-    },
-    status: 'Created'
-  },
-  {
-    firstPlayer: {
-      username: 'test1',
-      coin: 1,
-      items: cards
-    },
-    secondPlayer: {
-      username: 'test2',
-      coin: 1,
-      items: cards
-    },
-    status: 'Created'
-  },
-  {
-    firstPlayer: {
-      username: 'test1',
-      coin: 0,
-      items: cards
-    },
-    secondPlayer: {
-      username: 'test2',
-      coin: 1,
-      items: cards
-    },
-    status: 'Created'
-  },
-  {
-    firstPlayer: {
-      username: 'test1',
-      coin: 1,
       items: cards
     },
     secondPlayer: {
@@ -117,7 +78,46 @@ export const coinFlipMock: CoinFlipGame[] = [
       coin: 1,
       items: cards
     },
-    status: 'Created'
+    status: 'Ended'
+  },
+  {
+    firstPlayer: {
+      username: 'test1',
+      coin: 1,
+      items: cards
+    },
+    secondPlayer: {
+      username: 'test2',
+      coin: 1,
+      items: cards
+    },
+    status: 'Ended'
+  },
+  {
+    firstPlayer: {
+      username: 'test1',
+      coin: 1,
+      items: cards
+    },
+    secondPlayer: {
+      username: 'test2',
+      coin: 1,
+      items: cards
+    },
+    status: 'Ended'
+  },
+  {
+    firstPlayer: {
+      username: 'test1',
+      coin: 0,
+      items: cards
+    },
+    secondPlayer: {
+      username: 'test2',
+      coin: 1,
+      items: cards
+    },
+    status: 'Running'
   },
   {
     firstPlayer: {
@@ -156,6 +156,6 @@ export const coinFlipMock: CoinFlipGame[] = [
       coin: 0,
       items: cards
     },
-    status: 'Created'
+    status: 'Running'
   }
 ]

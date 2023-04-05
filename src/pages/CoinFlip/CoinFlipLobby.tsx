@@ -6,6 +6,8 @@ import ModalWrapper from '../../components/containers/ModalWrapper'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import RefreshIcon from '../../components/icons/RefreshIcon'
 import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
+import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
+import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
@@ -14,8 +16,9 @@ import { IItemCard } from '../../types/ItemCard'
 import { getCostByFieldName } from '../../helpers/numbers'
 import { cards } from '../../mocks/cards'
 
-interface CoinFlipCreateModalProps {
+interface CoinFlipLobbyProps {
   onClose: Dispatch<SetStateAction<boolean>>
+  isCreated: boolean
 }
 
 type UpdateArrayBySelectedItem = (
@@ -26,7 +29,7 @@ type UpdateArrayBySelectedItem = (
 type IsItemSelected = (items: IItemCard[], id: string) => boolean
 type HandleSelectItem = (id: string) => void
 
-const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
+const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
   const { selectedCoin, setSelectedCoin } = useCoinFlip()
 
   const [items, setItems] = useState<IItemCard[]>([])
@@ -74,7 +77,9 @@ const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
       <div className='flex justify-between items-center space-x-4 border-b border-lightblue-darken/50 pb-4 xs:pr-10 pt-5 xs:pt-3'>
         <div className='flex items-center justify-center'>
           <CoinFlipLogoIcon />
-          <span className='pl-3 text-lg hidden xxs:block'>Create Coinflip</span>
+          <span className='pl-3 text-lg hidden xxs:block'>
+            {isCreated ? 'Join' : 'Create'} Coinflip
+          </span>
         </div>
         <div className='flex justify-between items-center md:space-x-4 space-x-2'>
           <Button variant='YellowOutlined'>
@@ -121,9 +126,18 @@ const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
           <QuantityCoins textSize='text-sm' quantity={23535.32} />
         </div>
         <div className='flex items-center justify-between space-x-4'>
-          <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
+          {!isCreated
+            ? (<ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />) 
+            : (
+            <img
+              key={selectedCoin === 0 ? 1 : 0}
+              className='w-7 h-7 sm:w-11 sm:h-11'
+              src={selectedCoin === 0 ? CoinFlipTail : CoinFlipHead}
+              alt={selectedCoin === 0 ? 'tail' : 'head'}
+            />
+              )}
           <Button color='GreenPrimary'>
-            <span className='h-9 py-2 px-5'>Create</span>
+            <span className='h-9 py-2 px-5'>{isCreated ? 'Join' : 'Create'}</span>
           </Button>
         </div>
       </div>
@@ -131,4 +145,4 @@ const CoinFlipCreateModal = ({ onClose }: CoinFlipCreateModalProps) => {
   )
 }
 
-export default CoinFlipCreateModal
+export default CoinFlipLobby
