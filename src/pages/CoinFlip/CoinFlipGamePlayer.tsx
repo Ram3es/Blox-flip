@@ -4,8 +4,15 @@ import clsx from 'clsx'
 
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import ItemCard from '../../components/common/Cards/ItemCard'
+import WinPercent from '../../components/common/WinPercent'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { UserAvatar } from '../../components/user/UserAvatar'
+
+import SkinSmallIcon from '../../assets/img/skin_small.png'
+import SkinBigIcon from '../../assets/img/skin_big.png'
+
+import CoinFlipHead from '../../assets/img/head_medium.png'
+import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
 
 import { IItemCard } from '../../types/ItemCard'
 
@@ -13,49 +20,55 @@ import { cards } from '../../mocks/cards'
 
 interface PlayerProps {
   opponent: boolean
+  selectedCoin: 0 | 1
 }
 
-const CoinFlipGamePlayer = ({ opponent }: PlayerProps) => {
+const CoinFlipGamePlayer = ({ opponent, selectedCoin }: PlayerProps) => {
   const [items, setItems] = useState<IItemCard[]>([])
+
   useEffect(() => {
     setItems(cards.map((card) => ({ ...card, isSelected: false })))
   }, [])
 
+  const containerClasses = clsx('w-2/4 h-[400px] xs:h-[420px]', {
+    'bg-coinflip-game--orange': !opponent,
+    'bg-coinflip-game--blue': opponent
+  })
+
+  const avatarClasses = clsx(
+    'hidden xs:flex mt-[-55px] w-[117px] h-[117px] items-end justify-center border border-blue-highlight rounded-full overflow-hidden',
+    {
+      'bg-circle-avatar--yellow': !opponent,
+      'bg-circle-avatar--blue': opponent
+    }
+  )
+
   return (
-    <div
-      className={clsx('w-2/4 h-[400px] xs:h-[420px]', {
-        'bg-coinflip-game--orange': !opponent,
-        'bg-coinflip-game--blue': opponent
-      })}
-    >
+    <div className={containerClasses}>
       <div className='bg-blue-primary-secondary space-y-6 h-full'>
         <div className='mt-4 xs:mt-20 flex xs:flex-row flex-col items-start justify-around'>
-          <div className='mt-[-16px] xs:mx-0 mx-auto flex  bg-green-third'>
+          <div className='mt-[-16px] xs:mx-0 mx-auto flex bg-green-third'>
             <QuantityCoinsContainer size='SMALL'>
               <QuantityCoins quantity={14214.51} />
             </QuantityCoinsContainer>
           </div>
-          <div
-            className={clsx(
-              'hidden xs:flex mt-[-55px] w-[117px] h-[117px] items-end justify-center border border-blue-highlight rounded-full overflow-hidden',
-              {
-                'bg-circle-avatar--yellow': !opponent,
-                'bg-circle-avatar--blue': opponent
-              }
-            )}
-          >
+          <div className={avatarClasses}>
             <div className='w-21 h-21'>
               <UserAvatar />
             </div>
           </div>
-          <div className='xs:mt-[-24px] xs:space-y-3 text-center xs:mx-0 mx-auto'>
+          <div className='ml-1 xs:ml-0 xs:mt-[-24px] xs:space-y-3 text-center'>
             <span className='text-base font-bold'>Brrrrrr</span>
-            <div className='h-9 bg-blue-ocean-secondary/25 border-2 border-blue-ocean-secondary/50 px-3 md:px-4 rounded font-bold text-sm flex items-center justify-between'>
-              47.
-              <span className='text-gray-primary uppercase font-semibold text-xs pt-0.5'>
-                50 &nbsp;%
-              </span>
-            </div>
+            <WinPercent />
+          </div>
+        </div>
+        <div className='relative'>
+          <div className='absolute top-[-74px] right-2 xs:right-[80px] xs:top-[-155px] sm:right-[145px]'>
+            <img
+              src={(opponent && SkinBigIcon) || (selectedCoin === 0 ? CoinFlipHead : CoinFlipTail)}
+              className='w-12 h-12 xs:w-14 xs:h-14 '
+              alt={selectedCoin === 0 ? CoinFlipHead : CoinFlipTail}
+            />
           </div>
         </div>
         <div className='pb-48 xs:pb-52 w-full pr-3 -mr-2 flex flex-wrap overflow-y-auto min-h-[276px] max-h-full scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>

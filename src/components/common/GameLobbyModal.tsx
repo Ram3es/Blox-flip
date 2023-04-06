@@ -4,18 +4,20 @@ import { useCoinFlip } from '../../store/CoinFlipStore'
 import ItemCard from './Cards/ItemCard'
 import ModalWrapper from '../containers/ModalWrapper'
 import CoinFlipLogoIcon from '../icons/CoinFlipLogoIcon'
-import RefreshIcon from '../icons/RefreshIcon'
 import ToggleCoin from './BetActions/ToggleCoin'
-import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
-import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
+import QuantityCoinsContainer from './QuantityCoins/QuantityCoinsContainer'
 import { Button } from '../base/Button'
 import { QuantityCoins } from './QuantityCoins/QuantityCoins'
+
+import RefreshIcon from '../icons/RefreshIcon'
+
+import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
+import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
 
 import { IItemCard } from '../../types/ItemCard'
 
 import { getCostByFieldName } from '../../helpers/numbers'
 import { cards } from '../../mocks/cards'
-import QuantityCoinsContainer from './QuantityCoins/QuantityCoinsContainer'
 
 interface GameLobbyModalProps {
   onClose: Dispatch<SetStateAction<boolean>>

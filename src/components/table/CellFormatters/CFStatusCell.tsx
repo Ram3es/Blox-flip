@@ -1,12 +1,15 @@
+import { useState } from 'react'
+
+import CoinFlipLobby from '../../common/GameLobbyModal'
+import { UserAvatar } from '../../user/UserAvatar'
 import { GameStatus } from '../../../types/enums'
 import { Button } from '../../base/Button'
+
 import DiamondIcon from '../../icons/DiamondIcon'
 import PreviewIcon from '../../icons/PreviewIcon'
+
 import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
-import { UserAvatar } from '../../user/UserAvatar'
-import { useState } from 'react'
-import CoinFlipLobby from '../../common/GameLobbyModal'
 
 interface CFStatusCellProps {
   status: keyof typeof GameStatus
@@ -29,8 +32,6 @@ const ButtonWithTimer = () => {
 }
 
 const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
-  const [isOpenJoinCF, setIsOpenJoinCF] = useState(false)
-
   const getCurrentButtonByStatus = () => {
     if (status === 'Created') {
       return (
@@ -56,16 +57,16 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
       )
     }
 
-    if (status === 'Ended' && coin === 1) {
-      return (
-        <Button variant='BlueOutlined' onClick={() => setIsOpenJoinCF(true)}>
-          <div className='flex items-center justify-center px-5 py-2'>
-            <img className='h-6 w-6' src={CoinFlipTail} alt='head' />
-            <span className='text-blue-golf text-sm font-bold pl-2'>Winner</span>
-          </div>
-        </Button>
-      )
-    }
+    // if (status === 'Ended' && coin === 1) {
+    //   return (
+    //     <Button variant='BlueOutlined' onClick={() => setIsOpenJoinCF(true)}>
+    //       <div className='flex items-center justify-center px-5 py-2'>
+    //         <img className='h-6 w-6' src={CoinFlipTail} alt='head' />
+    //         <span className='text-blue-golf text-sm font-bold pl-2'>Winner</span>
+    //       </div>
+    //     </Button>
+    //   )
+    // }
 
     return <ButtonWithTimer />
   }
@@ -78,9 +79,6 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
           <PreviewIcon iconClasses='mx-auto my-auto' />
         </Button>
       </div>
-      {isOpenJoinCF ? (
-        <CoinFlipLobby isCreated={true} onClose={() => setIsOpenJoinCF(false)} />
-      ) : null}
     </>
   )
 }
