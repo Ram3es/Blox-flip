@@ -25,7 +25,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
 
   return (
     <ModalWrapper
-      closeModal={() => 'hi'}
+      closeModal={() => onClose}
       modalClasses='relative px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px]'
     >
       <div className='overflow-hidden pt-6 xs:pt-0'>

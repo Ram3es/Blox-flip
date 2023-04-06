@@ -13,4 +13,5 @@ export interface CoinFlipGame {
   firstPlayer: CoinFlipPlayer
   secondPlayer?: CoinFlipPlayer
   status: keyof typeof GameStatus
+  winCoin?: Coin
 }

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 
 import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
-import GameLobbyModal from '../../components/common/GameLobbyModal'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
@@ -13,7 +12,6 @@ import { BetToolkit } from '../../types/Bets'
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin } = useCoinFlip()
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
-  const [isOpenCreateCF, setIsOpenCreateCF] = useState(false)
 
   const betToolkit: BetToolkit[] = [
     {
@@ -56,16 +54,13 @@ const CoinFlipBetActions = () => {
           />
         </div>
         <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
-        <Button variant='Gradient' onClick={() => setIsOpenCreateCF(true)}>
+        <Button variant='Gradient' onClick={() => {}}>
           <div className='flex items-center justify-between md:py-3.5 py-2 px-2'>
             <DiamondIcon width='16' height='12' />
             <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
           </div>
         </Button>
       </div>
-      {isOpenCreateCF ? (
-        <GameLobbyModal isCreated={false} onClose={() => setIsOpenCreateCF(false)} />
-      ) : null}
     </>
   )
 }

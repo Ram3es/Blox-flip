@@ -12,11 +12,11 @@ import clsx from 'clsx'
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
 import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
+import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
 import { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 
 const CoinFlipList = () => {
   const [games] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -39,7 +39,7 @@ const CoinFlipList = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <div className='py-2.5 px-2'>
+        <div className='w-32 h-10'>
           <QuantityCoinsContainer>
             <QuantityCoins quantity={14214.51} />
           </QuantityCoinsContainer>
@@ -50,7 +50,7 @@ const CoinFlipList = () => {
     columnHelper.accessor('status', {
       id: 'status',
       header: () => 'Status',
-      cell: (props) => <CFStatusCell status={'Ended'} />,
+      cell: ({ row }) => <CFStatusCell status={row.original.status} coin={row.original.winCoin} />,
       footer: (props) => props.column.id
     })
   ]
@@ -72,8 +72,7 @@ const CoinFlipList = () => {
                   <th key={header.id} className='pb-4 border-blue-highlight/50 border-b'>
                     <div
                       className={clsx('text-left text-gray-primary font-semibold text-base', {
-                        'text-right': array[index] === array.at(-1),
-                        '': index === 1
+                        'text-right': array[index] === array.at(-1)
                       })}
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}

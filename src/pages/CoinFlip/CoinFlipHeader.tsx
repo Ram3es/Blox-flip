@@ -5,10 +5,9 @@ import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import CoinFlipBetActions from './CoinFlipBetActions'
 import SignInModal from '../../components/containers/SignInModal'
 import DiamondIcon from '../../components/icons/DiamondIcon'
-
-import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
+import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { Button } from '../../components/base/Button'
 
 const CoinFlipHeader = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
