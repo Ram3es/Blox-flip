@@ -13,6 +13,7 @@ import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
 
 import { Coin } from '../../../types/CoinFlip'
+import { useCoinFlip } from '../../../store/CoinFlipStore'
 
 interface CFStatusCellProps {
   status: keyof typeof GameStatus
@@ -24,9 +25,17 @@ interface CoinFlipButtonWithTimerProps {
   timer?: number
 }
 
-const CFJoinButton = () => {
+interface CoinFlipJoinButtonProps {
+  gameId: string
+}
+
+const CFJoinButton = ({ gameId }: CoinFlipJoinButtonProps) => {
+  const { setIsOpenJoinGame } = useCoinFlip()
+
+  console.log(gameId)
+
   return (
-    <Button variant='Gradient'>
+    <Button variant='Gradient' onClick={() => setIsOpenJoinGame(true)}>
       <div className='flex items-center justify-center h-10 w-[5.5rem]'>
         <span className='w-4 shrink-0 relative text-white'>
           <DiamondIcon width='16' height='12' />
@@ -91,7 +100,7 @@ const CFButtonWinner = ({ coin }: { coin: Coin }) => {
 const CFStatusCell = ({ status, coin }: CFStatusCellProps) => {
   const getCurrentButtonByStatus = () => {
     if (status === 'Created') {
-      return <CFJoinButton />
+      return <CFJoinButton gameId='uh1o1i24k124' />
     }
 
     if (status === 'Ended' && (coin === 0 || coin === 1)) {

@@ -10,7 +10,8 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 import { BetToolkit } from '../../types/Bets'
 
 const CoinFlipBetActions = () => {
-  const { betAmount, setBetAmount, selectedCoin, setSelectedCoin } = useCoinFlip()
+  const { betAmount, setBetAmount, selectedCoin, setSelectedCoin, setIsOpenCreateGame } =
+    useCoinFlip()
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
 
   const betToolkit: BetToolkit[] = [
@@ -54,7 +55,7 @@ const CoinFlipBetActions = () => {
           />
         </div>
         <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
-        <Button variant='Gradient' onClick={() => {}}>
+        <Button variant='Gradient' onClick={() => setIsOpenCreateGame(true)}>
           <div className='flex items-center justify-between md:py-3.5 py-2 px-2'>
             <DiamondIcon width='16' height='12' />
             <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
