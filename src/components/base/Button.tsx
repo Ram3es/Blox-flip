@@ -18,7 +18,8 @@ enum ColorEnum {
   GreenPrimaryOpacity = 'GreenPrimaryOpacity',
   BlueSecondary = 'BlueSecondary',
   BlueAccent = 'BlueAccent',
-  BlueHighlight = 'BlueHighlight'
+  BlueHighlight = 'BlueHighlight',
+  BlueAccentSix = 'BlueAccentSix'
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -34,7 +35,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'bg-green-primary/20': color === ColorEnum.GreenPrimaryOpacity,
       'bg-blue-secondary': color === ColorEnum.BlueSecondary,
       'bg-blue-accent': color === ColorEnum.BlueAccent,
-      'bg-blue-highlight': color === ColorEnum.BlueHighlight
+      'bg-blue-highlight': color === ColorEnum.BlueHighlight,
+      'bg-blue-accent-six': color === ColorEnum.BlueAccentSix
     })
 
     const variantClasses = clsx('flex items-center rounded', {

@@ -10,13 +10,15 @@ import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import VersusBattleIcon from '../../assets/img/versus_battle.png'
+import QuestionMark from '../../assets/img/question_mark.svg'
 
 interface CoinFlipGameProps {
   onClose?: Dispatch<SetStateAction<boolean>>
   gameId?: number
+  withBot?: boolean
 }
 
-const CoinFlipGame = ({ gameId, onClose }: CoinFlipGameProps) => {
+const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
   const [serverSeed] = useState(
     'e6c22f866c14ee6c22f866c14ee6c22f866c14ee6c22f866c14ee6c22f866c14ee6c22f866c14e'
   )
@@ -46,12 +48,15 @@ const CoinFlipGame = ({ gameId, onClose }: CoinFlipGameProps) => {
           <div className='z-100 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
             <img className='rotate-[-48deg]' src={VersusBattleIcon} alt='versus' />
           </div>
-          <div className='flex items-center'>
+          <div className='sm:w-96 flex justify-center items-center'>
             <AvatarWithUsername username='Brrrrrra' avatar='' />
             <span className='mx-6'>
               <img src={VersusBattleIcon} alt='versus' />
             </span>
-            <AvatarWithUsername username='Brrrrrra' avatar='' />
+            <AvatarWithUsername
+              username={withBot ? '...' : 'Brrrrrra'}
+              avatar={withBot ? QuestionMark : ''}
+            />
           </div>
         </div>
         <div className='flex'>

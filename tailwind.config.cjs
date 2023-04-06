@@ -35,6 +35,7 @@ module.exports = {
         'blue-accent-third': 'rgba(33, 40, 65, 1)',
         'blue-accent-fourth': 'rgba(52, 61, 97, 1)',
         'blue-accent-five': 'rgba(79, 89, 136, 1)',
+        'blue-accent-six': 'rgba(45, 56, 106)',
         'blue-highlight': 'rgba(54, 62, 96)',
         'blue-highlight-secondary': 'rgba(47, 55, 95)',
         'blue-light': 'rgba(72, 81, 120)',

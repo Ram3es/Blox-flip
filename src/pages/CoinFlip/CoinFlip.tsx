@@ -7,7 +7,7 @@ const CoinFlip = () => {
     <div>
       <CoinFlipHeader />
       <CoinFlipList />
-      <CoinFlipGame />
+      <CoinFlipGame withBot={false} />
     </div>
   )
 }

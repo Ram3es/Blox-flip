@@ -8,22 +8,24 @@ import WinPercent from '../../components/common/WinPercent'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { UserAvatar } from '../../components/user/UserAvatar'
 
-import SkinSmallIcon from '../../assets/img/skin_small.png'
 import SkinBigIcon from '../../assets/img/skin_big.png'
 
 import CoinFlipHead from '../../assets/img/head_medium.png'
 import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
+import QuestionMark from '../../assets/img/question_mark.svg'
 
 import { IItemCard } from '../../types/ItemCard'
 
 import { cards } from '../../mocks/cards'
+import { Button } from '../../components/base/Button'
 
 interface PlayerProps {
   opponent: boolean
   selectedCoin: 0 | 1
+  isBot?: boolean
 }
 
-const CoinFlipGamePlayer = ({ opponent, selectedCoin }: PlayerProps) => {
+const CoinFlipGamePlayer = ({ opponent, selectedCoin, isBot }: PlayerProps) => {
   const [items, setItems] = useState<IItemCard[]>([])
 
   useEffect(() => {
@@ -49,16 +51,16 @@ const CoinFlipGamePlayer = ({ opponent, selectedCoin }: PlayerProps) => {
         <div className='mt-4 xs:mt-20 flex xs:flex-row flex-col items-start justify-around'>
           <div className='mt-[-16px] xs:mx-0 mx-auto flex bg-green-third'>
             <QuantityCoinsContainer size='SMALL'>
-              <QuantityCoins quantity={14214.51} />
+              <QuantityCoins quantity={isBot ? null : 124124} />
             </QuantityCoinsContainer>
           </div>
           <div className={avatarClasses}>
             <div className='w-21 h-21'>
-              <UserAvatar />
+              <UserAvatar image={isBot ? QuestionMark : ''} />
             </div>
           </div>
           <div className='ml-1 xs:ml-0 xs:mt-[-24px] xs:space-y-3 text-center'>
-            <span className='text-base font-bold'>Brrrrrr</span>
+            <span className='text-base font-bold'>{isBot ? '...' : 'Braaaaa'}</span>
             <WinPercent />
           </div>
         </div>
@@ -72,10 +74,21 @@ const CoinFlipGamePlayer = ({ opponent, selectedCoin }: PlayerProps) => {
           </div>
         </div>
         <div className='hidden xs:block border-b border-blue-accent ml-2 mr-7' />
-        <div className='pb-48 xs:pb-52 w-full pr-3 -mr-2 flex flex-wrap overflow-y-auto min-h-[276px] max-h-full scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
-          {items.map((item) => (
-            <ItemCard variant='CoinFlipSmall' key={item.id} {...item} />
-          ))}
+        <div className='pb-48 xs:pb-60 w-full pr-3 -mr-2 flex flex-wrap overflow-y-auto min-h-[276px] max-h-full scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+          {!isBot &&
+            items.map((item) => <ItemCard variant='CoinFlipSmall' key={item.id} {...item} />)}
+          {isBot && (
+            <div className='px-2 my-10 mx-auto space-y-2'>
+              <Button color='GreenPrimary'>
+                <div className='w-32 xs:w-40 h-9 flex items-center justify-center'>Call bot</div>
+              </Button>
+              <Button color='BlueAccentSix'>
+                <div className='w-32 xs:w-40 h-9 flex items-center justify-center text-blue-ocean-secondary'>
+                  Cancel
+                </div>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

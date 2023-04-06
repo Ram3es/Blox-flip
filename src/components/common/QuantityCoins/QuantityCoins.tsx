@@ -4,7 +4,7 @@ import DiamondIcon from '../../icons/DiamondIcon'
 import { formatNumber } from '../../../helpers/numbers'
 
 export interface QuantityCoinsProps {
-  quantity: number
+  quantity?: number | null
   isFailed?: boolean
   color?: 'red' | 'green' | 'none'
   textSize?: string
@@ -39,7 +39,7 @@ export const QuantityCoins: FC<QuantityCoinsProps> = ({
     'text-white': color === 'none'
   })
 
-  const remainder = quantity % 1
+  const remainder = quantity ? quantity % 1 : null
 
   return (
     <div className='flex items-center'>
@@ -51,16 +51,13 @@ export const QuantityCoins: FC<QuantityCoinsProps> = ({
         />
       </span>
       <span className={quantityClasses}>
-        {isFailed ? (
-          <span className='text-white'>-</span>
-        ) : remainder === 0 ? (
-          <>
-            {formatNumber(quantity)}
-            <span className='opacity-50'>.00</span>
-          </>
-        ) : (
-          <>{formatNumber(quantity, 2)}</>
-        )}
+        {quantity === null || quantity === undefined
+          ? '...'
+          : quantity && isFailed
+            ? (<span className='text-white'>-</span>)
+            : remainder === 0
+              ? (<>{formatNumber(quantity)}<span className='opacity-50'>.00</span></>)
+              : (<>{formatNumber(quantity, 2)}</>)}
       </span>
     </div>
   )
