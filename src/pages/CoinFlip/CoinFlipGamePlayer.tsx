@@ -71,6 +71,7 @@ const CoinFlipGamePlayer = ({ opponent, selectedCoin }: PlayerProps) => {
             />
           </div>
         </div>
+        <div className='hidden xs:block border-b border-blue-accent ml-2 mr-7' />
         <div className='pb-48 xs:pb-52 w-full pr-3 -mr-2 flex flex-wrap overflow-y-auto min-h-[276px] max-h-full scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
           {items.map((item) => (
             <ItemCard variant='CoinFlipSmall' key={item.id} {...item} />
