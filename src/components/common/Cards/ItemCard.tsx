@@ -61,12 +61,12 @@ const ItemCard: FC<IItemCardProps> = ({
   })
 
   const variantClasses = clsx(
-    `${isSelected ? 'is-selected' : ''} px-1 w-1/2 xxs:w-1/4 xs:w-1/5 shrink-0 mb-2 group/item`,
+    `${isSelected ? 'is-selected' : ''} px-1 w-1/2 xxs:w-1/4 shrink-0 mb-2 group/item`,
     {
-      'md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
-      'md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
-      'lg:w-3/9 md:h-40 is-default': variant === ItemCardVariantEnum.CoinFlip,
-      'lg:w-1/4 text-xs is-default': variant === ItemCardVariantEnum.CoinFlipSmall
+      'xs:w-1/5 md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
+      'xs:w-1/5 md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
+      'xs:w-1/5 lg:w-3/9 md:h-40 is-default': variant === ItemCardVariantEnum.CoinFlip,
+      'w-full xs:w-1/3 md:w-1/4 text-xs is-default': variant === ItemCardVariantEnum.CoinFlipSmall
     }
   )
 

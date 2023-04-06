@@ -100,7 +100,7 @@ const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
           </Button>
         </div>
       </div>
-      <div className='w-full min-h-[276px] xs:min-h-[362px] max-h-[calc(100vh_-_100%)] sm:max-h-[calc(100vh_-_85%)] ls:max-h-[calc(100vh_-_125%)] lg:max-h-[calc(100vh_-_135%)] 3xl:max-h-[calc(100vh_-_268%)] flex flex-wrap overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-3 -mr-2 '>
+      <div className='pb-60 xs:pb-40 w-full pr-3 -mr-2 flex flex-wrap overflow-y-auto min-h-[276px] max-h-full scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
         {items.map((item) => (
           <ItemCard variant='CoinFlip' key={item.id} onSelect={handleSelectItem} {...item} />
         ))}
