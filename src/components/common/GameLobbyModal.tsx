@@ -1,22 +1,23 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 
-import ItemCard from '../../components/common/Cards/ItemCard'
-import ModalWrapper from '../../components/containers/ModalWrapper'
-import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
-import RefreshIcon from '../../components/icons/RefreshIcon'
-import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
+import ItemCard from './Cards/ItemCard'
+import ModalWrapper from '../containers/ModalWrapper'
+import CoinFlipLogoIcon from '../icons/CoinFlipLogoIcon'
+import RefreshIcon from '../icons/RefreshIcon'
+import ToggleCoin from './BetActions/ToggleCoin'
 import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
-import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import { Button } from '../base/Button'
+import { QuantityCoins } from './QuantityCoins/QuantityCoins'
 
 import { IItemCard } from '../../types/ItemCard'
 
 import { getCostByFieldName } from '../../helpers/numbers'
 import { cards } from '../../mocks/cards'
+import QuantityCoinsContainer from './QuantityCoins/QuantityCoinsContainer'
 
-interface CoinFlipLobbyProps {
+interface GameLobbyModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
   isCreated: boolean
 }
@@ -29,7 +30,7 @@ type UpdateArrayBySelectedItem = (
 type IsItemSelected = (items: IItemCard[], id: string) => boolean
 type HandleSelectItem = (id: string) => void
 
-const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
+const GameLobbyModal = ({ onClose, isCreated }: GameLobbyModalProps) => {
   const { selectedCoin, setSelectedCoin } = useCoinFlip()
 
   const [items, setItems] = useState<IItemCard[]>([])
@@ -83,7 +84,7 @@ const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
         </div>
         <div className='flex justify-between items-center md:space-x-4 space-x-2'>
           <Button variant='YellowOutlined'>
-            <span className=' text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
+            <span className='text-13 font-medium px-4 py-2.5 flex items-center justify-center'>
               {items.length} <span className='text-orange-primary-light'>&nbsp;Items</span>
             </span>
           </Button>
@@ -91,9 +92,9 @@ const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
             <span className='font-medium text-13 leading-4 text-blue-ocean-secondary hidden xxs:block'>
               Inventory value
             </span>
-            <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
+            <QuantityCoinsContainer>
               <QuantityCoins quantity={getCostByFieldName(items, 'price')} />
-            </div>
+            </QuantityCoinsContainer>
           </div>
           <Button onClick={handleResetSelectedItems}>
             <RefreshIcon />
@@ -117,25 +118,27 @@ const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
                 &nbsp;skins
               </span>
             </div>
-            <div className='h-9 flex items-center border-2 border-green-primary/40 gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
+            <QuantityCoinsContainer size='SMALL'>
               <QuantityCoins textSize='text-base' quantity={getCostInSelectedItems()} />
-            </div>
+            </QuantityCoinsContainer>
           </div>
         </div>
         <div className='h-9 flex items-center gradient-green-secondary shadow-green-primary-20 rounded px-3 md:px-4'>
           <QuantityCoins textSize='text-sm' quantity={23535.32} />
         </div>
+
         <div className='flex items-center justify-between space-x-4'>
-          {!isCreated
-            ? (<ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />) 
-            : (
+          {!isCreated && (
+            <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
+          )}
+          {isCreated && (
             <img
               key={selectedCoin === 0 ? 1 : 0}
               className='w-7 h-7 sm:w-11 sm:h-11'
               src={selectedCoin === 0 ? CoinFlipTail : CoinFlipHead}
               alt={selectedCoin === 0 ? 'tail' : 'head'}
             />
-              )}
+          )}
           <Button color='GreenPrimary'>
             <span className='h-9 py-2 px-5'>{isCreated ? 'Join' : 'Create'}</span>
           </Button>
@@ -145,4 +148,4 @@ const CoinFlipLobby = ({ onClose, isCreated }: CoinFlipLobbyProps) => {
   )
 }
 
-export default CoinFlipLobby
+export default GameLobbyModal

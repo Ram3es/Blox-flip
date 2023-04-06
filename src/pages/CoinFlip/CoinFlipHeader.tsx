@@ -8,6 +8,7 @@ import DiamondIcon from '../../components/icons/DiamondIcon'
 
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 
 const CoinFlipHeader = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -32,9 +33,9 @@ const CoinFlipHeader = () => {
             </span>
           </Button>
           {!state.user && (
-            <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded px-3 py-1.5 md:px-4 md:py-2.5'>
-              <QuantityCoins quantity={23535.32} />
-            </div>
+            <QuantityCoinsContainer>
+              <QuantityCoins quantity={14214.51} />
+            </QuantityCoinsContainer>
           )}
         </div>
         <div className='flex items-center'>

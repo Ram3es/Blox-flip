@@ -17,7 +17,7 @@ const ToggleCoin = ({ selectedCoin, setSelectedCoin }: ToggleCoinProps) => {
       {coins.map((coin) => (
         <img
           key={coin}
-          onClick={() => setSelectedCoin((prev) => (prev === 0 ? 1 : 0))}
+          onClick={() => setSelectedCoin(coin)}
           className={clsx('w-7 h-7 sm:w-11 sm:h-11 cursor-pointer', {
             'grayscale-[75%]': selectedCoin !== coin
           })}

@@ -16,6 +16,7 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 
 import { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
+import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 
 const CoinFlipList = () => {
   const [games] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -38,8 +39,10 @@ const CoinFlipList = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <div className='flex items-center border border-green-primary gradient-green-secondary shadow-green-primary-20 rounded py-2.5 px-2'>
-          <QuantityCoins quantity={14214.51} />
+        <div className='py-2.5 px-2'>
+          <QuantityCoinsContainer>
+            <QuantityCoins quantity={14214.51} />
+          </QuantityCoinsContainer>
         </div>
       ),
       footer: (props) => props.column.id

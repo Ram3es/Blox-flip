@@ -3,14 +3,14 @@ import clsx from 'clsx'
 
 import { Button } from '../../base/Button'
 import { BetToolkit } from '../../../types/Bets'
-import { BaseSizes } from '../../../types/Sizes'
+import { BaseSize } from '../../../types/enums'
 
 type BetToolkitOrNull = BetToolkit | null
 interface ToggleBetsProps {
   value: BetToolkitOrNull
   handleChange: (value: BetToolkitOrNull) => void
   betToolkit: BetToolkit[]
-  buttonSize?: keyof typeof BaseSizes
+  buttonSize?: keyof typeof BaseSize
 }
 
 const ToggleBets = ({ value, handleChange, betToolkit, buttonSize = 'LARGE' }: ToggleBetsProps) => {
@@ -30,9 +30,9 @@ const ToggleBets = ({ value, handleChange, betToolkit, buttonSize = 'LARGE' }: T
                   className={clsx('px-2 items-center flex font-bold text-15', {
                     'text-green-primary': checked && toolkit.label !== 'Clear',
                     'text-gray-primary': !checked || toolkit.label === 'Clear',
-                    'py-2': buttonSize === BaseSizes.LARGE,
-                    'py-1.5': buttonSize === BaseSizes.MEDIUM,
-                    'py-1': buttonSize === BaseSizes.SMALL
+                    'py-2': buttonSize === BaseSize.LARGE,
+                    'py-1.5': buttonSize === BaseSize.MEDIUM,
+                    'py-1': buttonSize === BaseSize.SMALL
 
                   })}
                 >

@@ -6,7 +6,7 @@ import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
 import { UserAvatar } from '../../user/UserAvatar'
 import { useState } from 'react'
-import CoinFlipLobby from '../../../pages/CoinFlip/CoinFlipLobby'
+import CoinFlipLobby from '../../common/GameLobbyModal'
 
 interface CFStatusCellProps {
   status: keyof typeof GameStatus
@@ -78,7 +78,9 @@ const CFStatusCell = ({ status, coin = 1 }: CFStatusCellProps) => {
           <PreviewIcon iconClasses='mx-auto my-auto' />
         </Button>
       </div>
-      {isOpenJoinCF ? (<CoinFlipLobby isCreated={true} onClose={() => setIsOpenJoinCF(false)} />) : null}
+      {isOpenJoinCF ? (
+        <CoinFlipLobby isCreated={true} onClose={() => setIsOpenJoinCF(false)} />
+      ) : null}
     </>
   )
 }
