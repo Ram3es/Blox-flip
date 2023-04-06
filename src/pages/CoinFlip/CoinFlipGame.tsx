@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 
-import ModalWrapper from '../../components/containers/ModalWrapper'
+import ModalWrapper, { IModalWrapper } from '../../components/containers/ModalWrapper'
 import CoinFlipGamePlayer from './CoinFlipGamePlayer'
 import AvatarWithUsername from '../../components/common/AvatarWithUsername'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
@@ -13,7 +13,7 @@ import VersusBattleIcon from '../../assets/img/versus_battle.png'
 import QuestionMark from '../../assets/img/question_mark.svg'
 
 interface CoinFlipGameProps {
-  onClose?: Dispatch<SetStateAction<boolean>>
+  onClose: () => void
   gameId?: number
   withBot?: boolean
 }
@@ -25,7 +25,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
 
   return (
     <ModalWrapper
-      closeModal={() => onClose}
+      closeModal={onClose}
       modalClasses='relative px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px]'
     >
       <div className='overflow-hidden pt-6 xs:pt-0'>

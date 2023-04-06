@@ -50,7 +50,7 @@ const CoinFlipList = () => {
     columnHelper.accessor('status', {
       id: 'status',
       header: () => 'Status',
-      cell: ({ row }) => <CFStatusCell status={row.original.status} coin={row.original.winCoin} />,
+      cell: ({ row }) => <CFStatusCell gameId='rqwsrqwsrq2' status={row.original.status} coin={row.original.winCoin} />,
       footer: (props) => props.column.id
     })
   ]

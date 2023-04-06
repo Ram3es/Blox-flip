@@ -18,6 +18,7 @@ import { useCoinFlip } from '../../../store/CoinFlipStore'
 interface CFStatusCellProps {
   status: keyof typeof GameStatus
   coin?: Coin
+  gameId: string
 }
 
 interface CoinFlipButtonWithTimerProps {
@@ -97,7 +98,11 @@ const CFButtonWinner = ({ coin }: { coin: Coin }) => {
   )
 }
 
-const CFStatusCell = ({ status, coin }: CFStatusCellProps) => {
+const CFStatusCell = ({ status, coin, gameId }: CFStatusCellProps) => {
+  const { setIsOpenWatchedGame } = useCoinFlip()
+
+  console.log(gameId)
+
   const getCurrentButtonByStatus = () => {
     if (status === 'Created') {
       return <CFJoinButton gameId='uh1o1i24k124' />
@@ -116,7 +121,10 @@ const CFStatusCell = ({ status, coin }: CFStatusCellProps) => {
   return (
     <div className='flex items-center justify-end'>
       {getCurrentButtonByStatus()}
-      <Button className=' leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'>
+      <Button
+        onClick={() => setIsOpenWatchedGame(true)}
+        className='leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
+      >
         <PreviewIcon iconClasses='mx-auto my-auto' />
       </Button>
     </div>
