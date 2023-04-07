@@ -27,6 +27,8 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
 
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(10)
 
+  console.log(timeToStartEffect)
+
   const playerHeadRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<HTMLDivElement>(null)
 
