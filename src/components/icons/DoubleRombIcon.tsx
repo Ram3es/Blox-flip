@@ -1,12 +1,14 @@
 export const DoubleRombIcon = ({
   width = '20',
-  height = '10'
+  height = '10',
+  iconClasses
 }: {
   width?: string
   height?: string
+  iconClasses?: string
 }) => {
   return (
-    <svg width={width} height={height} viewBox='0 0 20 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg className={iconClasses ?? ''} width={width} height={height} viewBox='0 0 20 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path d='M3.5 1.5L7 5L3.5 8.5L0 5L3.5 1.5Z' fill='url(#paint0_linear_792_5)' />
       <path
         d='M3.5 1.5L7 5L3.5 8.5L0 5L3.5 1.5Z'

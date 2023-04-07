@@ -17,8 +17,7 @@ import ButtonsCell from '../../components/table/CellFormatters/ButtonsCell'
 import CasesCell from '../../components/table/CellFormatters/CasesCell'
 import RoundCell from '../../components/table/CellFormatters/RoundCell'
 
-const columnHelper =
-  createColumnHelper<Pick<IBattlesInfo, 'status' | 'date' | 'gameSetting' | 'players'>>()
+const columnHelper = createColumnHelper<Pick<IBattlesInfo, 'id' | 'status' | 'date' | 'gameSetting' | 'players' >>()
 const columnsMemo = [
   columnHelper.accessor(({ gameSetting }) => gameSetting.rounds, {
     id: 'rounds',
@@ -81,7 +80,7 @@ const columnsMemo = [
   columnHelper.accessor(({ gameSetting }) => gameSetting, {
     id: 'active',
     header: () => 'Active',
-    cell: ({ row: { original } }) => <ButtonsCell status={original.status} />,
+    cell: ({ row: { original } }) => <ButtonsCell id={original.id} status={ original.status} />,
     footer: (props) => props.column.id
   })
 ]

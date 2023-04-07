@@ -1,15 +1,23 @@
 
+import { IItemCard, IUnboxCard } from '../types/ItemCard'
 import { IUser } from './../types/User'
 
 type TStatus = 'created' | 'running' | 'ended'
 export type TMode = '1v1' | '1v1v1' | '1v1v1v1' | 'group' | '2v2'
-export type TBattleUser = Pick<IUser, 'id' | 'avatar' >
+
+export interface IBattleUser extends Omit<IUser, 'progress' > {
+
+  dropsCards: IItemCard[]
+  wonDiamonds: number
+
+}
 export interface IBattlesInfo {
   id: string
   status: TStatus
   date: string
-  players: [] | TBattleUser[]
+  players: [] | IBattleUser[]
   gameSetting: IGameSetting
+  cases?: IUnboxCard[]
 }
 interface IGameSetting {
   rounds: number
@@ -26,7 +34,7 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '777',
     status: 'created',
-    players: [{ id: '21', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [{ id: '21', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -37,7 +45,10 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '778',
     status: 'running',
-    players: [{ id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 12,
       price: 17000,
@@ -49,7 +60,10 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '790',
     status: 'ended',
-    players: [{ id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 7,
       price: 17000,
@@ -60,7 +74,11 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '779',
     status: 'ended',
-    players: [{ id: '32323', avatar: 'https://cdn.dribbble.com/users/3175546/screenshots/11634060/media/abe23d862136d3a3cebe2c654b2a5ae6.png?compress=1&resize=400x300' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '32323', avatar: 'https://cdn.dribbble.com/users/3175546/screenshots/11634060/media/abe23d862136d3a3cebe2c654b2a5ae6.png?compress=1&resize=400x300', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 12000,
@@ -72,7 +90,9 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '7327',
     status: 'ended',
-    players: [{ id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: '23233', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -83,7 +103,9 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '777',
     status: 'running',
-    players: [{ id: '23233', avatar: '/src/assets/img/avatar_img.png' }, { id: 'd325', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd325', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -95,7 +117,9 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '7778',
     status: 'created',
-    players: [{ id: '435', avatar: '/src/assets/img/avatar_img.png' }, { id: 'd32345', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '435', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -107,7 +131,11 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '77786',
     status: 'running',
-    players: [{ id: '435', avatar: '/src/assets/img/avatar_img.png' }, { id: 'd32345', avatar: '/src/assets/img/avatar_img.png' }, { id: 'd32345', avatar: '/src/assets/img/avatar_img.png' }, { id: 'd32345', avatar: '/src/assets/img/avatar_img.png' }],
+    players: [
+      { id: '435', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 7,
       price: 9900,

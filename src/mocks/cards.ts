@@ -1,6 +1,6 @@
-import { IUnboxCard } from '../types/ItemCard'
+import { IItemCard, IUnboxCard } from '../types/ItemCard'
 
-export const cards = [
+export const cards: IItemCard[] = [
   { id: '1', color: 'Orange', image: 'horns', name: 'Fiery Horns ', price: 1200, sold: true, active: false, isSelected: false },
   { id: '2', color: 'Blue', image: 'helmet', name: 'Fiery Helmet of the Netherworld', price: 600, sold: false, active: true, isSelected: false },
   { id: '3', color: 'Pink', image: 'horns', name: 'Fiery Horns of the Netherworld', price: 2400, sold: true, active: false, isSelected: false },

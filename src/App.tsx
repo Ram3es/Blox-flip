@@ -25,6 +25,7 @@ import CreditCard from './pages/Deposit/methods/CreditCard'
 import { DepositGift } from './pages/Deposit/methods/DepositGift'
 import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
+import BattleCases from './pages/Battle/BattleCases'
 import CoinFlip from './pages/CoinFlip/CoinFlip'
 
 export const App = () => {
@@ -66,6 +67,7 @@ export const App = () => {
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/battles-lobby' element={<BattleLobby />} />
           <Route path='/create-battle' element={<CreateBattle />} />
+          <Route path='/battle/:id' element={<BattleCases />} />
         </Routes>
       </Container>
     </BrowserRouter>

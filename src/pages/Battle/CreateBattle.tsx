@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/base/Button'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import AddBoxCard from '../../components/common/Cards/AddBoxCard'
@@ -30,6 +31,7 @@ const CreateBattle = () => {
   const [batlleSettings, setSetting] = useState(battleInitState)
 
   const fieldWithLinkRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   const incrementCounter = useCallback((id: string) => setCasesToBet(state => [...state.map(box => {
     if (box.id === id) {
@@ -70,8 +72,46 @@ const CreateBattle = () => {
   }, [batlleSettings])
 
   const onSubmitModal = useCallback((cards: IUnboxCardCounter[]) => setCasesToBet(cards), [])
+
+  const convertAmountBoxes = (): IUnboxCardCounter[] => {
+    let converted = [] as IUnboxCardCounter[]
+    casesBetted.forEach(box => {
+      const multiplyed: IUnboxCardCounter[] = Array.from(Array(box.amount).fill(box))
+      converted = converted.concat(multiplyed)
+    })
+    return converted
+  }
+
   const createGame = () => {
-    console.log({ ...batlleSettings, rounds: amountCases, price: totalCost })
+    console.log({
+      ...batlleSettings,
+      rounds: amountCases,
+      price: totalCost,
+      cases: casesBetted
+    })
+
+    const responseFromDB = {
+      gameSetting: {
+        ...batlleSettings,
+        rounds: amountCases,
+        price: totalCost
+      },
+      cases: convertAmountBoxes(),
+      players: [
+        {
+          id: new Date().getTime().toString(),
+          name: 'Boris Johnson',
+          avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe_FBy0_PayvR5hOX1F6i5ItKIblV1_y7HTg&usqp=CAU',
+          level: 17,
+          dropsCards: [],
+          wonDiamonds: 0
+        }, ...Array.from(Array(batlleSettings.mode.requiredPlayers - 1))],
+      id: '1234567',
+      date: '2032-03-12T23:46:58.567Z',
+      status: 'created'
+
+    }
+    navigate(`/battle/${responseFromDB.id}`, { state: responseFromDB })
   }
   return (
         <div className ="max-w-1190 w-full mx-auto">
@@ -103,6 +143,7 @@ const CreateBattle = () => {
                     </div>
                     <div className=' w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0 '>
                       <Button
+                        disabled={!casesBetted.length}
                         onClick={createGame}
                         className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
                         >Create
