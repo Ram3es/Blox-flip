@@ -62,7 +62,7 @@ const CoinFlipList = () => {
   })
 
   return (
-    <div className='overflow-auto max-w-full py-4'>
+    <div className='overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full max-w-full py-4'>
       <table className='min-w-full border-separate border-spacing-y-2.5'>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

@@ -1,6 +1,8 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import ModalWrapper, { IModalWrapper } from '../../components/containers/ModalWrapper'
+import clsx from 'clsx'
+
+import ModalWrapper from '../../components/containers/ModalWrapper'
 import CoinFlipGamePlayer from './CoinFlipGamePlayer'
 import AvatarWithUsername from '../../components/common/AvatarWithUsername'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
@@ -23,6 +25,38 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
     'e6c22f866c14ee6c22f866c14ee6c22f866c14ee6c22f866c14ee6c22f866c14ee6c22f866c14e'
   )
 
+  const [timeToStartEffect, setTimeToStartEffect] = useState<number>(10)
+
+  const playerHeadRef = useRef<HTMLDivElement>(null)
+  const playerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeToStartEffect((prevTimer) => {
+        if (prevTimer <= 0) {
+          clearInterval(countdown)
+          if (playerHeadRef.current && playerRef.current) {
+            playerHeadRef.current.style.filter = 'grayscale(100%)'
+            playerRef.current.style.filter = 'grayscale(100%)'
+          }
+          return 0
+        }
+        return prevTimer - 1
+      })
+    }, 1000)
+
+    return () => {
+      clearInterval(countdown)
+    }
+  }, [])
+
+  const mainSkinIconClasses = clsx(
+    'flex z-100 absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center',
+    {
+      grayscale: withBot
+    }
+  )
+
   return (
     <ModalWrapper
       closeModal={onClose}
@@ -42,7 +76,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
               <QuantityCoins quantity={14214.51} />
             </QuantityCoinsContainer>
           </div>
-          <div className='flex absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center'>
+          <div className={mainSkinIconClasses}>
             <img src={SkinBigIcon} alt='skin' />
           </div>
           <div className='z-100 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
@@ -54,6 +88,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
               <img src={VersusBattleIcon} alt='versus' />
             </span>
             <AvatarWithUsername
+              ref={playerHeadRef}
               username={withBot ? '...' : 'Brrrrrra'}
               avatar={withBot ? QuestionMark : ''}
             />
@@ -61,7 +96,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
         </div>
         <div className='flex'>
           <CoinFlipGamePlayer opponent={false} selectedCoin={0} />
-          <CoinFlipGamePlayer opponent={true} selectedCoin={1} />
+          <CoinFlipGamePlayer ref={playerRef} opponent={true} selectedCoin={1} isBot={withBot} />
         </div>
         <div className='absolute z-[50] bottom-0 left-0 w-full text-center py-2.5 px-6 bg-blue-highlight-secondary'>
           <p className='text-clip overflow-hidden text-blue-ocean-third font-normal text-base'>

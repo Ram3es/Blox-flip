@@ -33,8 +33,6 @@ interface CoinFlipJoinButtonProps {
 const CFJoinButton = ({ gameId }: CoinFlipJoinButtonProps) => {
   const { setIsOpenJoinGame } = useCoinFlip()
 
-  console.log(gameId)
-
   return (
     <Button variant='Gradient' onClick={() => setIsOpenJoinGame(true)}>
       <div className='flex items-center justify-center h-10 w-[5.5rem]'>
@@ -100,8 +98,6 @@ const CFButtonWinner = ({ coin }: { coin: Coin }) => {
 
 const CFStatusCell = ({ status, coin, gameId }: CFStatusCellProps) => {
   const { setIsOpenWatchedGame } = useCoinFlip()
-
-  console.log(gameId)
 
   const getCurrentButtonByStatus = () => {
     if (status === 'Created') {

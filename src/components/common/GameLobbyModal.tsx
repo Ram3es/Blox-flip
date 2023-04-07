@@ -22,6 +22,7 @@ import { cards } from '../../mocks/cards'
 interface GameLobbyModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
   isCreated: boolean
+  handleFunction: () => void
 }
 
 type UpdateArrayBySelectedItem = (
@@ -32,7 +33,7 @@ type UpdateArrayBySelectedItem = (
 type IsItemSelected = (items: IItemCard[], id: string) => boolean
 type HandleSelectItem = (id: string) => void
 
-const GameLobbyModal = ({ onClose, isCreated }: GameLobbyModalProps) => {
+const GameLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyModalProps) => {
   const { selectedCoin, setSelectedCoin } = useCoinFlip()
 
   const [items, setItems] = useState<IItemCard[]>([])
@@ -141,7 +142,7 @@ const GameLobbyModal = ({ onClose, isCreated }: GameLobbyModalProps) => {
               alt={selectedCoin === 0 ? 'tail' : 'head'}
             />
           )}
-          <Button color='GreenPrimary'>
+          <Button color='GreenPrimary' onClick={handleFunction}>
             <span className='h-9 py-2 px-5'>{isCreated ? 'Join' : 'Create'}</span>
           </Button>
         </div>
