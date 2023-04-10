@@ -25,28 +25,30 @@ const KingGameInventoriesHeader = ({
   selectedOption,
   setSelectedOption
 }: HeaderProps) => {
-  const headingClasses = clsx('flex items-center gap-2 font-bold text-base', {
+  const headingClasses = clsx('flex items-center gap-2 font-bold text-10 xs:text-base', {
     'gradient-king-text': isKing,
     'text-gray-primary': !isKing
   })
 
   return (
-    <div className='flex items-center gap-4'>
+    <div className='flex items-start ls:items-center ls:flex-row flex-col gap-4'>
       <div className={headingClasses}>
-        <ListIcon />
+        <p className='hidden ls:block'>
+          <ListIcon />
+        </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
       <QuantityCoins quantity={1500} />
       <Button disabled variant='HighlightDarken'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
-          7 <span className='hidden md:block'>&nbsp;Items</span>
+          7 <span>&nbsp;Items</span>
         </span>
       </Button>
       {isKing && options && selectedOption && setSelectedOption && (
         <ButtonsToggle
           options={options}
           currentSelect={selectedOption}
-          peackFunction={setSelectedOption}
+          peakFunction={setSelectedOption}
         />
       )}
     </div>

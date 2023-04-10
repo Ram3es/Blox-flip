@@ -45,7 +45,7 @@ const KingGameInventories = ({ game }: KingGameInventoriesProps) => {
 
   return (
     <div className='rounded-sm min-h-[460px] p-4 bg-gradient-yellow--king space-y-2'>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-start ls:items-center justify-between'>
         <KingGameInventoriesHeader
           isKing
           options={kingTabs}
