@@ -1,6 +1,12 @@
 export const ListIcon = () => {
   return (
-    <svg width={14} height={12} viewBox='0 0 14 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg
+      width={14}
+      height={12}
+      viewBox='0 0 14 12'
+      fill='currentColor'
+      xmlns='http://www.w3.org/2000/svg'
+    >
       <path
         d='M13 0H5C4.73478 0 4.48043 0.105357 4.29289 0.292893C4.10536 0.48043 4 0.734784 4 1C4 1.26522 4.10536 1.51957 4.29289 1.70711C4.48043 1.89464 4.73478 2 5 2H13C13.2652 2 13.5196 1.89464 13.7071 1.70711C13.8946 1.51957 14 1.26522 14 1C14 0.734784 13.8946 0.48043 13.7071 0.292893C13.5196 0.105357 13.2652 0 13 0Z'
         fill='currentColor'

@@ -11,7 +11,7 @@ import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 
 const KingGame = () => {
   return (
-    <div className='p-16 ls:p-0 flex flex-col xxs:items-center ls:items-stretch justify-items-center rounded bg-blue-golf/10 h-full ls:bg-transparent bg-gradient-yellow--king w-full ls:h-44 ls:flex-row ls:justify-between border--king-yellow'>
+    <div className='p-16 ls:p-0 flex flex-col xxs:items-center ls:items-stretch justify-items-center rounded h-full ls:bg-transparent bg-gradient-yellow--king w-full ls:h-44 ls:flex-row ls:justify-between border--king-yellow'>
       <div className='relative min-w-[444px] ls:block flex items-center ls:gap-0 gap-5'>
         <div className='ls:absolute top-[-55px] bg-gradient-yellow--king-avatar border--king-avatar-yellow w-[122px] h-[121px] flex items-center justify-center '>
           <UserAvatar className='w-20 h-[74px]' />

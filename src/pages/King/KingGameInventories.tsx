@@ -1,16 +1,64 @@
-import { ListIcon } from '../../components/icons/ListIcon'
-import { IUser } from '../../types/User'
+import { useEffect, useMemo, useState } from 'react'
+
+import KingGameInventoriesHeader from './KingGameInventoriesHeader'
+import KingGameInventoriesList from './KingGameInventoriesList'
+
+import DashedBigSpacerIcon from '../../assets/img/separator_big_icon.png'
+
+import { IKingGame } from '../../types/King'
+import { IItemCard } from '../../types/ItemCard'
+
+import { users } from '../../mocks/liveFeedUsers'
+import { cards } from '../../mocks/cards'
+
+export interface TabInterface {
+  variant: string
+}
+const kingTabs: TabInterface[] = [{ variant: 'Kings items' }, { variant: 'Kings vault' }]
 
 interface KingGameInventoriesProps {
-  user?: IUser
+  game?: IKingGame
 }
 
-const KingGameInventories = ({ user }: KingGameInventoriesProps) => {
+const KingGameInventories = ({ game }: KingGameInventoriesProps) => {
+  const [kingItems, setKingItems] = useState<IItemCard[]>([])
+  const [opponentItems, setOpponentItems] = useState<IItemCard[]>([])
+  const [kingItemsTab, setKingItemsTab] = useState<TabInterface>(kingTabs[0])
+
+  const updatedKingItems = useMemo(() => {
+    if (kingItemsTab.variant === 'Kings items') {
+      return cards.map((card) => ({ ...card, isSelected: false }))
+    }
+    if (kingItemsTab.variant === 'Kings vault') {
+      return cards.filter((card) => card.price > 1200)
+    }
+    return []
+  }, [kingItemsTab])
+
+  useEffect(() => {
+    setKingItems(updatedKingItems)
+  }, [updatedKingItems])
+
+  useEffect(() => {
+    setOpponentItems(cards.slice(0, 5).map((card) => ({ ...card, isSelected: false })))
+  }, [])
+
   return (
-    <div className='bg-[#1F2438] relative rounded-sm'>
-      <div className='bg-gradient-to-r from-[rgba(255,172,46,0.25)] via-transparent to-transparent absolute inset-0 rounded-sm'></div>
-      <div className='bg-black bg-opacity-15 h-full w-full rounded-sm gradient-king-text'>
-        <ListIcon />
+    <div className='rounded-sm min-h-[460px] p-4 bg-gradient-yellow--king space-y-2'>
+      <div className='flex items-center justify-between'>
+        <KingGameInventoriesHeader
+          isKing
+          options={kingTabs}
+          selectedOption={kingItemsTab}
+          setSelectedOption={setKingItemsTab}
+          user={users[0]}
+        />
+        <KingGameInventoriesHeader user={users[0]} />
+      </div>
+      <div className='flex items-center gap-2'>
+        <KingGameInventoriesList itemList={kingItems} />
+        <img className='hidden ls:block' src={DashedBigSpacerIcon} alt='dashed spacer' />
+        <KingGameInventoriesList itemList={opponentItems} />
       </div>
     </div>
   )
