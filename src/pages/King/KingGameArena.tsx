@@ -9,13 +9,13 @@ import KingIcon from '../../assets/img/king_icon.png'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 
-const KingGame = () => {
+const KingGameArena = () => {
   return (
-    <div className='p-16 ls:p-0 flex flex-col xxs:items-center ls:items-stretch justify-items-center rounded h-full ls:bg-transparent bg-gradient-yellow--king w-full ls:h-44 ls:flex-row ls:justify-between border--king-yellow'>
-      <div className='relative min-w-[444px] ls:block flex items-center ls:gap-0 gap-5'>
-        <div className='ls:absolute top-[-55px] bg-gradient-yellow--king-avatar border--king-avatar-yellow w-[122px] h-[121px] flex items-center justify-center '>
+    <div className='gap-4 xs:gap-0 p-16 ls:p-0 flex flex-col xxs:items-center ls:items-stretch rounded h-full ls:bg-transparent bg-gradient-yellow--king w-full ls:h-44 ls:flex-row ls:justify-between border--king-yellow'>
+      <div className='relative xs:min-w-[444px] ls:block flex xs:flex-row flex-col items-center ls:gap-0 gap-5'>
+        <div className='ls:absolute top-[-55px] bg-gradient-yellow--king-avatar border--king-avatar-yellow xs:w-[122px] xs:h-[121px] flex items-center justify-center '>
           <UserAvatar className='w-20 h-[74px]' />
-          <img src={KingIcon} className='left-[-28px] absolute top-[-45px]' />
+          <img src={KingIcon} className='left-0 xs:left-[-28px] absolute top-[-45px]' />
         </div>
         <div className='ls:pl-36 ls:pt-2 space-y-1'>
           <p className='font-semibold text-xl gradient-king-text'>Current King</p>
@@ -39,8 +39,8 @@ const KingGame = () => {
         </div>
       </div>
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
-      <div className='relative min-w-[444px] ls:block flex items-center ls:gap-0 gap-5'>
-        <div className='ls:absolute left-[320px] top-[-55px] w-[122px] h-[121px] flex items-center justify-center bg-gradient-blue--king'>
+      <div className='relative xs:min-w-[444px] ls:block flex xs:flex-row flex-col items-center ls:gap-0 gap-5'>
+        <div className='ls:absolute left-[320px] top-[-55px] xs:w-[122px] xs:h-[121px] flex items-center justify-center bg-gradient-blue--king'>
           <UserAvatar className='w-20 h-[74px]' />
         </div>
         <div className='flex flex-col ls:items-end ls:pr-36 ls:pt-2 ls:space-y-1'>
@@ -69,4 +69,4 @@ const KingGame = () => {
   )
 }
 
-export default KingGame
+export default KingGameArena
