@@ -89,6 +89,19 @@ body {
       /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
     #1f2438;
 }
+.bg-gradient-yellow--king-avatar {
+  background: radial-gradient(
+      77.43% 77.43% at 50% 50%,
+      rgba(213, 149, 49, 0.45) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    #1f2438;
+  border-radius: 8px;
+}
+.bg-gradient-blue--king {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), #1f2438;
+  border-radius: 8px;
+}
 .bg-gradient--blue-darken {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #2f3656;
@@ -222,6 +235,39 @@ body {
     background: radial-gradient(94.25% 94.25% at 50% 50%, #2cdd68 0%, rgba(0, 0, 0, 0) 100%)
       border-box;
   }
+}
+@media (min-width: 1400px) {
+  .border--king-yellow {
+    border: 1px solid transparent;
+    border-image: linear-gradient(90deg, #ffab2e 0.51%, #5f5637 51.93%, #373f5f 100%);
+    border-image-slice: 1;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 15px;
+  }
+  .bg-gradient-yellow--king {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+      linear-gradient(90deg, #ffac2e -15.91%, rgba(31, 36, 56, 0) 40%);
+    border-radius: 15px;
+  }
+  .bg-gradient-dark-blue--king {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #171b29;
+    border-radius: 5px;
+    transform: rotate(45deg);
+  }
+  .border--king-battle-icon {
+    border: 1px solid transparent;
+    border-image: linear-gradient(90deg, #ffab2e 0.51%, #5f5637 51.93%, #373f5f 100%);
+    border-image-slice: 1;
+    border-radius: 8px;
+  }
+}
+.border--king-avatar-yellow {
+  border: 1px solid transparent;
+  border-image: linear-gradient(90deg, #ffab2e 0.51%, #5f5637 51.93%, #373f5f 100%);
+  border-image-slice: 1;
+  border-radius: 8px;
 }
 .battle_td--radial-green {
   background: radial-gradient(
@@ -376,8 +422,17 @@ body {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.24)),
     linear-gradient(228.46deg, rgba(64, 73, 112, 0.1) 2.2%, rgba(82, 101, 181, 0.1) 99.81%), #21263a;
 }
+.bg-gradient-yellow {
+  background: linear-gradient(53.1deg, #ff8d24 -4.15%, #ffc700 76.05%), #ffffff;
+}
 .gradient-affiliate-text {
   background-image: linear-gradient(268.73deg, #4ba1ff -38.14%, #00e7ff 129.02%);
+}
+.gradient-king-text {
+  background: linear-gradient(53.1deg, #ff8d24 -4.15%, #ffc700 76.05%), #ffffff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .gradient-violet-text {
   background-image: radial-gradient(
@@ -667,16 +722,20 @@ input {
 }
 
 .wheel-wrapper {
-    background: radial-gradient(57.62% 57.62% at 50% 50%, rgba(71, 100, 214, 0.16) 0%, rgba(0, 0, 0, 0) 100%);
-    border: 1px solid rgba(147, 155, 185, 0.12);
+  background: radial-gradient(
+    57.62% 57.62% at 50% 50%,
+    rgba(71, 100, 214, 0.16) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border: 1px solid rgba(147, 155, 185, 0.12);
 }
 
 .text-gradient-red {
-    background: linear-gradient(9.63deg, #FE4747 4.2%, #FFC700 166.04%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+  background: linear-gradient(9.63deg, #fe4747 4.2%, #ffc700 166.04%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 /*-----media----*/

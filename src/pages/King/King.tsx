@@ -1,15 +1,16 @@
-import React from 'react'
+import KingGame from './KingGame'
+import KingQueue from './KingQueue'
+import KingGameInventories from './KingGameInventories'
+
+import { users } from '../../mocks/liveFeedUsers'
 
 const King = () => {
   return (
-        <div>
-        <h1 className='text-red text-5xl'>King</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus inventore ipsa fugiat
-          similique, quia, necessitatibus repudiandae ad commodi architecto aliquam molestiae adipisci
-          voluptates nesciunt esse magnam est delectus, iure nulla.
-        </p>
-      </div>
+    <div className='mt-20 flex flex-col justify-center gap-4'>
+      <KingGame />
+      <KingQueue queue={users.slice(0, 10)} />
+      <KingGameInventories />
+    </div>
   )
 }
 
