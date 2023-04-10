@@ -127,7 +127,15 @@ export const History = () => {
         searchValue={searchValue}
         filtersVariants={filtersVariants}
         tableHeader={
-          <FilterHeader label={<ListIcon />} text='My history' textColor='text-gray-primary' />
+          <FilterHeader
+            label={
+              <span className='text-gray-primary'>
+                <ListIcon />
+              </span>
+            }
+            text='My history'
+            textColor='text-gray-primary'
+          />
         }
         variant='History'
       />
