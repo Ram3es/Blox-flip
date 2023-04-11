@@ -1,50 +1,56 @@
+import { useState } from 'react'
 import { Disclosure } from '@headlessui/react'
 
 import clsx from 'clsx'
 
 import ItemCard from '../../components/common/Cards/ItemCard'
 import ItemsList from '../../components/common/ItemsList'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import { Button } from '../../components/base/Button'
+import { CopyIcon } from '../../components/icons/CopyIcon'
 
 import { ArrowGrayIcon } from '../../components/icons/ArrowGrayIcon'
 
-import KingIcon from '../../assets/img/king_icon.png'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import SmallDashedSpacer from '../../assets/img/dashed_spacer_small.png'
 
 import { IKingGame } from '../../types/King'
+import KingGameHistoryPlayer from './KingGameHistoryPlayer'
 
 interface KingGameHistoryItemProps {
   game: IKingGame
 }
 
 const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
+  const [hashCode] = useState('895b7f3ef391e048da04ce3d895b7f3ef391e048da04ce3d')
+  const handleReferralLinkCopy = () => {
+    navigator.clipboard.writeText(hashCode).catch((error) => {
+      console.log(error)
+    })
+  }
+
   return (
     <Disclosure>
       {({ open }) => (
-        <>
-          <div className='p-2 py-6 flex items-center justify-between h-20 border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10'>
+        <div>
+          <div className='p-2 py-6 flex items-center justify-between h-16 rounded border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10'>
             <div className='flex items-center justify-between'>
-              <div className='flex items-center justify-between'>
-                <UserAvatar className='w-14 h-14' />
-                <img src={KingIcon} className='w-10 h-8' />
-                <QuantityCoins quantity={1500} />
-              </div>
+              <KingGameHistoryPlayer isKing />
               <div className='flex items-center justify-center'>
                 <img src={SwordsIcon} className='scale-50' />
               </div>
-              <div className='flex items-center justify-between'>
-                <QuantityCoins quantity={1500} />
-                <div className='bg-gradient-blue--king'>
-                  <UserAvatar className='w-14 h-14' />
-                </div>
-              </div>
+              <KingGameHistoryPlayer />
             </div>
             <img src={SmallDashedSpacer} alt='dashed spacer' />
             <div>
-              <p>Game 3 - Round 2</p>
-              <p>Hash: blablalbalbla1124124</p>
+              <p className='font-medium'>Game 3 - Round 2</p>
+              <div className='flex items-center'>
+                <span className='max-w-[120px] font-normal text-13 text-gray-accent truncate'>
+                  Hash: {hashCode}
+                </span>
+                <Button onClick={handleReferralLinkCopy} type='button'>
+                  <CopyIcon iconClasses='w-2.5 h-3' />
+                </Button>
+              </div>
             </div>
             <img src={SmallDashedSpacer} alt='dashed spacer' />
             <ItemsList items={game.firstPlayer.items} />
@@ -57,7 +63,7 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
             </Disclosure.Button>
           </div>
           <Disclosure.Panel>
-            <div className='mx-5 bg-blue-darken/70 rounded'>
+            <div className='mx-5 bg-blue-darken/70 rounded-br rounded-bl'>
               <div className='p-2 flex flex-wrap overflow-y-auto h-[200px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
                 {game.firstPlayer.items.slice(0, 2).map((item) => (
                   <ItemCard
@@ -69,7 +75,7 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
               </div>
             </div>
           </Disclosure.Panel>
-        </>
+        </div>
       )}
     </Disclosure>
   )

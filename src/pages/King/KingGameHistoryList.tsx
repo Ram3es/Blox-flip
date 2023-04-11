@@ -8,7 +8,7 @@ interface KingGameHistoryListProps {
 
 const KingGameHistoryList = ({ games }: KingGameHistoryListProps) => {
   return (
-    <div className='gap-2 flex flex-col'>
+    <div className='gap-3 flex flex-col'>
       {games.map((game, index) => (
         <KingGameHistoryItem key={index * Math.random()} game={game} />
       ))}
