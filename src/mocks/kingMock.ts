@@ -39,7 +39,6 @@ export const kingMock: IKingGame[] = [
     },
     secondPlayer: {
       username: 'test2',
-      coin: 0,
       items: cards
     }
   },

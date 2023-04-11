@@ -3,11 +3,11 @@ import { UserAvatar } from '../../components/user/UserAvatar'
 
 import { ISecondUser } from '../../types/User'
 
-interface KingQueueProps {
+interface KingGameQueueProps {
   queue: ISecondUser[]
 }
 
-const KingQueue = ({ queue }: KingQueueProps) => {
+const KingGameQueue = ({ queue }: KingGameQueueProps) => {
   return (
     <div className='flex items-center justify-between gap-4'>
       <div className='hidden md:flex'>
@@ -31,4 +31,4 @@ const KingQueue = ({ queue }: KingQueueProps) => {
   )
 }
 
-export default KingQueue
+export default KingGameQueue
