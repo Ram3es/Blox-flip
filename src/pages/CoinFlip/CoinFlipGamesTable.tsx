@@ -18,7 +18,7 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 import type { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
 
-const CoinFlipList = () => {
+const CoinFlipGamesTable = () => {
   const [games] = useState<CoinFlipGame[]>(coinFlipMock)
 
   const columnHelper = createColumnHelper<CoinFlipGame>()
@@ -105,4 +105,4 @@ const CoinFlipList = () => {
   )
 }
 
-export default CoinFlipList
+export default CoinFlipGamesTable

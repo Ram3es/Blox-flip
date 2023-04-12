@@ -3,11 +3,9 @@ import { forwardRef, useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
-import ItemCard from '../../components/common/Cards/ItemCard'
 import WinPercent from '../../components/common/WinPercent'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { UserAvatar } from '../../components/user/UserAvatar'
-import { Button } from '../../components/base/Button'
 
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import CoinFlipHead from '../../assets/img/head_medium.png'

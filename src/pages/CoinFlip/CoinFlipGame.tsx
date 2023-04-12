@@ -1,18 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-import clsx from 'clsx'
-
 import ModalWrapper from '../../components/containers/ModalWrapper'
 import CoinFlipGamePlayer from './CoinFlipGamePlayer'
-import AvatarWithUsername from '../../components/common/AvatarWithUsername'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
-import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
-
-import SkinBigIcon from '../../assets/img/skin_big.png'
-import VersusBattleIcon from '../../assets/img/versus_battle.png'
-import QuestionMark from '../../assets/img/question_mark.svg'
+import CoinFlipGameHeader from './CoinFlipGameHeader'
 
 interface CoinFlipGameProps {
   onClose: () => void
@@ -52,50 +43,13 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
     }
   }, [])
 
-  const mainSkinIconClasses = clsx(
-    'flex z-100 absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center',
-    {
-      grayscale: withBot
-    }
-  )
-
   return (
     <ModalWrapper
       closeModal={onClose}
       modalClasses='relative ls:px-0 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px]'
     >
       <div className='overflow-hidden pt-6 xs:pt-0'>
-        <div className='px-4 flex flex-col xs:flex-row justify-between items-center space-y-2 xs:space-y-0 xs:space-x-4 pb-4 xs:pr-10'>
-          <div className='flex items-center ls:justify-between justify-center space-x-2 xs:space-x-6 text-lg font-bold'>
-            <div className='flex border--coinflip-game w-8 h-8 items-center justify-center'>
-              <CoinFlipLogoIcon />
-            </div>
-            <div className='flex items-center'>
-              <span className='hidden xxs:block'>CF&nbsp;</span>
-              <span className='text-orange-primary-light'>#13</span>
-            </div>
-            <QuantityCoinsContainer>
-              <QuantityCoins quantity={14214.51} />
-            </QuantityCoinsContainer>
-          </div>
-          <div className={mainSkinIconClasses}>
-            <img src={SkinBigIcon} alt='skin' />
-          </div>
-          <div className='z-100 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
-            <img className='rotate-[-48deg]' src={VersusBattleIcon} alt='versus' />
-          </div>
-          <div className='sm:w-96 flex justify-center items-center'>
-            <AvatarWithUsername username='Brrrrrra' avatar='' />
-            <span className='mx-6'>
-              <img src={VersusBattleIcon} alt='versus' />
-            </span>
-            <AvatarWithUsername
-              ref={playerHeadRef}
-              username={withBot ? '...' : 'Brrrrrra'}
-              avatar={withBot ? QuestionMark : ''}
-            />
-          </div>
-        </div>
+        <CoinFlipGameHeader ref={playerHeadRef} withBot={withBot} />
         <div className='flex'>
           <CoinFlipGamePlayer opponent={false} selectedCoin={0} />
           <CoinFlipGamePlayer ref={playerRef} opponent={true} selectedCoin={1} isBot={withBot} />

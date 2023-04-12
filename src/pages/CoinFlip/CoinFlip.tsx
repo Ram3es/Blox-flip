@@ -4,7 +4,7 @@ import { useCoinFlip } from '../../store/CoinFlipStore'
 import GameLobbyModal from '../../components/common/GameLobbyModal'
 import CoinFlipGame from './CoinFlipGame'
 import CoinFlipHeader from './CoinFlipHeader'
-import CoinFlipList from './CoinFlipList'
+import CoinFlipGamesTable from './CoinFlipGamesTable'
 
 const CoinFlip = () => {
   const {
@@ -33,7 +33,7 @@ const CoinFlip = () => {
   return (
     <>
       <CoinFlipHeader />
-      <CoinFlipList />
+      <CoinFlipGamesTable />
       {isOpenCreateGame && (
         <GameLobbyModal
           isCreated={false}
