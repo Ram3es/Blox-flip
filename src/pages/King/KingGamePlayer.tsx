@@ -15,7 +15,7 @@ interface KingGameProps {
 }
 
 const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
-  const avatarClasses = clsx('top-[-55px] flex items-center justify-center p-4 rounded-lg', {
+  const avatarClasses = clsx('ls:top-[-55px] flex items-center justify-center p-4 rounded-lg', {
     'ls:absolute gradient-background--yellow gradient-border--yellow': isKing,
     'ls:absolute left-[320px] gradient-background--blue': !isKing
   })

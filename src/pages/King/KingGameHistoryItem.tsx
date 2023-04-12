@@ -66,7 +66,7 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
               <div className='p-2 flex flex-wrap overflow-y-auto h-[200px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
                 {game.firstPlayer.items.map((item) => (
                   <ItemCard
-                    key={item.id + new Date().getMilliseconds().toString()}
+                    key={String(new Date().getMilliseconds()) + item.id}
                     variant='KingList'
                     {...item}
                   />

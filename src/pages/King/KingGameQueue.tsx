@@ -20,7 +20,7 @@ const KingGameQueue = ({ queue }: KingGameQueueProps) => {
         </div>
         {queue.map((item, index) => (
           <div
-            key={index}
+            key={item.id}
             className='w-11 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'
           >
             <UserAvatar />
