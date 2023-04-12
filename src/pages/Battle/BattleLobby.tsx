@@ -7,7 +7,7 @@ import { dataTable } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 import TableBattleLobby from './TableBattleLobby'
 
-const GreenLink = ({ to, title, amount }: { to: string; title: string; amount: number }) => (
+const GreenLink = ({ to, title, amount }: { to: string, title: string, amount: number }) => (
   <NavLink
     to={to}
     className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-2 py-1 leading-6 mr-3 cursor-pointer mb-4'
