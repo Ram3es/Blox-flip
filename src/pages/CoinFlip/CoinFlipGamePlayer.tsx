@@ -17,6 +17,7 @@ import QuestionMark from '../../assets/img/question_mark.svg'
 import type { IItemCard } from '../../types/ItemCard'
 
 import { cards } from '../../mocks/cards'
+import CoinFlipGameItems from './CoinFlipGameItems'
 
 interface PlayerProps {
   opponent: boolean
@@ -75,22 +76,9 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(
               />
             </div>
           </div>
-          <div className='hidden xs:block border-b border-blue-accent ml-2 mr-7' />
-          <div className='pb-48 xs:pb-60 w-full pr-3 -mr-2 flex flex-wrap overflow-y-auto min-h-[276px] max-h-full scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
-            {!isBot &&
-              items.map((item) => <ItemCard variant='CoinFlipSmall' key={item.id} {...item} />)}
-            {isBot && (
-              <div className='px-2 my-10 mx-auto space-y-2'>
-                <Button color='GreenPrimary'>
-                  <div className='w-32 xs:w-40 h-9 flex items-center justify-center'>Call bot</div>
-                </Button>
-                <Button color='BlueAccentSix'>
-                  <div className='w-32 xs:w-40 h-9 flex items-center justify-center text-blue-ocean-secondary'>
-                    Cancel
-                  </div>
-                </Button>
-              </div>
-            )}
+          <div className='hidden xs:block border-b border-blue-accent ml-4 mr-7' />
+          <div className='h-full w-full pr-6'>
+            <CoinFlipGameItems items={items} isBot={isBot} />
           </div>
         </div>
       </div>

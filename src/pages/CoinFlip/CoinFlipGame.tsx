@@ -62,11 +62,11 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='relative px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px]'
+      modalClasses='relative ls:px-0 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px]'
     >
       <div className='overflow-hidden pt-6 xs:pt-0'>
-        <div className='flex flex-col xs:flex-row justify-between items-center space-y-2 xs:space-y-0 xs:space-x-4 pb-4 xs:pr-10'>
-          <div className='flex items-center justify-between space-x-2 pr-20 xs:pr-0 xs:space-x-6 text-lg font-bold'>
+        <div className='px-4 flex flex-col xs:flex-row justify-between items-center space-y-2 xs:space-y-0 xs:space-x-4 pb-4 xs:pr-10'>
+          <div className='flex items-center ls:justify-between justify-center space-x-2 xs:space-x-6 text-lg font-bold'>
             <div className='flex border--coinflip-game w-8 h-8 items-center justify-center'>
               <CoinFlipLogoIcon />
             </div>
