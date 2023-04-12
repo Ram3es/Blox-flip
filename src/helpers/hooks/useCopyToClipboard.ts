@@ -3,13 +3,12 @@ import { debounce } from './useDebounceCallback'
 
 type CopiedValue = string | undefined
 type CopyFn = () => Promise<boolean>
-type VoidCopyFn = () => void
 
 const useCopyToClipboard = (initialText: string) => {
   const [text, setText] = useState(initialText)
   const [copiedText, setCopiedText] = useState<CopiedValue>(initialText)
 
-  const copy: CopyFn = useCallback(
+  const handleCopyText: CopyFn = useCallback(
     debounce(async () => {
       if (!navigator?.clipboard) {
         return false
@@ -26,12 +25,6 @@ const useCopyToClipboard = (initialText: string) => {
     }, 400),
     [text]
   )
-
-  const handleCopyText: VoidCopyFn = () => {
-    copy().catch((error) => {
-      console.error('Error occurred during copy:', error)
-    })
-  }
 
   return {
     text: copiedText,
