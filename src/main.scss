@@ -89,6 +89,12 @@ body {
       /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
     #1f2438;
 }
+.jp-bg-blue {
+  background: linear-gradient(90.51deg, rgba(73, 100, 215, 0.2) -97.7%, rgba(0, 0, 0, 0) 106.16%), linear-gradient(0deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), #29304D;
+}
+.jp-bg-green {
+  background: linear-gradient(90.51deg, rgba(44, 221, 104, 0.2) -97.7%, rgba(0, 0, 0, 0) 56.16%), linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), #29304D;
+}
 .bg-gradient--blue-darken {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #2f3656;
@@ -136,6 +142,9 @@ body {
       rgba(0, 0, 0, 0) 100%
     ),
     #262c46;
+}
+.radial-orange-item {
+ background:  radial-gradient(94.25% 94.25% at 50% 50%, rgba(255, 153, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%), rgba(54, 62, 96, 0.15);
 }
 .border--mask,
 .border--mask-hover {

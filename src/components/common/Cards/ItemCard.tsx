@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import { IMAGES } from '../../../constants/images'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 import SelectedIcon from '../../icons/SelectedIcon'
+import { UserAvatar } from '../../user/UserAvatar'
 
 enum BorderColorEnum {
   Red = 'Red',
@@ -28,10 +29,11 @@ export interface IItemCardProps {
   color?: string
   itemClasses?: string
   variant?: keyof typeof ItemCardVariantEnum
+  userAvatar?: string
 
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, itemClasses, variant = ItemCardVariantEnum.Standard }) => {
+const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, itemClasses, variant = ItemCardVariantEnum.Standard, userAvatar }) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -69,16 +71,26 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect
               </div>
             </div>
           </div>
-          <div className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl`}>
+          <div className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl group-[.is-user]/item:pl-0`}>
             <div className="mb-2 hidden group-[.is-percent]/item:block">{chance ? <>{chance}%</> : <>1.5%</> }</div>
             <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
-            <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left"><span>{name}</span></div>
-            <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start">
-              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5">
+            <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left group-[.is-user]/item:hidden"><span>{name}</span></div>
+            <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start group-[.is-user]/item:items-center">
+              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] ">
                 <img src={IMAGES[image]} alt="@T" className="absolute object-contain w-full h-full" />
               </div>
-              <div className="flex items-center justify-center relative z-40">
-                <QuantityCoinsWithChildren quantity={price} />
+              <div>
+                <div className=' hidden group-[.is-user]/item:block w-[120px] text-gray-primary mb-2 text-left'>
+                  <span className=''>{name}</span>
+                </div>
+                <div className="flex items-center justify-center relative z-40 group-[.is-user]/item:justify-start">
+                  <QuantityCoinsWithChildren quantity={price} />
+                </div>
+              </div>
+              <div className='hidden group-[.is-user]/item:block mx-auto'>
+                <div className='w-14 h-[50px] shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue ml-4 '>
+                  <UserAvatar image={userAvatar} />
+                </div>
               </div>
             </div>
           </div>

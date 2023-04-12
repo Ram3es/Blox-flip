@@ -10,7 +10,8 @@ export const cards: IItemCard[] = [
   { id: '7', color: 'Red', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 1600, sold: true, active: false, isSelected: false },
   { id: '8', color: 'Red', image: 'helmet', name: 'Zafira Helemet of the Netherworld', price: 1600, sold: true, active: false, isSelected: false },
   { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Helemet of the Netherworld', price: 1000, sold: true, active: false, isSelected: false },
-  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 300, sold: false, active: true, isSelected: false }
+  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 300, sold: false, active: true, isSelected: false },
+  { id: '11', color: 'Green', image: 'redCrown', name: 'Fiery Crown of the Netherworld', price: 450, sold: false, active: true, isSelected: false }
 ]
 
 export const unboxCard: IUnboxCard[] = [
