@@ -8,7 +8,6 @@ interface KingHealthBarProps {
 
 const KingHealthBar = ({ value, max, position }: KingHealthBarProps) => {
   const healthPointBarWidth = (value / max) * 100
-
   const healthPointClasses = clsx('', {
     'flex justify-end': position === 'right'
   })
