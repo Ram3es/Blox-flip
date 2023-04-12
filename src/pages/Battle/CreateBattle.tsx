@@ -28,7 +28,7 @@ const battleInitState = {
 const CreateBattle = () => {
   const [isOpenModal, setOpenModal] = useState(false)
   const [casesBetted, setCasesToBet] = useState<IUnboxCardCounter[]>([])
-  const { text, handleCopyText } = useCopyToClipboard(
+  const { text: referralLink, handleCopyText: handleReferralLink } = useCopyToClipboard(
     'https://robloxsite.com/i?/h371s9f!39g_123'
   )
   const [battleSettings, setSetting] = useState(battleInitState)
@@ -179,12 +179,12 @@ const CreateBattle = () => {
                     titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
                     inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
                     inputClasses='overflow-ellipsis grow w-0 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate'
-                    value={text}
+                    value={referralLink}
                     placeholder='...'
                     readOnly
                   />
                   <div className='absolute z-20 top-[60px] right-7'>
-                    <Button className='w-7 shrink-0' onClick={handleCopyText} type='button'>
+                    <Button className='w-7 shrink-0' onClick={handleReferralLink} type='button'>
                       <CopyIcon />
                     </Button>
                   </div>

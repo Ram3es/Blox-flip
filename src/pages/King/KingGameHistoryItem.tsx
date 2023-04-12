@@ -21,7 +21,7 @@ interface KingGameHistoryItemProps {
 }
 
 const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
-  const { text, handleCopyText } = useCopyToClipboard(
+  const { text: hashCode, handleCopyText: handleCopyHashCode } = useCopyToClipboard(
     '895b7f3ef391e048da04ce3d895b7f3ef391e048da04ce3d'
   )
 
@@ -42,9 +42,9 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
               <p className='font-medium'>Game 3 - Round 2</p>
               <div className='flex items-center'>
                 <span className='max-w-[160px] font-normal text-13 text-gray-accent truncate'>
-                  Hash: {text}
+                  Hash: {hashCode}
                 </span>
-                <Button onClick={handleCopyText} type='button'>
+                <Button onClick={handleCopyHashCode} type='button'>
                   <CopyIcon iconClasses='w-2.5 h-3' />
                 </Button>
               </div>

@@ -7,6 +7,7 @@ import NavHeader from '../../navigate/NavHeader'
 import { CopyIconSecond } from '../../icons/CopyIconSecond'
 import UnboxingIconTitle from '../../icons/UnboxingIconTitle'
 import VerticalDivider from '../../icons/VerticalDivider'
+import { Button } from '../../base/Button'
 
 interface IGameHeaderProps {
   gameStatus: string
@@ -23,7 +24,7 @@ const GameHeader: FC<IGameHeaderProps> = ({
   totalPrice,
   currentBoxPrice
 }) => {
-  const { handleCopyText } = useCopyToClipboard(window.location.href)
+  const { handleCopyText: handleCopyLocation } = useCopyToClipboard(window.location.href)
 
   return (
     <NavHeader
@@ -50,10 +51,10 @@ const GameHeader: FC<IGameHeaderProps> = ({
         </div>
       </div>
       <div className='flex flex-wrap items-center ml-4 mb-8  text-gray-primary'>
-        <div onClick={handleCopyText} className='flex items-center cursor-pointer mb-5 xxs:mb-0 '>
+        <Button onClick={handleCopyLocation} className='flex items-center cursor-pointer mb-5 xxs:mb-0 '>
           <CopyIconSecond />
           <span className='ml-2'>Copy Link</span>
-        </div>
+        </Button>
         <VerticalDivider className='mx-4  mb-5 xxs:mb-0' />
         <div className='flex items-center  mb-5 xxs:mb-0'>
           <span className='mr-3'>Total cost</span>

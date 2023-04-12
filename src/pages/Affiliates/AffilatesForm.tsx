@@ -12,10 +12,14 @@ const baseUrl = 'https://robloxsite.com/?a/'
 
 export const AffiliatesForm = () => {
   const [referralCode, setReferralCode] = useState('182Affiliatehahawqrqw')
-  const { text, handleCopyText, setText } = useCopyToClipboard(`${baseUrl}${referralCode}`)
+  const {
+    text: referralLink,
+    handleCopyText: handleCopyReferralLink,
+    setText: setReferralLink
+  } = useCopyToClipboard(`${baseUrl}${referralCode}`)
 
   useEffect(() => {
-    setText(baseUrl + referralCode)
+    setReferralLink(baseUrl + referralCode)
   }, [referralCode])
 
   const referralCodeSchema = Yup.object().shape({
@@ -51,12 +55,12 @@ export const AffiliatesForm = () => {
               titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
               inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
               inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate'
-              value={text}
+              value={referralLink}
               placeholder='...'
               readOnly
             />
             <div className='absolute z-20 top-[60px] right-7'>
-              <Button className='w-7 shrink-0' onClick={handleCopyText} type='button'>
+              <Button className='w-7 shrink-0' onClick={handleCopyReferralLink} type='button'>
                 <CopyIcon />
               </Button>
             </div>
