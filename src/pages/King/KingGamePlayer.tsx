@@ -4,7 +4,7 @@ import { UserAvatar } from '../../components/user/UserAvatar'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { Button } from '../../components/base/Button'
 import { UserLevel } from '../../components/user/UserLevel'
-import KingHealthBar from '../../components/common/KingHealthBar'
+import KingGameHealthBar from './KingGameHealthBar'
 
 import KingIcon from '../../assets/img/king_icon.png'
 
@@ -58,7 +58,7 @@ const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
         </div>
       </div>
       <div className={healthBarClasses}>
-        <KingHealthBar position={isKing ? 'left' : 'right'} value={3450} max={5450} />
+        <KingGameHealthBar isKing={isKing} position={isKing ? 'left' : 'right'} values={[1000, 1000, 1000, 1000]} />
       </div>
     </div>
   )
