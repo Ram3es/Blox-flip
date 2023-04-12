@@ -23,7 +23,7 @@ const GameHeader: FC<IGameHeaderProps> = ({
   totalPrice,
   currentBoxPrice
 }) => {
-  const [link, handleLinkCopy] = useCopyToClipboard(window.location.href)
+  const { handleCopyText } = useCopyToClipboard(window.location.href)
 
   return (
     <NavHeader
@@ -50,7 +50,7 @@ const GameHeader: FC<IGameHeaderProps> = ({
         </div>
       </div>
       <div className='flex flex-wrap items-center ml-4 mb-8  text-gray-primary'>
-        <div onClick={handleLinkCopy} className='flex items-center cursor-pointer mb-5 xxs:mb-0 '>
+        <div onClick={handleCopyText} className='flex items-center cursor-pointer mb-5 xxs:mb-0 '>
           <CopyIconSecond />
           <span className='ml-2'>Copy Link</span>
         </div>

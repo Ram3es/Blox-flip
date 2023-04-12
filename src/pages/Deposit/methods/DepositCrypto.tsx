@@ -9,9 +9,7 @@ import { getIconByPathName } from '../../../helpers/iconsHelper'
 import useCopyToClipboard from '../../../helpers/hooks/useCopyToClipboard'
 
 export const DepositCrypto: FC = () => {
-  const [bitcoinAddress, handleCopyBitcoinAddress] = useCopyToClipboard(
-    '0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25'
-  )
+  const { text, handleCopyText } = useCopyToClipboard('0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25')
   const [sendAmount, setSendAmount] = useState(100)
   const { pathname } = useLocation()
 
@@ -31,10 +29,10 @@ export const DepositCrypto: FC = () => {
                 inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-2 mr-12 truncate'
                 placeholder='...'
                 readOnly
-                value={bitcoinAddress}
+                value={text}
               />
               <div className='absolute z-20 top-[60px] right-4'>
-                <Button onClick={handleCopyBitcoinAddress} className='w-7 shrink-0' type='button'>
+                <Button onClick={handleCopyText} className='w-7 shrink-0' type='button'>
                   <CopyIconSecond />
                 </Button>
               </div>

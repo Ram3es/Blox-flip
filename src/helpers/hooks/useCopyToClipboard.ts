@@ -4,9 +4,8 @@ import { debounce } from './useDebounceCallback'
 type CopiedValue = string | undefined
 type CopyFn = () => Promise<boolean>
 type VoidCopyFn = () => void
-type SetTextFn = (newText: string) => void
 
-const useCopyToClipboard = (initialText: string): [CopiedValue, VoidCopyFn, SetTextFn] => {
+const useCopyToClipboard = (initialText: string) => {
   const [text, setText] = useState(initialText)
   const [copiedText, setCopiedText] = useState<CopiedValue>(initialText)
 
@@ -34,12 +33,11 @@ const useCopyToClipboard = (initialText: string): [CopiedValue, VoidCopyFn, SetT
     })
   }
 
-  const setBothTexts: SetTextFn = (newText: string) => {
-    setText(newText)
-    setCopiedText(newText)
+  return {
+    text: copiedText,
+    setText,
+    handleCopyText
   }
-
-  return [copiedText, handleCopyText, setBothTexts]
 }
 
 export default useCopyToClipboard
