@@ -15,6 +15,7 @@ import VerticalDivider from '../../components/icons/VerticalDivider'
 import NavHeader from '../../components/navigate/NavHeader'
 import { gameSettings } from '../../constants/battle'
 import { IUnboxCardCounter } from '../../types/ItemCard'
+import useCopyToClipboard from '../../helpers/hooks/useCopyToClipboard'
 
 const battleInitState = {
   rounds: 0,
@@ -27,8 +28,10 @@ const battleInitState = {
 const CreateBattle = () => {
   const [isOpenModal, setOpenModal] = useState(false)
   const [casesBetted, setCasesToBet] = useState<IUnboxCardCounter[]>([])
-  const [referralLink] = useState('https://robloxsite.com/i?/h371s9f!39g_123')
-  const [batlleSettings, setSetting] = useState(battleInitState)
+  const [referralLink, handleCopyReferralLink] = useCopyToClipboard(
+    'https://robloxsite.com/i?/h371s9f!39g_123'
+  )
+  const [battleSettings, setSetting] = useState(battleInitState)
 
   const fieldWithLinkRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
@@ -55,12 +58,6 @@ const CreateBattle = () => {
     }, { amountCases: 0, totalCost: 0 })
     : { amountCases: 0, totalCost: 0 }
 
-  const handleReferralLinkCopy = () => {
-    navigator.clipboard.writeText(referralLink).catch((error) => {
-      console.log(error)
-    })
-  }
-
   useEffect(() => {
     if (fieldWithLinkRef.current) {
       fieldWithLinkRef.current.scrollIntoView(
@@ -69,22 +66,22 @@ const CreateBattle = () => {
           block: 'end'
         })
     }
-  }, [batlleSettings])
+  }, [battleSettings])
 
   const onSubmitModal = useCallback((cards: IUnboxCardCounter[]) => setCasesToBet(cards), [])
 
   const convertAmountBoxes = (): IUnboxCardCounter[] => {
     let converted = [] as IUnboxCardCounter[]
     casesBetted.forEach(box => {
-      const multiplyed: IUnboxCardCounter[] = Array.from(Array(box.amount).fill(box))
-      converted = converted.concat(multiplyed)
+      const multiplayed: IUnboxCardCounter[] = Array.from(Array(box.amount).fill(box))
+      converted = converted.concat(multiplayed)
     })
     return converted
   }
 
   const createGame = () => {
     console.log({
-      ...batlleSettings,
+      ...battleSettings,
       rounds: amountCases,
       price: totalCost,
       cases: casesBetted
@@ -92,7 +89,7 @@ const CreateBattle = () => {
 
     const responseFromDB = {
       gameSetting: {
-        ...batlleSettings,
+        ...battleSettings,
         rounds: amountCases,
         price: totalCost
       },
@@ -105,7 +102,7 @@ const CreateBattle = () => {
           level: 17,
           dropsCards: [],
           wonDiamonds: 0
-        }, ...Array.from(Array(batlleSettings.mode.requiredPlayers - 1))],
+        }, ...Array.from(Array(battleSettings.mode.requiredPlayers - 1))],
       id: '1234567',
       date: '2032-03-12T23:46:58.567Z',
       status: 'created'
@@ -172,7 +169,7 @@ const CreateBattle = () => {
               options={setting.tabs}
               onSelect={(option) => setSetting(state => ({ ...state, [setting.name]: option }))}
               />))}
-              {batlleSettings.privacy.variant === 'Private' && (
+              {battleSettings.privacy.variant === 'Private' && (
                   <div ref={fieldWithLinkRef} className='relative px-2 w-full grow shrink-0 mb-4'>
                   <InputWithLabel
                     type='text'
@@ -187,7 +184,7 @@ const CreateBattle = () => {
                     readOnly
                   />
                   <div className='absolute z-20 top-[60px] right-7'>
-                    <Button className='w-7 shrink-0' onClick={handleReferralLinkCopy} type='button'>
+                    <Button className='w-7 shrink-0' onClick={handleCopyReferralLink} type='button'>
                       <CopyIcon />
                     </Button>
                   </div>

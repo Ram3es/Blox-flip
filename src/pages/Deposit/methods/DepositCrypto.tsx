@@ -6,17 +6,14 @@ import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
 import { useLocation } from 'react-router-dom'
 import { getIconByPathName } from '../../../helpers/iconsHelper'
+import useCopyToClipboard from '../../../helpers/hooks/useCopyToClipboard'
 
 export const DepositCrypto: FC = () => {
-  const [bitcoinAddress] = useState('0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25')
+  const [bitcoinAddress, handleCopyBitcoinAddress] = useCopyToClipboard(
+    '0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25'
+  )
   const [sendAmount, setSendAmount] = useState(100)
   const { pathname } = useLocation()
-
-  const handleCopyBitcoinAddress = () => {
-    navigator.clipboard.writeText(bitcoinAddress).catch((error) => {
-      console.log(error)
-    })
-  }
 
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>

@@ -7,15 +7,15 @@ interface ItemsListProps {
 
 const ItemsList = ({ items }: ItemsListProps) => {
   return (
-    <div className='flex items-center justify-center'>
-      {items.slice(0, 4).map((item) => (
-        <div key={item.id} className='w-[57px] h-[43px] rounded'>
+    <div className='py-2 flex items-center max-w-[280px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+      {items.map((item) => (
+        <div key={item.id} className='shrink-0'>
           <img
             src={IMAGES[item.image]}
             alt={item.name}
             loading='lazy'
             decoding='async'
-            className='object-contain w-full h-full'
+            className='object-contain w-[57px] h-[43px]'
           />
         </div>
       ))}

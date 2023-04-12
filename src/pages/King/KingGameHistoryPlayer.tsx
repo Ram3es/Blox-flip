@@ -1,9 +1,11 @@
+import clsx from 'clsx'
+
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { UserAvatar } from '../../components/user/UserAvatar'
 
 import KingIcon from '../../assets/img/king_icon.png'
-import { ISecondUser } from '../../types/User'
-import clsx from 'clsx'
+
+import type { ISecondUser } from '../../types/User'
 
 interface KingGameHistoryPlayerProps {
   user?: ISecondUser
