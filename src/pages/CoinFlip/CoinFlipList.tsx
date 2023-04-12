@@ -15,7 +15,7 @@ import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
-import { CoinFlipGame } from '../../types/CoinFlip'
+import type { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
 
 const CoinFlipList = () => {

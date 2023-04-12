@@ -7,7 +7,7 @@ import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
-import { BetToolkit } from '../../types/Bets'
+import type { BetToolkit } from '../../types/Bets'
 
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin, setIsOpenCreateGame } =
