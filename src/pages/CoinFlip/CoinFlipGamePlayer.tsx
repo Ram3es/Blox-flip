@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useState } from 'react'
 
 import clsx from 'clsx'
 
+import CoinFlipGameItems from './CoinFlipGameItems'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import WinPercent from '../../components/common/WinPercent'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
@@ -15,7 +16,6 @@ import QuestionMark from '../../assets/img/question_mark.svg'
 import type { IItemCard } from '../../types/ItemCard'
 
 import { cards } from '../../mocks/cards'
-import CoinFlipGameItems from './CoinFlipGameItems'
 
 interface PlayerProps {
   opponent: boolean
