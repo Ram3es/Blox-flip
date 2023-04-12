@@ -1,9 +1,10 @@
 import { useRef } from 'react'
 
+import KingGamePlayer from './KingGamePlayer'
+
 import ClocksIcon from '../../components/icons/ClocksIcon'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
-import KingGamePlayer from './KingGamePlayer'
 
 const KingGameArena = () => {
   const swordIconRef = useRef<HTMLImageElement>(null)

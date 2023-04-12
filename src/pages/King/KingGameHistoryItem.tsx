@@ -1,20 +1,19 @@
+import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
 import { Disclosure } from '@headlessui/react'
 
 import clsx from 'clsx'
 
+import KingGameHistoryPlayer from './KingGameHistoryPlayer'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import ItemsList from '../../components/common/ItemsList'
 import { Button } from '../../components/base/Button'
+
 import { CopyIcon } from '../../components/icons/CopyIcon'
-
 import { ArrowGrayIcon } from '../../components/icons/ArrowGrayIcon'
-
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import SmallDashedSpacer from '../../assets/img/dashed_spacer_small.png'
 
-import { IKingGame } from '../../types/King'
-import KingGameHistoryPlayer from './KingGameHistoryPlayer'
-import useCopyToClipboard from '../../helpers/hooks/useCopyToClipboard'
+import type { IKingGame } from '../../types/King'
 
 interface KingGameHistoryItemProps {
   game: IKingGame

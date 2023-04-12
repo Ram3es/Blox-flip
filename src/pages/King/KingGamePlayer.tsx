@@ -1,13 +1,14 @@
+import clsx from 'clsx'
+
 import { UserAvatar } from '../../components/user/UserAvatar'
+import { PlusIcon } from '../../components/icons/PlusIcon'
+import { Button } from '../../components/base/Button'
+import { UserLevel } from '../../components/user/UserLevel'
+import KingHealthBar from '../../components/common/KingHealthBar'
 
 import KingIcon from '../../assets/img/king_icon.png'
 
-import { ISecondUser } from '../../types/User'
-import { UserLevel } from '../../components/user/UserLevel'
-import KingHealthBar from '../../components/common/KingHealthBar'
-import { PlusIcon } from '../../components/icons/PlusIcon'
-import { Button } from '../../components/base/Button'
-import clsx from 'clsx'
+import type { ISecondUser } from '../../types/User'
 
 interface KingGameProps {
   user?: ISecondUser

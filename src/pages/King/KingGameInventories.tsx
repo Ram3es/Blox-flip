@@ -5,8 +5,8 @@ import KingGameInventoriesList from './KingGameInventoriesList'
 
 import DashedBigSpacerIcon from '../../assets/img/separator_big_icon.png'
 
-import { IKingGame } from '../../types/King'
-import { IItemCard } from '../../types/ItemCard'
+import type { IKingGame } from '../../types/King'
+import type { IItemCard } from '../../types/ItemCard'
 
 import { users } from '../../mocks/liveFeedUsers'
 import { cards } from '../../mocks/cards'

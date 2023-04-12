@@ -6,7 +6,7 @@ import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
 import { useLocation } from 'react-router-dom'
 import { getIconByPathName } from '../../../helpers/iconsHelper'
-import useCopyToClipboard from '../../../helpers/hooks/useCopyToClipboard'
+import { useCopyToClipboard } from '../../../helpers/hooks/useCopyToClipboard'
 
 export const DepositCrypto: FC = () => {
   const { text: bitcoinAddress, handleCopyText: setBitcoinAddress } = useCopyToClipboard('0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25')

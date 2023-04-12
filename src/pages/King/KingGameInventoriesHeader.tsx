@@ -7,8 +7,8 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 import { ListIcon } from '../../components/icons/ListIcon'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 
-import { TabInterface } from './KingGameInventories'
-import { ISecondUser } from '../../types/User'
+import type { TabInterface } from './KingGameInventories'
+import type { ISecondUser } from '../../types/User'
 
 interface HeaderProps {
   user: ISecondUser

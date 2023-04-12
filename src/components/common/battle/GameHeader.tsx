@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import useCopyToClipboard from '../../../helpers/hooks/useCopyToClipboard'
+import { useCopyToClipboard } from '../../../helpers/hooks/useCopyToClipboard'
 
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 import NavHeader from '../../navigate/NavHeader'

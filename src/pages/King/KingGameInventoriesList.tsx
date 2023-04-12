@@ -1,6 +1,6 @@
 import ItemCard from '../../components/common/Cards/ItemCard'
 
-import { IItemCard } from '../../types/ItemCard'
+import type { IItemCard } from '../../types/ItemCard'
 
 interface KingGameInventoriesListProps {
   itemList: IItemCard[]

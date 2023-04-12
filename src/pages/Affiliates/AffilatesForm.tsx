@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import useCopyToClipboard from '../../helpers/hooks/useCopyToClipboard'
+import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
 
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'

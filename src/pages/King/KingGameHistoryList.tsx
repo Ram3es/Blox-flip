@@ -1,6 +1,6 @@
 import KingGameHistoryItem from './KingGameHistoryItem'
 
-import { IKingGame } from '../../types/King'
+import type { IKingGame } from '../../types/King'
 
 interface KingGameHistoryListProps {
   games: IKingGame[]
