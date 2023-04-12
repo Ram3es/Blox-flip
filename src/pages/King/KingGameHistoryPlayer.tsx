@@ -16,17 +16,18 @@ const KingGameHistoryPlayer = ({ user, isKing }: KingGameHistoryPlayerProps) => 
   return (
     <div
       className={clsx('flex items-center justify-between gap-2', {
-        'flex-row': isKing,
+        'flex-row ': isKing,
         'flex-row-reverse': !isKing
       })}
     >
       <div
-        className={clsx('rounded', {
-          relative: isKing
+        className={clsx('p-1.5 rounded-lg', {
+          'gradient-background--yellow gradient-border--yellow': isKing,
+          'gradient-background--blue': !isKing
         })}
       >
-        <UserAvatar className='w-14 h-14' />
-        {isKing && <img src={KingIcon} className='w-10 h-8 absolute bottom-10 right-6' />}
+        <UserAvatar className='w-11 h-10' />
+        {isKing && <img src={KingIcon} className='w-10 h-8 absolute bottom-9 right-7' />}
       </div>
       <QuantityCoins quantity={1500} />
     </div>

@@ -15,18 +15,16 @@ interface KingGameProps {
 }
 
 const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
-  const avatarClasses = clsx('', {
-    'ls:absolute top-[-55px] bg-gradient-yellow--king-avatar border--king-avatar-yellow xs:w-[122px] xs:h-[121px] flex items-center justify-center ':
-      isKing,
-    'ls:absolute left-[320px] top-[-55px] xs:w-[122px] xs:h-[121px] flex items-center justify-center bg-gradient-blue--king':
-      !isKing
+  const avatarClasses = clsx('top-[-55px] flex items-center justify-center p-4 rounded-lg', {
+    'ls:absolute gradient-background--yellow gradient-border--yellow': isKing,
+    'ls:absolute left-[320px] gradient-background--blue': !isKing
   })
   const playerInfoClasses = clsx('', {
     'ls:pl-36 ls:pt-2 space-y-1': isKing,
     'flex flex-col ls:items-end ls:pr-36 ls:pt-2 ls:space-y-1': !isKing
   })
   const headingClasses = clsx('font-semibold text-xl', {
-    'gradient-king-text': isKing,
+    'gradient-king-yellow-text': isKing,
     'text-gray-primary': !isKing
   })
   const healthBarClasses = clsx('ls:pt-8 ', {

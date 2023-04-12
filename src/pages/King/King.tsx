@@ -8,7 +8,7 @@ import { kingMock } from '../../mocks/kingMock'
 
 const King = () => {
   return (
-    <div className='ls:mt-20 flex flex-col justify-center gap-32 mx-4'>
+    <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
       <KingGameArena />
       <KingGameQueue queue={users.slice(0, 10)} />
       <KingGameInventories />

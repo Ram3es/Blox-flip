@@ -1,18 +1,22 @@
+import { useRef } from 'react'
+
 import ClocksIcon from '../../components/icons/ClocksIcon'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 import KingGamePlayer from './KingGamePlayer'
 
 const KingGameArena = () => {
+  const swordIconRef = useRef<HTMLImageElement>(null)
+
   return (
-    <div className='gap-4 xs:gap-0 p-16 ls:p-0 flex flex-col xxs:items-center ls:items-stretch rounded h-full ls:bg-transparent bg-gradient-yellow--king w-full ls:h-44 ls:flex-row ls:justify-between border--king-yellow'>
+    <div className='gradient-background--yellow__secondary rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch h-full ls:h-44 w-full gap-4 xs:gap-0 p-16 ls:p-0'>
       <KingGamePlayer isKing />
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
       <div className='relative flex items-center justify-center gap-2'>
         <ClocksIcon />
         <div className='text-white font bold text-xl w-11'>{30}s</div>
-        <div className='ls:absolute bottom-[144px] border--king-battle-icon bg-gradient-dark-blue--king flex items-center justify-center '>
-          <img src={SwordsIcon} className='ls:rotate-[316deg] scale-150' />
+        <div className='gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[144px] p-2 flex items-center justify-center rotate-[45deg]'>
+          <img ref={swordIconRef} src={SwordsIcon} className='ls:scale-[280%] rotate-[-45deg]' />
         </div>
       </div>
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />

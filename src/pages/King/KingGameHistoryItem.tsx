@@ -28,12 +28,12 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
   return (
     <Disclosure>
       {({ open }) => (
-        <div>
-          <div className='p-2 py-6 flex flex-col gap-2 ls:flex-row items-center justify-between h-full ls:h-16 rounded border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10'>
-            <div className='flex items-center justify-between max-h-[60px]'>
+        <>
+          <div className='p-2 py-6 flex flex-col gap-2 ls:flex-row items-center justify-between h-full ls:h-16 rounded-xl border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10'>
+            <div className='flex items-center justify-between gap-3'>
               <KingGameHistoryPlayer isKing />
-              <div className='flex items-center justify-center'>
-                <img src={SwordsIcon} className='scale-50' />
+              <div className='rotate-[45deg] h-[30px] w-[30px] rounded-lg flex items-center justify-center gradient-border--yellow gradient-background--darkblue mr-1'>
+                <img src={SwordsIcon} className='scale-150 rotate-[-45deg]' />
               </div>
               <KingGameHistoryPlayer />
             </div>
@@ -74,7 +74,7 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
               </div>
             </div>
           </Disclosure.Panel>
-        </div>
+        </>
       )}
     </Disclosure>
   )

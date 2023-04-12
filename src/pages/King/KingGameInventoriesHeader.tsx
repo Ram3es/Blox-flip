@@ -26,7 +26,7 @@ const KingGameInventoriesHeader = ({
   setSelectedOption
 }: HeaderProps) => {
   const headingClasses = clsx('flex items-center gap-2 font-bold text-10 xs:text-base', {
-    'gradient-king-text': isKing,
+    'gradient-king-yellow-text': isKing,
     'text-gray-primary': !isKing
   })
 
