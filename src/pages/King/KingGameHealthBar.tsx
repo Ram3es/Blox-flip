@@ -85,15 +85,13 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
         </span>
       </div>
       <div className={healthPointBarContainerClasses}>
-        <div className='bg-black rounded relative'>
-          <div className='flex items-center justify-start w-full'>
-            <div
-              ref={healthPointBarRef}
-              className={healthPointBarClasses}
-              style={{ width: `${healthPointBarWidth}%` }}
-            />
-            <div ref={healthPointBarRemainderRef} className={healthPointBarRemainderClasses} />
-          </div>
+        <div className='bg-black rounded relative flex items-center justify-start w-full'>
+          <div
+            ref={healthPointBarRef}
+            className={healthPointBarClasses}
+            style={{ width: `${healthPointBarWidth}%` }}
+          />
+          <div ref={healthPointBarRemainderRef} className={healthPointBarRemainderClasses} />
         </div>
       </div>
     </div>
