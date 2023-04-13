@@ -19,7 +19,7 @@ interface KingGameProps {
 const KingGamePlayer = ({ user, isKing, values }: KingGameProps) => {
   const avatarClasses = clsx('ls:top-[-55px] flex items-center justify-center p-4 rounded-lg', {
     'ls:absolute gradient-background--yellow gradient-border--yellow': isKing,
-    'ls:absolute left-[320px] gradient-background--blue': !isKing
+    'ls:absolute right-0 gradient-background--blue': !isKing
   })
   const playerInfoClasses = clsx('', {
     'ls:pl-36 ls:pt-2 space-y-1': isKing,
