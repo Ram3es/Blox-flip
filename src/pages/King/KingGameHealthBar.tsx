@@ -4,23 +4,34 @@ import clsx from 'clsx'
 
 interface KingGameHealthBarProps {
   values: number[]
-  isKing?: boolean
+  isKing: boolean
 }
 
 const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
-  const maxHealthPoints = useMemo(() => values.reduce((a, b) => a + b, 0), [values])
-
   const [currentHealthPoints, setCurrentHealthPoints] = useState(100)
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(20)
+
+  console.log(timeToStartEffect, '<<<<<timeToStartEffect')
 
   const healthPointBarRef = useRef<HTMLDivElement>(null)
   const healthPointBarRemainderRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    setCurrentHealthPoints(maxHealthPoints)
-  }, [values])
+  const maxHealthPoints = useMemo(() => values.reduce((a, b) => a + b, 0), [values])
+  const healthPointBarWidth = useMemo(
+    () => (currentHealthPoints / maxHealthPoints) * 100,
+    [currentHealthPoints]
+  )
 
-  const healthPointBarWidth = (currentHealthPoints / maxHealthPoints) * 100
+  const setBorderByKingVariable = (isKing: boolean, value: string): void => {
+    if (isKing && healthPointBarRef.current) {
+      healthPointBarRef.current.style.borderTopRightRadius = value
+      healthPointBarRef.current.style.borderBottomRightRadius = value
+    }
+    if (!isKing && healthPointBarRef.current) {
+      healthPointBarRef.current.style.borderTopLeftRadius = value
+      healthPointBarRef.current.style.borderBottomLeftRadius = value
+    }
+  }
 
   const healthPointClasses = clsx('flex', {
     'justify-end': !isKing
@@ -46,6 +57,10 @@ const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
   })
 
   useEffect(() => {
+    setCurrentHealthPoints(maxHealthPoints)
+  }, [values])
+
+  useEffect(() => {
     const countdown = setInterval(() => {
       setTimeToStartEffect((prevTimer) => {
         if (prevTimer <= 0) {
@@ -58,17 +73,13 @@ const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
 
           if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
             healthPointBarRemainderRef.current.style.width = `${25}%`
-
-            healthPointBarRef.current.style.borderTopRightRadius = '0rem'
-            healthPointBarRef.current.style.borderBottomRightRadius = '0rem'
+            setBorderByKingVariable(isKing, '0rem')
           }
 
           setTimeout(() => {
             if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
               healthPointBarRemainderRef.current.style.width = '0%'
-
-              healthPointBarRef.current.style.borderTopRightRadius = '0.125rem'
-              healthPointBarRef.current.style.borderBottomRightRadius = '0.125rem'
+              setBorderByKingVariable(isKing, '0.125rem')
             }
           }, 2000)
         }

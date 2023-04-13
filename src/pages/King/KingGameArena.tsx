@@ -21,7 +21,7 @@ const KingGameArena = () => {
         </div>
       </div>
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
-      <KingGamePlayer values={[1000, 1000, 1000, 1000]} />
+      <KingGamePlayer isKing={false} values={[1000, 1000, 1000, 1000]} />
     </div>
   )
 }

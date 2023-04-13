@@ -12,7 +12,7 @@ import type { ISecondUser } from '../../types/User'
 
 interface KingGameProps {
   user?: ISecondUser
-  isKing?: boolean
+  isKing: boolean
   values: number[]
 }
 
