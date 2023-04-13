@@ -2,14 +2,14 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import clsx from 'clsx'
 
-import HealthPointsBar from '../../components/common/HealthPointsBar'
+import TextHealthPointsBar from '../../components/common/TextHealthPointsBar'
 
-interface KingGameHealthBarProps {
+interface KingGameHealthPointsBarProps {
   values: number[]
   isKing: boolean
 }
 
-const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
+const KingGameHealthPointsBar = ({ values, isKing }: KingGameHealthPointsBarProps) => {
   const [currentHealthPoints, setCurrentHealthPoints] = useState(100)
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(20)
 
@@ -98,7 +98,7 @@ const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
   return (
     <div className='space-y-2'>
       <div className={healthPointClasses}>
-        <HealthPointsBar
+        <TextHealthPointsBar
           currentHealthPoints={currentHealthPoints}
           maxHealthPoints={maxHealthPoints}
         />
@@ -117,4 +117,4 @@ const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
   )
 }
 
-export default KingGameHealthBar
+export default KingGameHealthPointsBar
