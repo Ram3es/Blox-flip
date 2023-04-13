@@ -4,14 +4,13 @@ import clsx from 'clsx'
 
 interface KingGameHealthBarProps {
   values: number[]
-  position: 'left' | 'right'
   isKing?: boolean
 }
 
-const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps) => {
+const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
   const maxHealthPoints = useMemo(() => values.reduce((a, b) => a + b, 0), [values])
 
-  const [currentHealthPoints, setCurrentHealthPoints] = useState(maxHealthPoints)
+  const [currentHealthPoints, setCurrentHealthPoints] = useState(100)
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(20)
 
   const healthPointBarRef = useRef<HTMLDivElement>(null)
@@ -23,23 +22,28 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
 
   const healthPointBarWidth = (currentHealthPoints / maxHealthPoints) * 100
 
-  const healthPointClasses = clsx('', {
-    'flex justify-end': position === 'right'
+  const healthPointClasses = clsx('flex', {
+    'justify-end': !isKing
   })
 
   const healthPointBarContainerClasses = clsx('max-w-[280px] border rounded p-0.5 bg-black', {
-    'ml-auto': position === 'right',
     'border-yellow-primary-accent': isKing,
-    'border-gray-primary': !isKing
+    'border-red-primary ml-auto': !isKing
   })
 
-  const healthPointBarClasses = clsx('h-2.5 rounded-sm text-xs flex items-center justify-end', {
-    'ml-auto': position === 'right',
+  const healthPointBarWrapperClasses = clsx('bg-black rounded relative flex', {
+    'flex-row-reverse': !isKing
+  })
+
+  const healthPointBarClasses = clsx('h-2.5 rounded-sm text-xs', {
     'gradient--background--yellow__fourth': isKing,
-    'bg-gray-primary': !isKing
+    'bg-red-primary': !isKing
   })
 
-  const healthPointBarRemainderClasses = 'h-2.5 bg-yellow-700/70 rounded-r-sm'
+  const healthPointBarRemainderClasses = clsx('h-2.5', {
+    'bg-yellow-700/70 rounded-r-sm': isKing,
+    'bg-red-primary/40 rounded-l-sm ml-auto': !isKing
+  })
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -51,8 +55,10 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
 
         if (prevTimer % 5 === 0) {
           setCurrentHealthPoints((prev) => prev - values[0])
+
           if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
             healthPointBarRemainderRef.current.style.width = `${25}%`
+
             healthPointBarRef.current.style.borderTopRightRadius = '0rem'
             healthPointBarRef.current.style.borderBottomRightRadius = '0rem'
           }
@@ -60,6 +66,7 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
           setTimeout(() => {
             if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
               healthPointBarRemainderRef.current.style.width = '0%'
+
               healthPointBarRef.current.style.borderTopRightRadius = '0.125rem'
               healthPointBarRef.current.style.borderBottomRightRadius = '0.125rem'
             }
@@ -83,7 +90,7 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
         </span>
       </div>
       <div className={healthPointBarContainerClasses}>
-        <div className='bg-black rounded relative flex items-center justify-start w-full'>
+        <div className={healthPointBarWrapperClasses}>
           <div
             ref={healthPointBarRef}
             className={healthPointBarClasses}
