@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import clsx from 'clsx'
 
+import HealthPointsBar from '../../components/common/HealthPointsBar'
+
 interface KingGameHealthBarProps {
   values: number[]
   isKing: boolean
@@ -96,9 +98,10 @@ const KingGameHealthBar = ({ values, isKing }: KingGameHealthBarProps) => {
   return (
     <div className='space-y-2'>
       <div className={healthPointClasses}>
-        <span className='font-bold text-sm'>
-          {currentHealthPoints} / <span className='text-white/50'>{maxHealthPoints} HP</span>
-        </span>
+        <HealthPointsBar
+          currentHealthPoints={currentHealthPoints}
+          maxHealthPoints={maxHealthPoints}
+        />
       </div>
       <div className={healthPointBarContainerClasses}>
         <div className={healthPointBarWrapperClasses}>
