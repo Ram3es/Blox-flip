@@ -58,7 +58,7 @@ const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
         </div>
       </div>
       <div className={healthBarClasses}>
-        <KingGameHealthBar isKing={isKing} position={isKing ? 'left' : 'right'} values={[1000, 1000, 1000, 1000]} />
+        <KingGameHealthBar isKing={isKing} position={'left'} values={[1000, 1000, 1000, 1000]} />
       </div>
     </div>
   )
