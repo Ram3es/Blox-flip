@@ -13,6 +13,8 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
   const [currentHealthPoints, setCurrentHealthPoints] = useState(maxHealthPoints)
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(20)
 
+  console.log('currentHelthPoints', currentHealthPoints)
+
   const healthPointBarRef = useRef<HTMLDivElement>(null)
   const healthPointBarRemainderRef = useRef<HTMLDivElement>(null)
 
@@ -43,7 +45,7 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
     'bg-gray-primary': !isKing
   })
 
-  const healthPointBarRemainderClasses = 'h-2.5 bg-yellow-700/70 rounded-sm'
+  const healthPointBarRemainderClasses = 'h-2.5 bg-yellow-700/70 rounded-r-sm'
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -56,8 +58,13 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
         if (prevTimer % 5 === 0) {
           setCurrentHealthPoints((prev) => prev - values[0])
           healthPointBarRemainderRef.current.style.width = `${25}%`
+          healthPointBarRef.current.style.borderTopRightRadius = '0rem'
+          healthPointBarRef.current.style.borderBottomRightRadius = '0rem'
+
           setTimeout(() => {
             healthPointBarRemainderRef.current.style.width = '0%'
+            healthPointBarRef.current.style.borderTopRightRadius = '0.125rem'
+            healthPointBarRef.current.style.borderBottomRightRadius = '0.125rem'
           }, 2000)
         }
 
@@ -83,7 +90,7 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
             <div
               ref={healthPointBarRef}
               className={healthPointBarClasses}
-              style={{ width: `${healthPointBarWidth + 2}%` }}
+              style={{ width: `${healthPointBarWidth}%` }}
             />
             <div ref={healthPointBarRemainderRef} className={healthPointBarRemainderClasses} />
           </div>
