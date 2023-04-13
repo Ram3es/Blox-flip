@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+
 import clsx from 'clsx'
 
 interface KingGameHealthBarProps {
@@ -13,8 +14,6 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
   const [currentHealthPoints, setCurrentHealthPoints] = useState(maxHealthPoints)
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(20)
 
-  console.log('currentHelthPoints', currentHealthPoints)
-
   const healthPointBarRef = useRef<HTMLDivElement>(null)
   const healthPointBarRemainderRef = useRef<HTMLDivElement>(null)
 
@@ -23,11 +22,6 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
   }, [values])
 
   const healthPointBarWidth = (currentHealthPoints / maxHealthPoints) * 100
-
-  for (let i = 0; i < values.length; i++) {
-    const item = values[i]
-    console.log((item / maxHealthPoints) * 100)
-  }
 
   const healthPointClasses = clsx('', {
     'flex justify-end': position === 'right'
@@ -57,14 +51,18 @@ const KingGameHealthBar = ({ values, position, isKing }: KingGameHealthBarProps)
 
         if (prevTimer % 5 === 0) {
           setCurrentHealthPoints((prev) => prev - values[0])
-          healthPointBarRemainderRef.current.style.width = `${25}%`
-          healthPointBarRef.current.style.borderTopRightRadius = '0rem'
-          healthPointBarRef.current.style.borderBottomRightRadius = '0rem'
+          if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
+            healthPointBarRemainderRef.current.style.width = `${25}%`
+            healthPointBarRef.current.style.borderTopRightRadius = '0rem'
+            healthPointBarRef.current.style.borderBottomRightRadius = '0rem'
+          }
 
           setTimeout(() => {
-            healthPointBarRemainderRef.current.style.width = '0%'
-            healthPointBarRef.current.style.borderTopRightRadius = '0.125rem'
-            healthPointBarRef.current.style.borderBottomRightRadius = '0.125rem'
+            if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
+              healthPointBarRemainderRef.current.style.width = '0%'
+              healthPointBarRef.current.style.borderTopRightRadius = '0.125rem'
+              healthPointBarRef.current.style.borderBottomRightRadius = '0.125rem'
+            }
           }, 2000)
         }
 

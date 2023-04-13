@@ -11,7 +11,7 @@ const KingGameArena = () => {
 
   return (
     <div className='gradient-background--yellow__secondary rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch h-full ls:h-44 w-full gap-4 xs:gap-0 p-16 ls:p-0'>
-      <KingGamePlayer isKing />
+      <KingGamePlayer isKing values={[1000, 1000, 1000, 1000]} />
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
       <div className='relative flex items-center justify-center gap-2'>
         <ClocksIcon />
@@ -21,7 +21,7 @@ const KingGameArena = () => {
         </div>
       </div>
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
-      <KingGamePlayer />
+      <KingGamePlayer values={[1000, 1000, 1000, 1000]} />
     </div>
   )
 }
