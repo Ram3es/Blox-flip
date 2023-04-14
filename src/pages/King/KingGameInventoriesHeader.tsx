@@ -33,7 +33,7 @@ const KingGameInventoriesHeader = ({
   return (
     <div className='flex items-start ls:items-center ls:flex-row flex-col gap-4'>
       <div className={headingClasses}>
-        <p className='hidden ls:block'>
+        <p className='hidden ls:block text-yellow-primary-accent'>
           <ListIcon />
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
