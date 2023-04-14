@@ -1,6 +1,5 @@
 import { useKing } from '../../store/KingStore'
 
-import { Button } from '../../components/base/Button'
 
 import KingGameArena from './KingGameArena'
 import KingGameQueue from './KingGameQueue'

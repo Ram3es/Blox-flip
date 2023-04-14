@@ -13,10 +13,10 @@ import type { ISecondUser } from '../../types/User'
 interface KingGameProps {
   user?: ISecondUser
   isKing: boolean
-  values: number[]
+  // values: number[]
 }
 
-const KingGamePlayer = ({ user, isKing, values }: KingGameProps) => {
+const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
   const avatarClasses = clsx('ls:top-[-55px] flex items-center justify-center p-4 rounded-lg', {
     'ls:absolute gradient-background--yellow gradient-border--yellow': isKing,
     'ls:absolute right-0 gradient-background--blue': !isKing
@@ -59,7 +59,7 @@ const KingGamePlayer = ({ user, isKing, values }: KingGameProps) => {
         </div>
       </div>
       <div className={healthBarClasses}>
-        <KingGameHealthPointsBar isKing={isKing} values={values} />
+        <KingGameHealthPointsBar isKing={isKing} />
       </div>
     </div>
   )
