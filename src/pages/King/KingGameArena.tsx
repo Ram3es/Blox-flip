@@ -8,6 +8,7 @@ import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 import ExplosionIcon from '../../assets/img/explosion_icon.png'
 import KingGameHealthPointsBar from './KingGameHealthPointsBar'
+import { IKingFight } from '../../types/King'
 
 const KingGameArena = () => {
   const { fight, setFight } = useKing()
@@ -30,6 +31,14 @@ const KingGameArena = () => {
 
   const healthBarKingRef = useRef<HTMLDivElement>(null)
   const healthBarOpponentRef = useRef<HTMLDivElement>(null)
+
+  const getRoundsByKingVariable = (isKing: boolean, fight: IKingFight[]): number[] => {
+    if (isKing) {
+      return fight.filter((round) => round.by === 'king').map((round) => round.damage)
+    } else {
+      return fight.filter((round) => round.by === 'opponent').map((round) => round.damage)
+    }
+  }
 
   useEffect(() => {
     if (fight) {
@@ -102,48 +111,51 @@ const KingGameArena = () => {
   }, [fight, timer])
 
   return (
-    <div className='gradient-background--yellow__secondary'>
-      <div className='rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch h-full ls:h-44 w-full gap-4 xs:gap-0 ls:p-0'>
-        <div>
-          <KingGamePlayer isKing />
+    <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
+      <div>
+        <KingGamePlayer isKing />
+        <div className='ls:pt-8 ls:pl-8 pb-7 w-full'>
+          <KingGameHealthPointsBar isKing ref={healthBarKingRef} currentHP={hpKing} />
         </div>
-
-        <img
-          ref={explosiveKingEffect}
-          className='absolute top-36 left-6 z-100'
-          style={{ visibility: 'hidden' }}
-          src={ExplosionIcon}
-          alt='explosion'
-        />
-
-        <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
-
-        <div className='relative flex items-center justify-center gap-2'>
-          <ClocksIcon />
-          <div className='text-white font bold text-xl w-11'>{timer}s</div>
-          <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[144px] p-2 flex items-center justify-center rotate-[45deg]'>
-            <img ref={swordIconRef} src={SwordsIcon} className='scale-[280%] rotate-[-45deg]' />
-          </div>
-        </div>
-
-        <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
-
-        <img
-          ref={explosiveOpponentEffect}
-          className='absolute right-80 top-36 z-100'
-          style={{ visibility: 'hidden' }}
-          src={ExplosionIcon}
-          alt='explosion'
-        />
-
-        <KingGamePlayer isKing={false} />
       </div>
-      <div className='flex items-center justify-between'>
-        <div className='ls:pt-8 ls:pl-8 w-full'>
-          <KingGameHealthPointsBar isKing ref={healthBarKingRef} hp={hpKing} />
+
+      <img
+        ref={explosiveKingEffect}
+        className='absolute top-36 left-6 z-100'
+        style={{ visibility: 'hidden' }}
+        src={ExplosionIcon}
+        alt='explosion'
+      />
+
+      <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
+
+      <div className='relative flex items-center justify-center gap-2'>
+        <ClocksIcon />
+        <div className='text-white font bold text-xl w-11'>{timer}s</div>
+        <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[144px] p-2 flex items-center justify-center rotate-[45deg]'>
+          <img ref={swordIconRef} src={SwordsIcon} className='scale-[280%] rotate-[-45deg]' />
         </div>
+      </div>
+
+      <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
+
+      <img
+        ref={explosiveOpponentEffect}
+        className='absolute right-80 top-36 z-100'
+        style={{ visibility: 'hidden' }}
+        src={ExplosionIcon}
+        alt='explosion'
+      />
+
+      <div>
+        <KingGamePlayer isKing={false} />
+
         <div className='ls:pt-8 ls:pr-8 w-full'>
-          <KingGameHealthPointsBar isKing={false} ref={healthBarOpponentRef} hp={hpOpponent} />
+          <KingGameHealthPointsBar
+            isKing={false}
+            ref={healthBarOpponentRef}
+            currentHP={hpOpponent}
+          />
         </div>
       </div>
     </div>
