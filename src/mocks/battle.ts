@@ -34,7 +34,7 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '777',
     status: 'created',
-    players: [{ id: '21', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+    players: [{ id: '21', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -46,9 +46,9 @@ export const dataTable: IBattlesInfo[] = [
     id: '778',
     status: 'running',
     players: [
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 12,
       price: 17000,
@@ -61,9 +61,9 @@ export const dataTable: IBattlesInfo[] = [
     id: '790',
     status: 'ended',
     players: [
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 7,
       price: 17000,
@@ -76,9 +76,9 @@ export const dataTable: IBattlesInfo[] = [
     status: 'ended',
     players: [
       { id: '32323', avatar: 'https://cdn.dribbble.com/users/3175546/screenshots/11634060/media/abe23d862136d3a3cebe2c654b2a5ae6.png?compress=1&resize=400x300', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 12000,
@@ -91,8 +91,8 @@ export const dataTable: IBattlesInfo[] = [
     id: '7327',
     status: 'ended',
     players: [
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -104,8 +104,8 @@ export const dataTable: IBattlesInfo[] = [
     id: '777',
     status: 'running',
     players: [
-      { id: '23233', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd325', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd325', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -118,8 +118,8 @@ export const dataTable: IBattlesInfo[] = [
     id: '7778',
     status: 'created',
     players: [
-      { id: '435', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '435', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 5,
       price: 9900,
@@ -132,10 +132,10 @@ export const dataTable: IBattlesInfo[] = [
     id: '77786',
     status: 'running',
     players: [
-      { id: '435', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: '/src/assets/img/avatar_img.png', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      { id: '435', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
+      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
     gameSetting: {
       rounds: 7,
       price: 9900,
