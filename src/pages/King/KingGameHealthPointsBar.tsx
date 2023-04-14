@@ -15,11 +15,11 @@ const KingGameHealthPointsBar = forwardRef<HTMLDivElement, KingGameHealthPointsB
     const healthPointBarWidth = useMemo(() => (currentHP / maxHP) * 100, [currentHP])
 
     const healthPointClasses = clsx('flex', {
-      'justify-end': !isKing
+      'ls:justify-end': !isKing
     })
     const healthPointBarContainerClasses = clsx('max-w-[280px] border rounded p-0.5 bg-black', {
       'border-yellow-primary-accent': isKing,
-      'border-red-primary ml-auto': !isKing
+      'border-red-primary ls:ml-auto': !isKing
     })
     const healthPointBarWrapperClasses = clsx('bg-black rounded relative flex', {
       'flex-row-reverse': !isKing

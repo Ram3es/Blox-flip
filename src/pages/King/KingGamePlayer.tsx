@@ -4,7 +4,6 @@ import { UserAvatar } from '../../components/user/UserAvatar'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { Button } from '../../components/base/Button'
 import { UserLevel } from '../../components/user/UserLevel'
-import KingGameHealthPointsBar from './KingGameHealthPointsBar'
 
 import KingIcon from '../../assets/img/king_icon.png'
 
@@ -28,13 +27,9 @@ const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
     'gradient-king-yellow-text': isKing,
     'text-gray-primary': !isKing
   })
-  // const healthBarClasses = clsx('ls:pt-8 ', {
-  //   'ls:pl-8': isKing,
-  //   'ls:pr-8': !isKing
-  // })
 
   return (
-    <div className='relative xs:min-w-[444px] ls:block flex xs:flex-row flex-col items-center ls:gap-0 gap-5'>
+    <div className='relative ls:block flex xs:flex-row flex-col items-center ls:gap-0 gap-5'>
       <div className={avatarClasses}>
         <UserAvatar className='w-20 h-[74px]' />
         {isKing && <img src={KingIcon} className='left-0 xs:left-[-28px] absolute top-[-45px]' />}
@@ -57,9 +52,6 @@ const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
           </div>
         </div>
       </div>
-      {/* <div className={healthBarClasses}>
-        <KingGameHealthPointsBar isKing={isKing} />
-      </div> */}
     </div>
   )
 }
