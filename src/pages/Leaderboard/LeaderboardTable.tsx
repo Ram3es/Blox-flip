@@ -6,9 +6,9 @@ import { ISecondUser } from '../../types/User'
 import { users } from '../../mocks/leaderboardMock'
 
 import { Table } from '../../components/table/Table'
-import { UserInfoCell } from '../../components/table/CellFormaters/UserInfoCell'
+import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { PlaceCell } from '../../components/table/CellFormaters/PlaceCell'
+import { PlaceCell } from '../../components/table/CellFormatters/PlaceCell'
 import { getSortedUsersByField } from '../../helpers/leaderboardHelpers'
 
 export const LeaderboardTable = () => {

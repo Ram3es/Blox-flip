@@ -6,7 +6,11 @@ enum VariantEnum {
   Gradient = 'Gradient',
   Outlined = 'Outlined',
   Highlight = 'Highlight',
-  HighlightDarken = 'HighlightDarken'
+  HighlightDarken = 'HighlightDarken',
+  YellowOutlined = 'YellowOutlined',
+  YellowOutlinedSecondary = 'YellowOutlinedSecondary',
+  GreenOutlinedSecondary = 'GreenOutlinedSecondary',
+  BlueOutlined = 'BlueOutlined'
 }
 
 enum ColorEnum {
@@ -14,7 +18,8 @@ enum ColorEnum {
   GreenPrimaryOpacity = 'GreenPrimaryOpacity',
   BlueSecondary = 'BlueSecondary',
   BlueAccent = 'BlueAccent',
-  BlueHighlight = 'BlueHighlight'
+  BlueHighlight = 'BlueHighlight',
+  BlueAccentSix = 'BlueAccentSix'
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -30,7 +35,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'bg-green-primary/20': color === ColorEnum.GreenPrimaryOpacity,
       'bg-blue-secondary': color === ColorEnum.BlueSecondary,
       'bg-blue-accent': color === ColorEnum.BlueAccent,
-      'bg-blue-highlight': color === ColorEnum.BlueHighlight
+      'bg-blue-highlight': color === ColorEnum.BlueHighlight,
+      'bg-blue-accent-six': color === ColorEnum.BlueAccentSix
     })
 
     const variantClasses = clsx('flex items-center rounded', {
@@ -41,7 +47,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'text-gray-primary bg-blue-highlight border border-blue-highlight hover:text-white':
         variant === VariantEnum.Highlight,
       'text-gray-primary blue-highlight hover:bg-blue-accent':
-        variant === VariantEnum.HighlightDarken
+        variant === VariantEnum.HighlightDarken,
+      'border border-orange-primary-light gradient-yellow shadow-orange-primary-light-20':
+        variant === VariantEnum.YellowOutlined,
+      'border border-green-primary gradient-green-secondary shadow-green-primary-20':
+        variant === VariantEnum.GreenOutlinedSecondary,
+      'border border-yellow-secondary bg-yellow-secondary bg-opacity-25':
+        variant === VariantEnum.YellowOutlinedSecondary,
+      'border border-blue-golf bg-blue-golf bg-opacity-25': variant === VariantEnum.BlueOutlined
     })
 
     return (
