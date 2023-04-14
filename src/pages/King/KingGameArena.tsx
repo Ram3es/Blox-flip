@@ -84,7 +84,7 @@ const KingGameArena = () => {
           explosiveOpponentEffect.current.style.visibility = 'visible'
           attackTextRef.current.style.visibility = 'visible'
           healthBarOpponentRef.current.style.width = `${25}%`
-          swordIconRef.current.style.rotate = '-45deg'
+          swordIconRef.current.style.rotate = '45deg'
         }
         setTimeout(() => {
           if (
@@ -114,7 +114,7 @@ const KingGameArena = () => {
         ) {
           explosiveKingEffect.current.style.visibility = 'visible'
           healthBarKingRef.current.style.width = `${25}%`
-          swordIconRef.current.style.rotate = '45deg'
+          swordIconRef.current.style.rotate = '-45deg'
           attackTextRef.current.style.visibility = 'visible'
 
           setTimeout(() => {
