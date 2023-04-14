@@ -86,7 +86,7 @@ const KingGameArena = () => {
 
   return (
     <div className='gradient-background--yellow__secondary rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch h-full ls:h-44 w-full gap-4 xs:gap-0 p-16 ls:p-0'>
-      <KingGamePlayer isKing values={[1000, 1000, 1000, 1000]} />
+      <KingGamePlayer isKing  />
 
       <img
         ref={explosiveKingEffect}
@@ -116,7 +116,7 @@ const KingGameArena = () => {
         alt='explosion'
       />
 
-      <KingGamePlayer isKing={false} values={[1000, 1000, 1000, 1000]} />
+      <KingGamePlayer isKing={false}  />
     </div>
   )
 }

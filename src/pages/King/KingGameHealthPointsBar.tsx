@@ -5,11 +5,11 @@ import clsx from 'clsx'
 import TextHealthPointsBar from '../../components/common/TextHealthPointsBar'
 
 interface KingGameHealthPointsBarProps {
-  values: number[]
+  // values: number[]
   isKing: boolean
 }
 
-const KingGameHealthPointsBar = ({ values, isKing }: KingGameHealthPointsBarProps) => {
+const KingGameHealthPointsBar = ({  isKing }: KingGameHealthPointsBarProps) => {
   const [currentHealthPoints, setCurrentHealthPoints] = useState(100)
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(20)
 
@@ -18,9 +18,9 @@ const KingGameHealthPointsBar = ({ values, isKing }: KingGameHealthPointsBarProp
   const healthPointBarRef = useRef<HTMLDivElement>(null)
   const healthPointBarRemainderRef = useRef<HTMLDivElement>(null)
 
-  const maxHealthPoints = useMemo(() => values.reduce((a, b) => a + b, 0), [values])
+  // const maxHealthPoints = useMemo(() => values.reduce((a, b) => a + b, 0), [values])
   const healthPointBarWidth = useMemo(
-    () => (currentHealthPoints / maxHealthPoints) * 100,
+    () => (currentHealthPoints / 4000) * 100,
     [currentHealthPoints]
   )
 
@@ -59,8 +59,8 @@ const KingGameHealthPointsBar = ({ values, isKing }: KingGameHealthPointsBarProp
   })
 
   useEffect(() => {
-    setCurrentHealthPoints(maxHealthPoints)
-  }, [values])
+    setCurrentHealthPoints(4000)
+  }, [])
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -71,7 +71,7 @@ const KingGameHealthPointsBar = ({ values, isKing }: KingGameHealthPointsBarProp
         }
 
         if (prevTimer % 5 === 0) {
-          setCurrentHealthPoints((prev) => prev - values[0])
+          setCurrentHealthPoints((prev) => prev - 1000)
 
           if (healthPointBarRef.current && healthPointBarRemainderRef.current) {
             healthPointBarRemainderRef.current.style.width = `${25}%`
@@ -100,7 +100,7 @@ const KingGameHealthPointsBar = ({ values, isKing }: KingGameHealthPointsBarProp
       <div className={healthPointClasses}>
         <TextHealthPointsBar
           currentHealthPoints={currentHealthPoints}
-          maxHealthPoints={maxHealthPoints}
+          maxHealthPoints={4000}
         />
       </div>
       <div className={healthPointBarContainerClasses}>

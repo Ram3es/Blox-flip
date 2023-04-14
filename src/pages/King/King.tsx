@@ -9,9 +9,16 @@ import KingGameHistoryList from './KingGameHistoryList'
 
 import { users } from '../../mocks/liveFeedUsers'
 import { kingMock } from '../../mocks/kingMock'
+import { useEffect } from 'react'
 
 const King = () => {
   const { setFight } = useKing()
+
+  useEffect(() => {
+    handleStartGame()
+  }, [
+
+  ])
 
   const handleStartGame = () => {
     setFight([
@@ -61,9 +68,6 @@ const King = () => {
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
       <KingGameArena />
-      <Button onClick={handleStartGame} variant='Standard' color='GreenPrimary'>
-        <span className='py-4 px-4 mx-auto'>Start game</span>
-      </Button>
       <KingGameQueue queue={users.slice(0, 10)} />
       <KingGameInventories />
       <KingGameHistoryList games={kingMock} />
