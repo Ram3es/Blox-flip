@@ -39,9 +39,9 @@ const KingGameInventoriesHeader = ({
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
       <QuantityCoins quantity={1500} />
-      <Button disabled variant='HighlightDarken'>
-        <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
-          7 <span>&nbsp;Items</span>
+      <Button disabled variant='YellowOutlined'>
+        <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
+          {7} <span>&nbsp;Items</span>
         </span>
       </Button>
       {isKing && options && selectedOption && setSelectedOption && (
