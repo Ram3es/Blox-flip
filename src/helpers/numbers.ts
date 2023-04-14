@@ -21,3 +21,10 @@ export const localeStringToNumber = (num: string, locale: string) => {
 
   return +numWithoutInvalidChars
 }
+
+export const getCostByFieldName = <T extends Record<K, number>, K extends keyof T>(
+  items: T[],
+  field: K
+): number => {
+  return items.reduce((acc, item) => acc + item[field], 0)
+}
