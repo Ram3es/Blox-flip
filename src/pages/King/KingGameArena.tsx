@@ -28,7 +28,7 @@ const KingGameArena = () => {
     if (fight) {
       setTimer(getFightDuration(roundDuration, fight.length))
 
-      const fightDurationMilliseconds = getFightDuration(roundDuration, fight.length) * 1000 + 10000
+      const fightDurationMilliseconds = getFightDuration(roundDuration, fight.length / 2) * 1000
 
       console.log('fightDurationMilliseconds', fightDurationMilliseconds)
 
@@ -99,8 +99,8 @@ const KingGameArena = () => {
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
       <div className='relative flex items-center justify-center gap-2'>
-        <ClocksIcon />
-        <div className='text-white font bold text-xl w-11'>{timer}s</div>
+        {/* <ClocksIcon /> */}
+        {/* <div className='text-white font bold text-xl w-11'>{timer}s</div> */}
         <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[144px] p-2 flex items-center justify-center rotate-[45deg]'>
           <img ref={swordIconRef} src={SwordsIcon} className='scale-[280%] rotate-[-45deg]' />
         </div>

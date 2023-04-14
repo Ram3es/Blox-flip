@@ -23,10 +23,9 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Context.Provider value={{ state, dispatch }}>
       <PlinkoProvider>
-        <CoinFlipProvider>{children}</CoinFlipProvider>
-      </PlinkoProvider>
-      <PlinkoProvider>
-        <KingProvider>{children}</KingProvider>
+        <CoinFlipProvider>
+          <KingProvider>{children}</KingProvider>
+        </CoinFlipProvider>
       </PlinkoProvider>
     </Context.Provider>
   )

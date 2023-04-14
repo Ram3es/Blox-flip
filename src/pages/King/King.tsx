@@ -1,6 +1,5 @@
 import { useKing } from '../../store/KingStore'
 
-
 import KingGameArena from './KingGameArena'
 import KingGameQueue from './KingGameQueue'
 import KingGameInventories from './KingGameInventories'
@@ -14,12 +13,6 @@ const King = () => {
   const { setFight } = useKing()
 
   useEffect(() => {
-    handleStartGame()
-  }, [
-
-  ])
-
-  const handleStartGame = () => {
     setFight([
       {
         by: 'king',
@@ -62,7 +55,7 @@ const King = () => {
         damage: 1000
       }
     ])
-  }
+  }, [])
 
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
