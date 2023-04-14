@@ -98,7 +98,15 @@ export const Transactions = () => {
         searchValue={searchValue}
         filtersVariants={filtersVariants}
         tableHeader={
-          <FilterHeader label={<ListIcon />} text='My transactions' textColor='text-gray-primary' />
+          <FilterHeader
+            label={
+              <span className='text-gray-primary'>
+                <ListIcon />
+              </span>
+            }
+            text='My transactions'
+            textColor='text-gray-primary'
+          />
         }
         variant='History'
       />
