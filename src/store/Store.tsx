@@ -3,6 +3,7 @@ import { IUser } from '../types/User'
 import { PlinkoProvider } from './PlinkoStore'
 import { Reducer, IAction } from './Reducer'
 import { CoinFlipProvider } from './CoinFlipStore'
+import { KingProvider } from './KingStore'
 
 export interface IState {
   user?: IUser
@@ -22,7 +23,9 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Context.Provider value={{ state, dispatch }}>
       <PlinkoProvider>
-        <CoinFlipProvider>{children}</CoinFlipProvider>
+        <CoinFlipProvider>
+          <KingProvider>{children}</KingProvider>
+        </CoinFlipProvider>
       </PlinkoProvider>
     </Context.Provider>
   )

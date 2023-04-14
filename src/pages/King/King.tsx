@@ -1,15 +1,69 @@
-import React from 'react'
+import { useKing } from '../../store/KingStore'
+
+import KingGameArena from './KingGameArena'
+import KingGameQueue from './KingGameQueue'
+import KingGameInventories from './KingGameInventories'
+import KingGameHistoryList from './KingGameHistoryList'
+
+import { users } from '../../mocks/liveFeedUsers'
+import { kingMock } from '../../mocks/kingMock'
+import { useEffect } from 'react'
 
 const King = () => {
+  const { setFight } = useKing()
+
+  useEffect(() => {
+    setFight([
+      {
+        by: 'king',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'opponent',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'king',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'opponent',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'king',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'opponent',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'king',
+        animation: 'spritesheet',
+        damage: 1000
+      },
+      {
+        by: 'opponent',
+        animation: 'spritesheet',
+        damage: 1000
+      }
+    ])
+  }, [])
+
   return (
-        <div>
-        <h1 className='text-red text-5xl'>King</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus inventore ipsa fugiat
-          similique, quia, necessitatibus repudiandae ad commodi architecto aliquam molestiae adipisci
-          voluptates nesciunt esse magnam est delectus, iure nulla.
-        </p>
-      </div>
+    <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
+      <KingGameArena />
+      <KingGameQueue queue={users.slice(0, 10)} />
+      <KingGameInventories />
+      <KingGameHistoryList games={kingMock} />
+    </div>
   )
 }
 
