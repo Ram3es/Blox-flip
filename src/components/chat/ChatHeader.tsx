@@ -1,11 +1,13 @@
 import { FC, useContext, useState } from 'react'
-import clsx from 'clsx'
 import { Context } from '../../store/Store'
-import { RouteItem } from '../../types/Routes'
 
-import { Button } from '../base/Button'
-import SignInModal from '../containers/SignInModal.'
+import clsx from 'clsx'
+
+import SignInModal from '../containers/SignInModal'
 import ChatUserCard from './ChatUserCard'
+import { Button } from '../base/Button'
+
+import { RouteItem } from '../../types/Routes'
 
 export const ChatHeader: FC = () => {
   const [isOpenSignInModal, setIsOpenModal] = useState(false)
@@ -22,18 +24,18 @@ export const ChatHeader: FC = () => {
   return (
     <>
       <div
-        className={clsx(
-          'border border-blue-highlight rounded-lg radial--blue mb-8 relative z-30',
-          {
-            'px-3 pt-2': state.user,
-            'px-2 py-3 flex items-center justify-center': !state.user
-          }
-        )}
+        className={clsx('border border-blue-highlight rounded-lg radial--blue mb-8 relative z-30', {
+          'px-3 pt-2': state.user,
+          'px-2 py-3 flex items-center justify-center': !state.user
+        })}
       >
         {state.user
           ? (<ChatUserCard routes={routes} variant='Header' user={state.user} />)
-          : (<Button color='GreenPrimary' variant='Gradient' onClick={() => setIsOpenModal(true)}><span className='px-24 py-2'>Login</span></Button>)
-        }
+          : (
+          <Button color='GreenPrimary' variant='Gradient' onClick={() => setIsOpenModal(true)}>
+            <span className='px-24 py-2'>Login</span>
+          </Button>
+            )}
       </div>
       <SignInModal isOpen={isOpenSignInModal} onClose={() => setIsOpenModal(false)} />
     </>

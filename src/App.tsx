@@ -27,6 +27,7 @@ import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 import Jackpot from './pages/Jackpot/Jackpot'
 import BattleCases from './pages/Battle/BattleCases'
+import CoinFlip from './pages/CoinFlip/CoinFlip'
 
 export const App = () => {
   return (
@@ -46,6 +47,7 @@ export const App = () => {
           <Route path='/crash' element={<Wheel />} />
           <Route path='/king' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
+          <Route path='/coinflip' element={<CoinFlip />} />
           <Route path='/deposit' element={<Deposit />}>
             <Route path='robux' element={<DepositRobux />} />
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />

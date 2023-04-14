@@ -14,23 +14,24 @@ import { useNavigate } from 'react-router-dom'
 import UnboxingCard from '../../components/common/Cards/UnboxingCard'
 import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
 
-const tabs = [{ variant: 'Hot' }, { variant: 'Featured' }, { variant: 'New' }, { variant: 'Creator' }]
+const tabs = [
+  { variant: 'Hot' },
+  { variant: 'Featured' },
+  { variant: 'New' },
+  { variant: 'Creator' }
+]
 
 const Unboxing = () => {
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
   const navigate = useNavigate()
 
-  const {
-    value,
-    searchBy,
-    onChange,
-    sortOptions,
-    priceRange,
-    setPriceRange,
-    setSortOptions
-  } = useToolbarState()
+  const { value, searchBy, onChange, sortOptions, priceRange, setPriceRange, setSortOptions } =
+    useToolbarState()
 
-  const ranged = useMemo(() => unboxCard.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to), [priceRange, unboxCard])
+  const ranged = useMemo(
+    () => unboxCard.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
+    [priceRange, unboxCard]
+  )
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, ranged])
   const sorted = useMemo(() => {
     if (sortOptions) {
@@ -63,37 +64,39 @@ const Unboxing = () => {
             <div className='w-7 shrink-0 mr-2 text-blue-golf'>
               <UnboxingIconTitle />
             </div>
-              <h3 className="font-extrabold text-2xl mr-2">Case unboxing</h3>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 -mx-1 py-2 order-2 lg:order-3">
-              <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={sortOptions?.title} />
-              <GreenTipSelect onSelect={setPriceRange} />
-              <SearchInput value={value} onChange={onChange} />
-
-            </div>
-            <div className="flex flex-wrap items-center min-w-full order-3 lg:min-w-0 lg:order-2 text-17 font-semibold">
+            <h3 className='font-extrabold text-2xl mr-2'>Case unboxing</h3>
+          </div>
+          <div className='flex flex-wrap items-center gap-2 -mx-1 py-2 order-2 lg:order-3'>
+            <SortSelect
+              options={sortingVariants}
+              onSelect={setSortOptions}
+              currentOptions={sortOptions?.title}
+            />
+            <GreenTipSelect onSelect={setPriceRange} />
+            <SearchInput value={value} onChange={onChange} />
+          </div>
+          <div className='flex flex-wrap items-center min-w-full order-3 lg:min-w-0 lg:order-2 text-17 font-semibold'>
             <ButtonsToggle
               options={tabs}
               currentSelect={currentTab}
-              peackFunction={setCurrentBoxes}
+              peakFunction={setCurrentBoxes}
               activeClasses=' text-green-primary li--active'
               btnClasses='mx-2.5 flex flex-col justify-center  min-h-full py-5 group text-gray-primary hover:text-white '
             />
           </div>
         </div>
-        <div className="flex flex-wrap items-center -mx-1 py-2 order-2 lg:order-3"></div>
-        <div className="flex flex-wrap -mx-2 mb-8 md:mb-12">
-          {sorted.map(card => (
+        <div className='flex flex-wrap items-center -mx-1 py-2 order-2 lg:order-3'></div>
+        <div className='flex flex-wrap -mx-2 mb-8 md:mb-12'>
+          {sorted.map((card) => (
             <UnboxingCard
               key={card.id}
               id={card.id}
               name={card.name}
               price={card.price}
               onSelect={() => navigate(card.id)}
-              />
-          )
-          )}
-          </div>
+            />
+          ))}
+        </div>
       </div>
     </div>
   )

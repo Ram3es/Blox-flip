@@ -52,9 +52,13 @@ const UserWalletButton = () => {
 
 const routesGames: RouteItem[] = [
   { path: '/unboxing', name: 'cases' },
+  { path: '/battles-lobby', name: 'caseBattles' },
+  { path: '/coinflip', name: 'coinflip' },
   { path: '/cups', name: 'cups' },
+  { path: '/jackpot', name: 'jackpot' },
   { path: '/mines', name: 'mines' },
-  { path: '/plinko', name: 'plinko' }
+  { path: '/plinko', name: 'plinko' },
+  { path: '/wheel', name: 'wheel' }
 ]
 
 export const Header = () => {
