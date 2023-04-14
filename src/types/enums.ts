@@ -18,7 +18,9 @@ export enum PaymentMethod {
 export enum BaseSize {
   SMALL = 'SMALL',
   MEDIUM = 'MEDIUM',
-  LARGE = 'LARGE'
+  LARGE = 'LARGE',
+  XL = 'XL',
+  XXL = 'XXL'
 }
 
 export enum GameStatus {

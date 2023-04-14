@@ -21,7 +21,7 @@ const ToggleMode = ({ mode, handleChange, isBlocked = false }: ToggleModeProps) 
           className={clsx(
             'capitalize font-semibold text-17 w-full h-11 border-b-[1px] flex items-center justify-center',
             {
-              'text-blue-golf border-blue-golf bg-blue-golf': mode === tab,
+              'text-blue-golf border-blue-golf bg-blue--golf': mode === tab,
               'text-gray-primary border-blue-light-primary': mode !== tab
             }
           )}

@@ -2,6 +2,7 @@ import React, { createContext, FC, PropsWithChildren, useReducer } from 'react'
 import { IUser } from '../types/User'
 import { PlinkoProvider } from './PlinkoStore'
 import { Reducer, IAction } from './Reducer'
+import { CoinFlipProvider } from './CoinFlipStore'
 import { KingProvider } from './KingStore'
 
 export interface IState {
@@ -21,6 +22,9 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)
   return (
     <Context.Provider value={{ state, dispatch }}>
+      <PlinkoProvider>
+        <CoinFlipProvider>{children}</CoinFlipProvider>
+      </PlinkoProvider>
       <PlinkoProvider>
         <KingProvider>{children}</KingProvider>
       </PlinkoProvider>
