@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import CardBg from '../../assets/img/case_bg.svg'
 import CardInnerBg from '../../assets/img/case_bg2.svg'
 import CardRadial from '../../assets/img/case_radial.svg'
+import { IMAGES } from '../../constants/images'
 
 interface IGameCardProps {
   titleBtn: string
@@ -30,7 +31,9 @@ const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path }) => {
           }
         />
         <div className='absolute inset-4 z-[35] flex flex-col items-center'>
-          <div className='mt-5 grow'>Case</div>
+          <div className='mt-5 grow'>
+            <img src={IMAGES.yellowGuy} className='absolute -left-20' />
+          </div>
           <NavLink
             to={path}
             className='px-2 py-2 max-w-36 w-[60%] text-center rounded-full leading-4 bg-black/15'
