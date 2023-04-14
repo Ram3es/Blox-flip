@@ -16,7 +16,7 @@ import JackpotWheel from './JackpotWheel'
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
-  const [timer, setTimer] = useState<number>(10)
+  const [timer, setTimer] = useState<number>(30)
   const [isOpenModal, setOpenModal] = useState<boolean>(false)
 
   const toggleModal = () => setOpenModal(state => !state)

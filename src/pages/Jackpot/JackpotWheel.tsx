@@ -25,7 +25,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer }) => {
     if (timer === 0) {
       setTimeout(() => start(2), 500)
       setTimeout(() => {
-        setTimer(10)
+        setTimer(30)
       }, 8500)
       return
     }
@@ -42,7 +42,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer }) => {
     setTimeout(() => {
       if (refSvg?.current?.style) {
         refSvg.current.style.transform = `rotate(${
-          -360 * 4 - 180 - 360 * (1 / 108) - 360 * (7 / 4)
+          -360 * 4 - 180 - 360 * (1 / 108) - 360 * (2 / 4)
         }deg)`
         refSvg.current.style.transitionTimingFunction = 'ease-out'
         refSvg.current.style.transitionDuration = `${8000 / 1000}s`
@@ -54,13 +54,13 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer }) => {
     { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg' },
     { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/74.jpg' },
     { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/598.jpg' },
-    { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
-    { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
-    { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
-    { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
-    { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
-    { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
     { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' }
+    // { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
+    // { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
+    // { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
+    // { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
+    // { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' },
+    // { num: 1, image: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/15.jpg' }
   ]
 
   useEffect(() => {
