@@ -26,14 +26,14 @@ const KingGameInventoriesHeader = ({
   setSelectedOption
 }: HeaderProps) => {
   const headingClasses = clsx('flex items-center gap-2 font-bold text-10 xs:text-base', {
-    'gradient-king-yellow-text': isKing,
+    'gradient-king-yellow-text text-yellow-primary-accent': isKing,
     'text-gray-primary': !isKing
   })
 
   return (
-    <div className='flex items-start ls:items-center ls:flex-row flex-col gap-4'>
+    <div className='flex items-start ls:items-center ls:flex-row flex-col gap-3'>
       <div className={headingClasses}>
-        <p className='hidden ls:block text-yellow-primary-accent'>
+        <p className='hidden ls:block'>
           <ListIcon />
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}

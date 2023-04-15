@@ -44,8 +44,8 @@ const KingGameInventories = ({ game }: KingGameInventoriesProps) => {
   }, [])
 
   return (
-    <div className='gradient-background--yellow__third rounded-xl p-4  space-y-2 min-h-[460px]'>
-      <div className='flex items-start ls:items-center justify-between'>
+    <div className='gradient-background--yellow__third rounded-xl p-4 min-h-[460px] flex'>
+      <div className='w-1/2 space-y-4'>
         <KingGameInventoriesHeader
           isKing
           options={kingTabs}
@@ -53,12 +53,14 @@ const KingGameInventories = ({ game }: KingGameInventoriesProps) => {
           setSelectedOption={setKingItemsTab}
           user={users[0]}
         />
-        <KingGameInventoriesHeader user={users[0]} />
-      </div>
-      <div className='flex items-center gap-2'>
         <KingGameInventoriesList itemList={kingItems} />
-        <img className='hidden ls:block' src={DashedBigSpacerIcon} alt='dashed spacer' />
-        <KingGameInventoriesList itemList={opponentItems} />
+      </div>
+      <img className='hidden ls:block px-2' src={DashedBigSpacerIcon} alt='dashed spacer' />
+      <div className='w-1/2 space-y-4'>
+        <KingGameInventoriesHeader user={users[0]} />
+        <div className='flex justify-end items-end'>
+          <KingGameInventoriesList itemList={opponentItems} />
+        </div>
       </div>
     </div>
   )
