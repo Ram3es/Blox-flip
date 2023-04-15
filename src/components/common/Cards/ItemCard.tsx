@@ -68,7 +68,7 @@ const ItemCard: FC<IItemCardProps> = ({
       'xs:w-1/5 md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
       'xs:w-1/5 lg:w-3/9 md:h-40 is-default': variant === ItemCardVariantEnum.CoinFlip,
       'w-full xs:w-1/3 md:w-1/4 text-xs is-default': variant === ItemCardVariantEnum.CoinFlipSmall,
-      'max-w-[120px] min-h-[120px] text-xs is-default': variant === ItemCardVariantEnum.KingList
+      'max-w-[120px] min-h-[120px] max-h-[165px] text-xs is-default': variant === ItemCardVariantEnum.KingList
     }
   )
 
