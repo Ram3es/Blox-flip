@@ -1,5 +1,6 @@
-import clsx from 'clsx'
+
 import React, { FC } from 'react'
+import clsx from 'clsx'
 import { IMAGES } from '../../../constants/images'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 import SelectedIcon from '../../icons/SelectedIcon'
