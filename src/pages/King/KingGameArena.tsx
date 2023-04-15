@@ -143,7 +143,7 @@ const KingGameArena = () => {
     <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
       <div>
         <KingGamePlayer isKing />
-        <div className='ls:pt-8 ls:pl-8 pb-7 w-full'>
+        <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
           <KingGameHealthPointsBar isKing ref={healthBarKingRef} currentHP={hpKing} />
         </div>
       </div>
@@ -158,7 +158,7 @@ const KingGameArena = () => {
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
-      <div className='relative flex items-center justify-center gap-2'>
+      <div className='relative flex items-center justify-center gap-2 py-2 ls:py-0'>
         {/* <ClocksIcon />
         <div className='text-white font bold text-xl w-11'>{timer}s</div> */}
         {fight && (
@@ -169,7 +169,7 @@ const KingGameArena = () => {
             attack
           </span>
         )}
-        <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[144px] p-2 flex items-center justify-center rotate-[45deg]'>
+        <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[134px] p-2 flex items-center justify-center rotate-[45deg]'>
           <img ref={swordIconRef} src={SwordsIcon} className='scale-[280%] rotate-[-45deg]' />
         </div>
       </div>
