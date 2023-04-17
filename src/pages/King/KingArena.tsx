@@ -22,11 +22,11 @@ import type { IKingFight } from '../../types/King'
 const KingArena = () => {
   const { game, fight, setFight } = useKing()
 
-  const [healthPointsKing, setHealthPointsKing] = useState(4000)
-  const [healthPointsOpponent, setHealthPointsOpponent] = useState(4000)
+  const [healthPointsKing, setHealthPointsKing] = useState(0)
+  const [healthPointsOpponent, setHealthPointsOpponent] = useState(0)
 
-  const [maxHealthPointsKing, setMaxHealthPointsKing] = useState(4000)
-  const [maxHealthPointsOpponent, setMaxHealthPointsOpponent] = useState(4000)
+  const [maxHealthPointsKing, setMaxHealthPointsKing] = useState(0)
+  const [maxHealthPointsOpponent, setMaxHealthPointsOpponent] = useState(0)
 
   const swordIconRef = useRef<HTMLImageElement>(null)
   const attackTextRef = useRef<HTMLSpanElement>(null)
