@@ -9,17 +9,19 @@ import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 import ExplosionIcon from '../../assets/img/explosion_icon.png'
 
-import type { IKingFight } from '../../types/King'
+import {
+  ROUND_DURATION,
+  ROUND_DURATION_MILLISECONDS,
+  TIME_EFFECT_MILLISECONDS
+} from '../../constants/king'
 
-let hpKing = 4000
-let hpOpponent = 4000
+import type { IKingFight } from '../../types/King'
 
 const KingGameArena = () => {
   const { fight, setFight } = useKing()
 
-  const [timer, setTimer] = useState(0)
-
-  const roundDuration = 5
+  const [healthPointsKing, setHealthPointsKing] = useState(4000)
+  const [healthPointsOpponent, setHealthPointsOpponent] = useState(4000)
 
   const getFightDuration = (roundDuration: number, fightRounds: number): number => {
     return roundDuration * fightRounds
@@ -31,111 +33,124 @@ const KingGameArena = () => {
   const explosiveKingEffect = useRef<HTMLImageElement>(null)
   const explosiveOpponentEffect = useRef<HTMLImageElement>(null)
 
-  const healthBarKingRef = useRef<HTMLDivElement>(null)
-  const healthBarOpponentRef = useRef<HTMLDivElement>(null)
+  const healthPointsBarKingRef = useRef<HTMLDivElement>(null)
+  const healthPointsBarOpponentRef = useRef<HTMLDivElement>(null)
 
-  const effect = (fightPath: IKingFight[]) => {
+  const applyDirectionAttackEffect = (round: IKingFight) => {
+    if (round.by === 'king') {
+      if (attackTextRef.current && swordIconRef.current) {
+        attackTextRef.current.style.visibility = 'visible'
+        swordIconRef.current.style.rotate = '45deg'
+        setTimeout(() => {
+          if (swordIconRef.current && attackTextRef.current) {
+            attackTextRef.current.style.visibility = 'hidden'
+            swordIconRef.current.style.rotate = '0deg'
+          }
+        }, TIME_EFFECT_MILLISECONDS)
+      }
+    }
+    if (round.by === 'opponent') {
+      if (attackTextRef.current && swordIconRef.current) {
+        attackTextRef.current.style.visibility = 'visible'
+        swordIconRef.current.style.rotate = '-45deg'
+        setTimeout(() => {
+          if (swordIconRef.current && attackTextRef.current) {
+            attackTextRef.current.style.visibility = 'hidden'
+            swordIconRef.current.style.rotate = '0deg'
+          }
+        }, TIME_EFFECT_MILLISECONDS)
+      }
+    }
+  }
+
+  const applyHealthPointBarEffect = (round: IKingFight) => {
+    if (round.by === 'king') {
+      setHealthPointsOpponent((prevHpOpponent) => prevHpOpponent - round.damage)
+
+      if (healthPointsBarOpponentRef.current) {
+        healthPointsBarOpponentRef.current.style.width = `${25}%`
+
+        setTimeout(() => {
+          if (healthPointsBarOpponentRef.current) {
+            healthPointsBarOpponentRef.current.style.width = '0%'
+          }
+        }, 2000)
+      }
+    }
+    if (round.by === 'opponent') {
+      setHealthPointsKing((prevHpKing) => prevHpKing - round.damage)
+
+      if (healthPointsBarKingRef.current) {
+        healthPointsBarKingRef.current.style.width = `${25}%`
+
+        setTimeout(() => {
+          if (healthPointsBarKingRef.current) {
+            healthPointsBarKingRef.current.style.width = '0%'
+          }
+        }, TIME_EFFECT_MILLISECONDS)
+      }
+    }
+  }
+
+  const applyExplosiveEffect = (round: IKingFight) => {
+    if (round.by === 'king') {
+      if (explosiveOpponentEffect.current) {
+        explosiveOpponentEffect.current.style.visibility = 'visible'
+
+        setTimeout(() => {
+          if (explosiveOpponentEffect.current) {
+            explosiveOpponentEffect.current.style.visibility = 'hidden'
+          }
+        }, TIME_EFFECT_MILLISECONDS)
+      }
+    }
+    if (round.by === 'opponent') {
+      if (explosiveKingEffect.current) {
+        explosiveKingEffect.current.style.visibility = 'visible'
+
+        setTimeout(() => {
+          if (explosiveKingEffect.current) {
+            explosiveKingEffect.current.style.visibility = 'hidden'
+          }
+        }, TIME_EFFECT_MILLISECONDS)
+      }
+    }
+  }
+
+  const startGame = (fightPath: IKingFight[]) => {
     for (let index = 0; index < fightPath.length; index++) {
       const round = fightPath[index]
-      setTimeout(() => {
-        if (round.by === 'king') {
-          hpOpponent -= round.damage
-          if (
-            explosiveOpponentEffect.current &&
-            healthBarOpponentRef.current &&
-            swordIconRef.current &&
-            attackTextRef.current
-          ) {
-            explosiveOpponentEffect.current.style.visibility = 'visible'
-            attackTextRef.current.style.visibility = 'visible'
-            healthBarOpponentRef.current.style.width = `${25}%`
-            swordIconRef.current.style.rotate = '45deg'
-          }
-          setTimeout(() => {
-            if (
-              explosiveOpponentEffect.current &&
-              healthBarOpponentRef.current &&
-              swordIconRef.current &&
-              attackTextRef.current
-            ) {
-              explosiveOpponentEffect.current.style.visibility = 'hidden'
-              attackTextRef.current.style.visibility = 'hidden'
-              healthBarOpponentRef.current.style.width = '0%'
-              swordIconRef.current.style.rotate = '0deg'
-            }
-          }, 2000)
-        }
-        if (round.by === 'opponent') {
-          hpKing -= round.damage
-          if (
-            explosiveKingEffect.current &&
-            healthBarKingRef.current &&
-            swordIconRef.current &&
-            attackTextRef.current
-          ) {
-            explosiveKingEffect.current.style.visibility = 'visible'
-            attackTextRef.current.style.visibility = 'visible'
-            healthBarKingRef.current.style.width = `${25}%`
-            swordIconRef.current.style.rotate = '-45deg'
 
-            setTimeout(() => {
-              if (
-                explosiveKingEffect.current &&
-                healthBarKingRef.current &&
-                swordIconRef.current &&
-                attackTextRef.current
-              ) {
-                explosiveKingEffect.current.style.visibility = 'hidden'
-                attackTextRef.current.style.visibility = 'hidden'
-                healthBarKingRef.current.style.width = '0%'
-                swordIconRef.current.style.rotate = '0deg'
-              }
-            }, 2000)
-          }
-        }
-      }, 5000 * index)
+      setTimeout(() => {
+        applyDirectionAttackEffect(round)
+        applyExplosiveEffect(round)
+        applyHealthPointBarEffect(round)
+      }, ROUND_DURATION_MILLISECONDS * index)
     }
   }
 
   useEffect(() => {
     if (!fight) return
 
-    setTimer(getFightDuration(roundDuration, fight.length))
-
-    const fightDurationMilliseconds = getFightDuration(roundDuration, fight.length) * 1000
+    const fightDurationMilliseconds = getFightDuration(ROUND_DURATION, fight.length) * 1000
 
     setTimeout(() => {
       setFight(null)
     }, fightDurationMilliseconds)
 
-    effect(fight)
+    startGame(fight)
   }, [fight])
-
-  useEffect(() => {
-    if (!fight) return
-
-    const countdown = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer <= 0) {
-          clearInterval(countdown)
-          return 0
-        }
-
-        return prevTimer - 1
-      })
-    }, 1000)
-
-    return () => {
-      clearInterval(countdown)
-    }
-  }, [fight, timer])
 
   return (
     <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
       <div>
         <KingGamePlayer isKing />
         <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
-          <KingGameHealthPointsBar isKing ref={healthBarKingRef} currentHP={hpKing} />
+          <KingGameHealthPointsBar
+            isKing
+            ref={healthPointsBarKingRef}
+            currentHP={healthPointsKing}
+          />
         </div>
       </div>
 
@@ -181,8 +196,8 @@ const KingGameArena = () => {
         <div className='ls:pt-8 ls:pr-8 w-full'>
           <KingGameHealthPointsBar
             isKing={false}
-            ref={healthBarOpponentRef}
-            currentHP={hpOpponent}
+            ref={healthPointsBarOpponentRef}
+            currentHP={healthPointsOpponent}
           />
         </div>
       </div>
