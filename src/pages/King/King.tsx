@@ -33,28 +33,28 @@ const King = () => {
       {
         by: 'opponent',
         animation: 'spritesheet',
-        damage: 2000
+        damage: 2999
       },
       {
         by: 'king',
-        animation: 'spritesheet',
-        damage: 1000
-      },
-      {
-        by: 'opponent',
-        animation: 'spritesheet',
-        damage: 1000
-      },
-      {
-        by: 'king',
-        animation: 'spritesheet',
-        damage: 1000
-      },
-      {
-        by: 'opponent',
         animation: 'spritesheet',
         damage: 1000
       }
+      // {
+      //   by: 'opponent',
+      //   animation: 'spritesheet',
+      //   damage: 1000
+      // },
+      // {
+      //   by: 'king',
+      //   animation: 'spritesheet',
+      //   damage: 1000
+      // },
+      // {
+      //   by: 'opponent',
+      //   animation: 'spritesheet',
+      //   damage: 1000
+      // }
     ])
   }
 

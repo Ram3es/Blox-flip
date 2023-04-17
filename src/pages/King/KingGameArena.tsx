@@ -11,13 +11,13 @@ import ExplosionIcon from '../../assets/img/explosion_icon.png'
 
 import type { IKingFight } from '../../types/King'
 
+let hpKing = 4000
+let hpOpponent = 4000
+
 const KingGameArena = () => {
   const { fight, setFight } = useKing()
 
   const [timer, setTimer] = useState(0)
-
-  const [hpKing, setHPKing] = useState(4000)
-  const [hpOpponent, setHPOpponent] = useState(4000)
 
   const roundDuration = 5
 
@@ -34,86 +34,81 @@ const KingGameArena = () => {
   const healthBarKingRef = useRef<HTMLDivElement>(null)
   const healthBarOpponentRef = useRef<HTMLDivElement>(null)
 
-  const opponentMove = useCallback(() => {
-    setHPKing((prev) => prev - 1000)
-
-    if (!fight) return
-    const kingRounds = fight.filter((item) => item.by === 'king')
-
-    for (let index = 0; index < kingRounds.length; index++) {
-      if (
-        explosiveKingEffect.current &&
-        healthBarKingRef.current &&
-        swordIconRef.current &&
-        attackTextRef.current
-      ) {
-        explosiveKingEffect.current.style.visibility = 'visible'
-        attackTextRef.current.style.visibility = 'visible'
-        healthBarKingRef.current.style.width = `${25}%`
-        swordIconRef.current.style.rotate = '-45deg'
-
-        setTimeout(() => {
+  const effect = (fightPath: IKingFight[]) => {
+    for (let index = 0; index < fightPath.length; index++) {
+      const round = fightPath[index]
+      setTimeout(() => {
+        if (round.by === 'king') {
+          hpOpponent -= round.damage
+          if (
+            explosiveOpponentEffect.current &&
+            healthBarOpponentRef.current &&
+            swordIconRef.current &&
+            attackTextRef.current
+          ) {
+            explosiveOpponentEffect.current.style.visibility = 'visible'
+            attackTextRef.current.style.visibility = 'visible'
+            healthBarOpponentRef.current.style.width = `${25}%`
+            swordIconRef.current.style.rotate = '45deg'
+          }
+          setTimeout(() => {
+            if (
+              explosiveOpponentEffect.current &&
+              healthBarOpponentRef.current &&
+              swordIconRef.current &&
+              attackTextRef.current
+            ) {
+              explosiveOpponentEffect.current.style.visibility = 'hidden'
+              attackTextRef.current.style.visibility = 'hidden'
+              healthBarOpponentRef.current.style.width = '0%'
+              swordIconRef.current.style.rotate = '0deg'
+            }
+          }, 2000)
+        }
+        if (round.by === 'opponent') {
+          hpKing -= round.damage
           if (
             explosiveKingEffect.current &&
             healthBarKingRef.current &&
             swordIconRef.current &&
             attackTextRef.current
           ) {
-            explosiveKingEffect.current.style.visibility = 'hidden'
-            attackTextRef.current.style.visibility = 'hidden'
-            healthBarKingRef.current.style.width = '0%'
-            swordIconRef.current.style.rotate = '0deg'
+            explosiveKingEffect.current.style.visibility = 'visible'
+            attackTextRef.current.style.visibility = 'visible'
+            healthBarKingRef.current.style.width = `${25}%`
+            swordIconRef.current.style.rotate = '-45deg'
+
+            setTimeout(() => {
+              if (
+                explosiveKingEffect.current &&
+                healthBarKingRef.current &&
+                swordIconRef.current &&
+                attackTextRef.current
+              ) {
+                explosiveKingEffect.current.style.visibility = 'hidden'
+                attackTextRef.current.style.visibility = 'hidden'
+                healthBarKingRef.current.style.width = '0%'
+                swordIconRef.current.style.rotate = '0deg'
+              }
+            }, 2000)
           }
-        }, 2000)
-      }
-    }
-  }, [fight])
-
-  const kingMove = useCallback(() => {
-    setHPOpponent((prev) => prev - 1000)
-
-    if (!fight) return
-
-    const opponentRounds = fight.filter((item) => item.by === 'opponent')
-
-    for (let index = 0; index < opponentRounds.length; index++) {
-      if (
-        explosiveOpponentEffect.current &&
-        healthBarOpponentRef.current &&
-        swordIconRef.current &&
-        attackTextRef.current
-      ) {
-        explosiveOpponentEffect.current.style.visibility = 'visible'
-        attackTextRef.current.style.visibility = 'visible'
-        healthBarOpponentRef.current.style.width = `${25}%`
-        swordIconRef.current.style.rotate = '45deg'
-      }
-      setTimeout(() => {
-        if (
-          explosiveOpponentEffect.current &&
-          healthBarOpponentRef.current &&
-          swordIconRef.current &&
-          attackTextRef.current
-        ) {
-          explosiveOpponentEffect.current.style.visibility = 'hidden'
-          attackTextRef.current.style.visibility = 'hidden'
-          healthBarOpponentRef.current.style.width = '0%'
-          swordIconRef.current.style.rotate = '0deg'
         }
-      }, 2000)
+      }, 5000 * index)
     }
-  }, [fight])
+  }
 
   useEffect(() => {
-    if (fight) {
-      setTimer(getFightDuration(roundDuration, fight.length))
+    if (!fight) return
 
-      const fightDurationMilliseconds = getFightDuration(roundDuration, fight.length) * 1000
+    setTimer(getFightDuration(roundDuration, fight.length))
 
-      setTimeout(() => {
-        setFight(null)
-      }, fightDurationMilliseconds)
-    }
+    const fightDurationMilliseconds = getFightDuration(roundDuration, fight.length) * 1000
+
+    setTimeout(() => {
+      setFight(null)
+    }, fightDurationMilliseconds)
+
+    effect(fight)
   }, [fight])
 
   useEffect(() => {
@@ -130,18 +125,10 @@ const KingGameArena = () => {
       })
     }, 1000)
 
-    if (timer % 10 === 0 && timer !== getFightDuration(roundDuration, fight.length)) {
-      kingMove()
-    }
-
-    if (timer % 5 === 0 && timer % 10 !== 0 && timer !== 0) {
-      opponentMove()
-    }
-
     return () => {
       clearInterval(countdown)
     }
-  }, [fight, timer, kingMove, opponentMove])
+  }, [fight, timer])
 
   return (
     <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
