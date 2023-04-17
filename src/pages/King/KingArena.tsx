@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useKing } from '../../store/KingStore'
 
 import KingHealthPointsBar from './KingHealthPointsBar'
-import KingPlayer from './KingPlayer'
+import KingArenaPlayer from './KingArenaPlayer'
 
 // import ClocksIcon from '../../components/icons/ClocksIcon'
 import SwordsIcon from '../../assets/img/swords_king.svg'
@@ -15,13 +15,18 @@ import {
   TIME_EFFECT_MILLISECONDS
 } from '../../constants/king'
 
+import { getFightDuration, getPercentByDamage, getSumPriceBySkins } from '../../helpers/kingHelpers'
+
 import type { IKingFight } from '../../types/King'
 
 const KingArena = () => {
-  const { fight, setFight } = useKing()
+  const { game, fight, setFight } = useKing()
 
   const [healthPointsKing, setHealthPointsKing] = useState(4000)
   const [healthPointsOpponent, setHealthPointsOpponent] = useState(4000)
+
+  const [maxHealthPointsKing, setMaxHealthPointsKing] = useState(4000)
+  const [maxHealthPointsOpponent, setMaxHealthPointsOpponent] = useState(4000)
 
   const swordIconRef = useRef<HTMLImageElement>(null)
   const attackTextRef = useRef<HTMLSpanElement>(null)
@@ -63,8 +68,10 @@ const KingArena = () => {
     if (round.by === 'king') {
       setHealthPointsOpponent((prevHpOpponent) => prevHpOpponent - round.damage)
 
+      const roundPercent = getPercentByDamage(round.damage, maxHealthPointsOpponent)
+
       if (healthPointsBarOpponentRef.current) {
-        healthPointsBarOpponentRef.current.style.width = `${25}%`
+        healthPointsBarOpponentRef.current.style.width = `${roundPercent}%`
 
         setTimeout(() => {
           if (healthPointsBarOpponentRef.current) {
@@ -76,8 +83,10 @@ const KingArena = () => {
     if (round.by === 'opponent') {
       setHealthPointsKing((prevHpKing) => prevHpKing - round.damage)
 
+      const roundPercent = getPercentByDamage(round.damage, maxHealthPointsKing)
+
       if (healthPointsBarKingRef.current) {
-        healthPointsBarKingRef.current.style.width = `${25}%`
+        healthPointsBarKingRef.current.style.width = `${roundPercent}%`
 
         setTimeout(() => {
           if (healthPointsBarKingRef.current) {
@@ -125,9 +134,20 @@ const KingArena = () => {
     }
   }
 
-  const getFightDuration = (roundDuration: number, fightRounds: number): number => {
-    return roundDuration * fightRounds
-  }
+  useEffect(() => {
+    if (game.firstPlayer) {
+      const kingMaxHealthPoints = getSumPriceBySkins(game.firstPlayer.items)
+
+      setHealthPointsKing(kingMaxHealthPoints)
+      setMaxHealthPointsKing(kingMaxHealthPoints)
+    }
+    if (game.secondPlayer) {
+      const opponentMaxHealthPoints = getSumPriceBySkins(game.firstPlayer.items)
+
+      setHealthPointsOpponent(opponentMaxHealthPoints)
+      setMaxHealthPointsOpponent(opponentMaxHealthPoints)
+    }
+  }, [game])
 
   useEffect(() => {
     if (!fight) return
@@ -144,12 +164,13 @@ const KingArena = () => {
   return (
     <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
       <div>
-        <KingPlayer isKing />
+        <KingArenaPlayer user={game.firstPlayer} isKing />
         <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
           <KingHealthPointsBar
             isKing
             ref={healthPointsBarKingRef}
             currentHP={healthPointsKing}
+            maxHP={maxHealthPointsKing}
           />
         </div>
       </div>
@@ -191,14 +212,17 @@ const KingArena = () => {
       />
 
       <div>
-        <KingPlayer isKing={false} />
+        <KingArenaPlayer isKing={false} user={game.secondPlayer} />
 
         <div className='ls:pt-8 ls:pr-8 w-full'>
-          <KingHealthPointsBar
-            isKing={false}
-            ref={healthPointsBarOpponentRef}
-            currentHP={healthPointsOpponent}
-          />
+          {game.secondPlayer && (
+            <KingHealthPointsBar
+              isKing={false}
+              ref={healthPointsBarOpponentRef}
+              currentHP={healthPointsOpponent}
+              maxHP={maxHealthPointsOpponent}
+            />
+          )}
         </div>
       </div>
     </div>

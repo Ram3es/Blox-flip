@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import CloseIcon from '../../assets/img/close.svg'
 import { Button } from '../base/Button'
 
 interface IModalWrapper {
-  children: JSX.Element | JSX.Element[] | undefined
+  children: JSX.Element | JSX.Element[] | undefined | ReactNode
   closeModal: Function
   modalClasses?: string
   closeBtnClasses?: string

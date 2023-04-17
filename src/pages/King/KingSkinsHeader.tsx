@@ -7,18 +7,21 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 import { ListIcon } from '../../components/icons/ListIcon'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 
-import type { TabInterface } from './KingInventories'
-import type { ISecondUser } from '../../types/User'
+import { getSumPriceBySkins } from '../../helpers/kingHelpers'
+
+import type { TabInterface } from './KingSkins'
+
+import type { IKingGamePlayer } from '../../types/King'
 
 interface HeaderProps {
-  user: ISecondUser
+  user?: IKingGamePlayer
   isKing?: boolean
   options?: TabInterface[]
   selectedOption?: TabInterface
   setSelectedOption?: Dispatch<SetStateAction<TabInterface>>
 }
 
-const KingInventoriesHeader = ({
+const KingSkinsHeader = ({
   user,
   isKing,
   options,
@@ -38,10 +41,15 @@ const KingInventoriesHeader = ({
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
-      <QuantityCoins quantity={1500} />
+      <QuantityCoins quantity={user ? getSumPriceBySkins(user.items) : null} />
       <Button disabled variant='YellowOutlined'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
-          {7} <span>&nbsp;Items</span>
+          {user && (
+            <>
+              {user.items.length} <span>&nbsp;Items</span>
+            </>
+          )}
+          {!user && '...'}
         </span>
       </Button>
       {isKing && options && selectedOption && setSelectedOption && (
@@ -55,4 +63,4 @@ const KingInventoriesHeader = ({
   )
 }
 
-export default KingInventoriesHeader
+export default KingSkinsHeader

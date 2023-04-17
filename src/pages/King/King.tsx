@@ -2,7 +2,7 @@ import { useKing } from '../../store/KingStore'
 
 import KingArena from './KingArena'
 import KingQueue from './KingQueue'
-import KingInventories from './KingInventories'
+import KingSkins from './KingSkins'
 import KingHistoryList from './KingHistoryList'
 
 import { Button } from '../../components/base/Button'
@@ -65,7 +65,7 @@ const King = () => {
         <span className='py-2.5 mx-auto'>Start game</span>
       </Button>
       <KingQueue queue={users.slice(0, 10)} />
-      <KingInventories />
+      <KingSkins />
       <KingHistoryList games={kingMock} />
     </div>
   )
