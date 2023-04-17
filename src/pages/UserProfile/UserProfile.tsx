@@ -3,14 +3,47 @@ import clsx from 'clsx'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import IconProfile from '../../components/icons/IconProfile'
 import Profile from './Profile'
+import { useContext, useEffect, useState } from 'react'
+import { Context } from '../../store/Store'
+import RedirectIcon from '../../components/icons/RedirectIcon'
 
-const navTabs = [
-  { name: 'My profile', path: '/profile' },
-  { name: 'Transactions', path: 'transactions' },
-  { name: 'History', path: 'history' }]
+interface INavTab {
+  name: string
+  path: string
+  icon?: string | JSX.Element
+}
+
+const profileTabs: Record<string, { title: string, tabs: INavTab[] } > = {
+  userProfile: {
+    title: 'UserProfile',
+    tabs: [
+      { name: 'Roblox Profile', path: 'https://www.roblox.com/', icon: <RedirectIcon /> }
+    ]
+  },
+  ownProfile: {
+    title: 'Profile',
+    tabs: [
+      { name: 'My profile', path: '/profile' },
+      { name: 'Transactions', path: 'transactions' },
+      { name: 'History', path: 'history' }]
+
+  }
+}
 
 const UserProfile = () => {
-  const { pathname } = useLocation()
+  const [varinatProfile, setVariantProfile] = useState<string>('ownProfile')
+  const { pathname, state } = useLocation()
+
+  const { state: { user } } = useContext(Context)
+
+  useEffect(() => {
+    if (state?.userId === user?.id) {
+      setVariantProfile('ownProfile')
+    } else {
+      setVariantProfile('userProfile')
+    }
+  }, [state])
+
   return (
       <>
         <div className='flex flex-wrap justify-between'>
@@ -18,13 +51,14 @@ const UserProfile = () => {
               <div className="shrink-0 w-4 mr-2.5 text-gray-primary">
                  <IconProfile />
               </div>
-              Profile
+             {profileTabs[varinatProfile].title}
           </div>
-          <div className=''>
-           {navTabs.map(tab => (
+          <div>
+            {profileTabs[varinatProfile].tabs.map(tab => (
               <NavLink
                 key={tab.path}
                 to={tab.path}
+                state={{ userId: user?.id }}
                 end
                 className={ ({ isActive }) => clsx('inline-block capitalize text-13 py-2 leading-3 px-4 text-center rounded  mx-1 border hover:text-white',
                   {
@@ -32,11 +66,16 @@ const UserProfile = () => {
                     'text-gray-primary border-transparent  bg-blue-highlight': !isActive
                   }
                 )}
-              >{tab.name}</NavLink>))}
+              >
+                <div className='flex items-center'>
+                  {tab?.icon && <span className='mr-2'>{tab?.icon}</span> }
+                  <span>{tab.name}</span>
+                </div>
+              </NavLink>))}
           </div>
         </div>
         <div className='min-h-screen'>
-          {pathname === '/profile' ? <Profile /> : <Outlet/> }
+          {pathname === '/profile' ? <Profile isOwnProfile={state?.userId === user?.id} /> : <Outlet/> }
         </div>
       </>
   )

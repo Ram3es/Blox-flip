@@ -10,6 +10,7 @@ import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins
 import { useNavigate } from 'react-router-dom'
 import { cards } from '../../mocks/cards'
 import { IItemCard } from '../../types/ItemCard'
+import Preferences from './Preferences'
 
 const user = {
   name: 'John Johnson',
@@ -30,9 +31,12 @@ const actions = [
 
 ]
 
-const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
+const cardsSorting = [
+  { variant: 'All' },
+  { variant: 'Active Items' },
+  { variant: 'Sold' }]
 
-const Profile = () => {
+const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
   const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
   const [sorted, setSorted] = useState<IItemCard[]>([])
@@ -81,8 +85,9 @@ const Profile = () => {
     <div className='h-fit'>
     <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
       <div className="flex flex-col justify-center items-center mx-auto relative z-20 -mt-9 w-3/4 xs:w-3/5 md:w-1/3">
-        <UserProgress user={user} />
+        <UserProgress isFullInfo={isOwnProfile} user={user} />
       </div>
+      { !isOwnProfile && <Preferences /> }
       <div className="flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight">
         {actions.map(action => (
           <div key={action.name} className="px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col group text-gray-primary hover:text-green-secondary">

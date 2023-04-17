@@ -1,8 +1,8 @@
 import React from 'react'
 import wheelBg from '../../assets/img/wheel-rect.svg'
 import wheelRadial from '../../assets/img/wheel-radial.svg'
-import arcWheel from '../../assets/img/arc-wheel.svg'
-import arcPng from '../../assets/img/arch-png.png'
+// import arcWheel from '../../assets/img/arc-wheel.svg'
+// import arcPng from '../../assets/img/arch-png.png'
 import CardInnerBg from '../../assets/img/case_bg2.svg'
 import { NavLink } from 'react-router-dom'
 
@@ -21,15 +21,7 @@ const WheelCard = () => {
               />
               <div className='absolute inset-4 z-[35] flex flex-col items-center'>
           <div className='mt-5 grow '>
-          <img
-              src={arcWheel}
-              alt='bg'
-              width='241'
-              height='246'
-              loading='lazy'
-              decoding='async'
-              className= 'absolute -top-5 left-0 '
-              />
+            cases
           </div>
           <NavLink
             to={'/wheel'}
