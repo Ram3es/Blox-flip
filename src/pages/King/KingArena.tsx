@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useKing } from '../../store/KingStore'
 
-import KingGameHealthPointsBar from './KingGameHealthPointsBar'
-import KingGamePlayer from './KingGamePlayer'
+import KingHealthPointsBar from './KingHealthPointsBar'
+import KingPlayer from './KingPlayer'
 
-import ClocksIcon from '../../components/icons/ClocksIcon'
+// import ClocksIcon from '../../components/icons/ClocksIcon'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 import ExplosionIcon from '../../assets/img/explosion_icon.png'
@@ -17,15 +17,11 @@ import {
 
 import type { IKingFight } from '../../types/King'
 
-const KingGameArena = () => {
+const KingArena = () => {
   const { fight, setFight } = useKing()
 
   const [healthPointsKing, setHealthPointsKing] = useState(4000)
   const [healthPointsOpponent, setHealthPointsOpponent] = useState(4000)
-
-  const getFightDuration = (roundDuration: number, fightRounds: number): number => {
-    return roundDuration * fightRounds
-  }
 
   const swordIconRef = useRef<HTMLImageElement>(null)
   const attackTextRef = useRef<HTMLSpanElement>(null)
@@ -129,6 +125,10 @@ const KingGameArena = () => {
     }
   }
 
+  const getFightDuration = (roundDuration: number, fightRounds: number): number => {
+    return roundDuration * fightRounds
+  }
+
   useEffect(() => {
     if (!fight) return
 
@@ -144,9 +144,9 @@ const KingGameArena = () => {
   return (
     <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
       <div>
-        <KingGamePlayer isKing />
+        <KingPlayer isKing />
         <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
-          <KingGameHealthPointsBar
+          <KingHealthPointsBar
             isKing
             ref={healthPointsBarKingRef}
             currentHP={healthPointsKing}
@@ -191,10 +191,10 @@ const KingGameArena = () => {
       />
 
       <div>
-        <KingGamePlayer isKing={false} />
+        <KingPlayer isKing={false} />
 
         <div className='ls:pt-8 ls:pr-8 w-full'>
-          <KingGameHealthPointsBar
+          <KingHealthPointsBar
             isKing={false}
             ref={healthPointsBarOpponentRef}
             currentHP={healthPointsOpponent}
@@ -205,4 +205,4 @@ const KingGameArena = () => {
   )
 }
 
-export default KingGameArena
+export default KingArena

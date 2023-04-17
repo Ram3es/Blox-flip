@@ -1,9 +1,9 @@
 import { useKing } from '../../store/KingStore'
 
-import KingGameArena from './KingGameArena'
-import KingGameQueue from './KingGameQueue'
-import KingGameInventories from './KingGameInventories'
-import KingGameHistoryList from './KingGameHistoryList'
+import KingArena from './KingArena'
+import KingQueue from './KingQueue'
+import KingInventories from './KingInventories'
+import KingHistoryList from './KingHistoryList'
 
 import { Button } from '../../components/base/Button'
 
@@ -60,13 +60,13 @@ const King = () => {
 
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
-      <KingGameArena />
+      <KingArena />
       <Button onClick={handleStartGame} color='GreenPrimary'>
         <span className='py-2.5 mx-auto'>Start game</span>
       </Button>
-      <KingGameQueue queue={users.slice(0, 10)} />
-      <KingGameInventories />
-      <KingGameHistoryList games={kingMock} />
+      <KingQueue queue={users.slice(0, 10)} />
+      <KingInventories />
+      <KingHistoryList games={kingMock} />
     </div>
   )
 }

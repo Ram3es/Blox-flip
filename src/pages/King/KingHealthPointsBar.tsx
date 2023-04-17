@@ -4,13 +4,13 @@ import clsx from 'clsx'
 
 import TextHealthPointsBar from '../../components/common/TextHealthPointsBar'
 
-interface KingGameHealthPointsBarProps {
+interface KingHealthPointsBarProps {
   isKing: boolean
   currentHP: number
   maxHP?: number
 }
 
-const KingGameHealthPointsBar = forwardRef<HTMLDivElement, KingGameHealthPointsBarProps>(
+const KingHealthPointsBar = forwardRef<HTMLDivElement, KingHealthPointsBarProps>(
   ({ isKing, currentHP, maxHP = 4000 }, ref) => {
     const healthPointBarWidth = useMemo(() => (currentHP / maxHP) * 100, [currentHP])
 
@@ -49,6 +49,6 @@ const KingGameHealthPointsBar = forwardRef<HTMLDivElement, KingGameHealthPointsB
   }
 )
 
-KingGameHealthPointsBar.displayName = 'KingGameHealthPointsBar'
+KingHealthPointsBar.displayName = 'KingHealthPointsBar'
 
-export default KingGameHealthPointsBar
+export default KingHealthPointsBar

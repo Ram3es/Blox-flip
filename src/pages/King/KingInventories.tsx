@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import KingGameInventoriesHeader from './KingGameInventoriesHeader'
-import KingGameInventoriesList from './KingGameInventoriesList'
+import KingInventoriesHeader from './KingInventoriesHeader'
+import KingInventoriesList from './KingInventoriesList'
 
 import DashedBigSpacerIcon from '../../assets/img/separator_big_icon.png'
 
@@ -16,11 +16,11 @@ export interface TabInterface {
 }
 const kingTabs: TabInterface[] = [{ variant: 'Kings items' }, { variant: 'Kings vault' }]
 
-interface KingGameInventoriesProps {
+interface KingInventoriesProps {
   game?: IKingGame
 }
 
-const KingGameInventories = ({ game }: KingGameInventoriesProps) => {
+const KingInventories = ({ game }: KingInventoriesProps) => {
   const [kingItems, setKingItems] = useState<IItemCard[]>([])
   const [opponentItems, setOpponentItems] = useState<IItemCard[]>([])
   const [kingItemsTab, setKingItemsTab] = useState<TabInterface>(kingTabs[0])
@@ -46,23 +46,23 @@ const KingGameInventories = ({ game }: KingGameInventoriesProps) => {
   return (
     <div className='gradient-background--yellow__third rounded-xl p-3.5 space-y-3 min-h-[460px]'>
       <div className='flex items-start ls:items-center justify-between px-2.5 '>
-        <KingGameInventoriesHeader
+        <KingInventoriesHeader
           isKing
           options={kingTabs}
           selectedOption={kingItemsTab}
           setSelectedOption={setKingItemsTab}
           user={users[0]}
         />
-        <KingGameInventoriesHeader user={users[0]} />
+        <KingInventoriesHeader user={users[0]} />
       </div>
       <div className='border-b border-b-[#323A5B] mx-3 pt-2'></div>
       <div className='flex justify-center gap-2'>
-        <KingGameInventoriesList itemList={kingItems} />
+        <KingInventoriesList itemList={kingItems} />
         <img className='hidden ls:block' src={DashedBigSpacerIcon} alt='dashed spacer' />
-        <KingGameInventoriesList itemList={opponentItems} />
+        <KingInventoriesList itemList={opponentItems} />
       </div>
     </div>
   )
 }
 
-export default KingGameInventories
+export default KingInventories

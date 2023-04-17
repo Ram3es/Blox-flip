@@ -7,7 +7,7 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 import { ListIcon } from '../../components/icons/ListIcon'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 
-import type { TabInterface } from './KingGameInventories'
+import type { TabInterface } from './KingInventories'
 import type { ISecondUser } from '../../types/User'
 
 interface HeaderProps {
@@ -18,7 +18,7 @@ interface HeaderProps {
   setSelectedOption?: Dispatch<SetStateAction<TabInterface>>
 }
 
-const KingGameInventoriesHeader = ({
+const KingInventoriesHeader = ({
   user,
   isKing,
   options,
@@ -55,4 +55,4 @@ const KingGameInventoriesHeader = ({
   )
 }
 
-export default KingGameInventoriesHeader
+export default KingInventoriesHeader

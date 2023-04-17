@@ -9,12 +9,12 @@ import KingIcon from '../../assets/img/king_icon.png'
 
 import type { ISecondUser } from '../../types/User'
 
-interface KingGameProps {
+interface KingPlayerProps {
   user?: ISecondUser
   isKing: boolean
 }
 
-const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
+const KingPlayer = ({ user, isKing }: KingPlayerProps) => {
   const avatarClasses = clsx('ls:top-[-55px] flex items-center justify-center p-4 rounded-lg', {
     'ls:absolute gradient-background--yellow gradient-border--yellow': isKing,
     'ls:absolute right-0 gradient-background--blue': !isKing
@@ -56,4 +56,4 @@ const KingGamePlayer = ({ user, isKing }: KingGameProps) => {
   )
 }
 
-export default KingGamePlayer
+export default KingPlayer
