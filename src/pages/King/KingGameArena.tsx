@@ -35,10 +35,10 @@ const KingGameArena = () => {
   const healthBarOpponentRef = useRef<HTMLDivElement>(null)
 
   const opponentMove = useCallback(() => {
+    setHPKing((prev) => prev - 1000)
+
     if (!fight) return
     const kingRounds = fight.filter((item) => item.by === 'king')
-
-    setHPKing((prev) => prev - 1000)
 
     for (let index = 0; index < kingRounds.length; index++) {
       if (
@@ -111,7 +111,7 @@ const KingGameArena = () => {
       const fightDurationMilliseconds = getFightDuration(roundDuration, fight.length) * 1000
 
       setTimeout(() => {
-        setFight([])
+        setFight(null)
       }, fightDurationMilliseconds)
     }
   }, [fight])

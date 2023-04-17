@@ -6,8 +6,8 @@ interface KingProviderProps {
 }
 
 interface IKingContext {
-  fight: IKingFight[]
-  setFight: Dispatch<SetStateAction<IKingFight[]>>
+  fight: IKingFight[] | null
+  setFight: Dispatch<SetStateAction<IKingFight[] | null>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -18,7 +18,7 @@ export const useKing = () => {
 }
 
 export const KingProvider = ({ children }: KingProviderProps) => {
-  const [fight, setFight] = useState<IKingFight[]>([])
+  const [fight, setFight] = useState<IKingFight[] | null>(null)
 
   return <KingContext.Provider value={{ fight, setFight }}>{children}</KingContext.Provider>
 }
