@@ -18,7 +18,7 @@ const King = () => {
       {
         by: 'king',
         animation: 'spritesheet',
-        damage: 1000
+        damage: 1500
       },
       {
         by: 'opponent',
@@ -28,12 +28,12 @@ const King = () => {
       {
         by: 'king',
         animation: 'spritesheet',
-        damage: 1000
+        damage: 1500
       },
       {
         by: 'opponent',
         animation: 'spritesheet',
-        damage: 1000
+        damage: 2000
       },
       {
         by: 'king',
