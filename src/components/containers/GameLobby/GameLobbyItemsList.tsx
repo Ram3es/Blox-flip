@@ -1,11 +1,10 @@
-import React from 'react'
 import ItemCard from '../../common/Cards/ItemCard'
+
 import type { IItemCard } from '../../../types/ItemCard'
-import type { HandleSelectItem } from './GameLobby'
 
 interface GameLobbyItemsListProps {
   items: IItemCard[]
-  handleSelectItem: HandleSelectItem
+  handleSelectItem: (id: string) => void
 }
 
 const GameLobbyItemsList = ({ items, handleSelectItem }: GameLobbyItemsListProps) => {

@@ -1,4 +1,5 @@
-import React, { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren } from 'react'
+
 import QuantityCoinsContainer from '../../common/QuantityCoins/QuantityCoinsContainer'
 import { QuantityCoins } from '../../common/QuantityCoins/QuantityCoins'
 

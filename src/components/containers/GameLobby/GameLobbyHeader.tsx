@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren } from 'react'
+
 import { Button } from '../../base/Button'
-import QuantityCoinsContainer from '../../common/QuantityCoins/QuantityCoinsContainer'
 import { QuantityCoins } from '../../common/QuantityCoins/QuantityCoins'
+import QuantityCoinsContainer from '../../common/QuantityCoins/QuantityCoinsContainer'
 import RefreshIcon from '../../icons/RefreshIcon'
 
 interface GameLobbyHeaderProps {

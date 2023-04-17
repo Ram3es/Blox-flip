@@ -15,7 +15,7 @@ const KingHealthPointsBar = forwardRef<HTMLDivElement, KingHealthPointsBarProps>
     const healthPointBarWidth = useMemo(() => (currentHP / maxHP) * 100, [currentHP])
 
     const healthPointClasses = clsx('flex', {
-      'ls:justify-end': !isKing
+      'justify-end': !isKing
     })
     const healthPointBarContainerClasses = clsx('max-w-[280px] border rounded p-0.5 bg-black', {
       'border-yellow-primary-accent': isKing,

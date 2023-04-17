@@ -162,9 +162,16 @@ const KingArena = () => {
   }, [fight])
 
   return (
-    <div className='gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0 ls:p-0'>
-      <div>
+    <div className='p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0'>
+      <div className='relative space-y-2 ls:space-y-0'>
         <KingArenaPlayer user={game.firstPlayer} isKing />
+        <img
+          ref={explosiveKingEffect}
+          className='absolute ls:bottom-20 ls:right-28 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
+          style={{ visibility: 'hidden' }}
+          src={ExplosionIcon}
+          alt='explosion'
+        />
         <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
           <KingHealthPointsBar
             isKing
@@ -174,14 +181,6 @@ const KingArena = () => {
           />
         </div>
       </div>
-
-      <img
-        ref={explosiveKingEffect}
-        className='absolute top-36 left-6 z-100'
-        style={{ visibility: 'hidden' }}
-        src={ExplosionIcon}
-        alt='explosion'
-      />
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
@@ -203,17 +202,15 @@ const KingArena = () => {
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
-      <img
-        ref={explosiveOpponentEffect}
-        className='absolute right-80 top-36 z-100'
-        style={{ visibility: 'hidden' }}
-        src={ExplosionIcon}
-        alt='explosion'
-      />
-
-      <div>
+      <div className='relative space-y-2 ls:space-y-0'>
         <KingArenaPlayer isKing={false} user={game.secondPlayer} />
-
+        <img
+          ref={explosiveOpponentEffect}
+          className='absolute ls:bottom-20 ls:left-32 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
+          style={{ visibility: 'hidden' }}
+          src={ExplosionIcon}
+          alt='explosion'
+        />
         <div className='ls:pt-8 ls:pr-8 w-full'>
           {game.secondPlayer && (
             <KingHealthPointsBar
