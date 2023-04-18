@@ -25,7 +25,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
              closeBtnClasses='rounded w-7 h-7 leading-7 absolute top-4 left-4 z-[2] text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
              >
            <div className='col-span-1 text-center relative'>
-             <div className='absolute w-full h-full flex flex-col items-center  p-4 z-[1] '>
+             <div className='absolute w-full h-full  flex-col items-center  p-4 z-[1] hidden sm:flex'>
                <img
                  src={Logo}
                  alt=''
@@ -51,7 +51,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                 </div>
             </div>
           </div>
-          <div className=" flex flex-col justify-between h-full col-span-2  relative  w-full">
+          <div className=" flex flex-col justify-between h-full col-span-3 mt-6 sm:mt-0 sm:col-span-2  relative  w-full">
             <div>
               <div className=' p-5'>
                 <div className='flex justify-between items-center border-b border-blue-highlight mb-6 pb-6'>
@@ -63,7 +63,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                   : <SignInForm onClose={() => onClose()} />}
               </div>
             </div>
-          <div className='flex w-[600px] gradient-modal-video p-4'>
+          <div className='flex max-w-[600px] h-full gradient-modal-video p-4'>
             <div className='text-lightblue-secondary w-[70%]'>
               <p className='mb-4'>In order for *Site* to operate correctly, we need access to your Roblox account.</p>
               <p> Press the play button to view a vide of how exactly to sign in using either credentials or .roblosecurity on our website.</p>
