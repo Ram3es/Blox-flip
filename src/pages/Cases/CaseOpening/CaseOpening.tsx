@@ -3,8 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { ICaseItem } from '../../../types/Cases'
+import { SPIN_TIME, SPIN_TIME_MILLISECONDS } from '../../../constants/cases'
 import { getRandomCards } from '../../../helpers/casesHelpers'
+
+import type { ICaseItem } from '../../../types/Cases'
+
 import { caseCards } from '../../../mocks/caseOpeningMock'
 
 import { Button } from '../../../components/base/Button'
@@ -18,13 +21,11 @@ import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
 
-const SPIN_TIME = 9000
-
 export const CaseOpening = () => {
   const { id } = useParams()
   const [cards] = useState<ICaseItem[]>(caseCards)
   const navigate = useNavigate()
-
+  console.log('rerender')
   const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
@@ -73,17 +74,31 @@ export const CaseOpening = () => {
   }
 
   const spin = (time: number) => {
-    setTimeout(() => {
+    const start = performance.now()
+    const startPosition = 0
+
+    const endPosition = -6.2 * 88 - 87 * 0.375
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - start
+      const progress = Math.min(elapsed / (time * 1000), 1)
+
+      const easedProgress = 1 - Math.pow(1 - progress, 2)
+
       if (itemsRef.current) {
         itemsRef.current.forEach((item) => {
-          item.style.transition = `left ${time}s cubic-bezier(0.12, 0.8, 0.38, 1)`
-          item.style.left = `-${6.2 * 88 + 87 * 0.375}rem`
+          item.style.left = `${startPosition + (endPosition - startPosition) * easedProgress}rem`
         })
       }
-    }, 1000)
-    setTimeout(() => {
-      setIsSpin(false)
-    }, SPIN_TIME)
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      } else {
+        setIsSpin(false)
+      }
+    }
+
+    requestAnimationFrame(animate)
   }
 
   const addWonItemInLines = () => {
@@ -112,7 +127,7 @@ export const CaseOpening = () => {
   const play = () => {
     reset()
     addWonItemInLines()
-    spin(8)
+    spin(SPIN_TIME)
     setIsSpin(true)
   }
 
@@ -231,7 +246,12 @@ export const CaseOpening = () => {
                   }}
                 >
                   {item.items.map((item: ICaseItem) => (
-                    <CasesLineItem key={item.id} timeoutToShow={SPIN_TIME} itsWinning={!!wonItem && item.id === wonItem[index]?.id} image={item.image} />
+                    <CasesLineItem
+                      key={item.id}
+                      timeoutToShow={SPIN_TIME_MILLISECONDS}
+                      itsWinning={!!wonItem && item.id === wonItem[index]?.id}
+                      image={item.image}
+                    />
                   ))}
                 </div>
               </div>
