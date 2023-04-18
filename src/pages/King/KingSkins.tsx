@@ -49,7 +49,10 @@ const KingSkins = () => {
       <div className='flex justify-center gap-2'>
         <KingSkinsList itemList={kingItems} />
         <img className='hidden ls:block' src={DashedBigSpacerIcon} alt='dashed spacer' />
-        <KingSkinsList itemList={game.secondPlayer ? game.secondPlayer.items : []} />
+        <KingSkinsList
+          itemList={game.secondPlayer ? game.secondPlayer.items : []}
+          placeContent='end'
+        />
       </div>
     </div>
   )
