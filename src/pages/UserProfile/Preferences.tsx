@@ -5,24 +5,6 @@ import { IMAGES } from '../../constants/images'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 
-// const tiles = [
-//   {
-//     label: 'Favourite case',
-//     icon: boxIcon,
-//     title: 'Diamond Case',
-//     image: 'greenBox'
-
-//   },
-//   {
-//     label: 'Best drops',
-//     icon: productPackage,
-//     title: 'Fiery Horns of the Netherworld',
-//     image: 'helmet'
-
-//   }
-
-// ]
-
 const Preferences = () => {
   return (
         <div className="flex flex-col md:flex-row pt-6 pb-2 px-2 border-t border-blue-highlight">

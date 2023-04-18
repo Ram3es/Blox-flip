@@ -2,15 +2,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import DiamondIcon from '../../components/icons/DiamondIcon'
-import ItemsIcon from '../../components/icons/ItemsIcon'
 import UserProgress from '../../components/user/UserProgress'
-import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
-import { useNavigate } from 'react-router-dom'
 import { cards } from '../../mocks/cards'
 import { IItemCard } from '../../types/ItemCard'
 import Preferences from './Preferences'
+import ItemsBar from './UserItemsBar'
+import { useLocation } from 'react-router-dom'
 
 const user = {
   name: 'John Johnson',
@@ -40,7 +39,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
   const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
   const [sorted, setSorted] = useState<IItemCard[]>([])
-  const navigate = useNavigate()
+  const { state: { userId } } = useLocation()
 
   const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
 
@@ -55,6 +54,9 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   }, [currentCardsVariant])
 
   const handleSelectCard = (id: string) => {
+    if (!isOwnProfile) {
+      return
+    }
     const card = sorted.find(item => item.id === id) as IItemCard
 
     if (!selectedCard.some(item => item.id === card.id)) {
@@ -79,7 +81,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   useEffect(() => {
     setSelectedCard([])
     filtered()
-  }, [currentCardsVariant])
+  }, [currentCardsVariant, userId])
 
   return (
     <div className='h-fit'>
@@ -89,10 +91,10 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
       </div>
       { !isOwnProfile && <Preferences /> }
       <div className="flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight">
-        {actions.map(action => (
-          <div key={action.name} className="px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col group text-gray-primary hover:text-green-secondary">
+        {actions.map((action, idx) => (
+          <div key={action.name} className={`${idx === actions.length - 1 ? 'is-green text-green-secondary' : 'text-gray-primary'} group px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col`}>
             <div className="text-sm font-extrabold  mb-1.5 uppercase">{action.name}</div>
-            <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow cursor-pointer border border-transparent group-hover:bg-green-primary/15 group-hover:border-green-primary">
+            <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary">
               <QuantityCoinsWithChildren
                 quantity={-1500.233534853}
                 quantityClasses='flex items-center text-lg font-bold'>
@@ -100,48 +102,20 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
                     <DiamondIcon className='w-[19px] h-[18px] -inset-full absolute m-auto' />
                   </span>
               </QuantityCoinsWithChildren>
-              {/* <a href="#"className="flex items-center uppercase leading-7 text-xs font-bold gradient-green rounded shadow-green-35 px-1.5">
-                <span className="w-4 shrink-0 mr-1.5">
-                  <img src="img/diamond_white.svg" alt="" width="16" height="12" loading="lazy" decoding="async" />
-                </span>
-                claim
-             </a> */}
             </div>
           </div>
         ))}
       </div>
     </div>
     <div className="flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center">
-      <div className="flex flex-wrap items-center">
-        <div className="text-gray-primary mr-2.5 font-bold text-base flex items-center">
-          <div className="w-4 mr-2 5 shrink-0">
-            <ItemsIcon />
-          </div>
-          My Items
-          <p className='ml-2'>-</p>
-          <p className="text-green-secondary font-normal text-sm min-w-[100px] leading-6 mx-2.5 ">{selectedCard.length } SELECTED</p>
-          </div>
-          <div className="flex items-center rounded min-w-[100px] mr-2.5">
-            <QuantityCoinsWithChildren
-                quantity={totalPriceSelected}
-                quantityClasses='flex items-center text-sm font-bold '>
-                  <span className="w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-secondary">
-                    <DiamondIcon className='-inset-full absolute m-auto' />
-                  </span>
-            </QuantityCoinsWithChildren>
-          </div>
-          <Button
-            onClick={() => {}}
-            className='flex items-center justify-center text-sm font-bold rounded border border-green-primary bg-green-primary hover:bg-green-500 py-1.5 px-7'
-             >Sell items</Button>
-          <Button
-            onClick={() => { navigate('/withdraw') }}
-            className='flex items-center justify-center py-1.5 px-4 ml-3 text-gray-primary text-13 font-semibold rounded bg-blue-highlight border border-blue-highlight hover:text-white '
-             >Withdraw</Button>
-          </div>
-          <div className='mt-2 xs:mt-0'>
-            <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peackFunction={setCurrentCardsVariant} />
-          </div>
+        <ItemsBar
+          isOwnProfile={isOwnProfile}
+          totalPriceSelected={totalPriceSelected}
+          amountSelected={selectedCard.length}
+        />
+      <div className='mt-2 xs:mt-0'>
+        <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peackFunction={setCurrentCardsVariant} />
+      </div>
     </div>
     <div className="flex flex-wrap -mx-1 mb-8 md:mb-12 text-sm">
       {sorted.map(card => (
