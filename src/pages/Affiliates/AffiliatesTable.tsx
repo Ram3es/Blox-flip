@@ -4,9 +4,9 @@ import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { ISecondUser } from '../../types/User'
 import { users } from '../../mocks/affiliatesMock'
 import { Table } from '../../components/table/Table'
-import { UserInfoCell } from '../../components/table/CellFormaters/UserInfoCell'
+import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { TimeCell } from '../../components/table/CellFormaters/TimeCell'
+import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
 
 export const AffiliatesTable = () => {
   const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])
@@ -42,6 +42,12 @@ export const AffiliatesTable = () => {
   ]
 
   return (
-    <Table data={data} columns={columns} sorting={sorting} setSorting={setSorting} variant='Stats' />
+    <Table
+      data={data}
+      columns={columns}
+      sorting={sorting}
+      setSorting={setSorting}
+      variant='Stats'
+    />
   )
 }

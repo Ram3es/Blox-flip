@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
+
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
@@ -10,7 +12,11 @@ const baseUrl = 'https://robloxsite.com/?a/'
 
 export const AffiliatesForm = () => {
   const [referralCode, setReferralCode] = useState('182Affiliatehahawqrqw')
-  const [referralLink, setReferralLink] = useState(`${baseUrl}${referralCode}`)
+  const {
+    text: referralLink,
+    handleCopyText: handleCopyReferralLink,
+    setText: setReferralLink
+  } = useCopyToClipboard(`${baseUrl}${referralCode}`)
 
   useEffect(() => {
     setReferralLink(baseUrl + referralCode)
@@ -29,12 +35,6 @@ export const AffiliatesForm = () => {
       })
       .required('Required')
   })
-
-  const handleReferralLinkCopy = () => {
-    navigator.clipboard.writeText(referralLink).catch((error) => {
-      console.log(error)
-    })
-  }
 
   return (
     <Formik
@@ -60,7 +60,7 @@ export const AffiliatesForm = () => {
               readOnly
             />
             <div className='absolute z-20 top-[60px] right-7'>
-              <Button className='w-7 shrink-0' onClick={handleReferralLinkCopy} type='button'>
+              <Button className='w-7 shrink-0' onClick={handleCopyReferralLink} type='button'>
                 <CopyIcon />
               </Button>
             </div>

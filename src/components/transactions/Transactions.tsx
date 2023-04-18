@@ -7,14 +7,14 @@ import type { FilterVariant } from '../../types/Table'
 import { ITransaction } from '../../types/Transaction'
 import { mockTransactions } from '../../mocks/transactionsMock'
 
-import { TimeCell } from '../table/CellFormaters/TimeCell'
+import { TimeCell } from '../table/CellFormatters/TimeCell'
 import { FilterHeader } from '../table/FilterHeader'
 import { ListIcon } from '../icons/ListIcon'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
-import { TransactionTypeCell } from '../table/CellFormaters/TransactionTypeCell'
+import { TransactionTypeCell } from '../table/CellFormatters/TransactionTypeCell'
 import { PaymentMethodCell } from '../table/PaymentMethodCell'
-import { StatusCell } from '../table/CellFormaters/StatusCell'
+import { StatusCell } from '../table/CellFormatters/StatusCell'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -98,7 +98,15 @@ export const Transactions = () => {
         searchValue={searchValue}
         filtersVariants={filtersVariants}
         tableHeader={
-          <FilterHeader label={<ListIcon />} text='My transactions' textColor='text-gray-primary' />
+          <FilterHeader
+            label={
+              <span className='text-gray-primary'>
+                <ListIcon />
+              </span>
+            }
+            text='My transactions'
+            textColor='text-gray-primary'
+          />
         }
         variant='History'
       />

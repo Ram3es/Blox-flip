@@ -4,13 +4,13 @@ import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
 
 import type { FilterVariant } from '../../types/Table'
-import { TimeCell } from '../table/CellFormaters/TimeCell'
+import { TimeCell } from '../table/CellFormatters/TimeCell'
 import { FilterHeader } from '../table/FilterHeader'
 import { ListIcon } from '../icons/ListIcon'
 import { mockHistory } from '../../mocks/gameHistoryMock'
 import { IHistory } from '../../types/History'
-import { GameCell } from '../table/CellFormaters/GameCell'
-import { MultiplierCell } from '../table/CellFormaters/MultiplierCell'
+import { GameCell } from '../table/CellFormatters/GameCell'
+import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 
@@ -127,7 +127,15 @@ export const History = () => {
         searchValue={searchValue}
         filtersVariants={filtersVariants}
         tableHeader={
-          <FilterHeader label={<ListIcon />} text='My history' textColor='text-gray-primary' />
+          <FilterHeader
+            label={
+              <span className='text-gray-primary'>
+                <ListIcon />
+              </span>
+            }
+            text='My history'
+            textColor='text-gray-primary'
+          />
         }
         variant='History'
       />

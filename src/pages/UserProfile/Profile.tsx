@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import DiamondIcon from '../../components/icons/DiamondIcon'
@@ -27,7 +26,6 @@ const actions = [
   { name: 'withdrawn' },
   { name: 'deposited' },
   { name: 'profit' }
-
 ]
 
 const cardsSorting = [
@@ -45,11 +43,14 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
 
   const filtered = useCallback(() => {
     switch (currentCardsVariant.variant) {
-      case 'Active Items': setSorted(cards.filter(card => card.active))
+      case 'Active Items':
+        setSorted(cards.filter((card) => card.active))
         break
-      case 'Sold': setSorted(cards.filter(card => card.sold))
+      case 'Sold':
+        setSorted(cards.filter((card) => card.sold))
         break
-      default: setSorted(cards)
+      default:
+        setSorted(cards)
     }
   }, [currentCardsVariant])
 
@@ -59,22 +60,26 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
     }
     const card = sorted.find(item => item.id === id) as IItemCard
 
-    if (!selectedCard.some(item => item.id === card.id)) {
-      setSelectedCard(state => ([...state, card]))
-      setSorted(state => [...state.map(elem => {
-        if (elem.id === id) {
-          return { ...elem, isSelected: true }
-        }
-        return elem
-      })])
+    if (!selectedCard.some((item) => item.id === card.id)) {
+      setSelectedCard((state) => [...state, card])
+      setSorted((state) => [
+        ...state.map((elem) => {
+          if (elem.id === id) {
+            return { ...elem, isSelected: true }
+          }
+          return elem
+        })
+      ])
     } else {
-      setSelectedCard(state => ([...state.filter(el => el.id !== card.id)]))
-      setSorted(state => [...state.map(elem => {
-        if (elem.id === id) {
-          return { ...elem, isSelected: false }
-        }
-        return elem
-      })])
+      setSelectedCard((state) => [...state.filter((el) => el.id !== card.id)])
+      setSorted((state) => [
+        ...state.map((elem) => {
+          if (elem.id === id) {
+            return { ...elem, isSelected: false }
+          }
+          return elem
+        })
+      ])
     }
   }
 
@@ -85,26 +90,27 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
 
   return (
     <div className='h-fit'>
-    <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
-      <div className="flex flex-col justify-center items-center mx-auto relative z-20 -mt-9 w-3/4 xs:w-3/5 md:w-1/3">
-        <UserProgress isFullInfo={isOwnProfile} user={user} />
-      </div>
-      { !isOwnProfile && <Preferences /> }
-      <div className="flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight">
-        {actions.map((action, idx) => (
-          <div key={action.name} className={`${idx === actions.length - 1 ? 'is-green text-green-secondary' : 'text-gray-primary'} group px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col`}>
-            <div className="text-sm font-extrabold  mb-1.5 uppercase">{action.name}</div>
-            <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary">
-              <QuantityCoinsWithChildren
-                quantity={-1500.233534853}
-                quantityClasses='flex items-center text-lg font-bold'>
+      <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
+        <div className="flex flex-col justify-center items-center mx-auto relative z-20 -mt-9 w-3/4 xs:w-3/5 md:w-1/3">
+          <UserProgress isFullInfo={isOwnProfile} user={user} />
+        </div>
+          { !isOwnProfile && <Preferences /> }
+        <div className="flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight">
+          {actions.map((action, idx) => (
+            <div key={action.name} className={`${idx === actions.length - 1 ? 'is-green text-green-secondary' : 'text-gray-primary'} group px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col`}>
+              <div className="text-sm font-extrabold  mb-1.5 uppercase">{action.name}</div>
+              <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary">
+                <QuantityCoinsWithChildren
+                  quantity={-1500.233534853}
+                  quantityClasses='flex items-center text-lg font-bold'
+                  >
                   <span className="w-8 h-8 shrink-0 text-center leading-8 bg-green-primary/20 rounded text-green-secondary relative mr-3">
                     <DiamondIcon className='w-[19px] h-[18px] -inset-full absolute m-auto' />
                   </span>
-              </QuantityCoinsWithChildren>
+                </QuantityCoinsWithChildren>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
     <div className="flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center">
@@ -114,7 +120,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
           amountSelected={selectedCard.length}
         />
       <div className='mt-2 xs:mt-0'>
-        <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peackFunction={setCurrentCardsVariant} />
+        <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peakFunction={setCurrentCardsVariant} />
       </div>
     </div>
     <div className="flex flex-wrap -mx-1 mb-8 md:mb-12 text-sm">
