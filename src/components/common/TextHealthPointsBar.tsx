@@ -9,10 +9,18 @@ const TextHealthPointsBar = ({
   currentHealthPoints,
   maxHealthPoints
 }: TextHealthPointsBarProps) => {
+  const numberFormatter = (value: number) => value.toString()
+
   return (
     <span className='font-bold text-sm'>
-      <CountUp start={maxHealthPoints} end={currentHealthPoints} duration={1.5} preserveValue /> /{' '}
-      <span className='text-white/50'>{maxHealthPoints} HP</span>
+      <CountUp
+        start={maxHealthPoints}
+        end={currentHealthPoints}
+        formattingFn={numberFormatter}
+        duration={1.5}
+        preserveValue
+      />{' '}
+      / <span className='text-white/50'>{maxHealthPoints} HP</span>
     </span>
   )
 }
