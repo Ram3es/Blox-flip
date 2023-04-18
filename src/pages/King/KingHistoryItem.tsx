@@ -29,7 +29,7 @@ const KingHistoryItem = ({ game }: KingHistoryItemProps) => {
       {({ open }) => (
         <>
           <div className='p-2 py-6 flex flex-col gap-2 ls:flex-row items-center justify-between h-full ls:h-16 rounded-xl border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10'>
-            <div className='flex items-center justify-between gap-3'>
+            <div className='flex flex-col xxs:flex-row items-center justify-between gap-3'>
               <KingHistoryPlayer isKing />
               <div className='rotate-[45deg] h-[30px] w-[30px] rounded-lg flex items-center justify-center gradient-border--yellow gradient-background--darkblue mr-1'>
                 <img src={SwordsIcon} className='scale-150 rotate-[-45deg]' />

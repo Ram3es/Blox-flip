@@ -70,7 +70,7 @@ const ItemCard: FC<IItemCardProps> = ({
       'xs:w-1/5 md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
       'xs:w-1/5 md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
       'xs:w-1/5 lg:w-3/9 md:min-h-40 point-hidden': variant === ItemCardVariantEnum.CoinFlip,
-      'w-full xs:w-1/3 md:w-1/4 min-h-[160px] text-xs point-hidden':
+      'w-full xs:w-1/3 md:w-1/4 min-h-[160px] 3xl:w-1/6 text-xs point-hidden':
         variant === ItemCardVariantEnum.FourByFour,
       'max-w-[121px] max-h-[160px] text-xs point-hidden': variant === ItemCardVariantEnum.KingList
     }

@@ -46,7 +46,7 @@ const KingSkins = () => {
         <KingSkinsHeader user={game.secondPlayer} />
       </div>
       <div className='border-b border-b-[#323A5B] mx-3 pt-2'></div>
-      <div className='flex justify-center gap-2'>
+      <div className='flex justify-center gap-2 max-h-[430px]'>
         <KingSkinsList itemList={kingItems} />
         <img className='hidden ls:block' src={DashedBigSpacerIcon} alt='dashed spacer' />
         <KingSkinsList
