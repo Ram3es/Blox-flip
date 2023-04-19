@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import type {  IUser } from '../../../types/User'
+import type { IUser } from '../../../types/User'
 
 import ModalWrapper from '../../containers/ModalWrapper'
 
