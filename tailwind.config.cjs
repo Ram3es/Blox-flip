@@ -19,6 +19,7 @@ module.exports = {
         13: '0.8125rem', //13px
         15: '0.9375rem', //15px
         17: '1.0625rem', //17px
+        22: '1.375rem', //22px
         26: '1.625rem' //26px
       },
       opacity: {
@@ -133,7 +134,9 @@ module.exports = {
         18: '4.5rem' //72px
       },
       screens: {
+        xxxs: '390px',
         xxs: '480px',
+        xm: '600px',
         xs: '768px',
         sm: '992px',
         md: '1200px',
