@@ -6,16 +6,22 @@ import { ChatTools } from './ChatTools'
 import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
-import BanModal from '../common/modals/BanModal'
+import BanModal from '../containers/Action/BanModal'
 import { user } from '../../mocks'
-import TimeoutModal from '../common/modals/TimeoutModal'
-import TipModal from '../common/modals/TipModal'
+import TimeoutModal from '../containers/Action/TimeoutModal'
+import TipModal from '../containers/Action/TipModal'
+import { useChat } from '../../store/ChatStore'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
-  const [isOpenBanModal, setIsOpenBanModal] = useState(false)
-  const [isOpenTimeoutModal, setIsOpenTimeoutModal] = useState(true)
-  const [isOpenTipModal, setIsOpenTipModal] = useState(true)
+  const {
+    isOpenBanModal,
+    setIsOpenBanModal,
+    isOpenTimeoutModal,
+    setIsOpenTimeoutModal,
+    isOpenTipModal,
+    setIsOpenTipModal
+  } = useChat()
 
   const handleShowChat = useCallback(() => {
     setShowChat(!showChat)

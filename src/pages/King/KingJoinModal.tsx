@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
 
-import GameLobbyContainer from '../../components/containers/GameLobby/GameLobbyContainer'
+import ModalWrapper from '../../components/containers/ModalWrapper'
 import GameLobbyHeader from '../../components/containers/GameLobby/GameLobbyHeader'
 import GameLobbyItemsList from '../../components/containers/GameLobby/GameLobbyItemsList'
 import GameLobbyFooter from '../../components/containers/GameLobby/GameLobbyFooter'
@@ -65,7 +65,10 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
   }, [])
 
   return (
-    <GameLobbyContainer onClose={onClose}>
+    <ModalWrapper
+      closeModal={onClose}
+      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
+    >
       <GameLobbyHeader
         skinsPrice={getCostInSelectedItems()}
         skinsQuantity={items.length}
@@ -86,7 +89,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
           <span className='h-9 py-2 px-5'>Deposit</span>
         </Button>
       </GameLobbyFooter>
-    </GameLobbyContainer>
+    </ModalWrapper>
   )
 }
 
