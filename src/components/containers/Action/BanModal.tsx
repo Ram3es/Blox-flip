@@ -1,12 +1,11 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import type { IUser } from '../../../types/User'
-
 import ModalWrapper from '../ModalWrapper'
-
-import BanIcon from '../../../assets/img/ban_icon.svg'
 import { Button } from '../../base/Button'
 import ActionModalHeader from './ActionModalHeader'
+import BanIcon from '../../icons/BanIcon'
+
+import type { IUser } from '../../../types/User'
 
 interface BanModalProps {
   user: IUser
@@ -21,8 +20,10 @@ const BanModal = ({ user, onClose, handleFunction }: BanModalProps) => {
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
     >
       <ActionModalHeader user={user}>
-        <img src={BanIcon} alt='thor' />
-        <span className='text-red-light font-black text-3xl uppercase'>ban user</span>
+        <div className='text-red-light flex items-center gap-2'>
+          <BanIcon />
+          <span className='font-black text-3xl uppercase'>ban user</span>
+        </div>
       </ActionModalHeader>
       <div className='py-4 space-y-8'>
         <div className='rounded-10 gradient-background--blue__secondary py-4 text-center'>

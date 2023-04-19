@@ -1,13 +1,12 @@
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from 'react'
 
-import type { IUser } from '../../../types/User'
-
 import ModalWrapper from '../ModalWrapper'
-import { Button } from '../../base/Button'
 import InputWithInlineLabel from '../../common/InputWithInlineLabel'
-
-import TipIcon from '../../../assets/img/tip_icon.svg'
 import ActionModalHeader from './ActionModalHeader'
+import TipIcon from '../../icons/TipIcon'
+import { Button } from '../../base/Button'
+
+import type { IUser } from '../../../types/User'
 
 interface TipModalProps {
   user: IUser
@@ -33,8 +32,10 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
     >
       <ActionModalHeader user={user}>
-        <img src={TipIcon} alt='thor' />
-        <span className='text-blue-golf font-black text-3xl uppercase'>tip user</span>
+        <div className='text-blue-golf flex items-center gap-2'>
+          <TipIcon />
+          <span className='font-black text-3xl uppercase'>tip user</span>
+        </div>
       </ActionModalHeader>
       <div className='py-4 space-y-8'>
         <InputWithInlineLabel

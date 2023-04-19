@@ -1,4 +1,5 @@
-import { FC, useContext } from 'react'
+import { FC, ReactNode, memo, useContext } from 'react'
+import { Context } from '../../store/Store'
 import { useChat } from '../../store/ChatStore'
 
 import { Link } from 'react-router-dom'
@@ -10,12 +11,16 @@ import { UserAvatar } from '../user/UserAvatar'
 import { UserLevel } from '../user/UserLevel'
 
 import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import BanIcon from '../icons/BanIcon'
+import UserIcon from '../icons/UserIcon'
+import TipIcon from '../icons/TipIcon'
+import TimeoutIcon from '../icons/TimeoutIcon'
 
 import type { IUser } from '../../types/User'
-import { Context } from '../../store/Store'
 
 interface userAction {
   name: string
+  icon?: ReactNode
   path?: string
   handleFunction?: () => void
 }
@@ -34,6 +39,8 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   const { state } = useContext(Context)
   const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal } = useChat()
 
+  const baseIconSizeClasses = 'w-3 h-3'
+
   const profileActions: userAction[] = [
     { path: '/profile', name: 'profile' },
     { path: '/affiliates', name: 'affiliates' },
@@ -43,42 +50,47 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   ]
 
   const chatUserActions: userAction[] = [
-    { path: '/profile', name: 'profile' },
+    { path: '/profile', name: 'profile', icon: <UserIcon className={baseIconSizeClasses} /> },
     {
       handleFunction: () => {
-        console.log('aga')
         setIsOpenTipModal(true)
       },
-      name: 'Tip user'
+      name: 'Tip user',
+      icon: <TipIcon className={baseIconSizeClasses} />
     }
   ]
 
   const chatAdminActions: userAction[] = [
-    { path: '/profile', name: 'Profile' },
+    { path: '/profile', name: 'Profile', icon: <UserIcon className={baseIconSizeClasses} /> },
     {
       handleFunction: () => {
-        console.log('aga')
         setIsOpenTipModal(true)
       },
-      name: 'Tip user'
+      name: 'Tip user',
+      icon: <TipIcon className={baseIconSizeClasses} />
     },
     {
       handleFunction: () => {
         setIsOpenTimeoutModal(true)
       },
-      name: 'Timeout user'
+      name: 'Timeout user',
+      icon: <TimeoutIcon className={baseIconSizeClasses} />
     },
     {
       handleFunction: () => {
         setIsOpenBanModal(true)
       },
-      name: 'Ban user'
+      name: 'Ban user',
+      icon: <BanIcon className={baseIconSizeClasses} />
     }
   ]
 
   const isAuth = () => state.user
 
-  const renderMenuItem = (action: userAction) => {
+  const renderActions = (action: userAction) => {
+    const itemClasses =
+      'flex  items-center gap-2 capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+
     if (action.path) {
       return (
         <Menu.Item
@@ -86,9 +98,9 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
           as={Link}
           to={`${action.path}`}
           state={{ userId: user.id }}
-          className='capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+          className={itemClasses}
         >
-          {action.name}
+          {action.icon && action.icon} {action.name}
         </Menu.Item>
       )
     }
@@ -98,9 +110,9 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
           key={action.name}
           onClick={action.handleFunction}
           as='div'
-          className='capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+          className={itemClasses}
         >
-          {action.name}
+          {action.icon && action.icon} {action.name}
         </Menu.Item>
       )
     }
@@ -110,8 +122,8 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
     variant === ChatUserCardVariant.Header
       ? profileActions
       : isAuth()
-        ? chatAdminActions
-        : chatUserActions
+      ? chatAdminActions
+      : chatUserActions
 
   return (
     <Menu>
@@ -149,11 +161,11 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
         as='div'
       >
         <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
-          {actions.map((route) => renderMenuItem(route))}
+          {actions.map((action) => renderActions(action))}
         </div>
       </Menu.Items>
     </Menu>
   )
 }
 
-export default ChatUserCard
+export default memo(ChatUserCard)
