@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import type {  IUser } from '../../../types/User'
+import type { IUser } from '../../../types/User'
 
 import ModalWrapper from '../../containers/ModalWrapper'
 
@@ -9,13 +9,13 @@ import { UserAvatar } from '../../user/UserAvatar'
 import { UserLevel } from '../../user/UserLevel'
 import { Button } from '../../base/Button'
 
-interface BanUserModalProps {
+interface TimeoutModalProps {
   user: IUser
   onClose: Dispatch<SetStateAction<boolean>>
   handleFunction: () => void
 }
 
-const BanUserModal = ({ user, onClose, handleFunction }: BanUserModalProps) => {
+const TimeoutModal = ({ user, onClose, handleFunction }: TimeoutModalProps) => {
   return (
     <ModalWrapper
       closeModal={onClose}
@@ -50,4 +50,4 @@ const BanUserModal = ({ user, onClose, handleFunction }: BanUserModalProps) => {
   )
 }
 
-export default BanUserModal
+export default TimeoutModal

@@ -33,7 +33,7 @@ module.exports = {
         'blue-primary-darken': 'rgba(31, 36, 56)',
         'blue-secondary': 'rgba(36, 42, 66)',
         'blue-accent': 'rgba(41, 48, 77)',
-        'blue-accent-primary':'rgba(42, 53, 100 )',
+        'blue-accent-primary': 'rgba(42, 53, 100)',
         'blue-accent-secondary': 'rgba(47, 54, 86)',
         'blue-accent-third': 'rgba(33, 40, 65, 1)',
         'blue-accent-fourth': 'rgba(52, 61, 97, 1)',
@@ -52,6 +52,7 @@ module.exports = {
         'gray-accent': 'rgba(135, 141, 169)',
         'gray-primary': 'rgba(147, 155, 185)',
         'gray-secondary': 'rgba(116, 123, 151)',
+        'gray-secondary-light': 'rgba(118, 130, 177)',
         'gray-secondary-darken': 'rgba(89, 97, 129)',
         'lightblue-darken': 'rgba(45, 56, 106)',
         'lightblue-primary': 'rgba(41, 199, 249)',
@@ -84,6 +85,7 @@ module.exports = {
         'red-primary': 'rgba(255, 63, 63)',
         'red-secondary': 'rgba(255, 77, 77)',
         'red-accent': 'rgba(239, 94, 94)',
+        'red-light': 'rgba(221, 82, 82)',
         'border-gray': 'rgba(152, 152, 152)'
       },
       gridTemplateColumns: {
@@ -109,7 +111,8 @@ module.exports = {
         full: '100%'
       },
       borderRadius: {
-        DEFAULT: '0.3125rem'
+        DEFAULT: '0.3125rem',
+        10: '0.625rem'
       },
       boxShadow: {
         'green-15': '0 0 15px rgba(75, 251, 134, 0.35)',

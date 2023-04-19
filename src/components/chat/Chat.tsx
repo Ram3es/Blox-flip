@@ -6,9 +6,13 @@ import { ChatTools } from './ChatTools'
 import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
+import BanUserModal from '../common/Admin/BanUserModal'
+import { user } from '../../mocks'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
+  const [isOpenBanModal, setIsOpenBanModal] = useState(true)
+  const [isOpenTimeoutModal, setIsOpenTimeoutModal] = useState(true)
 
   const handleShowChat = useCallback(() => {
     setShowChat(!showChat)
@@ -31,6 +35,13 @@ export const Chat = () => {
         <ChatMessageInput />
       </div>
       <ChatFab onClick={handleShowChat} active={showChat} />
+      {isOpenBanModal && (
+        <BanUserModal
+          user={user}
+          onClose={() => setIsOpenBanModal(false)}
+          handleFunction={() => console.log('ban')}
+        />
+      )}
     </>
   )
 }
