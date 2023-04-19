@@ -1,12 +1,24 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
+import { useChat } from '../../store/ChatStore'
+
 import { Link } from 'react-router-dom'
 import { Menu } from '@headlessui/react'
+
 import clsx from 'clsx'
-import { RouteItem } from '../../types/Routes'
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+
 import { UserAvatar } from '../user/UserAvatar'
 import { UserLevel } from '../user/UserLevel'
-import { IUser } from '../../types/User'
+
+import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+
+import type { IUser } from '../../types/User'
+import { Context } from '../../store/Store'
+
+interface userAction {
+  name: string
+  path?: string
+  handleFunction?: () => void
+}
 
 enum ChatUserCardVariant {
   Base = 'Base',
@@ -15,11 +27,92 @@ enum ChatUserCardVariant {
 
 interface ChatUserCardProps {
   user: IUser
-  routes: RouteItem[]
   variant?: keyof typeof ChatUserCardVariant
 }
 
-const ChatUserCard: FC<ChatUserCardProps> = ({ user, routes, variant = 'Base' }) => {
+const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
+  const { state } = useContext(Context)
+  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal } = useChat()
+
+  const profileActions: userAction[] = [
+    { path: '/profile', name: 'profile' },
+    { path: '/affiliates', name: 'affiliates' },
+    { path: '/leaderboard', name: 'leaderboard' },
+    { path: '/trivia', name: 'trivia' },
+    { path: '/megadrop', name: 'megadrop' }
+  ]
+
+  const chatUserActions: userAction[] = [
+    { path: '/profile', name: 'profile' },
+    {
+      handleFunction: () => {
+        console.log('aga')
+        setIsOpenTipModal(true)
+      },
+      name: 'Tip user'
+    }
+  ]
+
+  const chatAdminActions: userAction[] = [
+    { path: '/profile', name: 'Profile' },
+    {
+      handleFunction: () => {
+        console.log('aga')
+        setIsOpenTipModal(true)
+      },
+      name: 'Tip user'
+    },
+    {
+      handleFunction: () => {
+        setIsOpenTimeoutModal(true)
+      },
+      name: 'Timeout user'
+    },
+    {
+      handleFunction: () => {
+        setIsOpenBanModal(true)
+      },
+      name: 'Ban user'
+    }
+  ]
+
+  const isAuth = () => state.user
+
+  const renderMenuItem = (action: userAction) => {
+    if (action.path) {
+      return (
+        <Menu.Item
+          key={action.name}
+          as={Link}
+          to={`${action.path}`}
+          state={{ userId: user.id }}
+          className='capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+        >
+          {action.name}
+        </Menu.Item>
+      )
+    }
+    if (action.handleFunction) {
+      return (
+        <Menu.Item
+          key={action.name}
+          onClick={action.handleFunction}
+          as='div'
+          className='capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+        >
+          {action.name}
+        </Menu.Item>
+      )
+    }
+  }
+
+  const actions =
+    variant === ChatUserCardVariant.Header
+      ? profileActions
+      : isAuth()
+        ? chatAdminActions
+        : chatUserActions
+
   return (
     <Menu>
       <Menu.Button as='div' className='w-full'>
@@ -51,22 +144,12 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, routes, variant = 'Base' })
       <Menu.Items
         className={clsx('absolute left-0 right-0 pt-2.5 z-40', {
           'top-full': variant === ChatUserCardVariant.Header,
-          'bottom-4': variant === ChatUserCardVariant.Base
+          'top-8': variant === ChatUserCardVariant.Base
         })}
         as='div'
       >
         <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
-          {routes.map((route) => (
-            <Menu.Item
-              key={route.name}
-              as={Link}
-              to={`${route.path}`}
-              state={{ userId: user.id }}
-              className='capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
-            >
-              {route.name}
-            </Menu.Item>
-          ))}
+          {actions.map((route) => renderMenuItem(route))}
         </div>
       </Menu.Items>
     </Menu>
