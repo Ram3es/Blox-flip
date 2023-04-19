@@ -7,12 +7,12 @@ import KingIcon from '../../assets/img/king_icon.png'
 
 import type { ISecondUser } from '../../types/User'
 
-interface KingGameHistoryPlayerProps {
+interface KingHistoryPlayerProps {
   user?: ISecondUser
   isKing?: boolean
 }
 
-const KingGameHistoryPlayer = ({ user, isKing }: KingGameHistoryPlayerProps) => {
+const KingHistoryPlayer = ({ user, isKing }: KingHistoryPlayerProps) => {
   return (
     <div
       className={clsx('flex items-center justify-between gap-2', {
@@ -34,4 +34,4 @@ const KingGameHistoryPlayer = ({ user, isKing }: KingGameHistoryPlayerProps) => 
   )
 }
 
-export default KingGameHistoryPlayer
+export default KingHistoryPlayer
