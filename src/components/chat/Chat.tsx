@@ -6,14 +6,16 @@ import { ChatTools } from './ChatTools'
 import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
-import BanUserModal from '../common/Admin/BanUserModal'
+import BanModal from '../common/modals/BanModal'
 import { user } from '../../mocks'
-import TimeoutModal from '../common/Admin/TimeoutModal'
+import TimeoutModal from '../common/modals/TimeoutModal'
+import TipModal from '../common/modals/TipModal'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
   const [isOpenBanModal, setIsOpenBanModal] = useState(false)
   const [isOpenTimeoutModal, setIsOpenTimeoutModal] = useState(true)
+  const [isOpenTipModal, setIsOpenTipModal] = useState(true)
 
   const handleShowChat = useCallback(() => {
     setShowChat(!showChat)
@@ -37,7 +39,7 @@ export const Chat = () => {
       </div>
       <ChatFab onClick={handleShowChat} active={showChat} />
       {isOpenBanModal && (
-        <BanUserModal
+        <BanModal
           user={user}
           onClose={() => setIsOpenBanModal(false)}
           handleFunction={() => console.log('ban')}
@@ -47,6 +49,13 @@ export const Chat = () => {
         <TimeoutModal
           user={user}
           onClose={() => setIsOpenTimeoutModal(false)}
+          handleFunction={() => console.log('ban')}
+        />
+      )}
+      {isOpenTipModal && (
+        <TipModal
+          user={user}
+          onClose={() => setIsOpenTipModal(false)}
           handleFunction={() => console.log('ban')}
         />
       )}
