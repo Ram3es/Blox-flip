@@ -77,7 +77,7 @@ export const CaseOpening = () => {
     const start = performance.now()
     const startPosition = 0
 
-    const endPosition = -6.2 * 88 - 87 * 0.375
+    const endPosition = -6.26 * 88 - 87 * 0.375
 
     const animate = (currentTime: number) => {
       const elapsed = currentTime - start
@@ -238,7 +238,7 @@ export const CaseOpening = () => {
               </div>
               <div className='min-w-[1094px]'>
                 <div
-                  className='whitespace-nowrap relative left-0 flex'
+                  className='whitespace-nowrap relative left-0 flex gap-3'
                   ref={(item) => {
                     if (item !== null) {
                       itemsRef.current[index] = item
