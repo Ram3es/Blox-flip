@@ -31,7 +31,7 @@ const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path }) => {
         />
         <div className='absolute inset-4 z-[35] flex flex-col items-center'>
           <div className='mt-5 grow'>
-            cases
+            case
           </div>
           <NavLink
             to={path}
