@@ -291,6 +291,12 @@ body {
       border-box;
   }
 }
+.border-gold-gradient {
+  &:before {
+    background: linear-gradient(90deg, rgba(229, 136, 33, 1) 0%, rgba(111,88,64, 1) 100%)
+      border-box;
+  }
+}
 .gradient-border--yellow {
   position: relative;
   &:before {
@@ -560,6 +566,9 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+.gradient-gold-profile {
+  background: linear-gradient(219.83deg, rgba(255, 181, 70, 0.35) -31.99%, rgba(255, 181, 70, 0.35) 30.24%, rgba(226, 151, 39, 0.35) 52.85%, rgba(210, 134, 21, 0.35) 73.18%, rgba(202, 126, 13, 0.35) 93.37%, rgba(245, 170, 59, 0.35) 113.37%, rgba(199, 123, 10, 0.35) 137.65%, rgba(208, 132, 19, 0.35) 154.66%, rgba(223, 148, 36, 0.35) 181.87%, rgba(255, 181, 70, 0.35) 207.27%);
 }
 .gradient-king-yellow-text {
   background: linear-gradient(53.1deg, #ff8d24 -4.15%, #ffc700 76.05%), #ffffff;
@@ -847,6 +856,14 @@ input {
   background-clip: text;
   text-fill-color: transparent;
 }
+.text-gradient-gold {
+  background: linear-gradient(180deg, #FFB546 -31.99%, #FFB546 30.24%, #E29727 52.85%, #D28615 73.18%, #CA7E0D 93.37%, #F5AA3B 113.37%, #C77B0A 137.65%, #D08413 154.66%, #DF9424 181.87%, #FFB546 207.27%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
 
 /*-----media----*/
 /*

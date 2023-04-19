@@ -137,7 +137,9 @@ module.exports = {
         18: '4.5rem' //72px
       },
       screens: {
+        xxxs: '390px',
         xxs: '480px',
+        xm: '600px',
         xs: '768px',
         sm: '992px',
         md: '1200px',

@@ -9,6 +9,7 @@ interface IState {
 }
 
 const user = {
+  id: 'aass2b44b123ghg346',
   name: 'John Johnson',
   avatar: '',
   level: 11,
