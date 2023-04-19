@@ -3,7 +3,7 @@ import { Disclosure } from '@headlessui/react'
 
 import clsx from 'clsx'
 
-import KingGameHistoryPlayer from './KingGameHistoryPlayer'
+import KingHistoryPlayer from './KingHistoryPlayer'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import ItemsList from '../../components/common/ItemsList'
 import { Button } from '../../components/base/Button'
@@ -15,11 +15,11 @@ import SmallDashedSpacer from '../../assets/img/dashed_spacer_small.png'
 
 import type { IKingGame } from '../../types/King'
 
-interface KingGameHistoryItemProps {
+interface KingHistoryItemProps {
   game: IKingGame
 }
 
-const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
+const KingHistoryItem = ({ game }: KingHistoryItemProps) => {
   const { text: hashCode, handleCopyText: handleCopyHashCode } = useCopyToClipboard(
     '895b7f3ef391e048da04ce3d895b7f3ef391e048da04ce3d'
   )
@@ -29,12 +29,12 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
       {({ open }) => (
         <>
           <div className='p-2 py-6 flex flex-col gap-2 ls:flex-row items-center justify-between h-full ls:h-16 rounded-xl border border-dashed border-blue-highlight bg-gradient-to-t from-dark/20 to-blue-highlight/10'>
-            <div className='flex items-center justify-between gap-3'>
-              <KingGameHistoryPlayer isKing />
+            <div className='flex flex-col xxs:flex-row items-center justify-between gap-3'>
+              <KingHistoryPlayer isKing />
               <div className='rotate-[45deg] h-[30px] w-[30px] rounded-lg flex items-center justify-center gradient-border--yellow gradient-background--darkblue mr-1'>
                 <img src={SwordsIcon} className='scale-150 rotate-[-45deg]' />
               </div>
-              <KingGameHistoryPlayer />
+              <KingHistoryPlayer />
             </div>
             <img src={SmallDashedSpacer} className='ls:block hidden' alt='dashed spacer' />
             <div>
@@ -79,4 +79,4 @@ const KingGameHistoryItem = ({ game }: KingGameHistoryItemProps) => {
   )
 }
 
-export default KingGameHistoryItem
+export default KingHistoryItem

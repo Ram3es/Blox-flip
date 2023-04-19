@@ -7,18 +7,21 @@ import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoi
 import { ListIcon } from '../../components/icons/ListIcon'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 
-import type { TabInterface } from './KingGameInventories'
-import type { ISecondUser } from '../../types/User'
+import { getSumPriceBySkins } from '../../helpers/kingHelpers'
+
+import type { TabInterface } from './KingSkins'
+
+import type { IKingGamePlayer } from '../../types/King'
 
 interface HeaderProps {
-  user: ISecondUser
+  user?: IKingGamePlayer
   isKing?: boolean
   options?: TabInterface[]
   selectedOption?: TabInterface
   setSelectedOption?: Dispatch<SetStateAction<TabInterface>>
 }
 
-const KingGameInventoriesHeader = ({
+const KingSkinsHeader = ({
   user,
   isKing,
   options,
@@ -26,22 +29,27 @@ const KingGameInventoriesHeader = ({
   setSelectedOption
 }: HeaderProps) => {
   const headingClasses = clsx('flex items-center gap-2 font-bold text-10 xs:text-base', {
-    'gradient-king-yellow-text': isKing,
+    'gradient-king-yellow-text text-yellow-primary-accent': isKing,
     'text-gray-primary': !isKing
   })
 
   return (
-    <div className='flex items-start ls:items-center ls:flex-row flex-col gap-4'>
+    <div className='flex items-start ls:items-center ls:flex-row flex-col gap-3'>
       <div className={headingClasses}>
         <p className='hidden ls:block'>
           <ListIcon />
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
-      <QuantityCoins quantity={1500} />
-      <Button disabled variant='HighlightDarken'>
-        <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center'>
-          7 <span>&nbsp;Items</span>
+      <QuantityCoins quantity={user ? getSumPriceBySkins(user.items) : null} />
+      <Button disabled variant='YellowOutlined'>
+        <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
+          {user && (
+            <>
+              {user.items.length} <span>&nbsp;Items</span>
+            </>
+          )}
+          {!user && '...'}
         </span>
       </Button>
       {isKing && options && selectedOption && setSelectedOption && (
@@ -55,4 +63,4 @@ const KingGameInventoriesHeader = ({
   )
 }
 
-export default KingGameInventoriesHeader
+export default KingSkinsHeader

@@ -53,3 +53,14 @@ export const kingMock: IKingGame[] = [
     }
   }
 ]
+
+export const kingMockInitial: IKingGame = {
+  firstPlayer: {
+    username: 'test1',
+    items: cards.slice(0, 9)
+  },
+  secondPlayer: {
+    username: 'test2',
+    items: cards.slice(0, 8)
+  }
+}

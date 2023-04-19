@@ -1,4 +1,3 @@
-
 import React, { FC } from 'react'
 import clsx from 'clsx'
 import { IMAGES } from '../../../constants/images'
@@ -17,8 +16,8 @@ enum BorderColorEnum {
 enum ItemCardVariantEnum {
   Standard = 'Standard',
   CaseOpening = 'CaseOpening',
+  FourByFour = 'FourByFour',
   CoinFlip = 'CoinFlip',
-  CoinFlipSmall = 'CoinFlipSmall',
   KingList = 'KingList'
 }
 
@@ -34,10 +33,21 @@ export interface IItemCardProps {
   itemClasses?: string
   variant?: keyof typeof ItemCardVariantEnum
   userAvatar?: string
-
 }
 
-const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect, isSelected, color, itemClasses, variant = ItemCardVariantEnum.Standard, userAvatar }) => {
+const ItemCard: FC<IItemCardProps> = ({
+  id,
+  image,
+  name,
+  price,
+  chance,
+  onSelect,
+  isSelected,
+  color,
+  itemClasses,
+  variant = ItemCardVariantEnum.Standard,
+  userAvatar
+}) => {
   const borderRadial = clsx('', {
     'border--radial-orange': color === BorderColorEnum.Orange,
     'border--radial-blue': color === BorderColorEnum.Blue,
@@ -59,9 +69,10 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect
     {
       'xs:w-1/5 md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
       'xs:w-1/5 md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
-      'xs:w-1/5 lg:w-3/9 md:h-40 is-default': variant === ItemCardVariantEnum.CoinFlip,
-      'w-full xs:w-1/3 md:w-1/4 text-xs is-default': variant === ItemCardVariantEnum.CoinFlipSmall,
-      'max-w-[120px] min-h-[120px] text-xs is-default': variant === ItemCardVariantEnum.KingList
+      'xs:w-1/5 lg:w-3/9 md:min-h-40 point-hidden': variant === ItemCardVariantEnum.CoinFlip,
+      'w-full xs:w-1/3 md:w-1/4 min-h-[160px] 3xl:w-1/6 text-xs point-hidden':
+        variant === ItemCardVariantEnum.FourByFour,
+      'max-w-[121px] max-h-[160px] text-xs point-hidden': variant === ItemCardVariantEnum.KingList
     }
   )
 
@@ -85,19 +96,29 @@ const ItemCard: FC<IItemCardProps> = ({ id, image, name, price, chance, onSelect
               </div>
             </div>
           </div>
-          <div className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl group-[.is-user]/item:pl-0`}>
-            <div className="mb-2 hidden group-[.is-percent]/item:block">{chance ? <>{chance}%</> : <>1.5%</> }</div>
-            <div className="w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden"></div>
-            <div className="text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left group-[.is-user]/item:hidden"><span>{name}</span></div>
-            <div className="w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start group-[.is-user]/item:items-center">
-              <div className="w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] ">
-                <img src={IMAGES[image]} alt="@T" className="absolute object-contain w-full h-full" />
+          <div
+            className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl group-[.is-user]/item:pl-0`}
+          >
+            <div className='mb-2 hidden group-[.is-percent]/item:block'>
+              {chance ? <>{chance}%</> : <>1.5%</>}
+            </div>
+            <div className='w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden'></div>
+            <div className='text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left group-[.is-user]/item:hidden'>
+              <span>{name}</span>
+            </div>
+            <div className='w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start group-[.is-user]/item:items-center'>
+              <div className='w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] '>
+                <img
+                  src={IMAGES[image]}
+                  alt='@T'
+                  className='absolute object-contain w-full h-full'
+                />
               </div>
               <div>
                 <div className=' hidden group-[.is-user]/item:block w-[120px] text-gray-primary mb-2 text-left'>
                   <span className=''>{name}</span>
                 </div>
-                <div className="flex items-center justify-center relative z-40 group-[.is-user]/item:justify-start">
+                <div className='flex items-center justify-center relative z-40 group-[.is-user]/item:justify-start'>
                   <QuantityCoinsWithChildren quantity={price} />
                 </div>
               </div>
