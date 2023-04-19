@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import CountUp from 'react-countup'
 
 interface TextHealthPointsBarProps {
@@ -9,7 +11,7 @@ const TextHealthPointsBar = ({
   currentHealthPoints,
   maxHealthPoints
 }: TextHealthPointsBarProps) => {
-  const numberFormatter = (value: number) => value.toString()
+  const numberFormatter = useMemo(() => (value: number) => value.toString(), [currentHealthPoints])
 
   return (
     <span className='font-bold text-sm'>

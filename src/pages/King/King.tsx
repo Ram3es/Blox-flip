@@ -11,7 +11,7 @@ import { users } from '../../mocks/liveFeedUsers'
 import { kingMock } from '../../mocks/kingMock'
 
 const King = () => {
-  const { setFight } = useKing()
+  const { fight, setFight } = useKing()
 
   const handleStartGame = () => {
     setFight([
@@ -61,7 +61,7 @@ const King = () => {
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
       <KingArena />
-      <Button onClick={handleStartGame} color='GreenPrimary'>
+      <Button disabled={fight !== null} onClick={handleStartGame} color='GreenPrimary'>
         <span className='py-2.5 mx-auto'>Start game</span>
       </Button>
       <KingQueue queue={users.slice(0, 10)} />
