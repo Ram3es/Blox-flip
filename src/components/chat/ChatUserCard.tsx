@@ -60,7 +60,8 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, routes, variant = 'Base' })
             <Menu.Item
               key={route.name}
               as={Link}
-              to={route.path}
+              to={`${route.path}`}
+              state={{ userId: user.id }}
               className='capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
             >
               {route.name}

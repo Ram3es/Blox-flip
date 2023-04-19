@@ -56,7 +56,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
               <div className=' p-5'>
                 <div className='flex justify-between items-center border-b border-blue-highlight mb-6 pb-6'>
                   <h3 className="text-3xl font-extrabold text-lightblue-secondary uppercase">Sign in</h3>
-                  <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peakFunction={setCurrentVariant} />
+                  <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peackFunction={setCurrentVariant} />
                 </div>
                 {currentLoginVariant.variant === '.Roblosecurity'
                   ? <RobloForm />
