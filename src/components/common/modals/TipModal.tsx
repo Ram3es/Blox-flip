@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from 'react'
 
 import type { IUser } from '../../../types/User'
 
 import ModalWrapper from '../../containers/ModalWrapper'
-
-import TipIcon from '../../../assets/img/tip_icon.svg'
 import { UserAvatar } from '../../user/UserAvatar'
 import { UserLevel } from '../../user/UserLevel'
 import { Button } from '../../base/Button'
-import DiamondIcon from '../../icons/DiamondIcon'
+import InputWithInlineLabel from '../InputWithInlineLabel'
+
+import TipIcon from '../../../assets/img/tip_icon.svg'
 
 interface TipModalProps {
   user: IUser
@@ -18,25 +18,15 @@ interface TipModalProps {
 
 const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
   const [inputValue, setInputValue] = useState(0)
+  const [inputValueVerify, setInputValueVerify] = useState(0)
 
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const updateInputWidth = () => {
-    if (inputRef.current && inputValue > 2000) {
-      inputRef.current.style.width = '100px'
-    }
-    if (inputRef.current && inputValue < 2000) {
-      inputRef.current.style.width = '70px'
-    }
-  }
-
-  useEffect(() => {
-    updateInputWidth()
-  }, [inputValue])
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(Number(event.target.value))
-  }
+  }, [])
+
+  const handleChangeInputVerify = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setInputValueVerify(Number(event.target.value))
+  }, [])
 
   return (
     <ModalWrapper
@@ -57,40 +47,21 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
         </div>
       </div>
       <div className='py-4 space-y-8'>
-        <div className='pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 flex items-center justify-between'>
-          <div className='gradient--background--blue__third rounded-md px-5 py-2'>
-            <span className='text-gray-primary font-medium text-sm'>Tip amount</span>
-          </div>
-          <div className='flex items-center justify-end'>
-            <div className='relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary'>
-              <DiamondIcon className='-inset-full absolute m-auto' />
-            </div>
-            <input
-              ref={inputRef}
-              onChange={handleChange}
-              className='pl-2 bg-transparent text-left outline-none placeholder:text-white'
-              type='number'
-              placeholder='...'
-            />
-          </div>
-        </div>
-        <div className='pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 flex items-center justify-between border border-red-light-secondary/30'>
-          <div className='gradient--background--blue__third rounded-md px-5 py-2'>
-            <span className='text-gray-primary font-medium text-sm'>Verify amount</span>
-          </div>
-          <div className='flex items-center justify-end'>
-            <div className='relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary'>
-              <DiamondIcon className='-inset-full absolute m-auto' />
-            </div>
-            <input
-              ref={inputRef}
-              onChange={handleChange}
-              className='pl-2 bg-transparent text-left outline-none placeholder:text-white'
-              type='number'
-              placeholder='...'
-            />
-          </div>
-        </div>
+        <InputWithInlineLabel
+          type='number'
+          placeholder='...'
+          value={inputValue}
+          onChange={handleChangeInput}
+          label='Tip amount'
+        />
+
+        <InputWithInlineLabel
+          type='number'
+          placeholder='...'
+          value={inputValueVerify}
+          onChange={handleChangeInputVerify}
+          label='Verify amount'
+        />
         <div className='flex items-start justify-center gap-4'>
           <Button color='BlueAccentPrimary'>
             <span className='py-3 px-10 text-15 font-bold text-gray-primary'>Cancel</span>
@@ -100,7 +71,9 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
           </Button>
         </div>
         <div className='rounded-15 gradient-background--blue__secondary py-2 px-10 text-center'>
-          <p className='font-semibold text-base text-gray-secondary-light'>Please double check the tip amount before sending the tip.</p>
+          <p className='font-semibold text-base text-gray-secondary-light'>
+            Please double check the tip amount before sending the tip.
+          </p>
           <p className='font-semibold text-base text-orange-light'>
             We are NOT responsible for any miss-clicks or wrong input amounts tipped to other users.
             You and only you are responsible for making a tip.
