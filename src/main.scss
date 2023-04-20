@@ -293,7 +293,7 @@ body {
 }
 .border-gold-gradient {
   &:before {
-    background: linear-gradient(90deg, rgba(229, 136, 33, 1) 0%, rgba(111,88,64, 1) 100%)
+    background: linear-gradient(90deg, rgba(229, 136, 33, 1) 0%, rgba(111, 88, 64, 1) 100%)
       border-box;
   }
 }
@@ -364,6 +364,17 @@ body {
 }
 .gradient-background--blue {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), #1f2438;
+}
+.gradient-background--blue__secondary {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.24)),
+    linear-gradient(228.46deg, rgba(64, 73, 112, 0.1) 2.2%, rgba(82, 101, 181, 0.1) 99.81%);
+}
+.gradient--background--blue__third {
+  background: linear-gradient(
+    228.46deg,
+    rgba(64, 73, 112, 0.1) 2.2%,
+    rgba(82, 101, 181, 0.1) 99.81%
+  );
 }
 .gradient-background--darkblue {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #171b29;
@@ -564,7 +575,19 @@ body {
   background-clip: text;
 }
 .gradient-gold-profile {
-  background: linear-gradient(219.83deg, rgba(255, 181, 70, 0.35) -31.99%, rgba(255, 181, 70, 0.35) 30.24%, rgba(226, 151, 39, 0.35) 52.85%, rgba(210, 134, 21, 0.35) 73.18%, rgba(202, 126, 13, 0.35) 93.37%, rgba(245, 170, 59, 0.35) 113.37%, rgba(199, 123, 10, 0.35) 137.65%, rgba(208, 132, 19, 0.35) 154.66%, rgba(223, 148, 36, 0.35) 181.87%, rgba(255, 181, 70, 0.35) 207.27%);
+  background: linear-gradient(
+    219.83deg,
+    rgba(255, 181, 70, 0.35) -31.99%,
+    rgba(255, 181, 70, 0.35) 30.24%,
+    rgba(226, 151, 39, 0.35) 52.85%,
+    rgba(210, 134, 21, 0.35) 73.18%,
+    rgba(202, 126, 13, 0.35) 93.37%,
+    rgba(245, 170, 59, 0.35) 113.37%,
+    rgba(199, 123, 10, 0.35) 137.65%,
+    rgba(208, 132, 19, 0.35) 154.66%,
+    rgba(223, 148, 36, 0.35) 181.87%,
+    rgba(255, 181, 70, 0.35) 207.27%
+  );
 }
 .gradient-king-yellow-text {
   background: linear-gradient(53.1deg, #ff8d24 -4.15%, #ffc700 76.05%), #ffffff;
@@ -853,13 +876,24 @@ input {
   text-fill-color: transparent;
 }
 .text-gradient-gold {
-  background: linear-gradient(180deg, #FFB546 -31.99%, #FFB546 30.24%, #E29727 52.85%, #D28615 73.18%, #CA7E0D 93.37%, #F5AA3B 113.37%, #C77B0A 137.65%, #D08413 154.66%, #DF9424 181.87%, #FFB546 207.27%);
+  background: linear-gradient(
+    180deg,
+    #ffb546 -31.99%,
+    #ffb546 30.24%,
+    #e29727 52.85%,
+    #d28615 73.18%,
+    #ca7e0d 93.37%,
+    #f5aa3b 113.37%,
+    #c77b0a 137.65%,
+    #d08413 154.66%,
+    #df9424 181.87%,
+    #ffb546 207.27%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
 }
-
 
 /*-----media----*/
 /*

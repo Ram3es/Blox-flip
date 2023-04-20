@@ -7,19 +7,9 @@ import SignInModal from '../containers/SignInModal'
 import ChatUserCard from './ChatUserCard'
 import { Button } from '../base/Button'
 
-import { RouteItem } from '../../types/Routes'
-
 export const ChatHeader: FC = () => {
   const [isOpenSignInModal, setIsOpenModal] = useState(false)
   const { state } = useContext(Context)
-
-  const routes: RouteItem[] = [
-    { path: '/profile', name: 'profile' },
-    { path: '/affiliates', name: 'affiliates' },
-    { path: '/leaderboard', name: 'leaderboard' },
-    { path: '/trivia', name: 'trivia' },
-    { path: '/megadrop', name: 'megadrop' }
-  ]
 
   return (
     <>
@@ -30,7 +20,7 @@ export const ChatHeader: FC = () => {
         })}
       >
         {state.user
-          ? (<ChatUserCard routes={routes} variant='Header' user={state.user} />)
+          ? (<ChatUserCard variant='Header' user={state.user} />)
           : (
           <Button color='GreenPrimary' variant='Gradient' onClick={() => setIsOpenModal(true)}>
             <span className='px-24 py-2'>Login</span>
