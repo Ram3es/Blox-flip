@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 
-import GameLobbyModal from '../../components/common/GameLobbyModal'
+import CoinFlipLobbyModal from './CoinFlipLobbyModal'
 import CoinFlipGame from './CoinFlipGame'
 import CoinFlipHeader from './CoinFlipHeader'
 import CoinFlipGamesTable from './CoinFlipGamesTable'
@@ -35,14 +35,14 @@ const CoinFlip = () => {
       <CoinFlipHeader />
       <CoinFlipGamesTable />
       {isOpenCreateGame && (
-        <GameLobbyModal
+        <CoinFlipLobbyModal
           isCreated={false}
           handleFunction={handleCreateGame}
           onClose={() => setIsOpenCreateGame(false)}
         />
       )}
       {isOpenJoinGame && (
-        <GameLobbyModal
+        <CoinFlipLobbyModal
           isCreated={true}
           handleFunction={handleJoinGame}
           onClose={() => setIsOpenJoinGame(false)}
