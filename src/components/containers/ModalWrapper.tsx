@@ -16,7 +16,7 @@ const ModalWrapper: FC<IModalWrapper> = ({
   closeBtnClasses
 }) => {
   return (
-    <div className='fixed inset-0 z-[50] h-screen w-screen flex flex-col justify-center items-center bg-blue-darken/75'>
+    <div className='fixed inset-0 z-[100] h-screen w-screen flex flex-col justify-center items-center bg-blue-darken/75'>
       <div
         className={
           modalClasses ??
@@ -26,7 +26,7 @@ const ModalWrapper: FC<IModalWrapper> = ({
         <Button
           className={
             closeBtnClasses ??
-            'rounded w-7 h-7 leading-7 absolute top-4 right-6 text-center bg-blue-accent cursor-pointer'
+            'rounded w-7 h-7 leading-7 absolute top-4 right-6 text-center bg-lightblue-darken cursor-pointer'
           }
           onClick={() => closeModal()}
         >
