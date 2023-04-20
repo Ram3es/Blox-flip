@@ -89,7 +89,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
 
   const renderActions = (action: userAction) => {
     const itemClasses =
-      'flex  items-center gap-2 capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
+      'flex items-center gap-2 capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
 
     if (action.path) {
       return (
@@ -118,12 +118,12 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
     }
   }
 
-  const actions =
+  const getCurrentActions =
     variant === ChatUserCardVariant.Header
       ? profileActions
       : isAuth()
-      ? chatAdminActions
-      : chatUserActions
+        ? chatAdminActions
+        : chatUserActions
 
   return (
     <Menu>
@@ -147,7 +147,6 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
             </span>
             <UserLevel level={user ? user.level : 0} />
           </div>
-
           <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
             <ArrowGrayIcon />
           </div>
@@ -161,7 +160,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
         as='div'
       >
         <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
-          {actions.map((action) => renderActions(action))}
+          {getCurrentActions.map((action) => renderActions(action))}
         </div>
       </Menu.Items>
     </Menu>
