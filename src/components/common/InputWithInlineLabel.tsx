@@ -23,11 +23,11 @@ const InputWithInlineLabel = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const updateInputWidth = () => {
-    if (inputRef.current && Number(inputProps.value) > 2000) {
-      inputRef.current.style.width = '100px'
-    }
-    if (inputRef.current && Number(inputProps.value) < 2000) {
-      inputRef.current.style.width = '70px'
+    if (inputRef.current) {
+      inputRef.current.style.width =
+        inputRef.current.value.length > 1
+          ? (inputRef.current.value.length + 1).toString() + 'ch'
+          : '20px'
     }
   }
 
