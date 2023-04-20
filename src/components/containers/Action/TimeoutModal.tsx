@@ -29,7 +29,7 @@ const TimeoutModal = ({ user, onClose, handleFunction }: TimeoutModalProps) => {
       <ActionModalHeader user={user}>
         <div className='text-blue-golf flex items-center gap-2'>
           <TimeoutIcon />
-          <span className='font-black text-3xl uppercase'>timeout user</span>
+          <span className='font-black text-xl xxs:text-3xl uppercase hidden sm:block'>timeout user</span>
         </div>
       </ActionModalHeader>
       <div className='py-4 space-y-8'>
@@ -38,7 +38,7 @@ const TimeoutModal = ({ user, onClose, handleFunction }: TimeoutModalProps) => {
           placeholder='...'
           value={inputValue !== 0 ? inputValue : ''}
           onChange={handleChangeInput}
-          label='Tip amount'
+          label='Seconds'
         />
         <div className='flex items-start justify-center'>
           <Button color='GreenPrimary'>

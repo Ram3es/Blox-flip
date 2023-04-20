@@ -1,16 +1,19 @@
 import { useCallback, useState } from 'react'
+import { useChat } from '../../store/ChatStore'
+
 import clsx from 'clsx'
+
+import BanModal from '../containers/Action/BanModal'
+import TimeoutModal from '../containers/Action/TimeoutModal'
+import TipModal from '../containers/Action/TipModal'
 
 import { ChatHeader } from './ChatHeader'
 import { ChatTools } from './ChatTools'
 import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
-import BanModal from '../containers/Action/BanModal'
+
 import { user } from '../../mocks'
-import TimeoutModal from '../containers/Action/TimeoutModal'
-import TipModal from '../containers/Action/TipModal'
-import { useChat } from '../../store/ChatStore'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)

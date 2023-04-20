@@ -34,7 +34,7 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
       <ActionModalHeader user={user}>
         <div className='text-blue-golf flex items-center gap-2'>
           <TipIcon />
-          <span className='font-black text-3xl uppercase'>tip user</span>
+          <span className='font-black xxs:text-3xl uppercase hidden sm:block'>tip user</span>
         </div>
       </ActionModalHeader>
       <div className='py-4 space-y-8'>
@@ -56,10 +56,10 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
         />
         <div className='flex items-start justify-center gap-4'>
           <Button color='BlueAccentPrimary'>
-            <span className='py-3 px-10 text-15 font-bold text-gray-primary'>Cancel</span>
+            <span className='py-3 px-8 sm:px-10 text-15 font-bold text-gray-primary'>Cancel</span>
           </Button>
           <Button color='GreenPrimary'>
-            <span className='py-3 px-10 text-15 font-bold text-white'>Send tip</span>
+            <span className='py-3 px-8 sm:px-10 text-15 font-bold text-white'>Send tip</span>
           </Button>
         </div>
         <div className='rounded-15 gradient-background--blue__secondary py-2 px-10 text-center'>

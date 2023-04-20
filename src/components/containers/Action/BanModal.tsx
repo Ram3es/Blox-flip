@@ -22,7 +22,7 @@ const BanModal = ({ user, onClose, handleFunction }: BanModalProps) => {
       <ActionModalHeader user={user}>
         <div className='text-red-light flex items-center gap-2'>
           <BanIcon />
-          <span className='font-black text-3xl uppercase'>ban user</span>
+          <span className='font-black text-3xl uppercase hidden sm:block'>ban user</span>
         </div>
       </ActionModalHeader>
       <div className='py-4 space-y-8'>
