@@ -92,6 +92,7 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(96.03% 96.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-radial-80': 'radial-gradient(80.03% 80.03% at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-radial-70': 'radial-gradient(83.5% 83.5% at 70.83% 59.11%, var(--tw-gradient-stops))',
         'gradient-radial-60': 'radial-gradient(60.03% 60.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-lvl': 'radial-gradient(83.82% 83.82% at 50% 91.09%, var(--tw-gradient-stops))'
       },
