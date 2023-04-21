@@ -37,7 +37,7 @@ interface ChatUserCardProps {
 
 const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   const { state } = useContext(Context)
-  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal } = useChat()
+  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal, setIsOpenTriviaModal } = useChat()
 
   const baseIconSizeClasses = 'w-3 h-3'
 
@@ -45,7 +45,12 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
     { path: '/profile', name: 'profile' },
     { path: '/affiliates', name: 'affiliates' },
     { path: '/leaderboard', name: 'leaderboard' },
-    { path: '/trivia', name: 'trivia' },
+    {
+      handleFunction: () => {
+        setIsOpenTriviaModal(true)
+      },
+      name: 'Trivia'
+    },
     { path: '/megadrop', name: 'megadrop' }
   ]
 
