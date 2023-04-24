@@ -5,16 +5,35 @@ import { Button } from '../base/Button'
 import ModalWrapper from './ModalWrapper'
 import InputWithInlineLabel from '../common/InputWithInlineLabel'
 import ChallengeIcon from '../icons/ChallengeIcon'
+import { Listbox } from '@headlessui/react'
+import Label from '../base/Label'
+import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import clsx from 'clsx'
 
 interface ChallengeCreationModalProps {
   onClose: () => void
   handleFunction: () => void
 }
 
+interface GameVariantInterface {
+  gameName: string
+}
+
+const gameVariants: GameVariantInterface[] = [
+  { gameName: 'king' },
+  { gameName: 'wheel' },
+  { gameName: 'plinko' },
+  { gameName: 'coinflip' },
+  { gameName: 'jackpot' },
+  { gameName: 'cases' },
+  { gameName: 'case battles' }
+]
+
 const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationModalProps) => {
   const [inputWager, setInputWager] = useState(0)
   const [inputPrize, setInputPrize] = useState(0)
   const [inputMultiplier, setInputMultiplier] = useState('')
+  const [selectedGame, setSelectedGame] = useState<GameVariantInterface | null>(gameVariants[0])
 
   const handleChangeInputWager = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setInputWager(Number(event.target.value))
@@ -32,7 +51,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
+      modalClasses='h-full relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
     >
       <div className='flex items-center gap-6 border-b-[1px] border-blue-accent-primary pb-4 mb-6'>
         <div className='flex items-center gap-2'>
@@ -65,6 +84,42 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
           labelFill='Green'
           withIcon
         />
+        <Listbox
+          value={selectedGame}
+          onChange={setSelectedGame}
+          as='div'
+          className='relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text'
+        >
+          <Listbox.Button
+            as='div'
+            className='text-gray-primary capitalize font-medium text-base flex justify-between items-center'
+          >
+            <Label label='Game' />
+            <div className='flex items-center gap-2'>
+              {selectedGame?.gameName}
+              <ArrowGrayIcon size='SMALL' className='w-2 h-2' />
+            </div>
+          </Listbox.Button>
+          <Listbox.Options className='absolute right-0 mt-6 w-48 p-2 border rounded rounded-tr-none bg-blue-accent-secondary  popup--corner-tr list-none space-y-1.5'>
+            {gameVariants.map((variant, index) => (
+              <Listbox.Option key={variant.gameName} value={variant}>
+                {({ selected }) => (
+                  <li
+                    className={clsx(
+                      'outline-none capitalize text-13 cursor-pointer py-1.5 px-2.5 rounded  hover:text-white',
+                      {
+                        'text-white border border-blue-fourth': selected,
+                        'text-gray-primary bg-blue-third': !selected
+                      }
+                    )}
+                  >
+                    {variant.gameName}
+                  </li>
+                )}
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </Listbox>
         <div className='py-4 space-y-8'>
           <div className='flex items-start justify-center gap-4'>
             <Button color='BlueAccentPrimary' onClick={onClose}>

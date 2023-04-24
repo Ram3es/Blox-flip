@@ -3,20 +3,18 @@ import { InputHTMLAttributes, useEffect, useRef } from 'react'
 import clsx from 'clsx'
 
 import DiamondIcon from '../icons/DiamondIcon'
+import Label, { LabelFillEnum } from '../base/Label'
 
 enum OutlineColorEnum {
   RedLightSecondary = 'RedLightSecondary'
-}
-
-enum LabelFillEnum {
-  Blue = 'Blue',
-  Green = 'Green'
 }
 
 interface InputWithInlineLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   outlineColor?: keyof typeof OutlineColorEnum
   labelFill?: keyof typeof LabelFillEnum
+  inputClasses?: string
+  labelClasses?: string
   withIcon?: boolean
 }
 
@@ -25,6 +23,8 @@ const InputWithInlineLabel = ({
   outlineColor,
   labelFill = LabelFillEnum.Blue,
   withIcon = false,
+  inputClasses,
+  labelClasses,
   ...inputProps
 }: InputWithInlineLabelProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -49,14 +49,9 @@ const InputWithInlineLabel = ({
     }
   )
 
-  const labelClasses = clsx('rounded-md px-5 py-2 font-medium text-sm', {
-    'gradient--background--blue__third text-gray-primary': labelFill === LabelFillEnum.Blue,
-    'bg-green-primary/20 text-green-primary': labelFill === LabelFillEnum.Green
-  })
-
   return (
-    <div className={containerClasses}>
-      <span className={labelClasses}>{label}</span>
+    <div className={containerClasses} onClick={() => inputRef.current?.focus()}>
+      <Label labelClasses={labelClasses} label={label} labelFill={labelFill} />
       <div className='flex items-center justify-end'>
         {withIcon && (
           <div className='relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary'>
@@ -67,7 +62,9 @@ const InputWithInlineLabel = ({
           ref={inputRef}
           onChange={inputProps.onChange}
           value={inputProps.value}
-          className={'pl-2 bg-transparent text-left outline-none placeholder:text-white'}
+          className={
+            inputClasses ?? 'pl-2 bg-transparent text-left outline-none placeholder:text-white'
+          }
           type={inputProps.type}
           placeholder={inputProps.placeholder}
           {...inputProps}
