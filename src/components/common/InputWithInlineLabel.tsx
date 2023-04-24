@@ -8,15 +8,22 @@ enum OutlineColorEnum {
   RedLightSecondary = 'RedLightSecondary'
 }
 
+enum LabelFillEnum {
+  Blue = 'Blue',
+  Green = 'Green'
+}
+
 interface InputWithInlineLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
-  withIcon?: boolean
   outlineColor?: keyof typeof OutlineColorEnum
+  labelFill?: keyof typeof LabelFillEnum
+  withIcon?: boolean
 }
 
 const InputWithInlineLabel = ({
   label,
   outlineColor,
+  labelFill = LabelFillEnum.Blue,
   withIcon = false,
   ...inputProps
 }: InputWithInlineLabelProps) => {
@@ -42,11 +49,14 @@ const InputWithInlineLabel = ({
     }
   )
 
+  const labelClasses = clsx('rounded-md px-5 py-2 font-medium text-sm', {
+    'gradient--background--blue__third text-gray-primary': labelFill === LabelFillEnum.Blue,
+    'bg-green-primary/20 text-green-primary': labelFill === LabelFillEnum.Green
+  })
+
   return (
     <div className={containerClasses}>
-      <div className='gradient--background--blue__third rounded-md px-5 py-2'>
-        <span className='text-gray-primary font-medium text-sm'>{label}</span>
-      </div>
+      <span className={labelClasses}>{label}</span>
       <div className='flex items-center justify-end'>
         {withIcon && (
           <div className='relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary'>
