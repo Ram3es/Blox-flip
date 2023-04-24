@@ -52,7 +52,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
+      modalClasses='mt-4 md:mt-auto relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
     >
       <div className='flex items-center gap-6 border-b-[1px] border-blue-accent-primary pb-4 mb-6'>
         <div className='flex items-center gap-2'>
@@ -103,7 +103,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
               <ArrowGrayIcon size='SMALL' className='w-2 h-2' />
             </div>
           </Listbox.Button>
-          <Listbox.Options className='absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
+          <Listbox.Options className='focus:outline-none absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
             <div className='w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-[42px]' />
             {gameVariants.map((variant) => (
               <Listbox.Option key={variant.gameName} value={variant}>
@@ -127,10 +127,10 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
         <div className='py-4 space-y-8'>
           <div className='flex items-start justify-center gap-4'>
             <Button color='BlueAccentPrimary' onClick={onClose}>
-              <span className='py-3 px-8 sm:px-10 text-15 font-bold text-gray-primary'>Cancel</span>
+              <span className='py-3 px-4 sm:px-10 text-15 font-bold text-gray-primary'>Cancel</span>
             </Button>
             <Button color='GreenPrimary' onClick={handleFunction}>
-              <span className='py-3 px-8 sm:px-10 text-15 font-bold text-white'>
+              <span className='py-3 px-4 sm:px-10 text-15 font-bold text-white truncate'>
                 Create challenge
               </span>
             </Button>
