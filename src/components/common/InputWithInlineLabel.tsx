@@ -12,12 +12,16 @@ interface InputWithInlineLabelProps extends InputHTMLAttributes<HTMLInputElement
   label: string
   withIcon?: boolean
   outlineColor?: keyof typeof OutlineColorEnum
+  inputClasses?: string
+  labelClasses?: string
 }
 
 const InputWithInlineLabel = ({
   label,
   outlineColor,
   withIcon = false,
+  inputClasses,
+  labelClasses,
   ...inputProps
 }: InputWithInlineLabelProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -36,16 +40,16 @@ const InputWithInlineLabel = ({
   }, [inputProps.value])
 
   const containerClasses = clsx(
-    'pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 flex items-center justify-between',
+    'pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 flex items-center justify-between w-full cursor-text',
     {
       'border border-red-light-secondary/30': outlineColor === OutlineColorEnum.RedLightSecondary
     }
   )
 
   return (
-    <div className={containerClasses}>
-      <div className='gradient--background--blue__third rounded-md px-5 py-2'>
-        <span className='text-gray-primary font-medium text-sm'>{label}</span>
+    <div className={containerClasses} onClick={() => inputRef.current?.focus()}>
+      <div className={labelClasses ?? 'gradient--background--blue__third rounded-md px-5 py-2 text-gray-primary '}>
+        <span className='font-medium text-sm'>{label}</span>
       </div>
       <div className='flex items-center justify-end'>
         {withIcon && (
@@ -57,9 +61,10 @@ const InputWithInlineLabel = ({
           ref={inputRef}
           onChange={inputProps.onChange}
           value={inputProps.value}
-          className='pl-2 bg-transparent text-left outline-none placeholder:text-white'
+          className={ inputClasses ?? 'pl-2 bg-transparent text-left outline-none placeholder:text-white'}
           type={inputProps.type}
           placeholder={inputProps.placeholder}
+          {...inputProps}
         />
       </div>
     </div>

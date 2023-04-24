@@ -11,6 +11,8 @@ interface IChatContext {
   setIsOpenTimeoutModal: Dispatch<SetStateAction<boolean>>
   isOpenTipModal: boolean
   setIsOpenTipModal: Dispatch<SetStateAction<boolean>>
+  isOpenTriviaModal: boolean
+  setIsOpenTriviaModal: Dispatch<SetStateAction<boolean>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -24,6 +26,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [isOpenBanModal, setIsOpenBanModal] = useState(false)
   const [isOpenTimeoutModal, setIsOpenTimeoutModal] = useState(false)
   const [isOpenTipModal, setIsOpenTipModal] = useState(false)
+  const [isOpenTriviaModal, setIsOpenTriviaModal] = useState(false)
 
   return (
     <ChatContext.Provider
@@ -33,7 +36,9 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         isOpenTimeoutModal,
         setIsOpenTimeoutModal,
         isOpenTipModal,
-        setIsOpenTipModal
+        setIsOpenTipModal,
+        isOpenTriviaModal,
+        setIsOpenTriviaModal
       }}
     >
       {children}
