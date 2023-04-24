@@ -3,3 +3,8 @@ export interface ISortOptions {
   direction: 'ASC' | 'DESC'
   sortBy: string
 }
+
+export interface ISelectOptions {
+  title: string
+  value: any
+}

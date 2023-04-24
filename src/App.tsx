@@ -28,6 +28,7 @@ import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 import Jackpot from './pages/Jackpot/Jackpot'
 import BattleCases from './pages/Battle/BattleCases'
 import CoinFlip from './pages/CoinFlip/CoinFlip'
+import Challenges from './pages/Challenges/Challenges'
 
 export const App = () => {
   return (
@@ -63,6 +64,7 @@ export const App = () => {
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
+          <Route path='/challenges' element={<Challenges />} />
           <Route path='/unboxing' element={<Unboxing />} />
           <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
