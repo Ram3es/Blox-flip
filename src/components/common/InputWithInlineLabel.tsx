@@ -43,7 +43,7 @@ const InputWithInlineLabel = ({
   }, [inputProps.value])
 
   const containerClasses = clsx(
-    'pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 flex items-center justify-between',
+    'pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 flex items-center justify-between w-full cursor-text',
     {
       'border border-red-light-secondary/30': outlineColor === OutlineColorEnum.RedLightSecondary
     }
@@ -67,9 +67,10 @@ const InputWithInlineLabel = ({
           ref={inputRef}
           onChange={inputProps.onChange}
           value={inputProps.value}
-          className='pl-2 bg-transparent text-left outline-none placeholder:text-white'
+          className={'pl-2 bg-transparent text-left outline-none placeholder:text-white'}
           type={inputProps.type}
           placeholder={inputProps.placeholder}
+          {...inputProps}
         />
       </div>
     </div>

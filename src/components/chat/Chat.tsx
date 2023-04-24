@@ -14,6 +14,7 @@ import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
 
 import { user } from '../../mocks'
+import TriviaModal from '../containers/TriviaModal'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
@@ -23,7 +24,9 @@ export const Chat = () => {
     isOpenTimeoutModal,
     setIsOpenTimeoutModal,
     isOpenTipModal,
-    setIsOpenTipModal
+    setIsOpenTipModal,
+    isOpenTriviaModal,
+    setIsOpenTriviaModal
   } = useChat()
 
   const handleShowChat = useCallback(() => {
@@ -67,6 +70,11 @@ export const Chat = () => {
           onClose={() => setIsOpenTipModal(false)}
           handleFunction={() => console.log('ban')}
         />
+      )}
+      {isOpenTriviaModal && (
+        <TriviaModal
+          onClose={() => setIsOpenTriviaModal(false)}
+          isOpen={isOpenTriviaModal} />
       )}
     </>
   )
