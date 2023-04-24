@@ -3,7 +3,6 @@ import { InputHTMLAttributes, useEffect, useRef } from 'react'
 import clsx from 'clsx'
 
 import DiamondIcon from '../icons/DiamondIcon'
-import Label, { LabelFillEnum } from '../base/Label'
 
 enum OutlineColorEnum {
   RedLightSecondary = 'RedLightSecondary'
@@ -12,7 +11,6 @@ enum OutlineColorEnum {
 interface InputWithInlineLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   outlineColor?: keyof typeof OutlineColorEnum
-  labelFill?: keyof typeof LabelFillEnum
   inputClasses?: string
   labelClasses?: string
   withIcon?: boolean
@@ -21,7 +19,6 @@ interface InputWithInlineLabelProps extends InputHTMLAttributes<HTMLInputElement
 const InputWithInlineLabel = ({
   label,
   outlineColor,
-  labelFill = LabelFillEnum.Blue,
   withIcon = false,
   inputClasses,
   labelClasses,
@@ -51,7 +48,14 @@ const InputWithInlineLabel = ({
 
   return (
     <div className={containerClasses} onClick={() => inputRef.current?.focus()}>
-      <Label labelClasses={labelClasses} label={label} labelFill={labelFill} />
+      <span
+        className={
+          labelClasses ??
+          'rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary'
+        }
+      >
+        {label}
+      </span>
       <div className='flex items-center justify-end'>
         {withIcon && (
           <div className='relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary'>

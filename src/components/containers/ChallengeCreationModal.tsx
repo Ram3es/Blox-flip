@@ -10,7 +10,6 @@ import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
 import ModalWrapper from './ModalWrapper'
 import InputWithInlineLabel from '../common/InputWithInlineLabel'
 import ChallengeIcon from '../icons/ChallengeIcon'
-import Label from '../base/Label'
 
 interface ChallengeCreationModalProps {
   onClose: () => void
@@ -53,7 +52,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
+      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
     >
       <div className='flex items-center gap-6 border-b-[1px] border-blue-accent-primary pb-4 mb-6'>
         <div className='flex items-center gap-2'>
@@ -83,29 +82,30 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
           value={inputPrize !== 0 ? inputPrize : ''}
           onChange={handleChangeInputPrize}
           label='Prize'
-          labelFill='Green'
+          labelClasses='rounded-md px-5 py-2 font-medium text-sm bg-green-primary/20 text-green-primary'
           withIcon
         />
         <Listbox
           value={selectedGame}
           onChange={setSelectedGame}
           as='div'
-          className='relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text'
+          className='relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text flex items-center justify-between'
         >
+          <span className='capitalize rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary'>
+            Game
+          </span>
           <Listbox.Button
             as='div'
-            className='text-gray-primary capitalize font-medium text-base flex justify-between items-center'
+            className='cursor-pointer text-gray-primary capitalize font-medium text-base flex justify-between items-center pl-10'
           >
-            <Label label='Game' />
             <div className='flex items-center gap-2'>
               {selectedGame?.gameName}
               <ArrowGrayIcon size='SMALL' className='w-2 h-2' />
             </div>
           </Listbox.Button>
-
-          <Listbox.Options className='absolute top-14 right-[-1.3rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
-            <div className='w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-10' />
-            {gameVariants.map((variant, index) => (
+          <Listbox.Options className='absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
+            <div className='w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-[42px]' />
+            {gameVariants.map((variant) => (
               <Listbox.Option key={variant.gameName} value={variant}>
                 {({ selected }) => (
                   <li
