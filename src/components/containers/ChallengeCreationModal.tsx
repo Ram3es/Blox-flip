@@ -1,14 +1,16 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 
+import { Listbox } from '@headlessui/react'
+
+import clsx from 'clsx'
+
 import { Button } from '../base/Button'
+import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
 
 import ModalWrapper from './ModalWrapper'
 import InputWithInlineLabel from '../common/InputWithInlineLabel'
 import ChallengeIcon from '../icons/ChallengeIcon'
-import { Listbox } from '@headlessui/react'
 import Label from '../base/Label'
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
-import clsx from 'clsx'
 
 interface ChallengeCreationModalProps {
   onClose: () => void
@@ -51,7 +53,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='h-full relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
+      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto overflow-hidden'
     >
       <div className='flex items-center gap-6 border-b-[1px] border-blue-accent-primary pb-4 mb-6'>
         <div className='flex items-center gap-2'>
@@ -100,13 +102,15 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
               <ArrowGrayIcon size='SMALL' className='w-2 h-2' />
             </div>
           </Listbox.Button>
-          <Listbox.Options className='absolute right-0 mt-6 w-48 p-2 border rounded rounded-tr-none bg-blue-accent-secondary  popup--corner-tr list-none space-y-1.5'>
+
+          <Listbox.Options className='absolute top-14 right-[-1.3rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
+            <div className='w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-10' />
             {gameVariants.map((variant, index) => (
               <Listbox.Option key={variant.gameName} value={variant}>
                 {({ selected }) => (
                   <li
                     className={clsx(
-                      'outline-none capitalize text-13 cursor-pointer py-1.5 px-2.5 rounded  hover:text-white',
+                      'capitalize text-15 cursor-pointer py-1.5 px-2.5 rounded font-medium hover:text-white',
                       {
                         'text-white border border-blue-fourth': selected,
                         'text-gray-primary bg-blue-third': !selected
