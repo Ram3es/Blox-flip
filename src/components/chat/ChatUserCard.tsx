@@ -51,7 +51,8 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
       },
       name: 'Trivia'
     },
-    { path: '/megadrop', name: 'megadrop' }
+    { path: '/megadrop', name: 'megadrop' },
+    { path: '/challenges', name: 'challenges' }
   ]
 
   const chatUserActions: userAction[] = [
