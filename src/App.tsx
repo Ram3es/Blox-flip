@@ -28,6 +28,7 @@ import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 import Jackpot from './pages/Jackpot/Jackpot'
 import BattleCases from './pages/Battle/BattleCases'
 import CoinFlip from './pages/CoinFlip/CoinFlip'
+import Terms from './pages/TermsOfService/Terms'
 
 export const App = () => {
   return (
@@ -70,6 +71,7 @@ export const App = () => {
           <Route path='/create-battle' element={<CreateBattle />} />
           <Route path='/jackpot' element={<Jackpot />} />
           <Route path='/battle/:id' element={<BattleCases />} />
+          <Route path='/terms' element={<Terms />} />
         </Routes>
       </Container>
     </BrowserRouter>
