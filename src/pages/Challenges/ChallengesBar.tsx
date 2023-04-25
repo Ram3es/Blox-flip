@@ -58,6 +58,7 @@ const ChallengesBar = ({ userRole = 'user' }: { userRole?: string }) => {
                isClaimed={card?.isClaimed}
                price={card.price}
                image={card.image}
+               openModal={() => console.log('open Modal')}
               />
           ))}
         </div>

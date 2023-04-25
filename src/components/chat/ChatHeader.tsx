@@ -18,7 +18,8 @@ export const ChatHeader: FC = () => {
     { path: '/affiliates', name: 'affiliates' },
     { path: '/leaderboard', name: 'leaderboard' },
     { path: '/trivia', name: 'trivia' },
-    { path: '/megadrop', name: 'megadrop' }
+    { path: '/megadrop', name: 'megadrop' },
+    { path: '/challenges', name: 'challenges' }
   ]
 
   return (

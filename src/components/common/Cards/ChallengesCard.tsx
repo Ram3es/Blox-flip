@@ -10,10 +10,11 @@ interface IChaleendgCardProps {
   isClaimed?: boolean
   price: number
   image: string
+  openModal: Function
 }
 
-const ChallengesCard: FC<IChaleendgCardProps> = ({ price, isClaimed, image }) => {
-  const colorCard = clsx('w-full h-[250px] challenges--mask border mt-10 relative rounded-lg', {
+const ChallengesCard: FC<IChaleendgCardProps> = ({ price, isClaimed, image, openModal }) => {
+  const borderColor = clsx('w-full h-[250px] challenges--mask border mt-10 relative rounded-lg cursor-pointer', {
     'challenge-card-border-gold': !isClaimed
   })
   const cardGradient = clsx('absolute inset-0 w-full h-full z-10 rounded-[10px]', {
@@ -22,11 +23,13 @@ const ChallengesCard: FC<IChaleendgCardProps> = ({ price, isClaimed, image }) =>
   })
   return (
       <div className=' px-1 xxxs:px-2 w-1/2 xxxs:w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/5 flex shrink-0'>
-        <div className={`${colorCard} `}>
+        <div onClick={() => openModal()} className={`${borderColor} `}>
             <div className={cardGradient} >
-              <div className='flex flex-col gap-2 items-center justify-between absolute pt-7 pb-2  w-full h-full z-20'>
-                <img src={image} alt='game' width='150' height='150' className=' mx-auto absolute' />
-                <div className='flex flex-col items-center mt-auto '>
+              <div className='flex flex-col gap-2 items-center justify-between absolute pt-6 pb-4  w-full h-full z-20'>
+                <div className='w-full shrink-0 pb-[70%] h-0 relative mb-1.5'>
+                <img src={image} alt='game' className='absolute object-contain w-full h-full' />
+                </div>
+                <div className='flex flex-col items-center '>
                   <span className='text-[20px] text-gradient-gold font-bold'>{isClaimed ? 'Rewarded' : 'Rewards' }</span>
                   <QuantityCoinsWithChildren
                     quantityClasses='flex items-center text-base font-semibold  mt-2'
