@@ -41,7 +41,7 @@ export const ChatMessageInput = () => {
   }
 
   return (
-    <div className='absolute inset-0 top-auto z-50 p-4 bg-blue-primary'>
+    <div className='absolute inset-0 top-auto z-40 p-4 bg-blue-primary'>
       <form onSubmit={handleSubmit}>
         <Input
           placeholder={`${t('chat.placeholder')}`}
