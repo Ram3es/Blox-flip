@@ -3,6 +3,7 @@ export interface IUser {
   name: string
   avatar: string
   level: number
+  role?: string
   progress: {
     current: number
     required: number

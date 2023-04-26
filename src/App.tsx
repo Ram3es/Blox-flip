@@ -64,6 +64,7 @@ export const App = () => {
             <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
           </Route>
           <Route path='/affiliates' element={<Affiliates />} />
+          <Route path='/challenges' element={<Challenges />} />
           <Route path='/unboxing' element={<Unboxing />} />
           <Route path='/unboxing/:id' element={<CaseOpening />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
