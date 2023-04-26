@@ -4,7 +4,6 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
-  useEffect,
   useState
 } from 'react'
 import { dataTable, IBattlesInfo } from '../mocks/battle'
@@ -28,8 +27,6 @@ export const useBattleCase = () => {
 export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
   const [games, setGames] = useState<IBattlesInfo[]>(dataTable)
   console.log('🚀 ~ file: BattleCaseStore.tsx:30 ~ BattleCaseProvider ~ games:', games)
-
-
 
   return (
     <BattleCaseContext.Provider

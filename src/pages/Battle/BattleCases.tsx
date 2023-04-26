@@ -20,7 +20,6 @@ const BattleCases = () => {
 
   useEffect(() => {
     if (location.pathname) {
-      console.log(location.pathname.split('/')[2])
       const currentGame = games.filter((item) => item.id === location.pathname.split('/')[2])
       setGameState(currentGame[0])
     }
