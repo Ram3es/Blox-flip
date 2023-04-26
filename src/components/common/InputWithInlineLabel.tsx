@@ -10,10 +10,10 @@ enum OutlineColorEnum {
 
 interface InputWithInlineLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
-  withIcon?: boolean
   outlineColor?: keyof typeof OutlineColorEnum
   inputClasses?: string
   labelClasses?: string
+  withIcon?: boolean
 }
 
 const InputWithInlineLabel = ({
@@ -48,9 +48,14 @@ const InputWithInlineLabel = ({
 
   return (
     <div className={containerClasses} onClick={() => inputRef.current?.focus()}>
-      <div className={labelClasses ?? 'gradient--background--blue__third rounded-md px-5 py-2 text-gray-primary '}>
-        <span className='font-medium text-sm'>{label}</span>
-      </div>
+      <span
+        className={
+          labelClasses ??
+          'rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary'
+        }
+      >
+        {label}
+      </span>
       <div className='flex items-center justify-end'>
         {withIcon && (
           <div className='relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary'>
@@ -61,7 +66,9 @@ const InputWithInlineLabel = ({
           ref={inputRef}
           onChange={inputProps.onChange}
           value={inputProps.value}
-          className={ inputClasses ?? 'pl-2 bg-transparent text-left outline-none placeholder:text-white'}
+          className={
+            inputClasses ?? 'pl-2 bg-transparent text-left outline-none placeholder:text-white'
+          }
           type={inputProps.type}
           placeholder={inputProps.placeholder}
           {...inputProps}

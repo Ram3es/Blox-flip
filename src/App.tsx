@@ -72,6 +72,7 @@ export const App = () => {
           <Route path='/create-battle' element={<CreateBattle />} />
           <Route path='/jackpot' element={<Jackpot />} />
           <Route path='/battle/:id' element={<BattleCases />} />
+          <Route path='/challenges' element={<Challenges />} />
         </Routes>
       </Container>
     </BrowserRouter>
