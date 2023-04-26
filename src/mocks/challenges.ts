@@ -1,7 +1,7 @@
 import wheelGame from '../assets/img/wheel-big.png'
-import plinkoGame from '../assets/img/plinko-card.png'
-import coinflipGame from '../assets/img/coinflip-card.png'
-import jackpotGame from '../assets/img/jackpot-card.png'
+import plinkoGame from '../assets/img/plinko-challenges-card.png'
+import coinflipGame from '../assets/img/coinflip-challenge-card.png'
+import jackpotGame from '../assets/img/jackpot-challenge-card.png'
 
 export interface IChallengeCard {
   id: string
