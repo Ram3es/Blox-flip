@@ -958,6 +958,31 @@ text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1);
 }
 
 
+.terms-papper {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.11)), radial-gradient(96.03% 96.03% at 50% 50%, rgba(108, 123, 188, 0.05) 0%, rgba(47, 54, 86, 0) 100%), #22283F;
+  border: 1px solid rgba(35, 49, 73, 1);
+  border-radius: 5px;
+}
+.terms-list {
+ p {
+  position: relative;
+  margin-left: 29px;
+    &:before {
+      content:'';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border: 1px solid rgba(147, 155, 185, 0.65);
+      border-radius: 50%;
+      background: rgba(147, 155, 185, 0.65);
+      position: absolute;
+      top:7px;
+      left:-18px;
+      
+      
+    }
+  }
+}
 /*-----media----*/
 /*
 .select{
