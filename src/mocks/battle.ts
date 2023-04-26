@@ -1,15 +1,12 @@
-
-import { IItemCard, IUnboxCard } from '../types/ItemCard'
-import { IUser } from './../types/User'
+import type { IItemCard, IUnboxCard } from '../types/ItemCard'
+import type { IUser } from './../types/User'
 
 type TStatus = 'created' | 'running' | 'ended'
 export type TMode = '1v1' | '1v1v1' | '1v1v1v1' | 'group' | '2v2'
 
-export interface IBattleUser extends Omit<IUser, 'progress' > {
-
+export interface IBattleUser extends Omit<IUser, 'progress'> {
   dropsCards: IItemCard[]
   wonDiamonds: number
-
 }
 export interface IBattlesInfo {
   id: string
@@ -34,115 +31,331 @@ export const dataTable: IBattlesInfo[] = [
   {
     id: '777',
     status: 'created',
-    players: [{ id: '21', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+    players: [
+      {
+        id: '21',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 5,
       price: 9900,
       mode: { variant: '1v1', requiredPlayers: 2 }
     },
-    date: '2032-03-12T23:46:58.567Z'
+    date: '2032-03-12T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '778',
     status: 'running',
     players: [
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 12,
       price: 17000,
       mode: { variant: '1v1v1', requiredPlayers: 3 },
       currentRound: 4
     },
-    date: '2032-04-12T23:46:58.567Z'
+    date: '2032-04-12T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '790',
     status: 'ended',
     players: [
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 7,
       price: 17000,
       mode: { variant: '1v1v1', requiredPlayers: 3 }
     },
-    date: '2032-04-12T23:46:58.567Z'
+    date: '2032-04-12T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '779',
     status: 'ended',
     players: [
-      { id: '32323', avatar: 'https://cdn.dribbble.com/users/3175546/screenshots/11634060/media/abe23d862136d3a3cebe2c654b2a5ae6.png?compress=1&resize=400x300', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '32323',
+        avatar:
+          'https://cdn.dribbble.com/users/3175546/screenshots/11634060/media/abe23d862136d3a3cebe2c654b2a5ae6.png?compress=1&resize=400x300',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 5,
       price: 12000,
       mode: { variant: 'group', requiredPlayers: 4 },
       currentRound: 5
     },
-    date: '2032-05-12T23:46:58.567Z'
+    date: '2032-05-12T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '7327',
     status: 'ended',
     players: [
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 5,
       price: 9900,
       mode: { variant: '1v1', requiredPlayers: 2 }
     },
-    date: '2032-03-14T23:46:58.567Z'
+    date: '2032-03-14T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '777',
     status: 'running',
     players: [
-      { id: '23233', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd325', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '23233',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: 'd325',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 5,
       price: 9900,
       mode: { variant: '1v1', requiredPlayers: 2 },
       currentRound: 4
     },
-    date: '2032-03-14T23:46:58.567Z'
+    date: '2032-03-14T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '7778',
     status: 'created',
     players: [
-      { id: '435', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '435',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: 'd32345',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 5,
       price: 9900,
       mode: { variant: '1v1v1v1', requiredPlayers: 4 },
       currentRound: 4
     },
-    date: '2032-11-14T23:46:58.567Z'
+    date: '2032-11-14T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   },
   {
     id: '77786',
     status: 'running',
     players: [
-      { id: '435', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 },
-      { id: 'd32345', avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg', name: 'Patron', level: 13, dropsCards: [], wonDiamonds: 0 }],
+      {
+        id: '435',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: 'd32345',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: 'd32345',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      },
+      {
+        id: 'd32345',
+        avatar:
+          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13,
+        dropsCards: [],
+        wonDiamonds: 0
+      }
+    ],
     gameSetting: {
       rounds: 7,
       price: 9900,
       mode: { variant: '2v2', requiredPlayers: 4 },
       currentRound: 4
     },
-    date: '2032-11-14T23:46:58.567Z'
+    date: '2032-11-14T23:46:58.567Z',
+    cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }
+    ]
   }
-
 ]

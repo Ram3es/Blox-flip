@@ -1,11 +1,15 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
+
+import { useNavigate } from 'react-router-dom'
+
 import { Button } from '../../base/Button'
 import Loader from '../../base/Loader'
+
 import DaggersIcons from '../../icons/DaggersIcons'
 import PreviewIcon from '../../icons/PreviewIcon'
 import SelectedIcon from '../../icons/SelectedIcon'
+
 import { GameStatus } from '../../../types/enums'
-import { useNavigate } from 'react-router-dom'
 
 const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
   const navigate = useNavigate()
@@ -51,7 +55,10 @@ const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
   return (
     <div className='flex items-center justify-end'>
       {activeButton}
-      <Button className=' leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'>
+      <Button
+        onClick={() => navigate(`/battle/${id}`)}
+        className=' leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
+      >
         <PreviewIcon iconClasses='mx-auto my-auto' />
       </Button>
     </div>
