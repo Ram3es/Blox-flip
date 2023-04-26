@@ -18,8 +18,7 @@ const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
       case GameStatus.Created:
         return (
           <Button
-            onClick={() => console.log('join battle')
-            }
+            onClick={() => navigate(`/battle/${id}`)}
             className='grow rounded px-3 py-2 leading-6 flex items-center justify-center bg-green-primary hover:bg-green-500 whitespace-nowrap'
           >
             <DaggersIcons />
