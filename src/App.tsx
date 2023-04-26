@@ -29,6 +29,7 @@ import Jackpot from './pages/Jackpot/Jackpot'
 import BattleCases from './pages/Battle/BattleCases'
 import CoinFlip from './pages/CoinFlip/CoinFlip'
 import Terms from './pages/TermsOfService/Terms'
+import Challenges from './pages/Challenges/Challenges'
 
 export const App = () => {
   return (
@@ -72,6 +73,7 @@ export const App = () => {
           <Route path='/jackpot' element={<Jackpot />} />
           <Route path='/battle/:id' element={<BattleCases />} />
           <Route path='/terms' element={<Terms />} />
+          <Route path='/challenges' element={<Challenges />} />
         </Routes>
       </Container>
     </BrowserRouter>
