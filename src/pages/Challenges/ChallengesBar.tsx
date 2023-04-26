@@ -11,7 +11,7 @@ const toggleVariants = [
   { variant: 'Claimed' }
 ]
 
-const ChallengesBar = ({ userRole = 'user' }: { userRole?: string }) => {
+const ChallengesBar = ({ openChallengeModal, openAdminModal, userRole = 'user' }: { openChallengeModal: Function, openAdminModal: Function, userRole?: string }) => {
   const [filterClaimed, setFilteringVariant] = useState(toggleVariants[0])
   const [gameFilter, setGameFilter] = useState(challenges[0])
 
@@ -36,7 +36,7 @@ const ChallengesBar = ({ userRole = 'user' }: { userRole?: string }) => {
                 <div className='flex flex-wrap items-center ml-3 mt-2 xxxs:mt-0'>
                     { userRole === 'admin' &&
                       <Button
-                        onClick={() => console.log('show Modal')}
+                        onClick={() => openAdminModal()}
                         className='challenge-btn-gradient text-sm py-1.5  px-4 text-center rounded  mr-3 hover:opacity-80'
                       >
                         Create challenge
@@ -58,7 +58,7 @@ const ChallengesBar = ({ userRole = 'user' }: { userRole?: string }) => {
                isClaimed={card?.isClaimed}
                price={card.price}
                image={card.image}
-               openModal={() => console.log('open Modal')}
+               openModal={() => openChallengeModal(card)}
               />
           ))}
         </div>

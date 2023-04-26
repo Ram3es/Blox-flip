@@ -5,16 +5,17 @@ import DaggersIcons from '../../icons/DaggersIcons'
 import PreviewIcon from '../../icons/PreviewIcon'
 import SelectedIcon from '../../icons/SelectedIcon'
 import { GameStatus } from '../../../types/enums'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const activeButton = useMemo(() => {
     switch (status) {
       case GameStatus.Created:
         return (
           <Button
-            onClick={() => navigate(`/battle/${id}`)}
+            onClick={() => console.log('join battle')
+            }
             className='grow rounded px-3 py-2 leading-6 flex items-center justify-center bg-green-primary hover:bg-green-500 whitespace-nowrap'
           >
             <DaggersIcons />

@@ -10,10 +10,11 @@ interface IChaleendgCardProps {
   isClaimed?: boolean
   price: number
   image: string
-  openModal: Function
+  openModal?: Function
+  wrapClasses?: string
 }
 
-const ChallengesCard: FC<IChaleendgCardProps> = ({ price, isClaimed, image, openModal }) => {
+const ChallengesCard: FC<IChaleendgCardProps> = ({ wrapClasses, price, isClaimed, image, openModal }) => {
   const borderColor = clsx('w-full h-[250px] challenges--mask border mt-10 relative rounded-lg cursor-pointer', {
     'challenge-card-border-gold': !isClaimed
   })
@@ -22,8 +23,8 @@ const ChallengesCard: FC<IChaleendgCardProps> = ({ price, isClaimed, image, open
     'gradient-challenge--gold': !isClaimed
   })
   return (
-      <div className=' px-1 xxxs:px-2 w-1/2 xxxs:w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/5 flex shrink-0'>
-        <div onClick={() => openModal()} className={`${borderColor} `}>
+      <div className={ wrapClasses ?? ' px-1 xxxs:px-2 w-1/2 xxxs:w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/5 flex shrink-0'}>
+        <div onClick={() => openModal?.()} className={`${borderColor} `}>
             <div className={cardGradient} >
               <div className='flex flex-col gap-2 items-center justify-between absolute pt-6 pb-4  w-full h-full z-20'>
                 <div className='w-full shrink-0 pb-[70%] h-0 relative mb-1.5'>
