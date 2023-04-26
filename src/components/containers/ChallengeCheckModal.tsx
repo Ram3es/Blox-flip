@@ -4,9 +4,11 @@ import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 import ChallengeIcon from '../icons/ChallengeIcon'
 import CheckMarkRoundedIcon from '../icons/CheckMarkRoundedIcon'
+import ChallengesCard from '../common/Cards/ChallengesCard'
+import { IChallengeCard } from '../../mocks/challenges'
 
 interface ChallengeCheckModalProps {
-  challenge: any
+  challenge: IChallengeCard | null
   onClose: () => void
 }
 
@@ -17,7 +19,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
       modalClasses='mt-4 md:mt-auto relative py-6 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
     >
       <div className='space-y-6'>
-        <div className='flex items-center justify-center flex-col gap-6 border-b-[1px] border-blue-accent-primary pb-8 mb-6 xs:px-28'>
+        <div className='flex items-center justify-center flex-col gap-6 border-b-[1px] border-blue-accent-primary pb-8 mb-12 xs:px-28'>
           <div className='flex items-center gap-2'>
             <ChallengeIcon />
             <h3 className='uppercase text-gradient-gold text-xl xs:text-3xl font-black'>challenges</h3>
@@ -27,35 +29,45 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
             rewarded.
           </span>
         </div>
-        <div className='flex items-center'>
-          <div className='w-1/4'>ICON</div>
-          <div className='w-3/4 gradient-trivia-info rounded-br-15 rounded-tr-15 py-7'>
+        <div className='flex flex-col xm:flex-row items-center gradient-trivia-info rounded-15 rounded-tr-15 '>
+          <div className='w-2/3 xxxs:w-1/2 xxs:w-1/3 xm:w-1/4 relative h-[248px] '>
+            <ChallengesCard
+              price={challenge?.price ?? 0}
+              image={challenge?.image ?? ''}
+              isClaimed={challenge?.isClaimed}
+              wrapClasses='w-full absolute -top-[42px]'
+            />
+          </div>
+          <div className='w-full xm:w-3/4 py-7'>
             <div className='leading-8 xs:text-22 font-semibold inline-block border-b-[1px] border-blue-accent-primary mx-9 pb-7 mb-6'>
               <h3>
-                First to hit <span className='text-gradient-gold'>10x on</span> Wheel with minimum
+                First to hit <span className='text-gradient-gold'>10x on</span>{` ${challenge?.name.charAt(0).toUpperCase().concat(challenge?.name.slice(1).toLowerCase()) ?? ''} with minimum `}
                 <span className='ml-2 inline-block align-top'>
-                  <QuantityCoins textSize='22' quantity={1500} />
+                  <QuantityCoins textSize='22' quantity={challenge?.price ?? 0} />
                 </span>{' '}
                 wins{' '}
                 <span className='ml-2 inline-block align-top'>
-                  <QuantityCoins textSize='22' quantity={11500} />
+                  <QuantityCoins textSize='22' quantity={challenge?.price as number * 10 ?? 0} />
                 </span>
               </h3>
             </div>
             <span className='text-green-accent-secondary flex gap-2 items-center justify-center my-auto font-bold xs:text-lg mx-9 xs:mx-0'>
-              <CheckMarkRoundedIcon /> You completed and claimed this challenge
+              <CheckMarkRoundedIcon />{challenge?.isClaimed ? 'You completed and claimed this challenge' : 'Your account hits all requirements' }
             </span>
           </div>
         </div>
-        <div className='rounded-15 gradient-trivia-info py-2 xs:px-20 px-4 text-center space-y-6 font-semibold xs:text-base'>
-          <p className='text-gray-secondary-light'>
-            Please double check the challenge and your bet amounts before proceeding with it
-          </p>
-          <p className='text-orange-light'>
-            We are NOT responsible for any miss-clicks or wrong input amounts when trying to win the
-            challenge. You and only you are responsible for your bets.
-          </p>
-        </div>
+        {!challenge?.isClaimed && (
+           <div className='rounded-15 gradient-trivia-info py-2 xs:px-20 px-4 text-center space-y-6 font-semibold xs:text-base'>
+           <p className='text-gray-secondary-light'>
+             Please double check the challenge and your bet amounts before proceeding with it
+           </p>
+           <p className='text-orange-light'>
+             We are NOT responsible for any miss-clicks or wrong input amounts when trying to win the
+             challenge. You and only you are responsible for your bets.
+           </p>
+         </div>
+        ) }
+
       </div>
     </ModalWrapper>
   )

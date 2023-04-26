@@ -1,11 +1,11 @@
 import { Menu } from '@headlessui/react'
 import React, { FC } from 'react'
-import { ISortOptions } from '../../types/SortOptions'
+import { ISelectOptions, ISortOptions } from '../../types/SortOptions'
 import { Button } from '../base/Button'
 import TriangleArrow from '../icons/TriangleArrow'
 
 interface ISortSelectProps {
-  options: ISortOptions[]
+  options: ISortOptions[] | ISelectOptions []
   onSelect: Function
   currentOptions?: string
 }

@@ -14,3 +14,14 @@ export const selectItem = [
   { title: '5k - 10k', value: { from: 5001, to: 10000 } },
   { title: '10k - 25k', value: { from: 10001, to: 25000 } }
 ]
+
+export const challenges = [
+  { title: 'All games', value: 'all' },
+  { title: 'King', value: 'king' },
+  { title: 'Wheel', value: 'wheel' },
+  { title: 'Plinko', value: 'plinko' },
+  { title: 'Coinflip', value: 'coinflip' },
+  { title: 'Jackpot', value: 'jackpot' },
+  { title: 'Cases', value: 'cases' },
+  { title: 'Case Battles', value: 'case-battles' }
+]
