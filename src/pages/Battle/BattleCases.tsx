@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { useBattleCase } from '../../store/BattleCaseStore'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useLocation } from 'react-router-dom'
 
@@ -14,16 +13,13 @@ import type { IItemCard, IUnboxCard } from '../../types/ItemCard'
 const BattleCases = () => {
   const location = useLocation()
 
-  const { games } = useBattleCase()
-  const [gameState, setGameState] = useState<IBattlesInfo>(games[0])
+  const [gameState, setGameState] = useState<IBattlesInfo>(location.state)
+  console.log('🚀 ~ file: BattleCases.tsx:17 ~ BattleCases ~ gameState:', gameState)
   const [usersFinishedRound, setFinishedRound] = useState<Record<string, number>>({})
-
-  useEffect(() => {
-    if (location.pathname) {
-      const currentGame = games.filter((item) => item.id === location.pathname.split('/')[2])
-      setGameState(currentGame[0])
-    }
-  }, [location, games])
+  console.log(
+    '🚀 ~ file: BattleCases.tsx:19 ~ BattleCases ~ usersFinishedRound:',
+    usersFinishedRound
+  )
 
   const updateRound = (userId: string) => {
     setFinishedRound((state) => ({ ...state, [userId]: state[userId] + 1 || 1 }))
@@ -55,48 +51,38 @@ const BattleCases = () => {
   }
 
   const getCurrentBoxPrice = (cases: IUnboxCard[]): number => {
-    if (gameState.status !== 'created' && gameState.gameSetting.currentRound) {
-      return cases[gameState.gameSetting.currentRound - 1].price
+    if (gameState && gameState.status !== 'created' && gameState.gameSetting.currentRound) {
+      return cases[gameState.gameSetting.currentRound - 1]?.price || 0
     }
     return 0
   }
 
   useEffect(() => {
-    if (gameState) {
-      if (
-        gameState.players.every((item) => item !== undefined) &&
-        !gameState.gameSetting.currentRound
-      ) {
-        setGameState((state) => ({
-          ...state,
-          status: 'running',
-          gameSetting: { ...state.gameSetting, currentRound: 1 }
-        }))
-        return
-      }
-      if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
-        setGameState((state) => ({ ...state, status: 'ended' }))
-      }
+    if (
+      gameState.players.length === gameState.gameSetting.mode.requiredPlayers &&
+      gameState.status === 'created'
+    ) {
+      setGameState((state) => ({
+        ...state,
+        status: 'running',
+        gameSetting: { ...state.gameSetting, currentRound: 1 }
+      }))
+      return
     }
-  }, [gameState, location])
+    if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
+      setGameState((state) => ({ ...state, status: 'ended' }))
+    }
+  }, [gameState.players, gameState.gameSetting.currentRound])
 
   useEffect(() => {
-    if (gameState) {
-      if (
-        usersFinishedRound &&
-        Object.values(usersFinishedRound).every(
-          (val) => val === gameState.gameSetting.currentRound
-        ) &&
-        gameState.gameSetting.currentRound
-      ) {
-        setGameState((state) => ({
-          ...state,
-          gameSetting: {
-            ...state.gameSetting,
-            currentRound: (state.gameSetting.currentRound as number) + 1
-          }
-        }))
-      }
+    if (gameState.gameSetting.currentRound) {
+      setGameState((state) => ({
+        ...state,
+        gameSetting: {
+          ...state.gameSetting,
+          currentRound: (state.gameSetting.currentRound as number) + 1
+        }
+      }))
     }
   }, [usersFinishedRound])
 

@@ -82,13 +82,14 @@ const BattleMode: FC<IBattleModeProps> = ({
     setWinningCard((state) => ({ ...state, [playerId]: card }))
   }
 
-  const isWinners = (playerId: string): boolean | undefined => {
+  const isWinners = (playerId: string): boolean => {
     if (currentRoundWinners?.length) {
       return currentRoundWinners.map((items) => items[0])?.includes(playerId)
     }
     if (gameWinnerPlayer?.length) {
       return gameWinnerPlayer.map((player) => player.id)?.includes(playerId)
     }
+    return false
   }
 
   useEffect(() => {
@@ -145,9 +146,9 @@ const BattleMode: FC<IBattleModeProps> = ({
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-              'bg-gradient-lvl from-green-primary/30': !!isWinners(players[i]?.id),
+              'bg-gradient-lvl from-green-primary/30': isWinners(players[i]?.id),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                isWinners(players[i]?.id) !== undefined && !isWinners(players[i]?.id)
+                isWinners(players[i]?.id) !== undefined && isWinners(players[i]?.id)
             })}
           >
             {i !== playersInGame.length - 1 && (
@@ -175,7 +176,7 @@ const BattleMode: FC<IBattleModeProps> = ({
               />
               <RoundWinBorderBottomEffect
                 isShown={!!currentRoundWinners || !!gameWinnerPlayer}
-                isAddWinClass={!!isWinners(players[i]?.id)}
+                isAddWinClass={isWinners(players[i]?.id)}
               />
             </div>
             {status === 'created' && (
@@ -206,7 +207,7 @@ const BattleMode: FC<IBattleModeProps> = ({
             )}
             {status === 'ended' && isEndGame && (
               <PlayerStatusGame
-                isPlayerGameWinner={!!isWinners(players[i]?.id)}
+                isPlayerGameWinner={isWinners(players[i]?.id)}
                 wonDiamonds={players[i]?.wonDiamonds}
               />
             )}

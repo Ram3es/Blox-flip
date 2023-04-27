@@ -124,8 +124,7 @@ const CreateBattle = () => {
           level: 17,
           dropsCards: [],
           wonDiamonds: 0
-        },
-        ...Array.from(Array(battleSettings.mode.requiredPlayers - 1))
+        }
       ],
       id: '1234567',
       date: '2032-03-12T23:46:58.567Z',

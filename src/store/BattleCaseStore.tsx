@@ -1,11 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useState
-} from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
 import { dataTable, IBattlesInfo } from '../mocks/battle'
 
 interface BattleCaseProviderProps {
@@ -26,7 +19,6 @@ export const useBattleCase = () => {
 
 export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
   const [games, setGames] = useState<IBattlesInfo[]>(dataTable)
-  console.log('🚀 ~ file: BattleCaseStore.tsx:30 ~ BattleCaseProvider ~ games:', games)
 
   return (
     <BattleCaseContext.Provider

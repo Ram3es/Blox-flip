@@ -297,7 +297,7 @@ export const dataTable: IBattlesInfo[] = [
       rounds: 5,
       price: 9900,
       mode: { variant: '1v1v1v1', requiredPlayers: 4 },
-      currentRound: 4
+      currentRound: 0
     },
     date: '2032-11-14T23:46:58.567Z',
     cases: [
