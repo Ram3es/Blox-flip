@@ -14,12 +14,7 @@ const BattleCases = () => {
   const location = useLocation()
 
   const [gameState, setGameState] = useState<IBattlesInfo>(location.state)
-  console.log('🚀 ~ file: BattleCases.tsx:17 ~ BattleCases ~ gameState:', gameState)
   const [usersFinishedRound, setFinishedRound] = useState<Record<string, number>>({})
-  console.log(
-    '🚀 ~ file: BattleCases.tsx:19 ~ BattleCases ~ usersFinishedRound:',
-    usersFinishedRound
-  )
 
   const updateRound = (userId: string) => {
     setFinishedRound((state) => ({ ...state, [userId]: state[userId] + 1 || 1 }))
@@ -75,15 +70,13 @@ const BattleCases = () => {
   }, [gameState.players, gameState.gameSetting.currentRound])
 
   useEffect(() => {
-    if (gameState.gameSetting.currentRound) {
-      setGameState((state) => ({
-        ...state,
-        gameSetting: {
-          ...state.gameSetting,
-          currentRound: (state.gameSetting.currentRound as number) + 1
-        }
-      }))
-    }
+    setGameState((state) => ({
+      ...state,
+      gameSetting: {
+        ...state.gameSetting,
+        currentRound: (state.gameSetting.currentRound as number) + 1
+      }
+    }))
   }, [usersFinishedRound])
 
   return (
