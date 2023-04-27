@@ -13,9 +13,9 @@ import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
 import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
 import VerticalDivider from '../../components/icons/VerticalDivider'
 import NavHeader from '../../components/navigate/NavHeader'
-import { gameSettings } from '../../constants/battle'
 import { IUnboxCardCounter } from '../../types/ItemCard'
 import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
+import { gameSettings } from '../../constants/Battle'
 
 const battleInitState = {
   rounds: 0,
