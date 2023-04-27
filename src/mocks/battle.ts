@@ -13,7 +13,7 @@ interface IGameSetting {
   rounds: number
   price: number
   mode: IModeGame
-  currentRound?: number
+  currentRound: number
 }
 
 export interface IBattlesInfo {
@@ -45,6 +45,7 @@ export const dataTable: IBattlesInfo[] = [
       }
     ],
     gameSetting: {
+      currentRound: 0,
       rounds: 5,
       price: 9900,
       mode: { variant: '1v1', requiredPlayers: 2 }
@@ -136,6 +137,7 @@ export const dataTable: IBattlesInfo[] = [
     gameSetting: {
       rounds: 7,
       price: 17000,
+      currentRound: 0,
       mode: { variant: '1v1v1', requiredPlayers: 3 }
     },
     date: '2032-04-12T23:46:58.567Z',
@@ -225,7 +227,8 @@ export const dataTable: IBattlesInfo[] = [
     gameSetting: {
       rounds: 5,
       price: 9900,
-      mode: { variant: '1v1', requiredPlayers: 2 }
+      mode: { variant: '1v1', requiredPlayers: 2 },
+      currentRound: 0
     },
     date: '2032-03-14T23:46:58.567Z',
     cases: [
@@ -301,6 +304,8 @@ export const dataTable: IBattlesInfo[] = [
     },
     date: '2032-11-14T23:46:58.567Z',
     cases: [
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
+      { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
       { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 1500 },
       { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 },
       { id: '3', color: 'Pink', image: 'horns', name: ' Hot Box', price: 2400 }

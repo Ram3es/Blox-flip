@@ -175,7 +175,7 @@ const BattleMode: FC<IBattleModeProps> = ({
               />
               <RoundWinBorderBottomEffect
                 isShown={!!currentRoundWinners || !!gameWinnerPlayer}
-                isAddWinClass={isWinners(players[i]?.id)}
+                isAddWinClass={!!isWinners(players[i]?.id)}
               />
             </div>
             {status === 'created' && (
@@ -206,7 +206,7 @@ const BattleMode: FC<IBattleModeProps> = ({
             )}
             {status === 'ended' && isEndGame && (
               <PlayerStatusGame
-                isPlayerGameWinner={isWinners(players[i]?.id)}
+                isPlayerGameWinner={!!isWinners(players[i]?.id)}
                 wonDiamonds={players[i]?.wonDiamonds}
               />
             )}

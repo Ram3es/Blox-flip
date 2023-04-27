@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useLocation } from 'react-router-dom'
 
@@ -46,7 +46,7 @@ const BattleCases = () => {
   }
 
   const getCurrentBoxPrice = (cases: IUnboxCard[]): number => {
-    if (gameState && gameState.status !== 'created' && gameState.gameSetting.currentRound) {
+    if (gameState && gameState.status !== 'created') {
       return cases[gameState.gameSetting.currentRound - 1]?.price || 0
     }
     return 0
@@ -64,19 +64,21 @@ const BattleCases = () => {
       }))
       return
     }
-    if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
+    if (gameState.gameSetting.rounds <= gameState.gameSetting.currentRound) {
       setGameState((state) => ({ ...state, status: 'ended' }))
     }
   }, [gameState.players, gameState.gameSetting.currentRound])
 
   useEffect(() => {
-    setGameState((state) => ({
-      ...state,
-      gameSetting: {
-        ...state.gameSetting,
-        currentRound: (state.gameSetting.currentRound as number) + 1
-      }
-    }))
+    if (gameState.status === 'running') {
+      setGameState((state) => ({
+        ...state,
+        gameSetting: {
+          ...state.gameSetting,
+          currentRound: state.gameSetting.currentRound + 1
+        }
+      }))
+    }
   }, [usersFinishedRound])
 
   return (

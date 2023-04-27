@@ -111,6 +111,7 @@ const CreateBattle = () => {
     const responseFromDB = {
       gameSetting: {
         ...battleSettings,
+        currentRound: 0,
         rounds: amountCases,
         price: totalCost
       },
