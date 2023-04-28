@@ -26,10 +26,7 @@ const KingJoin = () => {
         </span>
       </Button>
       {isOpenJoinGame && (
-        <KingJoinModal
-          handleFunction={handleJoinGame}
-          onClose={() => setIsOpenJoinGame(false)}
-        />
+        <KingJoinModal handleFunction={handleJoinGame} onClose={handleOpenModal} />
       )}
     </>
   )

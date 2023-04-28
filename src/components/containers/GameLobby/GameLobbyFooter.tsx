@@ -7,12 +7,14 @@ interface GameLobbyFooterProps {
   selectedItemsLength: number
   selectedItemsCost: number
   inventoryItemsLength: number
+  betGap?: number
 }
 
 const GameLobbyFooter: FC<PropsWithChildren<GameLobbyFooterProps>> = ({
   selectedItemsLength,
   selectedItemsCost,
   inventoryItemsLength,
+  betGap,
   children
 }) => {
   return (
@@ -33,9 +35,11 @@ const GameLobbyFooter: FC<PropsWithChildren<GameLobbyFooterProps>> = ({
           </QuantityCoinsContainer>
         </div>
       </div>
-      <div className='h-9 flex items-center gradient-green-secondary shadow-green-primary-20 rounded px-3 md:px-4'>
-        <QuantityCoins textSize='text-sm' quantity={23535.32} />
-      </div>
+      {betGap && (
+        <div className='h-9 flex items-center gradient-green-secondary shadow-green-primary-20 rounded px-3 md:px-4'>
+          <QuantityCoins textSize='text-sm' quantity={betGap} />
+        </div>
+      )}
       <div className='flex items-center justify-between space-x-4'>{children}</div>
     </div>
   )
