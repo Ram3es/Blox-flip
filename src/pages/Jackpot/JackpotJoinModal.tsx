@@ -36,20 +36,24 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
     }))
   }, [])
 
+  useEffect(() => {
+    setItems(initialItems)
+  }, [initialItems])
+
+  const handleResetSelectedItems = useCallback(() => {
+    setItems(initialItems)
+  }, [initialItems])
+
+  const isItemSelected = (items: IJackpotCard[], id: string) => {
+    return items.some((item) => item.id === id && item.isSelected)
+  }
+
   const updateArrayBySelectedItem = (
     items: IJackpotCard[],
     id: string,
     isSelected: boolean
   ): IJackpotCard[] => {
-    return items.map((item) =>
-      item.id === id
-        ? { ...item, isSelected }
-        : item
-    )
-  }
-
-  const isItemSelected = (items: IJackpotCard[], id: string) => {
-    return items.some((item) => item.id === id && item.isSelected)
+    return items.map((item) => (item.id === id ? { ...item, isSelected } : item))
   }
 
   const handleSelectItem = useCallback(
@@ -65,19 +69,11 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
     [items, isItemSelected, updateArrayBySelectedItem]
   )
 
-  const handleResetSelectedItems = useCallback(() => {
-    setItems(initialItems)
-  }, [initialItems])
-
   const getCostInSelectedItems = (): number => {
     return getCostByFieldName(selectedItems, 'price')
   }
 
   const costInventoryItems = getCostByFieldName(items, 'price')
-
-  useEffect(() => {
-    setItems(initialItems)
-  }, [initialItems])
 
   const handleBetJackpot = () => {
     onClose(true)
