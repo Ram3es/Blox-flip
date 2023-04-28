@@ -63,6 +63,7 @@ const BattleMode: FC<IBattleModeProps> = ({
   const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>()
   const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>()
   const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
+  const [isSpinEnd, setIsSpinEnd] = useState(false)
   const [isEndGame, setShowEnd] = useState(false)
 
   const playersInGame = Array.from(Array(mode.requiredPlayers))
@@ -105,10 +106,12 @@ const BattleMode: FC<IBattleModeProps> = ({
 
       setCurrentRoundWinners(winnersPlayer)
       setAllWinningCards(winningCard)
+      setIsSpinEnd(true)
 
       setTimeout(() => {
         setCurrentRoundWinners(undefined)
         setAllWinningCards({})
+        setIsSpinEnd(false)
       }, 2800)
     }
   }, [winningCard])
@@ -146,8 +149,11 @@ const BattleMode: FC<IBattleModeProps> = ({
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-              'bg-gradient-lvl from-green-primary/30': isWinners(players[i]?.id),
-              'bg-gradient-lvl from-red-accent/30 to-dark/0': !isWinners(players[i]?.id)
+              'bg-gradient-lvl from-green-primary/30':
+                isWinners(players[i]?.id) ||
+                gameWinnerPlayer?.find((player) => player?.id === players[i]?.id),
+              'bg-gradient-lvl from-red-accent/30 to-dark/0':
+                (!isWinners(players[i]?.id) && isSpinEnd) || (!isWinners(players[i]?.id) && isEndGame)
             })}
           >
             {i !== playersInGame.length - 1 && (
