@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
-import JackpotUserCard from '../../components/common/Cards/JackpotUserCard'
 import GameInfoListItem from '../../components/common/GameInfoListItem'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import StrippedBgItem from '../../components/common/StrippedBgItem'
@@ -12,19 +11,48 @@ import { cards } from '../../mocks/cards'
 import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
 import { IJackpotCard } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
+import { sumItemsPrice } from '../../helpers/jackpotHelpers'
+import { Context } from '../../store/Store'
+import SignInModal from '../../components/containers/SignInModal'
+import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
-  const [timer, setTimer] = useState<number>(30)
+  const [isOpenLoginModal, setOpenLoginModal] = useState<boolean>(false)
   const [isOpenModal, setOpenModal] = useState<boolean>(false)
+  const [timer, setTimer] = useState<number>(10)
+
+  const { state: { user } } = useContext(Context)
+  const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)
 
   const toggleModal = () => setOpenModal(state => !state)
+  const calculateWinChance = useCallback((bet: number) => Number((bet / jackpot * 100).toFixed(2)), [joinedUsers])
 
   const joinUserToGame = () => {
-    toggleModal()
-    setUserJoined(state => [...state])
+    if (user) {
+      toggleModal()
+    } else {
+      setOpenLoginModal(true)
+    }
   }
+
+  const onSubmitJackpotModal = (selectedCards: IJackpotCard[]) => {
+    setSelectedCard(selectedCards)
+    if (user) {
+      setUserJoined(state => [...state,
+        {
+          id: user?.id,
+          avatar: user?.avatar,
+          level: user?.level,
+          userName: user?.name,
+          deposit: sumItemsPrice(selectedCards)
+
+        }
+      ])
+    }
+  }
+
   return (
     <div className="max-w-[1200px] w-full mx-auto">
       <div className="w-full flex-col gap-1">
@@ -35,18 +63,20 @@ const Jackpot = () => {
               <JackpotWheel
                 timer={timer}
                 setTimer={setTimer}
+                jackPot ={jackpot}
+                joinedUsers={joinedUsers}
               />
             </div>
             <div className='max-w-[382px] w-full mx-auto flex flex-col gap-4'>
               <div className='flex gap-3 justify-between'>
                 <GameInfoListItem label='TOTAL PLAYERS'>
-                  <span>23</span>
+                  <span>{joinedUsers.length}</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='WIN CHANCE %'>
-                  <span className='text-green-primary'>23.59%</span>
+                  <span className='text-green-primary'>{calculateWinChance(joinedUsers.find(player => player.id === user?.id)?.deposit ?? 0)} %</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='YOUR DEPOSIT'>
-                  <QuantityCoinsWithChildren quantity={3500} />
+                  <QuantityCoinsWithChildren quantity={sumItemsPrice(selectedCards)} />
                 </GameInfoListItem>
               </div>
               <div className='w-full border-b border-blue-accent-secondary '/>
@@ -105,9 +135,10 @@ const Jackpot = () => {
               <div className='h-[310px]  scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-6'>
                 <div className='flex flex-col  gap-y-2 p-0.5 '>
                   {joinedUsers.map(player => (
-                    <JackpotUserCard
+                    <JoinedUserRow
                      key={player.id}
                      user={player}
+                     userChance={calculateWinChance(player.deposit)}
                     />
                   ))}
               </div>
@@ -133,16 +164,18 @@ const Jackpot = () => {
             </StrippedBgItem>
             <div className='flex flex-col  gap-y-2 p-0.5 opacity-50 '>
                   {joinedUsers.map(player => (
-                    <JackpotUserCard
+                    <JoinedUserRow
                      key={player.id}
                      user={player}
+                     userChance={calculateWinChance(player.deposit)}
                     />
                   ))}
               </div>
           </div>
         </div>
       </div>
-      <JackpotModal isOpen={isOpenModal} onClose={toggleModal} onSubmit={setSelectedCard} />
+      <JackpotModal userAvatar={user?.avatar} isOpen={isOpenModal} onClose={toggleModal} onSubmit={onSubmitJackpotModal} />
+      <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )
 }

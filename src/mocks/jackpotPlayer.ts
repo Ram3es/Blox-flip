@@ -3,6 +3,7 @@ export interface IJackpotPlayer {
   userName: string
   avatar: string
   level: number
+  deposit: number
 
 }
 
@@ -11,31 +12,43 @@ export const jackpotPlayer: IJackpotPlayer[] = [
     id: new Date().getTime().toString(),
     userName: 'Mark SkyWalker',
     avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-    level: 17
-  },
-  {
-    id: new Date().getTime().toString().concat('-1'),
-    userName: 'Luke SkyWalker',
-    avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-    level: 34
-  },
-  {
-    id: new Date().getTime().toString().concat('-2'),
-    userName: 'Luke SkyWalker sddddddddddddddddd ddddddddddddddddddddddddd',
-    avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-    level: 34
+    level: 17,
+    deposit: 23000
   },
   {
     id: new Date().getTime().toString().concat('-3'),
-    userName: 'Gaupt Standarted',
+    userName: 'Haupt Standarted',
     avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-    level: 55
+    level: 55,
+    deposit: 13000
   },
   {
     id: new Date().getTime().toString().concat('-4'),
-    userName: 'Gaupt Standarted',
+    userName: 'Haupt Standarted',
     avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-    level: 55
+    level: 55,
+    deposit: 65000
+  },
+  {
+    id: new Date().getTime().toString().concat('-5'),
+    userName: 'Haupt Standarted',
+    avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+    level: 55,
+    deposit: 5000
+  },
+  {
+    id: new Date().getTime().toString().concat('-5'),
+    userName: 'Haupt Standarted',
+    avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+    level: 55,
+    deposit: 7200
+  },
+  {
+    id: new Date().getTime().toString().concat('-5'),
+    userName: 'Haupt Standarted',
+    avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+    level: 55,
+    deposit: 5200
   }
 
 ]

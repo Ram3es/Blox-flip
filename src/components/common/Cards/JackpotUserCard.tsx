@@ -4,7 +4,7 @@ import { UserAvatar } from '../../user/UserAvatar'
 import { UserLevel } from '../../user/UserLevel'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 
-const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
+const JoinedUserRow = ({ user, userChance }: { user: IJackpotPlayer, userChance: number }) => {
   return (
         <div
           className='w-full flex items-center justify-between rounded  relative bg-[#252942]'
@@ -28,11 +28,11 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
               </div>
             </div>
             <div className='h-full flex rounded-r overflow-hidden gap-5 ml-2'>
-                 <QuantityCoinsWithChildren quantity={116000} />
+                 <QuantityCoinsWithChildren quantity={user.deposit} />
                 <div
                  style={{ background: ' linear-gradient(90deg, rgba(44, 221, 104, 0.19) 9.99%, rgba(41, 48, 77, 0) 171.7%)' }}
                  className=' h-full flex flex-col items-center justify-center grow  px-3 py-[20px] text-10 font-semibold'>
-                    <div className='text-green-primary text-13'>15,88%</div>
+                    <div className='text-green-primary text-13 min-w-[50px] text-center'>{userChance} %</div>
                     <div className='leading-none'>CHANCE</div>
                 </div>
             </div>
@@ -40,4 +40,4 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
   )
 }
 
-export default JackpotUserCard
+export default JoinedUserRow

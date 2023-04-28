@@ -11,7 +11,7 @@ interface IState {
 const user = {
   id: 'aass2b44b123ghg346',
   name: 'John Johnson',
-  avatar: '',
+  avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg',
   level: 11,
   progress: {
     current: 50,
