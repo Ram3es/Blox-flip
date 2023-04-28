@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 
 import GameLobbyHeader from '../../components/containers/GameLobby/GameLobbyHeader'
 import GameLobbyItemsList from '../../components/containers/GameLobby/GameLobbyItemsList'
@@ -25,6 +25,17 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
   const [items, setItems] = useState<IJackpotCard[]>([])
   const selectedItems = items.filter((item) => item.isSelected)
 
+  const AVATAR_URL =
+    'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
+
+  const initialItems = useMemo(() => {
+    return cards.map((card) => ({
+      ...card,
+      isSelected: false,
+      avatar: AVATAR_URL
+    }))
+  }, [])
+
   const updateArrayBySelectedItem = (
     items: IJackpotCard[],
     id: string,
@@ -32,12 +43,7 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
   ): IJackpotCard[] => {
     return items.map((item) =>
       item.id === id
-        ? {
-            ...item,
-            isSelected,
-            avatar:
-              'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
-          }
+        ? { ...item, isSelected }
         : item
     )
   }
@@ -56,19 +62,12 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
         setItems((prev) => updateArrayBySelectedItem(prev, id, !isSelected))
       }
     },
-    [items]
+    [items, isItemSelected, updateArrayBySelectedItem]
   )
 
   const handleResetSelectedItems = useCallback(() => {
-    setItems(
-      cards.map((card) => ({
-        ...card,
-        isSelected: false,
-        avatar:
-          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
-      }))
-    )
-  }, [])
+    setItems(initialItems)
+  }, [initialItems])
 
   const getCostInSelectedItems = (): number => {
     return getCostByFieldName(selectedItems, 'price')
@@ -77,15 +76,8 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
   const costInventoryItems = getCostByFieldName(items, 'price')
 
   useEffect(() => {
-    setItems(
-      cards.map((card) => ({
-        ...card,
-        isSelected: false,
-        avatar:
-          'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
-      }))
-    )
-  }, [])
+    setItems(initialItems)
+  }, [initialItems])
 
   const handleBetJackpot = () => {
     onClose(true)
