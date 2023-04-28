@@ -60,8 +60,8 @@ const BattleMode: FC<IBattleModeProps> = ({
   updateRound
 }) => {
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
-  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>()
-  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>()
+  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>([])
+  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
   const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
   const [isSpinEnd, setIsSpinEnd] = useState(false)
   const [isEndGame, setShowEnd] = useState(false)
@@ -109,7 +109,7 @@ const BattleMode: FC<IBattleModeProps> = ({
       setIsSpinEnd(true)
 
       setTimeout(() => {
-        setCurrentRoundWinners(undefined)
+        setCurrentRoundWinners([])
         setAllWinningCards({})
         setIsSpinEnd(false)
       }, 2800)
@@ -153,7 +153,8 @@ const BattleMode: FC<IBattleModeProps> = ({
                 isWinners(players[i]?.id) ||
                 gameWinnerPlayer?.find((player) => player?.id === players[i]?.id),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                (!isWinners(players[i]?.id) && isSpinEnd) || (!isWinners(players[i]?.id) && isEndGame)
+                (!isWinners(players[i]?.id) && isSpinEnd) ||
+                (!isWinners(players[i]?.id) && isEndGame)
             })}
           >
             {i !== playersInGame.length - 1 && (
@@ -180,7 +181,7 @@ const BattleMode: FC<IBattleModeProps> = ({
                 isEndGame={isEndGame}
               />
               <RoundWinBorderBottomEffect
-                isShown={!!currentRoundWinners || !!gameWinnerPlayer}
+                isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
                 isAddWinClass={isWinners(players[i]?.id)}
               />
             </div>
