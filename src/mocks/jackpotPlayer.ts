@@ -30,25 +30,32 @@ export const jackpotPlayer: IJackpotPlayer[] = [
     deposit: 65000
   },
   {
-    id: new Date().getTime().toString().concat('-5'),
+    id: new Date().getTime().toString().concat('-6'),
     userName: 'Haupt Standarted',
     avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
     level: 55,
     deposit: 5000
   },
   {
-    id: new Date().getTime().toString().concat('-5'),
+    id: new Date().getTime().toString().concat('-7'),
     userName: 'Haupt Standarted',
     avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
     level: 55,
     deposit: 7200
   },
   {
-    id: new Date().getTime().toString().concat('-5'),
+    id: new Date().getTime().toString().concat('-8'),
     userName: 'Haupt Standarted',
     avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
     level: 55,
     deposit: 5200
+  },
+  {
+    id: new Date().getTime().toString().concat('-9'),
+    userName: 'Haupt Standarted',
+    avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+    level: 55,
+    deposit: 12200
   }
 
 ]

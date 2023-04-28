@@ -7,7 +7,7 @@ export const getSumElements = <T extends {}, K extends keyof T>(arr: T[], key: K
   return 0
 }
 
-export const angleTiltImg = (d: any): number => ((d.startAngle as number) + (d.endAngle as number)) * 90 / Math.PI
+export const getAngleTilt = (d: any): number => ((d.startAngle as number) + (d.endAngle as number)) * 90 / Math.PI
 
 export const getColorByIndex = (index: number) => {
   if ([0, 4, 8, 12, 16, 20, 24, 28, 32].includes(index)) {

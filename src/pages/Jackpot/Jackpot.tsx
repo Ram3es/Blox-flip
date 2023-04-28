@@ -21,7 +21,7 @@ const Jackpot = () => {
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
   const [isOpenLoginModal, setOpenLoginModal] = useState<boolean>(false)
   const [isOpenModal, setOpenModal] = useState<boolean>(false)
-  const [timer, setTimer] = useState<number>(10)
+  const [timer, setTimer] = useState<number>(30)
 
   const { state: { user } } = useContext(Context)
   const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)

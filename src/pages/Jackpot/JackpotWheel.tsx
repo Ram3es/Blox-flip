@@ -7,7 +7,7 @@ import strippedBg from '../../assets/img/stripped-circle-bg.png'
 import WheelInfo from './WheelInfo'
 import CircularProgressBar from '../../components/common/CIrcularProgressBar'
 import GreenVector from '../../components/icons/GreenVector'
-import { angleTiltImg, getColorByIndex } from '../../helpers/jackpotHelpers'
+import { getAngleTilt, getColorByIndex } from '../../helpers/jackpotHelpers'
 import { IJackpotPlayer } from '../../mocks/jackpotPlayer'
 
 interface IJackpotWheelProps {
@@ -34,8 +34,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
   const start = useCallback((ticket: number): void => {
     let winDegrees = 0
     if (data.length) {
-      const sector = data[ticket]
-      winDegrees = (sector.startAngle + sector.endAngle) * 90 / Math.PI
+      winDegrees = getAngleTilt(data[ticket])
     }
     if (refSvg?.current?.style) {
       refSvg.current.style.transform = 'rotate(0deg)'
@@ -111,7 +110,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
         .attr('stroke', (d, i) => getColorByIndex(i).stroke)
 
       g.append('svg:image')
-        .attr('transform', (d: any) => `translate(${arc.centroid(d)[0] + width}, ${arc.centroid(d)[1] + width} ) rotate(${angleTiltImg(d)} 0 0)`)
+        .attr('transform', (d: any) => `translate(${arc.centroid(d)[0] + width}, ${arc.centroid(d)[1] + width} ) rotate(${getAngleTilt(d)} 0 0)`)
         .attr('xlink:href', (d, i) => generedPieData[i].image)
         .attr('width', 40)
         .attr('height', 40)
