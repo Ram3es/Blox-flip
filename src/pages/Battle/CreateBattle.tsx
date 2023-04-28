@@ -34,7 +34,7 @@ const battleInitState = {
 }
 
 const CreateBattle = () => {
-  const { games, setGames } = useBattleCase()
+  const { setGames } = useBattleCase()
   const [isOpenModal, setOpenModal] = useState(false)
   const [casesBetted, setCasesToBet] = useState<IUnboxCardCounter[]>([])
   const { text: referralLink, handleCopyText: handleReferralLink } = useCopyToClipboard(
