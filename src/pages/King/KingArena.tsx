@@ -15,7 +15,8 @@ import {
   TIME_EFFECT_MILLISECONDS
 } from '../../constants/king'
 
-import { getFightDuration, getPercentByDamage, getSumPriceBySkins } from '../../helpers/kingHelpers'
+import { getFightDuration, getPercentByDamage } from '../../helpers/kingHelpers'
+import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { IKingFight } from '../../types/King'
 
@@ -136,13 +137,13 @@ const KingArena = () => {
 
   useEffect(() => {
     if (game.firstPlayer) {
-      const kingMaxHealthPoints = getSumPriceBySkins(game.firstPlayer.items)
+      const kingMaxHealthPoints = getCostByFieldName(game.firstPlayer.items, 'price')
 
       setHealthPointsKing(kingMaxHealthPoints)
       setMaxHealthPointsKing(kingMaxHealthPoints)
     }
     if (game.secondPlayer) {
-      const opponentMaxHealthPoints = getSumPriceBySkins(game.firstPlayer.items)
+      const opponentMaxHealthPoints = getCostByFieldName(game.secondPlayer.items, 'price')
 
       setHealthPointsOpponent(opponentMaxHealthPoints)
       setMaxHealthPointsOpponent(opponentMaxHealthPoints)
