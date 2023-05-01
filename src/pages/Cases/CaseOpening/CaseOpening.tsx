@@ -15,7 +15,7 @@ import { QuantityCoins } from '../../../components/common/QuantityCoins/Quantity
 import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
-import { ArrowGrayIcon } from '../../../components/icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../../../components/icons/ArrowTriangleIcon'
 import { FairIcon } from '../../../components/icons/FairIcon'
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
@@ -145,7 +145,7 @@ export const CaseOpening = () => {
             className='rounded p-2 leading-4 text-gray-primary font-semibold flex  items-center bg-blue-accent-secondary hover:bg-blue-accent hover:text-white mb-4 mr-auto'
           >
             <span className='mr-1.5 rotate-90'>
-              <ArrowGrayIcon />
+              <ArrowTriangleIcon />
             </span>
             Back
           </Button>

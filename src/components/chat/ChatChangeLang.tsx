@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Listbox } from '@headlessui/react'
 
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 
 import EnglandIcon from '../../assets/img/flag_en.svg'
 import SpainIcon from '../../assets/img/flag_spain.svg'
@@ -48,7 +48,9 @@ export const ChatChangeLang: FC = () => {
                 />
               </span>
               <span className='bg-blue-accent shrink-0 rounded w-4 h-4 flex justify-center items-center leading-4 text-gray-secondary'>
-                <ArrowGrayIcon size='SMALL' className={`inline ${open ? 'rotate-180 transform' : ''}`} />
+                <ArrowTriangleIcon
+                  className={`inline w-2 ${open ? 'rotate-180 transform' : ''}`}
+                />
               </span>
             </>
           )}

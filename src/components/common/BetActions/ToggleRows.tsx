@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react'
 import { RowVariant } from '../../../types/Plinko'
-import { ArrowGrayIcon } from '../../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../../icons/ArrowTriangleIcon'
 import clsx from 'clsx'
 
 interface ToggleRowsProps {
@@ -23,9 +23,8 @@ const ToggleRows = ({ value, handleChange, rowOptions, isBlocked = false }: Togg
               <div className='px-2 pb-1.5'>{value}</div>
             </div>
             <div className='text-gray-primary pr-4'>
-              <ArrowGrayIcon
-                size='SMALL'
-                className={clsx('w-3 h-2', {
+              <ArrowTriangleIcon
+                className={clsx('h-2', {
                   'rotate-180': open
                 })}
               />

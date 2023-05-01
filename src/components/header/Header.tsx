@@ -10,7 +10,7 @@ import { RouteItem } from '../../types/Routes'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
 import { PlusIcon } from '../icons/PlusIcon'
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 
 const routesGames: RouteItem[] = [
@@ -74,7 +74,7 @@ export const Header = () => {
                 <span
                   className={`w-2 h-1 flex items-center justify-center ${open ? 'rotate-180' : ''}`}
                 >
-                  <ArrowGrayIcon />
+                  <ArrowTriangleIcon />
                 </span>
               </>
             )}

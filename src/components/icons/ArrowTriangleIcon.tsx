@@ -1,32 +1,15 @@
 import { FC } from 'react'
-import clsx from 'clsx'
 
-import { BaseSize } from '../../types/enums'
-
-interface ArrowGrayIconProps {
-  size?: keyof typeof BaseSize
+interface ArrowTriangleIconProps {
   className?: string
 }
 
-export const ArrowGrayIcon: FC<ArrowGrayIconProps> = ({
-  size = BaseSize.MEDIUM,
-  className = 'inline'
-}) => {
-  const svgWidth = clsx('', {
-    9: size === BaseSize.MEDIUM,
-    7: size === BaseSize.SMALL
-  })
-
-  const svgHeight = clsx('', {
-    8: size === BaseSize.MEDIUM,
-    4.66: size === BaseSize.SMALL
-  })
-
+export const ArrowTriangleIcon: FC<ArrowTriangleIconProps> = ({ className = 'inline' }) => {
   return (
     <svg
       className={className}
-      width={svgWidth}
-      height={svgHeight}
+      width='9'
+      height='8'
       viewBox='0 0 9 6'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -38,3 +21,5 @@ export const ArrowGrayIcon: FC<ArrowGrayIconProps> = ({
     </svg>
   )
 }
+
+export default ArrowTriangleIcon

@@ -5,7 +5,7 @@ import { WithdrawList } from './WithdrawList'
 
 import { IWithdrawMethod } from '../../types/Withdraw'
 
-import { ArrowGrayIcon } from '../../components/icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../../components/icons/ArrowTriangleIcon'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import MoneyIcon from '../../assets/img/deposit2_small.png'
 import RobuxIcon from '../../assets/img/deposit2.png'
@@ -42,7 +42,7 @@ export const WithdrawLayout = () => {
           className='rounded p-2 leading-4 text-gray-primary font-semibold flex items-center bg-blue-accent-secondary hover:bg-blue-accent hover:text-white mb-4 mr-6'
         >
           <span className='mr-1.5 rotate-90 text-gray-primary hover:text-white'>
-            <ArrowGrayIcon size='MEDIUM' />
+            <ArrowTriangleIcon />
           </span>
           Back
         </Button>
@@ -54,12 +54,14 @@ export const WithdrawLayout = () => {
           </div>
           <span className='text-2xl font-bold'>Withdraw</span>
         </div>
-        {pathname === '/withdraw' ? <></> : <CurrentLink path={pathname.split('/').pop() ?? ''}/>}
+        {pathname === '/withdraw' ? <></> : <CurrentLink path={pathname.split('/').pop() ?? ''} />}
       </div>
       <div className='max-w-1190 w-full m-auto'>
         <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
           <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm p-5 xs:p-9 overflow-hidden relative'>
-            {pathname === '/withdraw' ? <WithdrawList list={withdrawMethodsVariants} /> : <Outlet/> }
+            {pathname === '/withdraw'
+              ? (<WithdrawList list={withdrawMethodsVariants} />)
+              : (<Outlet />)}
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ import clsx from 'clsx'
 import Image from '../base/Image'
 import { UserLevel } from '../user/UserLevel'
 
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 import BanIcon from '../icons/BanIcon'
 import UserIcon from '../icons/UserIcon'
 import TipIcon from '../icons/TipIcon'
@@ -156,7 +156,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
               <UserLevel level={user ? user.level : 0} />
             </div>
             <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
-              <ArrowGrayIcon
+              <ArrowTriangleIcon
                 className={clsx('', {
                   'rotate-180': open
                 })}

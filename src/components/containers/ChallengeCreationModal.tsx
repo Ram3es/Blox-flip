@@ -5,7 +5,7 @@ import { Listbox } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Button } from '../base/Button'
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 
 import ModalWrapper from './ModalWrapper'
 import InputWithInlineLabel from '../common/InputWithInlineLabel'
@@ -100,7 +100,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
           >
             <div className='flex items-center gap-2'>
               {selectedGame?.gameName}
-              <ArrowGrayIcon size='SMALL' className='w-2 h-2' />
+              <ArrowTriangleIcon className='w-2 h-2' />
             </div>
           </Listbox.Button>
           <Listbox.Options className='focus:outline-none absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
