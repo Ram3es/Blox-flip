@@ -7,7 +7,7 @@ import { Menu } from '@headlessui/react'
 
 import clsx from 'clsx'
 
-import { UserAvatar } from '../user/UserAvatar'
+import Image from '../base/Image'
 import { UserLevel } from '../user/UserLevel'
 
 import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
@@ -37,7 +37,8 @@ interface ChatUserCardProps {
 
 const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   const { state } = useContext(Context)
-  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal, setIsOpenTriviaModal } = useChat()
+  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal, setIsOpenTriviaModal } =
+    useChat()
 
   const baseIconSizeClasses = 'w-3 h-3'
 
@@ -136,7 +137,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
       <Menu.Button as='div' className='w-full'>
         <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
           <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
-            <UserAvatar />
+            <Image />
           </div>
           <div
             className={clsx('flex', {

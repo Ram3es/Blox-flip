@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import clsx from 'clsx'
 
-import { UserAvatar } from '../../user/UserAvatar'
+import Image from '../../base/Image'
 import { GameStatus } from '../../../types/enums'
 import { Button } from '../../base/Button'
 
@@ -68,7 +68,7 @@ const CFButtonWithTimer = ({ avatar = '', timer = 30 }: CoinFlipButtonWithTimerP
     <Button variant='Outlined'>
       <div className='flex items-center justify-center w-[9.5rem] h-10'>
         <div className='w-6 h-6 border border-blue-highlight rounded overflow-hidden radial--blue'>
-          <UserAvatar image={avatar} />
+          <Image image={avatar} />
         </div>
         <p className='font-bold text-sm text-green-primary pl-2'>
           Joining in <span className='text-white'>{timeToEnd}s</span>

@@ -6,7 +6,7 @@ import CoinFlipGameItems from './CoinFlipGameItems'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import WinPercent from '../../components/common/WinPercent'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import CoinFlipHead from '../../assets/img/head_medium.png'
@@ -55,7 +55,7 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(
             </div>
             <div className={avatarClasses}>
               <div className='w-21 h-21'>
-                <UserAvatar image={isBot ? QuestionMark : ''} />
+                <Image image={isBot ? QuestionMark : ''} />
               </div>
             </div>
             <div className='ml-1 xs:ml-0 xs:mt-[-24px] xs:space-y-3 text-center'>

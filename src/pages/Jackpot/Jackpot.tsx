@@ -6,7 +6,7 @@ import GameInfoListItem from '../../components/common/GameInfoListItem'
 import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import StrippedBgItem from '../../components/common/StrippedBgItem'
 import VerifyBets from '../../components/common/VerifyBets'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 import { cards } from '../../mocks/cards'
 import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
 import { IJackpotCard } from '../../types/Jackpot'
@@ -100,8 +100,8 @@ const Jackpot = () => {
                 <div className='text-gray-primary w-full text-center truncate'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
               </div>
             </StrippedBgItem>
-            <div className='h-[310px]  scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-6'>
-              <div className='flex flex-col  gap-y-2 p-0.5 '>
+            <div className='h-[310px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-6'>
+              <div className='flex flex-col gap-y-2 p-0.5 '>
                 {joinedUsers.map((player) => (
                   <JackpotUserCard key={player.id} user={player} />
                 ))}
@@ -112,7 +112,7 @@ const Jackpot = () => {
               <div className='flex flex-col xs:flex-row items-center justify-between'>
                 <div className='w-full flex flex-col xs:flex-row  items-center text-sm gap-1 mb-2 xs:mb-0'>
                   <div className=' mx-auto xs:mx-0 w-[50px] h-11 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue '>
-                    <UserAvatar image={joinedUsers[0].avatar} />
+                    <Image image={joinedUsers[0].avatar} />
                   </div>
                   <div className='flex items-center gap-1 ml-2'>
                     <span className='text-green-primary  max-w-[150px] truncate block'>

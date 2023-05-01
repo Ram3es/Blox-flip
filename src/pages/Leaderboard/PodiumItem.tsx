@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 import { Button } from '../../components/base/Button'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 
 import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'
@@ -73,7 +73,10 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
                 }
               )}
             >
-              <UserAvatar image={user.avatar} width='73' height='68' className='object-cover w-full h-full rounded-lg' />
+              <Image
+                image={user.avatar}
+                className='object-cover w-full h-full rounded-lg'
+              />
             </div>
             <div className='mb-3 font-bold'>{user.username}</div>
             <div className='flex justify-center mb-3'>

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 import { UserLevel } from '../../components/user/UserLevel'
 import KingJoin from './KingJoin'
 
@@ -32,7 +32,7 @@ const KingArenaPlayer = ({ user, isKing }: KingArenaPlayerProps) => {
   return (
     <div className='relative ls:block flex xs:flex-row flex-col items-center ls:gap-0 gap-5'>
       <div className={avatarClasses}>
-        <UserAvatar className='w-20 h-[74px]' image={user ? '' : QuestionMark} />
+        <Image className='w-20 h-[74px]' image={user ? '' : QuestionMark} />
         {isKing && <img src={KingIcon} className='left-0 xs:left-[-28px] absolute top-[-45px]' />}
       </div>
       <div className={playerInfoClasses}>

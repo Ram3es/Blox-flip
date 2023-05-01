@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { UserAvatar } from '../user/UserAvatar'
+import Image from '../base/Image'
 
 interface AvatarWithUsernameProps {
   avatar: string
@@ -10,7 +10,7 @@ const AvatarWithUsername = forwardRef<HTMLDivElement, AvatarWithUsernameProps>(
   ({ avatar, username }, ref) => {
     return (
       <div ref={ref} className='flex items-center space-x-2'>
-        <UserAvatar
+        <Image
           className='w-11 h-10 border border-blue-highlight rounded radial--blue'
           image={avatar}
         />

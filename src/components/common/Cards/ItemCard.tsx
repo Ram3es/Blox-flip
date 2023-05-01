@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { IMAGES } from '../../../constants/images'
 import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 import SelectedIcon from '../../icons/SelectedIcon'
-import { UserAvatar } from '../../user/UserAvatar'
+import Image from '../../base/Image'
 
 enum BorderColorEnum {
   Red = 'Red',
@@ -124,7 +124,7 @@ const ItemCard: FC<IItemCardProps> = ({
               </div>
               <div className='hidden group-[.is-user]/item:block mx-auto'>
                 <div className='w-14 h-[50px] shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue ml-4 '>
-                  <UserAvatar image={userAvatar} />
+                  <Image image={userAvatar} />
                 </div>
               </div>
             </div>
