@@ -56,7 +56,7 @@ const CoinFlipBetActions = () => {
       <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
       <Button variant='GreenGradient' onClick={() => setIsOpenCreateGame(true)}>
         <div className='flex items-center justify-between md:py-3.5 py-2 px-2'>
-          <DiamondIcon width='16' height='12' />
+          <DiamondIcon className='w-[16px] h-[12px]' />
           <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
         </div>
       </Button>

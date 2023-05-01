@@ -16,7 +16,7 @@ import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
 import ArrowTriangleIcon from '../../../components/icons/ArrowTriangleIcon'
-import { FairIcon } from '../../../components/icons/FairIcon'
+import FairIcon from '../../../components/icons/FairIcon'
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'

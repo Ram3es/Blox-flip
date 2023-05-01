@@ -44,7 +44,7 @@ const KingHistoryItem = ({ game }: KingHistoryItemProps) => {
                   Hash: {hashCode}
                 </span>
                 <Button onClick={handleCopyHashCode} type='button'>
-                  <CopyIcon iconClasses='w-2.5 h-3' />
+                  <CopyIcon className='w-2.5 h-3' />
                 </Button>
               </div>
             </div>

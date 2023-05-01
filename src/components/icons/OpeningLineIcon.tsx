@@ -1,16 +1,11 @@
-export const OpeningLineIcon = ({
-  width = '4',
-  height = '29'
-}: {
-  width?: string
-  height?: string
-}) => {
+export const OpeningLineIcon = ({ className }: { className?: string }) => {
   return (
     <svg
-      width={width}
-      height={height}
+      width='4'
+      height='29'
       viewBox='0 0 4 29'
       fill='none'
+      className={className}
       xmlns='http://www.w3.org/2000/svg'
     >
       <path d='M0 0L4 0V29H0V0Z' fill='url(#paint0_linear_173_41)' />

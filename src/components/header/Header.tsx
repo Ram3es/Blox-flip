@@ -113,7 +113,7 @@ export const Header = () => {
             className='text-xs flex-row flex items-center w-8 h-8 xs:h-9 xs:w-auto xs:px-2.5 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20'
           >
             <span className='w-4 shrink-0 mx-auto relative text-white'>
-              <DiamondIcon width='16' height='12' />
+              <DiamondIcon className='w-[16px] h-[12px]' />
             </span>
             <span className='hidden md:block ml-2.5'>{t('header.free')}</span>
           </Link>
@@ -145,7 +145,7 @@ export const Header = () => {
                   className='relative z-20 text-xs flex-row flex justify-center items-center h-8 px-2.5 leading-8 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20 mb-2'
                 >
                   <span className='w-4 shrink-0 mr-2.5 flex text-white'>
-                    <DiamondIcon width='15' height='13' />
+                    <DiamondIcon className='w-[15px] h-[13px]' />
                   </span>
                   <span>{t('common.deposit')}</span>
                 </Menu.Item>

@@ -102,12 +102,12 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
 
           <Button
             type='submit'
-            variant={variant !== VariantEnum.Withdraw ? 'Gradient' : 'HighlightDarken'}
+            variant={variant !== VariantEnum.Withdraw ? 'GreenGradient' : 'HighlightDarken'}
             color={variant === VariantEnum.Deposit ? 'GreenPrimary' : 'BlueHighlight'}
           >
             <div className='flex items-center justify-center px-24 py-3 text-15'>
               <span className='min-w-fit shrink-0 mr-1.5'>
-                <DiamondIcon width='20' height='17' />
+                <DiamondIcon className='w-[20px] h-[17px]' />
               </span>
               {variant === VariantEnum.Deposit ? 'Deposit' : 'Withdraw'}
             </div>

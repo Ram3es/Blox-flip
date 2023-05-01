@@ -37,7 +37,7 @@ const CFJoinButton = ({ gameId }: CoinFlipJoinButtonProps) => {
     <Button variant='GreenGradient' onClick={() => setIsOpenJoinGame(true)}>
       <div className='flex items-center justify-center h-10 w-[5.5rem]'>
         <span className='w-4 shrink-0 relative text-white'>
-          <DiamondIcon width='16' height='12' />
+          <DiamondIcon className='w-[16px] h-[12px]' />
         </span>
         <span className='pl-2'>Join</span>
       </div>

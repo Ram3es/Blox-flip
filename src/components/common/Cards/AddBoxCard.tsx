@@ -9,9 +9,7 @@ const AddBoxCard = ({ openModal }: { openModal: Function }) => {
       >
         <div className='text-gray-primary rounded-2xl w-16 h-16 bg-blue-accent-secondary/30 bg-gradient-to-t from-dark/20 to-dark/20 relative group hover:bg-blue-accent cursor-pointer'>
           <PlusIcon
-            width={18}
-            height={18}
-            className='absolute inset-0 m-auto group-hover:text-white'
+            className='w-[18px] h-[18px] absolute inset-0 m-auto group-hover:text-white'
           />
         </div>
       </div>
