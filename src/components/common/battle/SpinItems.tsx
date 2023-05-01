@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { getRandomCards } from '../../../helpers/casesHelpers'
 import { cards } from '../../../mocks/cards'
 import { IItemCard } from '../../../types/ItemCard'
@@ -11,14 +11,20 @@ interface ISpinGameProps {
   updateRound: Function
   addWinningCard: Function
   setShowEnd: Function
-
 }
 
-const SpinItems: FC<ISpinGameProps> = ({ status, updateRewards, playerId, updateRound, addWinningCard, setShowEnd }) => {
+const SpinItems: FC<ISpinGameProps> = ({
+  status,
+  updateRewards,
+  playerId,
+  updateRound,
+  addWinningCard,
+  setShowEnd
+}) => {
   const [randomItems, setRandomItems] = useState<IItemCard[]>(getRandomCards(100, cards))
   const [winningCard, setWinningCard] = useState<IItemCard>()
   const [isRespin, setRespin] = useState(false)
-  const refInterval = useRef <ReturnType<typeof setInterval>>()
+  const refInterval = useRef<ReturnType<typeof setInterval>>()
 
   const itemsRef = useRef<HTMLDivElement>(null)
 
@@ -48,7 +54,7 @@ const SpinItems: FC<ISpinGameProps> = ({ status, updateRewards, playerId, update
       ...randomCard,
       id: `${randomCard.id} ${new Date().getTime()}`
     }
-    setRandomItems(prev => {
+    setRandomItems((prev) => {
       const state = [...prev]
       state[87] = winningCart
       return state
@@ -97,15 +103,21 @@ const SpinItems: FC<ISpinGameProps> = ({ status, updateRewards, playerId, update
   }, [winningCard])
 
   return (
-       <div className='min-h-[380px] absolute top-0 left-0 w-full h-full overflow-hidden'>
-          <div
-           ref={itemsRef}
-           className=" z-20 absolute inset-0 flex flex-col-reverse justify-start items-center pt-1 pb-2 overflow-hidden">
-            {randomItems.map((item, index) => (
-              <BattleGameItem key={index} itsWinning={item.id === winningCard?.id} winningCard={winningCard} image={item.image} />
-            ))}
-          </div>
-        </div>
+    <div className='min-h-[380px] absolute top-0 left-0 w-full h-full overflow-hidden'>
+      <div
+        ref={itemsRef}
+        className='z-20 absolute inset-0 flex flex-col-reverse justify-start items-center pt-1 pb-2 overflow-hidden'
+      >
+        {randomItems.map((item, index) => (
+          <BattleGameItem
+            key={index}
+            itsWinning={item.id === winningCard?.id}
+            winningCard={winningCard}
+            image={item.image}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 

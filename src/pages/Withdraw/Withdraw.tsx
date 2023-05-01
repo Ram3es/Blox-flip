@@ -47,7 +47,7 @@ export const Withdraw = () => {
                 </div>
             ) }
           </NavHeader>
-          {currentPath === 'roblox-limiteds' && <div className='flex items-end  lg:ml-5 lg:items-start pb-8'>
+          {currentPath === 'roblox-limiteds' && <div className='flex items-end lg:ml-5 lg:items-start pb-8'>
            <Button
               onClick={() => console.log(selectedCards)}
               className='pointer-events-auto flex justify-center items-center leading-9 text-gray-primary text-base font-bold rounded px-2.5 py-1 bg-blue-highlight hover:bg-blue-accent w-64 shrink-0'

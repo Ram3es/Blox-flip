@@ -67,14 +67,14 @@ const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
             color === possibleBets.RED ? 'text-gradient-red' : ''
           }`}
         >
-          BET {color}{' '}
+          BET {color}
           {color === possibleBets.GREY
             ? '2'
             : color === possibleBets.YELLOW
-            ? '3'
-            : color === possibleBets.BLUE
-            ? '5'
-            : '50'}
+              ? '3'
+              : color === possibleBets.BLUE
+                ? '5'
+                : '50'}
           X
         </div>
       </div>

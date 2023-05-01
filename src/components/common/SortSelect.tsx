@@ -10,7 +10,7 @@ interface ISortSelectProps {
   currentOptions?: string
 }
 
-const SortSelect: FC<ISortSelectProps> = ({ options, currentOptions = 'Recomended', onSelect }) => {
+const SortSelect: FC<ISortSelectProps> = ({ options, currentOptions = 'Recommended', onSelect }) => {
   return (
     <div className='relative'>
         <Menu>
