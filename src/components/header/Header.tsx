@@ -56,7 +56,9 @@ const routesGames: RouteItem[] = [
   { path: '/coinflip', name: 'coinflip' },
   { path: '/jackpot', name: 'jackpot' },
   { path: '/plinko', name: 'plinko' },
-  { path: '/wheel', name: 'wheel' }
+  { path: '/wheel', name: 'wheel' },
+  { path: '/king', name: 'king' },
+  { path: '/challenges', name: 'challenges' }
 ]
 
 export const Header = () => {

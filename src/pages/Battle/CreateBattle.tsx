@@ -15,7 +15,7 @@ import VerticalDivider from '../../components/icons/VerticalDivider'
 import NavHeader from '../../components/navigate/NavHeader'
 import { IUnboxCardCounter } from '../../types/ItemCard'
 import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
-import { gameSettings } from '../../constants/Battle'
+import { gameSettings } from '../../constants/battle-cases'
 
 const battleInitState = {
   rounds: 0,
