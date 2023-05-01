@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { RowVariant } from '../../../types/Plinko'
 import { ArrowGrayIcon } from '../../icons/ArrowGrayIcon'
+import clsx from 'clsx'
 
 interface ToggleRowsProps {
   value: RowVariant
@@ -13,17 +14,24 @@ const ToggleRows = ({ value, handleChange, rowOptions, isBlocked = false }: Togg
   return (
     <Listbox value={value} onChange={handleChange}>
       <Listbox.Button className={`${isBlocked ? 'pointer-events-none' : 'pointer-event-auto'}`}>
-        <div className='flex items-center justify-between bg-blue-highlight rounded h-12 pl-2.5'>
-          <div className='flex items-center space-y-2'>
-            <div className='bg-blue-light rounded px-2 py-1 items-center flex font-bold text-15 text-gray-primary'>
-              Rows
+        {({ open }) => (
+          <div className='flex items-center justify-between bg-blue-highlight rounded h-12 pl-2.5'>
+            <div className='flex items-center space-y-2'>
+              <div className='bg-blue-light rounded px-2 py-1 items-center flex font-bold text-15 text-gray-primary'>
+                Rows
+              </div>
+              <div className='px-2 pb-1.5'>{value}</div>
             </div>
-            <div className='px-2 pb-1.5'>{value}</div>
+            <div className='text-gray-primary pr-4'>
+              <ArrowGrayIcon
+                size='SMALL'
+                className={clsx('w-3 h-2', {
+                  'rotate-180': open
+                })}
+              />
+            </div>
           </div>
-          <div className='text-gray-primary pr-4'>
-            <ArrowGrayIcon size='SMALL' className='w-3 h-2' />
-          </div>
-        </div>
+        )}
       </Listbox.Button>
       <Listbox.Options>
         <div className='z-40 relative top-full'>

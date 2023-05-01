@@ -12,8 +12,8 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
     setInputValue({ ...inputsValue, [event.target.name]: event.target.value })
   }
 
-  return isOpen
-    ? (<ModalWrapper closeModal={onClose}>
+  return isOpen && (
+    <ModalWrapper closeModal={onClose}>
       <div className='flex border-b border-blue-highlight mb-6 pb-6 pr-8'>
         <div className='w-7 mr-2 shrink-0 text-green-primary'>
           <GiftWithDiamond />
@@ -30,7 +30,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button color='GreenPrimary' variant='Gradient'>
+          <Button color='GreenPrimary' variant='GreenGradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
               <DiamondIcon width='15' height='13' />
               Claim
@@ -48,7 +48,7 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button color='GreenPrimary' variant='Gradient'>
+          <Button color='GreenPrimary' variant='GreenGradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
               <DiamondIcon width='15' height='13' />
               Claim
@@ -56,8 +56,8 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           </Button>
         </div>
       </div>
-    </ModalWrapper>)
-    : null
+    </ModalWrapper>
+  )
 }
 
 export default RobuxModal

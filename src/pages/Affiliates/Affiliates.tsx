@@ -109,7 +109,7 @@ export const Affiliates = () => {
               quantity={25500}
             />
             <Link to='/withdraw'>
-              <Button color='GreenPrimary' variant='Gradient'>
+              <Button color='GreenPrimary' variant='GreenGradient'>
                 <div className='flex items-center gap-1 uppercase leading-7 text-xs shadow-green-35 px-2 '>
                   <DiamondIcon width='16' height='12' />
                   Claim

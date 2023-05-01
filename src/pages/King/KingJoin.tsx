@@ -20,7 +20,7 @@ const KingJoin = () => {
 
   return (
     <>
-      <Button onClick={handleOpenModal} variant='Standard' color='GreenPrimary'>
+      <Button onClick={handleOpenModal} color='GreenPrimary'>
         <span className='px-2.5 h-8 flex items-center justify-center'>
           {queue.length > 0 ? <PlusIcon /> : 'Join game'}
         </span>

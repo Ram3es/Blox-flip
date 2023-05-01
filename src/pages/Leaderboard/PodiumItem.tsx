@@ -118,7 +118,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
             </div>
             <div className='flex items-center mb-2'>
               <div className='bg-gradient-to-r from-green-primary/0 to-green-primary h-px mr-1 grow'></div>
-              <Button variant='Outlined'>
+              <Button variant='GreenOutlined'>
                 <span
                   className={clsx('px-5 py-1 leading-5 whitespace-nowrap', {
                     'text-sm': place === 1,

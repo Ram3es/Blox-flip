@@ -19,13 +19,12 @@ export const ChatHeader: FC = () => {
           'px-2 py-3 flex items-center justify-center': !state.user
         })}
       >
-        {state.user
-          ? (<ChatUserCard variant='Header' user={state.user} />)
-          : (
-          <Button color='GreenPrimary' variant='Gradient' onClick={() => setIsOpenModal(true)}>
+        {state.user && <ChatUserCard variant='Header' user={state.user} />}
+        {!state.user && (
+          <Button color='GreenPrimary' variant='GreenGradient' onClick={() => setIsOpenModal(true)}>
             <span className='px-24 py-2'>Login</span>
           </Button>
-            )}
+        )}
       </div>
       <SignInModal isOpen={isOpenSignInModal} onClose={() => setIsOpenModal(false)} />
     </>

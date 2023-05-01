@@ -15,7 +15,7 @@ export const ChatLottery = () => {
         25, 500<span className='text-white/50'>.00</span>
       </span>
       <Popover>
-        <Popover.Button as={Button} color='GreenPrimary' variant='Gradient'>
+        <Popover.Button as={Button} color='GreenPrimary' variant='GreenGradient'>
           <span className='px-1.5 leading-7 text-11'>{t('chat.tip')}</span>
         </Popover.Button>
         <Popover.Panel>

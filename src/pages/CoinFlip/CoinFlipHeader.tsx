@@ -40,7 +40,7 @@ const CoinFlipHeader = () => {
         <div className='flex items-center'>
           {state.user && <CoinFlipBetActions />}
           {!state.user && (
-            <Button variant='Gradient' onClick={() => setIsOpenModal(true)}>
+            <Button variant='GreenGradient' onClick={() => setIsOpenModal(true)}>
               <div className='flex items-center justify-between px-20 xs:px-3 py-3'>
                 <DiamondIcon width='16' height='12' />
                 <span className='pl-2 text-sm leading-4 truncate'>Create new</span>

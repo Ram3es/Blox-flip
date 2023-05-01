@@ -135,29 +135,35 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   return (
     <Menu>
       <Menu.Button as='div' className='w-full'>
-        <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
-          <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
-            <Image />
-          </div>
-          <div
-            className={clsx('flex', {
-              'mr-7': variant === ChatUserCardVariant.Base
-            })}
-          >
-            <span
-              className={clsx('font-bold mr-2', {
-                'text-gray-primary': variant === ChatUserCardVariant.Header,
-                'text-white': variant === ChatUserCardVariant.Base
+        {({ open }) => (
+          <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
+            <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
+              <Image />
+            </div>
+            <div
+              className={clsx('flex', {
+                'mr-7': variant === ChatUserCardVariant.Base
               })}
             >
-              {user ? user.name : ''}
-            </span>
-            <UserLevel level={user ? user.level : 0} />
+              <span
+                className={clsx('font-bold mr-2', {
+                  'text-gray-primary': variant === ChatUserCardVariant.Header,
+                  'text-white': variant === ChatUserCardVariant.Base
+                })}
+              >
+                {user ? user.name : ''}
+              </span>
+              <UserLevel level={user ? user.level : 0} />
+            </div>
+            <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
+              <ArrowGrayIcon
+                className={clsx('', {
+                  'rotate-180': open
+                })}
+              />
+            </div>
           </div>
-          <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
-            <ArrowGrayIcon />
-          </div>
-        </div>
+        )}
       </Menu.Button>
       <Menu.Items
         className={clsx('absolute left-0 right-0 pt-2.5 z-40', {

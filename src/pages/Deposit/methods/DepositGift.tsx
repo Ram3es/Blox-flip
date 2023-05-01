@@ -66,7 +66,7 @@ export const DepositGift = () => {
               />
             </div>
             <div className='flex flex-col items-center'>
-              <Button type='submit' variant='Gradient' color='GreenPrimary'>
+              <Button type='submit' variant='GreenGradient' color='GreenPrimary'>
                 <div className='flex items-center justify-center px-24 py-3 text-15'>
                   <span className='min-w-fit shrink-0 mr-1.5'>
                     <DiamondIcon width='20' height='17' />

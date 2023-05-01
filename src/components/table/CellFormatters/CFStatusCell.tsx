@@ -34,7 +34,7 @@ const CFJoinButton = ({ gameId }: CoinFlipJoinButtonProps) => {
   const { setIsOpenJoinGame } = useCoinFlip()
 
   return (
-    <Button variant='Gradient' onClick={() => setIsOpenJoinGame(true)}>
+    <Button variant='GreenGradient' onClick={() => setIsOpenJoinGame(true)}>
       <div className='flex items-center justify-center h-10 w-[5.5rem]'>
         <span className='w-4 shrink-0 relative text-white'>
           <DiamondIcon width='16' height='12' />
@@ -65,7 +65,7 @@ const CFButtonWithTimer = ({ avatar = '', timer = 30 }: CoinFlipButtonWithTimerP
   }, [timer])
 
   return (
-    <Button variant='Outlined'>
+    <Button variant='GreenOutlined'>
       <div className='flex items-center justify-center w-[9.5rem] h-10'>
         <div className='w-6 h-6 border border-blue-highlight rounded overflow-hidden radial--blue'>
           <Image image={avatar} />
@@ -80,7 +80,7 @@ const CFButtonWithTimer = ({ avatar = '', timer = 30 }: CoinFlipButtonWithTimerP
 
 const CFButtonWinner = ({ coin }: { coin: Coin }) => {
   return (
-    <Button disabled variant={coin === 0 ? 'YellowOutlinedSecondary' : 'BlueOutlined'}>
+    <Button disabled variant={coin === 0 ? 'YellowOutlinedSecondary' : 'BlueGolfOutlined'}>
       <div className='flex items-center justify-center w-28 h-10'>
         <img className='h-6 w-6' src={coin === 0 ? CoinFlipHead : CoinFlipTail} alt='head' />
         <span

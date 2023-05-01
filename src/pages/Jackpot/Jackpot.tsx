@@ -84,7 +84,7 @@ const Jackpot = () => {
               <GameInfoListItem label='MAX. ITEMS'>
                 <span>15</span>
               </GameInfoListItem>
-              <Button color='GreenPrimary' variant='Gradient' onClick={joinUserToGame}>
+              <Button color='GreenPrimary' variant='GreenGradient' onClick={joinUserToGame}>
                 <div className='w-[121px] h-12 flex justify-center items-center'>Join Game</div>
               </Button>
             </div>
