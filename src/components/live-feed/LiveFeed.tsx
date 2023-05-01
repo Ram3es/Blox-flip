@@ -14,6 +14,10 @@ import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/Table'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
+import DiamondContainer from '../common/QuantityCoinsNew/DiamondContainer'
+import DiamondIcon from '../icons/DiamondIcon'
+import QuantityCoinsNew from '../common/QuantityCoinsNew/QuantityCoinsNew'
+import QuantityCoinsNewContainer from '../common/QuantityCoinsNew/QuantityCoinsNewContainer'
 
 const RedDotIcon = () => {
   return (
@@ -87,7 +91,14 @@ export const LiveFeed = () => {
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Bet',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
+      cell: ({ row }) => (
+        <QuantityCoinsNewContainer color='Transparent'>
+          <DiamondContainer color='Green'>
+            <DiamondIcon />
+          </DiamondContainer>
+          <QuantityCoinsNew quantity={row.original.bet} />
+        </QuantityCoinsNewContainer>
+      ),
       filterFn: (row, _columnId, value) => {
         return row.original.bet > value
       },
@@ -103,10 +114,14 @@ export const LiveFeed = () => {
       id: 'profit',
       header: 'Profit',
       cell: ({ row }) => (
-        <QuantityCoins
-          quantity={row.original.profit}
-          color={row.original.isWinner ? 'green' : 'red'}
-        />
+        <QuantityCoinsNewContainer color='Transparent'>
+          <DiamondContainer color={row.original.isWinner ? 'Green' : 'Red'}>
+            <DiamondIcon />
+          </DiamondContainer>
+          <span className='text-green-primary'>
+            <QuantityCoinsNew quantity={row.original.profit} />
+          </span>
+        </QuantityCoinsNewContainer>
       ),
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value
