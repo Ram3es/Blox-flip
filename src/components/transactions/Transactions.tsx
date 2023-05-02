@@ -10,7 +10,6 @@ import { mockTransactions } from '../../mocks/transactionsMock'
 import { TimeCell } from '../table/CellFormatters/TimeCell'
 import { FilterHeader } from '../table/FilterHeader'
 import { ListIcon } from '../icons/ListIcon'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 import { TransactionTypeCell } from '../table/CellFormatters/TransactionTypeCell'
 import { PaymentMethodCell } from '../table/PaymentMethodCell'
@@ -84,7 +83,7 @@ export const Transactions = () => {
       header: () => 'Amount',
       cell: ({ row }) => (
         <CoinsContainer color='Transparent'>
-          <IconContainer color={row.original.isError ? 'Gray' : 'Green'} size='Small'>
+          <IconContainer color={row.original.isError ? 'Gray' : 'GreenPrimary'} size='Small'>
             <DiamondIcon />
           </IconContainer>
           <CoinsTypography quantity={row.original.amount} />
