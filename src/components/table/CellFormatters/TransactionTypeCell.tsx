@@ -16,7 +16,7 @@ export const TransactionTypeCell: FC<TypeCellProps> = ({ type }) => {
       })}
     >
       {type === TransactionVariant.Deposit && (
-        <span className='w-5 h-5 text-center leading-5 bg-green-primary rounded relative shadow-green-15 mr-2.5'>
+        <span className='w-5 h-5 text-center text-white leading-5 bg-green-primary rounded relative shadow-green-15 mr-2.5'>
           <PlusIcon width={7} height={7} className='-inset-full absolute m-auto' />
         </span>
       )}

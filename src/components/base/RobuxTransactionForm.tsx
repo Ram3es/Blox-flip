@@ -9,6 +9,9 @@ import InputWithLabel from './InputWithLabel'
 
 import { formatNumber } from '../../helpers/numbers'
 import { IAmountState } from '../../types/Form'
+import QuantityCoinsNew from '../common/QuantityCoinsNew/QuantityCoinsNew'
+import QuantityCoinsNewContainer from '../common/QuantityCoinsNew/QuantityCoinsNewContainer'
+import DiamondContainer from '../common/QuantityCoinsNew/DiamondContainer'
 
 enum VariantEnum {
   Deposit = 'Deposit',
@@ -88,14 +91,12 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
               YOU ARE {variant === 'Deposit' ? 'DEPOSITING' : 'WITHDRAWING'}
             </div>
             <div className='text-17 flex items-center mx-auto mb-7'>
-              <QuantityCoins
-                quantity={values.amountNumber}
-                textSize='text-base'
-                iconBgHeight='6'
-                iconBgWidth='6'
-                iconHeight='12'
-                iconWidth='14'
-              />
+              <QuantityCoinsNewContainer color='Transparent'>
+                <DiamondContainer color='Green'>
+                  <DiamondIcon />
+                </DiamondContainer>
+                <QuantityCoinsNew quantity={values.amountNumber} />
+              </QuantityCoinsNewContainer>
             </div>
             <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
           </>

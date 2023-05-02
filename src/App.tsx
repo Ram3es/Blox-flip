@@ -30,35 +30,12 @@ import BattleCases from './pages/Battle/BattleCases'
 import CoinFlip from './pages/CoinFlip/CoinFlip'
 import Terms from './pages/TermsOfService/Terms'
 import Challenges from './pages/Challenges/Challenges'
-import QuantityCoinsNew from './components/common/QuantityCoinsNew/QuantityCoinsNew'
-import QuantityCoinsNewContainer from './components/common/QuantityCoinsNew/QuantityCoinsNewContainer'
-import DiamondContainer from './components/common/QuantityCoinsNew/DiamondContainer'
-import DiamondIcon from './components/icons/DiamondIcon'
 
 export const App = () => {
   return (
     <BrowserRouter>
       <Container>
         <Header />
-        <QuantityCoinsNewContainer>
-          <DiamondContainer color='Green'>
-            <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={1500} />
-        </QuantityCoinsNewContainer>
-        <QuantityCoinsNewContainer>
-          <DiamondContainer color='Green'>
-            <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={1510.9} />
-        </QuantityCoinsNewContainer>
-        <QuantityCoinsNewContainer>
-          <DiamondContainer color='Green'>
-            <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew />
-        </QuantityCoinsNewContainer>
-
         <Chat />
         <Routes>
           <Route path='/' element={<Home />} />

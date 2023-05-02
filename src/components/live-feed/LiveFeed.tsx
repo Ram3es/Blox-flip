@@ -93,7 +93,7 @@ export const LiveFeed = () => {
       header: () => 'Bet',
       cell: ({ row }) => (
         <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color='Green'>
+          <DiamondContainer color='Green' size='Small'>
             <DiamondIcon />
           </DiamondContainer>
           <QuantityCoinsNew quantity={row.original.bet} />
@@ -115,12 +115,10 @@ export const LiveFeed = () => {
       header: 'Profit',
       cell: ({ row }) => (
         <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color={row.original.isWinner ? 'Green' : 'Red'}>
+          <DiamondContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
             <DiamondIcon />
           </DiamondContainer>
-          <span className='text-green-primary'>
-            <QuantityCoinsNew quantity={row.original.profit} />
-          </span>
+          <QuantityCoinsNew quantity={row.original.profit} fontColor='Green' />
         </QuantityCoinsNewContainer>
       ),
       filterFn: (row, _columnId, value) => {

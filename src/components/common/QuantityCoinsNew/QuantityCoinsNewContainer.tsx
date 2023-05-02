@@ -4,7 +4,8 @@ import clsx from 'clsx'
 
 enum ColorEnum {
   Transparent = 'Transparent',
-  Green = 'Green'
+  Green = 'GreenPrimary',
+  GreenDarken = 'GreenDarken'
 }
 
 enum SizeEnum {
@@ -26,12 +27,15 @@ const QuantityCoinsNewContainer: FC<PropsWithChildren<QuantityCoinsNewContainerP
   size = SizeEnum.Medium
 }) => {
   const mainClasses = clsx('flex items-center gap-2 rounded', {
-    'border border-green-primary gradient-green-secondary shadow-green-primary-20':
-      color === ColorEnum.Green
+    'gradient-green-secondary shadow-green-primary-20 border border-green-primary ':
+      color === ColorEnum.Green,
+    'bg-green-primary/15': color === ColorEnum.GreenDarken
   })
 
-  const sizeClasses = clsx('', {
-    'px-2 py-2': size === SizeEnum.Medium
+  const sizeClasses = clsx('px-1.5', {
+    'w-[108px] h-[31px]': size === SizeEnum.Small,
+    'w-[117px] h-[31px]': size === SizeEnum.Medium,
+    'w-[135px] h-[35px]': size === SizeEnum.Large
   })
 
   return <div className={`${mainClasses} ${sizeClasses}`}>{children}</div>

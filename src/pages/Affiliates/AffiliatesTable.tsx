@@ -7,6 +7,10 @@ import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
+import QuantityCoinsNewContainer from '../../components/common/QuantityCoinsNew/QuantityCoinsNewContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import QuantityCoinsNew from '../../components/common/QuantityCoinsNew/QuantityCoinsNew'
+import DiamondContainer from '../../components/common/QuantityCoinsNew/DiamondContainer'
 
 export const AffiliatesTable = () => {
   const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])
@@ -30,13 +34,27 @@ export const AffiliatesTable = () => {
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Wagered',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
+      cell: ({ row }) => (
+        <QuantityCoinsNewContainer color='Transparent'>
+          <DiamondContainer color='Green' size='Small'>
+            <DiamondIcon />
+          </DiamondContainer>
+          <QuantityCoinsNew quantity={row.original.bet} />
+        </QuantityCoinsNewContainer>
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: ISecondUser) => row.profit, {
       id: 'profit',
       header: 'Earned',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.profit} color='green' />,
+      cell: ({ row }) => (
+        <QuantityCoinsNewContainer color='Transparent'>
+          <DiamondContainer color='Green' size='Small'>
+            <DiamondIcon />
+          </DiamondContainer>
+          <QuantityCoinsNew quantity={row.original.profit} fontColor='Green' />
+        </QuantityCoinsNewContainer>
+      ),
       footer: (props) => props.column.id
     })
   ]
