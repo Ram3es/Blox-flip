@@ -2,11 +2,11 @@ import React, { FC } from 'react'
 import clsx from 'clsx'
 import { IMAGES } from '../../../constants/images'
 import SelectedIcon from '../../icons/SelectedIcon'
-import { UserAvatar } from '../../user/UserAvatar'
 import CoinsContainer from '../Coins/CoinsContainer'
 import CoinsTypography from '../Coins/CoinsTypography'
 import IconContainer from '../Coins/IconContainer'
 import DiamondIcon from '../../icons/DiamondIcon'
+import Image from '../../base/Image'
 
 enum BorderColorEnum {
   Red = 'Red',

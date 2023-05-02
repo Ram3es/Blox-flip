@@ -26,7 +26,7 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
           JOINED
         </div>
         <div className='w-9 h-8 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue '>
-          <UserAvatar image={user.avatar} />
+          <Image image={user.avatar} />
         </div>
         <div className='max-w-[120px] truncate'>{user.userName}</div>
         <div className='flex  mx-1'>

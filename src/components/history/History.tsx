@@ -104,7 +104,7 @@ export const History = () => {
       header: () => 'Wager',
       cell: (props) => (
         <CoinsContainer color='Transparent'>
-          <IconContainer color='Green' size='Small'>
+          <IconContainer color='GreenPrimary' size='Small'>
             <DiamondIcon />
           </IconContainer>
           <CoinsTypography quantity={props.getValue()} />
@@ -117,7 +117,7 @@ export const History = () => {
       header: () => 'Profit',
       cell: ({ row }) => (
         <CoinsContainer color='Transparent'>
-          <IconContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
+          <IconContainer color={row.original.isWinner ? 'GreenPrimary' : 'RedAccent'} size='Small'>
             <DiamondIcon />
           </IconContainer>
           <CoinsTypography

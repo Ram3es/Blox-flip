@@ -91,7 +91,7 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
             </div>
             <div className='text-17 flex items-center mx-auto mb-7'>
               <CoinsContainer color='Transparent'>
-                <IconContainer color='Green'>
+                <IconContainer color='GreenPrimary'>
                   <DiamondIcon />
                 </IconContainer>
                 <CoinsTypography quantity={values.amountNumber} />

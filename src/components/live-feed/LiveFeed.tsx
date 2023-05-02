@@ -93,7 +93,7 @@ export const LiveFeed = () => {
       header: () => 'Bet',
       cell: ({ row }) => (
         <CoinsContainer color='Transparent'>
-          <IconContainer color='Green' size='Small'>
+          <IconContainer color='GreenPrimary' size='Small'>
             <DiamondIcon />
           </IconContainer>
           <CoinsTypography quantity={row.original.bet} />
@@ -115,7 +115,7 @@ export const LiveFeed = () => {
       header: 'Profit',
       cell: ({ row }) => (
         <CoinsContainer color='Transparent'>
-          <IconContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
+          <IconContainer color={row.original.isWinner ? 'GreenPrimary' : 'RedAccent'} size='Small'>
             <DiamondIcon />
           </IconContainer>
           <CoinsTypography quantity={row.original.profit} fontColor='Green' />
