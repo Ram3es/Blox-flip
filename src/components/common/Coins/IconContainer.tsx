@@ -36,7 +36,8 @@ const IconContainer: FC<PropsWithChildren<IconContainerProps>> = ({
   const sizeClasses = clsx('', {
     'w-5 h-5': size === SizeEnum.Small,
     'w-6 h-6': size === SizeEnum.Medium,
-    'w-[26px] h-[26px]': size === SizeEnum.Large
+    'w-[26px] h-[26px]': size === SizeEnum.Large,
+    'w-[30px] h-[30px]': size === SizeEnum.ExtraLarge
   })
 
   return <div className={`${IconContainerClasses} ${sizeClasses}`}>{children}</div>

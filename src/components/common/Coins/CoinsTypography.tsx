@@ -13,6 +13,7 @@ enum TextSizeEnum {
   Size14 = 'Size14',
   Size16 = 'Size16',
   Size17 = 'Size17',
+  Size18 = 'Size18',
   Size22 = 'Size22'
 }
 
@@ -38,6 +39,7 @@ const CoinsTypography: FC<CoinsTypographyProps> = ({
     'text-sm': fontSize === TextSizeEnum.Size14,
     'text-base': fontSize === TextSizeEnum.Size16,
     'text-17': fontSize === TextSizeEnum.Size17,
+    'text-lg': fontSize === TextSizeEnum.Size18,
     'text-22': fontSize === TextSizeEnum.Size22
   })
 

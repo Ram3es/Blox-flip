@@ -12,11 +12,13 @@ import clsx from 'clsx'
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
 import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
 import type { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 const CoinFlipGamesTable = () => {
   const [games] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -39,18 +41,25 @@ const CoinFlipGamesTable = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <div className='w-32 h-10'>
-          <QuantityCoinsContainer>
-            <QuantityCoins quantity={14214.51} />
-          </QuantityCoinsContainer>
-        </div>
+        <CoinsContainer color='GreenGradient' size='ExtraLarge'>
+          <IconContainer color='GreenPrimary' size='Medium'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={14214.51} fontSize='Size14' />
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('status', {
       id: 'status',
       header: () => 'Status',
-      cell: ({ row }) => <CFStatusCell gameId='rqwsrqwsrq2' status={row.original.status} coin={row.original.winCoin} />,
+      cell: ({ row }) => (
+        <CFStatusCell
+          gameId='rqwsrqwsrq2'
+          status={row.original.status}
+          coin={row.original.winCoin}
+        />
+      ),
       footer: (props) => props.column.id
     })
   ]

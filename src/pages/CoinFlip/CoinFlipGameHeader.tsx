@@ -2,14 +2,16 @@ import { forwardRef } from 'react'
 
 import clsx from 'clsx'
 
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import AvatarWithUsername from '../../components/common/AvatarWithUsername'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import VersusBattleIcon from '../../assets/img/versus_battle.png'
 import QuestionMark from '../../assets/img/question_mark.svg'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 interface CoinFlipGameHeaderProps {
   withBot?: boolean
@@ -34,9 +36,12 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
             <span className='hidden xxs:block'>CF&nbsp;</span>
             <span className='text-orange-primary-light'>#13</span>
           </div>
-          <QuantityCoinsContainer>
-            <QuantityCoins quantity={14214.51} />
-          </QuantityCoinsContainer>
+          <CoinsContainer color='GreenGradient' size='ExtraLarge'>
+            <IconContainer color='GreenPrimary' size='Medium'>
+              <DiamondIcon />
+            </IconContainer>
+            <CoinsTypography quantity={14214.51} fontSize='Size14' />
+          </CoinsContainer>
         </div>
         <div className={skinIconClasses}>
           <img src={SkinBigIcon} alt='skin' />
