@@ -1,9 +1,6 @@
-
+import { FC, ReactNode, useEffect, useState } from 'react'
 import clsx from 'clsx'
-import React, { FC, ReactNode, useEffect, useState } from 'react'
-import { IMAGES } from '../../../constants/images'
-import { IBattleUser, IModeGame } from '../../../mocks/battle'
-import { IItemCard, IUnboxCard } from '../../../types/ItemCard'
+
 import Loader from '../../base/Loader'
 import BattleDaggers from '../../icons/BattleDaggers'
 import DaggersGreenGradient from '../../icons/DaggersGreenGradient'
@@ -16,6 +13,10 @@ import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
 import SpinItems from './SpinItems'
 import UserBar from './UserBar'
 import UsersDrops from './UsersDrops'
+
+import { IMAGES } from '../../../constants/images'
+import { IBattleUser, IModeGame } from '../../../mocks/battle'
+import type { IItemCard, IUnboxCard } from '../../../types/ItemCard'
 
 interface IBattleModeProps {
   status: string
@@ -49,11 +50,20 @@ const getIcons = (type: string, index: number) => {
   }
 }
 
-const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, casesBox, updateRewards, updateRound }) => {
+const BattleMode: FC<IBattleModeProps> = ({
+  status,
+  mode,
+  players,
+  onJoinUser,
+  casesBox,
+  updateRewards,
+  updateRound
+}) => {
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
-  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>()
-  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>()
-  const [allwinningCard, setallWinningCard] = useState<Record<string, IItemCard>>({})
+  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>([])
+  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
+  const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
+  const [isSpinEnd, setIsSpinEnd] = useState(false)
   const [isEndGame, setShowEnd] = useState(false)
 
   const playersInGame = Array.from(Array(mode.requiredPlayers))
@@ -70,16 +80,17 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
   }
 
   const addWinningCard = (playerId: string, card: IItemCard) => {
-    setWinningCard(state => ({ ...state, [playerId]: card }))
+    setWinningCard((state) => ({ ...state, [playerId]: card }))
   }
 
-  const isWinners = (playerId: string): boolean | undefined => {
+  const isWinners = (playerId: string) => {
     if (currentRoundWinners?.length) {
-      return currentRoundWinners.map(items => items[0])?.includes(playerId)
+      return currentRoundWinners.map((items) => items[0])?.includes(playerId)
     }
     if (gameWinnerPlayer?.length) {
-      return gameWinnerPlayer.map(player => player.id)?.includes(playerId)
+      return gameWinnerPlayer.map((player) => player.id)?.includes(playerId)
     }
+    return false
   }
 
   useEffect(() => {
@@ -91,14 +102,16 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
         }
         return acc
       })
-      const winnersPlayer = userWinningCards.filter(item => item[1].price === wonCard[1].price)
+      const winnersPlayer = userWinningCards.filter((item) => item[1].price === wonCard[1].price)
 
       setCurrentRoundWinners(winnersPlayer)
-      setallWinningCard(winningCard)
+      setAllWinningCards(winningCard)
+      setIsSpinEnd(true)
 
       setTimeout(() => {
-        setCurrentRoundWinners(undefined)
-        setallWinningCard({})
+        setCurrentRoundWinners([])
+        setAllWinningCards({})
+        setIsSpinEnd(false)
       }, 2800)
     }
   }, [winningCard])
@@ -111,93 +124,115 @@ const BattleMode: FC<IBattleModeProps> = ({ status, mode, players, onJoinUser, c
         }
         return acc
       })
-      const winnersGame = players.filter(player => player.wonDiamonds === wonDiamonds)
+      const winnersGame = players.filter((player) => player.wonDiamonds === wonDiamonds)
       setGameWinnerPlayer(winnersGame)
     }
   }, [isEndGame])
 
   return (
-        <div className='flex -mx-2'>
-          {playersInGame.map((_, i) => (
-            <div key={i} className={clsx('px-1 mb-9 relative', {
-              'w-1/2': mode.requiredPlayers === 2,
-              'w-1/3': mode.requiredPlayers === 3,
-              'w-1/4': mode.requiredPlayers === 4
-
-            })}>
-              <UserBar
-                 user={players[i]}
-                 amountPlayers={mode.requiredPlayers}
-                 onJoinGame={() => handleJoinUser(i)}
-                 isPlayerGameWinners={isWinners(players[i]?.id)}
-                 isEndGame={isEndGame}
-
+    <div className='flex -mx-2'>
+      {playersInGame.map((_, i) => (
+        <div
+          key={i}
+          className={clsx('px-1 mb-9 relative', {
+            'w-1/2': mode.requiredPlayers === 2,
+            'w-1/3': mode.requiredPlayers === 3,
+            'w-1/4': mode.requiredPlayers === 4
+          })}
+        >
+          <UserBar
+            user={players[i]}
+            amountPlayers={mode.requiredPlayers}
+            onJoinGame={() => handleJoinUser(i)}
+            isPlayerGameWinners={isWinners(players[i]?.id)}
+            isEndGame={isEndGame}
+          />
+          <div
+            className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
+              'bg-gradient-lvl from-green-primary/30':
+                isWinners(players[i]?.id) ||
+                gameWinnerPlayer?.find((player) => player?.id === players[i]?.id),
+              'bg-gradient-lvl from-red-accent/30 to-dark/0':
+                (!isWinners(players[i]?.id) && isSpinEnd) ||
+                (!isWinners(players[i]?.id) && isEndGame)
+            })}
+          >
+            {i !== playersInGame.length - 1 && (
+              <div className='absolute left-full -ml-7 -mt-8 top-1/2 w-16 z-30 '>
+                {getIcons(mode.variant, i)}
+              </div>
+            )}
+            <div className='grow -translate-y-[2px] '>
+              <img
+                src={IMAGES.graySeparator}
+                alt='divider'
+                width='92'
+                height='1'
+                loading='lazy'
+                decoding='async'
+                className='w-full h-px'
               />
-              <div className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-                'bg-gradient-lvl from-green-primary/30': !!isWinners(players[i]?.id),
-                'bg-gradient-lvl from-red-accent/30 to-dark/0': isWinners(players[i]?.id) !== undefined && !isWinners(players[i]?.id)
-
-              })}>
-                    {i !== playersInGame.length - 1 && (
-                         <div className="absolute left-full -ml-7 -mt-8 top-1/2 w-16 z-30 ">
-                           { getIcons(mode.variant, i)}
-                        </div>
-                    )}
-                <div className="grow -translate-y-[2px] ">
-                  <img src={IMAGES.graySeparator} alt="divider" width="92" height="1" loading="lazy" decoding="async" className="w-full h-px" />
-                </div>
-                <div className="w-52 mx-auto relative shrink-0 max-w-full z-10">
-                   <BackdropEffects
-                    statusGame={status}
-                    player={players[i]}
-                    winningCard={ allwinningCard[players[i]?.id]?.image }
-                    isEndGame={isEndGame}
-                    />
-                   <RoundWinBorderBottomEffect
-                     isShown={!!currentRoundWinners || !!gameWinnerPlayer }
-                     isAddWinClass={!!isWinners(players[i]?.id)}
-                    />
-                </div>
-                {status === 'created' &&
-                  <div className="z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2">
-              {players[i]
-                ? <>
-                     <DaggersGreenGradient />
-                      <span className='text-base font-bold'>Ready</span>
-                    </>
-                : <>
-                      <Loader height='40px' width='40px' color='rgba(147, 155, 185)' />
-                      <span className='text-base font-bold text-gray-primary'>Waiting</span>
-                    </>
-              }
-               </div>}
-               {status !== 'created' &&
-                   !isEndGame &&
-                   <SpinItems
-                      status={status}
-                      playerId={players[i]?.id}
-                      updateRewards={updateRewards}
-                      updateRound={updateRound}
-                      addWinningCard={addWinningCard}
-                      setShowEnd={setShowEnd}
-                 />
-                 }
-                  {status === 'ended' &&
-                   isEndGame &&
-                     <PlayerStatusGame
-                       isPlayerGameWinner={!!isWinners(players[i]?.id)}
-                       wonDiamonds={players[i]?.wonDiamonds}
-                        />
-                 }
-                <div className="grow rotate-180 translate-y-[-2px]">
-                  <img src={IMAGES.graySeparator} alt="divider" width="92" height="1" loading="lazy" decoding="async" className="w-full h-px" />
-                </div>
-                 </div>
-              <UsersDrops amountGamePlates={mode.requiredPlayers} cards={players[i]?.dropsCards} />
             </div>
-          ))}
-
+            <div className='w-52 mx-auto relative shrink-0 max-w-full z-10'>
+              <BackdropEffects
+                statusGame={status}
+                player={players[i]}
+                winningCard={allWinningCards[players[i]?.id]?.image}
+                isEndGame={isEndGame}
+              />
+              <RoundWinBorderBottomEffect
+                isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
+                isAddWinClass={isWinners(players[i]?.id)}
+              />
+            </div>
+            {status === 'created' && (
+              <div className='z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2'>
+                {players[i] && (
+                  <>
+                    <DaggersGreenGradient />
+                    <span className='text-base font-bold'>Ready</span>
+                  </>
+                )}
+                {players[i] && (
+                  <>
+                    <Loader height='40px' width='40px' color='rgba(147, 155, 185)' />
+                    <span className='text-base font-bold text-gray-primary'>Waiting</span>
+                  </>
+                )}
+              </div>
+            )}
+            {status !== 'created' && !isEndGame && (
+              <SpinItems
+                status={status}
+                playerId={players[i]?.id}
+                updateRewards={updateRewards}
+                updateRound={updateRound}
+                addWinningCard={addWinningCard}
+                setShowEnd={setShowEnd}
+              />
+            )}
+            {status === 'ended' && isEndGame && (
+              <PlayerStatusGame
+                isPlayerGameWinner={isWinners(players[i]?.id)}
+                wonDiamonds={players[i]?.wonDiamonds}
+              />
+            )}
+            <div className='grow rotate-180 translate-y-[-2px]'>
+              <img
+                src={IMAGES.graySeparator}
+                alt='divider'
+                width='92'
+                height='1'
+                loading='lazy'
+                decoding='async'
+                className='w-full h-px'
+              />
+            </div>
+          </div>
+          <UsersDrops amountGamePlates={mode.requiredPlayers} cards={players[i]?.dropsCards} />
         </div>
+      ))}
+    </div>
   )
 }
 

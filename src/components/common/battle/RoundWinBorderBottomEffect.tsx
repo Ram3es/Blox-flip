@@ -1,5 +1,3 @@
-import React from 'react'
-
 const RoundWinBorderBottomEffect = ({ isShown, isAddWinClass }: { isShown: boolean, isAddWinClass: boolean }) => {
   return (isShown
     ? <div className="relative z-10">

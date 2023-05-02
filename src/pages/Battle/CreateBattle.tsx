@@ -1,24 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { useBattleCase } from '../../store/BattleCaseStore'
+import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
+
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../../components/base/Button'
+
 import InputWithLabel from '../../components/base/InputWithLabel'
 import AddBoxCard from '../../components/common/Cards/AddBoxCard'
 import UnboxingWithCounter from '../../components/common/Cards/UnboxingWithCounter'
 import ToggleTabs from '../../components/common/ToggleTabs'
 import BattleModal from '../../components/containers/BattleModal'
 import PaymentMethodContainer from '../../components/containers/PaymentMethodContainer'
-import { CopyIcon } from '../../components/icons/CopyIcon'
 import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
 import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
 import VerticalDivider from '../../components/icons/VerticalDivider'
 import NavHeader from '../../components/navigate/NavHeader'
-import { IUnboxCardCounter } from '../../types/ItemCard'
-import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
+
+import { Button } from '../../components/base/Button'
+import { CopyIcon } from '../../components/icons/CopyIcon'
+
+import type { IUnboxCardCounter } from '../../types/ItemCard'
+
 import { gameSettings } from '../../constants/battle-cases'
+import { IBattlesInfo } from '../../mocks/battle'
 import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
 import IconContainer from '../../components/common/Coins/IconContainer'
 import CoinsTypography from '../../components/common/Coins/CoinsTypography'
-import DiamondIcon from '../../components/icons/DiamondIcon'
 
 const battleInitState = {
   rounds: 0,
@@ -29,6 +37,7 @@ const battleInitState = {
 }
 
 const CreateBattle = () => {
+  const { setGames } = useBattleCase()
   const [isOpenModal, setOpenModal] = useState(false)
   const [casesBetted, setCasesToBet] = useState<IUnboxCardCounter[]>([])
   const { text: referralLink, handleCopyText: handleReferralLink } = useCopyToClipboard(
@@ -107,6 +116,7 @@ const CreateBattle = () => {
     const responseFromDB = {
       gameSetting: {
         ...battleSettings,
+        currentRound: 0,
         rounds: amountCases,
         price: totalCost
       },
@@ -120,15 +130,16 @@ const CreateBattle = () => {
           level: 17,
           dropsCards: [],
           wonDiamonds: 0
-        },
-        ...Array.from(Array(battleSettings.mode.requiredPlayers - 1))
+        }
       ],
       id: '1234567',
       date: '2032-03-12T23:46:58.567Z',
       status: 'created'
     }
+    setGames((prevState) => [...prevState, responseFromDB as IBattlesInfo])
     navigate(`/battle/${responseFromDB.id}`, { state: responseFromDB })
   }
+
   return (
     <div className='max-w-1190 w-full mx-auto'>
       <NavHeader
@@ -136,8 +147,8 @@ const CreateBattle = () => {
         renderIcon={() => <DaggersGreenGradient iconClasses='w-[25px] h-[25px] ml-2' />}
       >
         <div>
-          <div className='flex flex-wrap items-center'>
-            <div className='flex items-center mb-3 xxs:mb-0'>
+          <div className='flex flex-wrap items-center '>
+            <div className=' flex items-center mb-3 xxs:mb-0'>
               <div className='w-4 shrink-0 mr-2.5 text-blue-golf'>
                 <UnboxingIconTitle iconClasses='w-[17px] h-[17px]' />
               </div>
@@ -161,7 +172,7 @@ const CreateBattle = () => {
                 <VerticalDivider />
               </div>
             </div>
-            <div className='w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0 '>
+            <div className='w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0'>
               <Button
                 disabled={!casesBetted.length}
                 onClick={createGame}

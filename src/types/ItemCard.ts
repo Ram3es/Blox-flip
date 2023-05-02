@@ -10,7 +10,7 @@ export interface IItemCard {
   hot?: boolean
 }
 export interface IUnboxCard extends IItemCard {
-  status: string
+  status?: string
 }
 
 export interface IUnboxCardCounter extends IItemCard {
