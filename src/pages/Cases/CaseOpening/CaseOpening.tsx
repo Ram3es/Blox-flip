@@ -11,7 +11,6 @@ import type { ICaseItem } from '../../../types/Cases'
 import { caseCards } from '../../../mocks/caseOpeningMock'
 
 import { Button } from '../../../components/base/Button'
-import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
 import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
@@ -20,6 +19,10 @@ import FairIcon from '../../../components/icons/FairIcon'
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
+import CoinsContainer from '../../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../../components/common/Coins/IconContainer'
+import DiamondIcon from '../../../components/icons/DiamondIcon'
+import CoinsTypography from '../../../components/common/Coins/CoinsTypography'
 
 export const CaseOpening = () => {
   const { id } = useParams()
@@ -168,14 +171,12 @@ export const CaseOpening = () => {
           <div className='flex flex-wrap justify-center relative items-start z-10 mb-4 px-4 sm:px-12 -mx-4 sm:-mx-12'>
             <div className='flex flex-wrap justify-center sm:justify-start min-w-fit mb-5 z-20 relative'>
               <div className='bg-green-primary/15 flex items-center px-1 pr-4 rounded mr-2.5 mb-2'>
-                <QuantityCoins
-                  quantity={1500}
-                  iconBgHeight='6'
-                  iconBgWidth='6'
-                  iconWidth='15.4'
-                  iconHeight='13'
-                  textSize='text-base'
-                />
+                <CoinsContainer color='GreenDarken'>
+                  <IconContainer color='GreenPrimary' size='Medium'>
+                    <DiamondIcon />
+                  </IconContainer>
+                  <CoinsTypography quantity={1500} fontSize='Size16' />
+                </CoinsContainer>
               </div>
               <Button
                 disabled={isSpin}

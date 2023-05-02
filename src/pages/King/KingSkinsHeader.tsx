@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from 'react'
 import clsx from 'clsx'
 
 import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { ListIcon } from '../../components/icons/ListIcon'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 
@@ -12,6 +11,10 @@ import { getCostByFieldName } from '../../helpers/numbers'
 import type { TabInterface } from './KingSkins'
 
 import type { IKingGamePlayer } from '../../types/King'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 interface HeaderProps {
   user?: IKingGamePlayer
@@ -41,7 +44,15 @@ const KingSkinsHeader = ({
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
-      <QuantityCoins quantity={user ? getCostByFieldName(user.items, 'price') : null} />
+      <CoinsContainer>
+        <IconContainer color='GreenPrimary' size='Small'>
+          <DiamondIcon />
+        </IconContainer>
+        <CoinsTypography
+          quantity={user ? getCostByFieldName(user.items, 'price') : null}
+          fontSize='Size14'
+        />
+      </CoinsContainer>
       <Button disabled variant='YellowOutlined'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
           {user && (

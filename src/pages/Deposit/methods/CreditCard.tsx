@@ -1,9 +1,11 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
-import { QuantityCoinsWithChildren } from '../../../components/common/QuantityCoins/QuantityWithChildren'
 import MethodsContainer from '../../../components/containers/PaymentMethodContainer'
 import DiamondIcon from '../../../components/icons/DiamondIcon'
+import CoinsContainer from '../../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../../components/common/Coins/IconContainer'
+import CoinsTypography from '../../../components/common/Coins/CoinsTypography'
 
 const CreditCardForm = () => {
   const [values, setValue] = useState({ cash: '', diamond: '' })
@@ -84,14 +86,12 @@ const CreditCardForm = () => {
           <div className='flex flex-col items-center'>
             <div className='text-gray-primary mb-2 font-bold uppercase'>YOU ARE BUYING</div>
             <div className='text-17 flex items-center mx-auto mb-7'>
-              <QuantityCoinsWithChildren
-                quantityClasses='flex items-center text-base font-bold'
-                quantity={Number(values.diamond)}
-              >
-                <span className='w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-secondary'>
-                  <DiamondIcon className='-inset-full absolute m-auto' />
-                </span>
-              </QuantityCoinsWithChildren>
+              <CoinsContainer color='Transparent'>
+                <IconContainer color='GreenPrimary'>
+                  <DiamondIcon />
+                </IconContainer>
+                <CoinsTypography quantity={Number(values.diamond)} />
+              </CoinsContainer>
             </div>
             <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
             <Button

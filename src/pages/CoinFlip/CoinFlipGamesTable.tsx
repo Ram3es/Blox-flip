@@ -41,7 +41,7 @@ const CoinFlipGamesTable = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <CoinsContainer color='GreenGradient' size='ExtraLarge'>
+        <CoinsContainer color='GreenGradient' size='XL'>
           <IconContainer color='GreenPrimary' size='Medium'>
             <DiamondIcon />
           </IconContainer>

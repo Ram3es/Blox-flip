@@ -6,7 +6,7 @@ enum SizeEnum {
   Small = 'Small',
   Medium = 'Medium',
   Large = 'Large',
-  ExtraLarge = 'ExtraLarge'
+  XL = 'XL'
 }
 
 enum ColorEnum {
@@ -37,7 +37,7 @@ const IconContainer: FC<PropsWithChildren<IconContainerProps>> = ({
     'w-5 h-5': size === SizeEnum.Small,
     'w-6 h-6': size === SizeEnum.Medium,
     'w-[26px] h-[26px]': size === SizeEnum.Large,
-    'w-[30px] h-[30px]': size === SizeEnum.ExtraLarge
+    'w-[30px] h-[30px]': size === SizeEnum.XL
   })
 
   return <div className={`${IconContainerClasses} ${sizeClasses}`}>{children}</div>

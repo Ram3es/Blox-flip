@@ -36,7 +36,7 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
             <span className='hidden xxs:block'>CF&nbsp;</span>
             <span className='text-orange-primary-light'>#13</span>
           </div>
-          <CoinsContainer color='GreenGradient' size='ExtraLarge'>
+          <CoinsContainer color='GreenGradient' size='XL'>
             <IconContainer color='GreenPrimary' size='Medium'>
               <DiamondIcon />
             </IconContainer>

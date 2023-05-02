@@ -1,7 +1,9 @@
 import { FC, PropsWithChildren } from 'react'
 
-import QuantityCoinsContainer from '../../common/QuantityCoins/QuantityCoinsContainer'
-import { QuantityCoins } from '../../common/QuantityCoins/QuantityCoins'
+import CoinsContainer from '../../common/Coins/CoinsContainer'
+import DiamondIcon from '../../icons/DiamondIcon'
+import IconContainer from '../../common/Coins/IconContainer'
+import CoinsTypography from '../../common/Coins/CoinsTypography'
 
 interface GameLobbyFooterProps {
   selectedItemsLength: number
@@ -30,15 +32,21 @@ const GameLobbyFooter: FC<PropsWithChildren<GameLobbyFooterProps>> = ({
               &nbsp;skins
             </span>
           </div>
-          <QuantityCoinsContainer size='SMALL'>
-            <QuantityCoins textSize='text-base' quantity={selectedItemsCost} />
-          </QuantityCoinsContainer>
+          <CoinsContainer color='GreenGradientSecondary' size='Large'>
+            <IconContainer color='GreenPrimary' size='Medium'>
+              <DiamondIcon />
+            </IconContainer>
+            <CoinsTypography quantity={selectedItemsCost} fontSize='Size16' />
+          </CoinsContainer>
         </div>
       </div>
       {betGap && (
-        <div className='h-9 flex items-center gradient-green-secondary shadow-green-primary-20 rounded px-3 md:px-4'>
-          <QuantityCoins textSize='text-sm' quantity={betGap} />
-        </div>
+        <CoinsContainer color='GreenGradientSecondary' size='Large'>
+          <IconContainer color='GreenPrimary' size='Medium'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={betGap} fontSize='Size14' />
+        </CoinsContainer>
       )}
       <div className='flex items-center justify-between space-x-4'>{children}</div>
     </div>

@@ -1,9 +1,12 @@
 import { FC, PropsWithChildren } from 'react'
 
 import { Button } from '../../base/Button'
-import { QuantityCoins } from '../../common/QuantityCoins/QuantityCoins'
-import QuantityCoinsContainer from '../../common/QuantityCoins/QuantityCoinsContainer'
+
 import RefreshIcon from '../../icons/RefreshIcon'
+import CoinsContainer from '../../common/Coins/CoinsContainer'
+import IconContainer from '../../common/Coins/IconContainer'
+import CoinsTypography from '../../common/Coins/CoinsTypography'
+import DiamondIcon from '../../icons/DiamondIcon'
 
 interface GameLobbyHeaderProps {
   skinsQuantity: number
@@ -30,9 +33,12 @@ const GameLobbyHeader: FC<PropsWithChildren<GameLobbyHeaderProps>> = ({
           <span className='font-medium text-13 leading-4 text-blue-ocean-secondary hidden xxs:block'>
             Inventory value
           </span>
-          <QuantityCoinsContainer>
-            <QuantityCoins quantity={skinsPrice} />
-          </QuantityCoinsContainer>
+          <CoinsContainer color='GreenGradient' size='XL'>
+            <IconContainer color='GreenPrimary' size='Medium'>
+              <DiamondIcon />
+            </IconContainer>
+            <CoinsTypography quantity={skinsPrice} fontSize='Size14' />
+          </CoinsContainer>
         </div>
         <Button onClick={handleResetSelectedSkins}>
           <RefreshIcon />

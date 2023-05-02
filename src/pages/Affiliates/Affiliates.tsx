@@ -1,12 +1,14 @@
 import AffiliatesLeftTopIcon from '../../assets/img/affiliates_l_t.png'
 import AffiliatesLeftIcon from '../../assets/img/affiliates_l.png'
 import GiftIcon from '../../assets/img/gift.png'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 import { AffiliatesTable } from './AffiliatesTable'
 import { AffiliatesForm } from './AffilatesForm'
 import { Link } from 'react-router-dom'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 export const Affiliates = () => {
   return (
@@ -59,40 +61,34 @@ export const Affiliates = () => {
         <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <QuantityCoins
-              textSize='text-lg'
-              iconBgWidth='8'
-              iconBgHeight='8'
-              iconHeight='19'
-              iconWidth='19'
-              quantity={1500}
-            />
+            <CoinsContainer color='Transparent'>
+              <IconContainer color='GreenPrimary' size='XL'>
+                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
+              </IconContainer>
+              <CoinsTypography quantity={1500} fontSize='Size18' />
+            </CoinsContainer>
           </div>
         </div>
         <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <QuantityCoins
-              textSize='text-lg'
-              iconBgWidth='8'
-              iconBgHeight='8'
-              iconHeight='19'
-              iconWidth='19'
-              quantity={1500}
-            />
+            <CoinsContainer color='Transparent'>
+              <IconContainer color='GreenPrimary' size='XL'>
+                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
+              </IconContainer>
+              <CoinsTypography quantity={1500} fontSize='Size18' />
+            </CoinsContainer>
           </div>
         </div>
         <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <QuantityCoins
-              textSize='text-lg'
-              iconBgWidth='8'
-              iconBgHeight='8'
-              iconHeight='19'
-              iconWidth='19'
-              quantity={1500}
-            />
+            <CoinsContainer color='Transparent'>
+              <IconContainer color='GreenPrimary' size='XL'>
+                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
+              </IconContainer>
+              <CoinsTypography quantity={1500} fontSize='Size18' />
+            </CoinsContainer>
           </div>
         </div>
         <div className='px-2 w-full xxs:w-1/2 md:w-1/4 min-w-fit grow mb-4 flex flex-col'>
@@ -100,14 +96,12 @@ export const Affiliates = () => {
             AVAILABLE EARNINGS
           </div>
           <div className='border bg-green-primary/15 border-green-primary flex items-center justify-center py-8 px-4 rounded-lg grow'>
-            <QuantityCoins
-              textSize='text-lg'
-              iconBgWidth='8'
-              iconBgHeight='8'
-              iconHeight='19'
-              iconWidth='19'
-              quantity={25500}
-            />
+            <CoinsContainer color='Transparent'>
+              <IconContainer color='GreenPrimary' size='XL'>
+                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
+              </IconContainer>
+              <CoinsTypography quantity={25500} fontSize='Size18' />
+            </CoinsContainer>
             <Link to='/withdraw'>
               <Button color='GreenPrimary' variant='GreenGradient'>
                 <div className='flex items-center gap-1 uppercase leading-7 text-xs shadow-green-35 px-2 '>

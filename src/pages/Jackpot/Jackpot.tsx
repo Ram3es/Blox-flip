@@ -3,7 +3,6 @@ import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import JackpotUserCard from '../../components/common/Cards/JackpotUserCard'
 import GameInfoListItem from '../../components/common/GameInfoListItem'
-import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import StrippedBgItem from '../../components/common/StrippedBgItem'
 import VerifyBets from '../../components/common/VerifyBets'
 import Image from '../../components/base/Image'
@@ -12,6 +11,10 @@ import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
 import { IJackpotCard } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
 import JackpotJoinModal from './JackpotJoinModal'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
@@ -43,10 +46,15 @@ const Jackpot = () => {
                   <span className='text-green-primary'>23.59%</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='YOUR DEPOSIT'>
-                  <QuantityCoinsWithChildren quantity={3500} />
+                  <CoinsContainer>
+                    <IconContainer color='GreenPrimary' size='Small'>
+                      <DiamondIcon />
+                    </IconContainer>
+                    <CoinsTypography quantity={3500} fontSize='Size14' />
+                  </CoinsContainer>
                 </GameInfoListItem>
               </div>
-              <div className='w-full border-b border-blue-accent-secondary ' />
+              <div className='w-full border-b border-blue-accent-secondary' />
               <div
                 style={{ direction: 'rtl' }}
                 className='h-[490px] overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pl-2.5 '
@@ -73,10 +81,20 @@ const Jackpot = () => {
           <div className='flex flex-col gap-5 w-full'>
             <div className='flex w-full gap-3 items-end flex-wrap'>
               <GameInfoListItem label='MIN. BET'>
-                <QuantityCoinsWithChildren quantity={1500} />
+                <CoinsContainer>
+                  <IconContainer color='GreenPrimary' size='Small'>
+                    <DiamondIcon />
+                  </IconContainer>
+                  <CoinsTypography quantity={1500} fontSize='Size14' />
+                </CoinsContainer>
               </GameInfoListItem>
               <GameInfoListItem label='MAX. BET'>
-                <QuantityCoinsWithChildren quantity={115500} />
+                <CoinsContainer>
+                  <IconContainer color='GreenPrimary' size='Small'>
+                    <DiamondIcon />
+                  </IconContainer>
+                  <CoinsTypography quantity={115500} fontSize='Size14' />
+                </CoinsContainer>
               </GameInfoListItem>
               <GameInfoListItem label='MIN. ITEMS'>
                 <span>1</span>
@@ -121,12 +139,12 @@ const Jackpot = () => {
                     <span className='block'>has won the jackpot</span>
                   </div>
                 </div>
-                <div className='rounded text-green-primary border bg-green-primary/15 border-green-primary whitespace-nowrap px-3 py-2 leading-6 '>
-                  <QuantityCoinsWithChildren
-                    quantityClasses='flex items-center text-base font-bold'
-                    quantity={115500}
-                  />
-                </div>
+                <CoinsContainer color='GreenGradient' size='XXL'>
+                  <IconContainer color='GreenPrimary' size='Medium'>
+                    <DiamondIcon />
+                  </IconContainer>
+                  <CoinsTypography quantity={115500} fontSize='Size14' />
+                </CoinsContainer>
               </div>
             </StrippedBgItem>
             <div className='flex flex-col gap-y-2 p-0.5 opacity-50 '>

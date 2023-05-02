@@ -7,9 +7,12 @@ import { users } from '../../mocks/leaderboardMock'
 
 import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { PlaceCell } from '../../components/table/CellFormatters/PlaceCell'
 import { getSortedUsersByField } from '../../helpers/leaderboardHelpers'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 export const LeaderboardTable = () => {
   const [data] = useState<ISecondUser[]>([...getSortedUsersByField(users, 'level').slice(3)])
@@ -32,13 +35,27 @@ export const LeaderboardTable = () => {
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Wagered',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
+      cell: ({ row }) => (
+        <CoinsContainer>
+          <IconContainer color='GreenPrimary' size='Small'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={row.original.bet} fontColor='Green' />
+        </CoinsContainer>
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: ISecondUser) => row.profit, {
       id: 'profit',
       header: 'Reward',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.profit} color='green' />,
+      cell: ({ row }) => (
+        <CoinsContainer>
+          <IconContainer color='GreenPrimary' size='Small'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={row.original.profit} fontColor='Green' />
+        </CoinsContainer>
+      ),
       footer: (props) => props.column.id
     })
   ]

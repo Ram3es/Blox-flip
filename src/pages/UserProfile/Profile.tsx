@@ -107,7 +107,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
               <div className='text-sm font-extrabold  mb-1.5 uppercase'>{action.name}</div>
               <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary'>
                 <CoinsContainer color='Transparent'>
-                  <IconContainer color='GreenPrimary' size='ExtraLarge'>
+                  <IconContainer color='GreenPrimary' size='XL'>
                     <DiamondIcon className='w-[18.5px] h-[15.5px]' />
                   </IconContainer>
                   <CoinsTypography quantity={totalPriceSelected} fontSize='Size18' />

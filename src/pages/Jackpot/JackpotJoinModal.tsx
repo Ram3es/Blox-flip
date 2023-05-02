@@ -8,13 +8,16 @@ import ModalWrapper from '../../components/containers/ModalWrapper'
 import JackpotCoins from '../../components/icons/JackpotCoins'
 
 import { Button } from '../../components/base/Button'
-import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 
 import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { IJackpotCard } from '../../types/Jackpot'
 
 import { cards } from '../../mocks/cards'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 interface JackpotJoinModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
@@ -105,12 +108,12 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
       >
         <div className='flex flex-col items-start xs:flex-row xs:items-center gap-3'>
           <span className='text-xs uppercase text-gray-primary'>Minimum value</span>
-          <div className='flex bg-green-primary/50 items-center px-2.5 py-1.5 rounded border border-transparent'>
-            <QuantityCoinsWithChildren
-              quantityClasses='flex items-center text-sm font-bold [&>*:first-child]:w-6 [&>*:first-child]:h-6'
-              quantity={1500}
-            />
-          </div>
+          <CoinsContainer color='GreenGradientSecondary' size='Large'>
+            <IconContainer color='GreenPrimary' size='Medium'>
+              <DiamondIcon />
+            </IconContainer>
+            <CoinsTypography quantity={1500} fontSize='Size14' />
+          </CoinsContainer>
         </div>
         <Button color='GreenPrimary' onClick={handleBetJackpot}>
           <span className='h-9 py-2 px-5'>Create</span>

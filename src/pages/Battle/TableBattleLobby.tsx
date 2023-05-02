@@ -8,7 +8,6 @@ import {
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 import React, { FC, useEffect, useMemo, useState } from 'react'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { IBattlesInfo } from '../../mocks/battle'
 import { GameStatus } from '../../types/enums'
 
@@ -16,8 +15,13 @@ import BattleModeCell from '../../components/table/CellFormatters/BattleModeCell
 import ButtonsCell from '../../components/table/CellFormatters/ButtonsCell'
 import CasesCell from '../../components/table/CellFormatters/CasesCell'
 import RoundCell from '../../components/table/CellFormatters/RoundCell'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
-const columnHelper = createColumnHelper<Pick<IBattlesInfo, 'id' | 'status' | 'date' | 'gameSetting' | 'players' >>()
+const columnHelper =
+  createColumnHelper<Pick<IBattlesInfo, 'id' | 'status' | 'date' | 'gameSetting' | 'players'>>()
 const columnsMemo = [
   columnHelper.accessor(({ gameSetting }) => gameSetting.rounds, {
     id: 'rounds',
@@ -59,14 +63,12 @@ const columnsMemo = [
     id: 'price',
     header: () => 'Price',
     cell: ({ row: { original } }) => (
-      <QuantityCoins
-        quantity={original.gameSetting.price}
-        iconHeight='12'
-        iconWidth='15'
-        iconBgHeight='5'
-        iconBgWidth='5'
-        textSize='text-sm'
-      />
+      <CoinsContainer color='Transparent'>
+        <IconContainer color='GreenPrimary' size='Medium'>
+          <DiamondIcon />
+        </IconContainer>
+        <CoinsTypography quantity={original.gameSetting.price} fontSize='Size14' />
+      </CoinsContainer>
     ),
     footer: (props) => props.column.id
   }),
@@ -80,7 +82,7 @@ const columnsMemo = [
   columnHelper.accessor(({ gameSetting }) => gameSetting, {
     id: 'active',
     header: () => 'Active',
-    cell: ({ row: { original } }) => <ButtonsCell id={original.id} status={ original.status} />,
+    cell: ({ row: { original } }) => <ButtonsCell id={original.id} status={original.status} />,
     footer: (props) => props.column.id
   })
 ]

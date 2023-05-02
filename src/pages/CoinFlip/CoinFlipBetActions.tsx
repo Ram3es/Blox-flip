@@ -5,9 +5,11 @@ import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
 import type { BetToolkit } from '../../types/Bets'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin, setIsOpenCreateGame } =
@@ -44,7 +46,12 @@ const CoinFlipBetActions = () => {
           <div className='hidden md:block gradient-blue-secondary text-gray-primary text-13 rounded p-1'>
             Bet amount
           </div>
-          <QuantityCoins quantity={betAmount} />
+          <CoinsContainer>
+            <IconContainer color='GreenPrimary' size='Medium'>
+              <DiamondIcon />
+            </IconContainer>
+            <CoinsTypography quantity={betAmount} fontSize='Size16' />
+          </CoinsContainer>
         </div>
         <ToggleBets
           value={selectedBet}
