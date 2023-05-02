@@ -123,13 +123,15 @@ export const Header = () => {
         <div className='p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
           <Menu>
             <Menu.Button as={Button} variant='GreenOutlined'>
-              <div className='p-1.5 flex items-center justify-between'>
-                <CoinsContainer color='GreenGradientSecondary' size='Large'>
-                  <IconContainer color='GreenPrimary' size='Medium'>
-                    <DiamondIcon />
-                  </IconContainer>
-                  <CoinsTypography quantity={1500} fontSize='Size14' />
-                </CoinsContainer>
+              <div className='px-1.5 xs:pr-1.5 py-1.5 flex items-center justify-center xs:justify-between'>
+                <div className='hidden xs:block'>
+                  <CoinsContainer color='Transparent' size='Small'>
+                    <IconContainer color='GreenPrimary' size='Medium'>
+                      <DiamondIcon />
+                    </IconContainer>
+                    <CoinsTypography quantity={1500} fontSize='Size14' />
+                  </CoinsContainer>
+                </div>
                 <div className='bg-green-primary flex items-center rounded'>
                   <span className='w-6 h-6 flex items-center justify-center text-white'>
                     <PlusIcon />
