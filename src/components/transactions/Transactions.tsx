@@ -15,6 +15,10 @@ import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helper
 import { TransactionTypeCell } from '../table/CellFormatters/TransactionTypeCell'
 import { PaymentMethodCell } from '../table/PaymentMethodCell'
 import { StatusCell } from '../table/CellFormatters/StatusCell'
+import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsContainer from '../common/Coins/CoinsContainer'
+import IconContainer from '../common/Coins/IconContainer'
+import DiamondIcon from '../icons/DiamondIcon'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -79,7 +83,12 @@ export const Transactions = () => {
       id: 'amount',
       header: () => 'Amount',
       cell: ({ row }) => (
-        <QuantityCoins quantity={row.original.amount} isFailed={row.original.isError} />
+        <CoinsContainer color='Transparent'>
+          <IconContainer color={row.original.isError ? 'Gray' : 'Green'} size='Small'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={row.original.amount} />
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     })

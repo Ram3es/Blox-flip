@@ -13,6 +13,10 @@ import { GameCell } from '../table/CellFormatters/GameCell'
 import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
+import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsContainer from '../common/Coins/CoinsContainer'
+import IconContainer from '../common/Coins/IconContainer'
+import DiamondIcon from '../icons/DiamondIcon'
 
 export const History = () => {
   const [data] = useState<IHistory[]>([...mockHistory])
@@ -98,17 +102,29 @@ export const History = () => {
     columnHelper.accessor('wager', {
       id: 'wager',
       header: () => 'Wager',
-      cell: (props) => <QuantityCoins quantity={props.getValue()} />,
+      cell: (props) => (
+        <CoinsContainer color='Transparent'>
+          <IconContainer color='Green' size='Small'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={props.getValue()} />
+        </CoinsContainer>
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: IHistory) => row.profit, {
       id: 'profit',
       header: () => 'Profit',
       cell: ({ row }) => (
-        <QuantityCoins
-          quantity={row.original.profit}
-          color={row.original.isWinner ? 'green' : 'red'}
-        />
+        <CoinsContainer color='Transparent'>
+          <IconContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography
+            quantity={row.original.profit}
+            fontColor={row.original.isWinner ? 'Green' : 'Red'}
+          />
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     })

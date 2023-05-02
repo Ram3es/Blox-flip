@@ -1,7 +1,10 @@
 import { IJackpotPlayer } from '../../../mocks/jackpotPlayer'
 import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
-import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
+import CoinsContainer from '../Coins/CoinsContainer'
+import IconContainer from '../Coins/IconContainer'
+import CoinsTypography from '../Coins/CoinsTypography'
+import DiamondIcon from '../../icons/DiamondIcon'
 
 const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
   return (
@@ -23,15 +26,20 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
           JOINED
         </div>
         <div className='w-9 h-8 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue '>
-          <Image image={user.avatar} />
+          <UserAvatar image={user.avatar} />
         </div>
         <div className='max-w-[120px] truncate'>{user.userName}</div>
         <div className='flex  mx-1'>
           <UserLevel level={user.level} />
         </div>
       </div>
-      <div className='h-full flex rounded-r overflow-hidden gap-5 ml-2'>
-        <QuantityCoinsWithChildren quantity={116000} />
+      <div className='h-full flex items-center rounded-r overflow-hidden gap-5 ml-2'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color='GreenPrimary' size='Small'>
+            <DiamondIcon />
+          </IconContainer>
+          <CoinsTypography quantity={116000} fontSize='Size14' />
+        </CoinsContainer>
         <div
           style={{
             background:
