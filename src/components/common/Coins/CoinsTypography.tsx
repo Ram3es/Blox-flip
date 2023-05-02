@@ -11,16 +11,18 @@ enum ColorEnum {
 enum TextSizeEnum {
   Size13 = 'Size13',
   Size14 = 'Size14',
-  Size16 = 'Size16'
+  Size16 = 'Size16',
+  Size17 = 'Size17',
+  Size22 = 'Size22'
 }
 
-interface QuantityCoinsNewProps {
+interface CoinsTypographyProps {
   quantity?: number | null
   fontColor?: keyof typeof ColorEnum
   fontSize?: keyof typeof TextSizeEnum
 }
 
-const QuantityCoinsNew: FC<QuantityCoinsNewProps> = ({
+const CoinsTypography: FC<CoinsTypographyProps> = ({
   quantity,
   fontColor = ColorEnum.White,
   fontSize = TextSizeEnum.Size13
@@ -32,7 +34,11 @@ const QuantityCoinsNew: FC<QuantityCoinsNewProps> = ({
   })
 
   const fontSizeClasses = clsx('', {
-    'text-base': fontSize === TextSizeEnum.Size16
+    'text-13': fontSize === TextSizeEnum.Size13,
+    'text-sm': fontSize === TextSizeEnum.Size14,
+    'text-base': fontSize === TextSizeEnum.Size16,
+    'text-17': fontSize === TextSizeEnum.Size17,
+    'text-22': fontSize === TextSizeEnum.Size22
   })
 
   const renderQuantity = () => {
@@ -40,7 +46,7 @@ const QuantityCoinsNew: FC<QuantityCoinsNewProps> = ({
       return <>...</>
     }
 
-    if (!Number.isInteger(quantity) || quantity === 0) {
+    if (!Number.isInteger(quantity)) {
       return <>{formatNumber(quantity, 2)}</>
     }
 
@@ -57,4 +63,4 @@ const QuantityCoinsNew: FC<QuantityCoinsNewProps> = ({
   return <span className={`${fontColorClasses} ${fontSizeClasses}`}>{renderQuantity()}</span>
 }
 
-export default QuantityCoinsNew
+export default CoinsTypography

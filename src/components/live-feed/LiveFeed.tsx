@@ -14,10 +14,10 @@ import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/Table'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
-import DiamondContainer from '../common/QuantityCoinsNew/DiamondContainer'
+import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsContainer from '../common/Coins/CoinsContainer'
+import IconContainer from '../common/Coins/IconContainer'
 import DiamondIcon from '../icons/DiamondIcon'
-import QuantityCoinsNew from '../common/QuantityCoinsNew/QuantityCoinsNew'
-import QuantityCoinsNewContainer from '../common/QuantityCoinsNew/QuantityCoinsNewContainer'
 
 const RedDotIcon = () => {
   return (
@@ -92,12 +92,12 @@ export const LiveFeed = () => {
       id: 'bet',
       header: () => 'Bet',
       cell: ({ row }) => (
-        <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color='Green' size='Small'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color='Green' size='Small'>
             <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={row.original.bet} />
-        </QuantityCoinsNewContainer>
+          </IconContainer>
+          <CoinsTypography quantity={row.original.bet} />
+        </CoinsContainer>
       ),
       filterFn: (row, _columnId, value) => {
         return row.original.bet > value
@@ -114,12 +114,12 @@ export const LiveFeed = () => {
       id: 'profit',
       header: 'Profit',
       cell: ({ row }) => (
-        <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
             <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={row.original.profit} fontColor='Green' />
-        </QuantityCoinsNewContainer>
+          </IconContainer>
+          <CoinsTypography quantity={row.original.profit} fontColor='Green' />
+        </CoinsContainer>
       ),
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value

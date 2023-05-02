@@ -1,9 +1,12 @@
 import { getItemColorByName } from '../../../helpers/wheelHelpers'
 import { IWheelBet } from '../../../mocks/wheelBets'
 import { possibleBets } from '../../../types/Wheel'
+import DiamondIcon from '../../icons/DiamondIcon'
 import TeamGroupIcon from '../../icons/TeamGroupIcon'
 import { UserAvatar } from '../../user/UserAvatar'
-import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
+import CoinsContainer from '../Coins/CoinsContainer'
+import CoinsTypography from '../Coins/CoinsTypography'
+import IconContainer from '../Coins/IconContainer'
 
 interface IWheelBetCard {
   color: possibleBets
@@ -72,7 +75,12 @@ const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
                 {cutString(bet.username)}
               </span>
             </div>
-            <QuantityCoinsWithChildren quantity={bet.bet} />
+            <CoinsContainer color='Transparent'>
+              <IconContainer color='GreenPrimary' size='Small'>
+                <DiamondIcon />
+              </IconContainer>
+              <CoinsTypography quantity={bet.bet} fontSize='Size14' />
+            </CoinsContainer>
           </div>
         ))}
       </div>

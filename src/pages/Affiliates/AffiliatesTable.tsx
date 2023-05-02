@@ -7,10 +7,10 @@ import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
-import QuantityCoinsNewContainer from '../../components/common/QuantityCoinsNew/QuantityCoinsNewContainer'
 import DiamondIcon from '../../components/icons/DiamondIcon'
-import QuantityCoinsNew from '../../components/common/QuantityCoinsNew/QuantityCoinsNew'
-import DiamondContainer from '../../components/common/QuantityCoinsNew/DiamondContainer'
+import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsContainer from '../../components/common/Coins/CoinsContainer'
+import IconContainer from '../../components/common/Coins/IconContainer'
 
 export const AffiliatesTable = () => {
   const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])
@@ -35,12 +35,12 @@ export const AffiliatesTable = () => {
       id: 'bet',
       header: () => 'Wagered',
       cell: ({ row }) => (
-        <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color='Green' size='Small'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color='GreenPrimary' size='Small'>
             <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={row.original.bet} />
-        </QuantityCoinsNewContainer>
+          </IconContainer>
+          <CoinsTypography quantity={row.original.bet} />
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     }),
@@ -48,12 +48,12 @@ export const AffiliatesTable = () => {
       id: 'profit',
       header: 'Earned',
       cell: ({ row }) => (
-        <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color='Green' size='Small'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color='GreenPrimary' size='Small'>
             <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={row.original.profit} fontColor='Green' />
-        </QuantityCoinsNewContainer>
+          </IconContainer>
+          <CoinsTypography quantity={row.original.profit} fontColor='Green' />
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     })

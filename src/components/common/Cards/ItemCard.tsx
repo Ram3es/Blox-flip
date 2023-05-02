@@ -1,9 +1,12 @@
 import React, { FC } from 'react'
 import clsx from 'clsx'
 import { IMAGES } from '../../../constants/images'
-import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 import SelectedIcon from '../../icons/SelectedIcon'
 import { UserAvatar } from '../../user/UserAvatar'
+import CoinsContainer from '../Coins/CoinsContainer'
+import CoinsTypography from '../Coins/CoinsTypography'
+import IconContainer from '../Coins/IconContainer'
+import DiamondIcon from '../../icons/DiamondIcon'
 
 enum BorderColorEnum {
   Red = 'Red',
@@ -91,9 +94,12 @@ const ItemCard: FC<IItemCardProps> = ({
               SELECTED
             </div>
             <div className='absolute flex justify-center z-40 bottom-4 w-full left-0'>
-              <div className='flex bg-green-primary/15 items-center px-1.5 py-1 rounded'>
-                <QuantityCoinsWithChildren quantity={price} />
-              </div>
+              <CoinsContainer color='Transparent'>
+                <IconContainer color='GreenPrimary' size='Small'>
+                  <DiamondIcon />
+                </IconContainer>
+                <CoinsTypography quantity={price} fontSize='Size14' />
+              </CoinsContainer>
             </div>
           </div>
           <div
@@ -119,7 +125,12 @@ const ItemCard: FC<IItemCardProps> = ({
                   <span className=''>{name}</span>
                 </div>
                 <div className='flex items-center justify-center relative z-40 group-[.is-user]/item:justify-start'>
-                  <QuantityCoinsWithChildren quantity={price} />
+                  <CoinsContainer color='Transparent'>
+                    <IconContainer color='GreenPrimary' size='Small'>
+                      <DiamondIcon />
+                    </IconContainer>
+                    <CoinsTypography quantity={price} fontSize='Size14' />
+                  </CoinsContainer>
                 </div>
               </div>
               <div className='hidden group-[.is-user]/item:block mx-auto'>

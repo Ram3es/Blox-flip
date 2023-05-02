@@ -1,6 +1,5 @@
 import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { Button } from './Button'
 import DiamondIcon from '../icons/DiamondIcon'
 
@@ -9,9 +8,9 @@ import InputWithLabel from './InputWithLabel'
 
 import { formatNumber } from '../../helpers/numbers'
 import { IAmountState } from '../../types/Form'
-import QuantityCoinsNew from '../common/QuantityCoinsNew/QuantityCoinsNew'
-import QuantityCoinsNewContainer from '../common/QuantityCoinsNew/QuantityCoinsNewContainer'
-import DiamondContainer from '../common/QuantityCoinsNew/DiamondContainer'
+import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsContainer from '../common/Coins/CoinsContainer'
+import IconContainer from '../common/Coins/IconContainer'
 
 enum VariantEnum {
   Deposit = 'Deposit',
@@ -91,12 +90,12 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
               YOU ARE {variant === 'Deposit' ? 'DEPOSITING' : 'WITHDRAWING'}
             </div>
             <div className='text-17 flex items-center mx-auto mb-7'>
-              <QuantityCoinsNewContainer color='Transparent'>
-                <DiamondContainer color='Green'>
+              <CoinsContainer color='Transparent'>
+                <IconContainer color='Green'>
                   <DiamondIcon />
-                </DiamondContainer>
-                <QuantityCoinsNew quantity={values.amountNumber} />
-              </QuantityCoinsNewContainer>
+                </IconContainer>
+                <CoinsTypography quantity={values.amountNumber} />
+              </CoinsContainer>
             </div>
             <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
           </>

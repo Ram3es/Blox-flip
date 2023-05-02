@@ -13,10 +13,10 @@ import { GameCell } from '../table/CellFormatters/GameCell'
 import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
-import QuantityCoinsNewContainer from '../common/QuantityCoinsNew/QuantityCoinsNewContainer'
-import DiamondContainer from '../common/QuantityCoinsNew/DiamondContainer'
+import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsContainer from '../common/Coins/CoinsContainer'
+import IconContainer from '../common/Coins/IconContainer'
 import DiamondIcon from '../icons/DiamondIcon'
-import QuantityCoinsNew from '../common/QuantityCoinsNew/QuantityCoinsNew'
 
 export const History = () => {
   const [data] = useState<IHistory[]>([...mockHistory])
@@ -103,12 +103,12 @@ export const History = () => {
       id: 'wager',
       header: () => 'Wager',
       cell: (props) => (
-        <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color='Green' size='Small'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color='Green' size='Small'>
             <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew quantity={props.getValue()} />
-        </QuantityCoinsNewContainer>
+          </IconContainer>
+          <CoinsTypography quantity={props.getValue()} />
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     }),
@@ -116,15 +116,15 @@ export const History = () => {
       id: 'profit',
       header: () => 'Profit',
       cell: ({ row }) => (
-        <QuantityCoinsNewContainer color='Transparent'>
-          <DiamondContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
+        <CoinsContainer color='Transparent'>
+          <IconContainer color={row.original.isWinner ? 'Green' : 'Red'} size='Small'>
             <DiamondIcon />
-          </DiamondContainer>
-          <QuantityCoinsNew
+          </IconContainer>
+          <CoinsTypography
             quantity={row.original.profit}
             fontColor={row.original.isWinner ? 'Green' : 'Red'}
           />
-        </QuantityCoinsNewContainer>
+        </CoinsContainer>
       ),
       footer: (props) => props.column.id
     })
