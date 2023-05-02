@@ -39,7 +39,7 @@ const CoinsContainer: FC<PropsWithChildren<CoinsContainerProps>> = ({
   })
 
   const sizeClasses = clsx('px-1.5', {
-    'min-w-[108px] h-[31px]': size === SizeEnum.Small,
+    'min-w-[90px] h-[31px]': size === SizeEnum.Small,
     'min-w-[117px] h-[31px]': size === SizeEnum.Medium,
     'min-w-[135px] h-[35px]': size === SizeEnum.Large,
     'min-w-[127px] h-[40px]': size === SizeEnum.XL,

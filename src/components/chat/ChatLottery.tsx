@@ -3,17 +3,20 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
 import DiamondIcon from '../icons/DiamondIcon'
 import { ChatLotteryInput } from './ChatLotteryInput'
+import CoinsContainer from '../common/Coins/CoinsContainer'
+import IconContainer from '../common/Coins/IconContainer'
+import CoinsTypography from '../common/Coins/CoinsTypography'
 
 export const ChatLottery = () => {
   const { t } = useTranslation()
   return (
     <div className='mr-2 rounded border bg-green-primary/15 hover:bg-green-primary/30 cursor-pointer border-green-primary flex grow items-center justify-between p-1.5'>
-      <span className='w-5 h-5 shrink-0 text-center leading-6 bg-green-primary/20 rounded relative mr-2 text-green-primary'>
-        <DiamondIcon className='-inset-full absolute m-auto' width='15' height='12' />
-      </span>
-      <span className='font-bold text-13 mr-2 whitespace-nowrap'>
-        25, 500<span className='text-white/50'>.00</span>
-      </span>
+      <CoinsContainer color='Transparent' size='Small'>
+        <IconContainer color='GreenPrimary' size='Small'>
+          <DiamondIcon className='w-3 h-3' />
+        </IconContainer>
+        <CoinsTypography quantity={25500} />
+      </CoinsContainer>
       <Popover>
         <Popover.Button as={Button} color='GreenPrimary' variant='GreenGradient'>
           <span className='px-1.5 leading-7 text-11'>{t('chat.tip')}</span>

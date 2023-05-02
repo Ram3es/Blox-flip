@@ -73,7 +73,7 @@ const BattleCases = () => {
         ...state,
         gameSetting: {
           ...state.gameSetting,
-          currentRound: state.gameSetting.currentRound + 1
+          currentRound: Number(state.gameSetting.currentRound) + 1
         }
       }))
     }
