@@ -11,9 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
 import { PlusIcon } from '../icons/PlusIcon'
 import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
-import CoinsContainer from '../common/Coins/CoinsContainer'
-import IconContainer from '../common/Coins/IconContainer'
-import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 const routesGames: RouteItem[] = [
   { path: '/unboxing', name: 'cases' },
@@ -125,12 +123,7 @@ export const Header = () => {
             <Menu.Button as={Button} variant='GreenOutlined'>
               <div className='px-1.5 xs:pr-1.5 py-1.5 flex items-center justify-center xs:justify-between'>
                 <div className='hidden xs:block'>
-                  <CoinsContainer color='Transparent' size='Small'>
-                    <IconContainer color='GreenPrimary' size='Medium'>
-                      <DiamondIcon />
-                    </IconContainer>
-                    <CoinsTypography quantity={1500} fontSize='Size14' />
-                  </CoinsContainer>
+                  <CoinsWithDiamond containerSize='Small' typographyQuantity={1500} />
                 </div>
                 <div className='bg-green-primary flex items-center rounded'>
                   <span className='w-6 h-6 flex items-center justify-center text-white'>

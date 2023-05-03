@@ -14,10 +14,7 @@ import QuestionMark from '../../assets/img/question_mark.svg'
 import type { IItemCard } from '../../types/ItemCard'
 
 import { cards } from '../../mocks/cards'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
-import DiamondIcon from '../../components/icons/DiamondIcon'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 interface PlayerProps {
   opponent: boolean
@@ -51,12 +48,11 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(
         <div className='bg-blue-primary-secondary space-y-6 h-full'>
           <div className='mt-4 xs:mt-20 flex xs:flex-row flex-col items-start justify-around'>
             <div className='mt-[-16px] xs:mx-0 mx-auto flex bg-green-third'>
-              <CoinsContainer color='GreenGradient' size='Large'>
-                <IconContainer color='GreenPrimary' size='Medium'>
-                  <DiamondIcon />
-                </IconContainer>
-                <CoinsTypography quantity={isBot ? null : 124124} fontSize='Size16' />
-              </CoinsContainer>
+              <CoinsWithDiamond
+                containerColor='GreenGradient'
+                typographyQuantity={isBot ? null : 124124}
+                typographyFontSize='Size16'
+              />
             </div>
             <div className={avatarClasses}>
               <div className='w-21 h-21'>

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { unboxCard } from '../../mocks/cards'
 import { IItemCard } from '../../types/ItemCard'
 import { Button } from '../base/Button'
@@ -7,12 +7,9 @@ import UnboxingCard from '../common/Cards/UnboxingCard'
 import GreenTipSelect from '../common/GreenTipSelect'
 import SearchInput from '../common/SearchInput'
 import DaggersGreenGradient from '../icons/DaggersGreenGradient'
-import { useToolbarState } from '../../helpers/hooks/useTollbarState'
+import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import ModalWrapper from './ModalWrapper'
-import CoinsContainer from '../common/Coins/CoinsContainer'
-import IconContainer from '../common/Coins/IconContainer'
-import DiamondIcon from '../icons/DiamondIcon'
-import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 const BattleModal = ({
   isOpen,
@@ -42,7 +39,7 @@ const BattleModal = ({
     setAllCards((state) => [...state.filter((orgCard) => orgCard.id !== card.id)])
   }
   return isOpen
-    ? (<ModalWrapper
+    ? ( <ModalWrapper
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto  overflow-hidden'
       closeModal={onClose}
     >
@@ -71,12 +68,12 @@ const BattleModal = ({
       <div className='absolute z-[50] bottom-0 left-0 w-full  flex items-center justify-between py-2.5 px-6 bg-[#2F375F] '>
         <div className='flex items-center gap-2'>
           <span className='text-gray-primary text-sm'>Total cost</span>
-          <CoinsContainer color='GreenGradientSecondary' size='Large'>
-            <IconContainer color='GreenPrimary' size='Medium'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={totalPriceSelected} fontSize='Size16' />
-          </CoinsContainer>
+          <CoinsWithDiamond
+            containerColor='GreenGradientSecondary'
+            containerSize='Large'
+            typographyQuantity={totalPriceSelected}
+            typographyFontSize='Size16'
+          />
         </div>
         <Button
           onClick={() => {

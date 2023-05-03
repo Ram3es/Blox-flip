@@ -11,10 +11,7 @@ import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
 import { IJackpotCard } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
 import JackpotJoinModal from './JackpotJoinModal'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
@@ -46,12 +43,7 @@ const Jackpot = () => {
                   <span className='text-green-primary'>23.59%</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='YOUR DEPOSIT'>
-                  <CoinsContainer>
-                    <IconContainer color='GreenPrimary' size='Small'>
-                      <DiamondIcon />
-                    </IconContainer>
-                    <CoinsTypography quantity={3500} fontSize='Size14' />
-                  </CoinsContainer>
+                  <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={3500} />
                 </GameInfoListItem>
               </div>
               <div className='w-full border-b border-blue-accent-secondary' />
@@ -81,20 +73,10 @@ const Jackpot = () => {
           <div className='flex flex-col gap-5 w-full'>
             <div className='flex w-full gap-3 items-end flex-wrap'>
               <GameInfoListItem label='MIN. BET'>
-                <CoinsContainer>
-                  <IconContainer color='GreenPrimary' size='Small'>
-                    <DiamondIcon />
-                  </IconContainer>
-                  <CoinsTypography quantity={1500} fontSize='Size14' />
-                </CoinsContainer>
+                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
               </GameInfoListItem>
               <GameInfoListItem label='MAX. BET'>
-                <CoinsContainer>
-                  <IconContainer color='GreenPrimary' size='Small'>
-                    <DiamondIcon />
-                  </IconContainer>
-                  <CoinsTypography quantity={115500} fontSize='Size14' />
-                </CoinsContainer>
+                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
               </GameInfoListItem>
               <GameInfoListItem label='MIN. ITEMS'>
                 <span>1</span>
@@ -139,12 +121,11 @@ const Jackpot = () => {
                     <span className='block'>has won the jackpot</span>
                   </div>
                 </div>
-                <CoinsContainer color='GreenGradient' size='XXL'>
-                  <IconContainer color='GreenPrimary' size='Medium'>
-                    <DiamondIcon />
-                  </IconContainer>
-                  <CoinsTypography quantity={115500} fontSize='Size14' />
-                </CoinsContainer>
+                <CoinsWithDiamond
+                  containerColor='GreenGradient'
+                  containerSize='XL'
+                  typographyQuantity={115500}
+                />
               </div>
             </StrippedBgItem>
             <div className='flex flex-col gap-y-2 p-0.5 opacity-50 '>

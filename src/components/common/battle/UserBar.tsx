@@ -2,12 +2,9 @@ import clsx from 'clsx'
 import { IBattleUser } from '../../../mocks/battle'
 import { Button } from '../../base/Button'
 import DaggersIcons from '../../icons/DaggersIcons'
-import DiamondIcon from '../../icons/DiamondIcon'
 import { UserLevel } from '../../user/UserLevel'
-import CoinsTypography from '../Coins/CoinsTypography'
-import IconContainer from '../Coins/IconContainer'
-import CoinsContainer from '../Coins/CoinsContainer'
 import Image from '../../base/Image'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 const UserBar = ({
   user,
@@ -19,7 +16,7 @@ const UserBar = ({
   user: IBattleUser
   onJoinGame: Function
   amountPlayers: number
-  isPlayerGameWinners?: boolean
+  isPlayerGameWinners?: boolean[]
   isEndGame: boolean
 }) => {
   const isLostGame = isEndGame && !isPlayerGameWinners
@@ -48,12 +45,14 @@ const UserBar = ({
               <UserLevel level={user.level} />
             </div>
           </div>
-          <CoinsContainer color={`${isLostGame ? 'RedPrimary' : 'GreenDarken'}`} size='Small'>
-            <IconContainer color={`${isLostGame ? 'RedPrimary' : 'GreenPrimary'}`} size='Small'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={user?.wonDiamonds ?? 1421412} />
-          </CoinsContainer>
+          <CoinsWithDiamond
+            containerColor={`${isLostGame ? 'RedPrimary' : 'GreenDarken'}`}
+            containerSize='Small'
+            iconContainerColor={`${isLostGame ? 'RedPrimary' : 'GreenPrimary'}`}
+            iconContainerSize='Small'
+            iconClasses='w-[13px]'
+            typographyQuantity={user?.wonDiamonds ?? 1421412}
+          />
         </>
       )}
       {!user && (

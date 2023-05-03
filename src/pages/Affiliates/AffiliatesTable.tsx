@@ -6,10 +6,7 @@ import { users } from '../../mocks/affiliatesMock'
 import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 export const AffiliatesTable = () => {
   const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])
@@ -34,12 +31,12 @@ export const AffiliatesTable = () => {
       id: 'bet',
       header: () => 'Wagered',
       cell: ({ row }) => (
-        <CoinsContainer color='Transparent'>
-          <IconContainer color='GreenPrimary' size='Small'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={row.original.bet} />
-        </CoinsContainer>
+        <CoinsWithDiamond
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.bet}
+          typographyFontSize='Size13'
+        />
       ),
       footer: (props) => props.column.id
     }),
@@ -47,12 +44,12 @@ export const AffiliatesTable = () => {
       id: 'profit',
       header: 'Earned',
       cell: ({ row }) => (
-        <CoinsContainer color='Transparent'>
-          <IconContainer color='GreenPrimary' size='Small'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={row.original.profit} fontColor='Green' />
-        </CoinsContainer>
+        <CoinsWithDiamond
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.profit}
+          typographyFontSize='Size13'
+        />
       ),
       footer: (props) => props.column.id
     })

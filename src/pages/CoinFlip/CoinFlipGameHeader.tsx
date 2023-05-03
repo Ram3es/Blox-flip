@@ -8,10 +8,7 @@ import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import VersusBattleIcon from '../../assets/img/versus_battle.png'
 import QuestionMark from '../../assets/img/question_mark.svg'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 interface CoinFlipGameHeaderProps {
   withBot?: boolean
@@ -36,12 +33,11 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
             <span className='hidden xxs:block'>CF&nbsp;</span>
             <span className='text-orange-primary-light'>#13</span>
           </div>
-          <CoinsContainer color='GreenGradient' size='XL'>
-            <IconContainer color='GreenPrimary' size='Medium'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={14214.51} fontSize='Size14' />
-          </CoinsContainer>
+          <CoinsWithDiamond
+            containerColor='GreenGradient'
+            containerSize='Large'
+            typographyQuantity={14214.51}
+          />
         </div>
         <div className={skinIconClasses}>
           <img src={SkinBigIcon} alt='skin' />

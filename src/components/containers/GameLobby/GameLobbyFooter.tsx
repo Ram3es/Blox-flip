@@ -1,9 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
-
-import CoinsContainer from '../../common/Coins/CoinsContainer'
-import DiamondIcon from '../../icons/DiamondIcon'
-import IconContainer from '../../common/Coins/IconContainer'
-import CoinsTypography from '../../common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../common/CoinsWithDiamond'
 
 interface GameLobbyFooterProps {
   selectedItemsLength: number
@@ -32,21 +28,20 @@ const GameLobbyFooter: FC<PropsWithChildren<GameLobbyFooterProps>> = ({
               &nbsp;skins
             </span>
           </div>
-          <CoinsContainer color='GreenGradientSecondary' size='Large'>
-            <IconContainer color='GreenPrimary' size='Medium'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={selectedItemsCost} fontSize='Size16' />
-          </CoinsContainer>
+          <CoinsWithDiamond
+            containerColor='GreenGradientSecondary'
+            containerSize='Large'
+            typographyQuantity={selectedItemsCost}
+            typographyFontSize='Size16'
+          />
         </div>
       </div>
       {betGap && (
-        <CoinsContainer color='GreenGradientSecondary' size='Large'>
-          <IconContainer color='GreenPrimary' size='Medium'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={betGap} fontSize='Size14' />
-        </CoinsContainer>
+        <CoinsWithDiamond
+          containerColor='GreenGradientSecondary'
+          containerSize='Large'
+          typographyQuantity={betGap}
+        />
       )}
       <div className='flex items-center justify-between space-x-4'>{children}</div>
     </div>

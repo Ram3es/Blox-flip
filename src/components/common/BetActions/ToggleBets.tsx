@@ -13,7 +13,7 @@ interface ToggleBetsProps {
   buttonSize?: keyof typeof BaseSize
 }
 
-const ToggleBets = ({ value, handleChange, betToolkit, buttonSize = 'LARGE' }: ToggleBetsProps) => {
+const ToggleBets = ({ value, handleChange, betToolkit, buttonSize = 'Large' }: ToggleBetsProps) => {
   return (
     <RadioGroup value={value} onChange={handleChange}>
       <div className='flex items-center justify-between space-x-2'>
@@ -30,10 +30,9 @@ const ToggleBets = ({ value, handleChange, betToolkit, buttonSize = 'LARGE' }: T
                   className={clsx('px-2 items-center flex font-bold text-15', {
                     'text-green-primary': checked && toolkit.label !== 'Clear',
                     'text-gray-primary': !checked || toolkit.label === 'Clear',
-                    'py-2': buttonSize === BaseSize.LARGE,
-                    'py-1.5': buttonSize === BaseSize.MEDIUM,
-                    'py-1': buttonSize === BaseSize.SMALL
-
+                    'py-2': buttonSize === BaseSize.Large,
+                    'py-1.5': buttonSize === BaseSize.Medium,
+                    'py-1': buttonSize === BaseSize.Small
                   })}
                 >
                   {toolkit.label}

@@ -1,10 +1,7 @@
 import { IJackpotPlayer } from '../../../mocks/jackpotPlayer'
 import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
-import CoinsContainer from '../Coins/CoinsContainer'
-import IconContainer from '../Coins/IconContainer'
-import CoinsTypography from '../Coins/CoinsTypography'
-import DiamondIcon from '../../icons/DiamondIcon'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
   return (
@@ -34,12 +31,7 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
         </div>
       </div>
       <div className='h-full flex items-center rounded-r overflow-hidden gap-5 ml-2'>
-        <CoinsContainer color='Transparent'>
-          <IconContainer color='GreenPrimary' size='Small'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={116000} fontSize='Size14' />
-        </CoinsContainer>
+        <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={116000} />
         <div
           style={{
             background:

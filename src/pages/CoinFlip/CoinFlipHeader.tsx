@@ -6,9 +6,7 @@ import CoinFlipBetActions from './CoinFlipBetActions'
 import SignInModal from '../../components/containers/SignInModal'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const CoinFlipHeader = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -33,12 +31,11 @@ const CoinFlipHeader = () => {
             </span>
           </Button>
           {!state.user && (
-            <CoinsContainer color='GreenGradient' size='XL'>
-              <IconContainer color='GreenPrimary' size='Medium'>
-                <DiamondIcon />
-              </IconContainer>
-              <CoinsTypography quantity={14214.51} fontSize='Size14' />
-            </CoinsContainer>
+            <CoinsWithDiamond
+              containerSize='Large'
+              containerColor='GreenGradient'
+              typographyQuantity={14214.51}
+            />
           )}
         </div>
         <div className='flex items-center'>

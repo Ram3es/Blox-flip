@@ -1,10 +1,8 @@
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import { Button } from '../../components/base/Button'
 import { useNavigate } from 'react-router-dom'
+
+import { Button } from '../../components/base/Button'
 import ItemsIcon from '../../components/icons/ItemsIcon'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const UserItemsBar = ({
   isOwnProfile,
@@ -31,12 +29,7 @@ const UserItemsBar = ({
             {amountSelected} SELECTED
           </p>
           <div className='flex items-center rounded min-w-[100px] mr-2.5'>
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='Large'>
-                <DiamondIcon />
-              </IconContainer>
-              <CoinsTypography quantity={totalPriceSelected} fontSize='Size14' />
-            </CoinsContainer>
+            <CoinsWithDiamond typographyQuantity={totalPriceSelected} />
           </div>
           <Button
             onClick={() => {}}

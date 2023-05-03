@@ -3,16 +3,13 @@ import clsx from 'clsx'
 
 import { Button } from '../../components/base/Button'
 import Image from '../../components/base/Image'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'
 import ThirdPlaceIcon from '../../assets/img/coin3.svg'
 
-import { ISecondUser } from '../../types/User'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import type { ISecondUser } from '../../types/User'
 
 interface PodiumItemProps {
   user: ISecondUser
@@ -92,12 +89,12 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               </Button>
             </div>
             <div className='flex items-center justify-center mb-3'>
-              <CoinsContainer>
-                <IconContainer color='GreenPrimary' size={place === 1 ? 'Medium' : 'Small'}>
-                  <DiamondIcon className={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`} />
-                </IconContainer>
-                <CoinsTypography quantity={user.bet} fontSize={place === 1 ? 'Size16' : 'Size14'} />
-              </CoinsContainer>
+              <CoinsWithDiamond
+                iconContainerSize={place === 1 ? 'Medium' : 'Small'}
+                iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
+                typographyQuantity={user.bet}
+                typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
+              />
             </div>
             <div className='flex items-center mb-2'>
               <div className='bg-gradient-to-r from-green-primary/0 to-green-primary h-px mr-1 grow'></div>
@@ -114,16 +111,12 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               <div className='bg-gradient-to-r to-green-primary/0 from-green-primary h-px ml-1 grow'></div>
             </div>
             <div className='flex items-center justify-center'>
-              <CoinsContainer>
-                <IconContainer color='GreenPrimary' size={place === 1 ? 'Medium' : 'Small'}>
-                  <DiamondIcon className={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`} />
-                </IconContainer>
-                <CoinsTypography
-                  quantity={user.bet}
-                  fontSize={place === 1 ? 'Size16' : 'Size14'}
-                  fontColor='Green'
-                />
-              </CoinsContainer>
+              <CoinsWithDiamond
+                iconContainerSize={place === 1 ? 'Medium' : 'Small'}
+                iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
+                typographyQuantity={user.bet}
+                typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
+              />
             </div>
           </div>
         </div>

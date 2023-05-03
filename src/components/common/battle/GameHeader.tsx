@@ -7,10 +7,7 @@ import { CopyIconSecond } from '../../icons/CopyIconSecond'
 import UnboxingIconTitle from '../../icons/UnboxingIconTitle'
 import VerticalDivider from '../../icons/VerticalDivider'
 import { Button } from '../../base/Button'
-import CoinsTypography from '../Coins/CoinsTypography'
-import CoinsContainer from '../Coins/CoinsContainer'
-import IconContainer from '../Coins/IconContainer'
-import DiamondIcon from '../../icons/DiamondIcon'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 interface IGameHeaderProps {
   gameStatus: string
@@ -45,12 +42,14 @@ const GameHeader: FC<IGameHeaderProps> = ({
             {` / ${amountRounds}`}
           </div>
           <VerticalDivider className='mx-4' />
-          <CoinsContainer color='GreenDarken' size='Small'>
-            <IconContainer color='GreenPrimary' size='Small'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={currentBoxPrice} fontSize='Size16' />
-          </CoinsContainer>
+          <CoinsWithDiamond
+            containerColor='GreenDarken'
+            containerSize='Small'
+            iconContainerSize='Small'
+            iconClasses='w-[13px]'
+            typographyFontSize='Size16'
+            typographyQuantity={currentBoxPrice}
+          />
         </div>
       </div>
       <div className='flex flex-wrap items-center ml-4 mb-8  text-gray-primary'>
@@ -64,12 +63,11 @@ const GameHeader: FC<IGameHeaderProps> = ({
         <VerticalDivider className='mx-4 mb-5 xxs:mb-0' />
         <div className='flex items-center mb-5 xxs:mb-0'>
           <span className='mr-3'>Total cost</span>
-          <CoinsContainer color='GreenDarken' size='Large'>
-            <IconContainer color='GreenPrimary' size='Small'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={totalPrice} fontSize='Size16' />
-          </CoinsContainer>
+          <CoinsWithDiamond
+            containerColor='GreenDarken'
+            typographyFontSize='Size16'
+            typographyQuantity={currentBoxPrice}
+          />
         </div>
       </div>
     </NavHeader>

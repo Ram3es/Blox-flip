@@ -1,9 +1,6 @@
 import { FC } from 'react'
 import { IMAGES } from '../../../constants/images'
-import DiamondIcon from '../../icons/DiamondIcon'
-import CoinsContainer from '../Coins/CoinsContainer'
-import IconContainer from '../Coins/IconContainer'
-import CoinsTypography from '../Coins/CoinsTypography'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 interface IUnboxingCardProps {
   id: string
@@ -35,12 +32,7 @@ const UnboxingCard: FC<IUnboxingCardProps> = ({ id, name, price, onSelect }) => 
                 className='absolute object-contain w-full h-full'
               />
             </div>
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='Small'>
-                <DiamondIcon />
-              </IconContainer>
-              <CoinsTypography quantity={price} fontSize='Size14' />
-            </CoinsContainer>
+            <CoinsWithDiamond typographyQuantity={price} />
           </div>
         </div>
       </div>

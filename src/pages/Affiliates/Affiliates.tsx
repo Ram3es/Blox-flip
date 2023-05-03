@@ -4,11 +4,9 @@ import GiftIcon from '../../assets/img/gift.png'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 import { AffiliatesTable } from './AffiliatesTable'
-import { AffiliatesForm } from './AffilatesForm'
+import { AffiliatesForm } from './AffiliatesForm'
 import { Link } from 'react-router-dom'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 export const Affiliates = () => {
   return (
@@ -61,34 +59,34 @@ export const Affiliates = () => {
         <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='XL'>
-                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
-              </IconContainer>
-              <CoinsTypography quantity={1500} fontSize='Size18' />
-            </CoinsContainer>
+            <CoinsWithDiamond
+              iconContainerSize='XL'
+              iconClasses='w-[18.5px] h-[15.5px]'
+              typographyQuantity={1500}
+              typographyFontSize='Size18'
+            />
           </div>
         </div>
         <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='XL'>
-                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
-              </IconContainer>
-              <CoinsTypography quantity={1500} fontSize='Size18' />
-            </CoinsContainer>
+            <CoinsWithDiamond
+              iconContainerSize='XL'
+              iconClasses='w-[18.5px] h-[15.5px]'
+              typographyQuantity={1500}
+              typographyFontSize='Size18'
+            />
           </div>
         </div>
         <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='XL'>
-                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
-              </IconContainer>
-              <CoinsTypography quantity={1500} fontSize='Size18' />
-            </CoinsContainer>
+            <CoinsWithDiamond
+              iconContainerSize='XL'
+              iconClasses='w-[18.5px] h-[15.5px]'
+              typographyQuantity={1500}
+              typographyFontSize='Size18'
+            />
           </div>
         </div>
         <div className='px-2 w-full xxs:w-1/2 md:w-1/4 min-w-fit grow mb-4 flex flex-col'>
@@ -96,12 +94,12 @@ export const Affiliates = () => {
             AVAILABLE EARNINGS
           </div>
           <div className='border bg-green-primary/15 border-green-primary flex items-center justify-center py-8 px-4 rounded-lg grow'>
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='XL'>
-                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
-              </IconContainer>
-              <CoinsTypography quantity={25500} fontSize='Size18' />
-            </CoinsContainer>
+            <CoinsWithDiamond
+              iconContainerSize='XL'
+              iconClasses='w-[18.5px] h-[15.5px]'
+              typographyQuantity={1500}
+              typographyFontSize='Size18'
+            />
             <Link to='/withdraw'>
               <Button color='GreenPrimary' variant='GreenGradient'>
                 <div className='flex items-center gap-1 uppercase leading-7 text-xs shadow-green-35 px-2 '>

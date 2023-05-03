@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import ButtonsToggle from '../../components/base/ButtonToggle'
-import DiamondIcon from '../../components/icons/DiamondIcon'
 import UserProgress from '../../components/user/UserProgress'
 import ItemCard from '../../components/common/Cards/ItemCard'
-import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/ItemCard'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+
 import Preferences from './Preferences'
 import ItemsBar from './UserItemsBar'
-import { useLocation } from 'react-router-dom'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+
+import { cards } from '../../mocks/cards'
+import type { IItemCard } from '../../types/ItemCard'
 
 const user = {
   name: 'John Johnson',
@@ -106,12 +106,12 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
             >
               <div className='text-sm font-extrabold  mb-1.5 uppercase'>{action.name}</div>
               <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary'>
-                <CoinsContainer color='Transparent'>
-                  <IconContainer color='GreenPrimary' size='XL'>
-                    <DiamondIcon className='w-[18.5px] h-[15.5px]' />
-                  </IconContainer>
-                  <CoinsTypography quantity={totalPriceSelected} fontSize='Size18' />
-                </CoinsContainer>
+                <CoinsWithDiamond
+                  iconContainerSize='Large'
+                  iconClasses='w-[18.5px] h-[15.5px]'
+                  typographyQuantity={4200}
+                  typographyFontSize={'Size18'}
+                />
               </div>
             </div>
           ))}

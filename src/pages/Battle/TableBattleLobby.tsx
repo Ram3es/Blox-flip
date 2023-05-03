@@ -15,11 +15,7 @@ import BattleModeCell from '../../components/table/CellFormatters/BattleModeCell
 import ButtonsCell from '../../components/table/CellFormatters/ButtonsCell'
 import CasesCell from '../../components/table/CellFormatters/CasesCell'
 import RoundCell from '../../components/table/CellFormatters/RoundCell'
-
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 interface ITableProps {
   data: IBattlesInfo[]
@@ -72,12 +68,7 @@ const TableBattleLobby: FC<ITableProps> = ({ data, sortBy }) => {
       id: 'price',
       header: () => 'Price',
       cell: ({ row: { original } }) => (
-        <CoinsContainer color='Transparent'>
-          <IconContainer color='GreenPrimary' size='Medium'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={original.gameSetting.price} fontSize='Size14' />
-        </CoinsContainer>
+        <CoinsWithDiamond typographyQuantity={original.gameSetting.price} />
       ),
       footer: (props) => props.column.id
     }),

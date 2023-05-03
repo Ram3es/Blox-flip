@@ -14,10 +14,7 @@ import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helper
 import { TransactionTypeCell } from '../table/CellFormatters/TransactionTypeCell'
 import { PaymentMethodCell } from '../table/PaymentMethodCell'
 import { StatusCell } from '../table/CellFormatters/StatusCell'
-import CoinsTypography from '../common/Coins/CoinsTypography'
-import CoinsContainer from '../common/Coins/CoinsContainer'
-import IconContainer from '../common/Coins/IconContainer'
-import DiamondIcon from '../icons/DiamondIcon'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -82,12 +79,12 @@ export const Transactions = () => {
       id: 'amount',
       header: () => 'Amount',
       cell: ({ row }) => (
-        <CoinsContainer color='Transparent'>
-          <IconContainer color={row.original.isError ? 'Gray' : 'GreenPrimary'} size='Small'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={row.original.amount} />
-        </CoinsContainer>
+        <CoinsWithDiamond
+          iconContainerColor={row.original.isError ? 'Gray' : 'GreenPrimary'}
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.amount}
+        />
       ),
       footer: (props) => props.column.id
     })

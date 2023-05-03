@@ -1,7 +1,4 @@
-import DiamondIcon from '../../icons/DiamondIcon'
-import CoinsContainer from '../Coins/CoinsContainer'
-import IconContainer from '../Coins/IconContainer'
-import CoinsTypography from '../Coins/CoinsTypography'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 const PlayerStatusGame = ({
   isPlayerGameWinner,
@@ -19,15 +16,14 @@ const PlayerStatusGame = ({
       >
         {isPlayerGameWinner ? 'Winner' : 'Lost'}
       </span>
-      <CoinsContainer color={`${!isPlayerGameWinner ? 'RedPrimary' : 'GreenDarken'}`} size='Small'>
-        <IconContainer
-          color={`${!isPlayerGameWinner ? 'RedPrimary' : 'GreenPrimary'}`}
-          size='Small'
-        >
-          <DiamondIcon />
-        </IconContainer>
-        <CoinsTypography quantity={isPlayerGameWinner ? wonDiamonds ?? 0 : 0} fontSize='Size14' />
-      </CoinsContainer>
+      <CoinsWithDiamond
+        containerColor={`${!isPlayerGameWinner ? 'RedPrimary' : 'GreenDarken'}`}
+        containerSize='Small'
+        iconClasses='w-[13px]'
+        iconContainerColor={`${!isPlayerGameWinner ? 'RedPrimary' : 'GreenPrimary'}`}
+        iconContainerSize='Small'
+        typographyQuantity={isPlayerGameWinner ? wonDiamonds ?? 0 : 0}
+      />
     </div>
   )
 }

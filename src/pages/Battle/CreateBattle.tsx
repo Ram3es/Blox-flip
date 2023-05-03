@@ -23,10 +23,7 @@ import type { IUnboxCardCounter } from '../../types/ItemCard'
 
 import { gameSettings } from '../../constants/battle-cases'
 import { IBattlesInfo } from '../../mocks/battle'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const battleInitState = {
   rounds: 0,
@@ -162,12 +159,11 @@ const CreateBattle = () => {
             </div>
             <div className='flex items-center mt-3 xxs:mt-0'>
               <span className='text-gray-primary mr-2.5 font-semibold'>Total cost</span>
-              <CoinsContainer color='GreenDarken'>
-                <IconContainer color='GreenPrimary' size='Medium'>
-                  <DiamondIcon />
-                </IconContainer>
-                <CoinsTypography quantity={totalCost} fontSize='Size16' />
-              </CoinsContainer>
+              <CoinsWithDiamond
+                containerColor='GreenDarken'
+                typographyQuantity={totalCost}
+                typographyFontSize='Size16'
+              />
               <div className='w-px shrink-0 mx-4'>
                 <VerticalDivider />
               </div>

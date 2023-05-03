@@ -12,13 +12,10 @@ import clsx from 'clsx'
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
 import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import type { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 const CoinFlipGamesTable = () => {
   const [games] = useState<CoinFlipGame[]>(coinFlipMock)
@@ -41,12 +38,12 @@ const CoinFlipGamesTable = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <CoinsContainer color='GreenGradient' size='XL'>
-          <IconContainer color='GreenPrimary' size='Medium'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={14214.51} fontSize='Size14' />
-        </CoinsContainer>
+        <CoinsWithDiamond
+          containerSize='Large'
+          containerColor='GreenGradient'
+          typographyQuantity={14214.51}
+          typographyFontSize='Size16'
+        />
       ),
       footer: (props) => props.column.id
     }),

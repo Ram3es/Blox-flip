@@ -5,12 +5,10 @@ import DiamondIcon from '../icons/DiamondIcon'
 
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from './InputWithLabel'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 import { formatNumber } from '../../helpers/numbers'
 import { IAmountState } from '../../types/Form'
-import CoinsTypography from '../common/Coins/CoinsTypography'
-import CoinsContainer from '../common/Coins/CoinsContainer'
-import IconContainer from '../common/Coins/IconContainer'
 
 enum VariantEnum {
   Deposit = 'Deposit',
@@ -89,17 +87,11 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
             <div className='text-gray-primary mb-2 font-bold uppercase'>
               YOU ARE {variant === 'Deposit' ? 'DEPOSITING' : 'WITHDRAWING'}
             </div>
-            <div className='text-17 flex items-center mx-auto mb-7'>
-              <CoinsContainer color='Transparent'>
-                <IconContainer color='GreenPrimary'>
-                  <DiamondIcon />
-                </IconContainer>
-                <CoinsTypography quantity={values.amountNumber} />
-              </CoinsContainer>
+            <div className='flex items-center justify-center mb-7'>
+              <CoinsWithDiamond containerSize='Small' typographyQuantity={values.amountNumber} />
             </div>
             <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
           </>
-
           <Button
             type='submit'
             variant={variant !== VariantEnum.Withdraw ? 'GreenGradient' : 'HighlightDarken'}

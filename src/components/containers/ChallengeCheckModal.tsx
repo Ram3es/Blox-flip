@@ -1,14 +1,9 @@
 import ModalWrapper from './ModalWrapper'
-
-
 import ChallengeIcon from '../icons/ChallengeIcon'
 import CheckMarkRoundedIcon from '../icons/CheckMarkRoundedIcon'
 import ChallengesCard from '../common/Cards/ChallengesCard'
 import { IChallengeCard } from '../../mocks/challenges'
-import CoinsContainer from '../common/Coins/CoinsContainer'
-import IconContainer from '../common/Coins/IconContainer'
-import DiamondIcon from '../icons/DiamondIcon'
-import CoinsTypography from '../common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 interface ChallengeCheckModalProps {
   challenge: IChallengeCard | null
@@ -54,24 +49,19 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
                     .concat(challenge?.name.slice(1).toLowerCase()) ?? ''
                 } with minimum `}
                 <span className='ml-2 inline-block align-top'>
-                  <CoinsContainer color='Transparent'>
-                    <IconContainer color='GreenPrimary' size='Large'>
-                      <DiamondIcon />
-                    </IconContainer>
-                    <CoinsTypography quantity={challenge?.price ?? 0} fontSize='Size22' />
-                  </CoinsContainer>
+                  <CoinsWithDiamond
+                    iconContainerSize='Large'
+                    typographyQuantity={challenge?.price ?? 0}
+                    typographyFontSize='Size22'
+                  />
                 </span>{' '}
                 wins{' '}
                 <span className='ml-2 inline-block align-top'>
-                  <CoinsContainer color='Transparent'>
-                    <IconContainer color='GreenPrimary' size='Large'>
-                      <DiamondIcon />
-                    </IconContainer>
-                    <CoinsTypography
-                      quantity={(challenge?.price as number) * 10 ?? 0}
-                      fontSize='Size22'
-                    />
-                  </CoinsContainer>
+                  <CoinsWithDiamond
+                    iconContainerSize='Large'
+                    typographyQuantity={(challenge?.price as number) * 10 ?? 0}
+                    typographyFontSize='Size22'
+                  />
                 </span>
               </h3>
             </div>

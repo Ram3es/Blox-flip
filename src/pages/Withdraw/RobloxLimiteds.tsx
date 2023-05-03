@@ -1,15 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
+
 import ItemCard from '../../components/common/Cards/ItemCard'
-import DiamondIcon from '../../components/icons/DiamondIcon'
 import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+
 import { searchData } from '../../helpers/searchData'
 import { sortData } from '../../helpers/sortData'
+
 import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/ItemCard'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
+
+import type { IItemCard } from '../../types/ItemCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<IItemCard[]>(cards)
@@ -85,12 +86,7 @@ const RobloxLimiteds = () => {
                     <RemoveArrowBold iconClasses='group-hover mr-2' />
                     <span className='text-white'>{selectedCards.length} ITEMS</span>
                   </span>
-                  <CoinsContainer color='Transparent'>
-                    <IconContainer color='GreenPrimary' size='Large'>
-                      <DiamondIcon />
-                    </IconContainer>
-                    <CoinsTypography quantity={totalPriceSelected} fontSize='Size14' />
-                  </CoinsContainer>
+                  <CoinsWithDiamond typographyQuantity={totalPriceSelected} />
                 </div>
               </div>
               <div className='flex flex-wrap -mx-1 text-sm group/item is-added'>

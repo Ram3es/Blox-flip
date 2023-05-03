@@ -4,10 +4,7 @@ import dartsGold from '../../../assets/img/darts-small.svg'
 import ribbedGray from '../../../assets/img/ribbed-gray.png'
 
 import clsx from 'clsx'
-import CoinsTypography from '../Coins/CoinsTypography'
-import IconContainer from '../Coins/IconContainer'
-import CoinsContainer from '../Coins/CoinsContainer'
-import DiamondIcon from '../../icons/DiamondIcon'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 interface IChallengeCardProps {
   isClaimed?: boolean
@@ -17,7 +14,7 @@ interface IChallengeCardProps {
   wrapClasses?: string
 }
 
-const ChallengesCard: FC<IChaleendgCardProps> = ({
+const ChallengesCard: FC<IChallengeCardProps> = ({
   wrapClasses,
   price,
   isClaimed,
@@ -50,12 +47,11 @@ const ChallengesCard: FC<IChaleendgCardProps> = ({
               <span className='text-[20px] text-gradient-gold font-bold'>
                 {isClaimed ? 'Rewarded' : 'Rewards'}
               </span>
-              <CoinsContainer color='Transparent'>
-                <IconContainer color='GreenPrimary' size='Small'>
-                  <DiamondIcon />
-                </IconContainer>
-                <CoinsTypography quantity={price} fontSize='Size17' />
-              </CoinsContainer>
+              <CoinsWithDiamond
+                iconContainerSize='Small'
+                typographyQuantity={price}
+                typographyFontSize='Size17'
+              />
             </div>
           </div>
           <img

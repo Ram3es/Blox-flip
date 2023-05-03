@@ -12,10 +12,7 @@ import { IHistory } from '../../types/History'
 import { GameCell } from '../table/CellFormatters/GameCell'
 import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
-import CoinsTypography from '../common/Coins/CoinsTypography'
-import CoinsContainer from '../common/Coins/CoinsContainer'
-import IconContainer from '../common/Coins/IconContainer'
-import DiamondIcon from '../icons/DiamondIcon'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 export const History = () => {
   const [data] = useState<IHistory[]>([...mockHistory])
@@ -102,12 +99,7 @@ export const History = () => {
       id: 'wager',
       header: () => 'Wager',
       cell: (props) => (
-        <CoinsContainer color='Transparent'>
-          <IconContainer color='GreenPrimary' size='Small'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography quantity={props.getValue()} />
-        </CoinsContainer>
+        <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={props.getValue()} />
       ),
       footer: (props) => props.column.id
     }),
@@ -115,15 +107,12 @@ export const History = () => {
       id: 'profit',
       header: () => 'Profit',
       cell: ({ row }) => (
-        <CoinsContainer color='Transparent'>
-          <IconContainer color={row.original.isWinner ? 'GreenPrimary' : 'RedAccent'} size='Small'>
-            <DiamondIcon />
-          </IconContainer>
-          <CoinsTypography
-            quantity={row.original.profit}
-            fontColor={row.original.isWinner ? 'Green' : 'Red'}
-          />
-        </CoinsContainer>
+        <CoinsWithDiamond
+          iconContainerColor={row.original.isWinner ? 'GreenPrimary' : 'RedAccent'}
+          iconContainerSize='Small'
+          typographyQuantity={row.original.profit}
+          typographyFontColor={row.original.isWinner ? 'Green' : 'Red'}
+        />
       ),
       footer: (props) => props.column.id
     })

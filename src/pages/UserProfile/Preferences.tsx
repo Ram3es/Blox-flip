@@ -1,10 +1,9 @@
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+
 import boxIcon from '../../assets/img/box-with-gradient.svg'
 import productIcon from '../../assets/img/product-package.svg'
+
 import { IMAGES } from '../../constants/images'
-import DiamondIcon from '../../components/icons/DiamondIcon'
-import CoinsContainer from '../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../components/common/Coins/CoinsTypography'
 
 const Preferences = () => {
   return (
@@ -40,12 +39,12 @@ const Preferences = () => {
               alt='greenBox'
               className='mx-auto object-contain w-[100px] h-[100px] scale-75 xxs:scale-100'
             />
-            <CoinsContainer color='Transparent'>
-              <IconContainer color='GreenPrimary' size='XL'>
-                <DiamondIcon className='w-[18.5px] h-[15.5px]' />
-              </IconContainer>
-              <CoinsTypography quantity={4200} fontSize='Size18' />
-            </CoinsContainer>
+            <CoinsWithDiamond
+              iconContainerSize='Large'
+              iconClasses='w-[18.5px] h-[15.5px]'
+              typographyQuantity={4200}
+              typographyFontSize={'Size18'}
+            />
           </div>
         </div>
       </div>

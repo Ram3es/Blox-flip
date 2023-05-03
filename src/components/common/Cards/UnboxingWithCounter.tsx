@@ -1,10 +1,7 @@
 import { FC } from 'react'
 import { IMAGES } from '../../../constants/images'
 import Counter from '../../base/Counter'
-import CoinsContainer from '../Coins/CoinsContainer'
-import IconContainer from '../Coins/IconContainer'
-import CoinsTypography from '../Coins/CoinsTypography'
-import DiamondIcon from '../../icons/DiamondIcon'
+import CoinsWithDiamond from '../CoinsWithDiamond'
 
 interface IUnboxingCounterCardProps {
   id: string
@@ -29,12 +26,7 @@ const UnboxingWithCounter: FC<IUnboxingCounterCardProps> = ({
           <div className='bg-blue-accent-secondary/50 border border-blue-highlight rounded px-2 w-10/12 py-1 leading-4 font-semibold text-gray-primary mb-3 grow flex flex-col justify-center'>
             {name}
           </div>
-          <CoinsContainer color='Transparent'>
-            <IconContainer color='GreenPrimary' size='Small'>
-              <DiamondIcon />
-            </IconContainer>
-            <CoinsTypography quantity={price} fontSize='Size14' />
-          </CoinsContainer>
+          <CoinsWithDiamond typographyQuantity={price} />
           <div className='w-full pb-60% h-0 relative mb-4 mt-3'>
             <img
               src={IMAGES.greenBox}

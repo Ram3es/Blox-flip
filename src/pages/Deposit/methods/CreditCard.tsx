@@ -1,11 +1,9 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from 'react'
+import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
 import MethodsContainer from '../../../components/containers/PaymentMethodContainer'
 import DiamondIcon from '../../../components/icons/DiamondIcon'
-import CoinsContainer from '../../../components/common/Coins/CoinsContainer'
-import IconContainer from '../../../components/common/Coins/IconContainer'
-import CoinsTypography from '../../../components/common/Coins/CoinsTypography'
+import CoinsWithDiamond from '../../../components/common/CoinsWithDiamond'
 
 const CreditCardForm = () => {
   const [values, setValue] = useState({ cash: '', diamond: '' })
@@ -86,12 +84,7 @@ const CreditCardForm = () => {
           <div className='flex flex-col items-center'>
             <div className='text-gray-primary mb-2 font-bold uppercase'>YOU ARE BUYING</div>
             <div className='text-17 flex items-center mx-auto mb-7'>
-              <CoinsContainer color='Transparent'>
-                <IconContainer color='GreenPrimary'>
-                  <DiamondIcon />
-                </IconContainer>
-                <CoinsTypography quantity={Number(values.diamond)} />
-              </CoinsContainer>
+              <CoinsWithDiamond typographyQuantity={Number(values.diamond)} />
             </div>
             <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
             <Button
