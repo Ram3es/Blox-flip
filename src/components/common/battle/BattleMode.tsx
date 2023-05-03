@@ -39,6 +39,8 @@ const case2v2Icons: Record<number, ReactNode> = {
   2: <FriendlyOrange />
 }
 
+const initTeamState = { orange: { score: 0, teamPlayers: [] }, blue: { score: 0, teamPlayers: [] } }
+
 const getIcons = (type: string, index: number) => {
   switch (type) {
     case '2v2':
@@ -61,6 +63,7 @@ const BattleMode: FC<IBattleModeProps> = ({
 }) => {
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
   const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>([])
+  const [teamResult, setTeamResult] = useState<Record<string, { score: number, teamPlayers: Array<[string, IItemCard]> }>>(initTeamState)
   const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
   const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
   const [isSpinEnd, setIsSpinEnd] = useState(false)
@@ -69,6 +72,18 @@ const BattleMode: FC<IBattleModeProps> = ({
   const playersInGame = Array.from(Array(mode.requiredPlayers))
 
   const handleJoinUser = (idx: number) => {
+    if (mode.variant === '2v2') {
+      return onJoinUser(idx, {
+        dropsCards: [],
+        wonDiamonds: 0,
+        id: new Date().getTime().toString(),
+        avatar: '/src/assets/img/avatar_img.png',
+        name: 'CurrentUsr sfsgfsdg 7777',
+        level: 55,
+        team: idx > 1 ? 'orange' : 'blue'
+      })
+    }
+
     onJoinUser(idx, {
       dropsCards: [],
       wonDiamonds: 0,
@@ -95,37 +110,98 @@ const BattleMode: FC<IBattleModeProps> = ({
 
   useEffect(() => {
     const userWinningCards = Object.entries(winningCard)
+
     if (userWinningCards.length === players.length) {
-      const wonCard = userWinningCards.reduce((acc, card) => {
-        if (card[1].price > acc[1].price) {
-          acc = card
+      if (mode.variant !== '2v2') {
+        const wonCard = userWinningCards.reduce((acc, card) => {
+          if (card[1].price > acc[1].price) {
+            acc = card
+          }
+          return acc
+        })
+        const winnersPlayer = userWinningCards.filter(item => item[1].price === wonCard[1].price)
+
+        setCurrentRoundWinners(winnersPlayer)
+      }
+      if (mode.variant === '2v2') {
+        const formatedByTeam = players.reduce<Record<string, { score: number, teamPlayers: Array<[string, IItemCard]> }>>((acc, player) => {
+          if (!acc[player.team as string]) {
+            acc[player.team as string] = {
+              score: 0,
+              teamPlayers: []
+            }
+          }
+          acc[player.team as string].score += winningCard[player.id].price
+          acc[player.team as string].teamPlayers.push([player.id, winningCard[player.id]])
+
+          return acc
+        }, {})
+
+        Object.keys(formatedByTeam).forEach(key => setTeamResult(prev => (
+          {
+            ...prev,
+            [key]: {
+              ...prev[key],
+              teamPlayers: formatedByTeam[key].teamPlayers,
+              score: prev[key].score + formatedByTeam[key].score
+            }
+          })))
+
+        let bestScore = 0
+        let dreamTeam: Array<[string, IItemCard]> = []
+        for (const key in formatedByTeam) {
+          if (formatedByTeam[key].score === bestScore) {
+            dreamTeam = [...dreamTeam, ...formatedByTeam[key].teamPlayers]
+          }
+
+          if (formatedByTeam[key].score > bestScore) {
+            bestScore = formatedByTeam[key].score
+            dreamTeam = formatedByTeam[key].teamPlayers
+          }
         }
-        return acc
-      })
-      const winnersPlayer = userWinningCards.filter((item) => item[1].price === wonCard[1].price)
+        setCurrentRoundWinners(dreamTeam)
+      }
 
-      setCurrentRoundWinners(winnersPlayer)
-      setAllWinningCards(winningCard)
+      setallWinningCard(winningCard)
       setIsSpinEnd(true)
-
       setTimeout(() => {
         setCurrentRoundWinners([])
         setAllWinningCards({})
+        setWinningCard({})
         setIsSpinEnd(false)
       }, 2800)
     }
   }, [winningCard])
 
+  const getTeamWinnersId = (): string[] => {
+    let score = 0
+    let teamWinners: string[] = []
+    for (const key in teamResult) {
+      if (teamResult[key].score > score) {
+        score = teamResult[key].score
+        teamWinners = teamResult[key].teamPlayers.map(item => item[0])
+      }
+    }
+    return teamWinners
+  }
+
   useEffect(() => {
     if (isEndGame) {
-      const { wonDiamonds } = players.reduce((acc, player) => {
-        if (acc.wonDiamonds < player.wonDiamonds) {
-          acc = player
-        }
-        return acc
-      })
-      const winnersGame = players.filter((player) => player.wonDiamonds === wonDiamonds)
-      setGameWinnerPlayer(winnersGame)
+      if (mode.variant === '2v2') {
+        setGameWinnerPlayer(players.filter(player => getTeamWinnersId().includes(player.id)))
+      }
+
+      if (mode.variant !== '2v2') {
+        const { wonDiamonds } = players.reduce((acc, player) => {
+          if (acc.wonDiamonds < player.wonDiamonds) {
+            acc = player
+          }
+          return acc
+        })
+        const winnersGame = players.filter(player => player.wonDiamonds === wonDiamonds)
+
+        setGameWinnerPlayer(winnersGame)
+      }
     }
   }, [isEndGame])
 

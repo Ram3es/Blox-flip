@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
-import JackpotUserCard from '../../components/common/Cards/JackpotUserCard'
 import GameInfoListItem from '../../components/common/GameInfoListItem'
 import StrippedBgItem from '../../components/common/StrippedBgItem'
 import VerifyBets from '../../components/common/VerifyBets'
@@ -10,40 +9,75 @@ import { cards } from '../../mocks/cards'
 import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
 import { IJackpotCard } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
+import { sumItemsPrice } from '../../helpers/jackpotHelpers'
+import { Context } from '../../store/Store'
+import SignInModal from '../../components/containers/SignInModal'
+import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
 import JackpotJoinModal from './JackpotJoinModal'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+import JackpotModal from '../../components/containers/JackpotModal'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
-  const [timer, setTimer] = useState<number>(30)
+  const [isOpenLoginModal, setOpenLoginModal] = useState<boolean>(false)
   const [isOpenModal, setOpenModal] = useState<boolean>(false)
+  const [timer, setTimer] = useState<number>(30)
 
-  const toggleModal = () => setOpenModal((state) => !state)
+  const { state: { user } } = useContext(Context)
+  const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)
+
+  const toggleModal = () => setOpenModal(state => !state)
+  const calculateWinChance = useCallback((bet: number) => Number((bet / jackpot * 100).toFixed(2)), [joinedUsers])
 
   const joinUserToGame = () => {
-    toggleModal()
-    setUserJoined((state) => [...state])
+    if (user) {
+      toggleModal()
+    } else {
+      setOpenLoginModal(true)
+    }
   }
+
+  const onSubmitJackpotModal = (selectedCards: IJackpotCard[]) => {
+    setSelectedCard(selectedCards)
+    if (user) {
+      setUserJoined(state => [...state,
+        {
+          id: user?.id,
+          avatar: user?.avatar,
+          level: user?.level,
+          userName: user?.name,
+          deposit: sumItemsPrice(selectedCards)
+
+        }
+      ])
+    }
+  }
+
   return (
     <div className='max-w-[1200px] w-full mx-auto'>
       <div className='w-full flex-col gap-1'>
         <VerifyBets />
-        <div className='w-full flex flex-col-reverse ls:flex-row gap-10'>
-          <div className='flex flex-col md:flex-row ls:flex-col gap-2 ls:gap-6 items-center'>
-            <div className='w-[492px] h-[492px] flex justify-center items-center mx-0 xs:mx-auto md:mx-0 scale-75 xs:scale-100'>
-              <JackpotWheel timer={timer} setTimer={setTimer} />
+        <div className="w-full flex flex-col-reverse ls:flex-row gap-10">
+          <div className="flex flex-col md:flex-row ls:flex-col gap-2 ls:gap-6 items-center">
+            <div className="w-[492px] h-[492px] flex justify-center items-center mx-0 xs:mx-auto md:mx-0 scale-75 xs:scale-100">
+              <JackpotWheel
+                timer={timer}
+                setTimer={setTimer}
+                jackPot ={jackpot}
+                joinedUsers={joinedUsers}
+              />
             </div>
             <div className='max-w-[382px] w-full mx-auto flex flex-col gap-4'>
               <div className='flex gap-3 justify-between'>
                 <GameInfoListItem label='TOTAL PLAYERS'>
-                  <span>23</span>
+                  <span>{joinedUsers.length}</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='WIN CHANCE %'>
-                  <span className='text-green-primary'>23.59%</span>
+                  <span className='text-green-primary'>{calculateWinChance(joinedUsers.find(player => player.id === user?.id)?.deposit ?? 0)} %</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='YOUR DEPOSIT'>
-                  <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={3500} />
+                  <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={sumItemsPrice(selectedCards)} />
                 </GameInfoListItem>
               </div>
               <div className='w-full border-b border-blue-accent-secondary' />
@@ -88,23 +122,25 @@ const Jackpot = () => {
                 <div className='w-[121px] h-12 flex justify-center items-center'>Join Game</div>
               </Button>
             </div>
-            <div className='w-full border-b border-blue-accent-secondary ' />
-            <StrippedBgItem color='Blue'>
-              <div className='w-full flex flex-col items-center'>
-                <div className='flex items-center'>
-                  <span className='text-green-primary text-base font-bold uppercase mr-1'>
-                    Round starts in
-                  </span>
-                  {`0.${timer}s`}
+            <div className='w-full border-b border-blue-accent-secondary '/>
+              <StrippedBgItem color='Blue'>
+                <div className='w-full flex flex-col items-center'>
+                  <div className='flex items-center'>
+                    <span className='text-green-primary text-base font-bold uppercase mr-1'>Round starts in</span>
+                    {`0.${timer}s`}
+                  </div>
+                    <div className='text-gray-primary w-full text-center truncate'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
                 </div>
-                <div className='text-gray-primary w-full text-center truncate'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
-              </div>
-            </StrippedBgItem>
-            <div className='h-[310px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-6'>
-              <div className='flex flex-col gap-y-2 p-0.5 '>
-                {joinedUsers.map((player) => (
-                  <JackpotUserCard key={player.id} user={player} />
-                ))}
+              </StrippedBgItem>
+              <div className='h-[310px]  scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-6'>
+                <div className='flex flex-col  gap-y-2 p-0.5 '>
+                  {joinedUsers.map(player => (
+                    <JoinedUserRow
+                     key={player.id}
+                     user={player}
+                     userChance={calculateWinChance(player.deposit)}
+                    />
+                  ))}
               </div>
             </div>
             <div className='w-full border-b border-blue-accent-secondary ' />
@@ -128,15 +164,20 @@ const Jackpot = () => {
                 />
               </div>
             </StrippedBgItem>
-            <div className='flex flex-col gap-y-2 p-0.5 opacity-50 '>
-              {joinedUsers.map((player) => (
-                <JackpotUserCard key={player.id} user={player} />
-              ))}
-            </div>
+            <div className='flex flex-col  gap-y-2 p-0.5 opacity-50 '>
+                  {joinedUsers.map(player => (
+                    <JoinedUserRow
+                     key={player.id}
+                     user={player}
+                     userChance={calculateWinChance(player.deposit)}
+                    />
+                  ))}
+              </div>
           </div>
         </div>
       </div>
-      {isOpenModal && <JackpotJoinModal onClose={toggleModal} handleFunction={setSelectedCard} />}
+      <JackpotModal userAvatar={user?.avatar} isOpen={isOpenModal} onClose={toggleModal} onSubmit={onSubmitJackpotModal} />
+      <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )
 }

@@ -59,7 +59,7 @@ const SpinItems: FC<ISpinGameProps> = ({
       state[87] = winningCart
       return state
     })
-    setWinningCard(() => winningCart)
+    setWinningCard(winningCart)
   }
 
   const play = () => {

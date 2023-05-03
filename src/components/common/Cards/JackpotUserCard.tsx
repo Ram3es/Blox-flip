@@ -3,7 +3,7 @@ import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 
-const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
+const JoinedUserRow = ({ user, userChance }: { user: IJackpotPlayer, userChance: number }) => {
   return (
     <div className='w-full flex items-center justify-between rounded  relative bg-[#252942]'>
       <div
@@ -31,7 +31,7 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
         </div>
       </div>
       <div className='h-full flex items-center rounded-r overflow-hidden gap-5 ml-2'>
-        <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={116000} />
+        <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={user.deposit} />
         <div
           style={{
             background:
@@ -39,7 +39,7 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
           }}
           className=' h-full flex flex-col items-center justify-center grow  px-3 py-[20px] text-10 font-semibold'
         >
-          <div className='text-green-primary text-13'>15,88%</div>
+          <div className='text-green-primary text-13 min-w-[50px] text-center'>{userChance} %</div>
           <div className='leading-none'>CHANCE</div>
         </div>
       </div>
@@ -47,4 +47,4 @@ const JackpotUserCard = ({ user }: { user: IJackpotPlayer }) => {
   )
 }
 
-export default JackpotUserCard
+export default JoinedUserRow

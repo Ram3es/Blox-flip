@@ -11,7 +11,8 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'spin-slow': 'spin 2s linear infinite'
+        'spin-slow': 'spin 2s linear infinite',
+        'reset-card': 'reset 0.3s linear'
       },
       fontSize: {
         10: '0.625rem', //10px
@@ -169,6 +170,10 @@ module.exports = {
             transform: 'scale(2.4)',
             opacity: 0
           }
+        },
+        reset: {
+          '0%,': { rotate: '0deg'},
+          '100%': { rotate: '180deg'},
         }
       }
     }

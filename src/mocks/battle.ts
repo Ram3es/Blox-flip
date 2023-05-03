@@ -7,7 +7,7 @@ export type TMode = '1v1' | '1v1v1' | '1v1v1v1' | 'group' | '2v2'
 export interface IBattleUser extends Omit<IUser, 'progress'> {
   dropsCards: IItemCard[]
   wonDiamonds: number
-}
+  team?: 'orange' | 'blue'
 
 interface IGameSetting {
   rounds: number
@@ -23,6 +23,13 @@ export interface IBattlesInfo {
   players: [] | IBattleUser[]
   gameSetting: IGameSetting
   cases?: IUnboxCard[]
+}
+interface IGameSetting {
+  rounds: number
+  price: number
+  mode: IModeGame
+  currentRound?: number
+
 }
 export interface IModeGame {
   variant: TMode
