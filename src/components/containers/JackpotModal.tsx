@@ -2,13 +2,11 @@ import React, { useRef, useState } from 'react'
 import { cards } from '../../mocks/cards'
 import { Button } from '../base/Button'
 import ItemCard from '../common/Cards/ItemCard'
-import { QuantityCoinsWithChildren } from '../common/QuantityCoins/QuantityWithChildren'
 import JackpotCoins from '../icons/JackpotCoins'
 import ModalWrapper from './ModalWrapper'
 import { getSumElements } from '../../helpers/jackpotHelpers'
 import { IJackpotCard } from '../../types/Jackpot'
 import { IItemCard } from '../../types/ItemCard'
-import Reload from '../icons/Reload'
 
 const JackpotModal = ({ isOpen, onClose, onSubmit, userAvatar }: { userAvatar?: string, isOpen: boolean, onClose: Function, onSubmit: Function }) => {
   const [allCards, setAllCard] = useState<IItemCard[]>(cards)
@@ -64,17 +62,16 @@ const JackpotModal = ({ isOpen, onClose, onSubmit, userAvatar }: { userAvatar?: 
           </div>
           <span className='shrink-0 block ' >Inventory value</span>
           <div className='px-2 py-2 rounded border border-green-primary/50 bg-gradient-radial-80 from-green-primary-light/20 to-dark/0'>
-            <QuantityCoinsWithChildren
+            {/* <QuantityCoinsWithChildren
               quantity={getSumElements(allCards, 'price')}
               quantityClasses='flex items-center text-sm font-semibold '
-            />
+            /> */}
           </div>
           <div
             ref={btnRef}
             onClick={onReset}
             className='shrink-0 cursor-pointer p-2'
             >
-            <Reload />
           </div>
           </div>
         </div>
@@ -104,11 +101,11 @@ const JackpotModal = ({ isOpen, onClose, onSubmit, userAvatar }: { userAvatar?: 
                  {20}
                  <span className='text-xs uppercase ml-1'>Skins</span>
               </div>
-              <div className="rounded text-green-primary border bg-green-primary/15 border-green-primary/50 whitespace-nowrap px-3 py-1.5 leading-6 ">
+              {/* <div className="rounded text-green-primary border bg-green-primary/15 border-green-primary/50 whitespace-nowrap px-3 py-1.5 leading-6 ">
                   <QuantityCoinsWithChildren
                     quantityClasses='flex items-center text-base font-bold [&>*:first-child]:w-6 [&>*:first-child]:h-6'
                     quantity={getSumElements(selectedCards, 'price')}/>
-                </div>
+                </div> */}
             </div>
             </div>
           </div>
@@ -117,11 +114,11 @@ const JackpotModal = ({ isOpen, onClose, onSubmit, userAvatar }: { userAvatar?: 
               <span className='text-xs uppercase text-gray-primary '>
                   Minimum value
               </span>
-              <div className="flex bg-green-primary/50 items-center px-2.5 py-1.5 rounded border border-transparent">
+              {/* <div className="flex bg-green-primary/50 items-center px-2.5 py-1.5 rounded border border-transparent">
                 <QuantityCoinsWithChildren
                   quantityClasses='flex items-center text-sm font-bold [&>*:first-child]:w-6 [&>*:first-child]:h-6'
                   quantity={1500} />
-              </div>
+              </div> */}
             </div>
           <Button
             onClick={handleSubmit}

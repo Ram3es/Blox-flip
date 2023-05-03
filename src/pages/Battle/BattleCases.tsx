@@ -30,7 +30,7 @@ const BattleCases = () => {
       ...state,
       players: [
         ...state.players.map((player) => {
-          if (player.id === userId) {
+          if (player?.id === userId) {
             return {
               ...player,
               dropsCards: [...player.dropsCards, card],

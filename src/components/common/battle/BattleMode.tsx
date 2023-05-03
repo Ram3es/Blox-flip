@@ -162,7 +162,7 @@ const BattleMode: FC<IBattleModeProps> = ({
         setCurrentRoundWinners(dreamTeam)
       }
 
-      setallWinningCard(winningCard)
+      setAllWinningCards(winningCard)
       setIsSpinEnd(true)
       setTimeout(() => {
         setCurrentRoundWinners([])
