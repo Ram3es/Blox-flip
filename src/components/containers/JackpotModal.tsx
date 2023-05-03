@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { cards } from '../../mocks/cards'
 import { Button } from '../base/Button'
 import ItemCard from '../common/Cards/ItemCard'
@@ -10,17 +10,32 @@ import { IJackpotCard } from '../../types/Jackpot'
 import { IItemCard } from '../../types/ItemCard'
 import Reload from '../icons/Reload'
 
-const JackpotModal = ({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: Function, onSubmit: Function }) => {
+const JackpotModal = ({ isOpen, onClose, onSubmit, userAvatar }: { userAvatar?: string, isOpen: boolean, onClose: Function, onSubmit: Function }) => {
   const [allCards, setAllCard] = useState<IItemCard[]>(cards)
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
+
+  const btnRef = useRef<HTMLDivElement>(null)
 
   const onSelectCard = (id: string) => {
     const cardSelected = allCards.find(card => card.id === id)
     if (cardSelected) {
-      setSelectedCard(state => [...state, { ...cardSelected, avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg' }])
+      setSelectedCard(state => [...state, { ...cardSelected, avatar: userAvatar ?? '' }])
       setAllCard(state => [...state.filter(card => card.id !== id)])
     }
   }
+  const onReset = () => {
+    if (btnRef?.current) {
+      if (btnRef?.current?.classList.contains('animate-reset-card')) {
+        return
+      }
+      btnRef.current.classList.add('animate-reset-card')
+      setTimeout(() => btnRef?.current && btnRef.current.classList.remove('animate-reset-card'), 400)
+    }
+
+    setSelectedCard([])
+    setAllCard(cards)
+  }
+
   const handleSubmit = () => {
     onSubmit(selectedCards)
     onClose()
@@ -54,7 +69,11 @@ const JackpotModal = ({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose:
               quantityClasses='flex items-center text-sm font-semibold '
             />
           </div>
-          <div className='shrink-0'>
+          <div
+            ref={btnRef}
+            onClick={onReset}
+            className='shrink-0 cursor-pointer p-2'
+            >
             <Reload />
           </div>
           </div>

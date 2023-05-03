@@ -1,9 +1,13 @@
+import { IJackpotCard } from '../types/Jackpot'
+
 export const getSumElements = <T extends {}, K extends keyof T>(arr: T[], key: K): number => {
   if (arr.length && (typeof arr[0][key] === 'number')) {
     return arr.reduce((acc, el) => acc + (el[key] as number), 0)
   }
   return 0
 }
+
+export const getAngleTilt = (d: any): number => ((d.startAngle as number) + (d.endAngle as number)) * 90 / Math.PI
 
 export const getColorByIndex = (index: number) => {
   if ([0, 4, 8, 12, 16, 20, 24, 28, 32].includes(index)) {
@@ -19,13 +23,6 @@ export const getColorByIndex = (index: number) => {
     return ({ arcColor: '#199258', stroke: '#5DE6ED' })
   }
   return ({ arcColor: '#5D2EA9', stroke: '#438DDE' })
-
-  // switch (index) {
-  //   case 0: return ({ arcColor: '#F59A10', stroke: '#9857AD' })
-  //   case 1: return ({ arcColor: '#5D2EA9', stroke: '#438DDE' })
-  //   case 2: return ({ arcColor: '#27D5DA', stroke: '#847FF2' })
-  //   case 3: return ({ arcColor: '#199258', stroke: '#5DE6ED' })
-  //   default:
-  //     return ({ arcColor: '#5D2EA9', stroke: '' })
-  // }
 }
+
+export const sumItemsPrice = (items: IJackpotCard[]): number => items.reduce((acc, item) => acc + item.price, 0)
