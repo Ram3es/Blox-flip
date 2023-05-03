@@ -5,10 +5,10 @@ import { Listbox } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Button } from '../base/Button'
-import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
-
 import ModalWrapper from './ModalWrapper'
 import InputWithInlineLabel from '../common/InputWithInlineLabel'
+
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 import ChallengeIcon from '../icons/ChallengeIcon'
 
 interface ChallengeCreationModalProps {

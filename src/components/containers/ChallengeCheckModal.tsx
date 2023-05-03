@@ -14,7 +14,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='mt-4 md:mt-auto relative py-6 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
+      modalClasses='xs:mt-4 md:mt-auto relative py-6 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
     >
       <div className='space-y-6'>
         <div className='flex items-center justify-center flex-col gap-6 border-b-[1px] border-blue-accent-primary pb-8 mb-12 xs:px-28'>
@@ -24,7 +24,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
               challenges
             </h3>
           </div>
-          <span className='xs:text-xl font-medium'>
+          <span className='xs:text-xl font-medium text-center'>
             Below you will see the challenge you have completed, it’s requirements and what you were
             rewarded.
           </span>

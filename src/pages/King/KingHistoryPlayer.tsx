@@ -29,7 +29,7 @@ const KingHistoryPlayer = ({ user, isKing }: KingHistoryPlayerProps) => {
         <Image className='w-11 h-10' />
         {isKing && <img src={KingIcon} className='w-10 h-8 absolute bottom-9 right-7' />}
       </div>
-      <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={1500} />
+      <CoinsWithDiamond iconContainerSize='Small' iconClasses='w-3' typographyQuantity={1500} />
     </div>
   )
 }
