@@ -41,7 +41,7 @@ const KingSkinsHeader = ({
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
-      <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={user ? getCostByFieldName(user.items, 'price') : null} />
+      <CoinsWithDiamond typographyQuantity={user ? getCostByFieldName(user.items, 'price') : null} />
       <Button disabled variant='YellowOutlined'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
           {user && (

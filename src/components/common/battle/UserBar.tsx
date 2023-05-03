@@ -16,7 +16,7 @@ const UserBar = ({
   user: IBattleUser
   onJoinGame: Function
   amountPlayers: number
-  isPlayerGameWinners?: boolean[]
+  isPlayerGameWinners?: boolean
   isEndGame: boolean
 }) => {
   const isLostGame = isEndGame && !isPlayerGameWinners
