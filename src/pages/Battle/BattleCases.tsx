@@ -12,6 +12,8 @@ const BattleCases = () => {
   const [gameState, setState] = useState<IBattlesInfo>(location.state)
   const [usersFinishedRound, setFinishedRound] = useState<Record<string, number>>({})
 
+  // console.log(gameState, 'gameState')
+
   const updateRound = (userId: string) => {
     setFinishedRound(state => ({ ...state, [userId]: state[userId] + 1 || 1 }))
   }

@@ -101,7 +101,8 @@ const CreateBattle = () => {
           avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe_FBy0_PayvR5hOX1F6i5ItKIblV1_y7HTg&usqp=CAU',
           level: 17,
           dropsCards: [],
-          wonDiamonds: 0
+          wonDiamonds: 0,
+          team: 'blue'
         }, ...Array.from(Array(battleSettings.mode.requiredPlayers - 1))],
       id: '1234567',
       date: '2032-03-12T23:46:58.567Z',

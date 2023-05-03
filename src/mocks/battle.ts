@@ -9,6 +9,7 @@ export interface IBattleUser extends Omit<IUser, 'progress' > {
 
   dropsCards: IItemCard[]
   wonDiamonds: number
+  team?: 'orange' | 'blue'
 
 }
 export interface IBattlesInfo {
@@ -24,6 +25,7 @@ interface IGameSetting {
   price: number
   mode: IModeGame
   currentRound?: number
+
 }
 export interface IModeGame {
   variant: TMode
