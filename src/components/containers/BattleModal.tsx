@@ -39,7 +39,7 @@ const BattleModal = ({
     setAllCards((state) => [...state.filter((orgCard) => orgCard.id !== card.id)])
   }
   return isOpen
-    ? ( <ModalWrapper
+    ? (<ModalWrapper
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto  overflow-hidden'
       closeModal={onClose}
     >

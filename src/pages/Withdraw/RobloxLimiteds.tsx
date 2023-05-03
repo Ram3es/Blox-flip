@@ -19,7 +19,7 @@ const RobloxLimiteds = () => {
       sortBy?: string
       searchBy: string
       direction?: 'ASC' | 'DESC'
-      priceRange: { from: number; to: number }
+      priceRange: { from: number, to: number }
       selectedCards: IItemCard[]
       setSelectedCard: Dispatch<SetStateAction<IItemCard[]>>
     }>()

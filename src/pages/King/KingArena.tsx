@@ -19,7 +19,6 @@ import { getFightDuration, getPercentByDamage } from '../../helpers/kingHelpers'
 import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { IKingFight } from '../../types/King'
-import VerifyBets from '../../components/common/VerifyBets'
 
 const KingArena = () => {
   const { game, fight, setFight } = useKing()

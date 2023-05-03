@@ -12,7 +12,7 @@ import SelectedIcon from '../../icons/SelectedIcon'
 import { GameStatus } from '../../../types/enums'
 import { useBattleCase } from '../../../store/BattleCaseStore'
 
-const ButtonsCell = ({ id, status }: { id: string; status: string }) => {
+const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
   const { games } = useBattleCase()
 
   const handleJoinBattle = useCallback(() => {

@@ -37,7 +37,7 @@ const BattleModeCell = ({
               } w-11 shrink-0 py-2 mx-1 h-fit`}
             >
               {isFinished
-                ? (<DaggersIcons iconClasses='w-6 h-6 mx-auto text-gray-primary' />) 
+                ? (<DaggersIcons iconClasses='w-6 h-6 mx-auto text-gray-primary' />)
                 : (
                 <DaggersGreenGradient iconClasses=' w-6 h-6 mx-auto' />
                   )}
