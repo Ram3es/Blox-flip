@@ -40,11 +40,11 @@ const CoinFlipBetActions = () => {
   return (
     <div className='flex flex-col items-center space-y-4 xs:space-y-0 xs:flex-row xs:space-x-3'>
       <div className='flex items-center justify-center md:justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2 bg-dark/25 rounded py-2 md:h-11 px-2'>
-        <div className='flex md:space-x-2 md:min-w-[210px]'>
+        <div className='flex items-center md:space-x-2 md:min-w-[210px]'>
           <div className='hidden md:block gradient-blue-secondary text-gray-primary text-13 rounded p-1'>
             Bet amount
           </div>
-          <CoinsWithDiamond typographyQuantity={betAmount} typographyFontSize='Size16' />
+          <CoinsWithDiamond containerSize='Small' typographyQuantity={betAmount} typographyFontSize='Size16' />
         </div>
         <ToggleBets
           value={selectedBet}

@@ -3,9 +3,10 @@ export interface IItemCard {
   name: string
   price: number
   image: string
+  color: string
+  chance?: number
   sold?: boolean
   active?: boolean
-  color: string
   isSelected?: boolean
   hot?: boolean
 }

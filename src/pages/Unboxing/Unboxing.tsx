@@ -43,9 +43,9 @@ const Unboxing = () => {
   }, [sortOptions, filtered])
 
   return (
-    <div className='flex flex-col min-h-full text-sm '>
+    <div className='flex flex-col min-h-full text-sm'>
       <div className='max-w-1190 w-full m-auto'>
-        <div className='flex overflow-hidden mb-8 md:mb-12 text-xs '>
+        <div className='flex overflow-hidden mb-8 md:mb-12 text-xs'>
           {cards.map((card) => (
             <ItemCard
               key={card.id}
@@ -80,8 +80,8 @@ const Unboxing = () => {
               options={tabs}
               currentSelect={currentTab}
               peakFunction={setCurrentBoxes}
-              activeClasses=' text-green-primary li--active'
-              btnClasses='mx-2.5 flex flex-col justify-center  min-h-full py-5 group text-gray-primary hover:text-white '
+              activeClasses='text-green-primary li--active'
+              btnClasses='mx-2.5 flex flex-col justify-center min-h-full py-5 group text-gray-primary hover:text-white'
             />
           </div>
         </div>
