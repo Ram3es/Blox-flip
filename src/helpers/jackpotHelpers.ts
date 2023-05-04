@@ -1,12 +1,3 @@
-import { IJackpotCard } from '../types/Jackpot'
-
-export const getSumElements = <T extends {}, K extends keyof T>(arr: T[], key: K): number => {
-  if (arr.length && (typeof arr[0][key] === 'number')) {
-    return arr.reduce((acc, el) => acc + (el[key] as number), 0)
-  }
-  return 0
-}
-
 export const getAngleTilt = (d: any): number => ((d.startAngle as number) + (d.endAngle as number)) * 90 / Math.PI
 
 export const getColorByIndex = (index: number) => {
@@ -24,5 +15,3 @@ export const getColorByIndex = (index: number) => {
   }
   return ({ arcColor: '#5D2EA9', stroke: '#438DDE' })
 }
-
-export const sumItemsPrice = (items: IJackpotCard[]): number => items.reduce((acc, item) => acc + item.price, 0)

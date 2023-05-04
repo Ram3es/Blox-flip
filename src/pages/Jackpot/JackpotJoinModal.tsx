@@ -4,7 +4,7 @@ import GameLobbyHeader from '../../components/containers/GameLobby/GameLobbyHead
 import GameLobbyItemsList from '../../components/containers/GameLobby/GameLobbyItemsList'
 import GameLobbyFooter from '../../components/containers/GameLobby/GameLobbyFooter'
 import ModalWrapper from '../../components/containers/ModalWrapper'
-
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import JackpotCoins from '../../components/icons/JackpotCoins'
 
 import { Button } from '../../components/base/Button'
@@ -14,19 +14,18 @@ import { getCostByFieldName } from '../../helpers/numbers'
 import type { IJackpotCard } from '../../types/Jackpot'
 
 import { cards } from '../../mocks/cards'
-import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+
+const AVATAR_URL =
+'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
 
 interface JackpotJoinModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
-  handleFunction: Dispatch<SetStateAction<IJackpotCard[]>>
+  handleFunction: (cards: IJackpotCard[]) => void
 }
 
 const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) => {
   const [items, setItems] = useState<IJackpotCard[]>([])
   const selectedItems = items.filter((item) => item.isSelected)
-
-  const AVATAR_URL =
-    'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
 
   const initialItems = useMemo(() => {
     return cards.map((card) => ({
