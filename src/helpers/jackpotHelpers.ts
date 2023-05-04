@@ -1,4 +1,5 @@
-export const getAngleTilt = (d: any): number => ((d.startAngle as number) + (d.endAngle as number)) * 90 / Math.PI
+export const getAngleTilt = (d: any): number =>
+  (((d.startAngle as number) + (d.endAngle as number)) * 90) / Math.PI
 
 export const getColorByIndex = (index: number) => {
   if ([0, 4, 8, 12, 16, 20, 24, 28, 32].includes(index)) {
@@ -13,5 +14,5 @@ export const getColorByIndex = (index: number) => {
   if ([3, 7, 11, 15, 19, 23, 27, 31, 35].includes(index)) {
     return { arcColor: '#199258', stroke: '#5DE6ED' }
   }
-  return ({ arcColor: '#5D2EA9', stroke: '#438DDE' })
+  return { arcColor: '#5D2EA9', stroke: '#438DDE' }
 }
