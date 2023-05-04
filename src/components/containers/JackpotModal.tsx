@@ -4,7 +4,6 @@ import { Button } from '../base/Button'
 import ItemCard from '../common/Cards/ItemCard'
 import JackpotCoins from '../icons/JackpotCoins'
 import ModalWrapper from './ModalWrapper'
-import { getSumElements } from '../../helpers/jackpotHelpers'
 import { IJackpotCard } from '../../types/Jackpot'
 import { IItemCard } from '../../types/ItemCard'
 
