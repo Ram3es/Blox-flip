@@ -199,7 +199,7 @@ const KingArena = () => {
         </div>
       </div>
       <div className='relative'>
-      {fight && <div ref={animateKingRef} className='absolute  top-[250px] xs:-top-[90px] -scale-x-75 ls:-top-[70%] -left-20  scale-75 ls:scale-x-75'/>}
+      {fight && <div ref={animateKingRef} className='absolute  top-[250px] xs:top-[90px] -scale-x-75 ls:-top-[70%] left-0 ls:-left-20  scale-75 ls:scale-x-75 '/>}
       </div>
       </div>
 
