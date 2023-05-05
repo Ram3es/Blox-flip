@@ -1,4 +1,4 @@
-import { UserAvatar } from '../../user/UserAvatar'
+import Image from '../../base/Image'
 import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
 
@@ -10,7 +10,7 @@ interface CFUserInfoCellProps {
 const CFUserInfoCell = ({ userAvatar = '', coin }: CFUserInfoCellProps) => {
   return (
     <div className='relative min-w-[6rem]'>
-      <UserAvatar
+      <Image
         image={userAvatar}
         className='h-14 w-14 border border-blue-highlight rounded radial--blue'
       />

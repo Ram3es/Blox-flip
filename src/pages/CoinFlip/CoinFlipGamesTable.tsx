@@ -12,8 +12,7 @@ import clsx from 'clsx'
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
 import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import type { CoinFlipGame } from '../../types/CoinFlip'
 import { coinFlipMock } from '../../mocks/coinFlipMock'
@@ -39,18 +38,25 @@ const CoinFlipGamesTable = () => {
       id: 'total',
       header: () => 'Total',
       cell: (props) => (
-        <div className='w-32 h-10'>
-          <QuantityCoinsContainer>
-            <QuantityCoins quantity={14214.51} />
-          </QuantityCoinsContainer>
-        </div>
+        <CoinsWithDiamond
+          containerSize='Large'
+          containerColor='GreenGradient'
+          typographyQuantity={14214.51}
+          typographyFontSize='Size16'
+        />
       ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('status', {
       id: 'status',
       header: () => 'Status',
-      cell: ({ row }) => <CFStatusCell gameId='rqwsrqwsrq2' status={row.original.status} coin={row.original.winCoin} />,
+      cell: ({ row }) => (
+        <CFStatusCell
+          gameId='rqwsrqwsrq2'
+          status={row.original.status}
+          coin={row.original.winCoin}
+        />
+      ),
       footer: (props) => props.column.id
     })
   ]

@@ -1,11 +1,11 @@
 import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { Button } from './Button'
 import DiamondIcon from '../icons/DiamondIcon'
 
 import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from './InputWithLabel'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 import { formatNumber } from '../../helpers/numbers'
 import { IAmountState } from '../../types/Form'
@@ -87,27 +87,19 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
             <div className='text-gray-primary mb-2 font-bold uppercase'>
               YOU ARE {variant === 'Deposit' ? 'DEPOSITING' : 'WITHDRAWING'}
             </div>
-            <div className='text-17 flex items-center mx-auto mb-7'>
-              <QuantityCoins
-                quantity={values.amountNumber}
-                textSize='text-base'
-                iconBgHeight='6'
-                iconBgWidth='6'
-                iconHeight='12'
-                iconWidth='14'
-              />
+            <div className='flex items-center justify-center mb-7'>
+              <CoinsWithDiamond containerSize='Small' typographyQuantity={values.amountNumber} />
             </div>
             <div className='bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7'></div>
           </>
-
           <Button
             type='submit'
-            variant={variant !== VariantEnum.Withdraw ? 'Gradient' : 'HighlightDarken'}
+            variant={variant !== VariantEnum.Withdraw ? 'GreenGradient' : 'HighlightDarken'}
             color={variant === VariantEnum.Deposit ? 'GreenPrimary' : 'BlueHighlight'}
           >
             <div className='flex items-center justify-center px-24 py-3 text-15'>
               <span className='min-w-fit shrink-0 mr-1.5'>
-                <DiamondIcon width='20' height='17' />
+                <DiamondIcon className='w-[20px] h-[17px]' />
               </span>
               {variant === VariantEnum.Deposit ? 'Deposit' : 'Withdraw'}
             </div>

@@ -2,15 +2,14 @@ import { ReactNode, ButtonHTMLAttributes, forwardRef } from 'react'
 import clsx from 'clsx'
 
 enum VariantEnum {
-  Standard = 'Standard',
-  Gradient = 'Gradient',
-  Outlined = 'Outlined',
+  GreenOutlined = 'GreenOutlined',
+  GreenOutlinedSecondary = 'GreenOutlinedSecondary',
+  GreenGradient = 'GreenGradient',
   Highlight = 'Highlight',
   HighlightDarken = 'HighlightDarken',
   YellowOutlined = 'YellowOutlined',
   YellowOutlinedSecondary = 'YellowOutlinedSecondary',
-  GreenOutlinedSecondary = 'GreenOutlinedSecondary',
-  BlueOutlined = 'BlueOutlined'
+  BlueGolfOutlined = 'BlueGolfOutlined'
 }
 
 enum ColorEnum {
@@ -31,7 +30,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ color, variant = VariantEnum.Standard, children, ...buttonProps }, ref) => {
+  ({ color, variant, children, ...buttonProps }, ref) => {
     const colorClasses = clsx('', {
       'bg-green-primary': color === ColorEnum.GreenPrimary,
       'bg-green-primary/20': color === ColorEnum.GreenPrimaryOpacity,
@@ -45,20 +44,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantClasses = clsx('flex items-center rounded', {
       'font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 shadow-green-20':
-        variant === VariantEnum.Gradient,
-      'text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary ':
-        variant === VariantEnum.Outlined,
+        variant === VariantEnum.GreenGradient,
+      'text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary':
+        variant === VariantEnum.GreenOutlined,
+      'border border-green-primary gradient-green-secondary shadow-green-primary-20':
+        variant === VariantEnum.GreenOutlinedSecondary,
       'text-gray-primary bg-blue-highlight border border-blue-highlight hover:text-white':
         variant === VariantEnum.Highlight,
       'text-gray-primary blue-highlight hover:bg-blue-accent':
         variant === VariantEnum.HighlightDarken,
       'border border-orange-primary-light gradient-yellow shadow-orange-primary-light-20':
         variant === VariantEnum.YellowOutlined,
-      'border border-green-primary gradient-green-secondary shadow-green-primary-20':
-        variant === VariantEnum.GreenOutlinedSecondary,
       'border border-yellow-secondary bg-yellow-secondary bg-opacity-25':
         variant === VariantEnum.YellowOutlinedSecondary,
-      'border border-blue-golf bg-blue-golf bg-opacity-25': variant === VariantEnum.BlueOutlined
+      'border border-blue-golf bg-blue-golf bg-opacity-25': variant === VariantEnum.BlueGolfOutlined
     })
 
     return (

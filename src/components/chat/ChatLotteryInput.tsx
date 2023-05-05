@@ -33,7 +33,7 @@ export const ChatLotteryInput = () => {
         value={tipCoins}
         onChange={handleTipRain}
       />
-      <Button variant='Gradient' color='GreenPrimary' type='submit'>
+      <Button variant='GreenGradient' color='GreenPrimary' type='submit'>
         <span className='flex items-center justify-center w-14 whitespace-nowrap leading-7 text-11'>
           {t('chat.tip')}
         </span>

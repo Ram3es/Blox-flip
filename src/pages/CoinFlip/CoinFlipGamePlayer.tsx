@@ -3,10 +3,8 @@ import { forwardRef, useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 import CoinFlipGameItems from './CoinFlipGameItems'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import WinPercent from '../../components/common/WinPercent'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import CoinFlipHead from '../../assets/img/head_medium.png'
@@ -16,6 +14,7 @@ import QuestionMark from '../../assets/img/question_mark.svg'
 import type { IItemCard } from '../../types/ItemCard'
 
 import { cards } from '../../mocks/cards'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 interface PlayerProps {
   opponent: boolean
@@ -49,13 +48,15 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(
         <div className='bg-blue-primary-secondary space-y-6 h-full'>
           <div className='mt-4 xs:mt-20 flex xs:flex-row flex-col items-start justify-around'>
             <div className='mt-[-16px] xs:mx-0 mx-auto flex bg-green-third'>
-              <QuantityCoinsContainer size='SMALL'>
-                <QuantityCoins quantity={isBot ? null : 124124} />
-              </QuantityCoinsContainer>
+              <CoinsWithDiamond
+                containerColor='GreenGradient'
+                typographyQuantity={isBot ? null : 124124}
+                typographyFontSize='Size16'
+              />
             </div>
             <div className={avatarClasses}>
               <div className='w-21 h-21'>
-                <UserAvatar image={isBot ? QuestionMark : ''} />
+                <Image image={isBot ? QuestionMark : ''} />
               </div>
             </div>
             <div className='ml-1 xs:ml-0 xs:mt-[-24px] xs:space-y-3 text-center'>

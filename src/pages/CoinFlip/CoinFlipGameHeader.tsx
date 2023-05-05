@@ -2,14 +2,13 @@ import { forwardRef } from 'react'
 
 import clsx from 'clsx'
 
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import AvatarWithUsername from '../../components/common/AvatarWithUsername'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 
 import SkinBigIcon from '../../assets/img/skin_big.png'
 import VersusBattleIcon from '../../assets/img/versus_battle.png'
 import QuestionMark from '../../assets/img/question_mark.svg'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 interface CoinFlipGameHeaderProps {
   withBot?: boolean
@@ -34,9 +33,11 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
             <span className='hidden xxs:block'>CF&nbsp;</span>
             <span className='text-orange-primary-light'>#13</span>
           </div>
-          <QuantityCoinsContainer>
-            <QuantityCoins quantity={14214.51} />
-          </QuantityCoinsContainer>
+          <CoinsWithDiamond
+            containerColor='GreenGradient'
+            containerSize='Large'
+            typographyQuantity={14214.51}
+          />
         </div>
         <div className={skinIconClasses}>
           <img src={SkinBigIcon} alt='skin' />

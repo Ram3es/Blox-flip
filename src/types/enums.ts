@@ -16,11 +16,21 @@ export enum PaymentMethod {
 }
 
 export enum BaseSize {
-  SMALL = 'SMALL',
-  MEDIUM = 'MEDIUM',
-  LARGE = 'LARGE',
+  Small = 'Small',
+  Medium = 'Medium',
+  Large = 'Large',
   XL = 'XL',
-  XXL = 'XXL'
+  XXL = 'XXL',
+}
+
+export enum TypographySizeEnum {
+  Size12 = 'Size12',
+  Size13 = 'Size13',
+  Size14 = 'Size14',
+  Size16 = 'Size16',
+  Size17 = 'Size17',
+  Size18 = 'Size18',
+  Size22 = 'Size22'
 }
 
 export enum GameStatus {

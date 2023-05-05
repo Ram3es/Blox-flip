@@ -7,10 +7,10 @@ import { Menu } from '@headlessui/react'
 
 import clsx from 'clsx'
 
-import { UserAvatar } from '../user/UserAvatar'
+import Image from '../base/Image'
 import { UserLevel } from '../user/UserLevel'
 
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 import BanIcon from '../icons/BanIcon'
 import UserIcon from '../icons/UserIcon'
 import TipIcon from '../icons/TipIcon'
@@ -37,7 +37,8 @@ interface ChatUserCardProps {
 
 const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   const { state } = useContext(Context)
-  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal, setIsOpenTriviaModal } = useChat()
+  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal, setIsOpenTriviaModal } =
+    useChat()
 
   const baseIconSizeClasses = 'w-3 h-3'
 
@@ -134,29 +135,35 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
   return (
     <Menu>
       <Menu.Button as='div' className='w-full'>
-        <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
-          <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
-            <UserAvatar />
-          </div>
-          <div
-            className={clsx('flex', {
-              'mr-7': variant === ChatUserCardVariant.Base
-            })}
-          >
-            <span
-              className={clsx('font-bold mr-2', {
-                'text-gray-primary': variant === ChatUserCardVariant.Header,
-                'text-white': variant === ChatUserCardVariant.Base
+        {({ open }) => (
+          <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
+            <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
+              <Image />
+            </div>
+            <div
+              className={clsx('flex', {
+                'mr-7': variant === ChatUserCardVariant.Base
               })}
             >
-              {user ? user.name : ''}
-            </span>
-            <UserLevel level={user ? user.level : 0} />
+              <span
+                className={clsx('font-bold mr-2', {
+                  'text-gray-primary': variant === ChatUserCardVariant.Header,
+                  'text-white': variant === ChatUserCardVariant.Base
+                })}
+              >
+                {user ? user.name : ''}
+              </span>
+              <UserLevel level={user ? user.level : 0} />
+            </div>
+            <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
+              <ArrowTriangleIcon
+                className={clsx('', {
+                  'rotate-180': open
+                })}
+              />
+            </div>
           </div>
-          <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
-            <ArrowGrayIcon />
-          </div>
-        </div>
+        )}
       </Menu.Button>
       <Menu.Items
         className={clsx('absolute left-0 right-0 pt-2.5 z-40', {

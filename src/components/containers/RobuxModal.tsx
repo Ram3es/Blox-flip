@@ -30,9 +30,9 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button color='GreenPrimary' variant='Gradient'>
+          <Button color='GreenPrimary' variant='GreenGradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
-              <DiamondIcon width='15' height='13' />
+              <DiamondIcon className='w-[15px] h-[13px]' />
               Claim
             </div>
           </Button>
@@ -48,9 +48,9 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button color='GreenPrimary' variant='Gradient'>
+          <Button color='GreenPrimary' variant='GreenGradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
-              <DiamondIcon width='15' height='13' />
+              <DiamondIcon className='w-[15px] h-[13px]' />
               Claim
             </div>
           </Button>

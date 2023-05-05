@@ -5,6 +5,7 @@ import { Reducer, IAction } from './Reducer'
 import { CoinFlipProvider } from './CoinFlipStore'
 import { KingProvider } from './KingStore'
 import { ChatProvider } from './ChatStore'
+import { BattleCaseProvider } from './BattleCaseStore'
 
 export interface IState {
   user?: IUser
@@ -24,11 +25,13 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Context.Provider value={{ state, dispatch }}>
       <ChatProvider>
-        <PlinkoProvider>
-          <CoinFlipProvider>
-            <KingProvider>{children}</KingProvider>
-          </CoinFlipProvider>
-        </PlinkoProvider>
+        <BattleCaseProvider>
+          <PlinkoProvider>
+            <CoinFlipProvider>
+              <KingProvider>{children}</KingProvider>
+            </CoinFlipProvider>
+          </PlinkoProvider>
+        </BattleCaseProvider>
       </ChatProvider>
     </Context.Provider>
   )

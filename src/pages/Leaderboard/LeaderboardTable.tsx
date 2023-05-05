@@ -7,8 +7,9 @@ import { users } from '../../mocks/leaderboardMock'
 
 import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { PlaceCell } from '../../components/table/CellFormatters/PlaceCell'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+
 import { getSortedUsersByField } from '../../helpers/leaderboardHelpers'
 
 export const LeaderboardTable = () => {
@@ -32,13 +33,25 @@ export const LeaderboardTable = () => {
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Wagered',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
+      cell: ({ row }) => (
+        <CoinsWithDiamond
+          iconContainerSize='Small'
+          typographyQuantity={row.original.bet}
+          typographyFontColor='Green'
+        />
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: ISecondUser) => row.profit, {
       id: 'profit',
       header: 'Reward',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.profit} color='green' />,
+      cell: ({ row }) => (
+        <CoinsWithDiamond
+          iconContainerSize='Small'
+          typographyQuantity={row.original.bet}
+          typographyFontColor='Green'
+        />
+      ),
       footer: (props) => props.column.id
     })
   ]

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { IMAGES } from '../../../constants/images'
-import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
-import DiamondIcon from '../../icons/DiamondIcon'
+import CoinsWithDiamond from '../CoinsWithDiamond'
+
 interface IUnboxingCardProps {
   id: string
   name: string
@@ -32,14 +32,7 @@ const UnboxingCard: FC<IUnboxingCardProps> = ({ id, name, price, onSelect }) => 
                 className='absolute object-contain w-full h-full'
               />
             </div>
-            <QuantityCoinsWithChildren
-              quantity={price}
-              quantityClasses='flex items-center text-sm font-bold '
-            >
-              <span className='w-6 h-6 text-center leading-6 bg-green-primary/20 rounded relative mr-1.5 text-green-primary'>
-                <DiamondIcon className='-inset-full absolute m-auto' />
-              </span>
-            </QuantityCoinsWithChildren>
+            <CoinsWithDiamond typographyQuantity={price} />
           </div>
         </div>
       </div>

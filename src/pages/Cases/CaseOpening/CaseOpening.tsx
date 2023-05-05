@@ -11,15 +11,15 @@ import type { ICaseItem } from '../../../types/Cases'
 import { caseCards } from '../../../mocks/caseOpeningMock'
 
 import { Button } from '../../../components/base/Button'
-import { QuantityCoins } from '../../../components/common/QuantityCoins/QuantityCoins'
 import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
 import { PotentialDrops } from './PotentialDrops'
 
-import { ArrowGrayIcon } from '../../../components/icons/ArrowGrayIcon'
-import { FairIcon } from '../../../components/icons/FairIcon'
+import ArrowTriangleIcon from '../../../components/icons/ArrowTriangleIcon'
+import FairIcon from '../../../components/icons/FairIcon'
 import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
+import CoinsWithDiamond from '../../../components/common/CoinsWithDiamond'
 
 export const CaseOpening = () => {
   const { id } = useParams()
@@ -145,7 +145,7 @@ export const CaseOpening = () => {
             className='rounded p-2 leading-4 text-gray-primary font-semibold flex  items-center bg-blue-accent-secondary hover:bg-blue-accent hover:text-white mb-4 mr-auto'
           >
             <span className='mr-1.5 rotate-90'>
-              <ArrowGrayIcon />
+              <ArrowTriangleIcon />
             </span>
             Back
           </Button>
@@ -166,21 +166,16 @@ export const CaseOpening = () => {
       <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
         <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/30 to-blue-accent-secondary/1 rounded text-sm px-4 sm:px-12 py-9 overflow-hidden relative'>
           <div className='flex flex-wrap justify-center relative items-start z-10 mb-4 px-4 sm:px-12 -mx-4 sm:-mx-12'>
-            <div className='flex flex-wrap justify-center sm:justify-start min-w-fit mb-5 z-20 relative'>
-              <div className='bg-green-primary/15 flex items-center px-1 pr-4 rounded mr-2.5 mb-2'>
-                <QuantityCoins
-                  quantity={1500}
-                  iconBgHeight='6'
-                  iconBgWidth='6'
-                  iconWidth='15.4'
-                  iconHeight='13'
-                  textSize='text-base'
-                />
-              </div>
+            <div className='flex flex-wrap justify-center gap-4 sm:justify-start min-w-fit mb-5 z-20 relative'>
+              <CoinsWithDiamond
+                containerColor='GreenDarken'
+                typographyQuantity={1500}
+                typographyFontSize='Size16'
+              />
               <Button
                 disabled={isSpin}
                 onClick={play}
-                className='bg-green-primary hover:bg-green-500 border border-green-primary py-2 px-4 leading-4 rounded mb-2'
+                className='bg-green-primary hover:bg-green-500 border border-green-primary py-2 px-4 leading-4 rounded mb-2 h-[35px]'
               >
                 Open case
               </Button>

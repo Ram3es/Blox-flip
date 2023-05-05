@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import KingIcon from '../../assets/img/king_icon.png'
 
@@ -26,10 +26,10 @@ const KingHistoryPlayer = ({ user, isKing }: KingHistoryPlayerProps) => {
           'gradient-background--blue': !isKing
         })}
       >
-        <UserAvatar className='w-11 h-10' />
+        <Image className='w-11 h-10' />
         {isKing && <img src={KingIcon} className='w-10 h-8 absolute bottom-9 right-7' />}
       </div>
-      <QuantityCoins quantity={1500} />
+      <CoinsWithDiamond iconContainerSize='Small' iconClasses='w-3' typographyQuantity={1500} />
     </div>
   )
 }

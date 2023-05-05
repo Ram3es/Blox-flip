@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import ButtonsToggle from '../../components/base/ButtonToggle'
-import DiamondIcon from '../../components/icons/DiamondIcon'
 import UserProgress from '../../components/user/UserProgress'
 import ItemCard from '../../components/common/Cards/ItemCard'
-import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
-import { cards } from '../../mocks/cards'
-import { IItemCard } from '../../types/ItemCard'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+
 import Preferences from './Preferences'
 import ItemsBar from './UserItemsBar'
-import { useLocation } from 'react-router-dom'
+
+import { cards } from '../../mocks/cards'
+import type { IItemCard } from '../../types/ItemCard'
 
 const user = {
   name: 'John Johnson',
@@ -28,16 +30,15 @@ const actions = [
   { name: 'profit' }
 ]
 
-const cardsSorting = [
-  { variant: 'All' },
-  { variant: 'Active Items' },
-  { variant: 'Sold' }]
+const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
 
 const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
   const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
   const [sorted, setSorted] = useState<IItemCard[]>([])
-  const { state: { userId } } = useLocation()
+  const {
+    state: { userId }
+  } = useLocation()
 
   const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
 
@@ -58,7 +59,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
     if (!isOwnProfile) {
       return
     }
-    const card = sorted.find(item => item.id === id) as IItemCard
+    const card = sorted.find((item) => item.id === id) as IItemCard
 
     if (!selectedCard.some((item) => item.id === card.id)) {
       setSelectedCard((state) => [...state, card])
@@ -91,47 +92,50 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   return (
     <div className='h-fit'>
       <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
-        <div className="flex flex-col justify-center items-center mx-auto relative z-20 -mt-9 w-3/4 xs:w-3/5 md:w-1/3">
+        <div className='flex flex-col justify-center items-center mx-auto relative z-20 -mt-9 w-3/4 xs:w-3/5 md:w-1/3'>
           <UserProgress isFullInfo={isOwnProfile} user={user} />
         </div>
-          { !isOwnProfile && <Preferences /> }
-        <div className="flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight">
+        {!isOwnProfile && <Preferences />}
+        <div className='flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight'>
           {actions.map((action, idx) => (
-            <div key={action.name} className={`${idx === actions.length - 1 ? 'is-green text-green-secondary' : 'text-gray-primary'} group px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col`}>
-              <div className="text-sm font-extrabold  mb-1.5 uppercase">{action.name}</div>
-              <div className="gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary">
-                <QuantityCoinsWithChildren
-                  quantity={-1500.233534853}
-                  quantityClasses='flex items-center text-lg font-bold'
-                  >
-                  <span className="w-8 h-8 shrink-0 text-center leading-8 bg-green-primary/20 rounded text-green-secondary relative mr-3">
-                    <DiamondIcon className='w-[19px] h-[18px] -inset-full absolute m-auto' />
-                  </span>
-                </QuantityCoinsWithChildren>
+            <div
+              key={action.name}
+              className={`${
+                idx === actions.length - 1 ? 'is-green text-green-secondary' : 'text-gray-primary'
+              } group px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col`}
+            >
+              <div className='text-sm font-extrabold  mb-1.5 uppercase'>{action.name}</div>
+              <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow  border border-transparent group-[.is-green]:bg-green-primary/15 group-[.is-green]:border-green-primary'>
+                <CoinsWithDiamond
+                  iconContainerSize='Large'
+                  iconClasses='w-[18.5px] h-[15.5px]'
+                  typographyQuantity={4200}
+                  typographyFontSize={'Size18'}
+                />
               </div>
             </div>
           ))}
+        </div>
       </div>
-    </div>
-    <div className="flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center">
+      <div className='flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center'>
         <ItemsBar
           isOwnProfile={isOwnProfile}
           totalPriceSelected={totalPriceSelected}
           amountSelected={selectedCard.length}
         />
-      <div className='mt-2 xs:mt-0'>
-        <ButtonsToggle options={cardsSorting} currentSelect={currentCardsVariant} peakFunction={setCurrentCardsVariant} />
+        <div className='mt-2 xs:mt-0'>
+          <ButtonsToggle
+            options={cardsSorting}
+            currentSelect={currentCardsVariant}
+            peakFunction={setCurrentCardsVariant}
+          />
+        </div>
       </div>
-    </div>
-    <div className="flex flex-wrap -mx-1 mb-8 md:mb-12 text-sm">
-      {sorted.map(card => (
-        <ItemCard
-          key={card.id}
-          onSelect={handleSelectCard}
-          {...card}
-           />
-      )) }
-    </div>
+      <div className='flex flex-wrap -mx-1 mb-8 md:mb-12 text-sm'>
+        {sorted.map((card) => (
+          <ItemCard key={card.id} onSelect={handleSelectCard} {...card} />
+        ))}
+      </div>
     </div>
   )
 }

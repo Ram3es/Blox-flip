@@ -1,28 +1,26 @@
 import { FC } from 'react'
 import defaultAvatar from '../../assets/img/avatar_img.png'
 
-interface UserAvatarProps {
+interface ImageProps {
   image?: string
-  width?: string // px
-  height?: string // px
+  defaultImage?: string
   className?: string
 }
 
-export const UserAvatar: FC<UserAvatarProps> = ({
+const Image: FC<ImageProps> = ({
   image = defaultAvatar,
-  width = '40',
-  height = '37',
+  defaultImage = defaultAvatar,
   className = 'object-cover w-full h-full'
 }) => {
   return (
     <img
-      src={image === null || image === '' ? defaultAvatar : image}
+      src={image === null || image === '' ? defaultImage : image}
       alt=''
-      width={width}
-      height={height}
       loading='lazy'
       decoding='async'
       className={className}
     />
   )
 }
+
+export default Image

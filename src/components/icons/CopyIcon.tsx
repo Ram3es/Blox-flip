@@ -1,7 +1,7 @@
-export const CopyIcon = ({ iconClasses }: { iconClasses?: string }) => {
+export const CopyIcon = ({ className }: { className?: string }) => {
   return (
     <svg
-      className={iconClasses}
+      className={className}
       xmlns='http://www.w3.org/2000/svg'
       width='19'
       height='21'

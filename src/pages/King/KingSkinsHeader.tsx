@@ -3,11 +3,11 @@ import { Dispatch, SetStateAction } from 'react'
 import clsx from 'clsx'
 
 import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { ListIcon } from '../../components/icons/ListIcon'
 import ButtonsToggle from '../../components/base/ButtonToggle'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
-import { getSumPriceBySkins } from '../../helpers/kingHelpers'
+import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { TabInterface } from './KingSkins'
 
@@ -41,7 +41,7 @@ const KingSkinsHeader = ({
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
-      <QuantityCoins quantity={user ? getSumPriceBySkins(user.items) : null} />
+      <CoinsWithDiamond typographyQuantity={user ? getCostByFieldName(user.items, 'price') : null} />
       <Button disabled variant='YellowOutlined'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
           {user && (

@@ -81,7 +81,7 @@ export const AffiliatesForm = () => {
               onChange={props.handleChange}
             />
             <div className='absolute z-20 top-[52px] right-7'>
-              <Button color='GreenPrimary' variant='Gradient' type='submit'>
+              <Button color='GreenPrimary' variant='GreenGradient' type='submit'>
                 <p className='text-sm font-bold px-4 py-2.5'>Change</p>
               </Button>
             </div>

@@ -2,14 +2,14 @@ import { FC } from 'react'
 import clsx from 'clsx'
 
 import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'
 import ThirdPlaceIcon from '../../assets/img/coin3.svg'
 
-import { ISecondUser } from '../../types/User'
+import type { ISecondUser } from '../../types/User'
 
 interface PodiumItemProps {
   user: ISecondUser
@@ -73,7 +73,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
                 }
               )}
             >
-              <UserAvatar image={user.avatar} width='73' height='68' className='object-cover w-full h-full rounded-lg' />
+              <Image image={user.avatar} className='object-cover w-full h-full rounded-lg' />
             </div>
             <div className='mb-3 font-bold'>{user.username}</div>
             <div className='flex justify-center mb-3'>
@@ -89,33 +89,16 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               </Button>
             </div>
             <div className='flex items-center justify-center mb-3'>
-              <QuantityCoins
-                quantity={user.bet}
-                textSize={clsx('', {
-                  'text-base': place === 1,
-                  'text-14': place === 2 || place === 3
-                })}
-                iconBgWidth={clsx('', {
-                  6: place === 1,
-                  5: place === 2 || place === 3
-                })}
-                iconBgHeight={clsx('', {
-                  6: place === 1,
-                  5: place === 2 || place === 3
-                })}
-                iconWidth={clsx('', {
-                  16: place === 1,
-                  12: place === 2 || place === 3
-                })}
-                iconHeight={clsx('', {
-                  12: place === 1,
-                  11: place === 2 || place === 3
-                })}
+              <CoinsWithDiamond
+                iconContainerSize={place === 1 ? 'Medium' : 'Small'}
+                iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
+                typographyQuantity={user.bet}
+                typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
               />
             </div>
             <div className='flex items-center mb-2'>
               <div className='bg-gradient-to-r from-green-primary/0 to-green-primary h-px mr-1 grow'></div>
-              <Button variant='Outlined'>
+              <Button variant='GreenOutlined'>
                 <span
                   className={clsx('px-5 py-1 leading-5 whitespace-nowrap', {
                     'text-sm': place === 1,
@@ -128,29 +111,11 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               <div className='bg-gradient-to-r to-green-primary/0 from-green-primary h-px ml-1 grow'></div>
             </div>
             <div className='flex items-center justify-center'>
-              <QuantityCoins
-                quantity={user.profit}
-                textSize={clsx('', {
-                  'text-base': place === 1,
-                  'text-14': place === 2 || place === 3
-                })}
-                iconBgWidth={clsx('', {
-                  6: place === 1,
-                  5: place === 2 || place === 3
-                })}
-                iconBgHeight={clsx('', {
-                  6: place === 1,
-                  5: place === 2 || place === 3
-                })}
-                iconWidth={clsx('', {
-                  16: place === 1,
-                  12: place === 2 || place === 3
-                })}
-                iconHeight={clsx('', {
-                  12: place === 1,
-                  11: place === 2 || place === 3
-                })}
-                color='green'
+              <CoinsWithDiamond
+                iconContainerSize={place === 1 ? 'Medium' : 'Small'}
+                iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
+                typographyQuantity={user.bet}
+                typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
               />
             </div>
           </div>

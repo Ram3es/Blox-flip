@@ -1,9 +1,10 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import clsx from 'clsx'
 import { IMAGES } from '../../../constants/images'
-import { QuantityCoinsWithChildren } from '../QuantityCoins/QuantityWithChildren'
 import SelectedIcon from '../../icons/SelectedIcon'
-import { UserAvatar } from '../../user/UserAvatar'
+import Image from '../../base/Image'
+import CoinsWithDiamond from '../CoinsWithDiamond'
+import { TypographySizeEnum } from '../../../types/enums'
 
 enum BorderColorEnum {
   Red = 'Red',
@@ -91,9 +92,11 @@ const ItemCard: FC<IItemCardProps> = ({
               SELECTED
             </div>
             <div className='absolute flex justify-center z-40 bottom-4 w-full left-0'>
-              <div className='flex bg-green-primary/15 items-center px-1.5 py-1 rounded'>
-                <QuantityCoinsWithChildren quantity={price} />
-              </div>
+              <CoinsWithDiamond
+                iconContainerSize='Small'
+                iconClasses='w-3 h-3'
+                typographyQuantity={price}
+              />
             </div>
           </div>
           <div
@@ -115,16 +118,25 @@ const ItemCard: FC<IItemCardProps> = ({
                 />
               </div>
               <div>
-                <div className=' hidden group-[.is-user]/item:block w-[120px] text-gray-primary mb-2 text-left'>
-                  <span className=''>{name}</span>
+                <div className='hidden group-[.is-user]/item:block w-[120px] text-gray-primary mb-2 text-left'>
+                  <span>{name}</span>
                 </div>
                 <div className='flex items-center justify-center relative z-40 group-[.is-user]/item:justify-start'>
-                  <QuantityCoinsWithChildren quantity={price} />
+                  <CoinsWithDiamond
+                    iconContainerSize='Small'
+                    iconClasses='w-[13px] h-[11px]'
+                    typographyQuantity={price}
+                    typographyFontSize={
+                      variant === ItemCardVariantEnum.CoinFlip
+                        ? TypographySizeEnum.Size12
+                        : TypographySizeEnum.Size14
+                    }
+                  />
                 </div>
               </div>
               <div className='hidden group-[.is-user]/item:block mx-auto'>
                 <div className='w-14 h-[50px] shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue ml-4 '>
-                  <UserAvatar image={userAvatar} />
+                  <Image image={userAvatar} />
                 </div>
               </div>
             </div>

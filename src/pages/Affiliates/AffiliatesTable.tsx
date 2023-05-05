@@ -5,8 +5,8 @@ import { ISecondUser } from '../../types/User'
 import { users } from '../../mocks/affiliatesMock'
 import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 export const AffiliatesTable = () => {
   const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])
@@ -30,13 +30,27 @@ export const AffiliatesTable = () => {
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Wagered',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
+      cell: ({ row }) => (
+        <CoinsWithDiamond
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.bet}
+          typographyFontSize='Size13'
+        />
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: ISecondUser) => row.profit, {
       id: 'profit',
       header: 'Earned',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.profit} color='green' />,
+      cell: ({ row }) => (
+        <CoinsWithDiamond
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.profit}
+          typographyFontSize='Size13'
+        />
+      ),
       footer: (props) => props.column.id
     })
   ]
