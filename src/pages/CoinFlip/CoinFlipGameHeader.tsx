@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useMemo } from 'react'
 
 import clsx from 'clsx'
 
@@ -16,7 +16,7 @@ interface CoinFlipGameHeaderProps {
 
 const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
   ({ withBot }, ref) => {
-    const coinSide = 1
+    const coinSide = useMemo(() => Math.floor(Math.random() * 2), [])
 
     const skinIconClasses = clsx(
       'flex z-40 absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-[167px] h-32 xs:h-[167px] items-center justify-center',

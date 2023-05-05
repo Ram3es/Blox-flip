@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useKing } from '../../store/KingStore'
 
 import KingHealthPointsBar from './KingHealthPointsBar'
@@ -38,29 +38,44 @@ const KingArena = () => {
   const healthPointsBarKingRef = useRef<HTMLDivElement>(null)
   const healthPointsBarOpponentRef = useRef<HTMLDivElement>(null)
 
+  const animateKingRef = useRef<HTMLDivElement>(null)
+  const animateOpponentRef = useRef<HTMLDivElement>(null)
+
+  const getRandomHero = useCallback((): string => {
+    const listHero = ['iceknight', 'cowboy', 'cosmic', 'knight', 'blade']
+    return listHero[Math.floor(Math.random() * 5)]
+  }, [])
+
   const applyDirectionAttackEffect = (round: IKingFight) => {
+    const hero = getRandomHero()
     if (round.by === 'king') {
-      if (attackTextRef.current && swordIconRef.current) {
+      if (attackTextRef.current && swordIconRef.current && animateKingRef.current) {
+        animateKingRef.current.classList.add('visible', 'king-animation', hero)
         attackTextRef.current.style.visibility = 'visible'
         swordIconRef.current.style.rotate = '45deg'
         setTimeout(() => {
-          if (swordIconRef.current && attackTextRef.current) {
+          if (swordIconRef.current && attackTextRef.current && animateKingRef.current) {
             attackTextRef.current.style.visibility = 'hidden'
             swordIconRef.current.style.rotate = '0deg'
+            animateKingRef.current.classList.remove('visible', 'king-animation', hero)
           }
-        }, TIME_EFFECT_MILLISECONDS)
+        }, 4000)
       }
     }
     if (round.by === 'opponent') {
-      if (attackTextRef.current && swordIconRef.current) {
+      const hero = getRandomHero()
+      if (attackTextRef.current && swordIconRef.current && animateOpponentRef.current) {
+        animateOpponentRef.current.classList.add('visible', 'king-animation', hero)
         attackTextRef.current.style.visibility = 'visible'
         swordIconRef.current.style.rotate = '-45deg'
+
         setTimeout(() => {
-          if (swordIconRef.current && attackTextRef.current) {
+          if (swordIconRef.current && attackTextRef.current && animateOpponentRef.current) {
             attackTextRef.current.style.visibility = 'hidden'
             swordIconRef.current.style.rotate = '0deg'
+            animateOpponentRef.current.classList.remove('hidden', 'king-animation', hero)
           }
-        }, TIME_EFFECT_MILLISECONDS)
+        }, 4000)
       }
     }
   }
@@ -163,7 +178,8 @@ const KingArena = () => {
   }, [fight])
 
   return (
-    <div className='p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col ls:flex-row ls:justify-between xxs:items-center ls:items-stretch w-full gap-4 xs:gap-0'>
+    <div className='p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col items-start ls:flex-row ls:justify-between ls:items-stretch w-full gap-4 xs:gap-0'>
+      <div className='flex'>
       <div className='relative space-y-2 ls:space-y-0'>
         <KingArenaPlayer user={game.firstPlayer} isKing />
         <img
@@ -181,6 +197,10 @@ const KingArena = () => {
             maxHP={maxHealthPointsKing}
           />
         </div>
+      </div>
+      <div className='relative'>
+      {fight && <div ref={animateKingRef} className='absolute  top-[250px] xs:-top-[90px] -scale-x-75 ls:-top-[70%] -left-20  scale-75 ls:scale-x-75'/>}
+      </div>
       </div>
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
@@ -203,6 +223,11 @@ const KingArena = () => {
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
+     <div className='flex flex-row-reverse ls:flex-row'>
+     <div className='relative mr-2'>
+      {fight && <div ref={animateOpponentRef}className='ml-4 absolute -top-[420px] xs:-top-[320px] ls:-top-[70%] -right-[360px] ls:-right-20 scale-75 -scale-x-75 ' />}
+
+      </div>
       <div className='relative space-y-2 ls:space-y-0'>
         <KingArenaPlayer isKing={false} user={game.secondPlayer} />
         <img
@@ -222,6 +247,7 @@ const KingArena = () => {
             />
           )}
         </div>
+      </div>
       </div>
     </div>
   )
