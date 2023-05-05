@@ -983,6 +983,31 @@ text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1);
     }
   }
 }
+.coinflip-animation.blue  {
+  background-image: url("./assets/img/coinflip-blue-winin-sprite.png");
+}
+.coinflip-animation.white  {
+  background-image: url("./assets/img/coinflip-white-win-sprite.png");
+}
+
+.coinflip-animation {
+  width: 500px;
+  height: 500px;
+  transform: scale(0.8);
+
+  background-position: 0px 0px;
+  animation: coinflip 6s steps(237) 1s forwards ;
+ 
+}
+
+@keyframes coinflip {
+  from {
+      background-position-y: 0px;
+  }
+  to {
+      background-position-y: -118500px;
+  }
+}
 /*-----media----*/
 /*
 .select{

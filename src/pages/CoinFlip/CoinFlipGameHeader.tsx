@@ -7,7 +7,7 @@ import AvatarWithUsername from '../../components/common/AvatarWithUsername'
 import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 
-import SkinBigIcon from '../../assets/img/skin_big.png'
+// import SkinBigIcon from '../../assets/img/skin_big.png'
 import VersusBattleIcon from '../../assets/img/versus_battle.png'
 import QuestionMark from '../../assets/img/question_mark.svg'
 
@@ -17,8 +17,10 @@ interface CoinFlipGameHeaderProps {
 
 const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
   ({ withBot }, ref) => {
+    const coinSide = 1
+
     const skinIconClasses = clsx(
-      'flex z-100 absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center',
+      'flex z-40 absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-[167px] h-32 xs:h-[167px] items-center justify-center',
       {
         grayscale: withBot
       }
@@ -39,7 +41,11 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
           </QuantityCoinsContainer>
         </div>
         <div className={skinIconClasses}>
-          <img src={SkinBigIcon} alt='skin' />
+          <div className=' relative w-full h-full'>
+            <div className={`${coinSide ? 'blue' : 'white'} coinflip-animation absolute -top-[100%] -left-[100%] `} />
+          </div>
+
+          {/* <img src={SkinBigIcon} alt='skin' /> */}
         </div>
         <div className='z-100 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
           <img className='rotate-[-48deg]' src={VersusBattleIcon} alt='versus' />
