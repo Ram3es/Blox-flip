@@ -10,11 +10,11 @@ import { mockTransactions } from '../../mocks/transactionsMock'
 import { TimeCell } from '../table/CellFormatters/TimeCell'
 import { FilterHeader } from '../table/FilterHeader'
 import { ListIcon } from '../icons/ListIcon'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { handleFilterByValueHelper, resetColumnFilterHelper } from '../../helpers/tableHelpers'
 import { TransactionTypeCell } from '../table/CellFormatters/TransactionTypeCell'
 import { PaymentMethodCell } from '../table/PaymentMethodCell'
 import { StatusCell } from '../table/CellFormatters/StatusCell'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 export const Transactions = () => {
   const [data] = useState<ITransaction[]>([...mockTransactions])
@@ -79,7 +79,12 @@ export const Transactions = () => {
       id: 'amount',
       header: () => 'Amount',
       cell: ({ row }) => (
-        <QuantityCoins quantity={row.original.amount} isFailed={row.original.isError} />
+        <CoinsWithDiamond
+          iconContainerColor={row.original.isError ? 'Gray' : 'GreenPrimary'}
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.amount}
+        />
       ),
       footer: (props) => props.column.id
     })

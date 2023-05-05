@@ -2,19 +2,19 @@ import { useCallback, useContext, useState } from 'react'
 import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import GameInfoListItem from '../../components/common/GameInfoListItem'
-import { QuantityCoinsWithChildren } from '../../components/common/QuantityCoins/QuantityWithChildren'
 import StrippedBgItem from '../../components/common/StrippedBgItem'
 import VerifyBets from '../../components/common/VerifyBets'
-import JackpotModal from '../../components/containers/JackpotModal'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 import { cards } from '../../mocks/cards'
 import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
 import { IJackpotCard } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
-import { sumItemsPrice } from '../../helpers/jackpotHelpers'
 import { Context } from '../../store/Store'
 import SignInModal from '../../components/containers/SignInModal'
 import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
+import JackpotJoinModal from './JackpotJoinModal'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+import { getCostByFieldName } from '../../helpers/numbers'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
@@ -23,11 +23,16 @@ const Jackpot = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false)
   const [timer, setTimer] = useState<number>(30)
 
-  const { state: { user } } = useContext(Context)
+  const {
+    state: { user }
+  } = useContext(Context)
   const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)
 
-  const toggleModal = () => setOpenModal(state => !state)
-  const calculateWinChance = useCallback((bet: number) => Number((bet / jackpot * 100).toFixed(2)), [joinedUsers])
+  const toggleModal = () => setOpenModal((state) => !state)
+  const calculateWinChance = useCallback(
+    (bet: number) => Number(((bet / jackpot) * 100).toFixed(2)),
+    [joinedUsers]
+  )
 
   const joinUserToGame = () => {
     if (user) {
@@ -40,71 +45,84 @@ const Jackpot = () => {
   const onSubmitJackpotModal = (selectedCards: IJackpotCard[]) => {
     setSelectedCard(selectedCards)
     if (user) {
-      setUserJoined(state => [...state,
+      setUserJoined((state) => [
+        ...state,
         {
           id: user?.id,
           avatar: user?.avatar,
           level: user?.level,
           userName: user?.name,
           deposit: sumItemsPrice(selectedCards)
-
         }
       ])
     }
   }
 
   return (
-    <div className="max-w-[1200px] w-full mx-auto">
-      <div className="w-full flex-col gap-1">
+    <div className='mx-auto w-full max-w-[1200px]'>
+      <div className='w-full flex-col gap-1'>
         <VerifyBets />
-        <div className="w-full flex flex-col-reverse ls:flex-row gap-10">
-          <div className="flex flex-col md:flex-row ls:flex-col gap-2 ls:gap-6 items-center">
-            <div className="w-[492px] h-[492px] flex justify-center items-center mx-0 xs:mx-auto md:mx-0 scale-75 xs:scale-100">
+        <div className='flex w-full flex-col-reverse gap-10 ls:flex-row'>
+          <div className='flex flex-col items-center gap-2 md:flex-row ls:flex-col ls:gap-6'>
+            <div className='mx-0 flex h-[492px] w-[492px] scale-75 items-center justify-center xs:mx-auto xs:scale-100 md:mx-0'>
               <JackpotWheel
                 timer={timer}
                 setTimer={setTimer}
-                jackPot ={jackpot}
+                jackPot={jackpot}
                 joinedUsers={joinedUsers}
               />
             </div>
-            <div className='max-w-[382px] w-full mx-auto flex flex-col gap-4'>
-              <div className='flex gap-3 justify-between'>
+            <div className='mx-auto flex w-full max-w-[382px] flex-col gap-4'>
+              <div className='flex justify-between gap-3'>
                 <GameInfoListItem label='TOTAL PLAYERS'>
                   <span>{joinedUsers.length}</span>
                 </GameInfoListItem>
                 <GameInfoListItem label='WIN CHANCE %'>
-                  <span className='text-green-primary'>{calculateWinChance(joinedUsers.find(player => player.id === user?.id)?.deposit ?? 0)} %</span>
+                  <span className='text-green-primary'>
+                    {calculateWinChance(
+                      joinedUsers.find((player) => player.id === user?.id)?.deposit ?? 0
+                    )}{' '}
+                    %
+                  </span>
                 </GameInfoListItem>
                 <GameInfoListItem label='YOUR DEPOSIT'>
-                  <QuantityCoinsWithChildren quantity={sumItemsPrice(selectedCards)} />
+                  <CoinsWithDiamond
+                    iconContainerSize='Small'
+                    typographyQuantity={getCostByFieldName(selectedCards, 'price')}
+                  />
                 </GameInfoListItem>
               </div>
-              <div className='w-full border-b border-blue-accent-secondary '/>
-                <div style={{ direction: 'rtl' }} className='h-[490px] overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pl-2.5 '>
-                  <div className='h-[480px]' style={{ direction: 'ltr' }}>
-                    {selectedCards.map((card, idx) => (
-                      <ItemCard
-                        key={card.id}
-                        id={card.id}
-                        name={card.name}
-                        price={card.price}
-                        image={card.image}
-                        color={card.color}
-                        userAvatar={card.avatar}
-                        itemClasses={`${cards.length - 1 === idx ? 'mb-0' : 'mb-2'} px-1 shrink-0 w-full xs:w-full group/item is-user is-added`}
-                      />
-                    ))}
-                  </div>
+              <div className='w-full border-b border-blue-accent-secondary' />
+              <div
+                style={{ direction: 'rtl' }}
+                className='h-[490px] overflow-auto pl-2.5 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full '
+              >
+                <div className='h-[480px]' style={{ direction: 'ltr' }}>
+                  {selectedCards.map((card, idx) => (
+                    <ItemCard
+                      key={card.id}
+                      id={card.id}
+                      name={card.name}
+                      price={card.price}
+                      image={card.image}
+                      color={card.color}
+                      userAvatar={card.avatar}
+                      itemClasses={`${
+                        cards.length - 1 === idx ? 'mb-0' : 'mb-2'
+                      } px-1 shrink-0 w-full xs:w-full group/item is-user is-added`}
+                    />
+                  ))}
                 </div>
               </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-5 w-full">
-            <div className="flex w-full gap-3 items-end flex-wrap">
+          <div className='flex w-full flex-col gap-5'>
+            <div className='flex w-full flex-wrap items-end gap-3'>
               <GameInfoListItem label='MIN. BET'>
-                <QuantityCoinsWithChildren quantity={1500} />
+                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
               </GameInfoListItem>
               <GameInfoListItem label='MAX. BET'>
-                <QuantityCoinsWithChildren quantity={115500} />
+                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
               </GameInfoListItem>
               <GameInfoListItem label='MIN. ITEMS'>
                 <span>1</span>
@@ -112,69 +130,69 @@ const Jackpot = () => {
               <GameInfoListItem label='MAX. ITEMS'>
                 <span>15</span>
               </GameInfoListItem>
-              <Button
-                color='GreenPrimary'
-                variant='Gradient'
-                onClick={joinUserToGame}
-                >
-                <div className='w-[121px] h-12 flex justify-center items-center'>
-                  Join Game
-                </div>
+              <Button color='GreenPrimary' variant='GreenGradient' onClick={joinUserToGame}>
+                <div className='flex h-12 w-[121px] items-center justify-center'>Join Game</div>
               </Button>
             </div>
-            <div className='w-full border-b border-blue-accent-secondary '/>
-              <StrippedBgItem color='Blue'>
-                <div className='w-full flex flex-col items-center'>
-                  <div className='flex items-center'>
-                    <span className='text-green-primary text-base font-bold uppercase mr-1'>Round starts in</span>
-                    {`0.${timer}s`}
-                  </div>
-                    <div className='text-gray-primary w-full text-center truncate'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
+            <div className='w-full border-b border-blue-accent-secondary ' />
+            <StrippedBgItem color='Blue'>
+              <div className='flex w-full flex-col items-center'>
+                <div className='flex items-center'>
+                  <span className='mr-1 text-base font-bold uppercase text-green-primary'>
+                    Round starts in
+                  </span>
+                  {`0.${timer}s`}
                 </div>
-              </StrippedBgItem>
-              <div className='h-[310px]  scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-6'>
-                <div className='flex flex-col  gap-y-2 p-0.5 '>
-                  {joinedUsers.map(player => (
-                    <JoinedUserRow
-                     key={player.id}
-                     user={player}
-                     userChance={calculateWinChance(player.deposit)}
-                    />
-                  ))}
+                <div className='w-full truncate text-center text-gray-primary'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
+              </div>
+            </StrippedBgItem>
+            <div className='h-[310px]  pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+              <div className='flex flex-col  gap-y-2 p-0.5 '>
+                {joinedUsers.map((player) => (
+                  <JoinedUserRow
+                    key={player.id}
+                    user={player}
+                    userChance={calculateWinChance(player.deposit)}
+                  />
+                ))}
               </div>
             </div>
-            <div className='w-full border-b border-blue-accent-secondary '/>
-            <StrippedBgItem color='Green' wrapContentClasses='py-2 px-6 xs:py-5 ' >
-              <div className='flex flex-col xs:flex-row items-center justify-between'>
-                <div className='w-full flex flex-col xs:flex-row  items-center text-sm gap-1 mb-2 xs:mb-0'>
-                  <div className=' mx-auto xs:mx-0 w-[50px] h-11 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue '>
-                    <UserAvatar image={joinedUsers[0].avatar} />
+            <div className='w-full border-b border-blue-accent-secondary ' />
+            <StrippedBgItem color='Green' wrapContentClasses='py-2 px-6 xs:py-5 '>
+              <div className='flex flex-col items-center justify-between xs:flex-row'>
+                <div className='mb-2 flex w-full flex-col  items-center gap-1 text-sm xs:mb-0 xs:flex-row'>
+                  <div className=' radial--blue mx-auto my-1 h-11 w-[50px] shrink-0 overflow-hidden rounded border border-blue-highlight xs:mx-0 '>
+                    <Image image={joinedUsers[0].avatar} />
                   </div>
-                  <div className='flex items-center gap-1 ml-2'>
-                    <span className='text-green-primary  max-w-[150px] truncate block'>{joinedUsers[2].userName}</span>
+                  <div className='ml-2 flex items-center gap-1'>
+                    <span className='block  max-w-[150px] truncate text-green-primary'>
+                      {joinedUsers[2].userName}
+                    </span>
                     <span className='block'>has won the jackpot</span>
                   </div>
                 </div>
-                <div className="rounded text-green-primary border bg-green-primary/15 border-green-primary whitespace-nowrap px-3 py-2 leading-6 ">
-                  <QuantityCoinsWithChildren
-                    quantityClasses='flex items-center text-base font-bold'
-                    quantity={115500}/>
-                </div>
+                <CoinsWithDiamond
+                  containerColor='GreenGradient'
+                  containerSize='XL'
+                  typographyQuantity={115500}
+                />
               </div>
             </StrippedBgItem>
             <div className='flex flex-col  gap-y-2 p-0.5 opacity-50 '>
-                  {joinedUsers.map(player => (
-                    <JoinedUserRow
-                     key={player.id}
-                     user={player}
-                     userChance={calculateWinChance(player.deposit)}
-                    />
-                  ))}
-              </div>
+              {joinedUsers.map((player) => (
+                <JoinedUserRow
+                  key={player.id}
+                  user={player}
+                  userChance={calculateWinChance(player.deposit)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <JackpotModal userAvatar={user?.avatar} isOpen={isOpenModal} onClose={toggleModal} onSubmit={onSubmitJackpotModal} />
+      {isOpenModal && (
+        <JackpotJoinModal onClose={toggleModal} handleFunction={onSubmitJackpotModal} />
+      )}
       <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )

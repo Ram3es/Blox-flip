@@ -72,9 +72,7 @@ export const Chat = () => {
         />
       )}
       {isOpenTriviaModal && (
-        <TriviaModal
-          onClose={() => setIsOpenTriviaModal(false)}
-          isOpen={isOpenTriviaModal} />
+        <TriviaModal onClose={() => setIsOpenTriviaModal(false)} isOpen={isOpenTriviaModal} />
       )}
     </>
   )

@@ -18,7 +18,7 @@ export const ChatFab: FC<ChatFabProps> = ({ onClick, active }) => {
 
   return (
     <>
-      <Button className={fabClasses} onClick={onClick} color='GreenPrimary' variant='Gradient'>
+      <Button className={fabClasses} onClick={onClick} color='GreenPrimary' variant='GreenGradient'>
         <span>{active ? 'Close X' : 'Chat'}</span>
       </Button>
     </>

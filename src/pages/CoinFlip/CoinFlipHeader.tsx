@@ -5,9 +5,8 @@ import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import CoinFlipBetActions from './CoinFlipBetActions'
 import SignInModal from '../../components/containers/SignInModal'
 import DiamondIcon from '../../components/icons/DiamondIcon'
-import QuantityCoinsContainer from '../../components/common/QuantityCoins/QuantityCoinsContainer'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 import { Button } from '../../components/base/Button'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const CoinFlipHeader = () => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -32,17 +31,19 @@ const CoinFlipHeader = () => {
             </span>
           </Button>
           {!state.user && (
-            <QuantityCoinsContainer>
-              <QuantityCoins quantity={14214.51} />
-            </QuantityCoinsContainer>
+            <CoinsWithDiamond
+              containerSize='Large'
+              containerColor='GreenGradient'
+              typographyQuantity={14214.51}
+            />
           )}
         </div>
         <div className='flex items-center'>
           {state.user && <CoinFlipBetActions />}
           {!state.user && (
-            <Button variant='Gradient' onClick={() => setIsOpenModal(true)}>
+            <Button variant='GreenGradient' onClick={() => setIsOpenModal(true)}>
               <div className='flex items-center justify-between px-20 xs:px-3 py-3'>
-                <DiamondIcon width='16' height='12' />
+                <DiamondIcon className='w-[16px] h-[12px]' />
                 <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
               </div>
             </Button>

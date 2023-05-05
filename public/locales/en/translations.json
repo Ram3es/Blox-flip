@@ -1,35 +1,35 @@
 {
-    "header": {
-     "games": "Games",
-     "free": "Free Diamonds"
+  "header": {
+    "games": "Games",
+    "free": "Free Diamonds"
+  },
+  "common": {
+    "games": {
+      "caseBattles": "Case Battles",
+      "cases": "Cases",
+      "crash": "Crash",
+      "coinflip": "Coinflip",
+      "king": "King",
+      "jackpot": "Jackpot",
+      "mines": "Mines",
+      "wheel": "Wheel",
+      "cups": "Cups",
+      "plinko": "Plinko",
+      "challenges": "Challenges"
     },
-    "common":{
-        "games": {
-            "caseBattles": "Case Battles",
-            "cases": "Cases",
-            "crash": "Crash",
-            "coinflip":"Coinflip",
-            "king": "King",
-            "jackpot":"Jackpot",
-            "mines": "Mines",
-            "wheel": "Wheel",
-            "cups": "Cups",
-            "plinko": "Plinko"
-        },
-      "deposit":"Deposit",
-      "withdraw": "Withdraw"
-    },
-    "home": {
-        "greeting": "Welcome Back",
-        "freeRobux": "want free robux?",
-        "press": "press",
-        "here":"here",
-        "rewards": "Rewards & Faucets"
-    },
-    "chat":{
-        "tip":"Tip Rain",
-        "tipTitle": "Enter the amount you want to tip",
-        "placeholder": "Send message..."
-        
-    }
+    "deposit": "Deposit",
+    "withdraw": "Withdraw"
+  },
+  "home": {
+    "greeting": "Welcome Back",
+    "freeRobux": "want free robux?",
+    "press": "press",
+    "here": "here",
+    "rewards": "Rewards & Faucets"
+  },
+  "chat": {
+    "tip": "Tip Rain",
+    "tipTitle": "Enter the amount you want to tip",
+    "placeholder": "Send message..."
+  }
 }

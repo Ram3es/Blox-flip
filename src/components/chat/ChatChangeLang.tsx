@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Listbox } from '@headlessui/react'
 
-import { ArrowGrayIcon } from '../icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 
 import EnglandIcon from '../../assets/img/flag_en.svg'
 import SpainIcon from '../../assets/img/flag_spain.svg'
@@ -34,20 +34,26 @@ export const ChatChangeLang: FC = () => {
     <div className='bg-blue-secondary p-2 rounded flex items-center flex-nowrap'>
       <Listbox value={selectedChatLanguage} onChange={setSelectedChatLanguage}>
         <Listbox.Button as={Button} color='BlueSecondary'>
-          <span className='w-7 shrink-0 rounded-sm overflow-hidden mr-2'>
-            <img
-              src={selectedChatLanguage.icon}
-              alt=''
-              width='27'
-              height='22'
-              loading='lazy'
-              decoding='async'
-              className='object-cover w-full h-full'
-            />
-          </span>
-          <span className='bg-blue-accent shrink-0 rounded text-center w-4 h-4 leading-4 text-gray-secondary'>
-            <ArrowGrayIcon size='SMALL' />
-          </span>
+          {({ open }) => (
+            <>
+              <span className='w-7 shrink-0 rounded-sm overflow-hidden mr-2'>
+                <img
+                  src={selectedChatLanguage.icon}
+                  alt=''
+                  width='27'
+                  height='22'
+                  loading='lazy'
+                  decoding='async'
+                  className='object-cover w-full h-full'
+                />
+              </span>
+              <span className='bg-blue-accent shrink-0 rounded w-4 h-4 flex justify-center items-center leading-4 text-gray-secondary'>
+                <ArrowTriangleIcon
+                  className={`inline w-2 ${open ? 'rotate-180 transform' : ''}`}
+                />
+              </span>
+            </>
+          )}
         </Listbox.Button>
         <Listbox.Options>
           <div className='absolute left-0 right-0 top-full pt-2.5'>

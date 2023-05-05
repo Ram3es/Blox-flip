@@ -12,8 +12,8 @@ import { FilterHeader } from '../table/FilterHeader'
 import { users } from '../../mocks/liveFeedUsers'
 import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/Table'
-import { QuantityCoins } from '../common/QuantityCoins/QuantityCoins'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 const RedDotIcon = () => {
   return (
@@ -87,7 +87,15 @@ export const LiveFeed = () => {
     columnHelper.accessor((row: ISecondUser) => row.bet, {
       id: 'bet',
       header: () => 'Bet',
-      cell: ({ row }) => <QuantityCoins quantity={row.original.bet} />,
+      cell: ({ row }) => (
+        <CoinsWithDiamond
+          containerSize='Small'
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.bet}
+          typographyFontSize='Size13'
+        />
+      ),
       filterFn: (row, _columnId, value) => {
         return row.original.bet > value
       },
@@ -103,9 +111,13 @@ export const LiveFeed = () => {
       id: 'profit',
       header: 'Profit',
       cell: ({ row }) => (
-        <QuantityCoins
-          quantity={row.original.profit}
-          color={row.original.isWinner ? 'green' : 'red'}
+        <CoinsWithDiamond
+          containerSize='Small'
+          iconContainerColor={row.original.isWinner ? 'GreenPrimary' : 'RedAccent'}
+          iconContainerSize='Small'
+          iconClasses='w-3 h-3'
+          typographyQuantity={row.original.profit}
+          typographyFontSize='Size13'
         />
       ),
       filterFn: (row, _columnId, value) => {

@@ -1,5 +1,5 @@
 import LabelList from '../../components/common/LabelList'
-import { UserAvatar } from '../../components/user/UserAvatar'
+import Image from '../../components/base/Image'
 
 import type { ISecondUser } from '../../types/User'
 
@@ -23,7 +23,7 @@ const KingQueue = ({ queue }: KingQueueProps) => {
             key={item.id}
             className='w-11 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'
           >
-            <UserAvatar />
+            <Image />
           </div>
         ))}
       </div>

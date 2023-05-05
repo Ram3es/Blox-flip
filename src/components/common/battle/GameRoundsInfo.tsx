@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { IMAGES } from '../../../constants/images'
 import { Button } from '../../base/Button'
-import { FairIcon } from '../../icons/FairIcon'
+import FairIcon from '../../icons/FairIcon'
 
 interface IBoxInfoProps {
   gameVariant: string

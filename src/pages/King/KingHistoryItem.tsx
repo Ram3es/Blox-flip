@@ -9,7 +9,7 @@ import ItemsList from '../../components/common/ItemsList'
 import { Button } from '../../components/base/Button'
 
 import { CopyIcon } from '../../components/icons/CopyIcon'
-import { ArrowGrayIcon } from '../../components/icons/ArrowGrayIcon'
+import ArrowTriangleIcon from '../../components/icons/ArrowTriangleIcon'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import SmallDashedSpacer from '../../assets/img/dashed_spacer_small.png'
 
@@ -44,7 +44,7 @@ const KingHistoryItem = ({ game }: KingHistoryItemProps) => {
                   Hash: {hashCode}
                 </span>
                 <Button onClick={handleCopyHashCode} type='button'>
-                  <CopyIcon iconClasses='w-2.5 h-3' />
+                  <CopyIcon className='w-2.5 h-3' />
                 </Button>
               </div>
             </div>
@@ -57,7 +57,7 @@ const KingHistoryItem = ({ game }: KingHistoryItemProps) => {
                 'rotate-180 transform': open
               })}
             >
-              <ArrowGrayIcon />
+              <ArrowTriangleIcon />
             </Disclosure.Button>
           </div>
           <Disclosure.Panel>

@@ -6,49 +6,12 @@ import DiamondIcon from '../icons/DiamondIcon'
 import Logo from '../../assets/img/logo.png'
 import HomeIcon from '../../assets/img/home_ico.svg'
 import GamesIcon from '../../assets/img/games_ico.svg'
-import ArrowWhiteIcon from '../../assets/img/arrow_white.svg'
 import { RouteItem } from '../../types/Routes'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
 import { PlusIcon } from '../icons/PlusIcon'
-
-const GamesButton = ({ title }: { title: string }) => {
-  return (
-    <div className='flex'>
-      <img
-        src={GamesIcon}
-        alt=''
-        width='17'
-        height='11'
-        loading='lazy'
-        decoding='async'
-        className='mr-2'
-      />
-      <span className='py-2 mr-2 font-bold hidden md:block'>{title}</span>
-      <img src={ArrowWhiteIcon} alt='' width='7' height='4' loading='lazy' decoding='async' />
-    </div>
-  )
-}
-
-const UserWalletButton = () => {
-  return (
-    <div className='border border-green-primary bg-green-primary/15 group-hover:bg-green-primary/30 flex items-center p-1.5 cursor-pointer'>
-      <span className='w-6 h-6 text-center leading-6 hidden xxs:block bg-green-primary/20 rounded relative mr-3 text-green-primary'>
-        <DiamondIcon className='-inset-full absolute m-auto' width='14.2' height='14' />
-      </span>
-      <span className='font-bold text-sm whitespace-nowrap mr-7 hidden xs:block'>
-        1,500<span className='text-white/50'>.00</span>
-      </span>
-      <span>
-        <Button variant='Standard' color='GreenPrimary'>
-          <span className='w-6 h-6 flex items-center justify-center'>
-            <PlusIcon />
-          </span>
-        </Button>
-      </span>
-    </div>
-  )
-}
+import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
+import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
 const routesGames: RouteItem[] = [
   { path: '/unboxing', name: 'cases' },
@@ -56,7 +19,9 @@ const routesGames: RouteItem[] = [
   { path: '/coinflip', name: 'coinflip' },
   { path: '/jackpot', name: 'jackpot' },
   { path: '/plinko', name: 'plinko' },
-  { path: '/wheel', name: 'wheel' }
+  { path: '/wheel', name: 'wheel' },
+  { path: '/king', name: 'king' },
+  { path: '/challenges', name: 'challenges' }
 ]
 
 export const Header = () => {
@@ -93,8 +58,26 @@ export const Header = () => {
           as='div'
           className='px-3 flex flex-row items-center h-8 xs:h-10 text-13 rounded bg-lightblue-secondary hover:bg-lightblue-wave relative'
         >
-          <Menu.Button>
-            <GamesButton title={t('header.games')} />
+          <Menu.Button as={Button}>
+            {({ open }) => (
+              <>
+                <img
+                  src={GamesIcon}
+                  alt=''
+                  width='17'
+                  height='11'
+                  loading='lazy'
+                  decoding='async'
+                  className='mr-2'
+                />
+                <span className='py-2 mr-2 font-bold hidden md:block'>{t('header.games')}</span>
+                <span
+                  className={`w-2 h-1 flex items-center justify-center ${open ? 'rotate-180' : ''}`}
+                >
+                  <ArrowTriangleIcon />
+                </span>
+              </>
+            )}
           </Menu.Button>
           <Menu.Items
             as='div'
@@ -121,7 +104,7 @@ export const Header = () => {
           1545
         </div>
         <Button
-          variant='Gradient'
+          variant='GreenGradient'
           color='GreenPrimary'
           className='diamond--highlight mr-2 xs:mr-6 ml-2 xs:ml-6'
         >
@@ -130,15 +113,24 @@ export const Header = () => {
             className='text-xs flex-row flex items-center w-8 h-8 xs:h-9 xs:w-auto xs:px-2.5 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20'
           >
             <span className='w-4 shrink-0 mx-auto relative text-white'>
-              <DiamondIcon width='16' height='12' />
+              <DiamondIcon className='w-[16px] h-[12px]' />
             </span>
             <span className='hidden md:block ml-2.5'>{t('header.free')}</span>
           </Link>
         </Button>
         <div className='p-2 xs:p-4 h-full flex flex-col justify-center rounded-r-lg bg-green-primary/15 relative'>
           <Menu>
-            <Menu.Button as='div'>
-              <UserWalletButton />
+            <Menu.Button as={Button} variant='GreenOutlined'>
+              <div className='px-1.5 xs:pr-1.5 py-1.5 flex items-center justify-center xs:justify-between'>
+                <div className='hidden xs:block'>
+                  <CoinsWithDiamond containerSize='Small' typographyQuantity={1500} />
+                </div>
+                <div className='bg-green-primary flex items-center rounded'>
+                  <span className='w-6 h-6 flex items-center justify-center text-white'>
+                    <PlusIcon />
+                  </span>
+                </div>
+              </div>
             </Menu.Button>
             <Menu.Items as='div' className='absolute xs:w-full right-0 top-full pt-2.5 z-50'>
               <div className='relative min-w-fit p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary'>
@@ -148,7 +140,7 @@ export const Header = () => {
                   className='relative z-20 text-xs flex-row flex justify-center items-center h-8 px-2.5 leading-8 font-bold gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 rounded shadow-green-20 mb-2'
                 >
                   <span className='w-4 shrink-0 mr-2.5 flex text-white'>
-                    <DiamondIcon width='15' height='13' />
+                    <DiamondIcon className='w-[15px] h-[13px]' />
                   </span>
                   <span>{t('common.deposit')}</span>
                 </Menu.Item>

@@ -20,7 +20,7 @@ const Challenges = () => {
     setIsOpenChallengeCheck(prev => ({ ...prev, isOpen: false }))
   }, [])
 
-  const openChallendgeModal = (challengeCard: IChallengeCard) => {
+  const openChallengeModal = (challengeCard: IChallengeCard) => {
     setIsOpenChallengeCheck(prev => ({ ...prev, isOpen: !prev.isOpen, challengeCard }))
   }
 
@@ -30,7 +30,7 @@ const Challenges = () => {
           <ChallengesBar
             userRole={state.user?.role}
             openAdminModal={() => setIsOpenChallengeCreation(state => !state)}
-            openChallengeModal={openChallendgeModal} />
+            openChallengeModal={openChallengeModal} />
 
           {isOpenChallengeCreation && (
             <ChallengeCreationModal

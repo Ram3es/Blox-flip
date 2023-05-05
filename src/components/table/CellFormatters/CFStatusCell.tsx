@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import clsx from 'clsx'
 
-import { UserAvatar } from '../../user/UserAvatar'
+import Image from '../../base/Image'
 import { GameStatus } from '../../../types/enums'
 import { Button } from '../../base/Button'
 
@@ -34,10 +34,10 @@ const CFJoinButton = ({ gameId }: CoinFlipJoinButtonProps) => {
   const { setIsOpenJoinGame } = useCoinFlip()
 
   return (
-    <Button variant='Gradient' onClick={() => setIsOpenJoinGame(true)}>
+    <Button variant='GreenGradient' onClick={() => setIsOpenJoinGame(true)}>
       <div className='flex items-center justify-center h-10 w-[5.5rem]'>
         <span className='w-4 shrink-0 relative text-white'>
-          <DiamondIcon width='16' height='12' />
+          <DiamondIcon className='w-[16px] h-[12px]' />
         </span>
         <span className='pl-2'>Join</span>
       </div>
@@ -65,10 +65,10 @@ const CFButtonWithTimer = ({ avatar = '', timer = 30 }: CoinFlipButtonWithTimerP
   }, [timer])
 
   return (
-    <Button variant='Outlined'>
+    <Button variant='GreenOutlined'>
       <div className='flex items-center justify-center w-[9.5rem] h-10'>
         <div className='w-6 h-6 border border-blue-highlight rounded overflow-hidden radial--blue'>
-          <UserAvatar image={avatar} />
+          <Image image={avatar} />
         </div>
         <p className='font-bold text-sm text-green-primary pl-2'>
           Joining in <span className='text-white'>{timeToEnd}s</span>
@@ -80,7 +80,7 @@ const CFButtonWithTimer = ({ avatar = '', timer = 30 }: CoinFlipButtonWithTimerP
 
 const CFButtonWinner = ({ coin }: { coin: Coin }) => {
   return (
-    <Button disabled variant={coin === 0 ? 'YellowOutlinedSecondary' : 'BlueOutlined'}>
+    <Button disabled variant={coin === 0 ? 'YellowOutlinedSecondary' : 'BlueGolfOutlined'}>
       <div className='flex items-center justify-center w-28 h-10'>
         <img className='h-6 w-6' src={coin === 0 ? CoinFlipHead : CoinFlipTail} alt='head' />
         <span

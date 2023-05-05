@@ -1,33 +1,33 @@
 {
-    "header": {
-     "games": "Oyunlar",
-     "free": "Free Diamonds"
+  "header": {
+    "games": "Oyunlar",
+    "free": "Free Diamonds"
+  },
+  "common": {
+    "games": {
+      "caseBattles": "Case Battles",
+      "cases": "Cases",
+      "crash": "Crash",
+      "king": "King",
+      "mines": "Mines",
+      "wheel": "Wheel",
+      "cups": "Cups",
+      "plinko": "Plinko",
+      "challenges": "Challenges"
     },
-    "common":{
-        "games": {
-            "caseBattles": "Case Battles",
-            "cases": "Cases",
-            "crash": "Crash",
-            "king": "King",
-            "mines": "Mines",
-            "wheel": "Wheel",
-            "cups": "Cups",
-            "plinko": "Plinko"
-        },
-      "deposit":"Deposit",
-      "withdraw": "Withdraw"
-    },
-    "home": {
-        "greeting": "Tekrar Hoşgeldiniz",
-        "freeRobux": "want free robux?",
-        "press": "press",
-        "here":"here",
-        "rewards": "Rewards & Faucets"
-    },
-    "chat":{
-        "tip":"Tip Rain",
-        "tipTitle": "Enter the amount you want to tip",
-        "placeholder": "Send message..."
-        
-    }
+    "deposit": "Deposit",
+    "withdraw": "Withdraw"
+  },
+  "home": {
+    "greeting": "Tekrar Hoşgeldiniz",
+    "freeRobux": "want free robux?",
+    "press": "press",
+    "here": "here",
+    "rewards": "Rewards & Faucets"
+  },
+  "chat": {
+    "tip": "Tip Rain",
+    "tipTitle": "Enter the amount you want to tip",
+    "placeholder": "Send message..."
+  }
 }

@@ -96,6 +96,7 @@ const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyMod
         inventoryItemsLength={items.length}
         selectedItemsCost={getCostInSelectedItems()}
         selectedItemsLength={selectedItems.length}
+        betGap={2555}
       >
         <div className='flex items-center justify-between space-x-4'>
           {!isCreated && (

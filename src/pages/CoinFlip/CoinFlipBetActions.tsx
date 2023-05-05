@@ -5,9 +5,9 @@ import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
-import { QuantityCoins } from '../../components/common/QuantityCoins/QuantityCoins'
 
 import type { BetToolkit } from '../../types/Bets'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const CoinFlipBetActions = () => {
   const { betAmount, setBetAmount, selectedCoin, setSelectedCoin, setIsOpenCreateGame } =
@@ -40,23 +40,23 @@ const CoinFlipBetActions = () => {
   return (
     <div className='flex flex-col items-center space-y-4 xs:space-y-0 xs:flex-row xs:space-x-3'>
       <div className='flex items-center justify-center md:justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2 bg-dark/25 rounded py-2 md:h-11 px-2'>
-        <div className='flex md:space-x-2 md:min-w-[210px]'>
+        <div className='flex items-center md:space-x-2 md:min-w-[210px]'>
           <div className='hidden md:block gradient-blue-secondary text-gray-primary text-13 rounded p-1'>
             Bet amount
           </div>
-          <QuantityCoins quantity={betAmount} />
+          <CoinsWithDiamond containerSize='Small' typographyQuantity={betAmount} typographyFontSize='Size16' />
         </div>
         <ToggleBets
           value={selectedBet}
           handleChange={setSelectedBet}
           betToolkit={betToolkit}
-          buttonSize='SMALL'
+          buttonSize='Small'
         />
       </div>
       <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
-      <Button variant='Gradient' onClick={() => setIsOpenCreateGame(true)}>
+      <Button variant='GreenGradient' onClick={() => setIsOpenCreateGame(true)}>
         <div className='flex items-center justify-between md:py-3.5 py-2 px-2'>
-          <DiamondIcon width='16' height='12' />
+          <DiamondIcon className='w-[16px] h-[12px]' />
           <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
         </div>
       </Button>
