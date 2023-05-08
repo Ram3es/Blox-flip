@@ -12,9 +12,9 @@ import JackpotWheel from './JackpotWheel'
 import { Context } from '../../store/Store'
 import SignInModal from '../../components/containers/SignInModal'
 import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
-import JackpotJoinModal from './JackpotJoinModal'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { getCostByFieldName } from '../../helpers/numbers'
+import JackpotModal from '../../components/containers/JackpotModal'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
@@ -26,6 +26,9 @@ const Jackpot = () => {
   const {
     state: { user }
   } = useContext(Context)
+  const AVATAR_URL =
+'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
+
   const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)
 
   const toggleModal = () => setOpenModal((state) => !state)
@@ -52,7 +55,7 @@ const Jackpot = () => {
           avatar: user?.avatar,
           level: user?.level,
           userName: user?.name,
-          deposit: sumItemsPrice(selectedCards)
+          deposit: getCostByFieldName(selectedCards, 'price')
         }
       ])
     }
@@ -190,9 +193,7 @@ const Jackpot = () => {
           </div>
         </div>
       </div>
-      {isOpenModal && (
-        <JackpotJoinModal onClose={toggleModal} handleFunction={onSubmitJackpotModal} />
-      )}
+      <JackpotModal isOpen={isOpenModal} onClose={toggleModal} onSubmit={onSubmitJackpotModal} userAvatar={user?.avatar ?? AVATAR_URL } />
       <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )
