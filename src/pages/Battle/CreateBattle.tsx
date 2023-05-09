@@ -59,7 +59,11 @@ const CreateBattle = () => {
   )
 
   const decrementCounter = useCallback(
-    (id: string) =>
+    (id: string) => {
+      const found = casesBetted.find(betted => betted.id === id)
+      if (found?.amount === 1) {
+        setCasesToBet(prev => [...prev.filter(card => card.id !== found.id)])
+      }
       setCasesToBet((state) => [
         ...state.map((box) => {
           if (box.id === id) {
@@ -67,7 +71,8 @@ const CreateBattle = () => {
           }
           return box
         })
-      ]),
+      ])
+    },
     [casesBetted]
   )
 
@@ -182,7 +187,7 @@ const CreateBattle = () => {
       </NavHeader>
       <PaymentMethodContainer>
         <AddBoxCard openModal={() => setOpenModal(true)} />
-        {casesBetted.map((card) => (
+        {casesBetted.filter(card => card.amount > 0).map((card) => (
           <UnboxingWithCounter
             key={card.id}
             id={card.id}
@@ -225,9 +230,9 @@ const CreateBattle = () => {
       )}
       <BattleModal
         isOpen={isOpenModal}
+        casesBetted={casesBetted}
         onSubmit={onSubmitModal}
-        onClose={() => setOpenModal(false)}
-      />
+        onClose={() => setOpenModal(false)} />
     </div>
   )
 }

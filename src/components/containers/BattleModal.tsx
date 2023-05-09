@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { unboxCard } from '../../mocks/cards'
-import { IItemCard } from '../../types/ItemCard'
+import { IItemCard, IUnboxCardCounter } from '../../types/ItemCard'
 import { Button } from '../base/Button'
 import { searchData } from '../../helpers/searchData'
 import UnboxingCard from '../common/Cards/UnboxingCard'
@@ -14,17 +14,20 @@ import CoinsWithDiamond from '../common/CoinsWithDiamond'
 const BattleModal = ({
   isOpen,
   onClose,
-  onSubmit
+  onSubmit,
+  casesBetted
 }: {
   isOpen: boolean
   onClose: Function
   onSubmit: Function
+  casesBetted: IUnboxCardCounter[]
+
 }) => {
-  const [unboxCards, setAllCards] = useState<IItemCard[]>(unboxCard)
-  const [selectedCards, setSelected] = useState<IItemCard[]>([])
+  const [unboxCards, setAllCards] = useState<IUnboxCardCounter[]>([])
+  const [selectedCards, setSelected] = useState<IUnboxCardCounter[]>([])
   const { value, searchBy, priceRange, onChange, setPriceRange } = useToolbarState()
 
-  const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
+  const totalPriceSelected = useMemo(() => selectedCards.reduce((acc, item) => acc + item.price * item.amount, 0), [casesBetted, selectedCards])
   const ranged = useMemo(
     () => unboxCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
     [priceRange, unboxCards]
@@ -35,9 +38,34 @@ const BattleModal = ({
   )
 
   const onSelect = (card: IItemCard) => {
-    setSelected((state) => [...state, { ...card, amount: 1 }])
-    setAllCards((state) => [...state.filter((orgCard) => orgCard.id !== card.id)])
+    setSelected(prev => {
+      const selctedCard = prev.find(prevCard => prevCard.id === card.id)
+      if (!selctedCard) {
+        const addNewCard = unboxCards.find(unCard => unCard.id === card.id) as IUnboxCardCounter
+        return [...prev, addNewCard]
+      }
+      return [...prev.map(prevCard => {
+        if (prevCard.id === selctedCard.id) {
+          return { ...selctedCard, amount: selctedCard.amount + 1 }
+        }
+        return prevCard
+      })]
+    })
   }
+
+  const handleSubmit = () => {
+    onSubmit(selectedCards)
+    onClose()
+  }
+
+  useEffect(() => {
+    setAllCards(unboxCard.map(card => ({ ...card, amount: 1 })))
+  }, [unboxCard])
+
+  useEffect(() => {
+    setSelected(casesBetted)
+  }, [casesBetted])
+
   return isOpen
     ? (<ModalWrapper
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto  overflow-hidden'
@@ -76,10 +104,7 @@ const BattleModal = ({
           />
         </div>
         <Button
-          onClick={() => {
-            onSubmit(selectedCards)
-            onClose()
-          }}
+          onClick={handleSubmit}
           className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-4 leading-4 rounded '
         >
           Complete
