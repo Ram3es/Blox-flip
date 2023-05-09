@@ -122,7 +122,7 @@ const Jackpot = () => {
           <div className='flex w-full flex-col gap-5'>
             <div className='flex w-full flex-wrap items-end gap-3'>
               <GameInfoListItem label='MIN. BET'>
-                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
+                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={1500} />
               </GameInfoListItem>
               <GameInfoListItem label='MAX. BET'>
                 <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
@@ -149,7 +149,7 @@ const Jackpot = () => {
                 <div className='w-full truncate text-center text-gray-primary'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
               </div>
             </StrippedBgItem>
-            <div className='h-[310px]  pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+            <div className='h-[310px] z-10  pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
               <div className='flex flex-col  gap-y-2 p-0.5 '>
                 {joinedUsers.map((player) => (
                   <JoinedUserRow
@@ -193,7 +193,7 @@ const Jackpot = () => {
           </div>
         </div>
       </div>
-      <JackpotModal isOpen={isOpenModal} onClose={toggleModal} onSubmit={onSubmitJackpotModal} userAvatar={user?.avatar ?? AVATAR_URL } />
+      {isOpenModal && <JackpotModal onClose={toggleModal} onSubmit={onSubmitJackpotModal} userAvatar={user?.avatar ?? AVATAR_URL } />}
       <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )
