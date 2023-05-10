@@ -17,7 +17,7 @@ interface CoinFlipGameHeaderProps {
 const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
   ({ withBot }, ref) => {
     const skinIconClasses = clsx(
-      'flex z-100 absolute top-[-20%] xs:left-[40%] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center',
+      'flex z-100 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center',
       {
         grayscale: withBot
       }

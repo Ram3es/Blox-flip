@@ -34,5 +34,9 @@ export const unboxCard: IUnboxCard[] = [
   { id: '7', color: 'Red', image: 'helmet', name: 'Fiery Created Box', price: 1600, status: 'new' },
   { id: '8', color: 'Red', image: 'helmet', name: 'Fiery Created Box', price: 1600, status: 'new' },
   { id: '9', color: 'Orange', image: 'helmet', name: 'Fiery Created Box', price: 1000, status: 'created' },
-  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Created Box', price: 300, status: 'created' }
+  { id: '10', color: 'Green', image: 'redCrown', name: 'Fiery Created Box', price: 300, status: 'created' },
+  { id: '11', color: 'Red', image: 'helmet', name: 'Fiery Created Box', price: 1600, status: 'new' },
+  { id: '12', color: 'Red', image: 'helmet', name: 'Fiery Created Box', price: 1600, status: 'new' },
+  { id: '13', color: 'Red', image: 'helmet', name: 'Fiery Created Box', price: 1600, status: 'new' },
+  { id: '14', color: 'Red', image: 'helmet', name: 'Fiery Created Box', price: 1600, status: 'new' }
 ]

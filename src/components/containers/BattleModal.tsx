@@ -86,7 +86,7 @@ const BattleModal = ({
         </div>
       </div>
       <div className=' border-b border-blue-accent-secondary' />
-      <div className='w-full min-h-[232px] max-h-[calc(100vh_-_210px)]  mt-5 mb-[34px] flex flex-wrap  overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full  pr-3 -mr-2 '>
+      <div className='w-full min-h-[250px] max-h-[calc(100vh_-_210px)]  mt-5 mb-[34px] flex flex-wrap  overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full  pr-3 -mr-2 '>
         {filtered.map((card) => (
           <UnboxingCard
             key={card.id}

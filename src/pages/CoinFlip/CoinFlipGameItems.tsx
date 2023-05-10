@@ -10,7 +10,7 @@ interface CoinFlipGameItemsProps {
 
 const CoinFlipGameItems = ({ items, isBot }: CoinFlipGameItemsProps) => {
   return (
-    <div className='pb-48 xs:pb-60 w-full max-h-full min-h-[276px] px-4 flex flex-wrap overflow-y-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+    <div className='pb-48 xs:pb-60 w-full max-h-full min-h-[276px] pl-1 xxxs:pl-4 pr-4 flex flex-wrap overflow-y-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
       {!isBot && items.map((item) => <ItemCard variant='FourByFour' key={item.id} {...item} />)}
       {isBot && (
         <div className='px-2 my-10 mx-auto space-y-2'>
