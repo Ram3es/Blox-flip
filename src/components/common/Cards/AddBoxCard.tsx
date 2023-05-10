@@ -9,10 +9,10 @@ const AddBoxCard = ({ openModal }: { openModal: Function }) => {
       >
         <div className='absolute text-gray-primary rounded-2xl w-16 h-16 bg-blue-accent-secondary/30 bg-gradient-to-t from-dark/20 to-dark/20  group hover:bg-blue-accent cursor-pointer flex justify-center items-center'>
           <PlusIcon
-            className='w-[18px] h-[18px]  group-hover:text-white'
+            className='w-[18px] h-[18px] group-hover:text-white'
           />
         </div>
-        <div className='pb-60% ' >
+        <div className='pb-60%' >
           <div className='h-[170px]' />
         </div>
       </div>

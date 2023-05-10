@@ -57,6 +57,10 @@ const BattleModal = ({
     onSubmit(selectedCards)
     onClose()
   }
+  const handleCloseModal = () => {
+    onClose()
+    setSelected(casesBetted)
+  }
 
   useEffect(() => {
     setAllCards(unboxCard.map(card => ({ ...card, amount: 1 })))
@@ -69,7 +73,7 @@ const BattleModal = ({
   return isOpen
     ? (<ModalWrapper
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto  overflow-hidden'
-      closeModal={onClose}
+      closeModal={handleCloseModal}
     >
       <div className=' flex flex-col xs:flex-row justify-between items-center mr-10 mb-5'>
         <div className='w-full flex justify-center xs:justify-start items-center'>
