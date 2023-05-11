@@ -120,7 +120,8 @@ const CreateBattle = () => {
         ...battleSettings,
         currentRound: 0,
         rounds: amountCases,
-        price: totalCost
+        price: totalCost,
+        isDone: false
       },
       cases: convertAmountBoxes(),
       players: [
@@ -133,7 +134,9 @@ const CreateBattle = () => {
           dropsCards: [],
           wonDiamonds: 0,
           team: 'blue'
-        }],
+        },
+        ...Array.from({ length: battleSettings.mode.requiredPlayers - 1 })
+      ],
       id: '1234567',
       date: '2032-03-12T23:46:58.567Z',
       status: 'created'
