@@ -24,7 +24,7 @@ const UserBar = ({
     <div
       className={`${user ? 'justify-between' : 'justify-center'} flex ${
         amountPlayers !== 2 ? 'flex-col w-fit px-2' : 'flex-row w-full px-4'
-      } flex-wrap items-center z-10 py-1 rounded-t bg-blue-accent-secondary w-full`}
+      } flex-wrap items-center z-10 py-1 rounded-t bg-blue-accent-secondary w-full h-[80px]`}
     >
       {user && (
         <>

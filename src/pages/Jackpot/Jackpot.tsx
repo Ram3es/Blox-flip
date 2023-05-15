@@ -12,9 +12,9 @@ import JackpotWheel from './JackpotWheel'
 import { Context } from '../../store/Store'
 import SignInModal from '../../components/containers/SignInModal'
 import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
-import JackpotJoinModal from './JackpotJoinModal'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { getCostByFieldName } from '../../helpers/numbers'
+import JackpotModal from '../../components/containers/JackpotModal'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
@@ -26,6 +26,9 @@ const Jackpot = () => {
   const {
     state: { user }
   } = useContext(Context)
+  const AVATAR_URL =
+'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
+
   const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)
 
   const toggleModal = () => setOpenModal((state) => !state)
@@ -52,7 +55,7 @@ const Jackpot = () => {
           avatar: user?.avatar,
           level: user?.level,
           userName: user?.name,
-          deposit: sumItemsPrice(selectedCards)
+          deposit: getCostByFieldName(selectedCards, 'price')
         }
       ])
     }
@@ -119,7 +122,7 @@ const Jackpot = () => {
           <div className='flex w-full flex-col gap-5'>
             <div className='flex w-full flex-wrap items-end gap-3'>
               <GameInfoListItem label='MIN. BET'>
-                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
+                <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={1500} />
               </GameInfoListItem>
               <GameInfoListItem label='MAX. BET'>
                 <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={115500} />
@@ -146,7 +149,7 @@ const Jackpot = () => {
                 <div className='w-full truncate text-center text-gray-primary'>{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
               </div>
             </StrippedBgItem>
-            <div className='h-[310px]  pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+            <div className='h-[310px] z-10  pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
               <div className='flex flex-col  gap-y-2 p-0.5 '>
                 {joinedUsers.map((player) => (
                   <JoinedUserRow
@@ -190,9 +193,7 @@ const Jackpot = () => {
           </div>
         </div>
       </div>
-      {isOpenModal && (
-        <JackpotJoinModal onClose={toggleModal} handleFunction={onSubmitJackpotModal} />
-      )}
+      {isOpenModal && <JackpotModal onClose={toggleModal} onSubmit={onSubmitJackpotModal} userAvatar={user?.avatar ?? AVATAR_URL } />}
       <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )
