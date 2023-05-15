@@ -40,6 +40,8 @@ import Challenges from './pages/Challenges/Challenges'
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 
 import Terms from './pages/TermsOfService/Terms'
+import FAQ from './pages/TermsOfService/FAQ'
+import ProvablyFair from './pages/TermsOfService/ProvablyFair'
 
 export const App = () => {
   return (
@@ -87,6 +89,9 @@ export const App = () => {
           <Route path='/leaderboard' element={<Leaderboard />} />
 
           <Route path='/terms' element={<Terms />} />
+          <Route path='/FAQ' element={<FAQ />} />
+          <Route path='/provably-fair' element={<ProvablyFair />} />
+
         </Routes>
       </Container>
     </BrowserRouter>
