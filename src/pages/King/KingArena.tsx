@@ -82,41 +82,46 @@ const KingArena = () => {
 
   const applyHealthPointBarEffect = (round: IKingFight) => {
     if (round.by === 'king') {
-      setHealthPointsOpponent((prevHpOpponent) => prevHpOpponent - round.damage)
+      setTimeout(() => {
+        setHealthPointsOpponent((prevHpOpponent) => prevHpOpponent - round.damage)
 
-      const roundPercent = getPercentByDamage(round.damage, maxHealthPointsOpponent)
-
-      if (healthPointsBarOpponentRef.current) {
-        healthPointsBarOpponentRef.current.style.width = `${roundPercent}%`
-
-        setTimeout(() => {
-          if (healthPointsBarOpponentRef.current) {
-            healthPointsBarOpponentRef.current.style.width = '0%'
-          }
-        }, 2000)
-      }
+        const roundPercent = getPercentByDamage(round.damage, maxHealthPointsOpponent)
+        if (healthPointsBarOpponentRef.current) {
+          healthPointsBarOpponentRef.current.style.width = `${roundPercent}%`
+          setTimeout(() => {
+            if (healthPointsBarOpponentRef.current) {
+              healthPointsBarOpponentRef.current.style.width = '0%'
+            }
+          }, TIME_EFFECT_MILLISECONDS / 2)
+        }
+      }, 1500)
     }
     if (round.by === 'opponent') {
-      setHealthPointsKing((prevHpKing) => prevHpKing - round.damage)
+      setTimeout(() => {
+        setHealthPointsKing((prevHpKing) => prevHpKing - round.damage)
 
-      const roundPercent = getPercentByDamage(round.damage, maxHealthPointsKing)
+        const roundPercent = getPercentByDamage(round.damage, maxHealthPointsKing)
+        if (healthPointsBarKingRef.current) {
+          healthPointsBarKingRef.current.style.width = `${roundPercent}%`
 
-      if (healthPointsBarKingRef.current) {
-        healthPointsBarKingRef.current.style.width = `${roundPercent}%`
-
-        setTimeout(() => {
-          if (healthPointsBarKingRef.current) {
-            healthPointsBarKingRef.current.style.width = '0%'
-          }
-        }, TIME_EFFECT_MILLISECONDS)
-      }
+          setTimeout(() => {
+            if (healthPointsBarKingRef.current) {
+              healthPointsBarKingRef.current.style.width = '0%'
+            }
+          }, TIME_EFFECT_MILLISECONDS / 2)
+        }
+      }, 1500)
     }
   }
 
   const applyExplosiveEffect = (round: IKingFight) => {
     if (round.by === 'king') {
       if (explosiveOpponentEffect.current) {
-        explosiveOpponentEffect.current.style.visibility = 'visible'
+        setTimeout(() => {
+          if (explosiveOpponentEffect.current) {
+            explosiveOpponentEffect.current.style.visibility = 'visible'
+          }
+        }, 1500)
 
         setTimeout(() => {
           if (explosiveOpponentEffect.current) {
@@ -127,7 +132,11 @@ const KingArena = () => {
     }
     if (round.by === 'opponent') {
       if (explosiveKingEffect.current) {
-        explosiveKingEffect.current.style.visibility = 'visible'
+        setTimeout(() => {
+          if (explosiveKingEffect.current) {
+            explosiveKingEffect.current.style.visibility = 'visible'
+          }
+        }, 1500)
 
         setTimeout(() => {
           if (explosiveKingEffect.current) {

@@ -1,5 +1,5 @@
 export const ROUND_DURATION = 5
 export const ROUND_DURATION_MILLISECONDS = ROUND_DURATION * 1000
 
-export const TIME_EFFECT = 2
+export const TIME_EFFECT = 4
 export const TIME_EFFECT_MILLISECONDS = TIME_EFFECT * 1000
