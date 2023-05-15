@@ -983,6 +983,68 @@ text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1);
     }
   }
 }
+.coinflip-animation.blue  {
+  background-image: url("./assets/img/coinflip-blue-winin-sprite.png");
+}
+.coinflip-animation.white  {
+  background-image: url("./assets/img/coinflip-white-win-sprite.png");
+}
+
+.coinflip-animation {
+  width: 500px;
+  height: 500px;
+  transform: scale(0.8);
+
+  background-position: 0px 0px;
+  animation: coinflip 6s steps(236) 1s forwards ;
+ 
+}
+
+.king-animation.cowboy {
+  background-image: url("./assets/img/king-sprite-cowboy.png");
+}
+.king-animation.iceknight {
+  background-image: url("./assets/img/king-sprite-iceknight.png");
+}
+.king-animation.knight {
+  background-image: url("./assets/img/king-sprite-knight.png");
+}
+.king-animation.blade {
+  background-image: url("./assets/img/king-sprite-blade.png");
+}
+.king-animation.cosmic {
+  background-image: url("./assets/img/king-sprite-cosmic-guard.png");
+}
+.king-animation {
+  width: 400px;
+  height: 400px;
+
+
+  background-position: 0 0;
+  animation: king 3.8s steps(180) forwards ;
+ 
+}
+
+@keyframes coinflip {
+  from {
+      background-position-y: 0px;
+  }
+  to {
+      background-position-y: -118000px;
+  }
+}
+
+@keyframes king {
+  from {
+      background-position-y: 0px;
+  }
+  to {
+      background-position-y: -72000px;
+  }
+}
+
+
+
 /*-----media----*/
 /*
 .select{
