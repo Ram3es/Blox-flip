@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState, useContext } from 'react'
 import { Context } from '../../store/Store'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
+import { login } from '../../services/user.service'
 
 interface IState {
   userName: string
@@ -27,7 +28,16 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
     const { name, value } = event.target
     setInputValue((prev) => ({ ...prev, [name]: value }))
   }
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    console.log(encodeURIComponent(inputValue.password))
+
+    try {
+      const { data } = await login(`username=${inputValue.userName}&password=${encodeURIComponent(inputValue.password)}`)
+      console.log(data, 'data')
+    } catch (error) {
+      console.log(error)
+    }
+
     dispatch({ type: 'LOGIN', payload: { ...user, name: inputValue.userName || 'John Johnson' } })
     onClose()
   }
