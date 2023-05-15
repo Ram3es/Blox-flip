@@ -89,7 +89,7 @@ const SpinItems: FC<ISpinGameProps> = ({
     }
     if (status === 'ended') {
       refInterval.current && clearInterval(refInterval.current)
-      setTimeout(() => setShowEnd(true), 8000)
+      setTimeout(() => setShowEnd(), 8000)
     }
   }, [status, isRespin])
 

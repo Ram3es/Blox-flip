@@ -46,7 +46,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='relative ls:px-0 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px]'
+      modalClasses='relative ls:px-0 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-6xl w-full m-auto space-y-5 min-h-[535px]'
     >
       <div className='overflow-hidden pt-6 xs:pt-0'>
         <CoinFlipGameHeader ref={playerHeadRef} withBot={withBot} />
@@ -54,7 +54,7 @@ const CoinFlipGame = ({ gameId, onClose, withBot }: CoinFlipGameProps) => {
           <CoinFlipGamePlayer opponent={false} selectedCoin={0} />
           <CoinFlipGamePlayer ref={playerRef} opponent={true} selectedCoin={1} isBot={withBot} />
         </div>
-        <div className='absolute z-[50] bottom-0 left-0 w-full text-center py-2.5 px-6 bg-blue-highlight-secondary'>
+        <div className='absolute z-[50] bottom-0 left-0 w-full text-center py-2.5 px-6 bg-blue-highlight-secondary rounded-b-2xl'>
           <p className='text-clip overflow-hidden text-blue-ocean-third font-normal text-base'>
             <span className='font-bold'>Server Seed #</span>
             {serverSeed}
