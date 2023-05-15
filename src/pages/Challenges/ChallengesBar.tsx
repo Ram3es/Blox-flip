@@ -11,7 +11,7 @@ const toggleVariants = [
   { variant: 'Claimed' }
 ]
 
-const ChallengesBar = ({ openChallengeModal, openAdminModal, userRole = 'user' }: { openChallengeModal: Function, openAdminModal: Function, userRole?: string }) => {
+const ChallengesBar = ({ openChallengeModal, openAdminModal, userRole = 'admin' }: { openChallengeModal: Function, openAdminModal: Function, userRole?: string }) => {
   const [filterClaimed, setFilteringVariant] = useState(toggleVariants[0])
   const [gameFilter, setGameFilter] = useState(challenges[0])
 
