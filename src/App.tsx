@@ -39,9 +39,9 @@ import Challenges from './pages/Challenges/Challenges'
 
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 
-import Terms from './pages/TermsOfService/Terms'
-import FAQ from './pages/TermsOfService/FAQ'
-import ProvablyFair from './pages/TermsOfService/ProvablyFair'
+import Terms from './pages/ServicePages/Terms'
+import FAQ from './pages/ServicePages/FAQ'
+import ProvablyFair from './pages/ServicePages/ProvablyFair'
 
 export const App = () => {
   return (
