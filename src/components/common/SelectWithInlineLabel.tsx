@@ -1,8 +1,9 @@
+import { useCallback, useState } from 'react'
 import { Listbox } from '@headlessui/react'
+
 import clsx from 'clsx'
 
 import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
-import { useCallback, useState } from 'react'
 
 interface SelectWithInlineLabelProps {
   label: string
