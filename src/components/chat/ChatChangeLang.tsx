@@ -8,8 +8,10 @@ import SpainIcon from '../../assets/img/flag_spain.svg'
 import TurkishIcon from '../../assets/img/flag_turkish.svg'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
+import { useChatSocketCtx } from '../../store/SocketStore'
 
 interface countryItem {
+  id: string
   name: string
   code: string
   icon: string
@@ -17,17 +19,19 @@ interface countryItem {
 }
 
 const languageVariants: countryItem[] = [
-  { name: 'England', code: 'en', icon: EnglandIcon, usersOnline: 11 },
-  { name: 'Spanish', code: 'es', icon: SpainIcon, usersOnline: 17 },
-  { name: 'Turkish', code: 'tr', icon: TurkishIcon, usersOnline: 31 }
+  { id: '1', name: 'England', code: 'en', icon: EnglandIcon, usersOnline: 11 },
+  { id: '2', name: 'Spanish', code: 'es', icon: SpainIcon, usersOnline: 17 },
+  { id: '3', name: 'Turkish', code: 'tr', icon: TurkishIcon, usersOnline: 31 }
 ]
 
 export const ChatChangeLang: FC = () => {
   const [selectedChatLanguage, setSelectedChatLanguage] = useState(languageVariants[0])
   const { i18n } = useTranslation()
+  const { socket } = useChatSocketCtx()
 
   useEffect(() => {
     void i18n.changeLanguage(selectedChatLanguage.code)
+    socket.emit('switch_chat', selectedChatLanguage.id)
   }, [selectedChatLanguage])
 
   return (

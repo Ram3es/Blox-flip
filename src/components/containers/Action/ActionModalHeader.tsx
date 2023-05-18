@@ -3,10 +3,10 @@ import { FC, PropsWithChildren } from 'react'
 import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
 
-import type { IUser } from '../../../types/User'
+import type { IChatUser } from '../../../types/User'
 
 interface ActionModalHeaderProps {
-  user: IUser
+  user: IChatUser
 }
 
 const ActionModalHeader: FC<PropsWithChildren<ActionModalHeaderProps>> = ({ user, children }) => {
@@ -15,7 +15,7 @@ const ActionModalHeader: FC<PropsWithChildren<ActionModalHeaderProps>> = ({ user
       <div className='flex items-center gap-2'>{children}</div>
       <div className='flex items-center justify-between gap-2'>
         <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
-          <Image />
+          <Image image={user.avatar} />
         </div>
         <span className='font-bold text-white'>{user.name}</span>
         <UserLevel level={user.level} />

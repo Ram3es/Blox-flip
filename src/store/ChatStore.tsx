@@ -1,4 +1,5 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
+import { IChatUser } from '../types/User'
 
 interface ChatProviderProps {
   children: ReactNode
@@ -13,6 +14,11 @@ interface IChatContext {
   setIsOpenTipModal: Dispatch<SetStateAction<boolean>>
   isOpenTriviaModal: boolean
   setIsOpenTriviaModal: Dispatch<SetStateAction<boolean>>
+  selectedUser?: IChatUser
+  setUserSelected: Dispatch<SetStateAction<IChatUser | undefined >>
+  selectedMessage: string
+  setSelectedMessage: Dispatch<SetStateAction<string>>
+
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -27,6 +33,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [isOpenTimeoutModal, setIsOpenTimeoutModal] = useState(false)
   const [isOpenTipModal, setIsOpenTipModal] = useState(false)
   const [isOpenTriviaModal, setIsOpenTriviaModal] = useState(false)
+  const [selectedUser, setUserSelected] = useState<IChatUser>()
+  const [selectedMessage, setSelectedMessage] = useState<string>('')
 
   return (
     <ChatContext.Provider
@@ -38,7 +46,12 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         isOpenTipModal,
         setIsOpenTipModal,
         isOpenTriviaModal,
-        setIsOpenTriviaModal
+        setIsOpenTriviaModal,
+        selectedUser,
+        setUserSelected,
+        selectedMessage,
+        setSelectedMessage
+
       }}
     >
       {children}

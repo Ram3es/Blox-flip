@@ -22,3 +22,11 @@ export interface ISecondUser {
   id: string
   isWin?: boolean
 }
+
+export interface IChatUser {
+  id: string
+  name: string
+  avatar: string
+  level: number
+  flag: number
+}

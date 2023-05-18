@@ -1,19 +1,31 @@
 import { ChatMessage } from './ChatMessage'
-
-import { user } from '../../mocks'
+import { useChatSocketCtx } from '../../store/SocketStore'
+import { chatmessagesMOCK } from '../../mocks/chat'
+import { useMemo } from 'react'
 
 export const ChatMessageList = () => {
+  const { historyChat } = useChatSocketCtx()
+
+  const renderMsg = useMemo(() => historyChat.length ? historyChat : chatmessagesMOCK, [historyChat])
+
   return (
     <div className='grow relative chat--gradient'>
       <div className='absolute inset-0 bottom-14 overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-3 -mr-2'>
+        {renderMsg.map(msg => (
+           <ChatMessage
+             key={msg.hash}
+             message={msg.message}
+             hash={msg.hash}
+             {...msg.user} />
+        ))}
+        {/* <ChatMessage message='test' {...user} />
         <ChatMessage message='test' {...user} />
         <ChatMessage message='test' {...user} />
         <ChatMessage message='test' {...user} />
         <ChatMessage message='test' {...user} />
         <ChatMessage message='test' {...user} />
         <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
+        <ChatMessage message='test' {...user} /> */}
       </div>
     </div>
   )
