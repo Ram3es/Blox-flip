@@ -1,5 +1,7 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
 import { IChatUser } from '../types/User'
+import { useSocketCtx } from './SocketStore'
+import { IChatMessage } from '../types/Chat'
 
 interface ChatProviderProps {
   children: ReactNode
@@ -18,6 +20,7 @@ interface IChatContext {
   setUserSelected: Dispatch<SetStateAction<IChatUser | undefined >>
   selectedMessage: string
   setSelectedMessage: Dispatch<SetStateAction<string>>
+  historyChat: IChatMessage[]
 
 }
 
@@ -33,8 +36,32 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [isOpenTimeoutModal, setIsOpenTimeoutModal] = useState(false)
   const [isOpenTipModal, setIsOpenTipModal] = useState(false)
   const [isOpenTriviaModal, setIsOpenTriviaModal] = useState(false)
+  const [historyChat, setHistoryChat] = useState<IChatMessage[]>([])
   const [selectedUser, setUserSelected] = useState<IChatUser>()
   const [selectedMessage, setSelectedMessage] = useState<string>('')
+  const { socket } = useSocketCtx()
+
+  useEffect(() => {
+    socket.on('chat_history', (histoyChat) => {
+      setHistoryChat(histoyChat.data)
+    })
+    socket.on('chat_receive', ({ data }) => {
+      setHistoryChat(data)
+    })
+    socket.on('remove_message', ({ data }) => {
+      setHistoryChat(prev => [...prev.filter(msg => msg.hash !== data)])
+    })
+    socket.on('remove_all_message', ({ data }) => {
+      setHistoryChat(prev => [...prev.filter(msg => msg.user.id !== data)])
+    })
+
+    return () => {
+      socket.off('chat_history')
+      socket.off('chat_receive')
+      socket.off('remove_message')
+      socket.off('remove_all_message')
+    }
+  }, [socket])
 
   return (
     <ChatContext.Provider
@@ -50,7 +77,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         selectedUser,
         setUserSelected,
         selectedMessage,
-        setSelectedMessage
+        setSelectedMessage,
+        historyChat
 
       }}
     >

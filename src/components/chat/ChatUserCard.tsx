@@ -105,14 +105,14 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
       },
       name: 'Remove Message',
       icon: <BanIcon className={baseIconSizeClasses} />
-    },
-    {
-      handleFunction: () => {
-        setUserSelected(user)
-      },
-      name: 'Remove User',
-      icon: <BanIcon className={baseIconSizeClasses} />
     }
+    // {
+    //   handleFunction: () => {
+    //     setUserSelected(user)
+    //   },
+    //   name: 'Remove User',
+    //   icon: <BanIcon className={baseIconSizeClasses} />
+    // }
   ]
 
   const isAuth = () => state.user

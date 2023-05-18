@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from 'react'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import BetActionsContainer from '../../components/common/BetActions/BetActionsContainer'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
@@ -6,8 +6,7 @@ import RangeSlider from '../../components/common/RangeSlider'
 import { BetToolkit } from '../../types/Bets'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 
-const WheelBetActions = () => {
-  const [betAmount, setBetAmount] = useState(200)
+const WheelBetActions = ({ betAmount, setBetAmount }: { betAmount: number, setBetAmount: Dispatch<SetStateAction<number>> }) => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
 
   const handleChangeBetAmount = useCallback(

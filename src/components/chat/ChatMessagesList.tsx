@@ -1,10 +1,10 @@
 import { ChatMessage } from './ChatMessage'
-import { useChatSocketCtx } from '../../store/SocketStore'
 import { chatmessagesMOCK } from '../../mocks/chat'
 import { useMemo } from 'react'
+import { useChat } from '../../store/ChatStore'
 
 export const ChatMessageList = () => {
-  const { historyChat } = useChatSocketCtx()
+  const { historyChat } = useChat()
 
   const renderMsg = useMemo(() => historyChat.length ? historyChat : chatmessagesMOCK, [historyChat])
 

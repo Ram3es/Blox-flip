@@ -2,8 +2,8 @@ import { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
 import { Input } from '../base/Input'
-import { useChatSocketCtx } from '../../store/SocketStore'
 import { Context } from '../../store/Store'
+import { useSocketCtx } from '../../store/SocketStore'
 
 const MailIcon = ({ className }: { className: string }) => {
   return (
@@ -32,7 +32,7 @@ export const ChatMessageInput = () => {
   const [message, setMessage] = useState('')
   const { t } = useTranslation()
 
-  const { socket } = useChatSocketCtx()
+  const { socket } = useSocketCtx()
   const { state: { user } } = useContext(Context)
 
   const handleMessage = (event: ChangeEvent<HTMLInputElement>) => {

@@ -16,7 +16,7 @@ import { ChatFab } from './ChatFab'
 import { user } from '../../mocks'
 import TriviaModal from '../containers/TriviaModal'
 import { IChatUser } from '../../types/User'
-import { useChatSocketCtx } from '../../store/SocketStore'
+import { useSocketCtx } from '../../store/SocketStore'
 import { IBanUser } from '../../types/Chat'
 
 export const Chat = () => {
@@ -34,7 +34,7 @@ export const Chat = () => {
     selectedMessage
   } = useChat()
 
-  const { socket } = useChatSocketCtx()
+  const { socket } = useSocketCtx()
 
   const handleShowChat = useCallback(() => {
     setShowChat(!showChat)
