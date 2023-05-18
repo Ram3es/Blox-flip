@@ -39,6 +39,8 @@ import Challenges from './pages/Challenges/Challenges'
 
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 
+import CaseAdmin from './pages/CaseAdmin/CaseAdmin'
+
 import Terms from './pages/TermsOfService/Terms'
 
 export const App = () => {
@@ -85,6 +87,8 @@ export const App = () => {
           <Route path='/challenges' element={<Challenges />} />
 
           <Route path='/leaderboard' element={<Leaderboard />} />
+
+          <Route path='/case-admin' element={<CaseAdmin />} />
 
           <Route path='/terms' element={<Terms />} />
         </Routes>

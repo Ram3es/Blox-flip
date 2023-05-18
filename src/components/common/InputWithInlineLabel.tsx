@@ -64,13 +64,9 @@ const InputWithInlineLabel = ({
         )}
         <input
           ref={inputRef}
-          onChange={inputProps.onChange}
-          value={inputProps.value}
           className={
-            inputClasses ?? 'pl-2 bg-transparent text-left outline-none placeholder:text-white'
+            inputClasses ?? 'pl-2 bg-transparent text-right outline-none placeholder:text-white max-w-[400px] overflow-y-scroll'
           }
-          type={inputProps.type}
-          placeholder={inputProps.placeholder}
           {...inputProps}
         />
       </div>
