@@ -5,7 +5,6 @@ import { useChat } from '../../store/ChatStore'
 
 export const ChatMessageList = () => {
   const { historyChat } = useChat()
-
   const renderMsg = useMemo(() => historyChat.length ? historyChat : chatmessagesMOCK, [historyChat])
 
   return (
@@ -18,14 +17,6 @@ export const ChatMessageList = () => {
              hash={msg.hash}
              {...msg.user} />
         ))}
-        {/* <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} />
-        <ChatMessage message='test' {...user} /> */}
       </div>
     </div>
   )

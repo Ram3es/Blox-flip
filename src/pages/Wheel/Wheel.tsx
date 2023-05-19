@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { IIWheelBet, IWheelBetHistory, IWheelGameHistory, possibleBets } from '../../types/Wheel'
+import { IIWheelBet, ILoadWheelRes, IWheelBetHistory, IWheelGameHistory, IWinTicket, possibleBets } from '../../types/Wheel'
 import WheelBetPeacker from './WheelBetPeacker'
 import WheelCircle from './WheelCircle'
 import WheelGamesHistory from './WheelGamesHistory'
 import WheelBetActions from './WheelBetActions'
 import { useSocketCtx } from '../../store/SocketStore'
 import { WheelBetRecord, wheelBetsMock } from '../../mocks/wheelBets'
+import { getTimerValue } from '../../helpers/wheelHelpers'
 
 const RALL_TIME = 1500
 let interval: any
@@ -15,15 +16,15 @@ const Wheel = () => {
   const [lastThousandBets, setLastThousandBets] = useState<IWheelBetHistory[]>([])
   const [wheelBets, setWhellBets] = useState<WheelBetRecord>(wheelBetsMock)
   const [timer, setTimer] = useState<number>(30)
-  const [wonTicket, setWonTicket] = useState<number>()
+  const [wonTicket, setWonTicket] = useState<IWinTicket>()
   const [betAmount, setBetAmount] = useState(200)
   const { socket } = useSocketCtx()
 
   const setHistoryData = (data?: possibleBets[]) => {
-    setLastTwentyGames(() =>
-      Array.from({ length: 20 }, (_, i) => ({ ticket: Math.floor(Math.random() * 54), gameId: i }))
-    )
-    // setLastTwentyGames(data?.slice(-20).map((color, idx) => ({ ticket: color, gameId: idx })) as [])
+    // setLastTwentyGames(() =>
+    //   Array.from({ length: 20 }, (_, i) => ({ ticket: Math.floor(Math.random() * 54), gameId: i }))
+    // )
+    setLastTwentyGames(data?.slice(-20).map((color, idx) => ({ ticket: color, gameId: idx })) as [])
 
     setLastThousandBets(() =>
       Array.from({ length: 100 }, (_, i) => {
@@ -38,7 +39,7 @@ const Wheel = () => {
     )
   }
 
-  const addGameToLastTwenty = (wonTicket: number) => {
+  const addGameToLastTwenty = (wonTicket: possibleBets) => {
     const newGameId = Math.floor(Math.random() * 10000)
     setLastTwentyGames((prevArray) => {
       const newArray = [...prevArray]
@@ -58,11 +59,14 @@ const Wheel = () => {
   useEffect(() => {
     socket.emit('wheel:connect')
 
-    socket.on('load_wheel', (data) => {
+    socket.on('load_wheel', ({ data }: { data: ILoadWheelRes }) => {
+      setTimer(getTimerValue(data.time))
     })
-
     socket.on('wheel_history', ({ data }: { data: possibleBets[] }) => {
-      // setHistoryData(data)
+      setHistoryData(data)
+    })
+    socket.on('wheel_end', ({ data }: { data: { num: number, color: possibleBets } }) => {
+      setWonTicket(data)
     })
     socket.on('add_wheel_bets', ({ data }: { data: WheelBetRecord }) => {
       setWhellBets(data)
@@ -76,10 +80,18 @@ const Wheel = () => {
         return prev
       })
     })
+
+    return () => {
+      socket.off('load_wheel')
+      socket.off('wheel_history')
+      socket.off('wheel_end')
+      socket.off('add_wheel_bets')
+      socket.off('add_wheel')
+    }
   }, [])
 
   useEffect(() => {
-    setHistoryData()
+    // setHistoryData()
     return () => {
       clearInterval(interval)
       interval = undefined
@@ -88,10 +100,10 @@ const Wheel = () => {
 
   useEffect(() => {
     if (timer === 0) {
-      const t = Math.floor(Math.random() * 54)
+      // const t = Math.floor(Math.random() * 54)
       clearInterval(interval)
       console.log(interval)
-      setWonTicket(t)
+      // setWonTicket(t)
       setTimeout(() => {
         interval = undefined
         setTimer(30)
@@ -108,7 +120,7 @@ const Wheel = () => {
   useEffect(() => {
     if (wonTicket) {
       const timerId = setTimeout(() => {
-        addGameToLastTwenty(wonTicket)
+        addGameToLastTwenty(wonTicket.color)
       }, RALL_TIME)
       return () => clearTimeout(timerId)
     }

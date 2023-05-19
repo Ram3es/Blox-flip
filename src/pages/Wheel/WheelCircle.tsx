@@ -6,8 +6,9 @@ import ClocksIcon from '../../components/icons/ClocksIcon'
 import WheelRobot from '../../assets/img/WheelRobot.png'
 import { getItemColorByIndex } from '../../helpers/wheelHelpers'
 import RoundedArrow from '../../components/icons/RoundedArrow'
+import { IWinTicket } from '../../types/Wheel'
 
-const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: number, ticket?: number }) => {
+const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: number, ticket?: IWinTicket }) => {
   const ref = useRef<SVGSVGElement>(null)
 
   const start = (ticket: number): void => {
@@ -57,7 +58,7 @@ const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: num
   }, [])
 
   useEffect(() => {
-    if (ticket) start(ticket)
+    if (ticket) start(ticket.num)
   }, [ticket])
 
   return (

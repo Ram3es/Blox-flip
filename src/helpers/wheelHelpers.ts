@@ -31,3 +31,10 @@ export const getColorHistory = (color: possibleBets) => {
   }
   return colors[color]
 }
+
+export const getTimerValue = (unixTimestamp: string): number => {
+  const now = new Date().getMilliseconds()
+  const future = new Date(+unixTimestamp * 1000).getMilliseconds()
+
+  return (future - now) / 1000
+}
