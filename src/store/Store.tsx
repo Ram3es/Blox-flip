@@ -6,6 +6,7 @@ import { CoinFlipProvider } from './CoinFlipStore'
 import { KingProvider } from './KingStore'
 import { ChatProvider } from './ChatStore'
 import { BattleCaseProvider } from './BattleCaseStore'
+import SocketCtxProvider from './SocketStore'
 
 export interface IState {
   user?: IUser
@@ -24,6 +25,7 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)
   return (
     <Context.Provider value={{ state, dispatch }}>
+     <SocketCtxProvider>
       <ChatProvider>
         <BattleCaseProvider>
           <PlinkoProvider>
@@ -33,7 +35,9 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
           </PlinkoProvider>
         </BattleCaseProvider>
       </ChatProvider>
+     </SocketCtxProvider>
     </Context.Provider>
+
   )
 }
 

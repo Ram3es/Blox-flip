@@ -2,18 +2,19 @@ import { FC } from 'react'
 
 import ChatUserCard from './ChatUserCard'
 
-import type { IUser } from '../../types/User'
+import type { IChatUser } from '../../types/User'
 
-interface UserMessageProps extends IUser {
+interface UserMessageProps extends IChatUser {
   message: string
+  hash: string
 }
 
-export const ChatMessage: FC<UserMessageProps> = ({ message, ...user }) => {
+export const ChatMessage: FC<UserMessageProps> = ({ message, hash, ...user }) => {
   return (
     <div className='relative'>
-      <ChatUserCard user={user} />
+      <ChatUserCard user={user} hashMsg={hash} />
       <div className='text-xs text-gray-secondary bg-blue-secondary/30 border border-blue-highlight rounded p-2 mb-4 break-words'>
-        {message.repeat(50)}
+        {message}
       </div>
     </div>
   )

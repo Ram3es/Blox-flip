@@ -13,6 +13,7 @@
     "@headlessui/react": "^1.7.11",
     "@tanstack/react-table": "^8.7.9",
     "@types/matter-js": "^0.18.2",
+    "@types/socket.io-client": "^3.0.0",
     "clsx": "^1.2.1",
     "d3-selection": "^3.0.0",
     "d3-shape": "^3.2.0",
@@ -28,6 +29,7 @@
     "react-i18next": "^12.1.5",
     "react-loading": "^2.0.3",
     "react-router-dom": "^6.8.1",
+    "socket.io-client": "^4.6.1",
     "yup": "^1.0.2"
   },
   "devDependencies": {

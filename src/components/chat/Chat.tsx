@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useChat } from '../../store/ChatStore'
 
 import clsx from 'clsx'
@@ -15,6 +15,9 @@ import { ChatFab } from './ChatFab'
 
 import { user } from '../../mocks'
 import TriviaModal from '../containers/TriviaModal'
+import { IChatUser } from '../../types/User'
+import { useSocketCtx } from '../../store/SocketStore'
+import { IBanUser } from '../../types/Chat'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
@@ -26,12 +29,33 @@ export const Chat = () => {
     isOpenTipModal,
     setIsOpenTipModal,
     isOpenTriviaModal,
-    setIsOpenTriviaModal
+    setIsOpenTriviaModal,
+    selectedUser,
+    selectedMessage
   } = useChat()
+
+  const { socket } = useSocketCtx()
 
   const handleShowChat = useCallback(() => {
     setShowChat(!showChat)
   }, [showChat])
+
+  const handleBanSubmit = (banUser: IBanUser) => {
+    socket.emit('ban', banUser, (res: any) => {
+      alert(JSON.stringify(res, null, 2))
+    })
+  }
+  const handleTimeoutSubmit = (banUser: IBanUser) => {
+    socket.emit('mute', banUser, (res: any) => {
+      alert(JSON.stringify(res, null, 2))
+    })
+  }
+
+  useEffect(() => {
+    selectedMessage && socket.emit('remove_chat', selectedMessage, (res: any) => {
+      alert(JSON.stringify(res, null, 2))
+    })
+  }, [selectedMessage])
 
   const chatClasses = clsx(
     'bg-blue-primary w-72 p-4 h-screen flex flex-col fixed -right-full top-0 bottom-0 z-100 sm:z-40 ease-out duration-300 chatJs',
@@ -52,16 +76,16 @@ export const Chat = () => {
       <ChatFab onClick={handleShowChat} active={showChat} />
       {isOpenBanModal && (
         <BanModal
-          user={user}
+          user={selectedUser as IChatUser}
           onClose={() => setIsOpenBanModal(false)}
-          handleFunction={() => console.log('ban')}
+          handleFunction={handleBanSubmit}
         />
       )}
       {isOpenTimeoutModal && (
         <TimeoutModal
-          user={user}
+          user={selectedUser as IChatUser}
           onClose={() => setIsOpenTimeoutModal(false)}
-          handleFunction={() => console.log('ban')}
+          handleFunction={handleTimeoutSubmit}
         />
       )}
       {isOpenTipModal && (

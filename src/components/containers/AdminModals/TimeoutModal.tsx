@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from 'react'
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useCallback, useState } from 'react'
 
 import ModalWrapper from '../ModalWrapper'
 import { Button } from '../../base/Button'
@@ -6,20 +6,37 @@ import ActionModalHeader from './ActionModalHeader'
 import InputWithInlineLabel from '../../common/InputWithInlineLabel'
 import TimeoutIcon from '../../icons/TimeoutIcon'
 
-import type { IUser } from '../../../types/User'
+import type { IChatUser } from '../../../types/User'
+import { IBanUser } from '../../../types/Chat'
 
 interface TimeoutModalProps {
-  user: IUser
+  user: IChatUser
   onClose: Dispatch<SetStateAction<boolean>>
-  handleFunction: () => void
+  handleFunction: (timeoutUser: IBanUser) => void
 }
 
 const TimeoutModal = ({ user, onClose, handleFunction }: TimeoutModalProps) => {
-  const [inputValue, setInputValue] = useState(0)
+  const [inputValues, setInputValue] = useState({ reason: '', time: '' })
 
   const handleChangeInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(Number(event.target.value))
+    const { name, value } = event.target
+    setInputValue(prev => ({ ...prev, [name]: value }))
   }, [])
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const isDisabled = Object.values(inputValues).some(v => !v)
+    if (isDisabled) {
+      return
+    }
+    const { reason, time } = inputValues
+    handleFunction({
+      reason,
+      time,
+      id: user.id
+    })
+    onClose(true)
+  }
 
   return (
     <ModalWrapper
@@ -34,20 +51,30 @@ const TimeoutModal = ({ user, onClose, handleFunction }: TimeoutModalProps) => {
           </span>
         </div>
       </ActionModalHeader>
-      <div className='py-4 space-y-8'>
+      <form onSubmit={onSubmit} className='py-4 space-y-6 mt-4'>
+      <InputWithInlineLabel
+          name='reason'
+          label= 'Reason'
+          placeholder='...'
+          value={inputValues.reason}
+          onChange={handleChangeInput}
+          autoComplete='off'
+        />
+
         <InputWithInlineLabel
           type='number'
+          name='time'
           placeholder='...'
-          value={inputValue !== 0 ? inputValue : ''}
+          value={Number(inputValues.time) !== 0 ? inputValues.time : ''}
           onChange={handleChangeInput}
-          label='Seconds'
+          label='Minutes'
         />
         <div className='flex items-start justify-center'>
-          <Button color='GreenPrimary'>
+          <Button type='submit' color='GreenPrimary'>
             <span className='py-3 px-10 text-15 font-bold text-white'>Timeout user</span>
           </Button>
         </div>
-      </div>
+      </form>
     </ModalWrapper>
   )
 }

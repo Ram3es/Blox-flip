@@ -1,13 +1,13 @@
 import { getItemColorByName } from '../../../helpers/wheelHelpers'
-import { IWheelBet } from '../../../mocks/wheelBets'
-import { possibleBets } from '../../../types/Wheel'
 import TeamGroupIcon from '../../icons/TeamGroupIcon'
 import Image from '../../base/Image'
 import CoinsWithDiamond from '../CoinsWithDiamond'
+import { IIWheelBet, possibleBets } from '../../../types/Wheel'
 
 interface IWheelBetCard {
   color: possibleBets
-  bets: IWheelBet[]
+  bets: IIWheelBet[]
+  onPeack: Function
 }
 
 const cutString = (s: string): string => {
@@ -19,7 +19,7 @@ const cutString = (s: string): string => {
   }
 }
 
-const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
+const WheelBetsCard = ({ color, bets, onPeack }: IWheelBetCard) => {
   return (
     <div className='w-full flex flex-col gap-4 relative'>
       <div
@@ -33,6 +33,7 @@ const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
               : '',
           color: color !== possibleBets.RED ? getItemColorByName(color, false) : ''
         }}
+        onClick={() => onPeack(color)}
       >
         <div
           className='rounded absolute -left-[1px] -top-[1px] w-[calc(100%+2px)] h-[calc(100%+2px)] -z-10'
@@ -81,7 +82,7 @@ const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
       <div className='flex flex-col'>
         {bets.map((bet, index) => (
           <div
-            key={color + 'bet' + bet.username}
+            key={color + 'bet' + bet.user.id}
             className='px-2 py-1 relative flex justify-between'
           >
             <div
@@ -94,13 +95,13 @@ const WheelBetsCard = ({ color, bets }: IWheelBetCard) => {
             />
             <div className='flex items-center'>
               <div className='w-8 h-8 shrink-0 border border-blue-highlight rounded-full overflow-hidden radial--gray mr-2.5'>
-                <Image image={bet.avatar} />
+                <Image image={bet.user.avatar} />
               </div>
               <span className='font-bold relative py-1 text-white text-13'>
-                {cutString(bet.username)}
+                {cutString(bet.user.name)}
               </span>
             </div>
-            <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={bet.bet} />
+            <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={bet.wager} />
           </div>
         ))}
       </div>

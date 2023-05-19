@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import LabelList from '../../components/common/LabelList'
-import { getItemColorByIndex, getItemColorByName } from '../../helpers/wheelHelpers'
+import { getColorHistory, getItemColorByName } from '../../helpers/wheelHelpers'
 import { IWheelBetHistory, IWheelGameHistory, possibleBets } from '../../types/Wheel'
 
 interface IWheelGamesHistory {
@@ -37,7 +37,7 @@ const WheelGamesHistory = ({ gamesHistory, betsHistory }: IWheelGamesHistory) =>
             <div
               key={`lats-20-games-${game.gameId}`}
               className="w-6 h-2 rounded-full"
-              style={{ background: getItemColorByIndex(game.ticket, false) }}
+              style={{ background: getColorHistory(game.ticket) }}
             />
           ))}
         </div>
