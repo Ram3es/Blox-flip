@@ -17,7 +17,7 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
     const coinSide = useMemo(() => Math.floor(Math.random() * 2), [])
 
     const skinIconClasses = clsx(
-      'flex z-100 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 items-center justify-center',
+      'flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center ',
       {
         grayscale: withBot
       }
@@ -40,11 +40,11 @@ const CoinFlipGameHeader = forwardRef<HTMLDivElement, CoinFlipGameHeaderProps>(
           />
         </div>
         <div className={skinIconClasses}>
-          <div className=' relative w-full h-full'>
-            <div className={`${coinSide ? 'blue' : 'white'} coinflip-animation absolute -top-[100%] -left-[100%] `} />
+          <div className=' relative  '>
+            <div className={`${coinSide ? 'blue' : 'white'} coinflip-animation absolute  -left-[250px] -top-[250px] z-1 `} />
           </div>
         </div>
-        <div className='z-100 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
+        <div className='z-40 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
           <img className='rotate-[-48deg]' src={VersusBattleIcon} alt='versus' />
         </div>
         <div className='sm:w-96 flex justify-center items-center'>

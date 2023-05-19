@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { IMAGES } from '../../../constants/images'
-import { Button } from '../../base/Button'
+import { Link } from 'react-router-dom'
 import FairIcon from '../../icons/FairIcon'
 
 interface IBoxInfoProps {
@@ -37,12 +37,14 @@ const GameRoundsInfo: FC<IBoxInfoProps> = ({ gameVariant, amountRounds, currentR
           </div>
         )) }
       </div>
-      <Button className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-3.5 py-1 leading-6 cursor-pointer flex items-center'>
+      <Link
+        to='/provably-fair#battle'
+        className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-3.5 py-1 leading-6 cursor-pointer flex items-center'>
         <div className='w-4 shrink-0 mr-2.5'>
           <FairIcon />
         </div>
          Provably fair
-      </Button>
+      </Link>
 
     </div>
   </div>

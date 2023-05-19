@@ -45,7 +45,7 @@ const WheelBetActions = () => {
   ]
 
   return (
-    <BetActionsContainer>
+    <BetActionsContainer path='/provably-fair#wheel' >
       <div className='flex flex-col space-y-4'>
         <div className='border-b-2 border-b-blue-accent-fourth pb-4'>
           <div className='relative'>
