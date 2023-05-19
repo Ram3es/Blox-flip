@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
@@ -156,12 +156,12 @@ export const CaseOpening = () => {
           </div>
           <span className='text-2xl font-bold'>{`Diamond Case ${String(id)}`}</span>
         </div>
-        <Button className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-3.5 py-1 leading-6 cursor-pointer mb-4 flex items-center'>
+        <Link to='/provably-fair#cases' className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-3.5 py-1 leading-6 cursor-pointer mb-4 flex items-center'>
           <div className='w-4 shrink-0 mr-2.5'>
             <FairIcon />
           </div>
           Provably fair
-        </Button>
+        </Link>
       </div>
       <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
         <div className='border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/30 to-blue-accent-secondary/1 rounded text-sm px-4 sm:px-12 py-9 overflow-hidden relative'>

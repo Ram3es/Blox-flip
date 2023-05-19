@@ -64,7 +64,7 @@ const Jackpot = () => {
   return (
     <div className='mx-auto w-full max-w-[1200px]'>
       <div className='w-full flex-col gap-1'>
-        <VerifyBets />
+          <VerifyBets path='/provably-fair#jackpot' />
         <div className='flex w-full flex-col-reverse gap-10 ls:flex-row'>
           <div className='flex flex-col items-center gap-2 md:flex-row ls:flex-col ls:gap-6'>
             <div className='mx-0 flex h-[492px] w-[492px] scale-75 items-center justify-center xs:mx-auto xs:scale-100 md:mx-0'>
