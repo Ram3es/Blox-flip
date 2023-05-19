@@ -80,7 +80,6 @@ const Wheel = () => {
         return prev
       })
     })
-
     return () => {
       socket.off('load_wheel')
       socket.off('wheel_history')

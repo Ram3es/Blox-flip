@@ -19,6 +19,10 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     })
 
     socket.connect()
+
+    return () => {
+      socket.off('balance')
+    }
   }, [socket])
   return (
       <ChatSocketCtx.Provider value={{ socket }}>
