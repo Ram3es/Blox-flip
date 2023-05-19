@@ -3,9 +3,9 @@ import { useChat } from '../../store/ChatStore'
 
 import clsx from 'clsx'
 
-import BanModal from '../containers/Action/BanModal'
-import TimeoutModal from '../containers/Action/TimeoutModal'
-import TipModal from '../containers/Action/TipModal'
+import BanModal from '../containers/AdminModals/BanModal'
+import TimeoutModal from '../containers/AdminModals/TimeoutModal'
+import TipModal from '../containers/AdminModals/TipModal'
 
 import { ChatHeader } from './ChatHeader'
 import { ChatTools } from './ChatTools'
