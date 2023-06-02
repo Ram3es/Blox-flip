@@ -1,56 +1,39 @@
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 
 import CoinFlipLobbyModal from './CoinFlipLobbyModal'
 import CoinFlipGame from './CoinFlipGame'
 import CoinFlipHeader from './CoinFlipHeader'
 import CoinFlipGamesTable from './CoinFlipGamesTable'
+import SignInModal from '../../components/containers/SignInModal'
+import { Context } from '../../store/Store'
 
 const CoinFlip = () => {
   const {
-    isOpenCreateGame,
-    setIsOpenCreateGame,
-    isOpenJoinGame,
-    setIsOpenJoinGame,
+    isOpenLobbyModal,
+    setIsOpenLobbyModal,
+    isOpenLoginModal,
+    setIsOpenLoginModal,
     isOpenBattleGame,
-    setIsOpenBattleGame,
-    isOpenWatchedGame,
-    setIsOpenWatchedGame,
-    isOpenCallBot,
-    setIsOpenCallBot
+    setIsOpenBattleGame
   } = useCoinFlip()
 
-  const handleCreateGame = useCallback(() => {
-    setIsOpenCreateGame(false)
-    setIsOpenBattleGame(true)
-  }, [])
+  const { state } = useContext(Context)
 
-  const handleJoinGame = useCallback(() => {
-    setIsOpenJoinGame(false)
-    setIsOpenBattleGame(true)
+  const handleCloseLoginModal = useCallback(() => {
+    setIsOpenLoginModal(false)
+    setIsOpenLobbyModal(true)
   }, [])
 
   return (
     <>
       <CoinFlipHeader />
       <CoinFlipGamesTable />
-      {/* {isOpenCreateGame && (
-        <CoinFlipLobbyModal
-          isCreated={false}
-          handleFunction={handleCreateGame}
-          onClose={() => setIsOpenCreateGame(false)}
-        />
-      )} */}
-      {isOpenJoinGame && (
-        <CoinFlipLobbyModal
-          isCreated={true}
-          handleFunction={handleJoinGame}
-          onClose={() => setIsOpenJoinGame(false)}
-        />
+      {isOpenLoginModal && !state.user && (
+        <SignInModal isOpen={isOpenLoginModal} onClose={handleCloseLoginModal} />
       )}
+      {isOpenLobbyModal && state.user && <CoinFlipLobbyModal />}
       {isOpenBattleGame && <CoinFlipGame onClose={() => setIsOpenBattleGame(false)} />}
-      {isOpenWatchedGame && <CoinFlipGame onClose={() => setIsOpenWatchedGame(false)} />}
-      {isOpenCallBot && <CoinFlipGame withBot={true} onClose={() => setIsOpenCallBot(false)} />}
     </>
   )
 }

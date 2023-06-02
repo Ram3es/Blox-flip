@@ -8,37 +8,27 @@ import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 
 import type { BetToolkit } from '../../types/Bets'
-import SignInModal from '../../components/containers/SignInModal'
-import CoinFlipLobbyModal from './CoinFlipLobbyModal'
 
 const CoinFlipBetActions = () => {
   const {
     betAmount,
     setBetAmount,
     selectedCoin,
+    setIsOpenLobbyModal,
     setSelectedCoin,
-    setIsOpenCreateGame,
-    isOpenCreateGame
+    setIsOpenLoginModal
   } = useCoinFlip()
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
-  const [isOpenLoginModal, setIsOpenLoginModal] = useState(false)
 
   const { state } = useContext(Context)
 
   const handleCreateGame = useCallback(() => {
     if (state.user) {
-      setIsOpenCreateGame(true)
-      setIsOpenLoginModal(false)
+      setIsOpenLobbyModal(true)
     } else {
       setIsOpenLoginModal(true)
-      setIsOpenCreateGame(true)
     }
   }, [state.user])
-
-  const handleCloseLoginModal = useCallback(() => {
-    setIsOpenLoginModal(false)
-    setIsOpenCreateGame(true)
-  }, [])
 
   const handleChangeBetAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -105,16 +95,6 @@ const CoinFlipBetActions = () => {
           <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
         </div>
       </Button>
-      {isOpenLoginModal && !state.user && (
-        <SignInModal isOpen={isOpenLoginModal} onClose={handleCloseLoginModal} />
-      )}
-      {!isOpenLoginModal && isOpenCreateGame && state.user && (
-        <CoinFlipLobbyModal
-          isCreated={false}
-          handleFunction={() => setIsOpenCreateGame(false)}
-          onClose={() => setIsOpenCreateGame(false)}
-        />
-      )}
     </div>
   )
 }

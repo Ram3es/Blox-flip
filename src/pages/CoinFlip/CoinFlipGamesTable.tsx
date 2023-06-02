@@ -14,49 +14,44 @@ import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
-import type { CoinFlipGame } from '../../types/CoinFlip'
-import { coinFlipMock } from '../../mocks/coinFlipMock'
+import { ICoinFlip } from '../../types/CoinFlip'
+import { coinFlipGamesMock } from '../../mocks/coinFlipMock'
+import { getCostByFieldName } from '../../helpers/numbers'
 
 const CoinFlipGamesTable = () => {
-  const [games] = useState<CoinFlipGame[]>(coinFlipMock)
+  const [games] = useState<ICoinFlip[]>(coinFlipGamesMock)
 
-  const columnHelper = createColumnHelper<CoinFlipGame>()
-  const gameColumns: Array<ColumnDef<CoinFlipGame, any>> = [
-    columnHelper.accessor('firstPlayer.coin', {
-      id: 'firstPlayer',
+  const columnHelper = createColumnHelper<ICoinFlip>()
+  const gameColumns: Array<ColumnDef<ICoinFlip, any>> = [
+    columnHelper.accessor('creator.coin', {
+      id: 'creator',
       header: () => 'Player',
-      cell: (props) => <CFUserInfoCell coin={props.getValue()} />,
+      cell: (props) => <CFUserInfoCell userAvatar={props.row.original.creator.avatar} coin={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('firstPlayer.items', {
+    columnHelper.accessor('creator.skins', {
       id: 'items',
       header: () => 'Items',
       cell: (props) => <ItemsListCell items={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('firstPlayer.coin', {
+    columnHelper.accessor('creator.skins', {
       id: 'total',
       header: () => 'Total',
-      cell: (props) => (
+      cell: ({ row }) => (
         <CoinsWithDiamond
           containerSize='Large'
           containerColor='GreenGradient'
-          typographyQuantity={14214.51}
+          typographyQuantity={getCostByFieldName(row.original.creator.skins, 'price')}
           typographyFontSize='Size16'
         />
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('status', {
+    columnHelper.accessor('state', {
       id: 'status',
       header: () => 'Status',
-      cell: ({ row }) => (
-        <CFStatusCell
-          gameId='rqwsrqwsrq2'
-          status={row.original.status}
-          coin={row.original.winCoin}
-        />
-      ),
+      cell: ({ row }) => <CFStatusCell game={row.original} />,
       footer: (props) => props.column.id
     })
   ]

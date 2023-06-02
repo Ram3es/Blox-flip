@@ -1,4 +1,6 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import { useCoinFlip } from '../../store/CoinFlipStore'
 import { useSocketCtx } from '../../store/SocketStore'
 
@@ -11,23 +13,24 @@ import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 import { Button } from '../../components/base/Button'
 
-import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
-import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
+import YellowCoin from '../../assets/img/CoinFlipHead.png'
+import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
 import type { IItemCard } from '../../types/ItemCard'
 
 import { getCostByFieldName } from '../../helpers/numbers'
+import { ICoinFlip } from '../../types/CoinFlip'
 
-interface GameLobbyModalProps {
-  onClose: Dispatch<SetStateAction<boolean>>
-  isCreated: boolean
-  handleFunction: () => void
-}
-
-const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyModalProps) => {
+const CoinFlipLobbyModal = () => {
+  const {
+    selectedCoin,
+    setSelectedCoin,
+    setIsOpenBattleGame,
+    setCurrentGame,
+    setIsOpenLobbyModal,
+    currentGame
+  } = useCoinFlip()
   const { socket } = useSocketCtx()
-
-  const { selectedCoin, setSelectedCoin } = useCoinFlip()
 
   const [skins, setSkins] = useState<IItemCard[]>([])
 
@@ -66,22 +69,77 @@ const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyMod
 
   const costInventorySkins = getCostByFieldName(skins, 'price')
 
+  const getSelectedSkinsIds = (selectedSkins: IItemCard[]) => {
+    return selectedSkins.map((skin) => skin.id)
+  }
+
+  const handleCreateCoinFlip = useCallback(() => {
+    socket.emit(
+      'coinflip_create',
+      { type: 'coinflip', items: getSelectedSkinsIds(skins), coin: selectedCoin },
+      (response: { error: boolean, message: string, data: ICoinFlip }) => {
+        if (response.error) {
+          toast.error(response.message)
+        }
+
+        if (!response.error) {
+          setIsOpenBattleGame(true)
+          setCurrentGame(response.data)
+        }
+      }
+    )
+    setIsOpenLobbyModal(false)
+    setIsOpenBattleGame(true)
+  }, [skins])
+
+  const handleJoinCoinFlip = useCallback(() => {
+    if (currentGame) {
+      socket.emit(
+        'coinflip_join',
+        {
+          type: 'coinflip',
+          items: getSelectedSkinsIds(skins),
+          gameId: currentGame.id,
+          coin: selectedCoin
+        },
+        (response: { error: boolean, message: string }) => {
+          if (response.error) {
+            toast.error(response.message)
+          }
+
+          if (!response.error) {
+            setIsOpenBattleGame(true)
+          }
+        }
+      )
+      setIsOpenLobbyModal(false)
+      setIsOpenBattleGame(true)
+    }
+  }, [skins])
+
   useEffect(() => {
     socket.emit(
       'load_items',
       { type: 'coinflip' },
-      (data: { err: boolean; skins: IItemCard[] }) => {
-        if (!data.err) {
-          setSkins(data.skins)
+      (response: { error: boolean, message: string, skins: IItemCard[] }) => {
+        if (response.error) {
+          toast.error(response.message)
         }
-        console.log('Error skins loaded')
+        if (!response.error) {
+          setSkins(response.skins)
+        }
       }
     )
   }, [])
 
+  const handleCloseModal = useCallback(() => {
+    setCurrentGame(null)
+    setIsOpenLobbyModal(false)
+  }, [])
+
   return (
     <ModalWrapper
-      closeModal={onClose}
+      closeModal={handleCloseModal}
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
     >
       <GameLobbyHeader
@@ -92,7 +150,7 @@ const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyMod
         <div className='flex items-center justify-center'>
           <CoinFlipLogoIcon />
           <span className='pl-3 text-lg hidden xxs:block'>
-            {isCreated ? 'Join' : 'Create'} Coinflip
+            {currentGame ? 'Join' : 'Create'} Coinflip
           </span>
         </div>
       </GameLobbyHeader>
@@ -104,19 +162,21 @@ const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyMod
         betGap={2555}
       >
         <div className='flex items-center justify-between space-x-4'>
-          {!isCreated && (
+          {!currentGame && (
             <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
           )}
-          {isCreated && (
+          {currentGame && (
             <img
-              key={selectedCoin === 0 ? 1 : 0}
               className='w-7 h-7 sm:w-11 sm:h-11'
-              src={selectedCoin === 0 ? CoinFlipTail : CoinFlipHead}
-              alt={selectedCoin === 0 ? 'tail' : 'head'}
+              src={currentGame.creator.coin ? YellowCoin : PurpleCoin}
+              alt='coinflip side'
             />
           )}
-          <Button color='GreenPrimary' onClick={handleFunction}>
-            <span className='h-9 py-2 px-5'>{isCreated ? 'Join' : 'Create'}</span>
+          <Button
+            color='GreenPrimary'
+            onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}
+          >
+            <span className='h-9 py-2 px-5'>{currentGame ? 'Join' : 'Create'}</span>
           </Button>
         </div>
       </GameLobbyFooter>

@@ -1,176 +1,120 @@
-import { CoinFlipGame } from '../types/CoinFlip'
+import { ICoinFlip } from '../types/CoinFlip'
 import { cards } from './cards'
 
-export const coinFlipMock: CoinFlipGame[] = [
+export const coinFlipGamesMock: ICoinFlip[] = [
   {
-    firstPlayer: {
-      username: 'test1',
-      coin: 1,
-      items: cards
+    state: 1,
+    id: '4124124',
+    seed: '2423423ssrsqwrq',
+    creator: {
+      id: '52352346235',
+      name: 'blablaMen',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 0
     },
-    secondPlayer: {
-      username: 'test2',
-      coin: 0,
-      items: cards
-    },
-    status: 'Created'
+    min: 100,
+    max: 500
   },
   {
-    firstPlayer: {
-      username: 'test1',
-      coin: 0,
-      items: cards
+    state: 2,
+    id: '4121241244124',
+    seed: '2423423ssrsqwrq',
+    creator: {
+      id: '52352346235',
+      name: 'blablaMen',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 0
     },
-    secondPlayer: {
-      username: 'test2',
-      coin: 1,
-      items: cards
+    joining: {
+      id: '241412412',
+      name: 'pomidorBobobo',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 0
     },
-    winCoin: 1,
-    status: 'Ended'
+    timer: 1685786515,
+    min: 100,
+    max: 500
   },
   {
-    firstPlayer: {
-      username: 'test1',
-      coin: 0,
-      items: cards
+    state: 3,
+    id: '4177724124',
+    seed: '2423423ssrsqwrq',
+    creator: {
+      id: '52352346235',
+      name: 'blablaMen',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 1
     },
-    secondPlayer: {
-      username: 'test2',
-      coin: 1,
-      items: cards
+    joining: {
+      id: '241412412',
+      name: 'pomidorBobobo',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 0
     },
-    winCoin: 0,
-    status: 'Ended'
+    min: 100,
+    max: 500
   },
   {
-    firstPlayer: {
-      username: 'test1',
-      coin: 1,
-      items: cards
+    state: 4,
+    id: '34u6394683',
+    seed: '2423423ssrsqwrq',
+    creator: {
+      id: '52352346235',
+      name: 'blablaMen',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 0
     },
-    secondPlayer: {
-      username: 'test2',
-      coin: 0,
-      items: cards
+    joining: {
+      id: '241412412',
+      name: 'pomidorBobobo',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      chance: 50,
+      skins: cards.slice(0, 5),
+      coin: 1
     },
-    status: 'Running'
-  },
-  {
-    firstPlayer: {
-      username: 'test1',
-      coin: 0,
-      items: cards
+    winner: {
+      id: '241412412',
+      name: 'pomidorBobobo',
+      avatar:
+        'https://vip.shuvar.com/media/catalog/product/cache/628b1a33a4779cd89563027f2a2c1a58/8/9/897-8-1.png',
+      level: 7,
+      value: 200,
+      coin: 1
     },
-    secondPlayer: {
-      username: 'test2',
-      coin: 1,
-      items: cards
-    },
-    status: 'Created'
+    min: 100,
+    max: 500
   }
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   status: 'Created'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 0,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   status: 'Ended'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   status: 'Ended'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   status: 'Ended'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 0,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   status: 'Running'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 0,
-  //     items: cards
-  //   },
-  //   status: 'Created'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   status: 'Created'
-  // },
-  // {
-  //   firstPlayer: {
-  //     username: 'test1',
-  //     coin: 1,
-  //     items: cards
-  //   },
-  //   secondPlayer: {
-  //     username: 'test2',
-  //     coin: 0,
-  //     items: cards
-  //   },
-  //   status: 'Running'
-  // }
 ]
