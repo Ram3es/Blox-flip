@@ -34,13 +34,13 @@ const CoinFlip = () => {
     <>
       <CoinFlipHeader />
       <CoinFlipGamesTable />
-      {isOpenCreateGame && (
+      {/* {isOpenCreateGame && (
         <CoinFlipLobbyModal
           isCreated={false}
           handleFunction={handleCreateGame}
           onClose={() => setIsOpenCreateGame(false)}
         />
-      )}
+      )} */}
       {isOpenJoinGame && (
         <CoinFlipLobbyModal
           isCreated={true}

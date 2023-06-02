@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
+import { useSocketCtx } from '../../store/SocketStore'
 
 import ModalWrapper from '../../components/containers/ModalWrapper'
 import GameLobbyHeader from '../../components/containers/GameLobby/GameLobbyHeader'
@@ -16,7 +17,6 @@ import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
 import type { IItemCard } from '../../types/ItemCard'
 
 import { getCostByFieldName } from '../../helpers/numbers'
-import { cards } from '../../mocks/cards'
 
 interface GameLobbyModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
@@ -24,54 +24,59 @@ interface GameLobbyModalProps {
   handleFunction: () => void
 }
 
-type UpdateArrayBySelectedItem = (
-  items: IItemCard[],
-  id: string,
-  isSelected: boolean
-) => IItemCard[]
-type IsItemSelected = (items: IItemCard[], id: string) => boolean
-type HandleSelectItem = (id: string) => void
-
 const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyModalProps) => {
+  const { socket } = useSocketCtx()
+
   const { selectedCoin, setSelectedCoin } = useCoinFlip()
 
-  const [items, setItems] = useState<IItemCard[]>([])
+  const [skins, setSkins] = useState<IItemCard[]>([])
 
-  const selectedItems = items.filter((item) => item.isSelected)
+  const selectedSkins = skins.filter((skin) => skin.isSelected)
 
-  const updateArrayBySelectedItem: UpdateArrayBySelectedItem = (items, id, isSelected) => {
-    return items.map((item) => (item.id === id ? { ...item, isSelected } : item))
+  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: string, isSelected: boolean) => {
+    return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected: IsItemSelected = (items, id) => {
-    return items.some((item) => item.id === id && item.isSelected)
+  const isItemSelected = (skins: IItemCard[], skinId: string) => {
+    return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
-  const handleSelectItem: HandleSelectItem = useCallback(
-    (id) => {
-      const item = items.find((item) => item.id === id)
+  const findSkinByItemId = (skinId: string) => skins.find((skin) => skin.id === skinId)
 
-      if (!item) return
+  const handleSelectSkin = useCallback(
+    (skinId: string) => {
+      const skin = findSkinByItemId(skinId)
 
-      const isSelected = isItemSelected(items, item.id)
+      if (!skin) return
 
-      setItems((prev) => updateArrayBySelectedItem(prev, id, !isSelected))
+      const isSelected = isItemSelected(skins, skin.id)
+
+      setSkins((prev) => updateArrayBySelectedSkin(prev, skinId, !isSelected))
     },
-    [items]
+    [skins]
   )
 
-  const handleResetSelectedItems = useCallback(() => {
-    setItems(cards.map((card) => ({ ...card, isSelected: false })))
+  const handleResetSelectedSkins = useCallback(() => {
+    setSkins(skins.map((skin) => ({ ...skin, isSelected: false })))
   }, [])
 
-  const getCostInSelectedItems = (): number => {
-    return getCostByFieldName(selectedItems, 'price')
+  const getCostInSelectedSkins = (): number => {
+    return getCostByFieldName(selectedSkins, 'price')
   }
 
-  const costInventoryItems = getCostByFieldName(items, 'price')
+  const costInventorySkins = getCostByFieldName(skins, 'price')
 
   useEffect(() => {
-    setItems(cards.map((card) => ({ ...card, isSelected: false })))
+    socket.emit(
+      'load_items',
+      { type: 'coinflip' },
+      (data: { err: boolean; skins: IItemCard[] }) => {
+        if (!data.err) {
+          setSkins(data.skins)
+        }
+        console.log('Error skins loaded')
+      }
+    )
   }, [])
 
   return (
@@ -80,9 +85,9 @@ const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyMod
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
     >
       <GameLobbyHeader
-        skinsPrice={costInventoryItems}
-        skinsQuantity={items.length}
-        handleResetSelectedSkins={handleResetSelectedItems}
+        skinsPrice={costInventorySkins}
+        skinsQuantity={skins.length}
+        handleResetSelectedSkins={handleResetSelectedSkins}
       >
         <div className='flex items-center justify-center'>
           <CoinFlipLogoIcon />
@@ -91,11 +96,11 @@ const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyMod
           </span>
         </div>
       </GameLobbyHeader>
-      <GameLobbyItemsList items={items} handleSelectItem={handleSelectItem} />
+      <GameLobbyItemsList items={skins} handleSelectItem={handleSelectSkin} />
       <GameLobbyFooter
-        inventoryItemsLength={items.length}
-        selectedItemsCost={getCostInSelectedItems()}
-        selectedItemsLength={selectedItems.length}
+        inventoryItemsLength={skins.length}
+        selectedItemsCost={getCostInSelectedSkins()}
+        selectedItemsLength={selectedSkins.length}
         betGap={2555}
       >
         <div className='flex items-center justify-between space-x-4'>

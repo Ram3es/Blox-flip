@@ -1,15 +1,12 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { Context } from '../../store/Store'
 
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import CoinFlipBetActions from './CoinFlipBetActions'
-import SignInModal from '../../components/containers/SignInModal'
-import DiamondIcon from '../../components/icons/DiamondIcon'
 import { Button } from '../../components/base/Button'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const CoinFlipHeader = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false)
   const { state } = useContext(Context)
 
   return (
@@ -39,18 +36,9 @@ const CoinFlipHeader = () => {
           )}
         </div>
         <div className='flex items-center'>
-          {state.user && <CoinFlipBetActions />}
-          {!state.user && (
-            <Button variant='GreenGradient' onClick={() => setIsOpenModal(true)}>
-              <div className='flex items-center justify-between px-20 xs:px-3 py-3'>
-                <DiamondIcon className='w-[16px] h-[12px]' />
-                <span className='pl-2 text-sm leading-4 truncate'>Create new</span>
-              </div>
-            </Button>
-          )}
+          <CoinFlipBetActions />
         </div>
       </div>
-      <SignInModal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
     </>
   )
 }
