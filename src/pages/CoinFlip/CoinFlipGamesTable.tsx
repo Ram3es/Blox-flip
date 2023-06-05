@@ -17,6 +17,7 @@ import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import { ICoinFlip } from '../../types/CoinFlip'
+
 import { coinFlipGamesMock } from '../../mocks/coinFlipMock'
 import { getCostByFieldName } from '../../helpers/numbers'
 

@@ -1,18 +1,21 @@
 import { FC, PropsWithChildren } from 'react'
 import CoinsWithDiamond from '../../common/CoinsWithDiamond'
+import GapQuantityCoins from '../../common/GapQuantityCoins'
 
 interface GameLobbyFooterProps {
   selectedItemsLength: number
   selectedItemsCost: number
   inventoryItemsLength: number
-  betGap?: number
+  min?: number
+  max?: number
 }
 
 const GameLobbyFooter: FC<PropsWithChildren<GameLobbyFooterProps>> = ({
   selectedItemsLength,
   selectedItemsCost,
   inventoryItemsLength,
-  betGap,
+  min,
+  max,
   children
 }) => {
   return (
@@ -36,12 +39,8 @@ const GameLobbyFooter: FC<PropsWithChildren<GameLobbyFooterProps>> = ({
           />
         </div>
       </div>
-      {betGap && (
-        <CoinsWithDiamond
-          containerColor='GreenGradientSecondary'
-          containerSize='Large'
-          typographyQuantity={betGap}
-        />
+      {min && max && (
+        <GapQuantityCoins min={min} max={max} />
       )}
       <div className='flex items-center justify-between space-x-4'>{children}</div>
     </div>

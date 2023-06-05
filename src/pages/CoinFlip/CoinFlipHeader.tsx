@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { Context } from '../../store/Store'
 
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import CoinFlipBetActions from './CoinFlipBetActions'
 import { Button } from '../../components/base/Button'
-import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 const CoinFlipHeader = () => {
   const { state } = useContext(Context)

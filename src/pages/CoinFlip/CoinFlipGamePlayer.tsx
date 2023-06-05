@@ -1,19 +1,19 @@
 import { forwardRef, useMemo } from 'react'
+import { useCoinFlip } from '../../store/CoinFlipStore'
 
 import clsx from 'clsx'
 
 import CoinFlipGameItems from './CoinFlipGameItems'
-import WinPercent from '../../components/common/WinPercent'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+import LabelWithTimer from '../../components/common/LabelWithTimer'
+import { Button } from '../../components/base/Button'
 import Image from '../../components/base/Image'
+import WinPercent from '../../components/common/WinPercent'
+
+import QuestionIcon from '../../components/icons/QuestionIcon'
 
 import YellowCoin from '../../assets/img/coinflip/YellowCoin.png'
 import PurpleCoin from '../../assets/img/coinflip/PurpleCoin.png'
-
-import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
-import { useCoinFlip } from '../../store/CoinFlipStore'
-import QuestionIcon from '../../components/icons/QuestionIcon'
-import LabelWithTimer from '../../components/common/LabelWithTimer'
-import { Button } from '../../components/base/Button'
 
 export interface PlayerProps {
   opponent: boolean

@@ -18,7 +18,7 @@ const CoinFlipGameModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, currentGame } = useCoinFlip()
   const { socket } = useSocketCtx()
 
-  const [timeToStartEffect, setTimeToStartEffect] = useState<number>(7)
+  const [timeToStartEffect, setTimeToStartEffect] = useState(7)
 
   const [animation, setAnimation] = useState(false)
 

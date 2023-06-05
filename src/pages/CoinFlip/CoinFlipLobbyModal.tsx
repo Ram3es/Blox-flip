@@ -16,10 +16,10 @@ import { Button } from '../../components/base/Button'
 import YellowCoin from '../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
-import type { IItemCard } from '../../types/ItemCard'
+import { IItemCard } from '../../types/ItemCard'
+import { ICoinFlip } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
-import { ICoinFlip } from '../../types/CoinFlip'
 
 const CoinFlipLobbyModal = () => {
   const {
@@ -159,7 +159,8 @@ const CoinFlipLobbyModal = () => {
         inventoryItemsLength={skins.length}
         selectedItemsCost={getCostInSelectedSkins()}
         selectedItemsLength={selectedSkins.length}
-        betGap={currentGame?.max}
+        max={currentGame?.max}
+        min={currentGame?.min}
       >
         <div className='flex items-center justify-between space-x-4'>
           {!currentGame && (
