@@ -32,8 +32,11 @@ const CoinFlipGamesTable = () => {
     columnHelper.accessor('creator.coin', {
       id: 'creator',
       header: () => 'Player',
-      cell: (props) => (
-        <CFUserInfoCell userAvatar={props.row.original.creator.avatar} coin={props.getValue()} />
+      cell: ({ row: { original } }) => (
+        <CFUserInfoCell
+          userAvatar={original.winner ? original.winner?.avatar : original.creator?.avatar}
+          coin={original.winner ? original.winner?.coin : original.creator?.coin}
+        />
       ),
       footer: (props) => props.column.id
     }),

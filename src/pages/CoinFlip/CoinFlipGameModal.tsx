@@ -46,14 +46,12 @@ const CoinFlipGameModal = () => {
                 opponentHeadRef.current.style.filter = 'grayscale(30%)'
                 opponentBodyRef.current.style.opacity = '0.3'
                 opponentBodyRef.current.style.filter = 'grayscale(30%)'
-                console.log('winner creator')
               }
               if (currentGame.winner?.coin === currentGame.joining?.coin) {
                 creatorHeadRef.current.style.opacity = '0.3'
                 creatorHeadRef.current.style.filter = 'grayscale(30%)'
                 creatorBodyRef.current.style.opacity = '0.3'
                 creatorBodyRef.current.style.filter = 'grayscale(30%)'
-                console.log('winner opponent')
               }
             }
             return 0
@@ -70,6 +68,15 @@ const CoinFlipGameModal = () => {
 
   useEffect(() => {
     socket.emit('coinflip_update', {}, (response: { data: ICoinFlip }) => {
+      if (!response.data) {
+        return
+      }
+      if (response.data) {
+        setCurrentGame(response.data)
+      }
+    })
+
+    socket.emit('coinflip_over', {}, (response: { data: ICoinFlip }) => {
       if (!response.data) {
         return
       }
