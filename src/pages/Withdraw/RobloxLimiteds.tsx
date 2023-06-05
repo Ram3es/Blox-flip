@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useLocation, useOutletContext } from 'react-router-dom'
 
 import ItemCard from '../../components/common/Cards/ItemCard'
 import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
@@ -23,11 +23,19 @@ const RobloxLimiteds = () => {
       setSelectedCard: Dispatch<SetStateAction<TRobloxCard[]>>
       socket: TSocket
     }>()
+  const { pathname } = useLocation()
 
   useEffect(() => {
-    socket.emit('market_reload', ({ data }: { data: TRobloxCard[] }) => {
-      setAllCards(data)
-    })
+    if (pathname.split('/').includes('deposit')) {
+      socket.emit('load_items', { type: 'market' }, ({ data }: { data: TRobloxCard[] }) => {
+        setAllCards(data)
+      })
+    }
+    if (pathname.split('/').includes('withdraw')) {
+      socket.emit('market_reload', ({ data }: { data: TRobloxCard[] }) => {
+        setAllCards(data)
+      })
+    }
   }, [])
 
   const ranged = useMemo(

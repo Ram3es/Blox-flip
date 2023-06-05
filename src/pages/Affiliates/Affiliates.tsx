@@ -15,8 +15,6 @@ export const Affiliates = () => {
   const [affilateData, setAffilateData] = useState<IAffilateData>()
   const { socket } = useSocketCtx()
 
-  console.log(affilateData, 'affilateData')
-
   useEffect(() => {
     socket.emit('affiliates_load', ({ data }: { data: IAffilateData }) => {
       setAffilateData(data)
@@ -125,7 +123,7 @@ export const Affiliates = () => {
         </div>
       </div>
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
-      <AffiliatesForm />
+      <AffiliatesForm referalCode={ affilateData?.code } />
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
       {affilateData?.users.length &&
         <AffiliatesTable data={affilateData.users } />}

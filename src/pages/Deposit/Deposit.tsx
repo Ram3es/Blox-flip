@@ -7,9 +7,11 @@ import NavHeader from '../../components/navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import { IItemCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
+import { useSocketCtx } from '../../store/SocketStore'
 
 export const Deposit = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
+  const { socket } = useSocketCtx()
   const { pathname } = useLocation()
   const currentPath = pathname.split('/')[2]
   const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } =
@@ -17,6 +19,7 @@ export const Deposit = () => {
 
   const contextOutlet = useMemo(
     () => ({
+      socket,
       searchBy,
       sortBy: sortOptions?.sortBy,
       direction: sortOptions?.direction,
@@ -26,6 +29,12 @@ export const Deposit = () => {
     }),
     [searchBy, sortOptions, selectedCards, priceRange]
   )
+
+  const handleDeposit = () => {
+    if (selectedCards.length) {
+      socket.emit('items_deposit:market', { type: 'market', items: selectedCards.map((card) => card.id) })
+    }
+  }
 
   return (
     <div className='max-w-[1470px] w-full mx-auto'>
@@ -48,7 +57,7 @@ export const Deposit = () => {
         {currentPath === 'roblox-limiteds' && (
           <div className='flex items-end  lg:ml-5 lg:items-start pb-8'>
             <Button
-              onClick={() => console.log(selectedCards)}
+              onClick={handleDeposit}
               className='pointer-events-auto flex justify-center items-center leading-9 text-white text-base font-bold rounded px-2.5 py-1  shadow-green-20 gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 w-64 shrink-0'
             >
               <DiamondIcon className='w-[21px] h-[17px] mr-2' />
