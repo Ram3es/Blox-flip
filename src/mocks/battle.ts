@@ -22,7 +22,7 @@ export interface IBattlesInfo {
   id: string
   status: TStatus
   date: string
-  players: Array<IBattleUser | undefined>
+  players: IBattleUser[]
   gameSetting: IGameSetting
   cases?: IUnboxCard[]
 }
@@ -44,8 +44,7 @@ export const dataTable: IBattlesInfo[] = [
         level: 13,
         dropsCards: [],
         wonDiamonds: 0
-      },
-      undefined
+      }
     ],
     gameSetting: {
       currentRound: 0,
@@ -411,9 +410,7 @@ export const dataTable: IBattlesInfo[] = [
         level: 13,
         dropsCards: [],
         wonDiamonds: 0
-      },
-      undefined,
-      undefined
+      }
     ],
     gameSetting: {
       rounds: 5,

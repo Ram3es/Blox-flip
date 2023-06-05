@@ -18,6 +18,8 @@ const BattleCases = () => {
   }
 
   const joinBattle = (idx: number, player: IBattleUser) => {
+    console.log(idx, 'idx', gameState.players, 'gameState')
+
     setGameState((state) => ({
       ...state,
       players: [...state.players.slice(0, idx), player, ...state.players.slice(idx + 1)]
@@ -96,7 +98,7 @@ const BattleCases = () => {
         />
         <BattleMode
           status={gameState.status}
-          players={gameState.players as IBattleUser[]}
+          players={gameState.players}
           casesBox={gameState.cases}
           onJoinUser={joinBattle}
           mode={gameState.gameSetting.mode}
