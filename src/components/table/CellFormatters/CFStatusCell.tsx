@@ -6,7 +6,7 @@ import { Context } from '../../../store/Store'
 import clsx from 'clsx'
 
 import { Button } from '../../base/Button'
-import ButtonWithTimer from '../../common/ButtonWithTimer'
+import LabelWithTimer from '../../common/LabelWithTimer'
 
 import DiamondIcon from '../../icons/DiamondIcon'
 import PreviewIcon from '../../icons/PreviewIcon'
@@ -31,6 +31,11 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
     }
   }, [state.user])
 
+  const handleWatchGame = useCallback(() => {
+    setIsOpenBattleGame(true)
+    setCurrentGame(game)
+  }, [game])
+
   const getCurrentButtonByState = () => {
     if (game.state === 1) {
       return (
@@ -47,9 +52,9 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
 
     if (game.state === 2) {
       return (
-        <ButtonWithTimer userAvatar={game.joining?.avatar ?? ''} timer={game.timer ?? 0}>
+        <LabelWithTimer userAvatar={game.joining?.avatar ?? ''} timer={game.timer ?? 0}>
           Joining in
-        </ButtonWithTimer>
+        </LabelWithTimer>
       )
     }
 
@@ -88,7 +93,7 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
       {getCurrentButtonByState()}
       {game.state !== 3 && (
         <Button
-          onClick={() => setIsOpenBattleGame(true)}
+          onClick={handleWatchGame}
           className='leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
         >
           <PreviewIcon iconClasses='mx-auto my-auto' />

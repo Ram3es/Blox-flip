@@ -1,5 +1,5 @@
 interface WinPercentProps {
-  percent?: string
+  percent: number
 }
 
 const WinPercent = ({ percent }: WinPercentProps) => {

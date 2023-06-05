@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSocketCtx } from '../../store/SocketStore'
+
 import {
   ColumnDef,
   createColumnHelper,
@@ -19,14 +21,20 @@ import { coinFlipGamesMock } from '../../mocks/coinFlipMock'
 import { getCostByFieldName } from '../../helpers/numbers'
 
 const CoinFlipGamesTable = () => {
-  const [games] = useState<ICoinFlip[]>(coinFlipGamesMock)
+  const [games, setGames] = useState<ICoinFlip[]>(coinFlipGamesMock)
+  const { socket } = useSocketCtx()
+
+  const removeGameById = (games: ICoinFlip[], gameId: string): ICoinFlip[] =>
+    games.filter((game) => game.id !== gameId)
 
   const columnHelper = createColumnHelper<ICoinFlip>()
   const gameColumns: Array<ColumnDef<ICoinFlip, any>> = [
     columnHelper.accessor('creator.coin', {
       id: 'creator',
       header: () => 'Player',
-      cell: (props) => <CFUserInfoCell userAvatar={props.row.original.creator.avatar} coin={props.getValue()} />,
+      cell: (props) => (
+        <CFUserInfoCell userAvatar={props.row.original.creator.avatar} coin={props.getValue()} />
+      ),
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('creator.skins', {
@@ -61,6 +69,18 @@ const CoinFlipGamesTable = () => {
     columns: gameColumns,
     getCoreRowModel: getCoreRowModel()
   })
+
+  useEffect(() => {
+    socket.emit('coinflip_remove', {}, (response: { id: string }) => {
+      if (!response.id) {
+        return
+      }
+      if (response.id) {
+        const filteredGames = removeGameById(games, response.id)
+        setGames(filteredGames)
+      }
+    })
+  }, [])
 
   return (
     <div className='overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full max-w-full py-4'>

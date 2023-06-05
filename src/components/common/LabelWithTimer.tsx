@@ -4,12 +4,12 @@ import CountUp from 'react-countup'
 import { Button } from '../base/Button'
 import Image from '../base/Image'
 
-interface ButtonWithTimerProps {
+interface LabelWithTimerProps {
   userAvatar: string
   timer: number
 }
 
-const ButtonWithTimer: FC<PropsWithChildren<ButtonWithTimerProps>> = ({
+const LabelWithTimer: FC<PropsWithChildren<LabelWithTimerProps>> = ({
   userAvatar,
   timer,
   children
@@ -31,4 +31,4 @@ const ButtonWithTimer: FC<PropsWithChildren<ButtonWithTimerProps>> = ({
   )
 }
 
-export default ButtonWithTimer
+export default LabelWithTimer

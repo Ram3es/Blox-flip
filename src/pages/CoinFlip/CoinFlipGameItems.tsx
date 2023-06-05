@@ -5,7 +5,7 @@ import type { IItemCard } from '../../types/ItemCard'
 
 interface CoinFlipGameItemsProps {
   items: IItemCard[]
-  isBot: boolean
+  isBot?: boolean
 }
 
 const CoinFlipGameItems = ({ items, isBot }: CoinFlipGameItemsProps) => {
