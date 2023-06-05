@@ -6,11 +6,11 @@ import './i18n'
 import Store from './store/Store'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Suspense fallback={'loading'}>
       <Store>
         <App />
       </Store>
     </Suspense>
-//  </React.StrictMode>
+  </React.StrictMode>
 )

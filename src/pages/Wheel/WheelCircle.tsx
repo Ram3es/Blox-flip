@@ -58,8 +58,6 @@ const WheelCircle = ({ rallTime, count, ticket, isStart }: { rallTime: number, c
   }, [])
 
   useEffect(() => {
-    console.log(isStart, ticket)
-
     if (isStart && ticket) start(ticket.num)
   }, [ticket, isStart])
 
@@ -86,7 +84,7 @@ const WheelCircle = ({ rallTime, count, ticket, isStart }: { rallTime: number, c
           <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient--blue-darken pr-4 py-3 pl-16 flex flex-col gap-1 items-center'>
             <div className='flex gap-1 items-center'>
               <ClocksIcon />
-              <div className='text-white text-[22px] w-11'>{count ?? 0}s</div>
+              <div className='text-white text-[22px] w-11'>{count}s</div>
             </div>
             <div className='text-gray-primary uppercase text-15'>
               ROLLING IN
