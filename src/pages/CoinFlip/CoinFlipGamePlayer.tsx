@@ -11,6 +11,9 @@ import PurpleCoin from '../../assets/img/coinflip/PurpleCoin.png'
 
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { useCoinFlip } from '../../store/CoinFlipStore'
+import QuestionIcon from '../../components/icons/QuestionIcon'
+import LabelWithTimer from '../../components/common/LabelWithTimer'
+import { Button } from '../../components/base/Button'
 
 export interface PlayerProps {
   opponent: boolean
@@ -32,10 +35,11 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent }
   })
 
   const avatarClasses = clsx(
-    'hidden relative sm:flex mt-[-55px] w-[117px] h-[117px] items-end justify-center border border-blue-highlight rounded-full z-1',
+    'hidden relative sm:flex mt-[-55px] w-[117px] h-[117px] justify-center border border-blue-highlight rounded-full z-1',
     {
       'bg-circle-avatar--yellow': isCreatorSide,
-      'bg-circle-avatar--blue': !isCreatorSide
+      'bg-circle-avatar--blue': !isCreatorSide,
+      'items-end': currentGame?.state !== 1 || isCreatorSide
     }
   )
 
@@ -45,6 +49,7 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent }
         <div className='mt-4 xs:mt-20 flex xs:flex-row flex-col items-center gap-4 sm:gap-0 sm:items-start justify-around'>
           <div className='sm:mt-[-16px] xs:mx-0 mx-auto flex bg-green-third'>
             <CoinsWithDiamond
+              containerSize='Large'
               containerColor='GreenGradient'
               typographyQuantity={
                 !opponent ? currentGame?.creator.value ?? null : currentGame?.joining?.value ?? null
@@ -53,13 +58,22 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent }
             />
           </div>
           <div className={avatarClasses}>
-            <div className='w-21 h-21 rounded-full overflow-hidden'>
-              <Image
-                image={
-                  !opponent ? currentGame?.creator.avatar ?? '' : currentGame?.joining?.avatar ?? ''
-                }
-              />
-            </div>
+            {(currentGame?.state !== 1 || isCreatorSide) && (
+              <div className='w-21 h-21 rounded-full overflow-hidden'>
+                <Image
+                  image={
+                    !opponent
+                      ? currentGame?.creator.avatar ?? ''
+                      : currentGame?.joining?.avatar ?? ''
+                  }
+                />
+              </div>
+            )}
+            {!isCreatorSide && currentGame?.state === 1 && (
+              <div className='flex items-center justify-center text-blue-highlight-third'>
+                <QuestionIcon className='w-7 h-[30px]' />
+              </div>
+            )}
             <img
               src={isCreatorSide ? YellowCoin : PurpleCoin}
               className='w-14 h-14 absolute top-0 -right-[28px] z-10'
@@ -83,20 +97,48 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent }
           />
           <div className='ml-1 xs:ml-0 xs:mt-[-24px] max-w-[120px] truncate xs:space-y-3 text-center'>
             <span className='text-base font-bold '>
-              {!opponent ? currentGame?.creator.name ?? '' : currentGame?.joining?.name ?? ''}
+              {!opponent ? currentGame?.creator.name ?? '...' : currentGame?.joining?.name ?? '...'}
             </span>
             <WinPercent
-              percent={
-                !opponent ? currentGame?.creator.chance ?? 50 : currentGame?.joining?.chance ?? 50
-              }
+              percent={!opponent ? currentGame?.creator.chance : currentGame?.joining?.chance}
             />
           </div>
         </div>
         <div className='hidden xs:block border-b border-blue-accent ml-4 mr-7' />
         <div className='h-full w-full pr-6'>
-          <CoinFlipGameItems
-            items={!opponent ? currentGame?.creator.skins ?? [] : currentGame?.joining?.skins ?? []}
-          />
+          {((currentGame?.state !== 1 && currentGame?.state !== 2) || isCreatorSide) && (
+            <CoinFlipGameItems
+              items={
+                !opponent ? currentGame?.creator.skins ?? [] : currentGame?.joining?.skins ?? []
+              }
+            />
+          )}
+          <div className='flex items-center justify-center'>
+            <div className='px-2 my-10 mx-auto space-y-2'>
+              {!isCreatorSide && currentGame?.state === 1 && (
+                <>
+                  <Button color='GreenPrimary'>
+                    <div className='w-32 xs:w-40 h-9 flex items-center justify-center'>
+                      Call bot
+                    </div>
+                  </Button>
+                  <Button color='BlueAccentSix'>
+                    <div className='w-32 xs:w-40 h-9 flex items-center justify-center text-blue-ocean-secondary'>
+                      Cancel
+                    </div>
+                  </Button>
+                </>
+              )}
+              {!isCreatorSide && currentGame?.state === 2 && (
+                <LabelWithTimer
+                  userAvatar={currentGame?.joining?.avatar ?? ''}
+                  timer={currentGame?.timer ?? 0}
+                >
+                  Joining in
+                </LabelWithTimer>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

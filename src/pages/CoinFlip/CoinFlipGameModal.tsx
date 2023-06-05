@@ -12,6 +12,7 @@ import SkinBigIcon from '../../assets/img/coinflip/SkinBigIcon.png'
 
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { ICoinFlip } from '../../types/CoinFlip'
+import clsx from 'clsx'
 
 const CoinFlipGameModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, currentGame } = useCoinFlip()
@@ -104,7 +105,7 @@ const CoinFlipGameModal = () => {
               typographyQuantity={14214.51}
             />
           </div>
-          <div className='flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center'>
+          <div className='p-3 flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center'>
             {animation && (
               <div className='relative'>
                 <div
@@ -115,14 +116,19 @@ const CoinFlipGameModal = () => {
               </div>
             )}
             {!animation && (
-              <img
-                className='absolute z-1'
-                style={{
-                  filter: 'drop-shadow(0px 0px 25px rgba(124, 80, 233, 0.47))'
-                }}
-                src={SkinBigIcon}
-                alt='skin icon'
-              />
+              <div
+                className={clsx('absolute z-1', {
+                  'opacity-60 grayscale': currentGame?.state === 1
+                })}
+              >
+                <img
+                  style={{
+                    filter: 'drop-shadow(0px 0px 25px rgba(124, 80, 233, 0.47))'
+                  }}
+                  src={SkinBigIcon}
+                  alt='skin icon'
+                />
+              </div>
             )}
           </div>
           <div className='z-40 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
