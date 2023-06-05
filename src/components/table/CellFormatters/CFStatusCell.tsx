@@ -94,7 +94,7 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
       {game.state !== 3 && (
         <Button
           onClick={handleWatchGame}
-          className='leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
+          className='leading-10 ml-2 flex h-10 w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
         >
           <PreviewIcon iconClasses='mx-auto my-auto' />
         </Button>

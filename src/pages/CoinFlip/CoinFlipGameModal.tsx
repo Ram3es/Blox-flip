@@ -109,7 +109,9 @@ const CoinFlipGameModal = () => {
             <CoinsWithDiamond
               containerColor='GreenGradient'
               containerSize='Large'
-              typographyQuantity={14214.51}
+              typographyQuantity={
+                (currentGame?.creator.value ?? 0) + (currentGame?.joining?.value ?? 0)
+              }
             />
           </div>
           <div className='p-3 flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center'>

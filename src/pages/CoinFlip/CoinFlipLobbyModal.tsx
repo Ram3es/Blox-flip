@@ -159,7 +159,7 @@ const CoinFlipLobbyModal = () => {
         inventoryItemsLength={skins.length}
         selectedItemsCost={getCostInSelectedSkins()}
         selectedItemsLength={selectedSkins.length}
-        betGap={2555}
+        betGap={currentGame?.max}
       >
         <div className='flex items-center justify-between space-x-4'>
           {!currentGame && (
