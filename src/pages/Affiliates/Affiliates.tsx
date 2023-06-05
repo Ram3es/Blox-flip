@@ -7,8 +7,21 @@ import { AffiliatesTable } from './AffiliatesTable'
 import { AffiliatesForm } from './AffiliatesForm'
 import { Link } from 'react-router-dom'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+import { useEffect, useState } from 'react'
+import { useSocketCtx } from '../../store/SocketStore'
+import { IAffilateData } from '../../types/Affilates'
 
 export const Affiliates = () => {
+  const [affilateData, setAffilateData] = useState<IAffilateData>()
+  const { socket } = useSocketCtx()
+
+  console.log(affilateData, 'affilateData')
+
+  useEffect(() => {
+    socket.emit('affiliates_load', ({ data }: { data: IAffilateData }) => {
+      setAffilateData(data)
+    })
+  }, [])
   return (
     <div className='max-w-5xl w-full mx-auto'>
       <div className='text-center relative rounded-2xl border border-lightblue-primary/70 mb-12 xs:mb-9'>
@@ -56,13 +69,24 @@ export const Affiliates = () => {
         </div>
       </div>
       <div className='flex flex-wrap -mx-2'>
-        <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
+        {/* <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
           <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
           <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
             <CoinsWithDiamond
               iconContainerSize='XL'
               iconClasses='w-[18.5px] h-[15.5px]'
               typographyQuantity={1500}
+              typographyFontSize='Size18'
+            />
+          </div>
+        </div> */}
+        <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
+          <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL DEPOSITED</div>
+          <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
+            <CoinsWithDiamond
+              iconContainerSize='XL'
+              iconClasses='w-[18.5px] h-[15.5px]'
+              typographyQuantity={affilateData?.deposits ?? 0}
               typographyFontSize='Size18'
             />
           </div>
@@ -73,18 +97,7 @@ export const Affiliates = () => {
             <CoinsWithDiamond
               iconContainerSize='XL'
               iconClasses='w-[18.5px] h-[15.5px]'
-              typographyQuantity={1500}
-              typographyFontSize='Size18'
-            />
-          </div>
-        </div>
-        <div className='px-2 w-full xxs:w-1/2 md:w-auto grow shrink-0 mb-4 flex flex-col'>
-          <div className='text-sm font-extrabold text-gray-primary mb-1.5'>TOTAL EARNINGS</div>
-          <div className='gradient-blue-secondary flex items-center justify-center py-8 px-5 rounded-lg grow'>
-            <CoinsWithDiamond
-              iconContainerSize='XL'
-              iconClasses='w-[18.5px] h-[15.5px]'
-              typographyQuantity={1500}
+              typographyQuantity={affilateData?.total ?? 0}
               typographyFontSize='Size18'
             />
           </div>
@@ -97,7 +110,7 @@ export const Affiliates = () => {
             <CoinsWithDiamond
               iconContainerSize='XL'
               iconClasses='w-[18.5px] h-[15.5px]'
-              typographyQuantity={1500}
+              typographyQuantity={affilateData?.current ?? 0}
               typographyFontSize='Size18'
             />
             <Link to='/withdraw'>
@@ -114,7 +127,8 @@ export const Affiliates = () => {
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
       <AffiliatesForm />
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
-      <AffiliatesTable />
+      {affilateData?.users.length &&
+        <AffiliatesTable data={affilateData.users } />}
     </div>
   )
 }

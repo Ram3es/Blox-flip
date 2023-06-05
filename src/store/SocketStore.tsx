@@ -1,11 +1,12 @@
 import { ReactNode, createContext, useContext, useEffect } from 'react'
 import { io, Socket } from 'socket.io-client'
 
+export type TSocket = Socket
 export interface ChatSocketCtxState {
-  socket: Socket
+  socket: TSocket
 }
-
-const socket = io('http://localhost:8080', { autoConnect: false }) // test local server 'http://localhost:8080
+const URL = import.meta.env.VITE_API_URL
+const socket = io(URL, { autoConnect: false })
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const ChatSocketCtx = createContext<ChatSocketCtxState>({} as ChatSocketCtxState)

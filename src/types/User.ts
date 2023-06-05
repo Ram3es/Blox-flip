@@ -23,10 +23,13 @@ export interface ISecondUser {
   isWin?: boolean
 }
 
-export interface IChatUser {
-  id: string
-  name: string
-  avatar: string
-  level: number
+export interface IChatUser extends Omit<IUser, 'progress'> {
   flag: number
+}
+export type TBaseUser = Omit<IUser, 'progress' | 'role'>
+
+export interface ILeaderbordUser extends TBaseUser {
+  bet: number
+  profit: number
+
 }

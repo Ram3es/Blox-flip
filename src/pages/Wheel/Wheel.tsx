@@ -15,9 +15,10 @@ const Wheel = () => {
   const [lastTwentyGames, setLastTwentyGames] = useState<IWheelGameHistory[]>([])
   const [lastThousandBets, setLastThousandBets] = useState<IWheelBetHistory[]>([])
   const [wheelBets, setWhellBets] = useState<WheelBetRecord>(wheelBetsMock)
-  const [timer, setTimer] = useState<number>(30)
+  const [timer, setTimer] = useState<number>()
   const [wonTicket, setWonTicket] = useState<IWinTicket>()
   const [betAmount, setBetAmount] = useState(200)
+  const [isStart, setIsStart] = useState(false)
   const { socket } = useSocketCtx()
 
   const setHistoryData = (data?: possibleBets[]) => {
@@ -60,15 +61,18 @@ const Wheel = () => {
     socket.emit('wheel:connect')
 
     socket.on('load_wheel', ({ data }: { data: ILoadWheelRes }) => {
-      setTimer(getTimerValue(data.time))
+      setTimer(getTimerValue(data.roll))
     })
     socket.on('wheel_history', ({ data }: { data: possibleBets[] }) => {
       setHistoryData(data)
     })
     socket.on('wheel_end', ({ data }: { data: { num: number, color: possibleBets } }) => {
       setWonTicket(data)
+      console.log(data)
     })
     socket.on('add_wheel_bets', ({ data }: { data: WheelBetRecord }) => {
+      console.log(data, 'data')
+
       setWhellBets(data)
     })
     socket.on('add_wheel', ({ data }: { data: IIWheelBet }) => {
@@ -90,40 +94,55 @@ const Wheel = () => {
   }, [])
 
   useEffect(() => {
-    // setHistoryData()
-    return () => {
+    if (timer) {
       clearInterval(interval)
-      interval = undefined
+      interval = setInterval(() => setTimer(prev => prev && prev - 1), 1000)
     }
-  }, [])
-
-  useEffect(() => {
     if (timer === 0) {
-      // const t = Math.floor(Math.random() * 54)
-      clearInterval(interval)
-      console.log(interval)
-      // setWonTicket(t)
+      setIsStart(boolean => !boolean)
       setTimeout(() => {
-        interval = undefined
-        setTimer(30)
-      }, 2000)
-    } else if (!interval) {
-      interval = setInterval(() => {
-        setTimer((timer) => {
-          return timer - 1
-        })
-      }, 1000)
-    }
-  }, [timer])
-
-  useEffect(() => {
-    if (wonTicket) {
-      const timerId = setTimeout(() => {
-        addGameToLastTwenty(wonTicket.color)
+        setIsStart(boolean => !boolean)
       }, RALL_TIME)
-      return () => clearTimeout(timerId)
     }
-  }, [wonTicket])
+    return () => clearInterval(interval)
+  }
+  , [timer])
+
+  // useEffect(() => {
+  //   // setHistoryData()
+  //   return () => {
+  //     clearInterval(interval)
+  //     interval = undefined
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   if (timer === 0) {
+  //     // const t = Math.floor(Math.random() * 54)
+  //     clearInterval(interval)
+  //     console.log(interval)
+  //     // setWonTicket(t)
+  //     setTimeout(() => {
+  //       interval = undefined
+  //       setTimer(30)
+  //     }, 2000)
+  //   } else if (!interval) {
+  //     interval = setInterval(() => {
+  //       setTimer((timer) => {
+  //         return timer - 1
+  //       })
+  //     }, 1000)
+  //   }
+  // }, [timer])
+
+  // useEffect(() => {
+  //   if (wonTicket) {
+  //     const timerId = setTimeout(() => {
+  //       addGameToLastTwenty(wonTicket.color)
+  //     }, RALL_TIME)
+  //     return () => clearTimeout(timerId)
+  //   }
+  // }, [wonTicket])
 
   return (
     <div className='flex flex-col gap-9'>
@@ -133,7 +152,7 @@ const Wheel = () => {
             gamesHistory={lastTwentyGames ?? []}
             betsHistory={lastThousandBets ?? []}
           />
-          <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} />
+          <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} isStart={isStart} />
 
           <div className='w-full xl:w-auto h-full'>
             <WheelBetActions betAmount={betAmount} setBetAmount={setBetAmount} />

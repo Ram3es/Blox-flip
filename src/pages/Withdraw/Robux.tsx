@@ -5,9 +5,13 @@ import { IAmountState } from '../../types/Form'
 
 import { localeStringToNumber } from '../../helpers/numbers'
 import { defaultAmountSchema } from '../../helpers/yupSchema'
+import { useOutletContext } from 'react-router-dom'
+import { TSocket } from '../../store/SocketStore'
 
 export const Robux = () => {
   const [values, setValues] = useState<IAmountState>({ amountString: '', amountNumber: 0 })
+
+  const { socket } = useOutletContext<{ socket: TSocket }>()
 
   const handleAmountChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,6 +28,9 @@ export const Robux = () => {
         .validate(values, { abortEarly: false })
         .then(() => {
           console.log('Validation successful')
+          socket.emit('withdraw_robux', { amount: values.amountNumber }, (res: any) => {
+            alert(JSON.stringify(res, null, 2))
+          })
           setValues({ amountString: '', amountNumber: 0 })
         })
         .catch((error) => {

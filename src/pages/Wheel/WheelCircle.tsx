@@ -8,7 +8,7 @@ import { getItemColorByIndex } from '../../helpers/wheelHelpers'
 import RoundedArrow from '../../components/icons/RoundedArrow'
 import { IWinTicket } from '../../types/Wheel'
 
-const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: number, ticket?: IWinTicket }) => {
+const WheelCircle = ({ rallTime, count, ticket, isStart }: { rallTime: number, count?: number, ticket?: IWinTicket, isStart: boolean }) => {
   const ref = useRef<SVGSVGElement>(null)
 
   const start = (ticket: number): void => {
@@ -58,8 +58,10 @@ const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: num
   }, [])
 
   useEffect(() => {
-    if (ticket) start(ticket.num)
-  }, [ticket])
+    console.log(isStart, ticket)
+
+    if (isStart && ticket) start(ticket.num)
+  }, [ticket, isStart])
 
   return (
     <>
@@ -84,7 +86,7 @@ const WheelCircle = ({ rallTime, count, ticket }: { rallTime: number, count: num
           <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient--blue-darken pr-4 py-3 pl-16 flex flex-col gap-1 items-center'>
             <div className='flex gap-1 items-center'>
               <ClocksIcon />
-              <div className='text-white text-[22px] w-11'>{count}s</div>
+              <div className='text-white text-[22px] w-11'>{count ?? 0}s</div>
             </div>
             <div className='text-gray-primary uppercase text-15'>
               ROLLING IN
