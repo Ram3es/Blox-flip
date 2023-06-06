@@ -4,23 +4,33 @@ import { Button } from '../../components/base/Button'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import GreenTipSelect from '../../components/common/GreenTipSelect'
 import WithdrawMethod from './WithdrawMethod'
-import { IItemCard } from '../../types/ItemCard'
+import { TRobloxCard } from '../../types/ItemCard'
 import SortSelect from '../../components/common/SortSelect'
 import { sortingVariants } from '../../constants/sorting'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import NavHeader from '../../components/navigate/NavHeader'
 import SearchInput from '../../components/common/SearchInput'
+import { useSocketCtx } from '../../store/SocketStore'
 
 export const Withdraw = () => {
-  const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
+  const [selectedCards, setSelectedCard] = useState<TRobloxCard[]>([])
   const { pathname } = useLocation()
-  const { value, searchBy, onChange, sortOptions, priceRange, setPriceRange, setSortOptions } =
-    useToolbarState()
+  const { socket } = useSocketCtx()
+  const {
+    value,
+    searchBy,
+    onChange,
+    sortOptions,
+    priceRange,
+    setPriceRange,
+    setSortOptions
+  } = useToolbarState()
 
   const currentPath = pathname.split('/')[2]
 
   const contextOutlet = useMemo(
     () => ({
+      socket,
       searchBy,
       sortBy: sortOptions?.sortBy,
       direction: sortOptions?.direction,
@@ -30,6 +40,15 @@ export const Withdraw = () => {
     }),
     [searchBy, sortOptions, selectedCards, priceRange]
   )
+
+  const submitWithdraw = () => {
+    if (selectedCards.length) {
+      socket.emit('market_withdraw', { ids: selectedCards.map(card => card.id) }, (res: any) => {
+        alert(JSON.stringify(res, null, 2))
+        setSelectedCard([])
+      })
+    }
+  }
 
   return (
     <div className=' w-full'>
@@ -54,7 +73,7 @@ export const Withdraw = () => {
         {currentPath === 'roblox-limiteds' && (
           <div className='flex items-end lg:ml-5 lg:items-start pb-8'>
             <Button
-              onClick={() => console.log(selectedCards)}
+              onClick={submitWithdraw}
               className='pointer-events-auto flex justify-center items-center leading-9 text-gray-primary text-base font-bold rounded px-2.5 py-1 bg-blue-highlight hover:bg-blue-accent w-64 shrink-0'
             >
               <DiamondIcon className='w-[21px] h-[17px] mr-2' />

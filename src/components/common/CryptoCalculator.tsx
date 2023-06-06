@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import InputWithLabel from '../base/InputWithLabel'
@@ -28,8 +28,8 @@ interface ExchangeRateState {
 
 interface AmountState extends ExchangeRateState {}
 
-export const CryptoCalculator = () => {
-  const [rates] = useState<ExchangeRateState>({
+export const CryptoCalculator = ({ rateCoin }: { rateCoin: number }) => {
+  const [rates, setRates] = useState<ExchangeRateState>({
     coin: 1000,
     bitcoin: 10,
     usd: 100
@@ -42,7 +42,7 @@ export const CryptoCalculator = () => {
 
   const { pathname } = useLocation()
 
-  const handleChange = (fieldName: string, value: number): void => {
+  const handleChange = useCallback((fieldName: string, value: number): void => {
     let newCoinAmount, newUsdAmount, newBtcAmount
 
     switch (fieldName) {
@@ -72,7 +72,15 @@ export const CryptoCalculator = () => {
       usd: Number(newUsdAmount.toFixed(2)),
       bitcoin: Number(newBtcAmount.toFixed(2))
     })
-  }
+  }, [rates.bitcoin])
+
+  useEffect(() => {
+    setRates(prev => ({ ...prev, bitcoin: rateCoin }))
+  }, [rateCoin])
+
+  useEffect(() => {
+    handleChange('bitcoin', 1)
+  }, [rates])
 
   return (
     <div className='flex flex-wrap mb-5 z-20'>

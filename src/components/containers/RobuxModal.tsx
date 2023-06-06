@@ -4,12 +4,34 @@ import ModalWrapper from './ModalWrapper'
 import { Button } from '../base/Button'
 import DiamondIcon from '../icons/DiamondIcon'
 import { GiftWithDiamond } from '../icons/GiftWithDiamond'
+import { useSocketCtx } from '../../store/SocketStore'
 
 const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function }) => {
   const [inputsValue, setInputValue] = useState({ promo: '', affiliate: '' })
+  const { socket } = useSocketCtx()
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue({ ...inputsValue, [event.target.name]: event.target.value })
+  }
+
+  const handlePromocode = () => {
+    const { promo: code } = inputsValue
+    if (code) {
+      socket.emit('promo_use', { code }, (res: any) => {
+        alert(JSON.stringify(res, null, 2))
+        setInputValue(prev => ({ ...prev, promo: '' }))
+      })
+    }
+  }
+
+  const handleAffilate = () => {
+    const { affiliate: code } = inputsValue
+    if (code) {
+      socket.emit('affiliate_use', { code }, (res: any) => {
+        alert(JSON.stringify(res, null, 2))
+        setInputValue(prev => ({ ...prev, affiliate: '' }))
+      })
+    }
   }
 
   return isOpen
@@ -30,7 +52,10 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button color='GreenPrimary' variant='GreenGradient'>
+          <Button
+            onClick={handlePromocode}
+            color='GreenPrimary'
+            variant='GreenGradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
               <DiamondIcon className='w-[15px] h-[13px]' />
               Claim
@@ -48,7 +73,10 @@ const RobuxModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: Function })
           onChange={(event) => handleChange(event)}
         />
         <div className='absolute z-20 inset-y-[42px] right-2'>
-          <Button color='GreenPrimary' variant='GreenGradient'>
+          <Button
+            onClick={handleAffilate}
+            color='GreenPrimary'
+            variant='GreenGradient'>
             <div className='flex items-center gap-1 leading-9 text-xs px-2.5'>
               <DiamondIcon className='w-[15px] h-[13px]' />
               Claim

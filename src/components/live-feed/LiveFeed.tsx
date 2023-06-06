@@ -68,7 +68,10 @@ export const LiveFeed = () => {
     columnHelper.accessor((row: ISecondUser) => row.username, {
       id: 'username',
       header: () => 'Username',
-      cell: ({ row }) => <UserInfoCell user={row.original} />,
+      cell: ({ row }) => {
+        const { avatar, id, username, level } = row.original
+        return <UserInfoCell user={{ id, avatar, name: username, level }} />
+      },
       filterFn: 'equalsString',
       footer: (props) => props.column.id
     }),

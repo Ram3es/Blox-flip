@@ -33,8 +33,8 @@ export const getColorHistory = (color: possibleBets) => {
 }
 
 export const getTimerValue = (unixTimestamp: string): number => {
-  const now = new Date().getMilliseconds()
-  const future = new Date(+unixTimestamp * 1000).getMilliseconds()
+  const now = Date.now()
+  const future = +unixTimestamp * 1000
 
-  return (future - now) / 1000
+  return Math.floor((future - now) / 1000)
 }

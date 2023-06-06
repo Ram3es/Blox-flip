@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
 import { debounce } from './useDebounceCallback'
 
-export const useCopyToClipboard = (initialText: string) => {
-  const [text, setText] = useState(initialText)
+export const useCopyToClipboard = (initialText?: string) => {
+  const [text, setText] = useState(initialText ?? '')
   const [copiedText, setCopiedText] = useState<string | undefined>(initialText)
 
   const handleCopyText = useCallback(
@@ -16,6 +16,7 @@ export const useCopyToClipboard = (initialText: string) => {
   return {
     text: copiedText,
     setText,
-    handleCopyText
+    handleCopyText,
+    renderText: text
   }
 }

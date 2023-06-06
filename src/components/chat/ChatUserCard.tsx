@@ -32,7 +32,7 @@ enum ChatUserCardVariant {
 
 interface ChatUserCardProps {
   user: IChatUser
-  hashMsg: string
+  hashMsg?: string
   variant?: keyof typeof ChatUserCardVariant
 }
 
@@ -104,7 +104,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     },
     {
       handleFunction: () => {
-        setSelectedMessage(hashMsg)
+        setSelectedMessage(hashMsg as string)
       },
       name: 'Remove Message',
       icon: <BanIcon className={baseIconSizeClasses} />

@@ -6,7 +6,7 @@ import { UserLevel } from '../../user/UserLevel'
 import type { IChatUser } from '../../../types/User'
 
 interface ActionModalHeaderProps {
-  user: IChatUser
+  user?: IChatUser
 }
 
 const ActionModalHeader: FC<PropsWithChildren<ActionModalHeaderProps>> = ({ user, children }) => {
