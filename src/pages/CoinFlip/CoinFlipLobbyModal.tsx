@@ -17,14 +17,12 @@ import YellowCoin from '../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
 import { IItemCard } from '../../types/ItemCard'
-import { ICoinFlip } from '../../types/CoinFlip'
+import { ICoin, ICoinFlip } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
 
 const CoinFlipLobbyModal = () => {
   const {
-    selectedCoin,
-    setSelectedCoin,
     setIsOpenBattleGame,
     setCurrentGame,
     setIsOpenLobbyModal,
@@ -33,6 +31,7 @@ const CoinFlipLobbyModal = () => {
   const { socket } = useSocketCtx()
 
   const [skins, setSkins] = useState<IItemCard[]>([])
+  const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 

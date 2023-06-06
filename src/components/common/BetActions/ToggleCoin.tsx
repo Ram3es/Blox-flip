@@ -1,13 +1,16 @@
-import { ICoinFlipContext } from '../../../store/CoinFlipStore'
+import { Dispatch, SetStateAction } from 'react'
 
 import clsx from 'clsx'
-
-import { ICoin } from '../../../types/CoinFlip'
 
 import YellowCoin from '../../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../../assets/img/CoinFlipTail.png'
 
-type ToggleCoinProps = Pick<ICoinFlipContext, 'selectedCoin' | 'setSelectedCoin'>
+import { ICoin } from '../../../types/CoinFlip'
+
+interface ToggleCoinProps {
+  selectedCoin: ICoin
+  setSelectedCoin: Dispatch<SetStateAction<ICoin>>
+}
 
 const ToggleCoin = ({ selectedCoin, setSelectedCoin }: ToggleCoinProps) => {
   const coins: ICoin[] = [0, 1]

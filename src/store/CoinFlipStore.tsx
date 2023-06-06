@@ -1,15 +1,11 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
-import { ICoin, ICoinFlip } from '../types/CoinFlip'
+import { ICoinFlip } from '../types/CoinFlip'
 
 interface PlinkoProviderProps {
   children: ReactNode
 }
 
 export interface ICoinFlipContext {
-  betAmount: number
-  setBetAmount: Dispatch<SetStateAction<number>>
-  selectedCoin: ICoin
-  setSelectedCoin: Dispatch<SetStateAction<ICoin>>
   currentGame: ICoinFlip | null
   setCurrentGame: Dispatch<SetStateAction<ICoinFlip | null>>
   isOpenLobbyModal: boolean
@@ -28,9 +24,6 @@ export const useCoinFlip = () => {
 }
 
 export const CoinFlipProvider = ({ children }: PlinkoProviderProps) => {
-  const [betAmount, setBetAmount] = useState(200)
-  const [selectedCoin, setSelectedCoin] = useState<ICoinFlipContext['selectedCoin']>(0)
-
   const [currentGame, setCurrentGame] = useState<ICoinFlip | null>(null)
 
   const [isOpenLobbyModal, setIsOpenLobbyModal] = useState(false)
@@ -40,10 +33,6 @@ export const CoinFlipProvider = ({ children }: PlinkoProviderProps) => {
   return (
     <CoinFlipContext.Provider
       value={{
-        betAmount,
-        setBetAmount,
-        selectedCoin,
-        setSelectedCoin,
         currentGame,
         setCurrentGame,
         isOpenLobbyModal,
