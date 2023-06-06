@@ -3,11 +3,11 @@ import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
 import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
 
 interface CFUserInfoCellProps {
-  userAvatar?: string
+  userAvatar: string
   coin: number
 }
 
-const CFUserInfoCell = ({ userAvatar = '', coin }: CFUserInfoCellProps) => {
+const CFUserInfoCell = ({ userAvatar, coin }: CFUserInfoCellProps) => {
   return (
     <div className='relative min-w-[6rem]'>
       <Image
