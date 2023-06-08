@@ -75,7 +75,7 @@ const King = () => {
         <VerifyBets path='/provably-fair#king' />
       </div>
       <KingArena game={kingGame} fight={kingFight} setFight={setKingFight} />
-      {/* <Button
+      <Button
         disabled={kingFight !== null}
         onClick={() => setKingGame(kingGameNullableMock)}
         color='GreenPrimary'
@@ -97,12 +97,12 @@ const King = () => {
         <span className='py-2.5 mx-auto'>Set game with only one king</span>
       </Button>
       <Button
-        disabled={kingFight !== null}
+        disabled={!kingGame?.challenger}
         onClick={() => setKingFight(kingFightMock)}
         color='GreenPrimary'
       >
         <span className='py-2.5 mx-auto'>Set fight</span>
-      </Button> */}
+      </Button>
       <KingQueue queue={users.slice(0, 10)} />
       <KingSkins game={kingGame} />
       <KingHistoryList games={kingHistory} />
