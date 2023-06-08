@@ -1,11 +1,12 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 
 import clsx from 'clsx'
+import CountUp from 'react-countup'
 
 import KingHealthPointsBar from './KingHealthPointsBar'
 import KingArenaPlayer from './KingArenaPlayer'
+import ClocksIcon from '../../components/icons/ClocksIcon'
 
-// import ClocksIcon from '../../components/icons/ClocksIcon'
 import SwordsIcon from '../../assets/img/swords_king.svg'
 import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 import ExplosionIcon from '../../assets/img/explosion_icon.png'
@@ -166,7 +167,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
           <KingArenaPlayer player={game?.champion ? game.champion : null} left />
           <img
             ref={explosiveKingEffect}
-            className='absolute ls:bottom-20 ls:right-28 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
+            className='absolute ls:bottom-24 ls:right-28 xs:bottom-6 xs:left-[-2rem] left-12 z-100'
             style={{ visibility: 'hidden' }}
             src={ExplosionIcon}
             alt='explosion'
@@ -200,8 +201,14 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
       <div className='relative flex items-center justify-center gap-2 py-2 ls:py-0'>
-        {/* <ClocksIcon />
-        <div className='text-white font bold text-xl w-11'>{timer}s</div> */}
+        {!fight && game?.end !== -1 && (
+          <>
+            <ClocksIcon />
+            <div className='text-white font bold text-xl w-11'>
+              <CountUp start={240} end={0} duration={240} useEasing={false} />s
+            </div>
+          </>
+        )}
         {fight && (
           <span
             ref={attackTextRef}
@@ -210,7 +217,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
             attack
           </span>
         )}
-        <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[134px] p-2 flex items-center justify-center rotate-[45deg]'>
+        <div className='h-[40px] w-[40px] ls:h-[66px] ls:w-[66px] gradient-border--yellow rounded-lg gradient-background--darkblue ls:absolute ls:bottom-[145px] p-2 flex items-center justify-center rotate-[45deg]'>
           <img ref={swordIconRef} src={SwordsIcon} className='scale-[280%] rotate-[-45deg]' />
         </div>
       </div>
@@ -230,7 +237,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
           <KingArenaPlayer player={game?.challenger ? game.challenger : null} />
           <img
             ref={explosiveOpponentEffect}
-            className='absolute ls:bottom-20 ls:left-32 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
+            className='absolute ls:bottom-24 ls:left-32 xs:bottom-6 xs:left-[-2rem] left-12 z-100'
             style={{ visibility: 'hidden' }}
             src={ExplosionIcon}
             alt='explosion'
