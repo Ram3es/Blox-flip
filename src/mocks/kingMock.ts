@@ -63,7 +63,7 @@ export const kingHistoryMock: IKingHistory[] = [
   }
 ]
 
-export const kingGameMock: IKingChampion = {
+export const kingGameMockNormal: IKingChampion = {
   id: '12412s412412',
   round: 1,
   champion: playerMock,
@@ -72,11 +72,17 @@ export const kingGameMock: IKingChampion = {
   time: 1686215369
 }
 
-export const kingGameNullableMock: IKingChampion = {
+export const kingGameMockOneKing: IKingChampion = {
   id: '12412s412412',
   round: 1,
   champion: playerMock,
-  challenger: playerSecondMock,
+  end: 1686215599,
+  time: 1686215369
+}
+
+export const kingGameNullableMock: IKingChampion = {
+  id: '12412s412412',
+  round: 1,
   end: -1,
   time: 1686215369
 }

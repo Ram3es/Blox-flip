@@ -1,5 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 
+import clsx from 'clsx'
+
 import KingHealthPointsBar from './KingHealthPointsBar'
 import KingArenaPlayer from './KingArenaPlayer'
 
@@ -158,10 +160,10 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
   }, [fight])
 
   return (
-    <div className='p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col items-start ls:flex-row ls:justify-between ls:items-stretch w-full gap-4 xs:gap-0'>
+    <div className='ls:h-[179px] p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col items-start ls:flex-row ls:justify-between ls:items-stretch w-full gap-4 xs:gap-0'>
       <div className='flex'>
         <div className='relative space-y-2 ls:space-y-0'>
-          <KingArenaPlayer player={!game || game.end === -1 ? null : game.champion} left />
+          <KingArenaPlayer player={game?.champion ? game.champion : null} left />
           <img
             ref={explosiveKingEffect}
             className='absolute ls:bottom-20 ls:right-28 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
@@ -169,13 +171,20 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
             src={ExplosionIcon}
             alt='explosion'
           />
-          <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
-            <KingHealthPointsBar
-              isKing
-              ref={healthPointsBarKingRef}
-              currentHP={healthPointsKing}
-              maxHP={maxHealthPointsKing}
-            />
+          <div
+            className={clsx('ls:pt-8 ls:pl-8 ls:pb-7 w-full', {
+              'opacity-100': game?.champion,
+              'opacity-0': !game?.champion
+            })}
+          >
+            {game?.champion && (
+              <KingHealthPointsBar
+                isKing
+                ref={healthPointsBarKingRef}
+                currentHP={healthPointsKing}
+                maxHP={maxHealthPointsKing}
+              />
+            )}
           </div>
         </div>
         <div className='relative'>
@@ -218,7 +227,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
           )}
         </div>
         <div className='relative space-y-2 ls:space-y-0'>
-          <KingArenaPlayer player={!game ? null : game.challenger} />
+          <KingArenaPlayer player={game?.challenger ? game.challenger : null} />
           <img
             ref={explosiveOpponentEffect}
             className='absolute ls:bottom-20 ls:left-32 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
@@ -226,15 +235,18 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
             src={ExplosionIcon}
             alt='explosion'
           />
-          <div className='ls:pt-8 ls:pr-8 w-full'>
-            {game.challenger && (
-              <KingHealthPointsBar
-                isKing={false}
-                ref={healthPointsBarOpponentRef}
-                currentHP={healthPointsOpponent}
-                maxHP={maxHealthPointsOpponent}
-              />
-            )}
+          <div
+            className={clsx('ls:pt-8 ls:pr-8 w-full', {
+              'opacity-100': game?.challenger,
+              'opacity-0': !game?.challenger
+            })}
+          >
+            <KingHealthPointsBar
+              isKing={false}
+              ref={healthPointsBarOpponentRef}
+              currentHP={healthPointsOpponent}
+              maxHP={maxHealthPointsOpponent}
+            />
           </div>
         </div>
       </div>

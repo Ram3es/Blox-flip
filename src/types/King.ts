@@ -12,8 +12,8 @@ export interface IKingPlayer {
 export interface IKingChampion {
   id: string
   round: number
-  champion: IKingPlayer
-  challenger: IKingPlayer
+  champion?: IKingPlayer
+  challenger?: IKingPlayer
   end: number
   time: number
 }

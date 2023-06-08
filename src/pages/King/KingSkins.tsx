@@ -18,15 +18,15 @@ interface KingSkinsInterface {
 }
 
 const KingSkins = ({ game }: KingSkinsInterface) => {
-  const [kingItems, setKingItems] = useState<IItemCard[]>(game?.champion.players_skins ?? [])
+  const [kingItems, setKingItems] = useState<IItemCard[]>(game?.champion?.players_skins ?? [])
   const [kingItemsTab, setKingItemsTab] = useState<TabInterface>(KING_TABS[0])
 
   const updatedKingItems = useMemo(() => {
     if (kingItemsTab.variant === 'Kings items') {
-      return game?.champion.players_skins.map((card: IItemCard) => ({ ...card, isSelected: false }))
+      return game?.champion?.players_skins ?? [].map((card: IItemCard) => ({ ...card, isSelected: false }))
     }
     if (kingItemsTab.variant === 'Kings vault') {
-      return game?.champion.players_skins.filter((card: IItemCard) => card.price > 2000)
+      return game?.champion?.players_skins ?? [].filter((card: IItemCard) => card.price > 2000)
     }
     return []
   }, [kingItemsTab])

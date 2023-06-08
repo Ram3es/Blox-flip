@@ -26,8 +26,8 @@ const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
     'flex flex-col ls:items-end ls:pr-36 ls:pt-2 ls:space-y-1': !left
   })
   const headingClasses = clsx('font-semibold text-xl', {
-    'gradient-king-yellow-text': left,
-    'text-gray-primary': !left
+    'gradient-king-yellow-text': left && player,
+    'text-gray-primary': !left || !player
   })
 
   return (
@@ -39,15 +39,24 @@ const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
         )}
       </div>
       <div className={playerInfoClasses}>
-        <div className='flex flex-row gap-3 pb-1 ls:pb-0'>
-          {!left && (
+        <div
+          className={clsx('flex gap-3 pb-1 ls:pb-0', {
+            'flex-row': !left,
+            'flex-row-reverse': left
+          })}
+        >
+          <div
+            className={clsx('', {
+              'opacity-0': left && player
+            })}
+          >
             <Button onClick={() => console.log('join')} color='GreenPrimary'>
               <span className='px-2.5 h-8 flex items-center justify-center'>
-                {!player ? 'Join game' : <PlusIcon />}
+                {player && !left ? <PlusIcon /> : 'Join game'}
               </span>
             </Button>
-          )}
-          <p className={headingClasses}>{left && player ? 'Current King' : 'Opponent'}</p>
+          </div>
+          <p className={headingClasses}>{left && player ? 'Current King' : 'Challenger'}</p>
         </div>
         <div className='flex items-center'>
           <span className='font-bold text-base'>{player ? player.name : 'Not joined...'}</span>

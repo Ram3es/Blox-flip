@@ -10,7 +10,8 @@ import VerifyBets from '../../components/common/VerifyBets'
 import { users } from '../../mocks/liveFeedUsers'
 import {
   kingFightMock,
-  kingGameMock,
+  kingGameMockNormal,
+  kingGameMockOneKing,
   kingGameNullableMock,
   kingHistoryMock
 } from '../../mocks/kingMock'
@@ -20,7 +21,7 @@ import { Button } from '../../components/base/Button'
 import KingJoinModal from './KingJoinModal'
 
 const King = () => {
-  const [kingGame, setKingGame] = useState<IKingChampion | null>(kingGameMock)
+  const [kingGame, setKingGame] = useState<IKingChampion | null>(null)
   const [kingFight, setKingFight] = useState<IKingFight[] | null>(null)
   console.log(kingGame, 'KING_GAME')
   const [kingHistory, setKingHistory] = useState<IKingHistory[]>([])
@@ -49,7 +50,7 @@ const King = () => {
       setKingHistory(data)
     })
 
-    setKingGame(kingGameMock) // delete after setup server
+    setKingGame(kingGameNullableMock) // delete after setup server
 
     setKingHistory(kingHistoryMock) // delete after setup server
 
@@ -77,12 +78,31 @@ const King = () => {
       <KingArena game={kingGame} fight={kingFight} setFight={setKingFight} />
       <Button
         disabled={kingFight !== null}
-        onClick={
-          () => setKingFight(kingFightMock) // delete after setup server
-        }
+        onClick={() => setKingGame(kingGameNullableMock)}
         color='GreenPrimary'
       >
-        <span className='py-2.5 mx-auto'>Start game</span>
+        <span className='py-2.5 mx-auto'>Set nullable game</span>
+      </Button>
+      <Button
+        disabled={kingFight !== null}
+        onClick={() => setKingGame(kingGameMockNormal)}
+        color='GreenPrimary'
+      >
+        <span className='py-2.5 mx-auto'>Set normal game</span>
+      </Button>
+      <Button
+        disabled={kingFight !== null}
+        onClick={() => setKingGame(kingGameMockOneKing)}
+        color='GreenPrimary'
+      >
+        <span className='py-2.5 mx-auto'>Set game with only one king</span>
+      </Button>
+      <Button
+        disabled={kingFight !== null}
+        onClick={() => setKingFight(kingFightMock)}
+        color='GreenPrimary'
+      >
+        <span className='py-2.5 mx-auto'>Set fight</span>
       </Button>
       <KingQueue queue={users.slice(0, 10)} />
       <KingSkins game={kingGame} />
