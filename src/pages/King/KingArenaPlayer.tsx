@@ -3,13 +3,13 @@ import clsx from 'clsx'
 import Image from '../../components/base/Image'
 import { UserLevel } from '../../components/user/UserLevel'
 
-import QuestionMark from '../../assets/img/question_mark.svg'
+import QuestionIcon from '../../components/icons/QuestionIcon'
+import { PlusIcon } from '../../components/icons/PlusIcon'
+import { Button } from '../../components/base/Button'
 
 import KingIcon from '../../assets/img/king_icon.png'
 
 import type { IKingPlayer } from '../../types/King'
-import { PlusIcon } from '../../components/icons/PlusIcon'
-import { Button } from '../../components/base/Button'
 
 interface KingArenaPlayerProps {
   player: IKingPlayer | null
@@ -33,7 +33,12 @@ const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
   return (
     <div className='relative ls:block flex xs:flex-row flex-col items-center ls:gap-0 gap-5'>
       <div className={avatarClasses}>
-        <Image className='w-20 h-[74px] rounded' image={player ? player.avatar : QuestionMark} />
+        {player && <Image className='w-20 h-[74px] rounded' image={player.avatar} />}
+        {!player && (
+          <span className='w-20 h-[74px] rounded flex items-center justify-center text-blue-gray-third'>
+            <QuestionIcon className='w-[19px] h-[38px]' />
+          </span>
+        )}
         {left && player && (
           <img src={KingIcon} className='left-0 xs:left-[-28px] absolute top-[-45px]' />
         )}

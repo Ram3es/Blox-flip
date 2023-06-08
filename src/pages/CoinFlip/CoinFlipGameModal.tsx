@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 import { useSocketCtx } from '../../store/SocketStore'
 
+import clsx from 'clsx'
+
 import ModalWrapper from '../../components/containers/ModalWrapper'
 import CoinFlipGamePlayer from './CoinFlipGamePlayer'
 import AvatarWithUsername from '../../components/common/AvatarWithUsername'
@@ -12,7 +14,6 @@ import SkinBigIcon from '../../assets/img/coinflip/SkinBigIcon.png'
 
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { ICoinFlip } from '../../types/CoinFlip'
-import clsx from 'clsx'
 
 const CoinFlipGameModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, currentGame } = useCoinFlip()
