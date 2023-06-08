@@ -27,16 +27,23 @@ export interface IKingHistory {
   winner: IKingPlayer
 }
 
+export enum KingWeaponEnum {
+  SWORD = 'SWORD',
+  KNIFE = 'KNIFE',
+  FLAMING_SWORD = 'FLAMING_SWORD',
+  PISTOL = 'PISTOL',
+  AUTOMATIC_WEAPON = 'AUTOMATIC_WEAPON'
+}
+
 export interface IKingWeapon {
-  1: 'sword'
-  2: 'knife'
-  3: 'flaming_sword'
-  4: 'pistol'
-  5: 'automatic_weapon'
+  1: keyof typeof KingWeaponEnum.SWORD
+  2: keyof typeof KingWeaponEnum.KNIFE
+  3: keyof typeof KingWeaponEnum.FLAMING_SWORD
+  4: keyof typeof KingWeaponEnum.PISTOL
+  5: keyof typeof KingWeaponEnum.AUTOMATIC_WEAPON
 }
 
 export type IKingWeaponKey = keyof IKingWeapon
-export type IKingAnimationType = IKingWeapon[IKingWeaponKey]
 
 export interface IKingFight {
   attacker: 'champion' | 'challenger'

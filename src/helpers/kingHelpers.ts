@@ -1,4 +1,4 @@
-import { IKingAnimationType, IKingWeaponKey } from '../types/King'
+import { IKingWeaponKey, KingWeaponEnum } from '../types/King'
 
 export const getPercentByDamage = (damage: number, maxHealthPoints: number) => {
   return ((damage * 100) / maxHealthPoints).toFixed(2)
@@ -7,17 +7,17 @@ export const getFightDuration = (roundDuration: number, fightRounds: number): nu
   return roundDuration * fightRounds
 }
 
-export const getAnimationByWeaponKey = (weaponKey: IKingWeaponKey): IKingAnimationType => {
+export const getAnimationByWeaponKey = (weaponKey: IKingWeaponKey): KingWeaponEnum => {
   switch (weaponKey) {
     case 1:
-      return 'sword'
+      return KingWeaponEnum.SWORD
     case 2:
-      return 'knife'
+      return KingWeaponEnum.KNIFE
     case 3:
-      return 'flaming_sword'
+      return KingWeaponEnum.FLAMING_SWORD
     case 4:
-      return 'pistol'
+      return KingWeaponEnum.PISTOL
     case 5:
-      return 'automatic_weapon'
+      return KingWeaponEnum.AUTOMATIC_WEAPON
   }
 }
