@@ -6,6 +6,8 @@ import KingQueue from './KingQueue'
 import KingSkins from './KingSkins'
 import KingHistoryList from './KingHistoryList'
 import VerifyBets from '../../components/common/VerifyBets'
+import KingJoinModal from './KingJoinModal'
+import { Button } from '../../components/base/Button'
 
 import { users } from '../../mocks/liveFeedUsers'
 import {
@@ -17,13 +19,10 @@ import {
 } from '../../mocks/kingMock'
 
 import { IKingChampion, IKingFight, IKingHistory } from '../../types/King'
-import { Button } from '../../components/base/Button'
-import KingJoinModal from './KingJoinModal'
 
 const King = () => {
   const [kingGame, setKingGame] = useState<IKingChampion | null>(null)
   const [kingFight, setKingFight] = useState<IKingFight[] | null>(null)
-  console.log(kingGame, 'KING_GAME')
   const [kingHistory, setKingHistory] = useState<IKingHistory[]>([])
 
   const { socket } = useSocketCtx()
@@ -76,7 +75,7 @@ const King = () => {
         <VerifyBets path='/provably-fair#king' />
       </div>
       <KingArena game={kingGame} fight={kingFight} setFight={setKingFight} />
-      <Button
+      {/* <Button
         disabled={kingFight !== null}
         onClick={() => setKingGame(kingGameNullableMock)}
         color='GreenPrimary'
@@ -103,7 +102,7 @@ const King = () => {
         color='GreenPrimary'
       >
         <span className='py-2.5 mx-auto'>Set fight</span>
-      </Button>
+      </Button> */}
       <KingQueue queue={users.slice(0, 10)} />
       <KingSkins game={kingGame} />
       <KingHistoryList games={kingHistory} />

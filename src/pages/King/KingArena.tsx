@@ -201,7 +201,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
       <div className='relative flex items-center justify-center gap-2 py-2 ls:py-0'>
-        {!fight && game?.end !== -1 && (
+        {!fight && game?.round && game?.round > 1 && (
           <>
             <ClocksIcon />
             <div className='text-white font bold text-xl w-11'>
