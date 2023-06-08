@@ -9,6 +9,7 @@ import DashedSpacerIcon from '../../assets/img/dashed_spacer.png'
 import ExplosionIcon from '../../assets/img/explosion_icon.png'
 
 import {
+  HEALTH_POINTS_EFFECT_MILLISECONDS,
   ROUND_DURATION,
   ROUND_DURATION_MILLISECONDS,
   TIME_EFFECT_MILLISECONDS
@@ -50,9 +51,10 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
   const applyDirectionAttackEffect = (round: IKingFight) => {
     const currentAnimationName = getAnimationByWeaponKey(round.weapon).toLowerCase()
 
-    const getOpponentRefByAttacker = round.attacker === 'champion' ? animateKingRef : animateOpponentRef
+    const getOpponentRefByAttacker =
+      round.attacker === 'champion' ? animateKingRef : animateOpponentRef
 
-    const animateRef = (ref: RefObject<HTMLDivElement>) => {
+    const animateRefs = (ref: RefObject<HTMLDivElement>) => {
       if (attackTextRef.current && swordIconRef.current && ref.current) {
         ref.current.classList.add('visible', 'king-animation', currentAnimationName)
         attackTextRef.current.style.visibility = 'visible'
@@ -64,11 +66,11 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
             swordIconRef.current.style.rotate = '0deg'
             ref.current.classList.remove('visible', 'king-animation', currentAnimationName)
           }
-        }, 4000)
+        }, TIME_EFFECT_MILLISECONDS)
       }
     }
 
-    animateRef(getOpponentRefByAttacker)
+    animateRefs(getOpponentRefByAttacker)
   }
 
   const applyHealthPointBarEffect = (round: IKingFight) => {
@@ -94,7 +96,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
           }
         }, TIME_EFFECT_MILLISECONDS / 2)
       }
-    }, 1500)
+    }, HEALTH_POINTS_EFFECT_MILLISECONDS)
   }
 
   const applyExplosiveEffect = (round: IKingFight) => {
@@ -180,7 +182,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
           {fight && (
             <div
               ref={animateKingRef}
-              className='absolute  top-[250px] xs:top-[90px] -scale-x-75 ls:-top-[70%] left-0 ls:-left-20  scale-75 ls:scale-x-75 '
+              className='absolute top-[250px] xs:top-[90px] -scale-x-75 ls:-top-[70%] left-0 ls:-left-20 scale-75 ls:scale-x-75 '
             />
           )}
         </div>
