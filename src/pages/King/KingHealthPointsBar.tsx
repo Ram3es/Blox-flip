@@ -12,7 +12,7 @@ interface KingHealthPointsBarProps {
 
 const KingHealthPointsBar = forwardRef<HTMLDivElement, KingHealthPointsBarProps>(
   ({ isKing, currentHP, maxHP = 4000 }, ref) => {
-    const healthPointBarWidth = useMemo(() => (currentHP / maxHP) * 100, [currentHP])
+    const healthPointBarWidth = useMemo(() => Math.sign(currentHP) === 1 ? (currentHP / maxHP) * 100 : 0, [currentHP])
 
     const healthPointClasses = clsx('flex', {
       'justify-end': !isKing

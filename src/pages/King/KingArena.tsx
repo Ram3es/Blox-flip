@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useKing } from '../../store/KingStore'
+import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 
 import KingHealthPointsBar from './KingHealthPointsBar'
 import KingArenaPlayer from './KingArenaPlayer'
@@ -15,14 +14,21 @@ import {
   TIME_EFFECT_MILLISECONDS
 } from '../../constants/king'
 
-import { getFightDuration, getPercentByDamage } from '../../helpers/kingHelpers'
-import { getCostByFieldName } from '../../helpers/numbers'
+import {
+  getAnimationByWeaponKey,
+  getFightDuration,
+  getPercentByDamage
+} from '../../helpers/kingHelpers'
 
-import type { IKingFight } from '../../types/King'
+import type { IKingChampion, IKingFight } from '../../types/King'
 
-const KingArena = () => {
-  const { game, fight, setFight } = useKing()
+interface KingArenaProps {
+  game: IKingChampion | null
+  fight: IKingFight[] | null
+  setFight: Dispatch<SetStateAction<IKingFight[] | null>>
+}
 
+const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
   const [healthPointsKing, setHealthPointsKing] = useState(0)
   const [healthPointsOpponent, setHealthPointsOpponent] = useState(0)
 
@@ -41,110 +47,77 @@ const KingArena = () => {
   const animateKingRef = useRef<HTMLDivElement>(null)
   const animateOpponentRef = useRef<HTMLDivElement>(null)
 
-  const getRandomHero = useCallback((): string => {
-    const listHero = ['iceknight', 'cowboy', 'cosmic', 'knight', 'blade']
-    return listHero[Math.floor(Math.random() * 5)]
-  }, [])
-
   const applyDirectionAttackEffect = (round: IKingFight) => {
-    const hero = getRandomHero()
-    if (round.by === 'king') {
-      if (attackTextRef.current && swordIconRef.current && animateKingRef.current) {
-        animateKingRef.current.classList.add('visible', 'king-animation', hero)
+    const currentAnimationName = getAnimationByWeaponKey(round.weapon).toLowerCase()
+
+    const getOpponentRefByAttacker = round.attacker === 'champion' ? animateKingRef : animateOpponentRef
+
+    const animateRef = (ref: RefObject<HTMLDivElement>) => {
+      if (attackTextRef.current && swordIconRef.current && ref.current) {
+        ref.current.classList.add('visible', 'king-animation', currentAnimationName)
         attackTextRef.current.style.visibility = 'visible'
-        swordIconRef.current.style.rotate = '45deg'
-        setTimeout(() => {
-          if (swordIconRef.current && attackTextRef.current && animateKingRef.current) {
-            attackTextRef.current.style.visibility = 'hidden'
-            swordIconRef.current.style.rotate = '0deg'
-            animateKingRef.current.classList.remove('visible', 'king-animation', hero)
-          }
-        }, 4000)
-      }
-    }
-    if (round.by === 'opponent') {
-      const hero = getRandomHero()
-      if (attackTextRef.current && swordIconRef.current && animateOpponentRef.current) {
-        animateOpponentRef.current.classList.add('visible', 'king-animation', hero)
-        attackTextRef.current.style.visibility = 'visible'
-        swordIconRef.current.style.rotate = '-45deg'
+        swordIconRef.current.style.rotate = round.attacker === 'champion' ? '45deg' : '-45deg'
 
         setTimeout(() => {
-          if (swordIconRef.current && attackTextRef.current && animateOpponentRef.current) {
+          if (swordIconRef.current && attackTextRef.current && ref.current) {
             attackTextRef.current.style.visibility = 'hidden'
             swordIconRef.current.style.rotate = '0deg'
-            animateOpponentRef.current.classList.remove('hidden', 'king-animation', hero)
+            ref.current.classList.remove('visible', 'king-animation', currentAnimationName)
           }
         }, 4000)
       }
     }
+
+    animateRef(getOpponentRefByAttacker)
   }
 
   const applyHealthPointBarEffect = (round: IKingFight) => {
-    if (round.by === 'king') {
-      setTimeout(() => {
-        setHealthPointsOpponent((prevHpOpponent) => prevHpOpponent - round.damage)
+    const setHealthPointsByAttacker =
+      round.attacker === 'champion' ? setHealthPointsOpponent : setHealthPointsKing
 
-        const roundPercent = getPercentByDamage(round.damage, maxHealthPointsOpponent)
-        if (healthPointsBarOpponentRef.current) {
-          healthPointsBarOpponentRef.current.style.width = `${roundPercent}%`
-          setTimeout(() => {
-            if (healthPointsBarOpponentRef.current) {
-              healthPointsBarOpponentRef.current.style.width = '0%'
-            }
-          }, TIME_EFFECT_MILLISECONDS / 2)
-        }
-      }, 1500)
-    }
-    if (round.by === 'opponent') {
-      setTimeout(() => {
-        setHealthPointsKing((prevHpKing) => prevHpKing - round.damage)
+    const getMaxHealthPointsByAttacker =
+      round.attacker === 'champion' ? maxHealthPointsOpponent : maxHealthPointsKing
 
-        const roundPercent = getPercentByDamage(round.damage, maxHealthPointsKing)
-        if (healthPointsBarKingRef.current) {
-          healthPointsBarKingRef.current.style.width = `${roundPercent}%`
+    const getCurrentRefByAttacker =
+      round.attacker === 'champion' ? healthPointsBarOpponentRef : healthPointsBarKingRef
 
-          setTimeout(() => {
-            if (healthPointsBarKingRef.current) {
-              healthPointsBarKingRef.current.style.width = '0%'
-            }
-          }, TIME_EFFECT_MILLISECONDS / 2)
-        }
-      }, 1500)
-    }
+    setTimeout(() => {
+      setHealthPointsByAttacker((prevHp) => prevHp - round.attack * 1000)
+
+      const roundPercent = getPercentByDamage(round.attack * 1000, getMaxHealthPointsByAttacker)
+      if (getCurrentRefByAttacker.current) {
+        getCurrentRefByAttacker.current.style.width = `${roundPercent}%`
+
+        setTimeout(() => {
+          if (getCurrentRefByAttacker.current) {
+            getCurrentRefByAttacker.current.style.width = '0%'
+          }
+        }, TIME_EFFECT_MILLISECONDS / 2)
+      }
+    }, 1500)
   }
 
   const applyExplosiveEffect = (round: IKingFight) => {
-    if (round.by === 'king') {
-      if (explosiveOpponentEffect.current) {
+    const getExplosiveEffectByAttacker =
+      round.attacker === 'champion' ? explosiveOpponentEffect : explosiveKingEffect
+
+    const applyEffect = (ref: RefObject<HTMLDivElement>) => {
+      if (ref.current) {
         setTimeout(() => {
-          if (explosiveOpponentEffect.current) {
-            explosiveOpponentEffect.current.style.visibility = 'visible'
+          if (ref.current) {
+            ref.current.style.visibility = 'visible'
           }
         }, 1500)
 
         setTimeout(() => {
-          if (explosiveOpponentEffect.current) {
-            explosiveOpponentEffect.current.style.visibility = 'hidden'
+          if (ref.current) {
+            ref.current.style.visibility = 'hidden'
           }
         }, TIME_EFFECT_MILLISECONDS)
       }
     }
-    if (round.by === 'opponent') {
-      if (explosiveKingEffect.current) {
-        setTimeout(() => {
-          if (explosiveKingEffect.current) {
-            explosiveKingEffect.current.style.visibility = 'visible'
-          }
-        }, 1500)
 
-        setTimeout(() => {
-          if (explosiveKingEffect.current) {
-            explosiveKingEffect.current.style.visibility = 'hidden'
-          }
-        }, TIME_EFFECT_MILLISECONDS)
-      }
-    }
+    applyEffect(getExplosiveEffectByAttacker)
   }
 
   const startGame = (fightPath: IKingFight[]) => {
@@ -160,17 +133,13 @@ const KingArena = () => {
   }
 
   useEffect(() => {
-    if (game.firstPlayer) {
-      const kingMaxHealthPoints = getCostByFieldName(game.firstPlayer.items, 'price')
-
-      setHealthPointsKing(kingMaxHealthPoints)
-      setMaxHealthPointsKing(kingMaxHealthPoints)
+    if (game?.champion) {
+      setHealthPointsKing(game.champion.value * 1000)
+      setMaxHealthPointsKing(game.champion.value * 1000)
     }
-    if (game.secondPlayer) {
-      const opponentMaxHealthPoints = getCostByFieldName(game.secondPlayer.items, 'price')
-
-      setHealthPointsOpponent(opponentMaxHealthPoints)
-      setMaxHealthPointsOpponent(opponentMaxHealthPoints)
+    if (game?.challenger) {
+      setHealthPointsOpponent(game.challenger.value * 1000)
+      setMaxHealthPointsOpponent(game.challenger.value * 1000)
     }
   }, [game])
 
@@ -189,27 +158,32 @@ const KingArena = () => {
   return (
     <div className='p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col items-start ls:flex-row ls:justify-between ls:items-stretch w-full gap-4 xs:gap-0'>
       <div className='flex'>
-      <div className='relative space-y-2 ls:space-y-0'>
-        <KingArenaPlayer user={game.firstPlayer} isKing />
-        <img
-          ref={explosiveKingEffect}
-          className='absolute ls:bottom-20 ls:right-28 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
-          style={{ visibility: 'hidden' }}
-          src={ExplosionIcon}
-          alt='explosion'
-        />
-        <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
-          <KingHealthPointsBar
-            isKing
-            ref={healthPointsBarKingRef}
-            currentHP={healthPointsKing}
-            maxHP={maxHealthPointsKing}
+        <div className='relative space-y-2 ls:space-y-0'>
+          <KingArenaPlayer player={!game || game.end === -1 ? null : game.champion} left />
+          <img
+            ref={explosiveKingEffect}
+            className='absolute ls:bottom-20 ls:right-28 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
+            style={{ visibility: 'hidden' }}
+            src={ExplosionIcon}
+            alt='explosion'
           />
+          <div className='ls:pt-8 ls:pl-8 ls:pb-7 w-full'>
+            <KingHealthPointsBar
+              isKing
+              ref={healthPointsBarKingRef}
+              currentHP={healthPointsKing}
+              maxHP={maxHealthPointsKing}
+            />
+          </div>
         </div>
-      </div>
-      <div className='relative'>
-      {fight && <div ref={animateKingRef} className='absolute  top-[250px] xs:top-[90px] -scale-x-75 ls:-top-[70%] left-0 ls:-left-20  scale-75 ls:scale-x-75 '/>}
-      </div>
+        <div className='relative'>
+          {fight && (
+            <div
+              ref={animateKingRef}
+              className='absolute  top-[250px] xs:top-[90px] -scale-x-75 ls:-top-[70%] left-0 ls:-left-20  scale-75 ls:scale-x-75 '
+            />
+          )}
+        </div>
       </div>
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
@@ -232,31 +206,35 @@ const KingArena = () => {
 
       <img className='hidden ls:block' src={DashedSpacerIcon} alt='dashed spacer' />
 
-     <div className='flex flex-row-reverse ls:flex-row'>
-     <div className='relative mr-2'>
-      {fight && <div ref={animateOpponentRef}className='ml-4 absolute -top-[420px] xs:-top-[320px] ls:-top-[70%] -right-[360px] ls:-right-20 scale-75 -scale-x-75 ' />}
-
-      </div>
-      <div className='relative space-y-2 ls:space-y-0'>
-        <KingArenaPlayer isKing={false} user={game.secondPlayer} />
-        <img
-          ref={explosiveOpponentEffect}
-          className='absolute ls:bottom-20 ls:left-32 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
-          style={{ visibility: 'hidden' }}
-          src={ExplosionIcon}
-          alt='explosion'
-        />
-        <div className='ls:pt-8 ls:pr-8 w-full'>
-          {game.secondPlayer && (
-            <KingHealthPointsBar
-              isKing={false}
-              ref={healthPointsBarOpponentRef}
-              currentHP={healthPointsOpponent}
-              maxHP={maxHealthPointsOpponent}
+      <div className='flex flex-row-reverse ls:flex-row'>
+        <div className='relative mr-2'>
+          {fight && (
+            <div
+              ref={animateOpponentRef}
+              className='ml-4 absolute -top-[420px] xs:-top-[320px] ls:-top-[70%] -right-[360px] ls:-right-20 scale-75 -scale-x-75 '
             />
           )}
         </div>
-      </div>
+        <div className='relative space-y-2 ls:space-y-0'>
+          <KingArenaPlayer player={!game ? null : game.challenger} />
+          <img
+            ref={explosiveOpponentEffect}
+            className='absolute ls:bottom-20 ls:left-32 xs:bottom-6 xs:left-[-2rem] bottom-24 left-12 z-100'
+            style={{ visibility: 'hidden' }}
+            src={ExplosionIcon}
+            alt='explosion'
+          />
+          <div className='ls:pt-8 ls:pr-8 w-full'>
+            {game.challenger && (
+              <KingHealthPointsBar
+                isKing={false}
+                ref={healthPointsBarOpponentRef}
+                currentHP={healthPointsOpponent}
+                maxHP={maxHealthPointsOpponent}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )

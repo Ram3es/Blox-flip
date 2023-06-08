@@ -1,72 +1,47 @@
-import { useEffect, useState } from 'react'
-
-import { useKing } from '../../store/KingStore'
+import { useCallback, useEffect, useState } from 'react'
+import { useSocketCtx } from '../../store/SocketStore'
 
 import KingArena from './KingArena'
 import KingQueue from './KingQueue'
 import KingSkins from './KingSkins'
 import KingHistoryList from './KingHistoryList'
-
-import { Button } from '../../components/base/Button'
+import VerifyBets from '../../components/common/VerifyBets'
 
 import { users } from '../../mocks/liveFeedUsers'
-import { kingHistoryMock, kingMock } from '../../mocks/kingMock'
-import VerifyBets from '../../components/common/VerifyBets'
-import { IKingHistory } from '../../types/King'
-import { useSocketCtx } from '../../store/SocketStore'
+import {
+  kingFightMock,
+  kingGameMock,
+  kingGameNullableMock,
+  kingHistoryMock
+} from '../../mocks/kingMock'
+
+import { IKingChampion, IKingFight, IKingHistory } from '../../types/King'
+import { Button } from '../../components/base/Button'
+import KingJoinModal from './KingJoinModal'
 
 const King = () => {
+  const [kingGame, setKingGame] = useState<IKingChampion | null>(kingGameMock)
+  const [kingFight, setKingFight] = useState<IKingFight[] | null>(null)
+  console.log(kingGame, 'KING_GAME')
   const [kingHistory, setKingHistory] = useState<IKingHistory[]>([])
 
   const { socket } = useSocketCtx()
-  const { fight, setFight } = useKing()
-
-  const handleStartGame = () => {
-    setFight([
-      {
-        by: 'king',
-        animation: 'spritesheet',
-        damage: 1500
-      },
-      {
-        by: 'opponent',
-        animation: 'spritesheet',
-        damage: 1000
-      },
-      {
-        by: 'king',
-        animation: 'spritesheet',
-        damage: 1500
-      },
-      {
-        by: 'opponent',
-        animation: 'spritesheet',
-        damage: 2999
-      },
-      {
-        by: 'king',
-        animation: 'spritesheet',
-        damage: 1000
-      }
-      // {
-      //   by: 'opponent',
-      //   animation: 'spritesheet',
-      //   damage: 1000
-      // },
-      // {
-      //   by: 'king',
-      //   animation: 'spritesheet',
-      //   damage: 1000
-      // },
-      // {
-      //   by: 'opponent',
-      //   animation: 'spritesheet',
-      //   damage: 1000
-      // }
-    ])
-  }
 
   useEffect(() => {
+    socket.on('champion_load', (data: IKingChampion) => {
+      if (!data) {
+        return
+      }
+      setKingGame(data)
+    })
+
+    socket.on('champion_fight', (data: IKingFight[]) => {
+      if (!data) {
+        return
+      }
+      setKingFight(data)
+    })
+
     socket.on('champion_history', (data: IKingHistory[]) => {
       if (!data) {
         return
@@ -74,11 +49,24 @@ const King = () => {
       setKingHistory(data)
     })
 
+    setKingGame(kingGameMock) // delete after setup server
+
     setKingHistory(kingHistoryMock) // delete after setup server
 
     return () => {
+      socket.off('champion_load')
       socket.off('champion_history')
     }
+  }, [])
+
+  const [isOpenJoinGame, setIsOpenJoinGame] = useState(false)
+
+  const handleOpenModal = useCallback(() => {
+    setIsOpenJoinGame(!isOpenJoinGame)
+  }, [isOpenJoinGame])
+
+  const handleJoinGame = useCallback(() => {
+    setIsOpenJoinGame(false)
   }, [])
 
   return (
@@ -86,13 +74,22 @@ const King = () => {
       <div className='flex justify-end md:mr-36 md:mb-2'>
         <VerifyBets path='/provably-fair#king' />
       </div>
-      <KingArena />
-      <Button disabled={fight !== null} onClick={handleStartGame} color='GreenPrimary'>
+      <KingArena game={kingGame} fight={kingFight} setFight={setKingFight} />
+      <Button
+        disabled={kingFight !== null}
+        onClick={
+          () => setKingFight(kingFightMock) // delete after setup server
+        }
+        color='GreenPrimary'
+      >
         <span className='py-2.5 mx-auto'>Start game</span>
       </Button>
       <KingQueue queue={users.slice(0, 10)} />
-      <KingSkins />
+      <KingSkins game={kingGame} />
       <KingHistoryList games={kingHistory} />
+      {isOpenJoinGame && (
+        <KingJoinModal handleFunction={handleJoinGame} onClose={handleOpenModal} />
+      )}
     </div>
   )
 }

@@ -11,10 +11,10 @@ import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { TabInterface } from './KingSkins'
 
-import type { IKingGamePlayer } from '../../types/King'
+import type { IKingPlayer } from '../../types/King'
 
 interface HeaderProps {
-  user?: IKingGamePlayer
+  player?: IKingPlayer
   isKing?: boolean
   options?: TabInterface[]
   selectedOption?: TabInterface
@@ -22,7 +22,7 @@ interface HeaderProps {
 }
 
 const KingSkinsHeader = ({
-  user,
+  player,
   isKing,
   options,
   selectedOption,
@@ -41,15 +41,17 @@ const KingSkinsHeader = ({
         </p>
         {isKing ? 'Kings items' : 'Opponents items'}
       </div>
-      <CoinsWithDiamond typographyQuantity={user ? getCostByFieldName(user.items, 'price') : null} />
+      <CoinsWithDiamond
+        typographyQuantity={player ? getCostByFieldName(player.players_skins, 'price') : null}
+      />
       <Button disabled variant='YellowOutlined'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
-          {user && (
+          {player && (
             <>
-              {user.items.length} <span>&nbsp;Items</span>
+              {player.players_skins.length} <span>&nbsp;Items</span>
             </>
           )}
-          {!user && '...'}
+          {!player && '...'}
         </span>
       </Button>
       {isKing && options && selectedOption && setSelectedOption && (

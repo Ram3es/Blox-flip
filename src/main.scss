@@ -1038,21 +1038,26 @@ input {
   animation: coinflip 6s steps(236) 1s forwards;
 }
 
-.king-animation.cowboy {
+.king-animation.pistol {
   background-image: url('./assets/img/king/king-sprite-cowboy.png');
 }
-.king-animation.iceknight {
+
+.king-animation.sword {
   background-image: url('./assets/img/king/king-sprite-iceknight.png');
 }
-.king-animation.knight {
+
+.king-animation.flaming_sword {
   background-image: url('./assets/img/king/king-sprite-knight.png');
 }
-.king-animation.blade {
+
+.king-animation.knife {
   background-image: url('./assets/img/king/king-sprite-blade.png');
 }
-.king-animation.cosmic {
+
+.king-animation.automatic_weapon {
   background-image: url('./assets/img/king/king-sprite-cosmic-guard.png');
 }
+
 .king-animation {
   width: 400px;
   height: 400px;
