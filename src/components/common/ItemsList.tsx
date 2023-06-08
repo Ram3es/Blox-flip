@@ -7,7 +7,7 @@ interface ItemsListProps {
 
 const ItemsList = ({ items }: ItemsListProps) => {
   return (
-    <div className='py-2 flex items-center max-w-[280px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+    <div className='py-2 flex items-center max-w-[285px] scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
       {items.map((item) => (
         <div key={item.id} className='shrink-0'>
           <img

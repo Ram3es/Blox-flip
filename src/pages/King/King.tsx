@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { useKing } from '../../store/KingStore'
 
 import KingArena from './KingArena'
@@ -8,10 +10,15 @@ import KingHistoryList from './KingHistoryList'
 import { Button } from '../../components/base/Button'
 
 import { users } from '../../mocks/liveFeedUsers'
-import { kingMock } from '../../mocks/kingMock'
+import { kingHistoryMock, kingMock } from '../../mocks/kingMock'
 import VerifyBets from '../../components/common/VerifyBets'
+import { IKingHistory } from '../../types/King'
+import { useSocketCtx } from '../../store/SocketStore'
 
 const King = () => {
+  const [kingHistory, setKingHistory] = useState<IKingHistory[]>([])
+
+  const { socket } = useSocketCtx()
   const { fight, setFight } = useKing()
 
   const handleStartGame = () => {
@@ -59,6 +66,21 @@ const King = () => {
     ])
   }
 
+  useEffect(() => {
+    socket.on('champion_history', (data: IKingHistory[]) => {
+      if (!data) {
+        return
+      }
+      setKingHistory(data)
+    })
+
+    setKingHistory(kingHistoryMock) // delete after setup server
+
+    return () => {
+      socket.off('champion_history')
+    }
+  }, [])
+
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
       <div className='flex justify-end md:mr-36 md:mb-2'>
@@ -70,7 +92,7 @@ const King = () => {
       </Button>
       <KingQueue queue={users.slice(0, 10)} />
       <KingSkins />
-      <KingHistoryList games={kingMock} />
+      <KingHistoryList games={kingHistory} />
     </div>
   )
 }
