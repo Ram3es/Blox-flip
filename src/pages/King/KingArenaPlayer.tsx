@@ -1,5 +1,8 @@
+import { useCallback, useState } from 'react'
+
 import clsx from 'clsx'
 
+import KingJoinModal from './KingJoinModal'
 import Image from '../../components/base/Image'
 import { UserLevel } from '../../components/user/UserLevel'
 
@@ -17,6 +20,12 @@ interface KingArenaPlayerProps {
 }
 
 const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
+  const [isOpenJoinGame, setIsOpenJoinGame] = useState(false)
+
+  const handleOpenModal = useCallback(() => {
+    setIsOpenJoinGame(!isOpenJoinGame)
+  }, [isOpenJoinGame])
+
   const avatarClasses = clsx('ls:top-[-55px] flex items-center justify-center p-4 rounded-lg', {
     'ls:absolute gradient-background--yellow gradient-border--yellow': left,
     'ls:absolute right-0 gradient-background--blue': !left
@@ -55,7 +64,7 @@ const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
               'opacity-0': left && player
             })}
           >
-            <Button onClick={() => console.log('join')} color='GreenPrimary'>
+            <Button onClick={handleOpenModal} color='GreenPrimary'>
               <span className='px-2.5 h-8 flex items-center justify-center'>
                 {player && !left ? <PlusIcon /> : 'Join game'}
               </span>
@@ -72,6 +81,9 @@ const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
           )}
         </div>
       </div>
+      {isOpenJoinGame && (
+        <KingJoinModal handleFunction={handleOpenModal} onClose={handleOpenModal} />
+      )}
     </div>
   )
 }

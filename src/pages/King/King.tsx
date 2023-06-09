@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSocketCtx } from '../../store/SocketStore'
 
 import KingArena from './KingArena'
@@ -6,7 +6,6 @@ import KingQueue from './KingQueue'
 import KingSkins from './KingSkins'
 import KingHistoryList from './KingHistoryList'
 import VerifyBets from '../../components/common/VerifyBets'
-import KingJoinModal from './KingJoinModal'
 import { Button } from '../../components/base/Button'
 
 import { users } from '../../mocks/liveFeedUsers'
@@ -59,16 +58,6 @@ const King = () => {
     }
   }, [])
 
-  const [isOpenJoinGame, setIsOpenJoinGame] = useState(false)
-
-  const handleOpenModal = useCallback(() => {
-    setIsOpenJoinGame(!isOpenJoinGame)
-  }, [isOpenJoinGame])
-
-  const handleJoinGame = useCallback(() => {
-    setIsOpenJoinGame(false)
-  }, [])
-
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
       <div className='flex justify-end md:mr-36 md:mb-2'>
@@ -76,41 +65,38 @@ const King = () => {
       </div>
       <KingArena game={kingGame} fight={kingFight} setFight={setKingFight} />
       <div className='items-center justify-center flex gap-2'>
-      <Button
-        disabled={kingFight !== null}
-        onClick={() => setKingGame(kingGameNullableMock)}
-        color='GreenPrimary'
-      >
-        <span className='px-2.5 py-2.5 mx-auto'>Set nullable game</span>
-      </Button>
-      <Button
-        disabled={kingFight !== null}
-        onClick={() => setKingGame(kingGameMockNormal)}
-        color='GreenPrimary'
-      >
-        <span className='px-2.5 py-2.5 mx-auto'>Set normal game</span>
-      </Button>
-      <Button
-        disabled={kingFight !== null}
-        onClick={() => setKingGame(kingGameMockOneKing)}
-        color='GreenPrimary'
-      >
-        <span className='px-2.5 py-2.5 mx-auto'>Set game with only one king</span>
-      </Button>
-      <Button
-        disabled={!kingGame?.challenger}
-        onClick={() => setKingFight(kingFightMock)}
-        color='GreenPrimary'
-      >
-        <span className='px-2.5 py-2.5 mx-auto'>Set fight</span>
-      </Button>
+        <Button
+          disabled={kingFight !== null}
+          onClick={() => setKingGame(kingGameNullableMock)}
+          color='GreenPrimary'
+        >
+          <span className='px-2.5 py-2.5 mx-auto'>Set nullable game</span>
+        </Button>
+        <Button
+          disabled={kingFight !== null}
+          onClick={() => setKingGame(kingGameMockNormal)}
+          color='GreenPrimary'
+        >
+          <span className='px-2.5 py-2.5 mx-auto'>Set normal game</span>
+        </Button>
+        <Button
+          disabled={kingFight !== null}
+          onClick={() => setKingGame(kingGameMockOneKing)}
+          color='GreenPrimary'
+        >
+          <span className='px-2.5 py-2.5 mx-auto'>Set game with only one king</span>
+        </Button>
+        <Button
+          disabled={!kingGame?.challenger}
+          onClick={() => setKingFight(kingFightMock)}
+          color='GreenPrimary'
+        >
+          <span className='px-2.5 py-2.5 mx-auto'>Set fight</span>
+        </Button>
       </div>
       <KingQueue queue={users.slice(0, 10)} />
       <KingSkins game={kingGame} />
       <KingHistoryList games={kingHistory} />
-      {isOpenJoinGame && (
-        <KingJoinModal handleFunction={handleJoinGame} onClose={handleOpenModal} />
-      )}
     </div>
   )
 }

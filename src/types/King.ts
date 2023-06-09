@@ -27,6 +27,16 @@ export interface IKingHistory {
   winner: IKingPlayer
 }
 
+// export enum KingModeEnum {
+//   REGULAR = 'REGULAR',
+//   SAFE_MODE = 'SAFE_MODE'
+// }
+
+// export interface IKingMode {
+//   0: keyof typeof KingModeEnum.REGULAR
+//   1: keyof typeof KingModeEnum.SAFE_MODE
+// }
+
 export enum KingWeaponEnum {
   SWORD = 'SWORD',
   KNIFE = 'KNIFE',
