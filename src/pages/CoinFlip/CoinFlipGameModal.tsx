@@ -2,26 +2,28 @@ import { useEffect, useRef, useState } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 import { useSocketCtx } from '../../store/SocketStore'
 
-import clsx from 'clsx'
-
 import ModalWrapper from '../../components/containers/ModalWrapper'
 import CoinFlipGamePlayer from './CoinFlipGamePlayer'
 import AvatarWithUsername from '../../components/common/AvatarWithUsername'
 
 import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import VersusBattleIcon from '../../assets/img/versus_battle.png'
-import SkinBigIcon from '../../assets/img/coinflip/SkinBigIcon.png'
 
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { ICoinFlip } from '../../types/CoinFlip'
+import { loadImage } from '../../helpers/loadImages'
+
+import blueSide from '../../assets/img/coinflip-blue-winin-sprite.png'
+import whiteSide from '../../assets/img/coinflip-white-win-sprite.png'
 
 const CoinFlipGameModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, currentGame } = useCoinFlip()
   const { socket } = useSocketCtx()
 
-  const [timeToStartEffect, setTimeToStartEffect] = useState(7)
+  const [timeToStartEffect, setTimeToStartEffect] = useState<number>(7)
 
-  const [animation, setAnimation] = useState(false)
+  const [animation, setAnimation] = useState<boolean>(false)
+  const [isLoadedSprites, setIsloadedSprites] = useState<boolean>(false)
 
   const creatorHeadRef = useRef<HTMLDivElement>(null)
   const opponentHeadRef = useRef<HTMLDivElement>(null)
@@ -29,7 +31,7 @@ const CoinFlipGameModal = () => {
   const opponentBodyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (currentGame?.winner) {
+    if (currentGame?.winner && isLoadedSprites) {
       setAnimation(true)
 
       const countdown = setInterval(() => {
@@ -65,7 +67,7 @@ const CoinFlipGameModal = () => {
         clearInterval(countdown)
       }
     }
-  }, [currentGame])
+  }, [currentGame, isLoadedSprites])
 
   useEffect(() => {
     socket.emit('coinflip_update', {}, (response: { data: ICoinFlip }) => {
@@ -92,6 +94,10 @@ const CoinFlipGameModal = () => {
     setCurrentGame(null)
   }
 
+  useEffect(() => {
+    loadImage([blueSide, whiteSide], () => setIsloadedSprites(true))
+  }, [])
+
   return (
     <ModalWrapper
       closeModal={handleCloseGameModal}
@@ -116,30 +122,11 @@ const CoinFlipGameModal = () => {
             />
           </div>
           <div className='p-3 flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center'>
-            {animation && (
-              <div className='relative'>
-                <div
-                  className={`${
-                    currentGame?.winner?.coin === 0 ? 'blue' : 'white'
-                  } coinflip-animation absolute -left-[250px] -top-[250px] z-1`}
-                />
-              </div>
-            )}
-            {!animation && (
-              <div
-                className={clsx('absolute z-1', {
-                  'opacity-60 grayscale': currentGame?.state === 1
-                })}
-              >
-                <img
-                  style={{
-                    filter: 'drop-shadow(0px 0px 25px rgba(124, 80, 233, 0.47))'
-                  }}
-                  src={SkinBigIcon}
-                  alt='skin icon'
-                />
-              </div>
-            )}
+            <div
+              className={`
+                 ${currentGame?.winner?.coin === 0 ? 'blue' : 'white'} 
+                 ${animation ? 'play' : ''} coinflip-animation absolute z-1`}
+            />
           </div>
           <div className='z-40 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center'>
             <img className='rotate-[-48deg]' src={VersusBattleIcon} alt='versus' />
