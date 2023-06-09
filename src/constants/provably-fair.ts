@@ -4,5 +4,5 @@ export const games = [
   { id: 'jackpot', title: 'Jackpot' },
   { id: 'battle', title: 'Battle Cases' },
   { id: 'cases', title: 'Cases' },
-  { id: 'king', title: 'King' }
+  { id: 'champion', title: 'Champion' }
 ]

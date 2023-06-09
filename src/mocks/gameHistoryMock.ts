@@ -56,7 +56,7 @@ export const mockHistory: IHistory[] = [
     isError: false
   },
   {
-    game: 'king',
+    game: 'champion',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 15.29,
     wager: 5500,
@@ -65,7 +65,7 @@ export const mockHistory: IHistory[] = [
     isError: true
   },
   {
-    game: 'king',
+    game: 'champion',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 15.29,
     wager: 5500,
@@ -74,7 +74,7 @@ export const mockHistory: IHistory[] = [
     isError: false
   },
   {
-    game: 'king',
+    game: 'champion',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 15.29,
     wager: 5500,
@@ -83,7 +83,7 @@ export const mockHistory: IHistory[] = [
     isError: true
   },
   {
-    game: 'king',
+    game: 'champion',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 15.29,
     wager: 5500,
@@ -92,7 +92,7 @@ export const mockHistory: IHistory[] = [
     isError: false
   },
   {
-    game: 'king',
+    game: 'champion',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 28.26,
     wager: 14214,
@@ -101,7 +101,7 @@ export const mockHistory: IHistory[] = [
     isError: false
   },
   {
-    game: 'king',
+    game: 'champion',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 100,
     wager: 21,

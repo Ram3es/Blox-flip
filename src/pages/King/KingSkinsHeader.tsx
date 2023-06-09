@@ -41,7 +41,7 @@ const KingSkinsHeader = ({
         <p className='hidden ls:block'>
           <ListIcon />
         </p>
-        {isKing ? 'Kings items' : 'Opponents items'}
+        {isKing ? 'Champion items' : 'Challenger items'}
       </div>
       <CoinsWithDiamond
         typographyQuantity={skins.length > 0 ? getCostByFieldName(skins, 'price') : null}

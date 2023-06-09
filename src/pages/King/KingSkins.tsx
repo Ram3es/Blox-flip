@@ -14,7 +14,7 @@ import { kingsVaultMock } from '../../mocks/kingMock'
 export interface TabInterface {
   variant: string
 }
-const KING_TABS: TabInterface[] = [{ variant: 'Kings items' }, { variant: 'Kings vault' }]
+const KING_TABS: TabInterface[] = [{ variant: 'Champion items' }, { variant: 'Champion vault' }]
 
 interface KingSkinsInterface {
   game: IKingChampion | null
@@ -29,7 +29,7 @@ const KingSkins = ({ game }: KingSkinsInterface) => {
   const [kingVaults, setKingVaults] = useState<IItemCard[]>([])
 
   useEffect(() => {
-    kingItemsTab.variant === 'Kings items'
+    kingItemsTab.variant === 'Champion items'
       ? setItemsList(game?.champion?.players_skins ?? [])
       : setItemsList(kingVaults ?? [])
   }, [kingItemsTab, game])

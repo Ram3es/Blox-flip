@@ -9,7 +9,7 @@ const games = [
   { name: 'caseBattles', path: '/battles-lobby' },
   { name: 'cases', path: '/unboxing' },
   { name: 'crash', path: '/crash' },
-  { name: 'king', path: '/king' },
+  { name: 'champion', path: '/champion' },
   { name: 'mines', path: '/mines' },
   { name: 'wheel', path: '/wheel' }
 ]

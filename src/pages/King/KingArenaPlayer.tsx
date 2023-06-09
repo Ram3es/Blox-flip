@@ -70,7 +70,7 @@ const KingArenaPlayer = ({ player, left }: KingArenaPlayerProps) => {
               </span>
             </Button>
           </div>
-          <p className={headingClasses}>{left && player ? 'Current King' : 'Challenger'}</p>
+          <p className={headingClasses}>{left && player ? 'Current Champion' : 'Challenger'}</p>
         </div>
         <div className='flex items-center'>
           <span className='font-bold text-base'>{player ? player.name : 'Not joined...'}</span>
