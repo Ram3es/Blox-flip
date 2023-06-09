@@ -129,3 +129,5 @@ export const kingFightMock: IKingFight[] = [
     attack: 10
   }
 ]
+
+export const kingsVaultMock = cards.filter((item) => item.price > 2000).slice(0, 10)
