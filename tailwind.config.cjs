@@ -57,6 +57,7 @@ module.exports = {
         'gray-accent': 'rgba(135, 141, 169)',
         'gray-primary': 'rgba(147, 155, 185)',
         'gray-secondary': 'rgba(116, 123, 151)',
+        'gray-third': 'rgba(147, 155, 185)',
         'gray-secondary-light': 'rgba(118, 130, 177)',
         'gray-secondary-darken': 'rgba(89, 97, 129)',
         'lightblue-darken': 'rgba(45, 56, 106)',
@@ -102,7 +103,8 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(96.03% 96.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-radial-80': 'radial-gradient(80.03% 80.03% at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-radial-70': 'radial-gradient(83.5% 83.5% at 70.83% 59.11%, var(--tw-gradient-stops))',
+        'gradient-radial-70':
+          'radial-gradient(83.5% 83.5% at 70.83% 59.11%, var(--tw-gradient-stops))',
         'gradient-radial-60': 'radial-gradient(60.03% 60.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-lvl': 'radial-gradient(83.82% 83.82% at 50% 91.09%, var(--tw-gradient-stops))'
       },
@@ -174,8 +176,8 @@ module.exports = {
           }
         },
         reset: {
-          '0%,': { rotate: '0deg'},
-          '100%': { rotate: '180deg'},
+          '0%,': { rotate: '0deg' },
+          '100%': { rotate: '180deg' }
         }
       }
     }
