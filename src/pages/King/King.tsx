@@ -61,7 +61,7 @@ const King = () => {
   return (
     <div className='ls:mt-20 flex flex-col justify-center gap-4 mx-4'>
       <div className='flex justify-end md:mr-36 md:mb-2'>
-        <VerifyBets path='/provably-fair#king' />
+        <VerifyBets path='/provably-fair#champion' />
       </div>
       <KingArena game={kingGame} fight={kingFight} setFight={setKingFight} />
       <div className='items-center justify-center flex gap-2'>
