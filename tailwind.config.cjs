@@ -44,6 +44,7 @@ module.exports = {
         'blue-accent-six': 'rgba(45, 56, 106)',
         'blue-highlight': 'rgba(54, 62, 96)',
         'blue-highlight-secondary': 'rgba(47, 55, 95)',
+        'blue-highlight-third': 'rgba(76, 87, 131)',
         // 'blue-highlight-secondary': 'rgba(12, 15, 31)',
         'blue-light': 'rgba(72, 81, 120)',
         'blue-ocean': 'rgba(82, 95, 151)',
@@ -52,9 +53,11 @@ module.exports = {
         'blue-light-primary': 'rgba(98, 111, 168)',
         'blue-light-secondary': 'rgba(108, 123, 188)',
         'blue-golf': 'rgba(71, 100, 214)',
+        'blue-text-secondary': 'rgba(67, 102, 193)',
         'gray-accent': 'rgba(135, 141, 169)',
         'gray-primary': 'rgba(147, 155, 185)',
         'gray-secondary': 'rgba(116, 123, 151)',
+        'gray-third': 'rgba(147, 155, 185)',
         'gray-secondary-light': 'rgba(118, 130, 177)',
         'gray-secondary-darken': 'rgba(89, 97, 129)',
         'lightblue-darken': 'rgba(45, 56, 106)',
@@ -100,7 +103,8 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(96.03% 96.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-radial-80': 'radial-gradient(80.03% 80.03% at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-radial-70': 'radial-gradient(83.5% 83.5% at 70.83% 59.11%, var(--tw-gradient-stops))',
+        'gradient-radial-70':
+          'radial-gradient(83.5% 83.5% at 70.83% 59.11%, var(--tw-gradient-stops))',
         'gradient-radial-60': 'radial-gradient(60.03% 60.03% at 50% 50%, var(--tw-gradient-stops))',
         'gradient-lvl': 'radial-gradient(83.82% 83.82% at 50% 91.09%, var(--tw-gradient-stops))'
       },
@@ -172,8 +176,8 @@ module.exports = {
           }
         },
         reset: {
-          '0%,': { rotate: '0deg'},
-          '100%': { rotate: '180deg'},
+          '0%,': { rotate: '0deg' },
+          '100%': { rotate: '180deg' }
         }
       }
     }

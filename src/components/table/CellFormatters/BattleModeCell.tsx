@@ -17,7 +17,7 @@ const BattleModeCell = ({
 }: {
   mode: IModeGame
   status: string
-  users: IBattleUser[]
+  users?: IBattleUser[]
 }) => {
   const getCell = (value: IModeGame) => {
     const isFinished = Boolean(status === GameStatus.Ended)
@@ -29,7 +29,7 @@ const BattleModeCell = ({
               <GreenLineLeftBattleLeft className={isFinished ? 'grayscale ' : ''} />
             </div>
             <div className=' w-12 h-12 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue'>
-              <Image image={users[0]?.avatar || question} />
+              <Image image={users?.[0]?.avatar ?? question} />
             </div>
             <div
               className={`${
@@ -43,7 +43,7 @@ const BattleModeCell = ({
                   )}
             </div>
             <div className='w-12 h-12 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue'>
-              <Image image={users[1]?.avatar || question} />
+              <Image image={users?.[1]?.avatar ?? question} />
             </div>
             <div className='w-6 shrink-0 ml-4'>
               <GreenLineBattleRight className={isFinished ? 'grayscale ' : ''} />
@@ -56,7 +56,7 @@ const BattleModeCell = ({
             {Array.from(Array(value.requiredPlayers)).map((_, i) => (
               <React.Fragment key={i}>
                 <div className='w-10 h-10 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue'>
-                  <Image image={users[i]?.avatar || question} />
+                  <Image image={users?.[i]?.avatar ?? question} />
                 </div>
                 {i === value.requiredPlayers - 1
                   ? null
@@ -92,7 +92,7 @@ const BattleModeCell = ({
                 key={i}
                 className='w-8 h-8 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue mx-0.5'
               >
-                <Image image={users[i]?.avatar || question} />
+                <Image image={users?.[i]?.avatar ?? question} />
               </div>
             ))}
             <div
@@ -113,7 +113,7 @@ const BattleModeCell = ({
             {Array.from(Array(value.requiredPlayers)).map((_, i) => (
               <React.Fragment key={i}>
                 <div className='w-8 h-8 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue'>
-                  <Image image={users[i]?.avatar || question} />
+                  <Image image={users?.[i]?.avatar ?? question} />
                 </div>
                 {i === value.requiredPlayers - 1
                   ? null
@@ -135,11 +135,11 @@ const BattleModeCell = ({
           <>
             <div className=' flex flex-col items-end '>
               <div className='mb-3 mr-3 w-8 h-8 shrink-0 border border-[#ffb84d] rounded-full overflow-hidden radial--blue'>
-                <Image image={users[0]?.avatar || question} />
+                <Image image={users?.[0]?.avatar ?? question} />
               </div>
               <YellowLine className={isFinished ? 'grayscale ' : ''} />
               <div className=' mt-3 mr-3 w-8 h-8 shrink-0 border border-[#ffb84d] rounded-full overflow-hidden radial--blue'>
-                <Image image={users[1]?.avatar || question} />
+                <Image image={users?.[1]?.avatar ?? question} />
               </div>
             </div>
             <div
@@ -153,11 +153,11 @@ const BattleModeCell = ({
             </div>
             <div className=' flex flex-col items-start '>
               <div className='mb-3 ml-3 w-8 h-8 shrink-0 border border-[#6389ff] rounded-full overflow-hidden radial--blue'>
-                <Image image={users[2]?.avatar || question} />
+                <Image image={users?.[2]?.avatar ?? question} />
               </div>
               <BlueLine className={isFinished ? 'grayscale ' : ''} />
               <div className='mt-3 ml-3 w-8 h-8 shrink-0 border border-[#6389ff] rounded-full overflow-hidden radial--blue'>
-                <Image image={users[3]?.avatar || question} />
+                <Image image={users?.[3]?.avatar ?? question} />
               </div>
             </div>
           </>

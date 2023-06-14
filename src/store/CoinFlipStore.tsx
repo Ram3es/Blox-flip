@@ -1,25 +1,19 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
-import { Coin } from '../types/CoinFlip'
+import { ICoinFlip } from '../types/CoinFlip'
 
 interface PlinkoProviderProps {
   children: ReactNode
 }
 
 export interface ICoinFlipContext {
-  betAmount: number
-  setBetAmount: Dispatch<SetStateAction<number>>
-  selectedCoin: Coin | null
-  setSelectedCoin: Dispatch<SetStateAction<Coin | null>>
-  isOpenCreateGame: boolean
-  setIsOpenCreateGame: Dispatch<SetStateAction<boolean>>
-  isOpenJoinGame: boolean
-  setIsOpenJoinGame: Dispatch<SetStateAction<boolean>>
+  currentGame: ICoinFlip | null
+  setCurrentGame: Dispatch<SetStateAction<ICoinFlip | null>>
+  isOpenLobbyModal: boolean
+  setIsOpenLobbyModal: Dispatch<SetStateAction<boolean>>
   isOpenBattleGame: boolean
   setIsOpenBattleGame: Dispatch<SetStateAction<boolean>>
-  isOpenWatchedGame: boolean
-  setIsOpenWatchedGame: Dispatch<SetStateAction<boolean>>
-  isOpenCallBot: boolean
-  setIsOpenCallBot: Dispatch<SetStateAction<boolean>>
+  isOpenLoginModal: boolean
+  setIsOpenLoginModal: Dispatch<SetStateAction<boolean>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -30,32 +24,23 @@ export const useCoinFlip = () => {
 }
 
 export const CoinFlipProvider = ({ children }: PlinkoProviderProps) => {
-  const [betAmount, setBetAmount] = useState(200)
-  const [selectedCoin, setSelectedCoin] = useState<ICoinFlipContext['selectedCoin']>(null)
+  const [currentGame, setCurrentGame] = useState<ICoinFlip | null>(null)
 
-  const [isOpenCreateGame, setIsOpenCreateGame] = useState(false)
-  const [isOpenJoinGame, setIsOpenJoinGame] = useState(false)
+  const [isOpenLobbyModal, setIsOpenLobbyModal] = useState(false)
   const [isOpenBattleGame, setIsOpenBattleGame] = useState(false)
-  const [isOpenWatchedGame, setIsOpenWatchedGame] = useState(false)
-  const [isOpenCallBot, setIsOpenCallBot] = useState(false)
+  const [isOpenLoginModal, setIsOpenLoginModal] = useState(false)
 
   return (
     <CoinFlipContext.Provider
       value={{
-        betAmount,
-        setBetAmount,
-        selectedCoin,
-        setSelectedCoin,
-        isOpenCreateGame,
-        setIsOpenCreateGame,
-        isOpenJoinGame,
-        setIsOpenJoinGame,
+        currentGame,
+        setCurrentGame,
+        isOpenLobbyModal,
+        setIsOpenLobbyModal,
         isOpenBattleGame,
         setIsOpenBattleGame,
-        isOpenWatchedGame,
-        setIsOpenWatchedGame,
-        isOpenCallBot,
-        setIsOpenCallBot
+        isOpenLoginModal,
+        setIsOpenLoginModal
       }}
     >
       {children}

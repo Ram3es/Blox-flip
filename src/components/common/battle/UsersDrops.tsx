@@ -5,10 +5,10 @@ import DoubleRombIconSolid from '../../icons/DoubleRombIconSolid'
 import ItemCard from '../Cards/ItemCard'
 
 const UsersDrops = ({ cards, amountGamePlates }: { cards?: IItemCard[], amountGamePlates: number }) => {
-  const resposiveDropCards = clsx('mb-2 px-1 w-1/2 point-hidden group/item', {
+  const resposiveDropCards = clsx('mb-2 px-1 w-1/2 point-hidden group/item is-block', {
     'sm:w-1/2 md:w-1/3 lg:w-1/4': amountGamePlates === 2,
     'sm:w-full md:w-1/2 lg:w-1/3': amountGamePlates === 3,
-    'sm:w-1/2 md:w-full lg:w-1/2': amountGamePlates === 4
+    'sm:w-1/2 md:w-full ls:w-1/2 ': amountGamePlates === 4
 
   })
   return (cards?.length

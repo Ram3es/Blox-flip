@@ -11,10 +11,11 @@ import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { TabInterface } from './KingSkins'
 
-import type { IKingGamePlayer } from '../../types/King'
+import { IItemCard } from '../../types/ItemCard'
 
 interface HeaderProps {
-  user?: IKingGamePlayer
+  skins: IItemCard[]
+  gameRound?: number
   isKing?: boolean
   options?: TabInterface[]
   selectedOption?: TabInterface
@@ -22,7 +23,8 @@ interface HeaderProps {
 }
 
 const KingSkinsHeader = ({
-  user,
+  skins,
+  gameRound,
   isKing,
   options,
   selectedOption,
@@ -39,24 +41,26 @@ const KingSkinsHeader = ({
         <p className='hidden ls:block'>
           <ListIcon />
         </p>
-        {isKing ? 'Kings items' : 'Opponents items'}
+        {isKing ? 'Champion items' : 'Challenger items'}
       </div>
-      <CoinsWithDiamond typographyQuantity={user ? getCostByFieldName(user.items, 'price') : null} />
+      <CoinsWithDiamond
+        typographyQuantity={skins.length > 0 ? getCostByFieldName(skins, 'price') : null}
+      />
       <Button disabled variant='YellowOutlined'>
         <span className='text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-3 md:py-1.5 flex items-center justify-center'>
-          {user && (
+          {skins.length > 0 && (
             <>
-              {user.items.length} <span>&nbsp;Items</span>
+              {skins.length} <span>&nbsp;Items</span>
             </>
           )}
-          {!user && '...'}
+          {skins.length <= 0 && '...'}
         </span>
       </Button>
       {isKing && options && selectedOption && setSelectedOption && (
         <ButtonsToggle
           options={options}
           currentSelect={selectedOption}
-          peakFunction={setSelectedOption}
+          peakFunction={!gameRound || gameRound <= 1 ? () => 0 : setSelectedOption}
         />
       )}
     </div>

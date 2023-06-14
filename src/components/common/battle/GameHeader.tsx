@@ -66,7 +66,7 @@ const GameHeader: FC<IGameHeaderProps> = ({
           <CoinsWithDiamond
             containerColor='GreenDarken'
             typographyFontSize='Size16'
-            typographyQuantity={currentBoxPrice}
+            typographyQuantity={totalPrice}
           />
         </div>
       </div>

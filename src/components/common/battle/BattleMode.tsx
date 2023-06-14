@@ -7,16 +7,15 @@ import DaggersGreenGradient from '../../icons/DaggersGreenGradient'
 import FriendlyBlue from '../../icons/FriendlyBlue'
 import FriendlyGreen from '../../icons/FriendlyGreen'
 import FriendlyOrange from '../../icons/FriendlyOrange'
-import BackdropEffects from './BackdropEffects'
-import PlayerStatusGame from './PlayerStatusGame'
-import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
-import SpinItems from './SpinItems'
-import UserBar from './UserBar'
-import UsersDrops from './UsersDrops'
-
 import { IMAGES } from '../../../constants/images'
 import { IBattleUser, IModeGame } from '../../../mocks/battle'
 import type { IItemCard, IUnboxCard } from '../../../types/ItemCard'
+import BackdropEffects from './BackdropEffects'
+import PlayerStatusGame from './PlayerStatusGame'
+import UserBar from './UserBar'
+import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
+import SpinItems from './SpinItems'
+import UsersDrops from './UsersDrops'
 
 interface IBattleModeProps {
   status: string
@@ -26,6 +25,9 @@ interface IBattleModeProps {
   casesBox?: IUnboxCard[]
   updateRewards: Function
   updateRound: Function
+  setFinishGame: Function
+  isFinishedGame: boolean
+
 }
 
 export interface IWiningPlayerCard {
@@ -59,7 +61,9 @@ const BattleMode: FC<IBattleModeProps> = ({
   onJoinUser,
   casesBox,
   updateRewards,
-  updateRound
+  updateRound,
+  setFinishGame,
+  isFinishedGame
 }) => {
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
   const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>([])
@@ -67,7 +71,6 @@ const BattleMode: FC<IBattleModeProps> = ({
   const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
   const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
   const [isSpinEnd, setIsSpinEnd] = useState(false)
-  const [isEndGame, setShowEnd] = useState(false)
 
   const playersInGame = Array.from(Array(mode.requiredPlayers))
 
@@ -98,7 +101,7 @@ const BattleMode: FC<IBattleModeProps> = ({
     setWinningCard((state) => ({ ...state, [playerId]: card }))
   }
 
-  const isWinners = (playerId: string) => {
+  const isWinners = (playerId: string): boolean => {
     if (currentRoundWinners?.length) {
       return currentRoundWinners.map((items) => items[0])?.includes(playerId)
     }
@@ -186,7 +189,7 @@ const BattleMode: FC<IBattleModeProps> = ({
   }
 
   useEffect(() => {
-    if (isEndGame) {
+    if (isFinishedGame) {
       if (mode.variant === '2v2') {
         setGameWinnerPlayer(players.filter(player => getTeamWinnersId().includes(player.id)))
       }
@@ -203,7 +206,13 @@ const BattleMode: FC<IBattleModeProps> = ({
         setGameWinnerPlayer(winnersGame)
       }
     }
-  }, [isEndGame])
+  }, [isFinishedGame])
+
+  useEffect(() => {
+    if (status === 'ended' && isFinishedGame) {
+      setFinishGame()
+    }
+  }, [status, isFinishedGame])
 
   return (
     <div className='flex -mx-2'>
@@ -221,7 +230,7 @@ const BattleMode: FC<IBattleModeProps> = ({
             amountPlayers={mode.requiredPlayers}
             onJoinGame={() => handleJoinUser(i)}
             isPlayerGameWinners={isWinners(players[i]?.id)}
-            isEndGame={isEndGame}
+            isEndGame={isFinishedGame}
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
@@ -230,7 +239,7 @@ const BattleMode: FC<IBattleModeProps> = ({
                 gameWinnerPlayer?.find((player) => player?.id === players[i]?.id),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
                 (!isWinners(players[i]?.id) && isSpinEnd) ||
-                (!isWinners(players[i]?.id) && isEndGame)
+                (!isWinners(players[i]?.id) && isFinishedGame)
             })}
           >
             {i !== playersInGame.length - 1 && (
@@ -254,7 +263,7 @@ const BattleMode: FC<IBattleModeProps> = ({
                 statusGame={status}
                 player={players[i]}
                 winningCard={allWinningCards[players[i]?.id]?.image}
-                isEndGame={isEndGame}
+                isEndGame={isFinishedGame}
               />
               <RoundWinBorderBottomEffect
                 isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
@@ -263,31 +272,28 @@ const BattleMode: FC<IBattleModeProps> = ({
             </div>
             {status === 'created' && (
               <div className='z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2'>
-                {players[i] && (
-                  <>
-                    <DaggersGreenGradient />
-                    <span className='text-base font-bold'>Ready</span>
-                  </>
-                )}
-                {players[i] && (
-                  <>
-                    <Loader height='40px' width='40px' color='rgba(147, 155, 185)' />
-                    <span className='text-base font-bold text-gray-primary'>Waiting</span>
-                  </>
-                )}
+                {players[i]
+                  ? <>
+                     <DaggersGreenGradient />
+                      <span className='text-base font-bold'>Ready</span>
+                    </>
+                  : <>
+                      <Loader height='40px' width='40px' color='rgba(147, 155, 185)' />
+                      <span className='text-base font-bold text-gray-primary'>Waiting</span>
+                    </>}
               </div>
             )}
-            {status !== 'created' && !isEndGame && (
+            {status !== 'created' && !isFinishedGame && (
               <SpinItems
                 status={status}
                 playerId={players[i]?.id}
                 updateRewards={updateRewards}
                 updateRound={updateRound}
                 addWinningCard={addWinningCard}
-                setShowEnd={setShowEnd}
+                setShowEnd={setFinishGame}
               />
             )}
-            {status === 'ended' && isEndGame && (
+            {status === 'ended' && isFinishedGame && (
               <PlayerStatusGame
                 isPlayerGameWinner={isWinners(players[i]?.id)}
                 wonDiamonds={players[i]?.wonDiamonds}

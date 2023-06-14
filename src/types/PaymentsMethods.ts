@@ -5,8 +5,14 @@ export interface IPaymentMethods {
 }
 
 export interface IMethodLabel {
+  type?: string
   path: string
   title: string
   image: string
   smallSize?: { width: string, height: string }
+}
+
+export interface ICryptoData {
+  address: string
+  rate: number
 }

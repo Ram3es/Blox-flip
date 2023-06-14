@@ -4,9 +4,10 @@ import VerifyBets from '../VerifyBets'
 interface BetActionsContainerInterface {
   isBlocked?: boolean
   children?: ReactNode
+  path?: string
 }
 
-const BetActionsContainer = ({ children, isBlocked = false }: BetActionsContainerInterface) => {
+const BetActionsContainer = ({ children, path, isBlocked = false }: BetActionsContainerInterface) => {
   return (
     <div
       className={`${
@@ -14,7 +15,9 @@ const BetActionsContainer = ({ children, isBlocked = false }: BetActionsContaine
       } bg-blue-accent rounded-lg py-5 flex flex-col justify-between space-y-5 xxs:w-full 2xl:w-[298px]`}
     >
       <div className='mx-4'>{children}</div>
-      <VerifyBets wrapClasses='flex items-end justify-center text-blue-golf pb-4' />
+      <VerifyBets
+        path={path}
+        wrapClasses='flex items-end justify-center text-blue-golf pb-4' />
     </div>
   )
 }

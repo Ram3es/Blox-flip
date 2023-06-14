@@ -1,56 +1,80 @@
-import { possibleBets } from '../types/Wheel'
+import { IIWheelBet, possibleBets } from '../types/Wheel'
 
-export interface IWheelBet {
-  avatar: string
-  bet: number
-  username: string
-}
+// export interface IWheelBet {
+//   avatar: string
+//   bet: number
+//   username: string
+// }
 
-export type WheelBetRwcord = Record<possibleBets, IWheelBet[]>
+export type WheelBetRecord = Record<possibleBets, IIWheelBet[]>
 
-export const wheelBets: WheelBetRwcord = {
+export const wheelBetsMock: WheelBetRecord = {
   [possibleBets.GREY]: [
     {
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-      bet: 1000,
-      username: 'Carmela_Botsford1'
+      user: {
+        id: '21',
+        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 13
+      },
+      wager: 1000,
+      color: possibleBets.GREY
     }
   ],
   [possibleBets.YELLOW]: [
     {
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-      bet: 4000,
-      username: 'Carmela_Botsford4'
+      user: {
+        id: '11',
+        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 17
+      },
+      wager: 1000,
+      color: possibleBets.YELLOW
     }
   ],
   [possibleBets.BLUE]: [
     {
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-      bet: 2000,
-      username: 'Carmela_Botsford2'
+      user: {
+        id: '116',
+        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 18
+      },
+      wager: 5000,
+      color: possibleBets.BLUE
     },
     {
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-      bet: 500,
-      username: 'Carmela'
+      user: {
+        id: '141',
+        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 37
+      },
+      wager: 1000,
+      color: possibleBets.BLUE
     }
   ],
   [possibleBets.RED]: [
     {
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-      bet: 3000,
-      username: 'Carmela_Botsford3'
+      user: {
+        id: '116q',
+        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 18
+      },
+      wager: 4000,
+      color: possibleBets.RED
     },
     {
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
-      bet: 4000,
-      username: 'Carmela_Botsford4'
+      user: {
+        id: '14e1',
+        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
+        name: 'Patron',
+        level: 37
+      },
+      wager: 3000,
+      color: possibleBets.RED
     }
   ]
 }

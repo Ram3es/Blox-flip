@@ -1,17 +1,34 @@
 import { IItemCard } from './ItemCard'
-import { GameStatus } from './enums'
 
-export type Coin = 1 | 0
+export type ICoin = 0 | 1
 
-export interface CoinFlipPlayer {
-  username: string
-  coin: Coin
-  items: IItemCard[]
+export type ICoinFlipStatus = 1 | 2 | 3 | 4
+
+export interface ICoinFlipPlayer {
+  id: string
+  name: string
+  avatar: string
+  level: number
+  value: number
+  chance: number
+  skins: IItemCard[]
+  coin: ICoin
 }
 
-export interface CoinFlipGame {
-  firstPlayer: CoinFlipPlayer
-  secondPlayer?: CoinFlipPlayer
-  status: keyof typeof GameStatus
-  winCoin?: Coin
+// state statuses
+// 1 - lobby is open
+// 2 - joining player
+// 3 - locked and sending
+// 4 - ended and go to bottom history
+
+export interface ICoinFlip {
+  state: ICoinFlipStatus
+  id: string
+  seed: string
+  creator: ICoinFlipPlayer
+  joining?: ICoinFlipPlayer
+  timer?: number
+  winner?: Omit<ICoinFlipPlayer, 'chance' | 'skins'>
+  min: number
+  max: number
 }

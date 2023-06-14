@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useLocation, useOutletContext } from 'react-router-dom'
 
 import ItemCard from '../../components/common/Cards/ItemCard'
 import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
@@ -8,21 +8,35 @@ import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { searchData } from '../../helpers/searchData'
 import { sortData } from '../../helpers/sortData'
 
-import { cards } from '../../mocks/cards'
-
-import type { IItemCard } from '../../types/ItemCard'
+import type { TRobloxCard } from '../../types/ItemCard'
+import { TSocket } from '../../store/SocketStore'
 
 const RobloxLimiteds = () => {
-  const [allCards, setAllCards] = useState<IItemCard[]>(cards)
-  const { sortBy, direction, searchBy, priceRange, selectedCards, setSelectedCard } =
+  const [allCards, setAllCards] = useState<TRobloxCard[]>([])
+  const { sortBy, direction, searchBy, priceRange, selectedCards, setSelectedCard, socket } =
     useOutletContext<{
       sortBy?: string
       searchBy: string
       direction?: 'ASC' | 'DESC'
       priceRange: { from: number, to: number }
-      selectedCards: IItemCard[]
-      setSelectedCard: Dispatch<SetStateAction<IItemCard[]>>
+      selectedCards: TRobloxCard[]
+      setSelectedCard: Dispatch<SetStateAction<TRobloxCard[]>>
+      socket: TSocket
     }>()
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    if (pathname.split('/').includes('deposit')) {
+      socket.emit('load_items', { type: 'market' }, ({ data }: { data: TRobloxCard[] }) => {
+        setAllCards(data)
+      })
+    }
+    if (pathname.split('/').includes('withdraw')) {
+      socket.emit('market_reload', ({ data }: { data: TRobloxCard[] }) => {
+        setAllCards(data)
+      })
+    }
+  }, [])
 
   const ranged = useMemo(
     () => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
@@ -31,24 +45,24 @@ const RobloxLimiteds = () => {
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, allCards, ranged])
   const sorted = useMemo(() => {
     if (sortBy && direction) {
-      return sortData(filtered, sortBy as keyof IItemCard, direction)
+      return sortData(filtered, sortBy as keyof TRobloxCard, direction)
     } else {
       return filtered
     }
   }, [direction, filtered, sortBy])
   const totalPriceSelected = selectedCards.reduce((acc, item) => acc + item.price, 0)
 
-  const addToSelectedCard = (card: IItemCard) => {
+  const addToSelectedCard = (card: TRobloxCard) => {
     setSelectedCard((state) => [...state, card])
     setAllCards(removeCard(allCards, card.id))
   }
 
-  const addToAllCard = (card: IItemCard) => {
+  const addToAllCard = (card: TRobloxCard) => {
     setAllCards((state) => [...state, card])
     setSelectedCard(removeCard(selectedCards, card.id))
   }
 
-  const removeCard = (data: IItemCard[], cardId: string) => {
+  const removeCard = (data: TRobloxCard[], cardId: string) => {
     return data.filter((item) => item.id !== cardId)
   }
 
@@ -60,7 +74,7 @@ const RobloxLimiteds = () => {
     <div className='flex'>
       <div className='max-w-1470 w-full flex flex-wrap xs:flex-nowrap mx-auto grow -mb-3 xs:-mb-6 '>
         <div className='order-2 xs:order-1 grow rounded border xs:border-b-0 border-sky-primary/30 w-full xs:w-auto mb-5 xs:mb-0'>
-          <div className='bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded h-full overflow-hidden p-3 pb-1 xs:pb-3'>
+          <div className='bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded h-full overflow-hidden p-3 pb-1 xs:pb-3 min-h-[60vh]'>
             <div className='flex flex-wrap -mx-1 text-sm '>
               {sorted.map((card) => (
                 <ItemCard

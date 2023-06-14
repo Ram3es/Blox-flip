@@ -21,3 +21,20 @@ export const getItemColorByName = (name: possibleBets, isForSvg: boolean): strin
   }
   return '#E1B850'
 }
+
+export const getColorHistory = (color: possibleBets) => {
+  const colors: Record<possibleBets, string> = {
+    grey: '#596180',
+    blue: '#4764D6',
+    red: 'linear-gradient(90deg, #FE4747 25%, #FFC700 95%)',
+    yellow: '#E1B850'
+  }
+  return colors[color]
+}
+
+export const getTimerValue = (unixTimestamp: string): number => {
+  const now = Date.now()
+  const future = +unixTimestamp * 1000
+
+  return Math.floor((future - now) / 1000)
+}

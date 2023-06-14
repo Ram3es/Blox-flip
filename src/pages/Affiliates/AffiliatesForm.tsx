@@ -10,17 +10,20 @@ import { CopyIcon } from '../../components/icons/CopyIcon'
 
 const baseUrl = 'https://robloxsite.com/?a/'
 
-export const AffiliatesForm = () => {
-  const [referralCode, setReferralCode] = useState('182Affiliatehahawqrqw')
+export const AffiliatesForm = ({ referalCode = '182Affiliatehahawqrqw' }: { referalCode?: string }) => {
+  const [referralCode, setReferralCode] = useState<string>('')
   const {
-    text: referralLink,
     handleCopyText: handleCopyReferralLink,
-    setText: setReferralLink
-  } = useCopyToClipboard(`${baseUrl}${referralCode}`)
+    setText: setReferralLink,
+    renderText: referralLink
+  } = useCopyToClipboard()
 
   useEffect(() => {
-    setReferralLink(baseUrl + referralCode)
-  }, [referralCode])
+    if (referalCode) {
+      setReferralLink(baseUrl + referalCode)
+      setReferralCode(referalCode)
+    }
+  }, [referalCode])
 
   const referralCodeSchema = Yup.object().shape({
     referralCode: Yup.string()
@@ -76,9 +79,10 @@ export const AffiliatesForm = () => {
               titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
               inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
               inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-28 truncate'
-              value={props.values.referralCode}
+              value={referralCode}
               placeholder='...'
               onChange={props.handleChange}
+              readOnly
             />
             <div className='absolute z-20 top-[52px] right-7'>
               <Button color='GreenPrimary' variant='GreenGradient' type='submit'>

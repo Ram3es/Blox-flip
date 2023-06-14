@@ -39,8 +39,8 @@ export const History = () => {
       onClick: () => filterByValue('game', 'crash')
     },
     {
-      name: 'king',
-      onClick: () => filterByValue('game', 'king')
+      name: 'champion',
+      onClick: () => filterByValue('game', 'champion')
     },
     {
       name: 'plinko',

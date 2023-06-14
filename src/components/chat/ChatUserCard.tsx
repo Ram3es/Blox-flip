@@ -16,7 +16,7 @@ import UserIcon from '../icons/UserIcon'
 import TipIcon from '../icons/TipIcon'
 import TimeoutIcon from '../icons/TimeoutIcon'
 
-import type { IUser } from '../../types/User'
+import type { IChatUser } from '../../types/User'
 
 interface userAction {
   name: string
@@ -31,14 +31,21 @@ enum ChatUserCardVariant {
 }
 
 interface ChatUserCardProps {
-  user: IUser
+  user: IChatUser
+  hashMsg?: string
   variant?: keyof typeof ChatUserCardVariant
 }
 
-const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
+const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }) => {
   const { state } = useContext(Context)
-  const { setIsOpenBanModal, setIsOpenTimeoutModal, setIsOpenTipModal, setIsOpenTriviaModal } =
-    useChat()
+  const {
+    setIsOpenBanModal,
+    setIsOpenTimeoutModal,
+    setIsOpenTipModal,
+    setIsOpenTriviaModal,
+    setUserSelected,
+    setSelectedMessage
+  } = useChat()
 
   const baseIconSizeClasses = 'w-3 h-3'
 
@@ -53,7 +60,10 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
       name: 'Trivia'
     },
     { path: '/megadrop', name: 'megadrop' },
-    { path: '/challenges', name: 'challenges' }
+    { path: '/challenges', name: 'challenges' },
+    { path: '/FAQ', name: 'FAQ' },
+    { path: '/terms', name: 'Terms of Service' }
+
   ]
 
   const chatUserActions: userAction[] = [
@@ -79,6 +89,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
     {
       handleFunction: () => {
         setIsOpenTimeoutModal(true)
+        setUserSelected(user)
       },
       name: 'Timeout user',
       icon: <TimeoutIcon className={baseIconSizeClasses} />
@@ -86,10 +97,25 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
     {
       handleFunction: () => {
         setIsOpenBanModal(true)
+        setUserSelected(user)
       },
       name: 'Ban user',
       icon: <BanIcon className={baseIconSizeClasses} />
+    },
+    {
+      handleFunction: () => {
+        setSelectedMessage(hashMsg as string)
+      },
+      name: 'Remove Message',
+      icon: <BanIcon className={baseIconSizeClasses} />
     }
+    // {
+    //   handleFunction: () => {
+    //     setUserSelected(user)
+    //   },
+    //   name: 'Remove User',
+    //   icon: <BanIcon className={baseIconSizeClasses} />
+    // }
   ]
 
   const isAuth = () => state.user
@@ -138,7 +164,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, variant = 'Base' }) => {
         {({ open }) => (
           <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
             <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
-              <Image />
+              <Image image={user.avatar} />
             </div>
             <div
               className={clsx('flex', {

@@ -9,10 +9,10 @@ import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'
 import ThirdPlaceIcon from '../../assets/img/coin3.svg'
 
-import type { ISecondUser } from '../../types/User'
+import type { ILeaderbordUser } from '../../types/User'
 
 interface PodiumItemProps {
-  user: ISecondUser
+  user: ILeaderbordUser
   place: 1 | 2 | 3
 }
 
@@ -75,7 +75,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
             >
               <Image image={user.avatar} className='object-cover w-full h-full rounded-lg' />
             </div>
-            <div className='mb-3 font-bold'>{user.username}</div>
+            <div className='mb-3 font-bold'>{user.name}</div>
             <div className='flex justify-center mb-3'>
               <Button variant='Highlight'>
                 <span
@@ -114,7 +114,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               <CoinsWithDiamond
                 iconContainerSize={place === 1 ? 'Medium' : 'Small'}
                 iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
-                typographyQuantity={user.bet}
+                typographyQuantity={user.profit}
                 typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
               />
             </div>

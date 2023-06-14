@@ -1,9 +1,9 @@
 import KingHistoryItem from './KingHistoryItem'
 
-import type { IKingGame } from '../../types/King'
+import { IKingHistory } from '../../types/King'
 
 interface KingHistoryListProps {
-  games: IKingGame[]
+  games: IKingHistory[]
 }
 
 const KingHistoryList = ({ games }: KingHistoryListProps) => {
@@ -11,7 +11,7 @@ const KingHistoryList = ({ games }: KingHistoryListProps) => {
     <div className='gap-3 flex flex-col'>
       {games.map((game) => (
         <KingHistoryItem
-          key={game.firstPlayer.username + String(new Date().getMilliseconds() * Math.random() * 5)}
+          key={game.id}
           game={game}
         />
       ))}

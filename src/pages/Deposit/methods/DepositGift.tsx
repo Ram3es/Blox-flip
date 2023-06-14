@@ -5,9 +5,11 @@ import InputWithLabel from '../../../components/base/InputWithLabel'
 import { Button } from '../../../components/base/Button'
 import { DepositGiftList } from './DepositGiftList'
 import DiamondIcon from '../../../components/icons/DiamondIcon'
+import { useSocketCtx } from '../../../store/SocketStore'
 
 export const DepositGift = () => {
   const [giftCode, setGiftCode] = useState('')
+  const { socket } = useSocketCtx()
 
   const giftCodeSchema = Yup.string()
     .required('Code is required')
@@ -23,6 +25,7 @@ export const DepositGift = () => {
         .validate(giftCode)
         .then(() => {
           console.log('Validation successful')
+          socket.emit('')
           setGiftCode('')
         })
         .catch((error) => {

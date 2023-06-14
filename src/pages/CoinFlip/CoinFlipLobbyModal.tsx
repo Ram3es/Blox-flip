@@ -1,5 +1,8 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import { useCoinFlip } from '../../store/CoinFlipStore'
+import { useSocketCtx } from '../../store/SocketStore'
 
 import ModalWrapper from '../../components/containers/ModalWrapper'
 import GameLobbyHeader from '../../components/containers/GameLobby/GameLobbyHeader'
@@ -10,108 +13,170 @@ import CoinFlipLogoIcon from '../../components/icons/CoinFlipLogoIcon'
 import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 import { Button } from '../../components/base/Button'
 
-import CoinFlipHead from '../../assets/img/CoinFlipHead.png'
-import CoinFlipTail from '../../assets/img/CoinFlipTail.png'
+import YellowCoin from '../../assets/img/CoinFlipHead.png'
+import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
-import type { IItemCard } from '../../types/ItemCard'
+import { IItemCard } from '../../types/ItemCard'
+import { ICoin, ICoinFlip } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
-import { cards } from '../../mocks/cards'
 
-interface GameLobbyModalProps {
-  onClose: Dispatch<SetStateAction<boolean>>
-  isCreated: boolean
-  handleFunction: () => void
-}
+const CoinFlipLobbyModal = () => {
+  const {
+    setIsOpenBattleGame,
+    setCurrentGame,
+    setIsOpenLobbyModal,
+    currentGame
+  } = useCoinFlip()
+  const { socket } = useSocketCtx()
 
-type UpdateArrayBySelectedItem = (
-  items: IItemCard[],
-  id: string,
-  isSelected: boolean
-) => IItemCard[]
-type IsItemSelected = (items: IItemCard[], id: string) => boolean
-type HandleSelectItem = (id: string) => void
+  const [skins, setSkins] = useState<IItemCard[]>([])
+  const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
 
-const CoinFlipLobbyModal = ({ onClose, isCreated, handleFunction }: GameLobbyModalProps) => {
-  const { selectedCoin, setSelectedCoin } = useCoinFlip()
+  const selectedSkins = skins.filter((skin) => skin.isSelected)
 
-  const [items, setItems] = useState<IItemCard[]>([])
-
-  const selectedItems = items.filter((item) => item.isSelected)
-
-  const updateArrayBySelectedItem: UpdateArrayBySelectedItem = (items, id, isSelected) => {
-    return items.map((item) => (item.id === id ? { ...item, isSelected } : item))
+  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: string, isSelected: boolean) => {
+    return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected: IsItemSelected = (items, id) => {
-    return items.some((item) => item.id === id && item.isSelected)
+  const isItemSelected = (skins: IItemCard[], skinId: string) => {
+    return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
-  const handleSelectItem: HandleSelectItem = useCallback(
-    (id) => {
-      const item = items.find((item) => item.id === id)
+  const findSkinByItemId = (skinId: string) => skins.find((skin) => skin.id === skinId)
 
-      if (!item) return
+  const handleSelectSkin = useCallback(
+    (skinId: string) => {
+      const skin = findSkinByItemId(skinId)
 
-      const isSelected = isItemSelected(items, item.id)
+      if (!skin) return
 
-      setItems((prev) => updateArrayBySelectedItem(prev, id, !isSelected))
+      const isSelected = isItemSelected(skins, skin.id)
+
+      setSkins((prev) => updateArrayBySelectedSkin(prev, skinId, !isSelected))
     },
-    [items]
+    [skins]
   )
 
-  const handleResetSelectedItems = useCallback(() => {
-    setItems(cards.map((card) => ({ ...card, isSelected: false })))
+  const handleResetSelectedSkins = useCallback(() => {
+    setSkins(skins.map((skin) => ({ ...skin, isSelected: false })))
   }, [])
 
-  const getCostInSelectedItems = (): number => {
-    return getCostByFieldName(selectedItems, 'price')
+  const getCostInSelectedSkins = (): number => {
+    return getCostByFieldName(selectedSkins, 'price')
   }
 
-  const costInventoryItems = getCostByFieldName(items, 'price')
+  const costInventorySkins = getCostByFieldName(skins, 'price')
+
+  const getSelectedSkinsIds = (selectedSkins: IItemCard[]) => {
+    return selectedSkins.map((skin) => skin.id)
+  }
+
+  const handleCreateCoinFlip = useCallback(() => {
+    socket.emit(
+      'coinflip_create',
+      { type: 'coinflip', items: getSelectedSkinsIds(skins), coin: selectedCoin },
+      (response: { error: boolean, message: string, data: ICoinFlip }) => {
+        if (response.error) {
+          toast.error(response.message)
+        }
+
+        if (!response.error) {
+          setIsOpenBattleGame(true)
+          setCurrentGame(response.data)
+        }
+      }
+    )
+    setIsOpenLobbyModal(false)
+    setIsOpenBattleGame(true)
+  }, [skins])
+
+  const handleJoinCoinFlip = useCallback(() => {
+    if (currentGame) {
+      socket.emit(
+        'coinflip_join',
+        {
+          type: 'coinflip',
+          items: getSelectedSkinsIds(skins),
+          gameId: currentGame.id,
+          coin: selectedCoin
+        },
+        (response: { error: boolean, message: string }) => {
+          if (response.error) {
+            toast.error(response.message)
+          }
+
+          if (!response.error) {
+            setIsOpenBattleGame(true)
+          }
+        }
+      )
+      setIsOpenLobbyModal(false)
+      setIsOpenBattleGame(true)
+    }
+  }, [skins])
 
   useEffect(() => {
-    setItems(cards.map((card) => ({ ...card, isSelected: false })))
+    socket.emit(
+      'load_items',
+      { type: 'coinflip' },
+      (response: { error: boolean, message: string, skins: IItemCard[] }) => {
+        if (response.error) {
+          toast.error(response.message)
+        }
+        if (!response.error) {
+          setSkins(response.skins)
+        }
+      }
+    )
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setCurrentGame(null)
+    setIsOpenLobbyModal(false)
   }, [])
 
   return (
     <ModalWrapper
-      closeModal={onClose}
+      closeModal={handleCloseModal}
       modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
     >
       <GameLobbyHeader
-        skinsPrice={costInventoryItems}
-        skinsQuantity={items.length}
-        handleResetSelectedSkins={handleResetSelectedItems}
+        skinsPrice={costInventorySkins}
+        skinsQuantity={skins.length}
+        handleResetSelectedSkins={handleResetSelectedSkins}
       >
         <div className='flex items-center justify-center'>
           <CoinFlipLogoIcon />
           <span className='pl-3 text-lg hidden xxs:block'>
-            {isCreated ? 'Join' : 'Create'} Coinflip
+            {currentGame ? 'Join' : 'Create'} Coinflip
           </span>
         </div>
       </GameLobbyHeader>
-      <GameLobbyItemsList items={items} handleSelectItem={handleSelectItem} />
+      <GameLobbyItemsList items={skins} handleSelectItem={handleSelectSkin} />
       <GameLobbyFooter
-        inventoryItemsLength={items.length}
-        selectedItemsCost={getCostInSelectedItems()}
-        selectedItemsLength={selectedItems.length}
-        betGap={2555}
+        inventoryItemsLength={skins.length}
+        selectedItemsCost={getCostInSelectedSkins()}
+        selectedItemsLength={selectedSkins.length}
+        max={currentGame?.max}
+        min={currentGame?.min}
       >
         <div className='flex items-center justify-between space-x-4'>
-          {!isCreated && (
+          {!currentGame && (
             <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
           )}
-          {isCreated && (
+          {currentGame && (
             <img
-              key={selectedCoin === 0 ? 1 : 0}
               className='w-7 h-7 sm:w-11 sm:h-11'
-              src={selectedCoin === 0 ? CoinFlipTail : CoinFlipHead}
-              alt={selectedCoin === 0 ? 'tail' : 'head'}
+              src={currentGame.creator.coin ? YellowCoin : PurpleCoin}
+              alt='coinflip side'
             />
           )}
-          <Button color='GreenPrimary' onClick={handleFunction}>
-            <span className='h-9 py-2 px-5'>{isCreated ? 'Join' : 'Create'}</span>
+          <Button
+            color='GreenPrimary'
+            onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}
+          >
+            <span className='h-9 py-2 px-5'>{currentGame ? 'Join' : 'Create'}</span>
           </Button>
         </div>
       </GameLobbyFooter>

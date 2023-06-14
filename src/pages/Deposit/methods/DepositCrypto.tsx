@@ -1,17 +1,28 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { CopyIconSecond } from '../../../components/icons/CopyIconSecond'
 import QRCodePlaceHolder from '../../../assets/img/qr-kod.png'
 import { CryptoCalculator } from '../../../components/common/CryptoCalculator'
 import { Button } from '../../../components/base/Button'
 import InputWithLabel from '../../../components/base/InputWithLabel'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useOutletContext } from 'react-router-dom'
 import { getIconByPathName } from '../../../helpers/iconsHelper'
 import { useCopyToClipboard } from '../../../helpers/hooks/useCopyToClipboard'
+import { TSocket } from '../../../store/SocketStore'
+import { ICryptoData } from '../../../types/PaymentsMethods'
 
 export const DepositCrypto: FC = () => {
-  const { text: bitcoinAddress, handleCopyText: setBitcoinAddress } = useCopyToClipboard('0x351af6d2387a0b2cf9af41sSDFw43585d2ce2a25')
+  const { handleCopyText: setBitcoinAddress, setText, renderText } = useCopyToClipboard()
   const [sendAmount, setSendAmount] = useState(100)
-  const { pathname } = useLocation()
+  const [rateCoin, setRateCoin] = useState<number>()
+  const { pathname, state: type } = useLocation()
+  const { socket } = useOutletContext<{ socket: TSocket }>()
+
+  useEffect(() => {
+    socket.emit(`${type as string}`, ({ data }: { data: ICryptoData }) => {
+      setText(data.address)
+      setRateCoin(data.rate)
+    })
+  }, [])
 
   return (
     <div className='border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9'>
@@ -29,7 +40,7 @@ export const DepositCrypto: FC = () => {
                 inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-2 mr-12 truncate'
                 placeholder='...'
                 readOnly
-                value={bitcoinAddress}
+                value={renderText}
               />
               <div className='absolute z-20 top-[60px] right-4'>
                 <Button onClick={setBitcoinAddress} className='w-7 shrink-0' type='button'>
@@ -63,7 +74,7 @@ export const DepositCrypto: FC = () => {
               </span>
             </div>
           </div>
-          <CryptoCalculator />
+          <CryptoCalculator rateCoin={rateCoin ?? 1} />
           <div className='flex flex-wrap xs:flex-nowrap justify-center xs:justify-start items-center'>
             <div className='min-w-fit shrink-0 w-28 mx-3 mb-6 xs:mb-0'>
               <img

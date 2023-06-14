@@ -39,7 +39,10 @@ import Challenges from './pages/Challenges/Challenges'
 
 import { Leaderboard } from './pages/Leaderboard/Leaderboard'
 
-import Terms from './pages/TermsOfService/Terms'
+import CaseAdmin from './pages/CaseAdmin/CaseAdmin'
+import Terms from './pages/ServicePages/Terms'
+import FAQ from './pages/ServicePages/FAQ'
+import ProvablyFair from './pages/ServicePages/ProvablyFair'
 
 export const App = () => {
   return (
@@ -70,7 +73,7 @@ export const App = () => {
           <Route path='/affiliates' element={<Affiliates />} />
 
           <Route path='/wheel' element={<Wheel />} />
-          <Route path='/king' element={<King />} />
+          <Route path='/champion' element={<King />} />
           <Route path='/plinko' element={<Plinko />} />
           <Route path='/coinflip' element={<CoinFlip />} />
           <Route path='/jackpot' element={<Jackpot />} />
@@ -86,7 +89,12 @@ export const App = () => {
 
           <Route path='/leaderboard' element={<Leaderboard />} />
 
+          <Route path='/case-admin' element={<CaseAdmin />} />
+
           <Route path='/terms' element={<Terms />} />
+          <Route path='/FAQ' element={<FAQ />} />
+          <Route path='/provably-fair' element={<ProvablyFair />} />
+
         </Routes>
       </Container>
     </BrowserRouter>

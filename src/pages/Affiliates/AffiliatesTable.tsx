@@ -1,23 +1,21 @@
 import { useState } from 'react'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
-import { ISecondUser } from '../../types/User'
-import { users } from '../../mocks/affiliatesMock'
 import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+import { IAffilateDeposit } from '../../types/Affilates'
 
-export const AffiliatesTable = () => {
-  const [data] = useState<ISecondUser[]>([...users.slice(0, 10)])
+export const AffiliatesTable = ({ data }: { data: IAffilateDeposit[] }) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
-  const columnHelper = createColumnHelper<ISecondUser>()
-  const columns: Array<ColumnDef<ISecondUser, any>> = [
-    columnHelper.accessor((row: ISecondUser) => row.username, {
-      id: 'username',
+  const columnHelper = createColumnHelper<IAffilateDeposit>()
+  const columns: Array<ColumnDef<IAffilateDeposit, any>> = [
+    columnHelper.accessor((row: IAffilateDeposit) => row.user, {
+      id: 'user',
       header: () => 'User',
-      cell: ({ row }) => <UserInfoCell user={row.original} />,
+      cell: ({ row }) => <UserInfoCell user={{ ...row.original.user }} />,
       filterFn: 'equalsString',
       footer: (props) => props.column.id
     }),
@@ -27,27 +25,14 @@ export const AffiliatesTable = () => {
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ISecondUser) => row.bet, {
-      id: 'bet',
-      header: () => 'Wagered',
+    columnHelper.accessor((row: IAffilateDeposit) => row.deposited, {
+      id: 'deposited',
+      header: () => 'Deposited',
       cell: ({ row }) => (
         <CoinsWithDiamond
           iconContainerSize='Small'
           iconClasses='w-3 h-3'
-          typographyQuantity={row.original.bet}
-          typographyFontSize='Size13'
-        />
-      ),
-      footer: (props) => props.column.id
-    }),
-    columnHelper.accessor((row: ISecondUser) => row.profit, {
-      id: 'profit',
-      header: 'Earned',
-      cell: ({ row }) => (
-        <CoinsWithDiamond
-          iconContainerSize='Small'
-          iconClasses='w-3 h-3'
-          typographyQuantity={row.original.profit}
+          typographyQuantity={row.original.deposited}
           typographyFontSize='Size13'
         />
       ),

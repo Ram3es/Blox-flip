@@ -1,11 +1,28 @@
+import { useEffect, useState } from 'react'
 import LeaderBoardIcon from '../../assets/img/leaderboard.svg'
 import FighterFirstIcon from '../../assets/img/leaderboard1.png'
 import FighterSecondIcon from '../../assets/img/leaderboard2.png'
-
+import { useSocketCtx } from '../../store/SocketStore'
+import { users } from '../../mocks/leaderboardMock'
 import { LeaderboardPodium } from './LeaderboardPodium'
 import { LeaderboardTable } from './LeaderboardTable'
+import { ILeaderbordData } from '../../types/Affilates'
+import { ILeaderbordUser } from '../../types/User'
 
 export const Leaderboard = () => {
+  const [boardData, setBoardData] = useState<ILeaderbordUser[]>([])
+  const { socket } = useSocketCtx()
+
+  useEffect(() => {
+    socket.emit('load_leaderboards', ({ data }: { data: ILeaderbordData[] }) => {
+      setBoardData(data.map(item => ({
+        ...item.user,
+        bet: item.wagered,
+        profit: item.reward
+
+      })))
+    })
+  }, [])
   return (
     <div className='max-w-5xl w-full mx-auto'>
       <div className='flex flex-wrap xxs:flex-nowrap items-end relative'>
@@ -51,9 +68,9 @@ export const Leaderboard = () => {
           />
         </div>
       </div>
-      <LeaderboardPodium />
+      <LeaderboardPodium users={(boardData.length && boardData) || users as any} />
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
-      <LeaderboardTable />
+      <LeaderboardTable data={boardData} />
     </div>
   )
 }

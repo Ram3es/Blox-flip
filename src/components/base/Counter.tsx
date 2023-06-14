@@ -5,16 +5,16 @@ interface ICountProps {
   count: number
   increment: Function
   decrement: Function
-  isDisabled: boolean
+  isDisabled?: boolean
 }
 
-const Counter: FC<ICountProps> = ({ count, increment, decrement, isDisabled }) => {
+const Counter: FC<ICountProps> = ({ count, increment, decrement }) => {
   return (
         <div className='flex items-center justify-center'>
             <Button
               onClick={() => decrement()}
-              className={`${isDisabled ? ' cursor-default bg-blue-light-primary/60 ' : 'bg-blue-light-primary/30 group hover:bg-blue-accent cursor-pointer'}  w-7 h-7 rounded leading-7 text-center font-semibold text-lg  text-gray-primary `}
-              disabled={isDisabled}
+              className='bg-blue-light-primary/30 group hover:bg-blue-accent cursor-pointer  w-7 h-7 rounded leading-7 text-center font-semibold text-lg  text-gray-primary '
+
               >
                <span className='group-hover:text-white'>-</span>
             </Button>
