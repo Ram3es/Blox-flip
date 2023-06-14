@@ -13,6 +13,7 @@ import ExplosionIcon from '../../assets/img/explosion_icon.png'
 
 import {
   HEALTH_POINTS_EFFECT_MILLISECONDS,
+  LIST_SPRITES,
   ROUND_DURATION,
   ROUND_DURATION_MILLISECONDS,
   TIME_EFFECT_MILLISECONDS
@@ -25,6 +26,7 @@ import {
 } from '../../helpers/kingHelpers'
 
 import type { IKingChampion, IKingFight } from '../../types/King'
+import { loadImage } from '../../helpers/loadImages'
 
 interface KingArenaProps {
   game: IKingChampion | null
@@ -38,6 +40,8 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
 
   const [maxHealthPointsKing, setMaxHealthPointsKing] = useState(0)
   const [maxHealthPointsOpponent, setMaxHealthPointsOpponent] = useState(0)
+
+  const [isLoadedAnimation, setIsLoadedAnimation] = useState<boolean>(false)
 
   const swordIconRef = useRef<HTMLImageElement>(null)
   const attackTextRef = useRef<HTMLSpanElement>(null)
@@ -149,7 +153,7 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
   }, [game])
 
   useEffect(() => {
-    if (!fight) return
+    if (!fight || !isLoadedAnimation) return
 
     const fightDurationMilliseconds = getFightDuration(ROUND_DURATION, fight.length) * 1000
 
@@ -158,7 +162,11 @@ const KingArena = ({ game, fight, setFight }: KingArenaProps) => {
     }, fightDurationMilliseconds)
 
     startGame(fight)
-  }, [fight])
+  }, [fight, isLoadedAnimation])
+
+  useEffect(() => {
+    loadImage(LIST_SPRITES, () => setIsLoadedAnimation(true))
+  }, [])
 
   return (
     <div className='ls:h-[179px] p-4 ls:p-0 gradient-background--yellow__secondary h-full rounded-xl flex flex-col items-start ls:flex-row ls:justify-between ls:items-stretch w-full gap-4 xs:gap-0'>

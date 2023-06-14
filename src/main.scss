@@ -1028,6 +1028,9 @@ input {
 .coinflip-animation.white {
   background-image: url('./assets/img/coinflip-white-win-sprite.png');
 }
+.coinflip-animation.play {
+  animation-play-state: running;
+}
 
 .coinflip-animation {
   width: 500px;
@@ -1036,6 +1039,7 @@ input {
 
   background-position: 0px 0px;
   animation: coinflip 6s steps(236) 1s forwards;
+  animation-play-state: paused;
 }
 
 .king-animation.pistol {
