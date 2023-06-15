@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
-import { login } from '../../services/user.service'
 
 const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
   const [inputValue, setInputValue] = useState({ code: '' })
@@ -12,12 +11,6 @@ const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
   }
 
   const onSubmit = async () => {
-    try {
-      const { data } = await login(`userId=${'test'}&ticket=${'test'}&code=${'test'}`)
-      console.log(data, 'data')
-    } catch (error) {
-      console.log(error)
-    }
     console.log(inputValue)
   }
   return (
