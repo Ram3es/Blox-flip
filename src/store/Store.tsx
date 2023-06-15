@@ -9,6 +9,7 @@ import SocketCtxProvider from './SocketStore'
 
 export interface IState {
   user?: IUser
+  hash?: string
 }
 
 const initialState: IState = {}

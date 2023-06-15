@@ -9,6 +9,8 @@ export const Reducer = (state: IState, action: IAction): IState => {
   switch (action.type) {
     case 'LOGIN':
       return { ...state, user: action.payload }
+    case 'CONNECT':
+      return { ...state, hash: action.payload }
     default:
       return state
   }

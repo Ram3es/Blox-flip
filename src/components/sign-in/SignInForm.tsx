@@ -1,8 +1,10 @@
-import React, { ChangeEvent, useState, useContext } from 'react'
+import React, { ChangeEvent, useState, useContext, useCallback } from 'react'
 import { Context } from '../../store/Store'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
-import { login } from '../../services/user.service'
+import { login, twoStepVerification } from '../../services/user.service'
+import { decodeBase64 } from '../../helpers/decodeToken'
+import AuthCodeModal from '../containers/AuthCode'
 
 interface IState {
   userName: string
@@ -21,6 +23,8 @@ const user = {
 }
 
 const SignInForm = ({ onClose }: { onClose: Function }) => {
+  const [isOpenTwoFactorModal, setIsOpenTwoFactorModal] = useState(false)
+  const [robloxData, setRobloxData] = useState<ILoginData>()
   const [inputValue, setInputValue] = useState<IState>({ userName: '', password: '' })
   const { dispatch } = useContext(Context)
 
@@ -28,18 +32,48 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
     const { name, value } = event.target
     setInputValue((prev) => ({ ...prev, [name]: value }))
   }
-  const onSubmit = async () => {
-    console.log(encodeURIComponent(inputValue.password))
 
+  const onSubmit = async () => {
     try {
       const { data } = await login(`username=${inputValue.userName}&password=${encodeURIComponent(inputValue.password)}`)
-      console.log(data, 'data')
+
+      if (!data.success && data.twoStepVerificationRequired && data.twoStepVerificationTicket && data.user) {
+        setRobloxData(data)
+        setIsOpenTwoFactorModal(true)
+      }
+
+      if (data.success) {
+        const hash = decodeBase64(data.data)
+        const userObject = JSON.parse(hash)
+
+        dispatch({ type: 'CONNECT', payload: hash })
+        dispatch({ type: 'LOGIN', payload: { ...user, name: userObject.name || 'John Johnson' } })
+      }
     } catch (error) {
       console.log(error)
     }
 
-    dispatch({ type: 'LOGIN', payload: { ...user, name: inputValue.userName || 'John Johnson' } })
-    onClose()
+    // onClose()
+  }
+
+  const loginTwoStep = useCallback(async (code: string) => {
+    if (robloxData?.twoStepVerificationTicket && robloxData.user?.id) {
+      try {
+        const { data } = await twoStepVerification(`ticket=${robloxData.twoStepVerificationTicket}&code=${code}&userId=${robloxData.user.id}`)
+        if (data.success && data.data) {
+          const hash = decodeBase64(data.data)
+
+          dispatch({ type: 'CONNECT', payload: hash })
+          dispatch({ type: 'LOGIN', payload: { ...user, name: inputValue.userName || 'John Johnson' } })
+        }
+      } catch (error) {
+        alert(error)
+      }
+    }
+  }, [robloxData])
+
+  const handleSubmitTwoFactorModal = (code: string) => {
+    void loginTwoStep(code)
   }
   return (
     <>
@@ -60,6 +94,11 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
         onChange={onChange}
       />
       <Submit submitFunction={onSubmit} />
+      { isOpenTwoFactorModal &&
+          <AuthCodeModal
+            onClose={() => setIsOpenTwoFactorModal(false) }
+            onSubmit={(code: string) => handleSubmitTwoFactorModal(code)}
+          /> }
     </>
   )
 }

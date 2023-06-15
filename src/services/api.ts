@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 
-const BASE_URL = 'http://localhost:80/'
+const BASE_URL = import.meta.env.VITE_AUTH_URL
 
 export const POST = async <T, B = undefined>(
   endPoint: string,
