@@ -1,13 +1,12 @@
 import React from 'react'
 import { IUser } from '../../types/User'
-import Avatar from '../../assets/img/avatar_img.png'
 
 const UserProgress = ({ user, isFullInfo = true }: { user: IUser, isFullInfo?: boolean }) => {
   const progress = Math.floor((user?.progress?.current / user?.progress?.required) * 100).toString()
   return (
         <>
           <div className="w-18 h-17 border border-blue-highlight rounded-lg radial--blue mb-2">
-            <img src={ Avatar } alt="avatar" width="73" height="68" loading="lazy" decoding="async" className="object-cover" />
+            <img src={ user.avatar } alt="avatar" width="73" height="68" loading="lazy" decoding="async" className="object-cover" />
           </div>
           {isFullInfo
             ? (

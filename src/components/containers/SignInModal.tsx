@@ -19,11 +19,12 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
   const [currentLoginVariant, setCurrentVariant] = useState(toggleOptions[0])
 
   return (isOpen
-    ? <ModalWrapper
-             closeModal={() => onClose()}
-             modalClasses='relative grid grid-cols-3 rounded-2xl overflow-hidden gradient-blue-primary shadow-dark-15'
-             closeBtnClasses='rounded w-7 h-7 leading-7 absolute top-4 left-4 z-[2] text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
-             >
+    ? <>
+        <ModalWrapper
+          closeModal={() => onClose()}
+          modalClasses='relative grid grid-cols-3 rounded-2xl overflow-hidden gradient-blue-primary shadow-dark-15'
+          closeBtnClasses='rounded w-7 h-7 leading-7 absolute top-4 left-4 z-[2] text-center bg-blue-highlight shadow-dark-5 hover:bg-blue-accent cursor-pointer'
+        >
            <div className='col-span-1 text-center relative'>
              <div className='absolute w-full h-full  flex-col items-center  p-4 z-[1] hidden sm:flex'>
                <img
@@ -59,7 +60,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                   <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peakFunction={setCurrentVariant} />
                 </div>
                 {currentLoginVariant.variant === '.Roblosecurity'
-                  ? <RobloForm />
+                  ? <RobloForm onClose={() => onClose()} />
                   : <SignInForm onClose={() => onClose()} />}
               </div>
             </div>
@@ -72,6 +73,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
         </ModalWrapper>
+      </>
     : null
   )
 }
