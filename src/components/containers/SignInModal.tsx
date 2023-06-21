@@ -60,7 +60,7 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                   <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peakFunction={setCurrentVariant} />
                 </div>
                 {currentLoginVariant.variant === '.Roblosecurity'
-                  ? <RobloForm />
+                  ? <RobloForm onClose={() => onClose()} />
                   : <SignInForm onClose={() => onClose()} />}
               </div>
             </div>

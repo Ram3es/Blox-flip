@@ -16,7 +16,7 @@ const user = {
   }
 }
 
-const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
+const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, onClose: Function }) => {
   const { dispatch } = useContext(Context)
   const [inputValue, setInputValue] = useState('')
 
@@ -28,10 +28,16 @@ const RobloSignIn = ({ submitFunction }: { submitFunction?: Function }) => {
     if (!inputValue) return
     try {
       const { data } = await robloxSecurityLogin(`cookie=.ROBLOSECURITY%3D${encodeURI(inputValue)}`)
+
+      if (!data.UserID) {
+        alert('wrong data')
+        return
+      }
       const hash = encodeBase64(JSON.stringify(data))
 
       dispatch({ type: 'CONNECT', payload: hash })
-      dispatch({ type: 'LOGIN', payload: { ...user, name: data.UserName } })
+      dispatch({ type: 'LOGIN', payload: { ...user, name: data.UserName, avatar: data.ThumbnailUrl } })
+      onClose()
     } catch (error) {
       console.log(error)
     }
