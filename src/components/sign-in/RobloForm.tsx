@@ -34,9 +34,9 @@ const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, o
         return
       }
       const hash = encodeBase64(JSON.stringify(data))
-
       dispatch({ type: 'CONNECT', payload: hash })
       dispatch({ type: 'LOGIN', payload: { ...user, name: data.UserName, avatar: data.ThumbnailUrl } })
+      localStorage.setItem('token', hash)
       onClose()
     } catch (error) {
       console.log(error)
