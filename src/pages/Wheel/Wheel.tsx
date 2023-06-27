@@ -5,7 +5,7 @@ import WheelCircle from './WheelCircle'
 import WheelGamesHistory from './WheelGamesHistory'
 import WheelBetActions from './WheelBetActions'
 import { useSocketCtx } from '../../store/SocketStore'
-import { WheelBetRecord, wheelBetsMock } from '../../mocks/wheelBets'
+import { WheelBetRecord } from '../../mocks/wheelBets'
 import { getTimerValue } from '../../helpers/wheelHelpers'
 
 const RALL_TIME = 1500
@@ -13,7 +13,7 @@ let interval: any
 
 const Wheel = () => {
   const [historyGames, setHistory] = useState<possibleBets[]>([])
-  const [wheelBets, setWhellBets] = useState<WheelBetRecord>(wheelBetsMock)
+  const [wheelBets, setWheelBets] = useState<WheelBetRecord>()
   const [timer, setTimer] = useState<number>()
   const [wonTicket, setWonTicket] = useState<IWinTicket>()
   const [betAmount, setBetAmount] = useState(200)
@@ -40,11 +40,11 @@ const Wheel = () => {
       setWonTicket(data)
     })
     socket.on('add_wheel_bets', ({ data }: { data: WheelBetRecord }) => {
-      setWhellBets(data)
+      setWheelBets(data)
     })
     socket.on('add_wheel', ({ data }: { data: IIWheelBet }) => {
       const { color } = data
-      setWhellBets(prev => {
+      setWheelBets(prev => {
         if (prev) {
           return { ...prev, [color]: [...prev[color], data] }
         }
@@ -73,8 +73,7 @@ const Wheel = () => {
       }, RALL_TIME)
     }
     return () => clearInterval(interval)
-  }
-  , [timer])
+  }, [timer])
 
   return (
     <div className='flex flex-col gap-9'>
