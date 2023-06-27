@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
@@ -14,6 +14,7 @@ import type { ISecondUser } from '../../types/User'
 import type { FilterVariant } from '../../types/Table'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
+import { Context } from '../../store/Store'
 
 const RedDotIcon = () => {
   return (
@@ -22,6 +23,7 @@ const RedDotIcon = () => {
 }
 
 export const LiveFeed = () => {
+  const { state } = useContext(Context)
   const [data] = useState<ISecondUser[]>([...users])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -51,7 +53,7 @@ export const LiveFeed = () => {
     },
     {
       name: 'my bets',
-      onClick: () => handleFilterByValue('username', 'Mark_Maggio')
+      onClick: () => handleFilterByValue('username', state.user?.name ?? '')
     },
     {
       name: 'big bets',

@@ -32,5 +32,4 @@ export type TBaseUser = Omit<IUser, 'progress' | 'role' | 'flag'>
 export interface ILeaderbordUser extends TBaseUser {
   bet: number
   profit: number
-
 }

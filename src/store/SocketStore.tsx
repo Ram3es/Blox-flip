@@ -1,10 +1,11 @@
-import { ReactNode, createContext, useContext, useEffect } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { Context } from './Store'
 
 export type TSocket = Socket
 export interface ChatSocketCtxState {
   socket: TSocket
+  userBalance: number
 }
 const URL = import.meta.env.VITE_API_URL
 const socket = io(URL, { autoConnect: false, query: { user_room: 1 } })
@@ -17,10 +18,14 @@ export const useSocketCtx = () => useContext(ChatSocketCtx)
 
 const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const { state: { hash }, dispatch } = useContext(Context)
+  const [userBalance, setUserBalance] = useState(0)
 
   useEffect(() => {
     socket.on('balance', ({ data }) => {
       // TODO
+      if (data) {
+        setUserBalance(data)
+      }
     })
 
     socket.connect()
@@ -39,7 +44,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     }
   }, [hash])
   return (
-      <ChatSocketCtx.Provider value={{ socket }}>
+      <ChatSocketCtx.Provider value={{ socket, userBalance }}>
         {children}
       </ChatSocketCtx.Provider>
   )

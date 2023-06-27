@@ -3,11 +3,11 @@ import LeaderBoardIcon from '../../assets/img/leaderboard.svg'
 import FighterFirstIcon from '../../assets/img/leaderboard1.png'
 import FighterSecondIcon from '../../assets/img/leaderboard2.png'
 import { useSocketCtx } from '../../store/SocketStore'
-import { users } from '../../mocks/leaderboardMock'
 import { LeaderboardPodium } from './LeaderboardPodium'
 import { LeaderboardTable } from './LeaderboardTable'
 import { ILeaderbordData } from '../../types/Affilates'
 import { ILeaderbordUser } from '../../types/User'
+import { getTopThreeUsers } from '../../helpers/leaderboardHelpers'
 
 export const Leaderboard = () => {
   const [boardData, setBoardData] = useState<ILeaderbordUser[]>([])
@@ -19,7 +19,6 @@ export const Leaderboard = () => {
         ...item.user,
         bet: item.wagered,
         profit: item.reward
-
       })))
     })
   }, [])
@@ -68,7 +67,7 @@ export const Leaderboard = () => {
           />
         </div>
       </div>
-      <LeaderboardPodium users={(boardData.length && boardData) || users as any} />
+      <LeaderboardPodium users={getTopThreeUsers(boardData, 'level')} />
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
       <LeaderboardTable data={boardData} />
     </div>
