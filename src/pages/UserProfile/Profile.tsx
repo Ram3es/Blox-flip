@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import ButtonsToggle from '../../components/base/ButtonToggle'
@@ -11,17 +11,7 @@ import ItemsBar from './UserItemsBar'
 
 import { cards } from '../../mocks/cards'
 import type { IItemCard } from '../../types/ItemCard'
-
-const user = {
-  name: 'John Johnson',
-  avatar: '',
-  level: 11,
-  id: '1',
-  progress: {
-    current: 50,
-    required: 165
-  }
-}
+import { Context } from '../../store/Store'
 
 const actions = [
   { name: 'wagered' },
@@ -33,6 +23,8 @@ const actions = [
 const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
 
 const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
+  const { state } = useContext(Context)
+
   const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
   const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
   const [sorted, setSorted] = useState<IItemCard[]>([])
@@ -93,7 +85,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
     <div className='h-fit'>
       <div className='profile--box border border-blue-highlight rounded-lg mb-12 mt-18 md:mt-12 relative '>
         <div className='flex flex-col justify-center items-center mx-auto relative z-20 -mt-9 w-3/4 xs:w-3/5 md:w-1/3'>
-          <UserProgress isFullInfo={isOwnProfile} user={user} />
+          <UserProgress isFullInfo={isOwnProfile} user={state?.user ?? null} />
         </div>
         {!isOwnProfile && <Preferences />}
         <div className='flex flex-wrap pt-6 pb-2 px-2 border-t border-blue-highlight'>
