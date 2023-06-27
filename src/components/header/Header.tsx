@@ -93,7 +93,7 @@ export const Header = () => {
                   as={NavLink}
                   to={route.path}
                   key={route.name}
-                  className='block text-white text-13 py-1.5 leading-2 px-2.5 rounded bg-lightblue-secondary hover:bg-lightblue-wave mb-1.5 border border-blue-accent'
+                  className='block text-white text-13 py-1.5 leading-2 px-2.5 rounded bg-lightblue-secondary hover:bg-lightblue-wave mb-1.5 last:mb-0 border border-blue-accent'
                 >
                   {t(`common.games.${route.name}`)}
                 </Menu.Item>

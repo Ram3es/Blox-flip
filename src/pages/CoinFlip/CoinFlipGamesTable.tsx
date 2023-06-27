@@ -18,11 +18,10 @@ import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import { ICoinFlip } from '../../types/CoinFlip'
 
-import { coinFlipGamesMock } from '../../mocks/coinFlipMock'
 import { getCostByFieldName } from '../../helpers/numbers'
 
 const CoinFlipGamesTable = () => {
-  const [games, setGames] = useState<ICoinFlip[]>(coinFlipGamesMock)
+  const [games, setGames] = useState<ICoinFlip[]>([])
   const { socket } = useSocketCtx()
 
   const removeGameById = (games: ICoinFlip[], gameId: string): ICoinFlip[] =>
