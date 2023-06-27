@@ -1,4 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useSocketCtx } from '../../store/SocketStore'
+
 import { Menu } from '@headlessui/react'
 
 import DiamondIcon from '../icons/DiamondIcon'
@@ -26,6 +28,8 @@ const routesGames: RouteItem[] = [
 
 export const Header = () => {
   const { t } = useTranslation()
+  const { userBalance } = useSocketCtx()
+
   return (
     <div className='mb-8 md:mb-12 pl-4 xs:pl-8 flex flex-wrap justify-between bg-blue-accent rounded-lg relative'>
       <div className='flex items-center py-1 xs:py-2 md:py-4'>
@@ -123,7 +127,7 @@ export const Header = () => {
             <Menu.Button as={Button} variant='GreenOutlined'>
               <div className='px-1.5 xs:pr-1.5 py-1.5 flex items-center justify-center xs:justify-between'>
                 <div className='hidden xs:block'>
-                  <CoinsWithDiamond containerSize='Small' typographyQuantity={1500} />
+                  <CoinsWithDiamond containerSize='Small' typographyQuantity={userBalance} />
                 </div>
                 <div className='bg-green-primary flex items-center rounded'>
                   <span className='w-6 h-6 flex items-center justify-center text-white'>

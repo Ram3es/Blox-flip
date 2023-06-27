@@ -1,4 +1,3 @@
-import React from 'react'
 import { IUser } from '../../types/User'
 
 const UserProgress = ({ user, isFullInfo = true }: { user: IUser, isFullInfo?: boolean }) => {
