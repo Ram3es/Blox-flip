@@ -1,5 +1,4 @@
-import { FC, ReactNode, memo, useContext } from 'react'
-import { Context } from '../../store/Store'
+import { FC, ReactNode, memo } from 'react'
 import { useChat } from '../../store/ChatStore'
 
 import { Link } from 'react-router-dom'
@@ -37,7 +36,6 @@ interface ChatUserCardProps {
 }
 
 const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }) => {
-  const { state } = useContext(Context)
   const {
     setIsOpenBanModal,
     setIsOpenTimeoutModal,
@@ -118,8 +116,6 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     // }
   ]
 
-  const isAuth = () => state.user
-
   const renderActions = (action: userAction) => {
     const itemClasses =
       'flex items-center gap-2 capitalize block text-gray-primary text-13 py-1.5 leading-2 px-2.5 rounded bg-blue-highlight hover:bg-blue-accent hover:text-white mb-1.5 border border-blue-accent'
@@ -154,14 +150,14 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
   const getCurrentActions =
     variant === ChatUserCardVariant.Header
       ? profileActions
-      : isAuth()
+      : user
         ? chatAdminActions
         : chatUserActions
 
   return (
     <Menu>
       <Menu.Button as='div' className='w-full'>
-        {({ open }) => (
+        {({ open }: { open: boolean }) => (
           <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
             <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
               <Image image={user.avatar} />
@@ -177,9 +173,9 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
                   'text-white': variant === ChatUserCardVariant.Base
                 })}
               >
-                {user ? user.name : ''}
+                {user?.name || ''}
               </span>
-              <UserLevel level={user ? user.level : 0} />
+              <UserLevel level={user?.level || 0} />
             </div>
             <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
               <ArrowTriangleIcon

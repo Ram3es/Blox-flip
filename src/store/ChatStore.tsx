@@ -79,7 +79,6 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         selectedMessage,
         setSelectedMessage,
         historyChat
-
       }}
     >
       {children}
