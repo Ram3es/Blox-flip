@@ -16,8 +16,6 @@ import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { IItemCard } from '../../types/ItemCard'
 
-import { cards } from '../../mocks/cards'
-
 interface KingJoinModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
   handleFunction: () => void
@@ -29,7 +27,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
   const { socket } = useSocketCtx()
 
   const [safeMode, setSafeMode] = useState(false)
-  const [skins, setSkins] = useState<IItemCard[]>(cards)
+  const [skins, setSkins] = useState<IItemCard[]>([])
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 
