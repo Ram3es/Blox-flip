@@ -16,8 +16,6 @@ import { getCostByFieldName } from '../../helpers/numbers'
 
 import type { IItemCard } from '../../types/ItemCard'
 
-import { cards } from '../../mocks/cards'
-
 interface KingJoinModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
   handleFunction: () => void
@@ -29,7 +27,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
   const { socket } = useSocketCtx()
 
   const [safeMode, setSafeMode] = useState(false)
-  const [skins, setSkins] = useState<IItemCard[]>(cards)
+  const [skins, setSkins] = useState<IItemCard[]>([])
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 
@@ -87,7 +85,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
       }
     )
 
-    handleFunction() // delete after setup server
+    // handleFunction() // delete after setup server
   }, [safeMode])
 
   return (
@@ -102,7 +100,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
       >
         <div className='flex items-center gap-2'>
           <img src={KingGameIcon} alt='king' />
-          <span className='text-22 font-bold hidden xxs:block capitalize'>king deposit</span>
+          <span className='text-22 font-bold hidden xxs:block capitalize'>champion deposit</span>
         </div>
       </GameLobbyHeader>
       <GameLobbyItemsList items={skins} handleSelectItem={handleSelectSkin} />

@@ -13,7 +13,12 @@ let interval: any
 
 const Wheel = () => {
   const [historyGames, setHistory] = useState<possibleBets[]>([])
-  const [wheelBets, setWheelBets] = useState<WheelBetRecord>()
+  const [wheelBets, setWheelBets] = useState<WheelBetRecord>({
+    grey: [],
+    blue: [],
+    yellow: [],
+    red: []
+  })
   const [timer, setTimer] = useState<number>()
   const [wonTicket, setWonTicket] = useState<IWinTicket>()
   const [betAmount, setBetAmount] = useState(200)
