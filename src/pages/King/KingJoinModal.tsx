@@ -87,7 +87,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
       }
     )
 
-    handleFunction() // delete after setup server
+    // handleFunction() // delete after setup server
   }, [safeMode])
 
   return (
@@ -102,7 +102,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
       >
         <div className='flex items-center gap-2'>
           <img src={KingGameIcon} alt='king' />
-          <span className='text-22 font-bold hidden xxs:block capitalize'>king deposit</span>
+          <span className='text-22 font-bold hidden xxs:block capitalize'>champion deposit</span>
         </div>
       </GameLobbyHeader>
       <GameLobbyItemsList items={skins} handleSelectItem={handleSelectSkin} />
