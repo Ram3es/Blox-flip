@@ -9,6 +9,10 @@ export const Reducer = (state: IState, action: IAction): IState => {
   switch (action.type) {
     case 'LOGIN':
       return { ...state, user: action.payload }
+    case 'LOGOUT': {
+      localStorage.removeItem('token')
+      return { ...state, user: undefined }
+    }
     case 'CONNECT':
       return { ...state, hash: action.payload }
     default:

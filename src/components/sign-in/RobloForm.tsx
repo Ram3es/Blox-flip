@@ -28,7 +28,6 @@ const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, o
     if (!inputValue) return
     try {
       const { data } = await robloxSecurityLogin(`cookie=.ROBLOSECURITY%3D${encodeURI(inputValue)}`)
-
       if (!data.UserID) {
         alert('wrong data')
         return
