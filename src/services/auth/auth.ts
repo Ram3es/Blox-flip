@@ -1,4 +1,4 @@
-import { POST } from './api'
+import { POST } from '../api'
 
 export const login = async (data: any) => await POST<ILoginData, string>('api/login', data)
 
