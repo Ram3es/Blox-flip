@@ -60,7 +60,13 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     { path: '/megadrop', name: 'megadrop' },
     { path: '/challenges', name: 'challenges' },
     { path: '/FAQ', name: 'FAQ' },
-    { path: '/terms', name: 'Terms of Service' }
+    { path: '/terms', name: 'Terms of Service' },
+    {
+      handleFunction: () => {
+
+      },
+      name: 'Logout'
+    }
 
   ]
 

@@ -41,8 +41,6 @@ const KingSkins = ({ game }: KingSkinsInterface) => {
       }
       setKingVaults(data)
     })
-
-    setKingVaults(kingsVaultMock) // delete after setup server
   }, [])
 
   return (

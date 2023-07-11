@@ -43,6 +43,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
       })
     }
   }, [hash])
+
   return (
       <ChatSocketCtx.Provider value={{ socket, userBalance }}>
         {children}

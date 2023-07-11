@@ -6,6 +6,7 @@ import { CoinFlipProvider } from './CoinFlipStore'
 import { ChatProvider } from './ChatStore'
 import { BattleCaseProvider } from './BattleCaseStore'
 import SocketCtxProvider from './SocketStore'
+import { CaseOpeningProvider } from './CaseOpeningStore'
 
 export interface IState {
   user?: IUser
@@ -27,11 +28,13 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
     <Context.Provider value={{ state, dispatch }}>
       <SocketCtxProvider>
         <ChatProvider>
-          <BattleCaseProvider>
-            <PlinkoProvider>
-              <CoinFlipProvider>{children}</CoinFlipProvider>
-            </PlinkoProvider>
-          </BattleCaseProvider>
+          <CaseOpeningProvider>
+            <BattleCaseProvider>
+              <PlinkoProvider>
+                <CoinFlipProvider>{children}</CoinFlipProvider>
+              </PlinkoProvider>
+            </BattleCaseProvider>
+          </CaseOpeningProvider>
         </ChatProvider>
       </SocketCtxProvider>
     </Context.Provider>
