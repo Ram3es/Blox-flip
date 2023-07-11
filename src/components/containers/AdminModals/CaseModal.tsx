@@ -17,6 +17,7 @@ import RefreshIcon from '../../icons/RefreshIcon'
 import { useSocketCtx } from '../../../store/SocketStore'
 import { toast } from 'react-toastify'
 import { ICaseUnboxingItem, ICaseUnboxingPotentialItem } from '../../../types/Cases'
+import { getRandomId } from '../../../helpers/casesHelpers'
 
 interface CaseModalProps {
   handleClose: () => void
@@ -86,7 +87,7 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
             data.map((skin) => ({
               ...skin,
               isSelected: false,
-              id: Date.now().toString(36) + Math.random().toString(36).substring(2)
+              id: getRandomId()
             }))
           )
         }
@@ -101,7 +102,7 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
               return {
                 ...skin,
                 isSelected: typeof isAlreadySelected !== 'undefined',
-                id: Date.now().toString(36) + Math.random().toString(36).substring(2)
+                id: getRandomId()
               }
             })
           )
@@ -155,12 +156,12 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
               'create_case',
               {
                 name: values.caseName,
-                short: values.caseName,
+                short: values.caseName.toLowerCase().replace(/\s/g, '').slice(0, 12),
                 image: values.image,
                 cost: values.casePrice,
                 skins: getSelectedSkinsIds(skins)
               },
-              (response: { error: boolean; message: string }) => {
+              (response: { error: boolean, message: string }) => {
                 if (response.error) {
                   toast.error(response.message)
                 }

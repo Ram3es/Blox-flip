@@ -4,7 +4,7 @@ import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { SPIN_TIME, SPIN_TIME_MILLISECONDS } from '../../../constants/cases'
-import { getRandomCards } from '../../../helpers/casesHelpers'
+import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 
 import type { ICaseUnboxingPotentialItem, ICaseUnboxingPotentialItemWithIds } from '../../../types/Cases'
 
@@ -115,7 +115,7 @@ export const CaseOpening = () => {
     //   }
     //   wonItemsArray.push(itemWon)
     // }
-    const wonItemsWithIds = wonItemsArray.map(item => ({ ...item, id: Date.now().toString(36) + Math.random().toString(36).substring(2) }))
+    const wonItemsWithIds = wonItemsArray.map(item => ({ ...item, id: getRandomId() }))
     setRouletteItems((prevItems) => {
       const rouletteItems = [...prevItems]
       for (let i = 0; i < lineCount; i++) {
