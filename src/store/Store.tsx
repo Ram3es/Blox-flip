@@ -1,4 +1,4 @@
-import React, { createContext, FC, PropsWithChildren, useReducer } from 'react'
+import React, { createContext, FC, PropsWithChildren, useContext, useReducer } from 'react'
 import { IUser } from '../types/User'
 import { PlinkoProvider } from './PlinkoStore'
 import { Reducer, IAction } from './Reducer'
@@ -21,6 +21,8 @@ interface IContext {
 }
 
 export const Context = createContext<IContext>({ state: initialState, dispatch: () => null })
+
+export const useAppStore = () => useContext(Context)
 
 const Store: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)

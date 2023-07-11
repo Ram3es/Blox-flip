@@ -1,6 +1,18 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
-import { Context } from './Store'
+import { useAppStore } from './Store'
+import { decodeBase64 } from '../helpers/decodeToken'
+
+const user = {
+  id: 'aass2b44b123ghg346',
+  name: 'John Johnson',
+  avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg',
+  level: 11,
+  progress: {
+    current: 50,
+    required: 165
+  }
+}
 
 export type TSocket = Socket
 export interface ChatSocketCtxState {
@@ -17,7 +29,7 @@ const ChatSocketCtx = createContext<ChatSocketCtxState>({} as ChatSocketCtxState
 export const useSocketCtx = () => useContext(ChatSocketCtx)
 
 const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
-  const { state: { hash }, dispatch } = useContext(Context)
+  const { state: { hash }, dispatch } = useAppStore()
   const [userBalance, setUserBalance] = useState(0)
 
   useEffect(() => {
@@ -27,7 +39,6 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         setUserBalance(data)
       }
     })
-
     socket.connect()
 
     return () => {
@@ -37,9 +48,12 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     if (token ?? hash) {
+      if (token) {
+        const decoded: IRobloxSecurityData = JSON.parse(decodeBase64((token)))
+        dispatch({ type: 'LOGIN', payload: { ...user, name: decoded.UserName, avatar: decoded.ThumbnailUrl } })
+      }
+
       socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
-        console.log(res)
-        // dispatch({ type: 'LOGIN', payload: res.data })
       })
     }
   }, [hash])
