@@ -90,9 +90,12 @@ const BattleModal = ({
         {filtered.map((card) => (
           <UnboxingCard
             key={card.id}
-            id={card.id}
+            // id={card.id}
             name={card.name}
-            price={card.price}
+            img={'qdrwqrd'}
+            short={card.name}
+            // price={card.price}
+            cost={21224}
             onSelect={() => onSelect(card)}
           />
         ))}

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import GreenTipSelect from '../../components/common/GreenTipSelect'
@@ -7,12 +7,13 @@ import SortSelect from '../../components/common/SortSelect'
 import { sortingVariants } from '../../constants/sorting'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import { searchData } from '../../helpers/searchData'
-import { cards, unboxCard } from '../../mocks/cards'
-import { IItemCard } from '../../types/ItemCard'
+import { cards } from '../../mocks/cards'
 import { sortData } from '../../helpers/sortData'
 import { useNavigate } from 'react-router-dom'
 import UnboxingCard from '../../components/common/Cards/UnboxingCard'
 import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
+import { ICaseUnboxingItem } from '../../types/Cases'
+import { useCaseOpening } from '../../store/CaseOpeningStore'
 
 const tabs = [
   { variant: 'Hot' },
@@ -22,6 +23,7 @@ const tabs = [
 ]
 
 const Unboxing = () => {
+  const { cases } = useCaseOpening()
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
   const navigate = useNavigate()
 
@@ -29,14 +31,15 @@ const Unboxing = () => {
     useToolbarState()
 
   const ranged = useMemo(
-    () => unboxCard.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
-    [priceRange, unboxCard]
+    () => cases.filter((card) => card.cost >= priceRange.from && card.cost <= priceRange.to),
+    [priceRange, cases]
   )
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, ranged])
-  const sorted = useMemo(() => {
+
+  const sorted: ICaseUnboxingItem[] = useMemo(() => {
     if (sortOptions) {
       const { direction, sortBy } = sortOptions
-      return sortData(filtered, sortBy as keyof IItemCard, direction)
+      return sortData(filtered, sortBy as keyof ICaseUnboxingItem, direction)
     } else {
       return filtered
     }
@@ -89,11 +92,12 @@ const Unboxing = () => {
         <div className='flex flex-wrap -mx-2 mb-8 md:mb-12'>
           {sorted.map((card) => (
             <UnboxingCard
-              key={card.id}
-              id={card.id}
+              key={card.name}
               name={card.name}
-              price={card.price}
-              onSelect={() => navigate(card.id)}
+              cost={card.cost}
+              short={card.short}
+              img={card.img}
+              onSelect={() => navigate(card.short)}
             />
           ))}
         </div>

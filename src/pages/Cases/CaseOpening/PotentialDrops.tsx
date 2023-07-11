@@ -1,15 +1,10 @@
-import { FC } from 'react'
 import ItemCard from '../../../components/common/Cards/ItemCard'
 
-import { ICaseItem } from '../../../types/Cases'
+import { ICaseUnboxingPotentialItem } from '../../../types/Cases'
 
 import { DoubleRombIcon } from '../../../components/icons/DoubleRombIcon'
 
-interface PotentialDropsProps {
-  cards: ICaseItem[]
-}
-
-export const PotentialDrops: FC<PotentialDropsProps> = ({ cards }) => {
+export const PotentialDrops = ({ cards }: { cards: ICaseUnboxingPotentialItem[] }) => {
   return (
     <>
       <div className='flex justify-center items-center mb-6'>
@@ -28,13 +23,13 @@ export const PotentialDrops: FC<PotentialDropsProps> = ({ cards }) => {
       <div className='flex flex-wrap -mx-1 mb-8 md:mb-12 text-xs'>
         {cards.map((card) => (
           <ItemCard
-            key={card.id}
-            id={card.id}
-            price={card.price}
+            key={card.name}
+            id={Date.now().toString(36) + Math.random().toString(36).substring(2)}
+            price={card.cost}
             image={card.image}
-            chance={card.chance}
+            chance={card.odds}
             variant='CaseOpening'
-            name={card.itemName}
+            name={card.name}
             color={card.color}
           />
         ))}

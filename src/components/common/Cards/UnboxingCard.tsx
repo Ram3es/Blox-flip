@@ -1,15 +1,12 @@
 import { FC } from 'react'
-import { IMAGES } from '../../../constants/images'
 import CoinsWithDiamond from '../CoinsWithDiamond'
+import { ICaseUnboxingItem } from '../../../types/Cases'
 
-interface IUnboxingCardProps {
-  id: string
-  name: string
-  price: number
-  onSelect: Function
+export interface UnboxingCardInterface extends Omit<ICaseUnboxingItem, 'items'> {
+  onSelect: () => void
 }
 
-const UnboxingCard: FC<IUnboxingCardProps> = ({ id, name, price, onSelect }) => {
+const UnboxingCard: FC<UnboxingCardInterface> = ({ name, cost, img, short, onSelect }) => {
   return (
     <div className='px-2 w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/6 shrink-0 lg:w-1/6 mb-4'>
       <div
@@ -23,8 +20,8 @@ const UnboxingCard: FC<IUnboxingCardProps> = ({ id, name, price, onSelect }) => 
             </div>
             <div className='w-full pb-60% h-0 relative mb-5'>
               <img
-                src={IMAGES.greenBox}
-                alt='greenbox'
+                src={img}
+                alt={short}
                 width='93'
                 height='101'
                 loading='lazy'
@@ -32,7 +29,7 @@ const UnboxingCard: FC<IUnboxingCardProps> = ({ id, name, price, onSelect }) => 
                 className='absolute object-contain w-full h-full'
               />
             </div>
-            <CoinsWithDiamond typographyQuantity={price} />
+            <CoinsWithDiamond typographyQuantity={cost} />
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ export const useToolbarState = () => {
   useEffect(() => {
     debounce(() => setSearchBy(value))
   }, [value])
+
   return {
     value,
     onChange,

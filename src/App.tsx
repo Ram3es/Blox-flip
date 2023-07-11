@@ -79,7 +79,7 @@ export const App = () => {
           <Route path='/jackpot' element={<Jackpot />} />
 
           <Route path='/unboxing' element={<Unboxing />} />
-          <Route path='/unboxing/:id' element={<CaseOpening />} />
+          <Route path='/unboxing/:short' element={<CaseOpening />} />
 
           <Route path='/battles-lobby' element={<BattleLobby />} />
           <Route path='/create-battle' element={<CreateBattle />} />

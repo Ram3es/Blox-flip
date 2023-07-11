@@ -6,9 +6,7 @@ import clsx from 'clsx'
 import { SPIN_TIME, SPIN_TIME_MILLISECONDS } from '../../../constants/cases'
 import { getRandomCards } from '../../../helpers/casesHelpers'
 
-import type { ICaseItem } from '../../../types/Cases'
-
-import { caseCards } from '../../../mocks/caseOpeningMock'
+import type { ICaseUnboxingPotentialItem, ICaseUnboxingPotentialItemWithIds } from '../../../types/Cases'
 
 import { Button } from '../../../components/base/Button'
 import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
@@ -20,18 +18,25 @@ import { OpeningLineIcon } from '../../../components/icons/OpeningLineIcon'
 import UnboxingIcon from '../../../components/icons/UnboxingIconTitle'
 import ItemBig from '../../../assets/img/item_big1.png'
 import CoinsWithDiamond from '../../../components/common/CoinsWithDiamond'
+import { useCaseOpening } from '../../../store/CaseOpeningStore'
+import { useSocketCtx } from '../../../store/SocketStore'
 
 export const CaseOpening = () => {
-  const { id } = useParams()
-  const [cards] = useState<ICaseItem[]>(caseCards)
+  const { socket } = useSocketCtx()
+  const { shortName } = useParams()
+  const { cases } = useCaseOpening()
+  const [currentCasePrice, setCurrentCasePrice] = useState(0)
+  const [potentialDropItems, setPotentialDropsItems] = useState<ICaseUnboxingPotentialItem[]>([])
+  const [wonItem, setWonItem] = useState<ICaseUnboxingPotentialItemWithIds[]>([])
+
   const navigate = useNavigate()
-  console.log('rerender')
+
   const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
 
-  const [rouletteItems, setRouletteItems] = useState<Array<{ items: ICaseItem[] }>>([
-    { items: getRandomCards(100, cards) }
+  const [rouletteItems, setRouletteItems] = useState<Array<{ items: ICaseUnboxingPotentialItemWithIds[] }>>([
+    { items: getRandomCards<ICaseUnboxingPotentialItemWithIds>(100, potentialDropItems as ICaseUnboxingPotentialItemWithIds[]) }
   ])
 
   const refreshLinesByCount = (count: number) => {
@@ -44,7 +49,7 @@ export const CaseOpening = () => {
         newItems.splice(localLineCount)
       } else if (newItems.length < localLineCount) {
         for (let i = newItems.length; i < localLineCount; i++) {
-          newItems.push({ items: getRandomCards(100, cards) })
+          newItems.push({ items: getRandomCards(100, potentialDropItems as ICaseUnboxingPotentialItemWithIds[]) })
         }
       }
       return newItems
@@ -54,8 +59,6 @@ export const CaseOpening = () => {
   useEffect(() => {
     refreshLinesByCount(lineCount)
   }, [lineCount])
-
-  const [wonItem, setWonItem] = useState<ICaseItem[]>()
 
   const reset = () => {
     if (itemsRef.current) {
@@ -67,7 +70,7 @@ export const CaseOpening = () => {
     setRouletteItems(() => {
       const newItems = []
       for (let i = 0; i < lineCount; i++) {
-        newItems.push({ items: getRandomCards(100, cards) })
+        newItems.push({ items: getRandomCards(100, potentialDropItems as ICaseUnboxingPotentialItemWithIds[]) })
       }
       return newItems
     })
@@ -101,40 +104,55 @@ export const CaseOpening = () => {
     requestAnimationFrame(animate)
   }
 
-  const addWonItemInLines = () => {
-    const wonItemsArray: ICaseItem[] = []
-    for (let i = 0; i < lineCount; i++) {
-      const randomCardIndex = Math.floor(Math.random() * cards.length)
-      const randomCard = cards[randomCardIndex]
-      const itemWon = {
-        ...randomCard,
-        id: `${randomCard.id} ${new Date().getTime()}`
-      }
-      wonItemsArray.push(itemWon)
-    }
+  const addWonItemInLines = (wonItemsArray: ICaseUnboxingPotentialItem[]) => {
+    // const wonItemsArray: ICaseUnboxingPotentialItem[] = []
+    // for (let i = 0; i < lineCount; i++) {
+    //   const randomCardIndex = Math.floor(Math.random() * potentialDropItems.length)
+    //   const randomCard = potentialDropItems[randomCardIndex]
+    //   const itemWon = {
+    //     ...randomCard,
+    //     id: `${randomCard.id} ${new Date().getTime()}`
+    //   }
+    //   wonItemsArray.push(itemWon)
+    // }
+    const wonItemsWithIds = wonItemsArray.map(item => ({ ...item, id: Date.now().toString(36) + Math.random().toString(36).substring(2) }))
     setRouletteItems((prevItems) => {
       const rouletteItems = [...prevItems]
       for (let i = 0; i < lineCount; i++) {
         const rouletteItem = [...rouletteItems[i].items]
-        rouletteItem[87] = wonItemsArray[i]
+        rouletteItem[87] = wonItemsWithIds[i]
         rouletteItems[i] = { items: rouletteItem }
       }
       return rouletteItems
     })
-    setWonItem(() => wonItemsArray)
+    setWonItem(() => wonItemsWithIds)
   }
 
   const play = () => {
-    reset()
-    addWonItemInLines()
-    spin(SPIN_TIME)
-    setIsSpin(true)
+    socket.emit('case_open', { short: shortName, num: lineCount }, (err: boolean, results: ICaseUnboxingPotentialItem[]) => {
+      if (err) {
+        return
+      }
+      reset()
+      addWonItemInLines(results)
+      spin(SPIN_TIME)
+      setIsSpin(true)
+    })
   }
 
   useEffect(() => {
     reset()
-    addWonItemInLines()
+    addWonItemInLines([])
   }, [lineCount])
+
+  useEffect(() => {
+    const currentCase = cases.find(item => item.short === shortName)
+
+    if (!currentCase) return
+
+    setCurrentCasePrice(currentCase.cost)
+    setPotentialDropsItems(currentCase.items)
+  }, [cases])
 
   return (
     <div className='max-w-1190 w-full m-auto'>
@@ -154,7 +172,7 @@ export const CaseOpening = () => {
           <div className='w-6 shrink-0 mr-3 text-blue-golf'>
             <UnboxingIcon iconClasses='w-6 h-6 ' />
           </div>
-          <span className='text-2xl font-bold'>{`Diamond Case ${String(id)}`}</span>
+          <span className='text-2xl font-bold'>{`Diamond Case ${String(shortName)}`}</span>
         </div>
         <Link to='/provably-fair#cases' className='relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-3.5 py-1 leading-6 cursor-pointer mb-4 flex items-center'>
           <div className='w-4 shrink-0 mr-2.5'>
@@ -169,7 +187,7 @@ export const CaseOpening = () => {
             <div className='flex flex-wrap justify-center gap-4 sm:justify-start min-w-fit mb-5 z-20 relative'>
               <CoinsWithDiamond
                 containerColor='GreenDarken'
-                typographyQuantity={1500}
+                typographyQuantity={currentCasePrice * lineCount}
                 typographyFontSize='Size16'
               />
               <Button
@@ -240,12 +258,13 @@ export const CaseOpening = () => {
                     }
                   }}
                 >
-                  {item.items.map((item: ICaseItem) => (
+                  {item.items.map((item: ICaseUnboxingPotentialItemWithIds) => (
                     <CasesLineItem
-                      key={item.id}
+                      key={item.name}
                       timeoutToShow={SPIN_TIME_MILLISECONDS}
                       itsWinning={!!wonItem && item.id === wonItem[index]?.id}
                       image={item.image}
+                      name={item.name}
                     />
                   ))}
                 </div>
@@ -254,7 +273,7 @@ export const CaseOpening = () => {
           ))}
         </div>
       </div>
-      <PotentialDrops cards={cards} />
+      <PotentialDrops cards={potentialDropItems} />
     </div>
   )
 }
