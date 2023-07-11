@@ -19,7 +19,8 @@ enum ItemCardVariantEnum {
   CaseOpening = 'CaseOpening',
   FourByFour = 'FourByFour',
   CoinFlip = 'CoinFlip',
-  KingList = 'KingList'
+  KingList = 'KingList',
+  CaseAdminItem = 'CaseAdminItem',
 }
 
 export interface IItemCardProps {
@@ -71,9 +72,10 @@ const ItemCard: FC<IItemCardProps> = ({
       'xxs:w-1/4 xs:w-1/5 md:w-1/6 lg:w-1/7': variant === ItemCardVariantEnum.Standard,
       'xxs:w-1/4 xs:w-1/5 md:w-1/7 lg:w-1/9 is-percent': variant === ItemCardVariantEnum.CaseOpening,
       'xxs:w-1/4 xs:w-1/5 lg:w-3/9 md:min-h-40 point-hidden': variant === ItemCardVariantEnum.CoinFlip,
-      'w-full  xxs:w-2/3 xs:w-1/2 x sm:w-1/3 lg:w-1/4  min-h-[160px] text-xs point-hidden ':
+      'w-full xxs:w-2/3 xs:w-1/2 x sm:w-1/3 lg:w-1/4 min-h-[160px] text-xs point-hidden ':
         variant === ItemCardVariantEnum.FourByFour,
-      'xxs:w-1/4 max-w-[121px] max-h-[160px] text-xs point-hidden': variant === ItemCardVariantEnum.KingList
+      'xxs:w-1/4 max-w-[121px] max-h-[160px] text-xs point-hidden': variant === ItemCardVariantEnum.KingList,
+      'xxs:w-1/4 max-w-[121px] max-h-[180px] text-xs point-hidden': variant === ItemCardVariantEnum.CaseAdminItem
     }
   )
 
