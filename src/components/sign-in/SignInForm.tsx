@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState, useContext, useCallback } from 'react'
 import { Context } from '../../store/Store'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
-import { login, twoStepVerification } from '../../services/user.service'
+import { login, twoStepVerification } from '../../services/auth/auth'
 import { decodeBase64 } from '../../helpers/decodeToken'
 import AuthCodeModal from '../containers/AuthCode'
 

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useContext, useState } from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
-import { robloxSecurityLogin } from '../../services/user.service'
+import { robloxSecurityLogin } from '../../services/auth/auth'
 import { Context } from '../../store/Store'
 import { encodeBase64 } from '../../helpers/decodeToken'
 
@@ -28,7 +28,6 @@ const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, o
     if (!inputValue) return
     try {
       const { data } = await robloxSecurityLogin(`cookie=.ROBLOSECURITY%3D${encodeURI(inputValue)}`)
-
       if (!data.UserID) {
         alert('wrong data')
         return

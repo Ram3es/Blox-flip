@@ -16,6 +16,7 @@ import TipIcon from '../icons/TipIcon'
 import TimeoutIcon from '../icons/TimeoutIcon'
 
 import type { IChatUser } from '../../types/User'
+import { useAppStore } from '../../store/Store'
 
 interface userAction {
   name: string
@@ -45,6 +46,8 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     setSelectedMessage
   } = useChat()
 
+  const { dispatch } = useAppStore()
+
   const baseIconSizeClasses = 'w-3 h-3'
 
   const profileActions: userAction[] = [
@@ -60,7 +63,13 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     { path: '/megadrop', name: 'megadrop' },
     { path: '/challenges', name: 'challenges' },
     { path: '/FAQ', name: 'FAQ' },
-    { path: '/terms', name: 'Terms of Service' }
+    { path: '/terms', name: 'Terms of Service' },
+    {
+      handleFunction: () => {
+        dispatch({ type: 'LOGOUT' })
+      },
+      name: 'Logout'
+    }
 
   ]
 

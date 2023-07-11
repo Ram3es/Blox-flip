@@ -11,3 +11,12 @@ interface IRobloxUser {
   name: string
   displayName?: string
 }
+
+interface IRobloxSecurityData {
+  IsAnyBuildersClubMember: boolean
+  IsPremium: boolean
+  RobuxBalance: number
+  ThumbnailUrl: string
+  UserID: number
+  UserName: string
+}
