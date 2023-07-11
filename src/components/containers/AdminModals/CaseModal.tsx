@@ -8,33 +8,44 @@ import InputWithInlineLabel from '../../common/InputWithInlineLabel'
 import ActionModalHeader from './ActionModalHeader'
 import SelectWithInlineLabel from '../../common/SelectWithInlineLabel'
 
-import { ICaseAdminItem } from '../../../types/CaseAdmin'
 import { Tab } from '@headlessui/react'
-import { useCallback, useState } from 'react'
-import { cards } from '../../../mocks/cards'
+import { useCallback, useEffect, useState } from 'react'
 import ItemCard from '../../common/Cards/ItemCard'
-import { IItemCard } from '../../../types/ItemCard'
 import { getCostByFieldName } from '../../../helpers/numbers'
 import CoinsWithDiamond from '../../common/CoinsWithDiamond'
 import RefreshIcon from '../../icons/RefreshIcon'
+import { useSocketCtx } from '../../../store/SocketStore'
+import { toast } from 'react-toastify'
+import { ICaseUnboxingItem, ICaseUnboxingPotentialItem } from '../../../types/Cases'
 
 interface CaseModalProps {
   handleClose: () => void
-  caseData: ICaseAdminItem | null
+  caseData: ICaseUnboxingItem | null
+}
+
+interface SkinInterface extends ICaseUnboxingPotentialItem {
+  id: string
+  isSelected: boolean
 }
 
 const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
+  const { socket } = useSocketCtx()
+
   const [tabIndex, setTabIndex] = useState(0)
 
-  const [skins, setSkins] = useState<IItemCard[]>(cards)
+  const [skins, setSkins] = useState<SkinInterface[]>([])
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 
-  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: string, isSelected: boolean) => {
+  const updateArrayBySelectedSkin = (
+    skins: SkinInterface[],
+    skinId: string,
+    isSelected: boolean
+  ) => {
     return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected = (skins: IItemCard[], skinId: string) => {
+  const isItemSelected = (skins: SkinInterface[], skinId: string) => {
     return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
@@ -58,12 +69,46 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
   }, [])
 
   const getCostInSelectedSkins = (): number => {
-    return getCostByFieldName(selectedSkins, 'price')
+    return getCostByFieldName(selectedSkins, 'cost')
   }
 
-  const getSelectedSkinsIds = (selectedSkins: IItemCard[]) => {
+  const getSelectedSkinsIds = (selectedSkins: SkinInterface[]) => {
     return selectedSkins.map((skin) => skin.id)
   }
+
+  useEffect(() => {
+    socket.emit(
+      'load_items',
+      { type: 'market' },
+      ({ data }: { data: ICaseUnboxingPotentialItem[] }) => {
+        if (!caseData) {
+          setSkins(
+            data.map((skin) => ({
+              ...skin,
+              isSelected: false,
+              id: Date.now().toString(36) + Math.random().toString(36).substring(2)
+            }))
+          )
+        }
+        if (caseData) {
+          setSkins(
+            // return mergedArray
+            data.map((skin) => {
+              const isAlreadySelected = caseData.items.find(
+                (selectedItem) => skin.name === selectedItem.name
+              )
+
+              return {
+                ...skin,
+                isSelected: typeof isAlreadySelected !== 'undefined',
+                id: Date.now().toString(36) + Math.random().toString(36).substring(2)
+              }
+            })
+          )
+        }
+      }
+    )
+  }, [])
 
   return (
     <ModalWrapper
@@ -99,14 +144,31 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
         </Tab.List>
         <Formik
           initialValues={{
-            caseName: caseData?.caseName ?? '',
-            selectedCategory: caseData?.category ?? '',
-            casePrice: caseData?.price ?? '0',
-            image: caseData?.image ?? '...'
+            caseName: caseData?.name ?? '',
+            // selectedCategory: caseData?.category ?? '',
+            casePrice: caseData?.cost ?? '0',
+            image: caseData?.img ?? '...'
           }}
           onSubmit={(values) => {
             console.log(values)
-            handleClose()
+            socket.emit(
+              'create_case',
+              {
+                name: values.caseName,
+                short: values.caseName,
+                image: values.image,
+                cost: values.casePrice,
+                skins: getSelectedSkinsIds(skins)
+              },
+              (response: { error: boolean; message: string }) => {
+                if (response.error) {
+                  toast.error(response.message)
+                }
+                if (!response.error) {
+                  handleClose()
+                }
+              }
+            )
           }}>
           {({ handleChange, values }) => (
             <Form>
@@ -175,8 +237,9 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                             variant="CaseAdminItem"
                             key={caseItem.id}
                             onSelect={handleSelectSkin}
+                            price={caseItem.cost}
                             {...caseItem}
-                            />
+                          />
                         ))}
                       </div>
                     </div>

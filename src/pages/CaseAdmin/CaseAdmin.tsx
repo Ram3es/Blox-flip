@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   createColumnHelper,
   flexRender,
@@ -19,22 +19,23 @@ import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import { IMAGES } from '../../constants/images'
 
-import { ICaseAdminItem } from '../../types/CaseAdmin'
-
-import { caseAdminMock } from '../../mocks/caseAdmin'
+import { useSocketCtx } from '../../store/SocketStore'
+import { ICaseUnboxingItem } from '../../types/Cases'
 
 interface ICaseModalState {
   state: boolean
-  caseData: ICaseAdminItem | null
+  caseData: ICaseUnboxingItem | null
 }
 
 const caseModalInitialState: ICaseModalState = {
-  state: true,
+  state: false,
   caseData: null
 }
 
 const CaseAdmin = () => {
-  const [data] = useState<ICaseAdminItem[]>([...caseAdminMock])
+  const { socket } = useSocketCtx()
+
+  const [data, setData] = useState<ICaseUnboxingItem[]>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [caseModal, setCaseModal] = useState<ICaseModalState>(caseModalInitialState)
 
@@ -42,7 +43,7 @@ const CaseAdmin = () => {
     setCaseModal({ state: true, caseData: null })
   }, [])
 
-  const handleEditCase = useCallback((caseData: ICaseAdminItem) => {
+  const handleEditCase = useCallback((caseData: ICaseUnboxingItem) => {
     setCaseModal({ state: true, caseData })
   }, [])
 
@@ -50,9 +51,9 @@ const CaseAdmin = () => {
     setCaseModal({ state: false, caseData: null })
   }, [])
 
-  const columnHelper = createColumnHelper<ICaseAdminItem>()
-  const columns: Array<ColumnDef<ICaseAdminItem, any>> = [
-    columnHelper.accessor((row: ICaseAdminItem) => row, {
+  const columnHelper = createColumnHelper<ICaseUnboxingItem>()
+  const columns: Array<ColumnDef<ICaseUnboxingItem, any>> = [
+    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
       id: 'case',
       header: () => 'Case',
       cell: ({ row }) => (
@@ -60,28 +61,28 @@ const CaseAdmin = () => {
           <div className='w-[47px] h-[53px] flex items-center justify-center'>
             <img src={IMAGES.greenBox} className='w-full h-full object-contain' alt='' />
           </div>
-          <p className='font-bold text-white text-13'>{row.original.caseName}</p>
+          <p className='font-bold text-white text-13'>{row.original.name}</p>
         </div>
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('isPublic', {
+    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
       id: 'public',
       header: () => 'Public',
-      cell: (props) => (
-        <span className='font-semibold'>{props.cell.getValue() ? 'Yes' : 'No'}</span>
+      cell: ({ row }) => (
+        <span className='font-semibold'>{row.original.cost ? 'Yes' : 'No'}</span>
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('category', {
+    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
       id: 'category',
       header: () => 'Category',
-      cell: ({ cell }) => (
-        <span className='capitalize font-bold text-white text-13'>{cell.getValue()}</span>
+      cell: ({ row }) => (
+        <span className='capitalize font-bold text-white text-13'>Test category</span>
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('price', {
+    columnHelper.accessor('cost', {
       id: 'price',
       header: 'Price',
       cell: ({ cell }) => (
@@ -95,7 +96,7 @@ const CaseAdmin = () => {
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ICaseAdminItem) => row, {
+    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
       id: 'profit',
       header: 'Create new',
       cell: ({ row }) => (
@@ -127,6 +128,15 @@ const CaseAdmin = () => {
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel()
   })
+
+  useEffect(() => {
+    socket.emit('load_admin_cases', (err: boolean, cases: []) => {
+      if (err) {
+        return
+      }
+      setData(cases)
+    })
+  }, [socket])
 
   return (
     <>
