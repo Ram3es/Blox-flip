@@ -185,7 +185,8 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                         label="Case Name"
                       />
                       <SelectWithInlineLabel
-                        value={values.selectedCategory}
+                        // value={values.selectedCategory}
+                        value=''
                         label="Select Category"
                         onChange={handleChange('selectedCategory')}
                         options={['Not best category', 'Best category', 'None', 'level cases']}
