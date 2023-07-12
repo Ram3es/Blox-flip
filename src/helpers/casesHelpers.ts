@@ -14,3 +14,7 @@ export const getRandomCards = <T extends object>(count: number, availableCards: 
   }
   return cards
 }
+
+export const getRandomId = () => {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2)
+}

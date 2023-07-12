@@ -3,6 +3,7 @@ import ItemCard from '../../../components/common/Cards/ItemCard'
 import { ICaseUnboxingPotentialItem } from '../../../types/Cases'
 
 import { DoubleRombIcon } from '../../../components/icons/DoubleRombIcon'
+import { getRandomId } from '../../../helpers/casesHelpers'
 
 export const PotentialDrops = ({ cards }: { cards: ICaseUnboxingPotentialItem[] }) => {
   return (
@@ -24,7 +25,7 @@ export const PotentialDrops = ({ cards }: { cards: ICaseUnboxingPotentialItem[] 
         {cards.map((card) => (
           <ItemCard
             key={card.name}
-            id={Date.now().toString(36) + Math.random().toString(36).substring(2)}
+            id={getRandomId()}
             price={card.cost}
             image={card.image}
             chance={card.odds}
