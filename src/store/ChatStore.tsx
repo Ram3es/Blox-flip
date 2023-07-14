@@ -45,13 +45,13 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     socket.on('chat_history', (histoyChat) => {
       setHistoryChat(histoyChat.data)
     })
-    socket.on('chat_receive', ({ data }) => {
+    socket.on('chat_receive', (data) => {
       setHistoryChat(data)
     })
-    socket.on('remove_message', ({ data }) => {
+    socket.on('remove_message', (data) => {
       setHistoryChat(prev => [...prev.filter(msg => msg.hash !== data)])
     })
-    socket.on('remove_all_message', ({ data }) => {
+    socket.on('remove_all_message', (data) => {
       setHistoryChat(prev => [...prev.filter(msg => msg.user.id !== data)])
     })
 
