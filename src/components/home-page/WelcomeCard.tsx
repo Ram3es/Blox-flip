@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { IUser } from '../../types/User'
+import { IUser, IUserLevel } from '../../types/User'
 import UserProgress from '../user/UserProgress'
 
 import line from '../../assets/img/welcome_line.svg'

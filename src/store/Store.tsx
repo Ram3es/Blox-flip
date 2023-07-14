@@ -1,5 +1,5 @@
 import React, { createContext, FC, PropsWithChildren, useContext, useReducer } from 'react'
-import { IUser } from '../types/User'
+import { IUser, IUserLevel } from '../types/User'
 import { PlinkoProvider } from './PlinkoStore'
 import { Reducer, IAction } from './Reducer'
 import { CoinFlipProvider } from './CoinFlipStore'
