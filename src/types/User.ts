@@ -1,4 +1,10 @@
-export interface IUser {
+export interface IUserLevel {
+  level: number
+  exp?: number
+  levelup?: number
+}
+
+export interface IUser extends IUserLevel {
   id: string
   name: string
   avatar: string

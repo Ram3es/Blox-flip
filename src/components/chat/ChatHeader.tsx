@@ -6,10 +6,12 @@ import clsx from 'clsx'
 import SignInModal from '../containers/SignInModal'
 import ChatUserCard from './ChatUserCard'
 import { Button } from '../base/Button'
+import { useSocketCtx } from '../../store/SocketStore'
 
 export const ChatHeader: FC = () => {
   const [isOpenSignInModal, setIsOpenModal] = useState(false)
   const { state } = useContext(Context)
+  const { userLevel } = useSocketCtx()
 
   return (
     <>
@@ -19,7 +21,7 @@ export const ChatHeader: FC = () => {
           'px-2 py-3 flex items-center justify-center': !state.user
         })}
       >
-        {state.user && <ChatUserCard variant='Header' user={state.user} />}
+        {state.user && <ChatUserCard variant='Header' user={{ ...state.user, ...userLevel }} />}
         {!state.user && (
           <Button color='GreenPrimary' variant='GreenGradient' onClick={() => setIsOpenModal(true)}>
             <span className='px-24 py-2'>Login</span>
