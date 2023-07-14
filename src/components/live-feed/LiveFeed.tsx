@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
@@ -9,22 +9,23 @@ import { GameCell } from '../table/CellFormatters/GameCell'
 import { TimeCell } from '../table/CellFormatters/TimeCell'
 import { FilterHeader } from '../table/FilterHeader'
 
-import { users } from '../../mocks/liveFeedUsers'
-import type { ISecondUser } from '../../types/User'
+import type { ILiveFeedUser } from '../../types/User'
 import type { FilterVariant } from '../../types/Table'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { Context } from '../../store/Store'
+import { useSocketCtx } from '../../store/SocketStore'
 
 const RedDotIcon = () => {
   return (
-    <span className='inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2'></span>
+    <span className="inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2"></span>
   )
 }
 
 export const LiveFeed = () => {
+  const { socket } = useSocketCtx()
   const { state } = useContext(Context)
-  const [data] = useState<ISecondUser[]>([...users])
+  const [data, setData] = useState<ILiveFeedUser[]>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
@@ -65,14 +66,14 @@ export const LiveFeed = () => {
     }
   ]
 
-  const columnHelper = createColumnHelper<ISecondUser>()
-  const columns: Array<ColumnDef<ISecondUser, any>> = [
-    columnHelper.accessor((row: ISecondUser) => row.username, {
+  const columnHelper = createColumnHelper<ILiveFeedUser>()
+  const columns: Array<ColumnDef<ILiveFeedUser, any>> = [
+    columnHelper.accessor((row: ILiveFeedUser) => row.username, {
       id: 'username',
       header: () => 'Username',
       cell: ({ row }) => {
-        const { avatar, id, username, level } = row.original
-        return <UserInfoCell user={{ id, avatar, name: username, level }} />
+        const { avatar, username, level } = row.original
+        return <UserInfoCell user={{ avatar, name: username, level }} />
       },
       filterFn: 'equalsString',
       footer: (props) => props.column.id
@@ -83,22 +84,22 @@ export const LiveFeed = () => {
       cell: (props) => <GameCell game={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('date', {
-      id: 'date',
+    columnHelper.accessor('time', {
+      id: 'time',
       header: () => 'Time',
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ISecondUser) => row.bet, {
+    columnHelper.accessor((row: ILiveFeedUser) => row.time, {
       id: 'bet',
       header: () => 'Bet',
       cell: ({ row }) => (
         <CoinsWithDiamond
-          containerSize='Small'
-          iconContainerSize='Small'
-          iconClasses='w-3 h-3'
+          containerSize="Small"
+          iconContainerSize="Small"
+          iconClasses="w-3 h-3"
           typographyQuantity={row.original.bet}
-          typographyFontSize='Size13'
+          typographyFontSize="Size13"
         />
       ),
       filterFn: (row, _columnId, value) => {
@@ -106,23 +107,23 @@ export const LiveFeed = () => {
       },
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('rate', {
-      id: 'rate',
+    columnHelper.accessor('multiplier', {
+      id: 'multiplier',
       header: () => 'Multiplier',
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ISecondUser) => row.profit, {
+    columnHelper.accessor((row: ILiveFeedUser) => row.profit, {
       id: 'profit',
       header: 'Profit',
       cell: ({ row }) => (
         <CoinsWithDiamond
-          containerSize='Small'
-          iconContainerColor={row.original.isWinner ? 'GreenPrimary' : 'RedAccent'}
-          iconContainerSize='Small'
-          iconClasses='w-3 h-3'
+          containerSize="Small"
+          iconContainerColor={row.original.profit >= row.original.bet ? 'GreenPrimary' : 'RedAccent'}
+          iconContainerSize="Small"
+          iconClasses="w-3 h-3"
           typographyQuantity={row.original.profit}
-          typographyFontSize='Size13'
+          typographyFontSize="Size13"
         />
       ),
       filterFn: (row, _columnId, value) => {
@@ -132,8 +133,18 @@ export const LiveFeed = () => {
     })
   ]
 
+  useEffect(() => {
+    socket.on('push_bet', (data: ILiveFeedUser[]) => {
+      setData(data)
+    })
+
+    return () => {
+      socket.off('push_bet')
+    }
+  }, [])
+
   return (
-    <div className='bg-blue-primary rounded-2xl px-4 md:px-9 py-5'>
+    <div className="bg-blue-primary rounded-2xl px-4 md:px-9 py-5">
       <Table
         data={data}
         columns={columns}
@@ -144,8 +155,8 @@ export const LiveFeed = () => {
         currentColum={currentColum}
         searchValue={searchValue}
         filtersVariants={filtersVariants}
-        tableHeader={<FilterHeader label={<RedDotIcon />} text='Live feed' />}
-        variant='Feed'
+        tableHeader={<FilterHeader label={<RedDotIcon />} text="Live feed" />}
+        variant="Feed"
       />
     </div>
   )
