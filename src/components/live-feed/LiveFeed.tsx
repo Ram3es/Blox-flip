@@ -73,7 +73,7 @@ export const LiveFeed = () => {
       header: () => 'Username',
       cell: ({ row }) => {
         const { avatar, username, level } = row.original
-        return <UserInfoCell user={{ avatar, username, level }} />
+        return <UserInfoCell user={{ avatar, name: username, level }} />
       },
       filterFn: 'equalsString',
       footer: (props) => props.column.id

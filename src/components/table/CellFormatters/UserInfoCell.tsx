@@ -1,10 +1,10 @@
 import { FC } from 'react'
-import { TBaseSecondUser } from '../../../types/User'
+import { TBaseUser } from '../../../types/User'
 import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
 
 interface UserInfoCellProps {
-  user: TBaseSecondUser
+  user: Omit<TBaseUser, 'id'>
 }
 
 export const UserInfoCell: FC<UserInfoCellProps> = ({ user }) => {
@@ -14,7 +14,7 @@ export const UserInfoCell: FC<UserInfoCellProps> = ({ user }) => {
         <div className='w-8 h-8 shrink-0 border border-blue-highlight rounded-full overflow-hidden radial--gray mr-2.5'>
           <Image image={user.avatar} />
         </div>
-        <span className='font-bold grow relative py-1 mr-2 text-white'>{user.username}</span>
+        <span className='font-bold grow relative py-1 mr-2 text-white'>{user.name}</span>
       </div>
       <div className='flex'>
         <UserLevel level={user.level} />
