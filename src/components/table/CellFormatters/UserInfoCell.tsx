@@ -4,7 +4,7 @@ import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
 
 interface UserInfoCellProps {
-  user: TBaseUser
+  user: Omit<TBaseUser, 'id'>
 }
 
 export const UserInfoCell: FC<UserInfoCellProps> = ({ user }) => {
