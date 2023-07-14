@@ -134,7 +134,7 @@ export const LiveFeed = () => {
   ]
 
   useEffect(() => {
-    socket.on('push_bet', ({ data }: { data: ILiveFeedUser[] }) => {
+    socket.on('push_bet', (data: ILiveFeedUser[]) => {
       setData(data)
     })
 

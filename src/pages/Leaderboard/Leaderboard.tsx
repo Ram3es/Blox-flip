@@ -14,7 +14,7 @@ export const Leaderboard = () => {
   const { socket } = useSocketCtx()
 
   useEffect(() => {
-    socket.emit('load_leaderboards', ({ data }: { data: ILeaderbordData[] }) => {
+    socket.emit('load_leaderboards', (data: ILeaderbordData[]) => {
       setBoardData(
         data.map((item) => ({
           ...item.user,
