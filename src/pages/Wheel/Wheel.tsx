@@ -7,8 +7,7 @@ import WheelBetActions from './WheelBetActions'
 import { useSocketCtx } from '../../store/SocketStore'
 import { WheelBetRecord } from '../../mocks/wheelBets'
 import { getTimerValue } from '../../helpers/wheelHelpers'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { getToast } from '../../helpers/toast'
 
 const RALL_TIME = 1500
 let interval: any
@@ -30,10 +29,7 @@ const Wheel = () => {
   const peackBet = useCallback(
     (color: possibleBets) => {
       socket.emit('wager_wheel', { color, wager: betAmount }, (response: any) => {
-        toast(response, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          className: 'px-4 py-2 bg-blue-accent text-white font-semibold text-base'
-        })
+        getToast(response)
       })
       console.log('bet: ', color)
     },
