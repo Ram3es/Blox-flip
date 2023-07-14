@@ -49,10 +49,10 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const { socket } = useSocketCtx()
 
   useEffect(() => {
-    socket.on('chat_history', (data) => {
-      setHistoryChat((prev) => [...prev, data])
+    socket.on('chat_history', (data: IChatMessage[]) => {
+      setHistoryChat((prev) => [...prev, ...data])
     })
-    socket.on('chat_receive', (data) => {
+    socket.on('chat_receive', (data: IChatMessage) => {
       setHistoryChat((prev) => [...prev, data])
     })
     socket.on('remove_message', (data) => {

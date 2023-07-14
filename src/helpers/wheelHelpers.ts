@@ -14,7 +14,7 @@ export const getItemColorByIndex = (ticket: number, isForSvg: boolean): string =
 export const getItemColorByName = (name: possibleBets, isForSvg: boolean): string => {
   if (name === possibleBets.RED) {
     return isForSvg ? 'url(#MaxWinGradient)' : 'linear-gradient(90deg, #FE4747 25%, #FFC700 95%)'
-  } else if (name === possibleBets.GREY) {
+  } else if (name === possibleBets.GRAY) {
     return '#596180'
   } else if (name === possibleBets.BLUE) {
     return '#4764D6'
@@ -24,7 +24,7 @@ export const getItemColorByName = (name: possibleBets, isForSvg: boolean): strin
 
 export const getColorHistory = (color: possibleBets) => {
   const colors: Record<possibleBets, string> = {
-    grey: '#596180',
+    gray: '#596180',
     blue: '#4764D6',
     red: 'linear-gradient(90deg, #FE4747 25%, #FFC700 95%)',
     yellow: '#E1B850'

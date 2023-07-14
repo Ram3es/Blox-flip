@@ -69,7 +69,7 @@ const WheelBetsCard = ({ color, bets, onPeack }: IWheelBetCard) => {
           }`}
         >
           BET {color}
-          {color === possibleBets.GREY
+          {color === possibleBets.GRAY
             ? '2'
             : color === possibleBets.YELLOW
               ? '3'

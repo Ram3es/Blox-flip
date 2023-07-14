@@ -1,7 +1,7 @@
 import { IUser } from './User'
 
 export enum possibleBets {
-  GREY = 'grey',
+  GRAY = 'gray',
   BLUE = 'blue',
   YELLOW = 'yellow',
   RED = 'red'

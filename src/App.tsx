@@ -43,6 +43,7 @@ import CaseAdmin from './pages/CaseAdmin/CaseAdmin'
 import Terms from './pages/ServicePages/Terms'
 import FAQ from './pages/ServicePages/FAQ'
 import ProvablyFair from './pages/ServicePages/ProvablyFair'
+import { ToastContainer } from 'react-toastify'
 
 export const App = () => {
   return (
@@ -51,51 +52,63 @@ export const App = () => {
         <Header />
         <Chat />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/profile' element={<UserProfile />}>
-            <Route path='transactions' element={<Transactions />} />
-            <Route path='history' element={<HistoryUser />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<UserProfile />}>
+            <Route path="transactions" element={<Transactions />} />
+            <Route path="history" element={<HistoryUser />} />
           </Route>
-          <Route path='/deposit' element={<Deposit />}>
-            <Route path='robux' element={<DepositRobux />} />
-            <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
-            <Route path='litecoin' element={<DepositCrypto />} />
-            <Route path='bitcoin' element={<DepositCrypto />} />
-            <Route path='ethereum' element={<DepositCrypto />} />
-            <Route path='credit-card' element={<CreditCard />} />
-            <Route path='g2a' element={<DepositGift />} />
-            <Route path='kinguin' element={<DepositGift />} />
+          <Route path="/deposit" element={<Deposit />}>
+            <Route path="robux" element={<DepositRobux />} />
+            <Route path="roblox-limiteds" element={<RobloxLimiteds />} />
+            <Route path="litecoin" element={<DepositCrypto />} />
+            <Route path="bitcoin" element={<DepositCrypto />} />
+            <Route path="ethereum" element={<DepositCrypto />} />
+            <Route path="credit-card" element={<CreditCard />} />
+            <Route path="g2a" element={<DepositGift />} />
+            <Route path="kinguin" element={<DepositGift />} />
           </Route>
-          <Route path='/withdraw' element={<Withdraw />}>
-            <Route path='robux' element={<Robux />} />
-            <Route path='roblox-limiteds' element={<RobloxLimiteds />} />
+          <Route path="/withdraw" element={<Withdraw />}>
+            <Route path="robux" element={<Robux />} />
+            <Route path="roblox-limiteds" element={<RobloxLimiteds />} />
           </Route>
-          <Route path='/affiliates' element={<Affiliates />} />
+          <Route path="/affiliates" element={<Affiliates />} />
 
-          <Route path='/wheel' element={<Wheel />} />
-          <Route path='/champion' element={<King />} />
-          <Route path='/plinko' element={<Plinko />} />
-          <Route path='/coinflip' element={<CoinFlip />} />
-          <Route path='/jackpot' element={<Jackpot />} />
+          <Route path="/wheel" element={<Wheel />} />
+          <Route path="/champion" element={<King />} />
+          <Route path="/plinko" element={<Plinko />} />
+          <Route path="/coinflip" element={<CoinFlip />} />
+          <Route path="/jackpot" element={<Jackpot />} />
 
-          <Route path='/unboxing' element={<Unboxing />} />
-          <Route path='/unboxing/:short' element={<CaseOpening />} />
+          <Route path="/unboxing" element={<Unboxing />} />
+          <Route path="/unboxing/:short" element={<CaseOpening />} />
 
-          <Route path='/battles-lobby' element={<BattleLobby />} />
-          <Route path='/create-battle' element={<CreateBattle />} />
-          <Route path='/battle/:id' element={<BattleCases />} />
+          <Route path="/battles-lobby" element={<BattleLobby />} />
+          <Route path="/create-battle" element={<CreateBattle />} />
+          <Route path="/battle/:id" element={<BattleCases />} />
 
-          <Route path='/challenges' element={<Challenges />} />
+          <Route path="/challenges" element={<Challenges />} />
 
-          <Route path='/leaderboard' element={<Leaderboard />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
 
-          <Route path='/case-admin' element={<CaseAdmin />} />
+          <Route path="/case-admin" element={<CaseAdmin />} />
 
-          <Route path='/terms' element={<Terms />} />
-          <Route path='/FAQ' element={<FAQ />} />
-          <Route path='/provably-fair' element={<ProvablyFair />} />
-
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/FAQ" element={<FAQ />} />
+          <Route path="/provably-fair" element={<ProvablyFair />} />
         </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={2000}
+          limit={5}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </Container>
     </BrowserRouter>
   )
