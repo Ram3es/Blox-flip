@@ -12,7 +12,6 @@ export interface ChatSocketCtxState {
 }
 const URL = import.meta.env.VITE_API_URL
 const socket = io(URL, { autoConnect: false, query: { user_room: 1 } })
-
 const token = localStorage.getItem('token')
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const ChatSocketCtx = createContext<ChatSocketCtxState>({} as ChatSocketCtxState)
@@ -28,16 +27,14 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
 
   useEffect(() => {
-    socket.on('balance', ({ data }) => {
-      // TODO
-      if (data) {
-        setUserBalance(data)
+    socket.on('balance', ({ balance }) => {
+      if (balance) {
+        setUserBalance(balance)
       }
     })
 
     socket.on('level', (userLevel: IUserLevel) => {
       setUserLevel(userLevel)
-      console.log('level', userLevel.level)
     })
     socket.connect()
 
