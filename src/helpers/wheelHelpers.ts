@@ -16,7 +16,7 @@ export const getItemColorByName = (name: possibleBets, isForSvg: boolean): strin
     return isForSvg ? 'url(#MaxWinGradient)' : 'linear-gradient(90deg, #FE4747 25%, #FFC700 95%)'
   } else if (name === possibleBets.GREY) {
     return '#596180'
-  } else if ((name === possibleBets.BLUE)) {
+  } else if (name === possibleBets.BLUE) {
     return '#4764D6'
   }
   return '#E1B850'
@@ -35,6 +35,5 @@ export const getColorHistory = (color: possibleBets) => {
 export const getTimerValue = (unixTimestamp: string): number => {
   const now = Date.now()
   const future = +unixTimestamp * 1000
-
-  return Math.floor((future - now) / 1000)
+  return Math.floor((future + 15000 - now) / 1000) // date to won ticket + 15sec
 }
