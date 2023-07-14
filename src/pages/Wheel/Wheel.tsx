@@ -7,6 +7,8 @@ import WheelBetActions from './WheelBetActions'
 import { useSocketCtx } from '../../store/SocketStore'
 import { WheelBetRecord } from '../../mocks/wheelBets'
 import { getTimerValue } from '../../helpers/wheelHelpers'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const RALL_TIME = 1500
 let interval: any
@@ -14,7 +16,7 @@ let interval: any
 const Wheel = () => {
   const [historyGames, setHistory] = useState<possibleBets[]>([])
   const [wheelBets, setWheelBets] = useState<WheelBetRecord>({
-    grey: [],
+    gray: [],
     blue: [],
     yellow: [],
     red: []
@@ -27,8 +29,11 @@ const Wheel = () => {
 
   const peackBet = useCallback(
     (color: possibleBets) => {
-      socket.emit('wager_wheel', { color, wager: betAmount }, (res: any) => {
-        alert(JSON.stringify(res, null, 2))
+      socket.emit('wager_wheel', { color, wager: betAmount }, (response: any) => {
+        toast(response, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          className: 'px-4 py-2 bg-blue-accent text-white font-semibold text-base'
+        })
       })
       console.log('bet: ', color)
     },
@@ -39,7 +44,10 @@ const Wheel = () => {
     socket.emit('wheel:connect')
 
     socket.on('load_wheel', (data: ILoadWheelRes) => {
-      setTimer(getTimerValue(data.time))
+      if (getTimerValue(data.time) > 0) {
+        console.log('load_wheel', new Date(Number(data.time) * 1000))
+        setTimer(getTimerValue(data.time))
+      }
     })
     socket.on('wheel_history', (data: possibleBets[]) => {
       setHistory(data)
@@ -71,7 +79,7 @@ const Wheel = () => {
 
   useEffect(() => {
     clearInterval(interval)
-    if (timer) {
+    if (timer && timer) {
       interval = setInterval(() => setTimer((prev) => prev && prev - 1), 1000)
     }
 

@@ -13,7 +13,7 @@ const WheelGamesHistory = memo(({ historyGames }: IWheelGamesHistory) => {
   const [sortedBetsHistory, setSortedBetsHistory] = useState<BetHistoryRecord>()
 
   const container: BetHistoryRecord = {
-    [possibleBets.GREY]: [],
+    [possibleBets.GRAY]: [],
     [possibleBets.BLUE]: [],
     [possibleBets.YELLOW]: [],
     [possibleBets.RED]: []
