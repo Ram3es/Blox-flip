@@ -16,8 +16,8 @@ const Wheel = () => {
   const [historyGames, setHistory] = useState<possibleBets[]>([])
   const [wheelBets, setWheelBets] = useState<WheelBetRecord>({
     gray: [],
-    blue: [],
     yellow: [],
+    blue: [],
     red: []
   })
   const [timer, setTimer] = useState<number>()
@@ -31,7 +31,6 @@ const Wheel = () => {
       socket.emit('wager_wheel', { color, wager: betAmount }, (response: any) => {
         getToast(response)
       })
-      console.log('bet: ', color)
     },
     [betAmount]
   )
@@ -48,26 +47,36 @@ const Wheel = () => {
       setHistory(data)
     })
     socket.on('wheel_end', ({ roll }: { roll: IWinTicket }) => {
-      setWonTicket(roll)
+      console.log('ROLL', roll)
+
+      setWonTicket(roll.color === 'gold' ? { ...roll, color: possibleBets.YELLOW } : roll)
     })
     socket.on('add_wheel_bets', (data: WheelBetRecord) => {
+      console.log('data', data)
       setWheelBets(data)
     })
     socket.on('add_wheel', (data: IIWheelBet) => {
       const { color } = data
-      if (
-        color === possibleBets.BLUE ||
-        color === possibleBets.GRAY ||
-        color === possibleBets.RED ||
-        color === possibleBets.YELLOW
-      ) {
-        setWheelBets((prev) => {
-          if (prev) {
-            return { ...prev, [color]: [...prev[color], data] }
+      setWheelBets((prev) => {
+        if (prev) {
+          console.log('add_wheel', {
+            ...prev,
+            [color === 'gold' ? possibleBets.YELLOW : color]: [
+              ...prev[color === 'gold' ? possibleBets.YELLOW : color],
+              color === 'gold' ? { ...data, color: possibleBets.YELLOW } : data
+            ]
+          })
+
+          return {
+            ...prev,
+            [color === 'gold' ? possibleBets.YELLOW : color]: [
+              ...prev[color === 'gold' ? possibleBets.YELLOW : color],
+              color === 'gold' ? { ...data, color: possibleBets.YELLOW } : data
+            ]
           }
-          return prev
-        })
-      }
+        }
+        return prev
+      })
     })
     return () => {
       socket.off('load_wheel')
@@ -89,7 +98,10 @@ const Wheel = () => {
       setTimeout(() => {
         setIsStart(false)
         if (wonTicket) {
-          setHistory((prev) => [...prev.slice(1), wonTicket?.color])
+          setHistory((prev) => [
+            ...prev.slice(1),
+            wonTicket.color === 'gold' ? possibleBets.YELLOW : wonTicket?.color
+          ])
         }
       }, RALL_TIME)
     }
