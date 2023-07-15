@@ -41,7 +41,6 @@ const Wheel = () => {
 
     socket.on('load_wheel', (data: ILoadWheelRes) => {
       if (getTimerValue(data.time) > 0) {
-        console.log('load_wheel', new Date(Number(data.time) * 1000))
         setTimer(getTimerValue(data.time))
       }
     })
@@ -50,19 +49,25 @@ const Wheel = () => {
     })
     socket.on('wheel_end', ({ roll }: { roll: IWinTicket }) => {
       setWonTicket(roll)
-      // setIsStart(true)
     })
     socket.on('add_wheel_bets', (data: WheelBetRecord) => {
       setWheelBets(data)
     })
     socket.on('add_wheel', (data: IIWheelBet) => {
       const { color } = data
-      setWheelBets((prev) => {
-        if (prev) {
-          return { ...prev, [color]: [...prev[color], data] }
-        }
-        return prev
-      })
+      if (
+        color === possibleBets.BLUE ||
+        color === possibleBets.GRAY ||
+        color === possibleBets.RED ||
+        color === possibleBets.YELLOW
+      ) {
+        setWheelBets((prev) => {
+          if (prev) {
+            return { ...prev, [color]: [...prev[color], data] }
+          }
+          return prev
+        })
+      }
     })
     return () => {
       socket.off('load_wheel')
@@ -83,8 +88,9 @@ const Wheel = () => {
       setIsStart(true)
       setTimeout(() => {
         setIsStart(false)
-        // setHistory((prev) => [...prev.slice(1), wonTicket?.roll?.color])
-        // disabled until there is no 'wheel_history'
+        if (wonTicket) {
+          setHistory((prev) => [...prev.slice(1), wonTicket?.color])
+        }
       }, RALL_TIME)
     }
     return () => clearInterval(interval)
