@@ -20,7 +20,7 @@ export interface ChatSocketCtxState {
   userBalance: number
 }
 const URL = import.meta.env.VITE_API_URL
-const socket = io(URL, { autoConnect: false, query: { user_room: 1 } })
+const socket = io(URL, { query: { user_room: 1 } })
 
 const token = localStorage.getItem('token')
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -31,20 +31,20 @@ export const useSocketCtx = () => useContext(ChatSocketCtx)
 const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const { state: { hash }, dispatch } = useAppStore()
   const [userBalance, setUserBalance] = useState(0)
+  const [isConnected, setConnected] = useState(socket.connected)
 
   useEffect(() => {
-    socket.on('balance', ({ data }) => {
-      // TODO
-      if (data) {
-        setUserBalance(data)
-      }
+    socket.on('connect', () => {
+      setConnected(true)
     })
-    socket.connect()
-
+    socket.on('disconnect', () => {
+      setConnected(false)
+    })
     return () => {
-      socket.off('balance')
+      socket.off('connect')
+      socket.off('disconnect')
     }
-  }, [socket])
+  }, [])
 
   useEffect(() => {
     if (token ?? hash) {
@@ -52,11 +52,12 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         const decoded: IRobloxSecurityData = JSON.parse(decodeBase64((token)))
         dispatch({ type: 'LOGIN', payload: { ...user, name: decoded.UserName, avatar: decoded.ThumbnailUrl } })
       }
-
-      socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
-      })
+      if (isConnected) {
+        socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
+        })
+      }
     }
-  }, [hash])
+  }, [hash, isConnected])
 
   return (
       <ChatSocketCtx.Provider value={{ socket, userBalance }}>
