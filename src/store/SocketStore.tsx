@@ -56,7 +56,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
       socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {})
     }
-  }, [hash])
+  }, [])
 
   return <ChatSocketCtx.Provider value={{ socket, userBalance, userLevel }}>{children}</ChatSocketCtx.Provider>
 }

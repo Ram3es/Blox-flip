@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import clsx from 'clsx'
-import { IMAGES } from '../../../constants/images'
+// import { IMAGES } from '../../../constants/images'
 import SelectedIcon from '../../icons/SelectedIcon'
 import Image from '../../base/Image'
 import CoinsWithDiamond from '../CoinsWithDiamond'
@@ -114,7 +114,7 @@ const ItemCard: FC<IItemCardProps> = ({
             <div className='w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start group-[.is-user]/item:items-center'>
               <div className='w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] '>
                 <img
-                  src={IMAGES[image]}
+                  src={image}
                   alt='@T'
                   className='absolute object-contain w-full h-full'
                 />
