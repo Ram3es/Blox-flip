@@ -5,6 +5,7 @@ import { defaultAmountSchema } from '../../../helpers/yupSchema'
 import { IAmountState } from '../../../types/Form'
 import { TSocket } from '../../../store/SocketStore'
 import { useOutletContext } from 'react-router-dom'
+import { getToast } from '../../../helpers/toast'
 
 export const DepositRobux = () => {
   const [values, setValues] = useState<IAmountState>({ amountString: '', amountNumber: 0 })
@@ -25,12 +26,13 @@ export const DepositRobux = () => {
         .validate(values, { abortEarly: false })
         .then(() => {
           console.log('Validation successful')
-          socket.emit('deposit_robux', { amount: values.amountNumber }, (res: any) => {
-            alert(JSON.stringify(res, null, 2))
+          socket.emit('robux_deposit', { amount: values.amountNumber }, (res: any) => {
+            getToast(res)
           })
           setValues({ amountString: '', amountNumber: 0 })
         })
         .catch((error) => {
+          getToast(error.message)
           console.log(error.message)
         })
     },
@@ -39,11 +41,11 @@ export const DepositRobux = () => {
   return (
     <>
       <RobuxTransactionForm
-        methodName='Input robox amount'
+        methodName="Input robox amount"
         onSubmit={handleFormSubmit}
         onChange={handleAmountChange}
         values={values}
-        variant='Deposit'
+        variant="Deposit"
       />
     </>
   )

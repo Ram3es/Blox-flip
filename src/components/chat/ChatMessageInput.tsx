@@ -4,6 +4,7 @@ import { Button } from '../base/Button'
 import { Input } from '../base/Input'
 import { Context } from '../../store/Store'
 import { useSocketCtx } from '../../store/SocketStore'
+import { getToast } from '../../helpers/toast'
 
 const MailIcon = ({ className }: { className: string }) => {
   return (
@@ -44,7 +45,7 @@ export const ChatMessageInput = () => {
     if (!message) return
 
     socket.emit('chat', { room: 1, message, user }, (res: any) => {
-      res.error && alert(JSON.stringify(res, null, 2))
+      res.error && getToast(res)
     })
     setMessage('')
   }

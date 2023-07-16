@@ -1,4 +1,10 @@
-export interface IUser {
+export interface IUserLevel {
+  level: number
+  exp?: number
+  levelup?: number
+}
+
+export interface IUser extends IUserLevel {
   id: string
   name: string
   avatar: string
@@ -28,8 +34,17 @@ export interface IChatUser extends Omit<IUser, 'progress'> {
   flag?: number
 }
 export type TBaseUser = Omit<IUser, 'progress' | 'role' | 'flag'>
+export type TBaseSecondUser = Omit<ISecondUser, 'isWinner' | 'rate' | 'id' | 'isWin' | 'bet' | 'date' | 'game' | 'profit'>
 
-export interface ILeaderbordUser extends TBaseUser {
+export interface ILeaderboardUser extends TBaseUser {
   bet: number
+  profit: number
+}
+
+export interface ILiveFeedUser extends TBaseSecondUser {
+  multiplier: number
+  bet: number
+  time: string
+  game: string
   profit: number
 }

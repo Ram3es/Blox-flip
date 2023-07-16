@@ -13,9 +13,9 @@ const WheelGamesHistory = memo(({ historyGames }: IWheelGamesHistory) => {
   const [sortedBetsHistory, setSortedBetsHistory] = useState<BetHistoryRecord>()
 
   const container: BetHistoryRecord = {
-    [possibleBets.GREY]: [],
-    [possibleBets.BLUE]: [],
+    [possibleBets.GRAY]: [],
     [possibleBets.YELLOW]: [],
+    [possibleBets.BLUE]: [],
     [possibleBets.RED]: []
   }
 
@@ -29,8 +29,6 @@ const WheelGamesHistory = memo(({ historyGames }: IWheelGamesHistory) => {
   useEffect(() => {
     setSortedBetsHistory(betsHistoryData(historyGames))
   }, [historyGames])
-
-  console.log(historyGames)
 
   return (
     <div className='flex flex-col md:flex-row gap-4 w-full md:w-auto overflow-hidden md:overflow-visible'>

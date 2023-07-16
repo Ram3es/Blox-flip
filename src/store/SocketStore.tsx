@@ -2,22 +2,13 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import { io, Socket } from 'socket.io-client'
 import { useAppStore } from './Store'
 import { decodeBase64 } from '../helpers/decodeToken'
-
-const user = {
-  id: 'aass2b44b123ghg346',
-  name: 'John Johnson',
-  avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg',
-  level: 11,
-  progress: {
-    current: 50,
-    required: 165
-  }
-}
+import { IUserLevel } from '../types/User'
 
 export type TSocket = Socket
 export interface ChatSocketCtxState {
   socket: TSocket
   userBalance: number
+  userLevel: IUserLevel | null
 }
 const URL = import.meta.env.VITE_API_URL
 const socket = io(URL, { query: { user_room: 1 } })
@@ -29,8 +20,13 @@ const ChatSocketCtx = createContext<ChatSocketCtxState>({} as ChatSocketCtxState
 export const useSocketCtx = () => useContext(ChatSocketCtx)
 
 const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
-  const { state: { hash }, dispatch } = useAppStore()
+  const {
+    state: { hash },
+    dispatch
+  } = useAppStore()
   const [userBalance, setUserBalance] = useState(0)
+  const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
+
   const [isConnected, setConnected] = useState(socket.connected)
 
   useEffect(() => {
@@ -47,10 +43,30 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   }, [])
 
   useEffect(() => {
+    socket.on('balance', ({ balance }) => {
+      if (balance) {
+        setUserBalance(balance)
+      }
+    })
+
+    socket.on('level', (userLevel: IUserLevel) => {
+      setUserLevel(userLevel)
+    })
+
+    return () => {
+      socket.off('balance')
+      socket.off('level')
+    }
+  }, [])
+
+  useEffect(() => {
     if (token ?? hash) {
       if (token) {
-        const decoded: IRobloxSecurityData = JSON.parse(decodeBase64((token)))
-        dispatch({ type: 'LOGIN', payload: { ...user, name: decoded.UserName, avatar: decoded.ThumbnailUrl } })
+        const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token))
+        dispatch({
+          type: 'LOGIN',
+          payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
+        })
       }
       if (isConnected) {
         socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
@@ -59,10 +75,6 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     }
   }, [hash, isConnected])
 
-  return (
-      <ChatSocketCtx.Provider value={{ socket, userBalance }}>
-        {children}
-      </ChatSocketCtx.Provider>
-  )
+  return <ChatSocketCtx.Provider value={{ socket, userBalance, userLevel }}>{children}</ChatSocketCtx.Provider>
 }
 export default SocketCtxProvider

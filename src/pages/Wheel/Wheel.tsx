@@ -7,6 +7,7 @@ import WheelBetActions from './WheelBetActions'
 import { useSocketCtx } from '../../store/SocketStore'
 import { WheelBetRecord } from '../../mocks/wheelBets'
 import { getTimerValue } from '../../helpers/wheelHelpers'
+import { getToast } from '../../helpers/toast'
 
 const RALL_TIME = 1500
 let interval: any
@@ -14,44 +15,65 @@ let interval: any
 const Wheel = () => {
   const [historyGames, setHistory] = useState<possibleBets[]>([])
   const [wheelBets, setWheelBets] = useState<WheelBetRecord>({
-    grey: [],
-    blue: [],
+    gray: [],
     yellow: [],
+    blue: [],
     red: []
   })
   const [timer, setTimer] = useState<number>()
-  const [wonTicket, setWonTicket] = useState<IWinTicket>()
+  const [wonTicket, setWonTicket] = useState<IWinTicket | null>(null)
   const [betAmount, setBetAmount] = useState(200)
   const [isStart, setIsStart] = useState(false)
   const { socket } = useSocketCtx()
 
-  const peackBet = useCallback((color: possibleBets) => {
-    socket.emit('wager_wheel', { color, wager: betAmount }, (res: any) => {
-      alert(JSON.stringify(res, null, 2))
-    })
-    console.log('bet: ', color)
-  }, [betAmount])
+  const peackBet = useCallback(
+    (color: possibleBets) => {
+      socket.emit('wager_wheel', { color, wager: betAmount }, (response: any) => {
+        getToast(response)
+      })
+    },
+    [betAmount]
+  )
 
   useEffect(() => {
     socket.emit('wheel:connect')
 
-    socket.on('load_wheel', ({ data }: { data: ILoadWheelRes }) => {
-      setTimer(getTimerValue(data.roll))
+    socket.on('load_wheel', (data: ILoadWheelRes) => {
+      if (getTimerValue(data.time) > 0) {
+        setTimer(getTimerValue(data.time))
+      }
     })
-    socket.on('wheel_history', ({ data }: { data: possibleBets[] }) => {
+    socket.on('wheel_history', (data: possibleBets[]) => {
       setHistory(data)
     })
-    socket.on('wheel_end', ({ data }: { data: { num: number, color: possibleBets } }) => {
-      setWonTicket(data)
+    socket.on('wheel_end', ({ roll }: { roll: IWinTicket }) => {
+      console.log('ROLL', roll)
+
+      setWonTicket(roll.color === 'gold' ? { ...roll, color: possibleBets.YELLOW } : roll)
     })
-    socket.on('add_wheel_bets', ({ data }: { data: WheelBetRecord }) => {
+    socket.on('add_wheel_bets', (data: WheelBetRecord) => {
+      console.log('data', data)
       setWheelBets(data)
     })
-    socket.on('add_wheel', ({ data }: { data: IIWheelBet }) => {
+    socket.on('add_wheel', (data: IIWheelBet) => {
       const { color } = data
-      setWheelBets(prev => {
+      setWheelBets((prev) => {
         if (prev) {
-          return { ...prev, [color]: [...prev[color], data] }
+          console.log('add_wheel', {
+            ...prev,
+            [color === 'gold' ? possibleBets.YELLOW : color]: [
+              ...prev[color === 'gold' ? possibleBets.YELLOW : color],
+              color === 'gold' ? { ...data, color: possibleBets.YELLOW } : data
+            ]
+          })
+
+          return {
+            ...prev,
+            [color === 'gold' ? possibleBets.YELLOW : color]: [
+              ...prev[color === 'gold' ? possibleBets.YELLOW : color],
+              color === 'gold' ? { ...data, color: possibleBets.YELLOW } : data
+            ]
+          }
         }
         return prev
       })
@@ -67,31 +89,34 @@ const Wheel = () => {
 
   useEffect(() => {
     clearInterval(interval)
-    if (timer) {
-      interval = setInterval(() => setTimer(prev => prev && prev - 1), 1000)
+    if (timer && timer) {
+      interval = setInterval(() => setTimer((prev) => prev && prev - 1), 1000)
     }
+
     if (timer === 0) {
-      setIsStart(boolean => !boolean)
+      setIsStart(true)
       setTimeout(() => {
-        setIsStart(boolean => !boolean)
-        setHistory(prev => [...prev.slice(1), wonTicket?.color as possibleBets])
+        setIsStart(false)
+        if (wonTicket) {
+          setHistory((prev) => [
+            ...prev.slice(1),
+            wonTicket.color === 'gold' ? possibleBets.YELLOW : wonTicket?.color
+          ])
+        }
       }, RALL_TIME)
     }
     return () => clearInterval(interval)
   }, [timer])
 
   return (
-    <div className='flex flex-col gap-9'>
-      <div className='flex flex-col md:flex-row 2xl:gap-x-6 justify-between flex-wrap'>
+    <div className="flex flex-col gap-9">
+      <div className="flex flex-col md:flex-row 2xl:gap-x-6 justify-between flex-wrap">
+        <WheelGamesHistory historyGames={historyGames} />
+        <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} isStart={isStart} />
 
-          <WheelGamesHistory
-            historyGames={historyGames}
-          />
-          <WheelCircle rallTime={RALL_TIME} ticket={wonTicket} count={timer} isStart={isStart} />
-
-          <div className='w-full xl:w-auto h-full'>
-            <WheelBetActions betAmount={betAmount} setBetAmount={setBetAmount} />
-          </div>
+        <div className="w-full xl:w-auto h-full">
+          <WheelBetActions betAmount={betAmount} setBetAmount={setBetAmount} />
+        </div>
       </div>
       <WheelBetPeacker onPeack={peackBet} bets={wheelBets} />
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { Context } from '../../store/Store'
 import SignInModal from '../containers/SignInModal'
 import GameCard from './GameCard'
@@ -17,8 +17,9 @@ const games = [
 const GamesSection = () => {
   const [isOpenSignInModal, setIsOpenModal] = useState(false)
   const { state } = useContext(Context)
+
   return (
-    <div className='flex flex-wrap -mx-3'>
+    <div className="flex flex-wrap -mx-3">
       <WelcomeCard user={state?.user} openModal={() => setIsOpenModal(true)} />
       {games.map(({ name, path }, idx) => (
         <GameCard key={path} titleBtn={name} path={path} isLeftCorner={idx % 2 === 0} />

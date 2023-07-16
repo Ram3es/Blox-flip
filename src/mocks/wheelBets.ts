@@ -9,7 +9,7 @@ import { IIWheelBet, possibleBets } from '../types/Wheel'
 export type WheelBetRecord = Record<possibleBets, IIWheelBet[]>
 
 export const wheelBetsMock: WheelBetRecord = {
-  [possibleBets.GREY]: [
+  [possibleBets.GRAY]: [
     {
       user: {
         id: '21',
@@ -18,7 +18,7 @@ export const wheelBetsMock: WheelBetRecord = {
         level: 13
       },
       wager: 1000,
-      color: possibleBets.GREY
+      color: possibleBets.GRAY
     }
   ],
   [possibleBets.YELLOW]: [
