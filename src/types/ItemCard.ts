@@ -18,4 +18,6 @@ export interface IUnboxCardCounter extends IItemCard {
   amount: number
 }
 
-export type TRobloxCard = Pick<IItemCard, 'id' | 'name' | 'price' | 'color' | 'image'>
+export interface TRobloxCard extends Pick<IItemCard, 'id' | 'name' | 'price' | 'color'> {
+  pic: string
+}

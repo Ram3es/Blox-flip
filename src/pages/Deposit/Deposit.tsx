@@ -32,7 +32,7 @@ export const Deposit = () => {
 
   const handleDeposit = () => {
     if (selectedCards.length) {
-      socket.emit('items_deposit:market', { type: 'market', items: selectedCards.map((card) => card.id) })
+      socket.emit('items_deposit', { type: 'market', items: selectedCards.map((card) => card.id) })
     }
   }
 
