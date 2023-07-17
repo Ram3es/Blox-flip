@@ -17,7 +17,7 @@ import YellowCoin from '../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
 import { IItemCard } from '../../types/ItemCard'
-import { ICoin, ICoinFlip } from '../../types/CoinFlip'
+import { ICoin } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
 import { getToast } from '../../helpers/toast'
@@ -72,14 +72,13 @@ const CoinFlipLobbyModal = () => {
     socket.emit(
       'coinflip_create',
       { type: 'coinflip', items: getSelectedSkinsIds(skins), coin: selectedCoin },
-      (response: { error: boolean, message: string, data: ICoinFlip }) => {
-        if (response.error) {
-          toast.error(response.message)
+      (error: boolean | string) => {
+        if (typeof error === 'string') {
+          toast.error(error)
         }
 
-        if (!response.error) {
+        if (!error) {
           setIsOpenBattleGame(true)
-          setCurrentGame(response.data)
         }
       }
     )
@@ -97,12 +96,12 @@ const CoinFlipLobbyModal = () => {
           gameId: currentGame.id,
           coin: selectedCoin
         },
-        (response: { error: boolean, message: string }) => {
-          if (response.error) {
-            toast.error(response.message)
+        (error: boolean | string) => {
+          if (typeof error === 'string') {
+            toast.error(error)
           }
 
-          if (!response.error) {
+          if (!error) {
             setIsOpenBattleGame(true)
           }
         }
