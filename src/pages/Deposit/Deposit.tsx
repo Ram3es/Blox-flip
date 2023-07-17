@@ -5,7 +5,7 @@ import ToolBar from '../../components/common/ToolBar'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import NavHeader from '../../components/navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
-import { IItemCard } from '../../types/ItemCard'
+import { IItemCard, TRobloxCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 import { useSocketCtx } from '../../store/SocketStore'
 
@@ -33,6 +33,7 @@ export const Deposit = () => {
   const handleDeposit = () => {
     if (selectedCards.length) {
       socket.emit('items_deposit', { type: 'market', items: selectedCards.map((card) => card.id) })
+      setSelectedCard([])
     }
   }
 

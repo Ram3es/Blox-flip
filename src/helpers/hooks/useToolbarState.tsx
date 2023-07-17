@@ -23,6 +23,5 @@ export const useToolbarState = () => {
     searchBy,
     priceRange: priceRange.value,
     setPriceRange
-
   }
 }
