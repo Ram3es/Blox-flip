@@ -11,7 +11,7 @@ export interface ChatSocketCtxState {
   userLevel: IUserLevel | null
 }
 const URL = import.meta.env.VITE_API_URL
-const socket = io(URL, { autoConnect: false, query: { user_room: 1} })
+const socket = io(URL, { autoConnect: false, query: { user_room: 1 } })
 
 const token = localStorage.getItem('token')
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -29,27 +29,32 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [isConnected, setConnected] = useState(socket.connected)
 
   useEffect(() => {
-    
     const onConnect = () => {
       setConnected(true)
     }
+
     const onDisconnect = () => {
       setConnected(false)
     }
+
     socket.on('connect', onConnect)
     socket.on('disconnect', onDisconnect)
+
     socket.on('balance', ({ balance }) => {
       if (balance) {
         setUserBalance(balance)
       }
     })
+
     socket.on('level', (userLevel: IUserLevel) => {
       setUserLevel(userLevel)
     })
+
     socket.connect()
+
     return () => {
-      socket.off('connect',onConnect)
-      socket.off('disconnect',onDisconnect)
+      socket.off('connect', onConnect)
+      socket.off('disconnect', onDisconnect)
       socket.off('balance')
       socket.off('level')
       socket.disconnect()
@@ -63,11 +68,11 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         type: 'LOGIN',
         payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
       })
-       if(isConnected){
+      if (isConnected) {
         socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
           console.log(res, 'res')
         })
-       }
+      }
     }
   }, [hash, isConnected])
 
