@@ -20,14 +20,10 @@ import { IItemCard } from '../../types/ItemCard'
 import { ICoin, ICoinFlip } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
+import { getToast } from '../../helpers/toast'
 
 const CoinFlipLobbyModal = () => {
-  const {
-    setIsOpenBattleGame,
-    setCurrentGame,
-    setIsOpenLobbyModal,
-    currentGame
-  } = useCoinFlip()
+  const { setIsOpenBattleGame, setCurrentGame, setIsOpenLobbyModal, currentGame } = useCoinFlip()
   const { socket } = useSocketCtx()
 
   const [skins, setSkins] = useState<IItemCard[]>([])
@@ -117,19 +113,15 @@ const CoinFlipLobbyModal = () => {
   }, [skins])
 
   useEffect(() => {
-    socket.emit(
-      'load_items',
-      { type: 'coinflip' },
-      (response: { error: boolean, message: string, skins: IItemCard[] }) => {
-        if (response.error) {
-          toast.error(response.message)
-        }
-        if (!response.error) {
-          setSkins(response.skins)
-        }
+    socket.emit('load_items', { type: 'coinflip' }, (err: boolean, skins: IItemCard[]) => {
+      if (err) {
+        getToast('Error loaded items')
       }
-    )
-  }, [])
+      if (!err) {
+        setSkins(skins)
+      }
+    })
+  }, [socket])
 
   const handleCloseModal = useCallback(() => {
     setCurrentGame(null)
@@ -139,16 +131,16 @@ const CoinFlipLobbyModal = () => {
   return (
     <ModalWrapper
       closeModal={handleCloseModal}
-      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
+      modalClasses="relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden"
     >
       <GameLobbyHeader
         skinsPrice={costInventorySkins}
         skinsQuantity={skins.length}
         handleResetSelectedSkins={handleResetSelectedSkins}
       >
-        <div className='flex items-center justify-center'>
+        <div className="flex items-center justify-center">
           <CoinFlipLogoIcon />
-          <span className='pl-3 text-lg hidden xxs:block'>
+          <span className="pl-3 text-lg hidden xxs:block">
             {currentGame ? 'Join' : 'Create'} Coinflip
           </span>
         </div>
@@ -161,22 +153,22 @@ const CoinFlipLobbyModal = () => {
         max={currentGame?.max}
         min={currentGame?.min}
       >
-        <div className='flex items-center justify-between space-x-4'>
+        <div className="flex items-center justify-between space-x-4">
           {!currentGame && (
             <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
           )}
           {currentGame && (
             <img
-              className='w-7 h-7 sm:w-11 sm:h-11'
+              className="w-7 h-7 sm:w-11 sm:h-11"
               src={currentGame.creator.coin ? YellowCoin : PurpleCoin}
-              alt='coinflip side'
+              alt="coinflip side"
             />
           )}
           <Button
-            color='GreenPrimary'
+            color="GreenPrimary"
             onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}
           >
-            <span className='h-9 py-2 px-5'>{currentGame ? 'Join' : 'Create'}</span>
+            <span className="h-9 py-2 px-5">{currentGame ? 'Join' : 'Create'}</span>
           </Button>
         </div>
       </GameLobbyFooter>
