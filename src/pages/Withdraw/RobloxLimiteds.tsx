@@ -10,7 +10,6 @@ import { sortData } from '../../helpers/sortData'
 
 import type { TRobloxCard } from '../../types/ItemCard'
 import { TSocket } from '../../store/SocketStore'
-import { getToast } from '../../helpers/toast'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<TRobloxCard[]>([])
@@ -19,7 +18,7 @@ const RobloxLimiteds = () => {
       sortBy?: string
       searchBy: string
       direction?: 'ASC' | 'DESC'
-      priceRange: { from: number, to: number }
+      priceRange: { from: number; to: number }
       selectedCards: TRobloxCard[]
       setSelectedCard: Dispatch<SetStateAction<TRobloxCard[]>>
       socket: TSocket
@@ -27,24 +26,22 @@ const RobloxLimiteds = () => {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    if (pathname.split('/').includes('deposit')) {
-      socket.emit('load_items', { type: 'market' }, (err: boolean, skins: TRobloxCard[]) => {
-        // console.log(skins, 'data')
-        if (err) {
-          getToast('items loaded')
-          console.log(err)
-        }
-        if (!err) {
-          setAllCards(skins)
-        }
-      })
+    if (selectedCards.length === 0) {
+      if (pathname.split('/').includes('deposit')) {
+        socket.emit('load_items', { type: 'market' }, (err: boolean, skins: TRobloxCard[]) => {
+          if (!err) {
+            setAllCards(skins)
+          }
+        })
+      }
     }
+
     if (pathname.split('/').includes('withdraw')) {
       socket.emit('market_reload', ({ data }: { data: TRobloxCard[] }) => {
         setAllCards(data)
       })
     }
-  }, [])
+  }, [selectedCards])
 
   const ranged = useMemo(
     () => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
@@ -76,10 +73,6 @@ const RobloxLimiteds = () => {
   const removeCard = (data: TRobloxCard[], cardId: string) => {
     return data.filter((item) => item.id !== cardId)
   }
-
-  useEffect(() => {
-    return () => setSelectedCard([])
-  }, [])
 
   return (
     <div className="flex">
