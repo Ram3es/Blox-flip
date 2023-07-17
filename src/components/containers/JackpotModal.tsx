@@ -18,7 +18,8 @@ const JackpotModal = ({ onClose, onSubmit, userAvatar }: { userAvatar: string, o
     return cards.map((card) => ({
       ...card,
       isSelected: false,
-      avatar: userAvatar
+      avatar: userAvatar,
+      pic: 'none'
     }))
   }, [])
 

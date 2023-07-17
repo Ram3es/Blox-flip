@@ -16,30 +16,26 @@ import { Button } from '../../components/base/Button'
 import YellowCoin from '../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
-import { IItemCard } from '../../types/ItemCard'
-import { ICoin, ICoinFlip } from '../../types/CoinFlip'
+import { TRobloxCard } from '../../types/ItemCard'
+import { ICoin } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
+import { getToast } from '../../helpers/toast'
 
 const CoinFlipLobbyModal = () => {
-  const {
-    setIsOpenBattleGame,
-    setCurrentGame,
-    setIsOpenLobbyModal,
-    currentGame
-  } = useCoinFlip()
+  const { setIsOpenBattleGame, setCurrentGame, setIsOpenLobbyModal, currentGame } = useCoinFlip()
   const { socket } = useSocketCtx()
 
-  const [skins, setSkins] = useState<IItemCard[]>([])
+  const [skins, setSkins] = useState<TRobloxCard[]>([])
   const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 
-  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: string, isSelected: boolean) => {
+  const updateArrayBySelectedSkin = (skins: TRobloxCard[], skinId: string, isSelected: boolean) => {
     return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected = (skins: IItemCard[], skinId: string) => {
+  const isItemSelected = (skins: TRobloxCard[], skinId: string) => {
     return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
@@ -68,7 +64,7 @@ const CoinFlipLobbyModal = () => {
 
   const costInventorySkins = getCostByFieldName(skins, 'price')
 
-  const getSelectedSkinsIds = (selectedSkins: IItemCard[]) => {
+  const getSelectedSkinsIds = (selectedSkins: TRobloxCard[]) => {
     return selectedSkins.map((skin) => skin.id)
   }
 
@@ -76,14 +72,13 @@ const CoinFlipLobbyModal = () => {
     socket.emit(
       'coinflip_create',
       { type: 'coinflip', items: getSelectedSkinsIds(skins), coin: selectedCoin },
-      (response: { error: boolean, message: string, data: ICoinFlip }) => {
-        if (response.error) {
-          toast.error(response.message)
+      (error: boolean | string) => {
+        if (typeof error === 'string') {
+          toast.error(error)
         }
 
-        if (!response.error) {
+        if (!error) {
           setIsOpenBattleGame(true)
-          setCurrentGame(response.data)
         }
       }
     )
@@ -101,12 +96,12 @@ const CoinFlipLobbyModal = () => {
           gameId: currentGame.id,
           coin: selectedCoin
         },
-        (response: { error: boolean, message: string }) => {
-          if (response.error) {
-            toast.error(response.message)
+        (error: boolean | string) => {
+          if (typeof error === 'string') {
+            toast.error(error)
           }
 
-          if (!response.error) {
+          if (!error) {
             setIsOpenBattleGame(true)
           }
         }
@@ -117,19 +112,15 @@ const CoinFlipLobbyModal = () => {
   }, [skins])
 
   useEffect(() => {
-    socket.emit(
-      'load_items',
-      { type: 'coinflip' },
-      (response: { error: boolean, message: string, skins: IItemCard[] }) => {
-        if (response.error) {
-          toast.error(response.message)
-        }
-        if (!response.error) {
-          setSkins(response.skins)
-        }
+    socket.emit('load_items', { type: 'coinflip' }, (err: boolean, skins: TRobloxCard[]) => {
+      if (err) {
+        getToast('Error loaded items')
       }
-    )
-  }, [])
+      if (!err) {
+        setSkins(skins)
+      }
+    })
+  }, [socket])
 
   const handleCloseModal = useCallback(() => {
     setCurrentGame(null)
@@ -139,16 +130,16 @@ const CoinFlipLobbyModal = () => {
   return (
     <ModalWrapper
       closeModal={handleCloseModal}
-      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
+      modalClasses="relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden"
     >
       <GameLobbyHeader
         skinsPrice={costInventorySkins}
         skinsQuantity={skins.length}
         handleResetSelectedSkins={handleResetSelectedSkins}
       >
-        <div className='flex items-center justify-center'>
+        <div className="flex items-center justify-center">
           <CoinFlipLogoIcon />
-          <span className='pl-3 text-lg hidden xxs:block'>
+          <span className="pl-3 text-lg hidden xxs:block">
             {currentGame ? 'Join' : 'Create'} Coinflip
           </span>
         </div>
@@ -161,22 +152,22 @@ const CoinFlipLobbyModal = () => {
         max={currentGame?.max}
         min={currentGame?.min}
       >
-        <div className='flex items-center justify-between space-x-4'>
+        <div className="flex items-center justify-between space-x-4">
           {!currentGame && (
             <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
           )}
           {currentGame && (
             <img
-              className='w-7 h-7 sm:w-11 sm:h-11'
+              className="w-7 h-7 sm:w-11 sm:h-11"
               src={currentGame.creator.coin ? YellowCoin : PurpleCoin}
-              alt='coinflip side'
+              alt="coinflip side"
             />
           )}
           <Button
-            color='GreenPrimary'
+            color="GreenPrimary"
             onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}
           >
-            <span className='h-9 py-2 px-5'>{currentGame ? 'Join' : 'Create'}</span>
+            <span className="h-9 py-2 px-5">{currentGame ? 'Join' : 'Create'}</span>
           </Button>
         </div>
       </GameLobbyFooter>
