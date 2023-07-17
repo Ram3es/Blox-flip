@@ -67,6 +67,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     {
       handleFunction: () => {
         dispatch({ type: 'LOGOUT' })
+        window.location.reload()
       },
       name: 'Logout'
     }

@@ -12,6 +12,7 @@ export interface ChatSocketCtxState {
 }
 const URL = import.meta.env.VITE_API_URL
 const socket = io(URL, { autoConnect: false, query: { user_room: 1 } })
+
 const token = localStorage.getItem('token')
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const ChatSocketCtx = createContext<ChatSocketCtxState>({} as ChatSocketCtxState)
@@ -25,8 +26,20 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   } = useAppStore()
   const [userBalance, setUserBalance] = useState(0)
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
+  const [isConnected, setConnected] = useState(socket.connected)
 
   useEffect(() => {
+    const onConnect = () => {
+      setConnected(true)
+    }
+
+    const onDisconnect = () => {
+      setConnected(false)
+    }
+
+    socket.on('connect', onConnect)
+    socket.on('disconnect', onDisconnect)
+
     socket.on('balance', ({ balance }) => {
       if (balance) {
         setUserBalance(balance)
@@ -36,27 +49,32 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     socket.on('level', (userLevel: IUserLevel) => {
       setUserLevel(userLevel)
     })
+
     socket.connect()
 
     return () => {
+      socket.off('connect', onConnect)
+      socket.off('disconnect', onDisconnect)
       socket.off('balance')
       socket.off('level')
+      socket.disconnect()
     }
-  }, [socket])
+  }, [])
 
   useEffect(() => {
     if (token ?? hash) {
-      if (token) {
-        const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token))
-        dispatch({
-          type: 'LOGIN',
-          payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
+      const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token ?? hash as string))
+      dispatch({
+        type: 'LOGIN',
+        payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
+      })
+      if (isConnected) {
+        socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
+          console.log(res, 'res')
         })
       }
-
-      socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {})
     }
-  }, [])
+  }, [hash, isConnected])
 
   return <ChatSocketCtx.Provider value={{ socket, userBalance, userLevel }}>{children}</ChatSocketCtx.Provider>
 }
