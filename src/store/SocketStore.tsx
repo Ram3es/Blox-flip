@@ -11,7 +11,13 @@ export interface ChatSocketCtxState {
   userLevel: IUserLevel | null
 }
 const URL = import.meta.env.VITE_API_URL
-const socket = io(URL, { autoConnect: false, query: { user_room: 1 } })
+const socket = io(URL,
+  {
+    autoConnect: false,
+    query: { user_room: 1 },
+    transports: ['websocket', 'pooling'],
+    upgrade: true
+  })
 
 const token = localStorage.getItem('token')
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
