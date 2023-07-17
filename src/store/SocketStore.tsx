@@ -26,7 +26,6 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   } = useAppStore()
   const [userBalance, setUserBalance] = useState(0)
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
-
   const [isConnected, setConnected] = useState(socket.connected)
 
   useEffect(() => {
@@ -61,13 +60,12 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     if (token ?? hash) {
-      if (token) {
-        const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token))
-        dispatch({
-          type: 'LOGIN',
-          payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
-        })
-      }
+      const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token ?? hash as string))
+      dispatch({
+        type: 'LOGIN',
+        payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
+      })
+
       if (isConnected) {
         socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
         })
