@@ -51,10 +51,10 @@ const CoinFlipGamesTable = () => {
       header: () => 'Total',
       cell: ({ row }) => (
         <CoinsWithDiamond
-          containerSize='Large'
-          containerColor='GreenGradient'
+          containerSize="Large"
+          containerColor="GreenGradient"
           typographyQuantity={getCostByFieldName(row.original.creator.skins, 'price')}
-          typographyFontSize='Size16'
+          typographyFontSize="Size16"
         />
       ),
       footer: (props) => props.column.id
@@ -74,28 +74,32 @@ const CoinFlipGamesTable = () => {
   })
 
   useEffect(() => {
-    socket.emit('coinflip_remove', {}, (response: { id: string }) => {
-      if (!response.id) {
-        return
-      }
-      if (response.id) {
-        const filteredGames = removeGameById(games, response.id)
+    socket.on('coinflip_remove', (id: string) => {
+      if (id) {
+        const filteredGames = removeGameById(games, id)
         setGames(filteredGames)
       }
     })
 
-    
-  }, [])
+    socket.on('coinflip_new', (data: ICoinFlip) => {
+      setGames((prev) => ({ ...prev, data }))
+    })
+
+    return () => {
+      socket.off('coinflip_remove')
+      socket.off('coinflip_new')
+    }
+  }, [socket])
 
   return (
-    <div className='overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full max-w-full py-4'>
-      <table className='min-w-full border-separate border-spacing-y-2.5'>
+    <div className="overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full max-w-full py-4">
+      <table className="min-w-full border-separate border-spacing-y-2.5">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header, index, array) => {
                 return (
-                  <th key={header.id} className='pb-4 border-blue-highlight/50 border-b'>
+                  <th key={header.id} className="pb-4 border-blue-highlight/50 border-b">
                     <div
                       className={clsx('text-left text-gray-primary font-semibold text-base', {
                         'text-right': array[index] === array.at(-1)
