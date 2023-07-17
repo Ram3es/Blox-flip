@@ -83,6 +83,8 @@ const CoinFlipGamesTable = () => {
         setGames(filteredGames)
       }
     })
+
+    
   }, [])
 
   return (

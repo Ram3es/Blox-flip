@@ -31,7 +31,8 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
     return cards.map((card) => ({
       ...card,
       isSelected: false,
-      avatar: AVATAR_URL
+      avatar: AVATAR_URL,
+      pic: 'soon'
     }))
   }, [])
 

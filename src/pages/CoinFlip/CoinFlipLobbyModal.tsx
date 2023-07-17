@@ -16,7 +16,7 @@ import { Button } from '../../components/base/Button'
 import YellowCoin from '../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
-import { IItemCard } from '../../types/ItemCard'
+import { TRobloxCard } from '../../types/ItemCard'
 import { ICoin } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
@@ -26,16 +26,16 @@ const CoinFlipLobbyModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, setIsOpenLobbyModal, currentGame } = useCoinFlip()
   const { socket } = useSocketCtx()
 
-  const [skins, setSkins] = useState<IItemCard[]>([])
+  const [skins, setSkins] = useState<TRobloxCard[]>([])
   const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 
-  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: string, isSelected: boolean) => {
+  const updateArrayBySelectedSkin = (skins: TRobloxCard[], skinId: string, isSelected: boolean) => {
     return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected = (skins: IItemCard[], skinId: string) => {
+  const isItemSelected = (skins: TRobloxCard[], skinId: string) => {
     return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
@@ -64,7 +64,7 @@ const CoinFlipLobbyModal = () => {
 
   const costInventorySkins = getCostByFieldName(skins, 'price')
 
-  const getSelectedSkinsIds = (selectedSkins: IItemCard[]) => {
+  const getSelectedSkinsIds = (selectedSkins: TRobloxCard[]) => {
     return selectedSkins.map((skin) => skin.id)
   }
 
@@ -112,7 +112,7 @@ const CoinFlipLobbyModal = () => {
   }, [skins])
 
   useEffect(() => {
-    socket.emit('load_items', { type: 'coinflip' }, (err: boolean, skins: IItemCard[]) => {
+    socket.emit('load_items', { type: 'coinflip' }, (err: boolean, skins: TRobloxCard[]) => {
       if (err) {
         getToast('Error loaded items')
       }

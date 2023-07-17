@@ -8,6 +8,7 @@ export interface IItemCard {
   sold?: boolean
   active?: boolean
   isSelected?: boolean
+  pic?: string
   hot?: boolean
 }
 export interface IUnboxCard extends IItemCard {
@@ -18,6 +19,6 @@ export interface IUnboxCardCounter extends IItemCard {
   amount: number
 }
 
-export interface TRobloxCard extends Pick<IItemCard, 'id' | 'name' | 'price' | 'color'> {
+export interface TRobloxCard extends Pick<IItemCard, 'id' | 'name' | 'price' | 'color' | 'isSelected'> {
   pic: string
 }
