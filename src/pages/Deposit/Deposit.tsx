@@ -8,10 +8,12 @@ import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import { IItemCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 import { useSocketCtx } from '../../store/SocketStore'
+import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
 
 export const Deposit = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
-  const { socket, twoFactorAuthCode, setTwoFactorAuthModal } = useSocketCtx()
+  const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
+  const { socket, setTwoFactorAuthModal } = useSocketCtx()
   const { pathname } = useLocation()
   const currentPath = pathname.split('/')[2]
   const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } =
@@ -34,7 +36,7 @@ export const Deposit = () => {
     if (selectedCards.length) {
       socket.emit('items_deposit', {
         type: 'market',
-        '2fa_code': twoFactorAuthCode,
+        '2fa_code': twoFactorAuthCode === '' ? null : twoFactorAuthCode,
         items: selectedCards.map((card) => card.id)
       })
       setSelectedCard([])
@@ -60,12 +62,34 @@ export const Deposit = () => {
           )}
         </NavHeader>
         {currentPath === 'roblox-limiteds' && (
-          <div className="flex flex-col gap-y-2 items-end lg:ml-5 lg:items-start">
-            <Button variant="BlueGolfOutlined" onClick={() => setTwoFactorAuthModal(true)}>
-              <span className="w-[200px] h-9 py-2 px-5">2FA</span>
-            </Button>
+          <div className="flex flex-col gap-y-2 items-end lg:ml-5 lg:items-start mb-8">
+            <InputWithInlineLabel
+              value={twoFactorAuthCode}
+              onChange={(event) => setTwoFactorAuthCode(event.target.value)}
+              type="text"
+              placeholder="..."
+              label="2FA Code"
+              containerClasses="w-[220px] pl-2 pr-4 rounded-md gradient-background--blue__secondary h-[35px] flex items-center justify-between w-full cursor-text"
+              labelClasses="pr-2 shrink truncate rounded-md px-3 h-[20px] flex items-center text-11 gradient--background--blue__third text-gray-primary"
+              inputClasses="bg-transparent text-right outline-none placeholder:text-white max-w-[80px] overflow-y-scroll"
+              icon={
+                <svg
+                  className="cursor-pointer flex-shrink-0 mr-2 w-4 h-4 text-gray-primary"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => setTwoFactorAuthModal(true)}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              }
+            />
             <Button onClick={handleDeposit} color="GreenPrimary">
-              <div className="w-[200px] h-10 flex items-center gap-2 justify-center">
+              <div className="w-[220px] h-10 flex items-center gap-2 justify-center">
                 <DiamondIcon className="w-[21px] h-[17px]" />
                 <span>Deposit</span>
               </div>

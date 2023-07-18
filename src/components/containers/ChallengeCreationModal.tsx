@@ -10,6 +10,7 @@ import InputWithInlineLabel from '../common/InputWithInlineLabel'
 
 import ArrowTriangleIcon from '../icons/ArrowTriangleIcon'
 import ChallengeIcon from '../icons/ChallengeIcon'
+import DiamondIcon from '../icons/DiamondIcon'
 
 interface ChallengeCreationModalProps {
   onClose: () => void
@@ -52,59 +53,67 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='mt-4 md:mt-auto relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto'
+      modalClasses="mt-4 md:mt-auto relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto"
     >
-      <div className='flex items-center gap-6 border-b-[1px] border-blue-accent-primary pb-4 mb-6'>
-        <div className='flex items-center gap-2'>
+      <div className="flex items-center gap-6 border-b-[1px] border-blue-accent-primary pb-4 mb-6">
+        <div className="flex items-center gap-2">
           <ChallengeIcon />
-          <h3 className='uppercase text-gradient-gold text-3xl font-black'>challenge creation</h3>
+          <h3 className="uppercase text-gradient-gold text-3xl font-black">challenge creation</h3>
         </div>
       </div>
-      <div className='flex flex-col gap-6'>
+      <div className="flex flex-col gap-6">
         <InputWithInlineLabel
-          type='number'
-          placeholder='...'
+          type="number"
+          placeholder="..."
           value={inputWager !== 0 ? inputWager : ''}
           onChange={handleChangeInputWager}
-          label='Min wager'
-          withIcon
+          label="Min wager"
+          icon={
+            <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+              <DiamondIcon className="-inset-full absolute m-auto" />
+            </div>
+          }
         />
         <InputWithInlineLabel
-          type='text'
-          placeholder='...'
+          type="text"
+          placeholder="..."
           value={inputMultiplier}
           onChange={handleChangeInputMultiplier}
-          label='Min multiplier'
+          label="Min multiplier"
         />
         <InputWithInlineLabel
-          type='number'
-          placeholder='...'
+          type="number"
+          placeholder="..."
           value={inputPrize !== 0 ? inputPrize : ''}
           onChange={handleChangeInputPrize}
-          label='Prize'
-          labelClasses='rounded-md px-5 py-2 font-medium text-sm bg-green-primary/20 text-green-primary'
-          withIcon
+          label="Prize"
+          labelClasses="rounded-md px-5 py-2 font-medium text-sm bg-green-primary/20 text-green-primary"
+          icon={
+            <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+              <DiamondIcon className="-inset-full absolute m-auto" />
+            </div>
+          }
         />
         <Listbox
           value={selectedGame}
           onChange={setSelectedGame}
-          as='div'
-          className='relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text flex items-center justify-between'
+          as="div"
+          className="relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text flex items-center justify-between"
         >
-          <span className='capitalize rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary'>
+          <span className="capitalize rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary">
             Game
           </span>
           <Listbox.Button
-            as='div'
-            className='cursor-pointer text-gray-primary capitalize font-medium text-base flex justify-between items-center pl-10'
+            as="div"
+            className="cursor-pointer text-gray-primary capitalize font-medium text-base flex justify-between items-center pl-10"
           >
-            <div className='flex items-center gap-2'>
+            <div className="flex items-center gap-2">
               {selectedGame?.gameName}
-              <ArrowTriangleIcon className='w-2 h-2' />
+              <ArrowTriangleIcon className="w-2 h-2" />
             </div>
           </Listbox.Button>
-          <Listbox.Options className='focus:outline-none absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5'>
-            <div className='w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-[42px]' />
+          <Listbox.Options className="focus:outline-none absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5">
+            <div className="w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-[42px]" />
             {gameVariants.map((variant) => (
               <Listbox.Option key={variant.gameName} value={variant}>
                 {({ selected }) => (
@@ -124,13 +133,13 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
             ))}
           </Listbox.Options>
         </Listbox>
-        <div className='py-4 space-y-8'>
-          <div className='flex items-start justify-center gap-4'>
-            <Button color='BlueAccentPrimary' onClick={onClose}>
-              <span className='py-3 px-4 sm:px-10 text-15 font-bold text-gray-primary'>Cancel</span>
+        <div className="py-4 space-y-8">
+          <div className="flex items-start justify-center gap-4">
+            <Button color="BlueAccentPrimary" onClick={onClose}>
+              <span className="py-3 px-4 sm:px-10 text-15 font-bold text-gray-primary">Cancel</span>
             </Button>
-            <Button color='GreenPrimary' onClick={handleFunction}>
-              <span className='py-3 px-4 sm:px-10 text-15 font-bold text-white truncate'>
+            <Button color="GreenPrimary" onClick={handleFunction}>
+              <span className="py-3 px-4 sm:px-10 text-15 font-bold text-white truncate">
                 Create challenge
               </span>
             </Button>

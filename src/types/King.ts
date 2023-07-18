@@ -60,3 +60,9 @@ export interface IKingFight {
   weapon: IKingWeaponKey
   attack: number
 }
+
+export interface IKingJoin {
+  items: string[]
+  type: 1 | 0
+  '2fa_code'?: string
+}

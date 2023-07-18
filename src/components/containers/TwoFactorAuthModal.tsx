@@ -16,7 +16,7 @@ interface TwoFactorAuthModalProps {
 
 const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
   const [disclosure, setDisclosure] = useState(false)
-  const { socket, twoFactorAuthCode } = useSocketCtx()
+  const { socket } = useSocketCtx()
 
   return (
     <ModalWrapper
@@ -47,7 +47,7 @@ const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
         </div>
         <Formik
           initialValues={{
-            code: twoFactorAuthCode
+            code: ''
           }}
           validationSchema={defaultPasswordSchema('code')}
           onSubmit={(values) => {
@@ -61,7 +61,6 @@ const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
                 }
                 if (!err) {
                   getToast(success_message)
-                  localStorage.setItem('roblox_2xfa_code', values.code)
                   handleClose()
                 }
               }
@@ -82,7 +81,7 @@ const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
                 type="submit"
                 className="flex items-center justify-center w-[256px] mx-auto h-10 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5"
               >
-                Verify Code
+                Verify Key
               </Button>
             </Form>
           )}

@@ -7,6 +7,7 @@ import TipIcon from '../../icons/TipIcon'
 import { Button } from '../../base/Button'
 
 import type { IUser } from '../../../types/User'
+import DiamondIcon from '../../icons/DiamondIcon'
 
 interface TipModalProps {
   user: IUser
@@ -44,7 +45,11 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
           value={inputValue !== 0 ? inputValue : ''}
           onChange={handleChangeInput}
           label='Tip amount'
-          withIcon
+          icon={
+            <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+              <DiamondIcon className="-inset-full absolute m-auto" />
+            </div>
+          }
         />
         <InputWithInlineLabel
           type='number'
@@ -52,7 +57,11 @@ const TipModal = ({ user, onClose, handleFunction }: TipModalProps) => {
           value={inputValueVerify !== 0 ? inputValueVerify : ''}
           onChange={handleChangeInputVerify}
           label='Verify amount'
-          withIcon
+          icon={
+            <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+              <DiamondIcon className="-inset-full absolute m-auto" />
+            </div>
+          }
         />
         <div className='flex items-start justify-center gap-4'>
           <Button color='BlueAccentPrimary'>

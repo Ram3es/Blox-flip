@@ -17,8 +17,6 @@ export interface ChatSocketCtxState {
   socket: TSocket
   userBalance: number
   userLevel: IUserLevel | null
-  twoFactorAuthCode: string
-  setTwoFactorAuthCode: Dispatch<SetStateAction<string>>
   twoFactorAuthModal: boolean
   setTwoFactorAuthModal: Dispatch<SetStateAction<boolean>>
 }
@@ -47,11 +45,9 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
 
   const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
-  const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
 
   useEffect(() => {
     const robloxTwoFactorAuthCode = localStorage.getItem('roblox_2xfa_code')
-    setTwoFactorAuthCode(robloxTwoFactorAuthCode ?? '')
 
     const onConnect = () => {
       setConnected(true)
@@ -106,10 +102,8 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         socket,
         userBalance,
         userLevel,
-        twoFactorAuthCode,
         twoFactorAuthModal,
-        setTwoFactorAuthModal,
-        setTwoFactorAuthCode
+        setTwoFactorAuthModal
       }}
     >
       {children}

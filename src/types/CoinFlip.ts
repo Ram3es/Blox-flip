@@ -32,3 +32,11 @@ export interface ICoinFlip {
   min: number
   max: number
 }
+
+export interface ICoinFlipCreate {
+  type: 'coinflip'
+  items: string[]
+  coin: ICoin
+  '2fa_code'?: string
+  gameId?: string
+}
