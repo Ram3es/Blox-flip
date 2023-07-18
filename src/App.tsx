@@ -44,8 +44,12 @@ import Terms from './pages/ServicePages/Terms'
 import FAQ from './pages/ServicePages/FAQ'
 import ProvablyFair from './pages/ServicePages/ProvablyFair'
 import { ToastContainer } from 'react-toastify'
+import { useSocketCtx } from './store/SocketStore'
+import TwoFactorAuthModal from './components/containers/TwoFactorAuthModal'
 
 export const App = () => {
+  const { twoFactorAuthModal, setTwoFactorAuthModal } = useSocketCtx()
+
   return (
     <BrowserRouter>
       <Container>
@@ -96,6 +100,7 @@ export const App = () => {
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/provably-fair" element={<ProvablyFair />} />
         </Routes>
+        {twoFactorAuthModal && <TwoFactorAuthModal handleClose={() => setTwoFactorAuthModal(false)} />}
         <ToastContainer
           position="bottom-right"
           autoClose={2000}

@@ -1,4 +1,12 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { io, Socket } from 'socket.io-client'
 import { useAppStore } from './Store'
 import { decodeBase64 } from '../helpers/decodeToken'
@@ -9,15 +17,18 @@ export interface ChatSocketCtxState {
   socket: TSocket
   userBalance: number
   userLevel: IUserLevel | null
+  twoFactorAuthCode: string
+  setTwoFactorAuthCode: Dispatch<SetStateAction<string>>
+  twoFactorAuthModal: boolean
+  setTwoFactorAuthModal: Dispatch<SetStateAction<boolean>>
 }
 const URL = import.meta.env.VITE_API_URL
-const socket = io(URL,
-  {
-    autoConnect: false,
-    query: { user_room: 1 },
-    transports: ['websocket', 'pooling'],
-    upgrade: true
-  })
+const socket = io(URL, {
+  autoConnect: false,
+  query: { user_room: 1 },
+  transports: ['websocket', 'pooling'],
+  upgrade: true
+})
 
 const token = localStorage.getItem('token')
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -30,11 +41,18 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     state: { hash },
     dispatch
   } = useAppStore()
-  const [userBalance, setUserBalance] = useState(0)
-  const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
   const [isConnected, setConnected] = useState(socket.connected)
 
+  const [userBalance, setUserBalance] = useState(0)
+  const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
+
+  const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(true)
+  const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
+
   useEffect(() => {
+    const robloxTwoFactorAuthCode = localStorage.getItem('roblox_2xfa_code')
+    setTwoFactorAuthCode(robloxTwoFactorAuthCode ?? '')
+
     const onConnect = () => {
       setConnected(true)
     }
@@ -69,7 +87,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     if (token ?? hash) {
-      const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token ?? hash as string))
+      const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token ?? (hash as string)))
       dispatch({
         type: 'LOGIN',
         payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
@@ -82,6 +100,20 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     }
   }, [hash, isConnected])
 
-  return <ChatSocketCtx.Provider value={{ socket, userBalance, userLevel }}>{children}</ChatSocketCtx.Provider>
+  return (
+    <ChatSocketCtx.Provider
+      value={{
+        socket,
+        userBalance,
+        userLevel,
+        twoFactorAuthCode,
+        twoFactorAuthModal,
+        setTwoFactorAuthModal,
+        setTwoFactorAuthCode
+      }}
+    >
+      {children}
+    </ChatSocketCtx.Provider>
+  )
 }
 export default SocketCtxProvider

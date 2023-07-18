@@ -24,7 +24,7 @@ import { getToast } from '../../helpers/toast'
 
 const CoinFlipLobbyModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, setIsOpenLobbyModal, currentGame } = useCoinFlip()
-  const { socket } = useSocketCtx()
+  const { socket, setTwoFactorAuthModal, twoFactorAuthCode } = useSocketCtx()
 
   const [skins, setSkins] = useState<TRobloxCard[]>([])
   const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
@@ -71,7 +71,7 @@ const CoinFlipLobbyModal = () => {
   const handleCreateCoinFlip = useCallback(() => {
     socket.emit(
       'coinflip_create',
-      { type: 'coinflip', items: getSelectedSkinsIds(skins), coin: selectedCoin },
+      { type: 'coinflip', '2fa_code': twoFactorAuthCode, items: getSelectedSkinsIds(skins), coin: selectedCoin },
       (error: boolean | string) => {
         if (typeof error === 'string') {
           toast.error(error)
@@ -92,6 +92,7 @@ const CoinFlipLobbyModal = () => {
         'coinflip_join',
         {
           type: 'coinflip',
+          '2fa_code': twoFactorAuthCode,
           items: getSelectedSkinsIds(skins),
           gameId: currentGame.id,
           coin: selectedCoin
@@ -163,6 +164,9 @@ const CoinFlipLobbyModal = () => {
               alt="coinflip side"
             />
           )}
+          <Button variant='BlueGolfOutlined' onClick={() => setTwoFactorAuthModal(true)}>
+            <span className="h-9 py-2 px-5">2FA</span>
+          </Button>
           <Button
             color="GreenPrimary"
             onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}

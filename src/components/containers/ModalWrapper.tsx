@@ -26,7 +26,7 @@ const ModalWrapper: FC<IModalWrapper> = ({
         <Button
           className={
             closeBtnClasses ??
-            'rounded w-7 h-7 leading-7 absolute top-4 right-6 text-center bg-lightblue-darken cursor-pointer z-[50]'
+            'rounded w-7 h-7 leading-7 absolute top-4 right-6 text-center flex items-center justify-center bg-lightblue-darken cursor-pointer z-[50]'
           }
           onClick={() => closeModal()}
         >

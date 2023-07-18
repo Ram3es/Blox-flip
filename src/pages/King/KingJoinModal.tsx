@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useState } from 'react'
 import { useSocketCtx } from '../../store/SocketStore'
 
 import { Switch } from '@headlessui/react'
@@ -24,7 +24,7 @@ interface KingJoinModalProps {
 export type HandleSelectItem = (id: string) => void
 
 const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
-  const { socket } = useSocketCtx()
+  const { socket, setTwoFactorAuthModal, twoFactorAuthCode } = useSocketCtx()
 
   const [safeMode, setSafeMode] = useState(false)
   const [skins, setSkins] = useState<IItemCard[]>([])
@@ -72,6 +72,7 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
     socket.emit(
       'challenger_join',
       {
+        '2fa_code': twoFactorAuthCode,
         items: getSelectedSkinsIds(skins),
         type: safeMode ? 1 : 0
       },
@@ -127,6 +128,9 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
             />
           </Switch>
         </div>
+        <Button variant='BlueGolfOutlined' onClick={() => setTwoFactorAuthModal(true)}>
+            <span className="h-9 py-2 px-5">2FA</span>
+        </Button>
         <Button color='GreenPrimary' onClick={handleJoinKing}>
           <span className='h-9 py-2 px-5'>Deposit</span>
         </Button>

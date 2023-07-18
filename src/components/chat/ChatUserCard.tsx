@@ -17,6 +17,7 @@ import TimeoutIcon from '../icons/TimeoutIcon'
 
 import type { IChatUser } from '../../types/User'
 import { useAppStore } from '../../store/Store'
+import { useSocketCtx } from '../../store/SocketStore'
 
 interface userAction {
   name: string
@@ -46,12 +47,22 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     setSelectedMessage
   } = useChat()
 
+  const {
+    setTwoFactorAuthModal
+  } = useSocketCtx()
+
   const { dispatch } = useAppStore()
 
   const baseIconSizeClasses = 'w-3 h-3'
 
   const profileActions: userAction[] = [
     { path: '/profile', name: 'profile' },
+    {
+      handleFunction: () => {
+        setTwoFactorAuthModal(true)
+      },
+      name: 'Set 2FA Key'
+    },
     { path: '/affiliates', name: 'affiliates' },
     { path: '/leaderboard', name: 'leaderboard' },
     {
