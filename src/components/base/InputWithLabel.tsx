@@ -30,7 +30,7 @@ const InputWithLabel: FC<IInputWithLabelProps> = ({
           {label}
         </div>
       )}
-      {inputProps.type === 'text' || inputProps.type === 'number'
+      {inputProps.type === 'text' || inputProps.type === 'number' || inputProps.type === 'password'
         ? (
         <div className={inputWrapperClasses ?? 'bg-dark/25 rounded-xl rounded-tl-none overflow-hidden'}>
           <div className={inputSecondWrapperClasses ?? 'relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-4 pr-3'}>

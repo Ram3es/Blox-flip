@@ -8,3 +8,12 @@ export const defaultAmountSchema = (stateName: string) => {
       .required('Enter the amount in order to withdraw it')
   })
 }
+
+export const defaultPasswordSchema = (stateName: string) => {
+  return Yup.object().shape({
+    [stateName]: Yup.string()
+      .required('No password provided.')
+      .min(6, 'Password is too short - should be 6 chars minimum.')
+      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
+  })
+}

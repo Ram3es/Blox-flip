@@ -75,6 +75,7 @@ const SignInForm = ({ onClose }: { onClose: Function }) => {
   const handleSubmitTwoFactorModal = (code: string) => {
     void loginTwoStep(code)
   }
+
   return (
     <>
       <InputWithLabel

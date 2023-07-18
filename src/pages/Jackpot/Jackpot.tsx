@@ -14,7 +14,7 @@ import SignInModal from '../../components/containers/SignInModal'
 import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { getCostByFieldName } from '../../helpers/numbers'
-import JackpotModal from '../../components/containers/JackpotModal'
+import JackpotJoinModal from './JackpotJoinModal'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
@@ -193,7 +193,7 @@ const Jackpot = () => {
           </div>
         </div>
       </div>
-      {isOpenModal && <JackpotModal onClose={toggleModal} onSubmit={onSubmitJackpotModal} userAvatar={user?.avatar ?? AVATAR_URL } />}
+      {isOpenModal && <JackpotJoinModal onClose={toggleModal} handleFunction={onSubmitJackpotModal} userAvatar={user?.avatar ?? AVATAR_URL } />}
       <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )

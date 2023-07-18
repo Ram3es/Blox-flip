@@ -14,16 +14,19 @@ import { getCostByFieldName } from '../../helpers/numbers'
 import type { IJackpotCard } from '../../types/Jackpot'
 
 import { cards } from '../../mocks/cards'
+import { useSocketCtx } from '../../store/SocketStore'
 
 const AVATAR_URL =
-'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
+  'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
 
 interface JackpotJoinModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
   handleFunction: (cards: IJackpotCard[]) => void
+  userAvatar: string
 }
 
-const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) => {
+const JackpotJoinModal = ({ onClose, handleFunction, userAvatar }: JackpotJoinModalProps) => {
+  const { setTwoFactorAuthModal } = useSocketCtx()
   const [items, setItems] = useState<IJackpotCard[]>([])
   const selectedItems = items.filter((item) => item.isSelected)
 
@@ -31,7 +34,7 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
     return cards.map((card) => ({
       ...card,
       isSelected: false,
-      avatar: AVATAR_URL,
+      avatar: userAvatar,
       pic: 'soon'
     }))
   }, [])
@@ -83,18 +86,18 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses='relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden'
+      modalClasses="relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-5xl w-full m-auto space-y-5 max-h-[555px] overflow-hidden"
     >
       <GameLobbyHeader
         skinsPrice={costInventoryItems}
         skinsQuantity={items.length}
         handleResetSelectedSkins={handleResetSelectedItems}
       >
-        <div className='flex items-center gap-2'>
-          <span className='text-blue-golf'>
+        <div className="flex items-center gap-2">
+          <span className="text-blue-golf">
             <JackpotCoins />
           </span>
-          <span className='text-22 font-bold hidden xxs:block capitalize'>Join Jackpot</span>
+          <span className="text-22 font-bold hidden xxs:block capitalize">Join Jackpot</span>
         </div>
       </GameLobbyHeader>
       <GameLobbyItemsList items={items} handleSelectItem={handleSelectItem} />
@@ -103,12 +106,15 @@ const JackpotJoinModal = ({ onClose, handleFunction }: JackpotJoinModalProps) =>
         selectedItemsCost={getCostInSelectedItems()}
         selectedItemsLength={selectedItems.length}
       >
-        <div className='flex flex-col items-start xs:flex-row xs:items-center gap-3'>
-          <span className='text-xs uppercase text-gray-primary'>Minimum value</span>
-          <CoinsWithDiamond containerColor='GreenGradientSecondary' typographyQuantity={1500} />
+        <div className="flex flex-col items-start xs:flex-row xs:items-center gap-3">
+          <span className="text-xs uppercase text-gray-primary">Minimum value</span>
+          <CoinsWithDiamond containerColor="GreenGradientSecondary" typographyQuantity={1500} />
         </div>
-        <Button color='GreenPrimary' onClick={handleBetJackpot}>
-          <span className='h-9 py-2 px-5'>Create</span>
+        <Button variant="BlueGolfOutlined" onClick={() => setTwoFactorAuthModal(true)}>
+          <span className="h-9 py-2 px-5">2FA</span>
+        </Button>
+        <Button color="GreenPrimary" onClick={handleBetJackpot}>
+          <span className="h-9 py-2 px-5">Create</span>
         </Button>
       </GameLobbyFooter>
     </ModalWrapper>

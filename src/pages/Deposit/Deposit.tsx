@@ -5,13 +5,13 @@ import ToolBar from '../../components/common/ToolBar'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import NavHeader from '../../components/navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
-import { IItemCard, TRobloxCard } from '../../types/ItemCard'
+import { IItemCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 import { useSocketCtx } from '../../store/SocketStore'
 
 export const Deposit = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
-  const { socket } = useSocketCtx()
+  const { socket, twoFactorAuthCode, setTwoFactorAuthModal } = useSocketCtx()
   const { pathname } = useLocation()
   const currentPath = pathname.split('/')[2]
   const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } =
@@ -32,18 +32,22 @@ export const Deposit = () => {
 
   const handleDeposit = () => {
     if (selectedCards.length) {
-      socket.emit('items_deposit', { type: 'market', items: selectedCards.map((card) => card.id) })
+      socket.emit('items_deposit', {
+        type: 'market',
+        '2fa_code': twoFactorAuthCode,
+        items: selectedCards.map((card) => card.id)
+      })
       setSelectedCard([])
     }
   }
 
   return (
-    <div className='max-w-[1470px] w-full mx-auto'>
-      <div className='flex flex-col xs:flex-row'>
+    <div className="max-w-[1470px] w-full mx-auto">
+      <div className="flex flex-col xs:flex-row">
         <NavHeader
-          title='Deposit'
+          title="Deposit"
           pathName={currentPath}
-          renderIcon={() => <DiamondIcon className='w-[29px] h-[25px] text-green-secondary ml-2' />}
+          renderIcon={() => <DiamondIcon className="w-[29px] h-[25px] text-green-secondary ml-2" />}
         >
           {currentPath === 'roblox-limiteds' && (
             <ToolBar
@@ -56,13 +60,15 @@ export const Deposit = () => {
           )}
         </NavHeader>
         {currentPath === 'roblox-limiteds' && (
-          <div className='flex items-end  lg:ml-5 lg:items-start pb-8'>
-            <Button
-              onClick={handleDeposit}
-              className='pointer-events-auto flex justify-center items-center leading-9 text-white text-base font-bold rounded px-2.5 py-1  shadow-green-20 gradient-green hover:bg-gradient-to-r hover:to-green-500 hover:from-green-500 w-64 shrink-0'
-            >
-              <DiamondIcon className='w-[21px] h-[17px] mr-2' />
-              <span>Deposit</span>
+          <div className="flex flex-col gap-y-2 items-end lg:ml-5 lg:items-start">
+            <Button variant="BlueGolfOutlined" onClick={() => setTwoFactorAuthModal(true)}>
+              <span className="w-[200px] h-9 py-2 px-5">2FA</span>
+            </Button>
+            <Button onClick={handleDeposit} color="GreenPrimary">
+              <div className="w-[200px] h-10 flex items-center gap-2 justify-center">
+                <DiamondIcon className="w-[21px] h-[17px]" />
+                <span>Deposit</span>
+              </div>
             </Button>
           </div>
         )}

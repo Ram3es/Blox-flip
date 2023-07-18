@@ -5,17 +5,6 @@ import { robloxSecurityLogin } from '../../services/auth/auth'
 import { Context } from '../../store/Store'
 import { encodeBase64 } from '../../helpers/decodeToken'
 
-const user = {
-  id: 'aass2b44b123ghg346',
-  name: 'John Johnson',
-  avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg',
-  level: 11,
-  progress: {
-    current: 50,
-    required: 165
-  }
-}
-
 const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, onClose: Function }) => {
   const { dispatch } = useContext(Context)
   const [inputValue, setInputValue] = useState('')
