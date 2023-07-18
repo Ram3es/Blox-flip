@@ -46,7 +46,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [userBalance, setUserBalance] = useState(0)
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
 
-  const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(true)
+  const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
   const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
 
   useEffect(() => {
