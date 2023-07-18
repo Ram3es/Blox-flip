@@ -106,10 +106,10 @@ const PlinkoActions = () => {
 
         socket.emit(
           'plinko',
-          { rows: selectedRow, risk, wager: betAmount },
+          { rows: selectedRow, risk: risk.toLowerCase(), wager: betAmount },
           (
             err: boolean,
-            { multiplier, amount, win }: { multiplier: number; amount: number; win: number }
+            { multiplier, amount, win }: { multiplier: number, amount: number, win: number }
           ) => {
             if (err) {
               getToast("Plinko doesn't fall")
