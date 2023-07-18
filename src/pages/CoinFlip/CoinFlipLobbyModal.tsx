@@ -17,14 +17,16 @@ import YellowCoin from '../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../assets/img/CoinFlipTail.png'
 
 import { TRobloxCard } from '../../types/ItemCard'
-import { ICoin } from '../../types/CoinFlip'
+import { ICoin, ICoinFlipCreate } from '../../types/CoinFlip'
 
 import { getCostByFieldName } from '../../helpers/numbers'
 import { getToast } from '../../helpers/toast'
+import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
 
 const CoinFlipLobbyModal = () => {
   const { setIsOpenBattleGame, setCurrentGame, setIsOpenLobbyModal, currentGame } = useCoinFlip()
-  const { socket, setTwoFactorAuthModal, twoFactorAuthCode } = useSocketCtx()
+  const { socket, setTwoFactorAuthModal } = useSocketCtx()
+  const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
 
   const [skins, setSkins] = useState<TRobloxCard[]>([])
   const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
@@ -69,9 +71,21 @@ const CoinFlipLobbyModal = () => {
   }
 
   const handleCreateCoinFlip = useCallback(() => {
+    const sendedData: ICoinFlipCreate = {
+      type: 'coinflip',
+      items: getSelectedSkinsIds(skins),
+      coin: selectedCoin
+    }
+
+    if (twoFactorAuthCode) {
+      sendedData['2fa_code'] = twoFactorAuthCode
+    }
+
     socket.emit(
       'coinflip_create',
-      { type: 'coinflip', '2fa_code': twoFactorAuthCode, items: getSelectedSkinsIds(skins), coin: selectedCoin },
+      {
+        sendedData
+      },
       (error: boolean | string) => {
         if (typeof error === 'string') {
           toast.error(error)
@@ -92,7 +106,7 @@ const CoinFlipLobbyModal = () => {
         'coinflip_join',
         {
           type: 'coinflip',
-          '2fa_code': twoFactorAuthCode,
+          '2fa_code': twoFactorAuthCode === '' ? null : twoFactorAuthCode,
           items: getSelectedSkinsIds(skins),
           gameId: currentGame.id,
           coin: selectedCoin
@@ -153,27 +167,51 @@ const CoinFlipLobbyModal = () => {
         max={currentGame?.max}
         min={currentGame?.min}
       >
-        <div className="flex items-center justify-between space-x-4">
-          {!currentGame && (
-            <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
-          )}
-          {currentGame && (
+        {!currentGame && (
+          <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
+        )}
+        {currentGame && (
+          <div>
             <img
               className="w-7 h-7 sm:w-11 sm:h-11"
               src={currentGame.creator.coin ? YellowCoin : PurpleCoin}
               alt="coinflip side"
             />
-          )}
-          <Button variant='BlueGolfOutlined' onClick={() => setTwoFactorAuthModal(true)}>
-            <span className="h-9 py-2 px-5">2FA</span>
-          </Button>
-          <Button
-            color="GreenPrimary"
-            onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}
-          >
-            <span className="h-9 py-2 px-5">{currentGame ? 'Join' : 'Create'}</span>
-          </Button>
+          </div>
+        )}
+        <div className="w-[220px]">
+          <InputWithInlineLabel
+            value={twoFactorAuthCode}
+            onChange={(event) => setTwoFactorAuthCode(event.target.value)}
+            type="text"
+            placeholder="..."
+            label="2FA Code"
+            containerClasses="pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-1.5 flex items-center justify-between w-full cursor-text"
+            labelClasses="pr-2 shrink truncate rounded-md px-3 h-[30px] flex items-center font-medium text-11 gradient--background--blue__third text-gray-primary"
+            inputClasses="bg-transparent text-right outline-none placeholder:text-white max-w-[80px] overflow-y-scroll"
+            icon={
+              <svg
+                className="cursor-pointer flex-shrink-0 mr-2 w-5 h-5 text-gray-primary"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => setTwoFactorAuthModal(true)}
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            }
+          />
         </div>
+        <Button
+          color="GreenPrimary"
+          onClick={currentGame ? handleJoinCoinFlip : handleCreateCoinFlip}
+        >
+          <span className="h-9 py-2 px-5">{currentGame ? 'Join' : 'Create'}</span>
+        </Button>
       </GameLobbyFooter>
     </ModalWrapper>
   )

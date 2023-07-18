@@ -18,6 +18,7 @@ import { useSocketCtx } from '../../../store/SocketStore'
 import { toast } from 'react-toastify'
 import { ICaseUnboxingItem, ICaseUnboxingPotentialItem } from '../../../types/Cases'
 import { getRandomId } from '../../../helpers/casesHelpers'
+import DiamondIcon from '../../icons/DiamondIcon'
 
 interface CaseModalProps {
   handleClose: () => void
@@ -114,7 +115,8 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
   return (
     <ModalWrapper
       closeModal={handleClose}
-      modalClasses="h-5/6 relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto space-y-4 overflow-hidden">
+      modalClasses="h-5/6 relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto space-y-4 overflow-hidden"
+    >
       <ActionModalHeader>
         <span className="font-black text-3xl capitalize text-gradient-gold">
           {caseData ? 'Change Case' : 'Create Case'}
@@ -129,7 +131,8 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                 'text-blue-golf border-blue-golf bg-blue--golf': tabIndex === 0,
                 'text-gray-primary border-blue-light-primary': tabIndex !== 0
               }
-            )}>
+            )}
+          >
             General
           </Tab>
           <Tab
@@ -139,7 +142,8 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                 'text-blue-golf border-blue-golf bg-blue--golf': tabIndex === 1,
                 'text-gray-primary border-blue-light-primary': tabIndex !== 1
               }
-            )}>
+            )}
+          >
             Cases
           </Tab>
         </Tab.List>
@@ -161,7 +165,7 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                 cost: values.casePrice,
                 skins: getSelectedSkinsIds(skins)
               },
-              (response: { error: boolean, message: string }) => {
+              (response: { error: boolean; message: string }) => {
                 if (response.error) {
                   toast.error(response.message)
                 }
@@ -170,7 +174,8 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                 }
               }
             )
-          }}>
+          }}
+        >
           {({ handleChange, values }) => (
             <Form>
               <div className="space-y-4">
@@ -186,7 +191,7 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                       />
                       <SelectWithInlineLabel
                         // value={values.selectedCategory}
-                        value=''
+                        value=""
                         label="Select Category"
                         onChange={handleChange('selectedCategory')}
                         options={['Not best category', 'Best category', 'None', 'level cases']}
@@ -197,7 +202,11 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                         type="number"
                         placeholder="..."
                         label="Case price"
-                        withIcon
+                        icon={
+                          <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+                            <DiamondIcon className="-inset-full absolute m-auto" />
+                          </div>
+                        }
                       />
                       <InputWithInlineLabel
                         value={values.image}

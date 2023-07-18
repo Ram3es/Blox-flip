@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import InputWithInlineLabel from '../common/InputWithInlineLabel'
 import { Button } from '../base/Button'
+import DiamondIcon from '../icons/DiamondIcon'
 
 interface IFormLabel {
   name: string
@@ -136,7 +137,11 @@ const TriviaForm = () => {
                 value={inputsValues[item.name] !== 0 ? inputsValues[item.name] : ''}
                 onChange={onChange}
                 label={item.label}
-                withIcon
+                icon={
+                  <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+                    <DiamondIcon className="-inset-full absolute m-auto" />
+                  </div>
+                }
                 autoComplete='off'
               />
                 )

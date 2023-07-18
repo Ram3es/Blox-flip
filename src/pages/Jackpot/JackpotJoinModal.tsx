@@ -15,9 +15,8 @@ import type { IJackpotCard } from '../../types/Jackpot'
 
 import { cards } from '../../mocks/cards'
 import { useSocketCtx } from '../../store/SocketStore'
+import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
 
-const AVATAR_URL =
-  'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
 
 interface JackpotJoinModalProps {
   onClose: Dispatch<SetStateAction<boolean>>
@@ -27,6 +26,8 @@ interface JackpotJoinModalProps {
 
 const JackpotJoinModal = ({ onClose, handleFunction, userAvatar }: JackpotJoinModalProps) => {
   const { setTwoFactorAuthModal } = useSocketCtx()
+  const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
+
   const [items, setItems] = useState<IJackpotCard[]>([])
   const selectedItems = items.filter((item) => item.isSelected)
 
@@ -110,9 +111,33 @@ const JackpotJoinModal = ({ onClose, handleFunction, userAvatar }: JackpotJoinMo
           <span className="text-xs uppercase text-gray-primary">Minimum value</span>
           <CoinsWithDiamond containerColor="GreenGradientSecondary" typographyQuantity={1500} />
         </div>
-        <Button variant="BlueGolfOutlined" onClick={() => setTwoFactorAuthModal(true)}>
-          <span className="h-9 py-2 px-5">2FA</span>
-        </Button>
+        <div className="w-[220px]">
+          <InputWithInlineLabel
+            value={twoFactorAuthCode}
+            onChange={(event) => setTwoFactorAuthCode(event.target.value)}
+            type="text"
+            placeholder="..."
+            label="2FA Code"
+            containerClasses="pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-1.5 flex items-center justify-between w-full cursor-text"
+            labelClasses="pr-2 shrink truncate rounded-md px-3 h-[30px] flex items-center font-medium text-11 gradient--background--blue__third text-gray-primary"
+            inputClasses="bg-transparent text-right outline-none placeholder:text-white max-w-[80px] overflow-y-scroll"
+            icon={
+              <svg
+                className="cursor-pointer flex-shrink-0 mr-2 w-5 h-5 text-gray-primary"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => setTwoFactorAuthModal(true)}
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            }
+          />
+        </div>
         <Button color="GreenPrimary" onClick={handleBetJackpot}>
           <span className="h-9 py-2 px-5">Create</span>
         </Button>
