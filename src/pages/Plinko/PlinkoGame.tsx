@@ -15,6 +15,7 @@ import clsx from 'clsx'
 import {
   getColorByMultiplier,
   getMultipliersByProps,
+  getPlinkoBottomFields,
   getRowSettingsByRows
 } from '../../helpers/plinkoHelpers'
 
@@ -282,10 +283,7 @@ const PlinkoGame = () => {
       <div className='scale-[0.58] sm:scale-100 flex items-center flex-col justify-center'>
         <div ref={plinkoGameRef} />
         <div className='flex justify-center items-center'>
-          {getMultipliersByProps(risk, rows)
-            .slice(1)
-            .reverse()
-            .concat(getMultipliersByProps(risk, rows))
+          {getPlinkoBottomFields(risk, rows)
             .map((multiplier, index) => (
               <div
                 key={multiplier + new Date().getTime() * Math.random()}
