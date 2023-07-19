@@ -27,3 +27,7 @@ export interface ICaseItem {
   chance: number
   price: number
 }
+
+export interface ICaseUnboxingItemWithAmount extends ICaseUnboxingItem {
+  amount: number
+}
