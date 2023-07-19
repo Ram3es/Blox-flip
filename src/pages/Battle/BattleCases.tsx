@@ -1,113 +1,155 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import BattleLayout from '../../components/containers/BattleGameLayout'
-import { IBattlesInfo, IBattleUser } from '../../mocks/battle'
-import type { IItemCard, IUnboxCard } from '../../types/ItemCard'
+import { IBattleUser } from '../../mocks/battle'
+import type { IItemCard } from '../../types/ItemCard'
 import BattleMode from '../../components/common/battle/BattleMode'
 import GameHeader from '../../components/common/battle/GameHeader'
 import GameRoundsInfo from '../../components/common/battle/GameRoundsInfo'
+import { useBattleCase } from '../../store/BattleCaseStore'
+import { useSocketCtx } from '../../store/SocketStore'
+import { IRootBattle, IRootBattleCaseItem, IRootBattleResult, RootBattleModeEnum } from '../../types/CaseBattles'
 
 const BattleCases = () => {
-  const location = useLocation()
+  const { id } = useParams()
+  const { games } = useBattleCase()
+  const { socket } = useSocketCtx()
 
-  const [gameState, setGameState] = useState<IBattlesInfo>(location.state)
+  const [gameState, setGameState] = useState<IRootBattle | null>(null)
+  const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
   const [usersFinishedRound, setFinishedRound] = useState<Record<string, number>>({})
 
   const updateRound = (userId: string) => {
-    setFinishedRound((state) => ({ ...state, [userId]: state[userId] + 1 || gameState.gameSetting.currentRound }))
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
+    setFinishedRound((state) => ({ ...state, [userId]: state[userId] + 1 || currentRound?.round! }))
   }
 
-  const joinBattle = (idx: number, player: IBattleUser) => {
-    console.log(idx, 'idx', gameState.players, 'gameState')
-
-    setGameState((state) => ({
-      ...state,
-      players: [...state.players.slice(0, idx), player, ...state.players.slice(idx + 1)]
-    }))
+  const HandleJoinBattle = (idx: number, player: IBattleUser) => {
+    // setGameState((state) => ({
+    //   ...state,
+    //   players: [...state.players.slice(0, idx), player, ...state.players.slice(idx + 1)]
+    // }))
   }
 
   const setFinishGame = () => {
-    setGameState(state => ({ ...state, gameSetting: { ...state.gameSetting, isDone: true } }))
+    // setGameState((state) => ({ ...state, gameSetting: { ...state.gameSetting, isDone: true } }))
   }
 
   const updateRewards = (userId: string, card: IItemCard) => {
-    setGameState((state) => ({
-      ...state,
-      players: [
-        ...state.players.map((player) => {
-          if (player?.id === userId) {
-            return {
-              ...player,
-              dropsCards: [...player.dropsCards, card],
-              wonDiamonds: player.wonDiamonds + card.price
-            }
-          }
-          return player
-        })
-      ]
-    }))
+    // setGameState((state) => ({
+    //   ...state,
+    //   players: [
+    //     ...state.players.map((player) => {
+    //       if (player?.id === userId) {
+    //         return {
+    //           ...player,
+    //           dropsCards: [...player.dropsCards, card],
+    //           wonDiamonds: player.wonDiamonds + card.price
+    //         }
+    //       }
+    //       return player
+    //     })
+    //   ]
+    // }))
   }
 
-  const getCurrentBoxPrice = (cases: IUnboxCard[]): number => {
-    if (gameState.status !== 'created' && gameState.gameSetting.currentRound) {
-      return cases[gameState.gameSetting.currentRound - 1].price
+  const getCurrentBoxPrice = (cases: IRootBattleCaseItem[]): number => {
+    if (gameState?.state !== 'open' && currentRound?.round) {
+      return cases[currentRound?.round - 1].price
     }
     return 0
   }
 
-  useEffect(() => {
-    if (gameState.players.length === gameState.gameSetting.mode.requiredPlayers && gameState.players.every(item => item !== undefined) && !gameState.gameSetting.currentRound) {
-      setGameState(state => ({
-        ...state,
-        status: 'running',
-        gameSetting: { ...state.gameSetting, currentRound: 1 }
-      }))
-      return
-    }
-    if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
-      setGameState(state =>
-        ({ ...state, status: 'ended' })
-      )
-    }
-  }, [gameState.players, gameState.gameSetting.currentRound])
+  // useEffect(() => {
+  //   if (
+  //     gameState.players.length === gameState.gameSetting.mode.requiredPlayers &&
+  //     gameState.players.every((item) => item !== undefined) &&
+  //     !gameState.gameSetting.currentRound
+  //   ) {
+  //     setGameState((state) => ({
+  //       ...state,
+  //       status: 'running',
+  //       gameSetting: { ...state.gameSetting, currentRound: 1 }
+  //     }))
+  //     return
+  //   }
+  //   if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
+  //     setGameState((state) => ({ ...state, status: 'ended' }))
+  //   }
+  // }, [gameState])
+
+  // useEffect(() => {
+  //   const users = Object.values(usersFinishedRound)
+  //   if (
+  //     users.length === gameState.gameSetting.mode.requiredPlayers &&
+  //     users.every((val) => val === gameState.gameSetting.currentRound) &&
+  //     gameState.gameSetting.currentRound &&
+  //     gameState.status !== 'ended'
+  //   ) {
+  //     setGameState((state) => ({
+  //       ...state,
+  //       gameSetting: { ...state.gameSetting, currentRound: state.gameSetting.currentRound + 1 }
+  //     }))
+  //   }
+  // }, [usersFinishedRound])
 
   useEffect(() => {
-    const users = Object.values(usersFinishedRound)
-    if (users.length === gameState.gameSetting.mode.requiredPlayers && users.every(val => val === gameState.gameSetting.currentRound) && gameState.gameSetting.currentRound && gameState.status !== 'ended') {
-      setGameState(state => ({
-        ...state,
-        gameSetting: { ...state.gameSetting, currentRound: state.gameSetting.currentRound + 1 }
-      }))
+    if (id) {
+      const currentGame = games.find((game) => game.id === Number(id))
+      if (currentGame) {
+        setGameState(currentGame)
+      }
     }
-  }, [usersFinishedRound])
+  }, [id])
+
+  useEffect(() => {
+    if (id && gameState) {
+      socket.on('battle_result', (data: IRootBattleResult[]) => {
+        const battleRound = data.find((item) => item.id === Number(id))
+        if (battleRound) {
+          setCurrentRound(battleRound)
+        }
+      })
+    }
+
+    return () => {
+      socket.off('battle_result')
+    }
+  }, [socket, id, gameState])
 
   return (
-    <div className='max-w-1190 w-full mx-auto text-sm'>
-      <BattleLayout amountGamePlates={gameState.gameSetting.mode.requiredPlayers}>
-        <GameHeader
-          gameStatus={gameState.status}
-          amountRounds={gameState.gameSetting.rounds}
-          currentRound={gameState.gameSetting.currentRound}
-          totalPrice={gameState.gameSetting.price}
-          currentBoxPrice={getCurrentBoxPrice(gameState?.cases as IUnboxCard[])}
-        />
-        <GameRoundsInfo
-          gameVariant={gameState.gameSetting.mode.variant}
-          amountRounds={gameState.gameSetting.rounds}
-          currentRound={gameState.gameSetting.currentRound}
-        />
-        <BattleMode
-          status={gameState.status}
-          players={gameState.players}
-          casesBox={gameState.cases}
-          onJoinUser={joinBattle}
-          mode={gameState.gameSetting.mode}
-          updateRewards={updateRewards}
-          updateRound={updateRound}
-          setFinishGame={setFinishGame}
-          isFinishedGame={gameState.gameSetting.isDone}
-        />
-      </BattleLayout>
+    <div className="max-w-1190 w-full mx-auto text-sm">
+      {gameState && (
+        <BattleLayout amountGamePlates={gameState.players.length + 1}>
+          <GameHeader
+            gameStatus={gameState.state}
+            amountRounds={gameState.caselist.length + 1}
+            currentRound={currentRound?.round ?? 0}
+            totalPrice={gameState.cost}
+            currentBoxPrice={getCurrentBoxPrice(gameState?.caselist)}
+          />
+          <GameRoundsInfo
+            gameVariant={gameState?.team ? 'Team' : gameState.gamemode === RootBattleModeEnum.crazy ? RootBattleModeEnum.crazy : RootBattleModeEnum.regular}
+            amountRounds={gameState.caselist.length + 1}
+            currentRound={currentRound?.round ?? 0}
+          />
+          <BattleMode
+            status={gameState.state}
+            players={gameState.players}
+            casesBox={gameState.caselist}
+            mode={{
+              variant: '2v2',
+              requiredPlayers: gameState.max
+            }}
+            isFinishedGame={gameState.state === 'ended'}
+            gameId={gameState.id}
+            // onJoinUser={HandleJoinBattle}
+            updateRewards={updateRewards}
+            updateRound={updateRound}
+            setFinishGame={setFinishGame}
+          />
+        </BattleLayout>
+      )}
     </div>
   )
 }

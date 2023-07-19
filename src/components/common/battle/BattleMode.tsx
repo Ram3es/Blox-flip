@@ -9,26 +9,16 @@ import FriendlyGreen from '../../icons/FriendlyGreen'
 import FriendlyOrange from '../../icons/FriendlyOrange'
 import { IMAGES } from '../../../constants/images'
 import { IBattleUser, IModeGame } from '../../../mocks/battle'
-import type { IItemCard, IUnboxCard } from '../../../types/ItemCard'
+import { IItemCard } from '../../../types/ItemCard'
 import BackdropEffects from './BackdropEffects'
 import PlayerStatusGame from './PlayerStatusGame'
 import UserBar from './UserBar'
 import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
 import SpinItems from './SpinItems'
 import UsersDrops from './UsersDrops'
-
-interface IBattleModeProps {
-  status: string
-  players: IBattleUser[]
-  mode: IModeGame
-  onJoinUser: Function
-  casesBox?: IUnboxCard[]
-  updateRewards: Function
-  updateRound: Function
-  setFinishGame: Function
-  isFinishedGame: boolean
-
-}
+import { useSocketCtx } from '../../../store/SocketStore'
+import { getToast } from '../../../helpers/toast'
+import { IRootBattleCaseItem, IRootBattlePlayer } from '../../../types/CaseBattles'
 
 export interface IWiningPlayerCard {
   id: string
@@ -54,46 +44,68 @@ const getIcons = (type: string, index: number) => {
   }
 }
 
+interface IBattleModeProps {
+  status: string
+  players: IRootBattlePlayer[]
+  mode: IModeGame
+  gameId: number
+  // onJoinUser: Function
+  casesBox?: IRootBattleCaseItem[]
+  updateRewards: Function
+  updateRound: Function
+  setFinishGame: Function
+  isFinishedGame: boolean
+}
+
 const BattleMode: FC<IBattleModeProps> = ({
   status,
   mode,
   players,
-  onJoinUser,
+  // onJoinUser,
+  gameId,
   casesBox,
   updateRewards,
   updateRound,
   setFinishGame,
   isFinishedGame
 }) => {
+  const { socket } = useSocketCtx()
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
   const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>([])
-  const [teamResult, setTeamResult] = useState<Record<string, { score: number, teamPlayers: Array<[string, IItemCard]> }>>(initTeamState)
+  const [teamResult, setTeamResult] = useState<Record<string, { score: number, teamPlayers: Array<[number, IItemCard]> }>>(initTeamState)
   const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
   const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
   const [isSpinEnd, setIsSpinEnd] = useState(false)
 
   const playersInGame = Array.from(Array(mode.requiredPlayers))
 
-  const handleJoinUser = (idx: number) => {
-    if (mode.variant === '2v2') {
-      return onJoinUser(idx, {
-        dropsCards: [],
-        wonDiamonds: 0,
-        id: new Date().getTime().toString(),
-        avatar: '/src/assets/img/avatar_img.png',
-        name: 'CurrentUsr sfsgfsdg 7777',
-        level: 55,
-        team: idx > 1 ? 'orange' : 'blue'
-      })
-    }
+  const handleJoinUser = (place: number) => {
+    socket.emit('join_battle', {
+      id: gameId,
+      place
+    }, (err: boolean | string) => {
+      if (typeof err === 'string') {
+        getToast(err)
+      }
 
-    onJoinUser(idx, {
-      dropsCards: [],
-      wonDiamonds: 0,
-      id: new Date().getTime().toString(),
-      avatar: '/src/assets/img/avatar_img.png',
-      name: 'CurrentUsr sfsgfsdg 7777',
-      level: 55
+      if (!err) {
+        getToast('joined successful')
+      }
+    })
+  }
+
+  const handleCallBot = (place: number) => {
+    socket.emit('bot_battle', {
+      id: gameId,
+      place
+    }, (err: boolean | string) => {
+      if (typeof err === 'string') {
+        getToast(err)
+      }
+
+      if (!err) {
+        getToast('joined successful')
+      }
     })
   }
 
@@ -127,39 +139,39 @@ const BattleMode: FC<IBattleModeProps> = ({
         setCurrentRoundWinners(winnersPlayer)
       }
       if (mode.variant === '2v2') {
-        const formatedByTeam = players.reduce<Record<string, { score: number, teamPlayers: Array<[string, IItemCard]> }>>((acc, player) => {
-          if (!acc[player.team as string]) {
-            acc[player.team as string] = {
+        const formattedByTeam = players.reduce<Record<string, { score: number, teamPlayers: Array<[string, IItemCard]> }>>((acc, player) => {
+          if (!acc[player.place]) {
+            acc[player.place] = {
               score: 0,
               teamPlayers: []
             }
           }
-          acc[player.team as string].score += winningCard[player.id].price
-          acc[player.team as string].teamPlayers.push([player.id, winningCard[player.id]])
+          acc[player.place].score += winningCard[player.id].price
+          acc[player.place].teamPlayers.push([player.id, winningCard[player.id]])
 
           return acc
         }, {})
 
-        Object.keys(formatedByTeam).forEach(key => setTeamResult(prev => (
+        Object.keys(formattedByTeam).forEach(key => setTeamResult(prev => (
           {
             ...prev,
             [key]: {
               ...prev[key],
-              teamPlayers: formatedByTeam[key].teamPlayers,
-              score: prev[key].score + formatedByTeam[key].score
+              teamPlayers: formattedByTeam[key].teamPlayers,
+              score: prev[key].score + formattedByTeam[key].score
             }
           })))
 
         let bestScore = 0
         let dreamTeam: Array<[string, IItemCard]> = []
-        for (const key in formatedByTeam) {
-          if (formatedByTeam[key].score === bestScore) {
-            dreamTeam = [...dreamTeam, ...formatedByTeam[key].teamPlayers]
+        for (const key in formattedByTeam) {
+          if (formattedByTeam[key].score === bestScore) {
+            dreamTeam = [...dreamTeam, ...formattedByTeam[key].teamPlayers]
           }
 
-          if (formatedByTeam[key].score > bestScore) {
-            bestScore = formatedByTeam[key].score
-            dreamTeam = formatedByTeam[key].teamPlayers
+          if (formattedByTeam[key].score > bestScore) {
+            bestScore = formattedByTeam[key].score
+            dreamTeam = formattedByTeam[key].teamPlayers
           }
         }
         setCurrentRoundWinners(dreamTeam)

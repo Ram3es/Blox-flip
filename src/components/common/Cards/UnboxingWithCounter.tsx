@@ -4,7 +4,6 @@ import Counter from '../../base/Counter'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 
 interface IUnboxingCounterCardProps {
-  id: string
   name: string
   price: number
   count: number

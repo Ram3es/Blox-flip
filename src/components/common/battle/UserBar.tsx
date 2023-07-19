@@ -5,20 +5,25 @@ import DaggersIcons from '../../icons/DaggersIcons'
 import { UserLevel } from '../../user/UserLevel'
 import Image from '../../base/Image'
 import CoinsWithDiamond from '../CoinsWithDiamond'
+import { IRootBattlePlayer } from '../../../types/CaseBattles'
+
+interface UserBarProps {
+  user: IRootBattlePlayer
+  onJoinGame: Function
+  amountPlayers: number
+  isPlayerGameWinners?: boolean
+  isEndGame: boolean
+  wonDiamonds: number
+}
 
 const UserBar = ({
   user,
   onJoinGame,
   amountPlayers,
   isPlayerGameWinners,
-  isEndGame
-}: {
-  user: IBattleUser
-  onJoinGame: Function
-  amountPlayers: number
-  isPlayerGameWinners?: boolean
-  isEndGame: boolean
-}) => {
+  isEndGame,
+  wonDiamonds
+}: UserBarProps) => {
   const isLostGame = isEndGame && !isPlayerGameWinners
   return (
     <div
@@ -28,8 +33,8 @@ const UserBar = ({
     >
       {user && (
         <>
-          <div className='w-fit flex items-center justify-between'>
-            <div className='w-9 h-8 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue mr-2.5'>
+          <div className="w-fit flex items-center justify-between">
+            <div className="w-9 h-8 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue mr-2.5">
               <Image image={user.avatar} />
             </div>
             <span
@@ -41,27 +46,27 @@ const UserBar = ({
             >
               {user.name}
             </span>
-            <div className='flex  mx-1'>
+            <div className="flex  mx-1">
               <UserLevel level={user.level} />
             </div>
           </div>
           <CoinsWithDiamond
             containerColor={`${isLostGame ? 'RedPrimary' : 'GreenDarken'}`}
-            containerSize='Small'
+            containerSize="Small"
             iconContainerColor={`${isLostGame ? 'RedPrimary' : 'GreenPrimary'}`}
-            iconContainerSize='Small'
-            iconClasses='w-[13px]'
-            typographyQuantity={user?.wonDiamonds ?? 1421412}
+            iconContainerSize="Small"
+            iconClasses="w-[13px]"
+            typographyQuantity={wonDiamonds ?? 1421412}
           />
         </>
       )}
       {!user && (
         <Button
           onClick={() => onJoinGame()}
-          className='rounded px-5 my-1 py-1 leading-6 flex items-center justify-center bg-green-primary hover:bg-green-500 whitespace-nowrap'
+          className="rounded px-5 my-1 py-1 leading-6 flex items-center justify-center bg-green-primary hover:bg-green-500 whitespace-nowrap"
         >
           <DaggersIcons />
-          <span className='ml-2'>Join</span>
+          <span className="ml-2">Join</span>
         </Button>
       )}
     </div>
