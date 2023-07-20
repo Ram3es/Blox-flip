@@ -1,12 +1,17 @@
 import { FC, useEffect, useState } from 'react'
-import { ICaseUnboxingPotentialItemWithIds } from '../../../types/Cases'
+import { IRootCasePotentialItem } from '../../../types/Cases'
 
-export interface CaseLineItemProps extends Pick<ICaseUnboxingPotentialItemWithIds, 'name' | 'image'> {
+export interface CaseLineItemProps extends Pick<IRootCasePotentialItem, 'name' | 'image'> {
   itsWinning: boolean
   timeoutToShow: number
 }
 
-export const CasesLineItem: FC<CaseLineItemProps> = ({ itsWinning, image, timeoutToShow, name }) => {
+export const CasesLineItem: FC<CaseLineItemProps> = ({
+  itsWinning,
+  image,
+  timeoutToShow,
+  name
+}) => {
   const [itemClasses, setItemClasses] = useState<string>(
     'will-change-transform gradient-border--red gradient-background--red opacity-60 w-[6.3125rem] h-[6.3125rem] shrink-0 z-10 flex items-center justify-center'
   )
@@ -25,9 +30,9 @@ export const CasesLineItem: FC<CaseLineItemProps> = ({ itsWinning, image, timeou
       <img
         src={image}
         alt={name}
-        loading='lazy'
-        decoding='async'
-        className='object-contain w-[5.625rem] h-17'
+        loading="lazy"
+        decoding="async"
+        className="object-contain w-[5.625rem] h-17"
       />
     </div>
   )

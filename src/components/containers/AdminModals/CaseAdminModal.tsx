@@ -1,4 +1,6 @@
-import { Form, Formik } from 'formik'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+
 import clsx from 'clsx'
 
 import { Button } from '../../base/Button'
@@ -16,21 +18,20 @@ import CoinsWithDiamond from '../../common/CoinsWithDiamond'
 import RefreshIcon from '../../icons/RefreshIcon'
 import { useSocketCtx } from '../../../store/SocketStore'
 import { toast } from 'react-toastify'
-import { ICaseUnboxingItem, ICaseUnboxingPotentialItem } from '../../../types/Cases'
-import { getRandomId } from '../../../helpers/casesHelpers'
+import { IRootCaseItem, IRootMarketItem } from '../../../types/Cases'
 import DiamondIcon from '../../icons/DiamondIcon'
+import { getToast } from '../../../helpers/toast'
 
-interface CaseModalProps {
+interface CaseAdminModalProps {
   handleClose: () => void
-  caseData: ICaseUnboxingItem | null
+  caseData: IRootCaseItem | null
 }
 
-interface SkinInterface extends ICaseUnboxingPotentialItem {
-  id: string
+interface SkinInterface extends IRootMarketItem {
   isSelected: boolean
 }
 
-const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
+const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
   const { socket } = useSocketCtx()
 
   const [tabIndex, setTabIndex] = useState(0)
@@ -41,20 +42,20 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
 
   const updateArrayBySelectedSkin = (
     skins: SkinInterface[],
-    skinId: string,
+    skinId: number,
     isSelected: boolean
   ) => {
     return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected = (skins: SkinInterface[], skinId: string) => {
+  const isItemSelected = (skins: SkinInterface[], skinId: number) => {
     return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
-  const findSkinByItemId = (skinId: string) => skins.find((skin) => skin.id === skinId)
+  const findSkinByItemId = (skinId: number) => skins.find((skin) => skin.id === skinId)
 
   const handleSelectSkin = useCallback(
-    (skinId: string) => {
+    (skinId: number) => {
       const skin = findSkinByItemId(skinId)
 
       if (!skin) return
@@ -71,7 +72,7 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
   }, [])
 
   const getCostInSelectedSkins = (): number => {
-    return getCostByFieldName(selectedSkins, 'cost')
+    return getCostByFieldName(selectedSkins, 'price')
   }
 
   const getSelectedSkinsIds = (selectedSkins: SkinInterface[]) => {
@@ -82,35 +83,52 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
     socket.emit(
       'load_items',
       { type: 'market' },
-      ({ data }: { data: ICaseUnboxingPotentialItem[] }) => {
-        if (!caseData) {
-          setSkins(
-            data.map((skin) => ({
-              ...skin,
-              isSelected: false,
-              id: getRandomId()
-            }))
-          )
+      (error: boolean | string, skins: IRootMarketItem[]) => {
+        if (typeof error === 'string') {
+          getToast(error)
         }
-        if (caseData) {
-          setSkins(
-            // return mergedArray
-            data.map((skin) => {
-              const isAlreadySelected = caseData.items.find(
-                (selectedItem) => skin.name === selectedItem.name
-              )
 
-              return {
+        if (!error) {
+          if (!caseData) {
+            setSkins(
+              skins.map((skin) => ({
                 ...skin,
-                isSelected: typeof isAlreadySelected !== 'undefined',
-                id: getRandomId()
-              }
-            })
-          )
+                isSelected: false
+              }))
+            )
+          }
+          if (caseData) {
+            setSkins(
+              // return mergedArray
+              skins.map((skin) => {
+                const isAlreadySelected = caseData.items.find(
+                  (selectedItem) => skin.id === selectedItem.id
+                )
+
+                return {
+                  ...skin,
+                  isSelected: typeof isAlreadySelected !== 'undefined'
+                }
+              })
+            )
+          }
         }
       }
     )
   }, [])
+
+  const caseSchema = Yup.object({
+    caseName: Yup.string()
+      .min(2, 'Case Name must be at least 2 characters')
+      .required('Case Name Required'),
+    shortName: Yup.string()
+      .min(2, 'Short Case Name must be at least 2 characters')
+      .required('Short Name Required'),
+    casePrice: Yup.number()
+      .min(1, 'Case price must be greater than 0')
+      .required('Case Price Required'),
+    image: Yup.string().url('Invalid URL').required('Image Required')
+  })
 
   return (
     <ModalWrapper
@@ -151,29 +169,47 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
           initialValues={{
             caseName: caseData?.name ?? '',
             // selectedCategory: caseData?.category ?? '',
+            shortName: caseData?.short ?? '',
             casePrice: caseData?.cost ?? '0',
-            image: caseData?.img ?? '...'
+            image: caseData?.img ?? ''
           }}
-          onSubmit={(values) => {
-            console.log(values)
-            socket.emit(
-              'create_case',
-              {
-                name: values.caseName,
-                short: values.caseName.toLowerCase().replace(/\s/g, '').slice(0, 12),
-                image: values.image,
-                cost: values.casePrice,
-                skins: getSelectedSkinsIds(skins)
-              },
-              (response: { error: boolean; message: string }) => {
-                if (response.error) {
-                  toast.error(response.message)
+          onSubmit={(values, { setSubmitting }) => {
+            console.log(getSelectedSkinsIds(selectedSkins))
+            caseSchema
+              .validate(values, { abortEarly: false })
+              .then(() => {
+                if (getSelectedSkinsIds(selectedSkins).length >= 1) {
+                  socket.emit(
+                    'create_case',
+                    {
+                      name: values.caseName,
+                      short: values.shortName,
+                      image: values.image,
+                      cost: values.casePrice,
+                      skins: getSelectedSkinsIds(selectedSkins)
+                    },
+                    (error: string | boolean) => {
+                      if (typeof error === 'string') {
+                        toast.error(error)
+                      }
+                      if (!error) {
+                        getToast('Case created successful')
+                        handleClose()
+                      }
+                    }
+                  )
+                } else {
+                  getToast('Please select minimum 1 skin')
                 }
-                if (!response.error) {
-                  handleClose()
-                }
-              }
-            )
+              })
+              .catch((errors) => {
+                console.log(errors)
+                const messages = errors.inner.join(', ')
+                getToast(messages)
+              })
+              .finally(() => {
+                setSubmitting(false)
+              })
           }}
         >
           {({ handleChange, values }) => (
@@ -189,13 +225,20 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                         placeholder="..."
                         label="Case Name"
                       />
-                      <SelectWithInlineLabel
+                      <InputWithInlineLabel
+                        value={values.shortName}
+                        onChange={handleChange('shortName')}
+                        type="text"
+                        placeholder="..."
+                        label="Short Case Name"
+                      />
+                      {/* <SelectWithInlineLabel
                         // value={values.selectedCategory}
                         value=""
                         label="Select Category"
                         onChange={handleChange('selectedCategory')}
                         options={['Not best category', 'Best category', 'None', 'level cases']}
-                      />
+                      /> */}
                       <InputWithInlineLabel
                         value={values.casePrice}
                         onChange={handleChange('casePrice')}
@@ -248,7 +291,7 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
                             variant="CaseAdminItem"
                             key={caseItem.id}
                             onSelect={handleSelectSkin}
-                            price={caseItem.cost}
+                            image={caseItem.pic}
                             {...caseItem}
                           />
                         ))}
@@ -275,4 +318,4 @@ const CaseModal = ({ handleClose, caseData }: CaseModalProps) => {
   )
 }
 
-export default CaseModal
+export default CaseAdminModal
