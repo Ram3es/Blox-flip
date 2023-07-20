@@ -21,6 +21,7 @@ import { IMAGES } from '../../constants/images'
 
 import { useSocketCtx } from '../../store/SocketStore'
 import { IRootCaseItem } from '../../types/Cases'
+import { getToast } from '../../helpers/toast'
 
 interface ICaseModalState {
   state: boolean
@@ -128,11 +129,14 @@ const CaseAdmin = () => {
   })
 
   useEffect(() => {
-    socket.emit('load_admin_cases', (err: boolean, cases: []) => {
-      if (err) {
-        return
+    socket.emit('load_admin_cases', (error: boolean | string, cases: IRootCaseItem[]) => {
+      if (typeof error === 'string') {
+        getToast(error)
       }
-      setData(cases)
+
+      if (!error) {
+        setData(cases)
+      }
     })
   }, [socket])
 
@@ -144,16 +148,15 @@ const CaseAdmin = () => {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index, array) => {
-                  return array[index] === array.at(-1) ? (
-                    <th key={header.id} className="pb-4">
-                      <Button variant="GreenGradient" onClick={handleCreateCase}>
-                        <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
-                          Create new
-                        </span>
-                      </Button>
-                    </th>
-                  ) : (
-                    <th key={header.id} className="pb-4 font-medium">
+                  return array[index] === array.at(-1)
+                    ? (<th key={header.id} className="pb-4">
+                        <Button variant="GreenGradient" onClick={handleCreateCase}>
+                          <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
+                            Create new
+                          </span>
+                        </Button>
+                      </th>)
+                    : (<th key={header.id} className="pb-4 font-medium">
                       <div
                         onClick={header.column.getToggleSortingHandler()}
                         className={clsx('cursor-pointer leading-2 px-1 w-24 py-1 rounded', {
@@ -164,8 +167,7 @@ const CaseAdmin = () => {
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
                       </div>
-                    </th>
-                  )
+                    </th>)
                 })}
               </tr>
             ))}
