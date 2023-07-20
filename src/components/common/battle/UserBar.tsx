@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { IBattleUser } from '../../../mocks/battle'
 import { Button } from '../../base/Button'
 import DaggersIcons from '../../icons/DaggersIcons'
 import { UserLevel } from '../../user/UserLevel'

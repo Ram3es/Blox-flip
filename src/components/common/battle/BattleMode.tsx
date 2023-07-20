@@ -18,7 +18,7 @@ import SpinItems from './SpinItems'
 import UsersDrops from './UsersDrops'
 import { useSocketCtx } from '../../../store/SocketStore'
 import { getToast } from '../../../helpers/toast'
-import { IRootBattleCaseItem, IRootBattlePlayer } from '../../../types/CaseBattles'
+import { IRootBattleCaseItem, IRootBattlePlayer, IRootBattleStateEnum } from '../../../types/CaseBattles'
 
 export interface IWiningPlayerCard {
   id: string
@@ -71,7 +71,7 @@ const BattleMode: FC<IBattleModeProps> = ({
 }) => {
   const { socket } = useSocketCtx()
   const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
-  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[string, IItemCard]>>([])
+  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[number, IItemCard]>>([])
   const [teamResult, setTeamResult] = useState<Record<string, { score: number, teamPlayers: Array<[number, IItemCard]> }>>(initTeamState)
   const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
   const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
@@ -109,11 +109,11 @@ const BattleMode: FC<IBattleModeProps> = ({
     })
   }
 
-  const addWinningCard = (playerId: string, card: IItemCard) => {
+  const addWinningCard = (playerId: number, card: IItemCard) => {
     setWinningCard((state) => ({ ...state, [playerId]: card }))
   }
 
-  const isWinners = (playerId: string): boolean => {
+  const isWinners = (playerId: number): boolean => {
     if (currentRoundWinners?.length) {
       return currentRoundWinners.map((items) => items[0])?.includes(playerId)
     }
@@ -221,7 +221,7 @@ const BattleMode: FC<IBattleModeProps> = ({
   }, [isFinishedGame])
 
   useEffect(() => {
-    if (status === 'ended' && isFinishedGame) {
+    if (status === IRootBattleStateEnum.done && isFinishedGame) {
       setFinishGame()
     }
   }, [status, isFinishedGame])
@@ -243,6 +243,7 @@ const BattleMode: FC<IBattleModeProps> = ({
             onJoinGame={() => handleJoinUser(i)}
             isPlayerGameWinners={isWinners(players[i]?.id)}
             isEndGame={isFinishedGame}
+            wonDiamonds={24124124}
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
@@ -282,7 +283,7 @@ const BattleMode: FC<IBattleModeProps> = ({
                 isAddWinClass={isWinners(players[i]?.id)}
               />
             </div>
-            {status === 'created' && (
+            {status === IRootBattleStateEnum.open && (
               <div className='z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2'>
                 {players[i]
                   ? <>
@@ -295,7 +296,7 @@ const BattleMode: FC<IBattleModeProps> = ({
                     </>}
               </div>
             )}
-            {status !== 'created' && !isFinishedGame && (
+            {status !== IRootBattleStateEnum.open && !isFinishedGame && (
               <SpinItems
                 status={status}
                 playerId={players[i]?.id}
@@ -305,7 +306,7 @@ const BattleMode: FC<IBattleModeProps> = ({
                 setShowEnd={setFinishGame}
               />
             )}
-            {status === 'ended' && isFinishedGame && (
+            {status === IRootBattleStateEnum.done && isFinishedGame && (
               <PlayerStatusGame
                 isPlayerGameWinner={isWinners(players[i]?.id)}
                 wonDiamonds={players[i]?.wonDiamonds}

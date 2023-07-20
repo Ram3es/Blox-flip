@@ -9,10 +9,10 @@ import DaggersIcons from '../../icons/DaggersIcons'
 import PreviewIcon from '../../icons/PreviewIcon'
 import SelectedIcon from '../../icons/SelectedIcon'
 
-import { GameStatus } from '../../../types/enums'
 import { useBattleCase } from '../../../store/BattleCaseStore'
+import { IRootBattle, IRootBattleStateEnum } from '../../../types/CaseBattles'
 
-const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
+const ButtonsCell = ({ id, state }: Pick<IRootBattle, 'id' | 'state'>) => {
   const { games } = useBattleCase()
 
   const handleJoinBattle = useCallback(() => {
@@ -21,8 +21,8 @@ const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
 
   const navigate = useNavigate()
   const activeButton = useMemo(() => {
-    switch (status) {
-      case GameStatus.Created:
+    switch (state) {
+      case IRootBattleStateEnum.open:
         return (
           <Button
             onClick={handleJoinBattle}
@@ -32,7 +32,7 @@ const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
             <span className='ml-2'>Join Battle</span>
           </Button>
         )
-      case GameStatus.Running:
+      case IRootBattleStateEnum.playing:
         return (
           <Button
             onClick={() => {
@@ -44,7 +44,7 @@ const ButtonsCell = ({ id, status }: { id: string, status: string }) => {
             <span className='ml-2'>Running</span>
           </Button>
         )
-      case GameStatus.Ended:
+      case IRootBattleStateEnum.done:
         return (
           <Button
             onClick={() => {

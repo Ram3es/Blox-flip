@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import BattleLayout from '../../components/containers/BattleGameLayout'
-import { IBattleUser } from '../../mocks/battle'
 import type { IItemCard } from '../../types/ItemCard'
 import BattleMode from '../../components/common/battle/BattleMode'
 import GameHeader from '../../components/common/battle/GameHeader'
 import GameRoundsInfo from '../../components/common/battle/GameRoundsInfo'
 import { useBattleCase } from '../../store/BattleCaseStore'
 import { useSocketCtx } from '../../store/SocketStore'
-import { IRootBattle, IRootBattleCaseItem, IRootBattleResult, RootBattleModeEnum } from '../../types/CaseBattles'
+import {
+  IRootBattle,
+  IRootBattleCaseItem,
+  IRootBattleResult,
+  IRootBattleModeEnum,
+  IRootBattlePlayer,
+  IRootBattleStateEnum
+} from '../../types/CaseBattles'
+import { IBattleUser } from '../../mocks/battle'
 
 const BattleCases = () => {
   const { id } = useParams()
@@ -24,7 +31,7 @@ const BattleCases = () => {
     setFinishedRound((state) => ({ ...state, [userId]: state[userId] + 1 || currentRound?.round! }))
   }
 
-  const HandleJoinBattle = (idx: number, player: IBattleUser) => {
+  const HandleJoinBattle = (idx: number, player: IRootBattlePlayer) => {
     // setGameState((state) => ({
     //   ...state,
     //   players: [...state.players.slice(0, idx), player, ...state.players.slice(idx + 1)]
@@ -129,7 +136,13 @@ const BattleCases = () => {
             currentBoxPrice={getCurrentBoxPrice(gameState?.caselist)}
           />
           <GameRoundsInfo
-            gameVariant={gameState?.team ? 'Team' : gameState.gamemode === RootBattleModeEnum.crazy ? RootBattleModeEnum.crazy : RootBattleModeEnum.regular}
+            gameVariant={
+              gameState?.team
+                ? 'Team'
+                : gameState.gamemode === IRootBattleModeEnum.crazy
+                  ? IRootBattleModeEnum.crazy
+                  : IRootBattleModeEnum.regular
+            }
             amountRounds={gameState.caselist.length + 1}
             currentRound={currentRound?.round ?? 0}
           />
@@ -141,7 +154,7 @@ const BattleCases = () => {
               variant: '2v2',
               requiredPlayers: gameState.max
             }}
-            isFinishedGame={gameState.state === 'ended'}
+            isFinishedGame={gameState.state === IRootBattleStateEnum.done}
             gameId={gameState.id}
             // onJoinUser={HandleJoinBattle}
             updateRewards={updateRewards}

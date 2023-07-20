@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import CoinsWithDiamond from '../CoinsWithDiamond'
-import { ICaseUnboxingItemWithAmount } from '../../../types/Cases'
+import { IRootCaseItemWithAmount } from '../../../types/Cases'
 
-export interface UnboxingCardInterface extends Omit<ICaseUnboxingItemWithAmount, 'items'> {
+export interface UnboxingCardInterface extends Omit<IRootCaseItemWithAmount, 'items'> {
   onSelect: () => void
 }
 

@@ -24,20 +24,12 @@ import { gameSettings } from '../../constants/battle-cases'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
-import { ICaseUnboxingItemWithAmount } from '../../types/Cases'
-
-const battleInitState = {
-  rounds: 0,
-  price: 0,
-  mode: { variant: '1v1', requiredPlayers: 2 },
-  privacy: { variant: 'Public' },
-  typeGame: { variant: 'Standard' }
-}
+import { IRootCaseItemWithAmount } from '../../types/Cases'
 
 const CreateBattle = () => {
   const { socket } = useSocketCtx()
   const [isOpenModal, setOpenModal] = useState(false)
-  const [casesBetted, setCasesToBet] = useState<ICaseUnboxingItemWithAmount[]>([])
+  const [casesBetted, setCasesToBet] = useState<IRootCaseItemWithAmount[]>([])
   const { text: referralLink, handleCopyText: handleReferralLink } = useCopyToClipboard(
     'https://robloxsite.com/i?/h371s9f!39g_123'
   )
@@ -98,7 +90,7 @@ const CreateBattle = () => {
   }, [battleSettings])
 
   const onSubmitModal = useCallback(
-    (cards: ICaseUnboxingItemWithAmount[]) => setCasesToBet(cards),
+    (cards: IRootCaseItemWithAmount[]) => setCasesToBet(cards),
     []
   )
 

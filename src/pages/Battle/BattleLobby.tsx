@@ -5,6 +5,7 @@ import ButtonsToggle from '../../components/base/ButtonToggle'
 import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
 import TableBattleLobby from './TableBattleLobby'
 import { useBattleCase } from '../../store/BattleCaseStore'
+import { IRootBattleStateEnum } from '../../types/CaseBattles'
 
 const GreenLink = ({ to, title, amount }: { to: string, title: string, amount: number }) => (
   <NavLink
@@ -23,8 +24,8 @@ const BattleLobby = () => {
   const [currentFilterOptions, setOptions] = useState(filterOptions[0])
   const navigate = useNavigate()
 
-  const activeBattle = games.filter((battle) => battle.state === 'running').length
-  const joinableBattle = games.filter((battle) => battle.state === 'open').length
+  const activeBattle = games.filter((battle) => battle.state === IRootBattleStateEnum.playing).length
+  const joinableBattle = games.filter((battle) => battle.state === IRootBattleStateEnum.open).length
 
   return (
     <div className="h-full">

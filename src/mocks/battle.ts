@@ -1,10 +1,10 @@
+import { IRootBattlePlayer } from '../types/CaseBattles'
 import type { IItemCard, IUnboxCard } from '../types/ItemCard'
-import type { IUser } from './../types/User'
 
 type TStatus = 'created' | 'running' | 'ended'
 export type TMode = '1v1' | '1v1v1' | '1v1v1v1' | 'group' | '2v2'
 
-export interface IBattleUser extends Omit<IUser, 'progress'> {
+export interface IBattleUser extends Omit<IRootBattlePlayer, 'progress'> {
   dropsCards: IItemCard[]
   wonDiamonds: number
   team?: 'orange' | 'blue'

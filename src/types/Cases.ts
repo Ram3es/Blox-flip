@@ -31,6 +31,6 @@ export interface ICaseItem {
   price: number
 }
 
-export interface ICaseUnboxingItemWithAmount extends ICaseUnboxingItem {
+export interface IRootCaseItemWithAmount extends IRootCaseItem {
   amount: number
 }
