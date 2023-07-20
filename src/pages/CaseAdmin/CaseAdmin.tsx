@@ -14,17 +14,17 @@ import clsx from 'clsx'
 import { Button } from '../../components/base/Button'
 import { TablePagination } from '../../components/table/TablePagination'
 import PreviewIcon from '../../components/icons/PreviewIcon'
-import CaseModal from '../../components/containers/AdminModals/CaseModal'
+import CaseAdminModal from '../../components/containers/AdminModals/CaseAdminModal'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import { IMAGES } from '../../constants/images'
 
 import { useSocketCtx } from '../../store/SocketStore'
-import { ICaseUnboxingItem } from '../../types/Cases'
+import { IRootCaseItem } from '../../types/Cases'
 
 interface ICaseModalState {
   state: boolean
-  caseData: ICaseUnboxingItem | null
+  caseData: IRootCaseItem | null
 }
 
 const caseModalInitialState: ICaseModalState = {
@@ -35,7 +35,7 @@ const caseModalInitialState: ICaseModalState = {
 const CaseAdmin = () => {
   const { socket } = useSocketCtx()
 
-  const [data, setData] = useState<ICaseUnboxingItem[]>([])
+  const [data, setData] = useState<IRootCaseItem[]>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [caseModal, setCaseModal] = useState<ICaseModalState>(caseModalInitialState)
 
@@ -43,7 +43,7 @@ const CaseAdmin = () => {
     setCaseModal({ state: true, caseData: null })
   }, [])
 
-  const handleEditCase = useCallback((caseData: ICaseUnboxingItem) => {
+  const handleEditCase = useCallback((caseData: IRootCaseItem) => {
     setCaseModal({ state: true, caseData })
   }, [])
 
@@ -51,34 +51,32 @@ const CaseAdmin = () => {
     setCaseModal({ state: false, caseData: null })
   }, [])
 
-  const columnHelper = createColumnHelper<ICaseUnboxingItem>()
-  const columns: Array<ColumnDef<ICaseUnboxingItem, any>> = [
-    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
+  const columnHelper = createColumnHelper<IRootCaseItem>()
+  const columns: Array<ColumnDef<IRootCaseItem, any>> = [
+    columnHelper.accessor((row: IRootCaseItem) => row, {
       id: 'case',
       header: () => 'Case',
       cell: ({ row }) => (
-        <div className='flex items-center gap-3'>
-          <div className='w-[47px] h-[53px] flex items-center justify-center'>
-            <img src={IMAGES.greenBox} className='w-full h-full object-contain' alt='' />
+        <div className="flex items-center gap-3">
+          <div className="w-[47px] h-[53px] flex items-center justify-center">
+            <img src={IMAGES.greenBox} className="w-full h-full object-contain" alt="" />
           </div>
-          <p className='font-bold text-white text-13'>{row.original.name}</p>
+          <p className="font-bold text-white text-13">{row.original.name}</p>
         </div>
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
+    columnHelper.accessor((row: IRootCaseItem) => row, {
       id: 'public',
       header: () => 'Public',
-      cell: ({ row }) => (
-        <span className='font-semibold'>{row.original.cost ? 'Yes' : 'No'}</span>
-      ),
+      cell: ({ row }) => <span className="font-semibold">{row.original.cost ? 'Yes' : 'No'}</span>,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
+    columnHelper.accessor((row: IRootCaseItem) => row, {
       id: 'category',
       header: () => 'Category',
       cell: ({ row }) => (
-        <span className='capitalize font-bold text-white text-13'>Test category</span>
+        <span className="capitalize font-bold text-white text-13">Test category</span>
       ),
       footer: (props) => props.column.id
     }),
@@ -87,25 +85,25 @@ const CaseAdmin = () => {
       header: 'Price',
       cell: ({ cell }) => (
         <CoinsWithDiamond
-          iconContainerSize='Small'
-          iconClasses='w-3.5'
-          typographyFontColor='Green'
+          iconContainerSize="Small"
+          iconClasses="w-3.5"
+          typographyFontColor="Green"
           typographyQuantity={cell.getValue()}
-          typographyFontSize='Size13'
+          typographyFontSize="Size13"
         />
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: ICaseUnboxingItem) => row, {
+    columnHelper.accessor((row: IRootCaseItem) => row, {
       id: 'profit',
       header: 'Create new',
       cell: ({ row }) => (
         <Button
           onClick={() => handleEditCase(row.original)}
-          className='flex items-center h-[33px] min-w-[76px] px-2 py-2 justify-between rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
+          className="flex items-center h-[33px] min-w-[76px] px-2 py-2 justify-between rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary"
         >
-          <PreviewIcon iconClasses='mx-auto my-auto' />
-          <span className='text-sm font-semibold'>View</span>
+          <PreviewIcon iconClasses="mx-auto my-auto" />
+          <span className="text-sm font-semibold">View</span>
         </Button>
       ),
       footer: (props) => props.column.id
@@ -140,24 +138,22 @@ const CaseAdmin = () => {
 
   return (
     <>
-      <div className='overflow-auto max-w-full py-4'>
-        <table className='text-13 min-w-full border-separate border-spacing-y-1'>
+      <div className="overflow-auto max-w-full py-4">
+        <table className="text-13 min-w-full border-separate border-spacing-y-1">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index, array) => {
-                  return array[index] === array.at(-1)
-                    ? (
-                    <th key={header.id} className='pb-4'>
-                      <Button variant='GreenGradient' onClick={handleCreateCase}>
-                        <span className='flex items-center justify-center min-w-[87px] min-h-[29px] text-xs'>
+                  return array[index] === array.at(-1) ? (
+                    <th key={header.id} className="pb-4">
+                      <Button variant="GreenGradient" onClick={handleCreateCase}>
+                        <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
                           Create new
                         </span>
                       </Button>
                     </th>
-                      )
-                    : (
-                    <th key={header.id} className='pb-4 font-medium'>
+                  ) : (
+                    <th key={header.id} className="pb-4 font-medium">
                       <div
                         onClick={header.column.getToggleSortingHandler()}
                         className={clsx('cursor-pointer leading-2 px-1 w-24 py-1 rounded', {
@@ -169,7 +165,7 @@ const CaseAdmin = () => {
                         {flexRender(header.column.columnDef.header, header.getContext())}
                       </div>
                     </th>
-                      )
+                  )
                 })}
               </tr>
             ))}
@@ -210,10 +206,7 @@ const CaseAdmin = () => {
         )}
       </div>
       {caseModal.state && (
-        <CaseModal
-          handleClose={handleCloseCase}
-          caseData={caseModal.caseData}
-        />
+        <CaseAdminModal handleClose={handleCloseCase} caseData={caseModal.caseData} />
       )}
     </>
   )
