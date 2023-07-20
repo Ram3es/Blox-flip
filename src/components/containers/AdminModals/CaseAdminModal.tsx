@@ -162,7 +162,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
               }
             )}
           >
-            Cases
+            Skins
           </Tab>
         </Tab.List>
         <Formik
