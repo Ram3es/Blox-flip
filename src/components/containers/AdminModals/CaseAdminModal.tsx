@@ -81,8 +81,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
 
   useEffect(() => {
     socket.emit(
-      'load_items',
-      { type: 'market' },
+      'load_all_items',
       (error: boolean | string, skins: IRootMarketItem[]) => {
         if (typeof error === 'string') {
           getToast(error)

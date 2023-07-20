@@ -8,20 +8,27 @@ import { LeaderboardTable } from './LeaderboardTable'
 import { ILeaderbordData } from '../../types/Affilates'
 import { ILeaderboardUser } from '../../types/User'
 import { getTopThreeUsers } from '../../helpers/leaderboardHelpers'
+import { getToast } from '../../helpers/toast'
 
 export const Leaderboard = () => {
   const [boardData, setBoardData] = useState<ILeaderboardUser[]>([])
   const { socket } = useSocketCtx()
 
   useEffect(() => {
-    socket.emit('load_leaderboards', (data: ILeaderbordData[]) => {
-      setBoardData(
-        data.map((item) => ({
-          ...item.user,
-          bet: item.wagered,
-          profit: item.reward
-        }))
-      )
+    socket.emit('load_leaderboards', (err: string | boolean, data: ILeaderbordData[]) => {
+      if (typeof err === 'string') {
+        getToast(err)
+      }
+
+      if (!err) {
+        setBoardData(
+          data.map((item) => ({
+            ...item.user,
+            bet: item.wagered,
+            profit: item.reward
+          }))
+        )
+      }
     })
   }, [])
   return (

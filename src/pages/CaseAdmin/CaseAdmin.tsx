@@ -94,7 +94,7 @@ const CaseAdmin = () => {
       footer: (props) => props.column.id
     }),
     columnHelper.accessor('items', {
-      id: 'price',
+      id: 'items',
       header: 'Skins',
       cell: ({ row }) => (
         <span className="capitalize font-bold text-white text-13">{row.original.items.length}</span>
