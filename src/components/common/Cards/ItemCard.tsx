@@ -24,7 +24,7 @@ enum ItemCardVariantEnum {
 }
 
 export interface IItemCardProps {
-  id: string
+  id: string | number
   name: string
   price: number
   image: string

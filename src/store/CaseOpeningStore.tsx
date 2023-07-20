@@ -8,15 +8,15 @@ import {
   useState
 } from 'react'
 import { useSocketCtx } from './SocketStore'
-import { ICaseUnboxingItem } from '../types/Cases'
+import { IRootCaseItem } from '../types/Cases'
 
 interface ChatProviderProps {
   children: ReactNode
 }
 
 interface ICaseOpeningContext {
-  cases: ICaseUnboxingItem[]
-  setCases: Dispatch<SetStateAction<ICaseUnboxingItem[]>>
+  cases: IRootCaseItem[]
+  setCases: Dispatch<SetStateAction<IRootCaseItem[]>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -27,7 +27,7 @@ export const useCaseOpening = () => {
 }
 
 export const CaseOpeningProvider = ({ children }: ChatProviderProps) => {
-  const [cases, setCases] = useState<ICaseUnboxingItem[]>([])
+  const [cases, setCases] = useState<IRootCaseItem[]>([])
 
   const { socket } = useSocketCtx()
 
