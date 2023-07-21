@@ -39,7 +39,7 @@ const case2v2Icons: Record<number, ReactNode> = {
   2: <FriendlyOrange />
 }
 
-const initTeamState = { orange: { score: 0, teamPlayers: [] }, blue: { score: 0, teamPlayers: [] } }
+// const initTeamState = { orange: { score: 0, teamPlayers: [] }, blue: { score: 0, teamPlayers: [] } }
 
 const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
   switch (type) {
@@ -64,14 +64,14 @@ const BattleMode: FC<IBattleModeProps> = ({
   historyRounds
 }: IBattleModeProps) => {
   const { socket } = useSocketCtx()
-  const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
-  const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[number, IItemCard]>>([])
-  const [teamResult, setTeamResult] =
-    useState<Record<string, { score: number; teamPlayers: Array<[number, IItemCard]> }>>(
-      initTeamState
-    )
-  const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
-  const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
+  // const [winningCard, setWinningCard] = useState<Record<string, IItemCard>>({})
+  // const [currentRoundWinners, setCurrentRoundWinners] = useState<Array<[number, IItemCard]>>([])
+  // const [teamResult, setTeamResult] =
+  //   useState<Record<string, { score: number; teamPlayers: Array<[number, IItemCard]> }>>(
+  //     initTeamState
+  //   )
+  // const [gameWinnerPlayer, setGameWinnerPlayer] = useState<IBattleUser[]>([])
+  // const [allWinningCards, setAllWinningCards] = useState<Record<string, IItemCard>>({})
   const [isSpinEnd, setIsSpinEnd] = useState(false)
 
   const handleJoinGame = (place: number) => {
@@ -112,19 +112,19 @@ const BattleMode: FC<IBattleModeProps> = ({
     )
   }
 
-  const addWinningCard = (playerId: number, card: IItemCard) => {
-    setWinningCard((state) => ({ ...state, [playerId]: card }))
-  }
+  // const addWinningCard = (playerId: number, card: IItemCard) => {
+  //   setWinningCard((state) => ({ ...state, [playerId]: card }))
+  // }
 
-  const isWinners = (playerId: number): boolean => {
-    if (currentRoundWinners?.length) {
-      return currentRoundWinners.map((items) => items[0])?.includes(playerId)
-    }
-    if (gameWinnerPlayer?.length) {
-      return gameWinnerPlayer.map((player) => player.id)?.includes(playerId)
-    }
-    return false
-  }
+  // const isWinners = (playerId: number): boolean => {
+  //   if (currentRoundWinners?.length) {
+  //     return currentRoundWinners.map((items) => items[0])?.includes(playerId)
+  //   }
+  //   if (gameWinnerPlayer?.length) {
+  //     return gameWinnerPlayer.map((player) => player.id)?.includes(playerId)
+  //   }
+  //   return false
+  // }
 
   const isWinnerRound = (playerIndex: number, roundItems: IRootBattleRoundItem[]): boolean => {
     const maxValueOfPrice = Math.max(...roundItems.map((item) => item.price), 0)
@@ -134,105 +134,105 @@ const BattleMode: FC<IBattleModeProps> = ({
     return filterByPrice.some((item) => item.slot === playerIndex + 1)
   }
 
-  useEffect(() => {
-    const userWinningCards = Object.entries(winningCard)
+  // useEffect(() => {
+  //   const userWinningCards = Object.entries(winningCard)
 
-    if (userWinningCards.length === game.max) {
-      if (mode.variant !== '2v2') {
-        const wonCard = userWinningCards.reduce((acc, card) => {
-          if (card[1].price > acc[1].price) {
-            acc = card
-          }
-          return acc
-        })
-        const winnersPlayer = userWinningCards.filter((item) => item[1].price === wonCard[1].price)
+  //   if (userWinningCards.length === game.max) {
+  //     if (mode.variant !== '2v2') {
+  //       const wonCard = userWinningCards.reduce((acc, card) => {
+  //         if (card[1].price > acc[1].price) {
+  //           acc = card
+  //         }
+  //         return acc
+  //       })
+  //       const winnersPlayer = userWinningCards.filter((item) => item[1].price === wonCard[1].price)
 
-        setCurrentRoundWinners(winnersPlayer)
-      }
-      if (mode.variant === '2v2') {
-        const formattedByTeam = players.reduce<
-          Record<string, { score: number; teamPlayers: Array<[string, IItemCard]> }>
-        >((acc, player) => {
-          if (!acc[player.place]) {
-            acc[player.place] = {
-              score: 0,
-              teamPlayers: []
-            }
-          }
-          acc[player.place].score += winningCard[player.id].price
-          acc[player.place].teamPlayers.push([player.id, winningCard[player.id]])
+  //       setCurrentRoundWinners(winnersPlayer)
+  //     }
+  //     if (mode.variant === '2v2') {
+  //       const formattedByTeam = players.reduce<
+  //         Record<string, { score: number; teamPlayers: Array<[string, IItemCard]> }>
+  //       >((acc, player) => {
+  //         if (!acc[player.place]) {
+  //           acc[player.place] = {
+  //             score: 0,
+  //             teamPlayers: []
+  //           }
+  //         }
+  //         acc[player.place].score += winningCard[player.id].price
+  //         acc[player.place].teamPlayers.push([player.id, winningCard[player.id]])
 
-          return acc
-        }, {})
+  //         return acc
+  //       }, {})
 
-        Object.keys(formattedByTeam).forEach((key) =>
-          setTeamResult((prev) => ({
-            ...prev,
-            [key]: {
-              ...prev[key],
-              teamPlayers: formattedByTeam[key].teamPlayers,
-              score: prev[key].score + formattedByTeam[key].score
-            }
-          }))
-        )
+  //       Object.keys(formattedByTeam).forEach((key) =>
+  //         setTeamResult((prev) => ({
+  //           ...prev,
+  //           [key]: {
+  //             ...prev[key],
+  //             teamPlayers: formattedByTeam[key].teamPlayers,
+  //             score: prev[key].score + formattedByTeam[key].score
+  //           }
+  //         }))
+  //       )
 
-        let bestScore = 0
-        let dreamTeam: Array<[string, IItemCard]> = []
-        for (const key in formattedByTeam) {
-          if (formattedByTeam[key].score === bestScore) {
-            dreamTeam = [...dreamTeam, ...formattedByTeam[key].teamPlayers]
-          }
+  //       let bestScore = 0
+  //       let dreamTeam: Array<[string, IItemCard]> = []
+  //       for (const key in formattedByTeam) {
+  //         if (formattedByTeam[key].score === bestScore) {
+  //           dreamTeam = [...dreamTeam, ...formattedByTeam[key].teamPlayers]
+  //         }
 
-          if (formattedByTeam[key].score > bestScore) {
-            bestScore = formattedByTeam[key].score
-            dreamTeam = formattedByTeam[key].teamPlayers
-          }
-        }
-        setCurrentRoundWinners(dreamTeam)
-      }
+  //         if (formattedByTeam[key].score > bestScore) {
+  //           bestScore = formattedByTeam[key].score
+  //           dreamTeam = formattedByTeam[key].teamPlayers
+  //         }
+  //       }
+  //       setCurrentRoundWinners(dreamTeam)
+  //     }
 
-      setAllWinningCards(winningCard)
-      setIsSpinEnd(true)
-      setTimeout(() => {
-        setCurrentRoundWinners([])
-        setAllWinningCards({})
-        setWinningCard({})
-        setIsSpinEnd(false)
-      }, 2800)
-    }
-  }, [winningCard])
+  //     setAllWinningCards(winningCard)
+  //     setIsSpinEnd(true)
+  //     setTimeout(() => {
+  //       setCurrentRoundWinners([])
+  //       setAllWinningCards({})
+  //       setWinningCard({})
+  //       setIsSpinEnd(false)
+  //     }, 2800)
+  //   }
+  // }, [winningCard])
 
-  const getTeamWinnersId = (): string[] => {
-    let score = 0
-    let teamWinners: string[] = []
-    for (const key in teamResult) {
-      if (teamResult[key].score > score) {
-        score = teamResult[key].score
-        teamWinners = teamResult[key].teamPlayers.map((item) => item[0])
-      }
-    }
-    return teamWinners
-  }
+  // const getTeamWinnersId = (): string[] => {
+  //   let score = 0
+  //   let teamWinners: string[] = []
+  //   for (const key in teamResult) {
+  //     if (teamResult[key].score > score) {
+  //       score = teamResult[key].score
+  //       teamWinners = teamResult[key].teamPlayers.map((item) => item[0])
+  //     }
+  //   }
+  //   return teamWinners
+  // }
 
-  useEffect(() => {
-    if (isFinishedGame) {
-      if (mode.variant === '2v2') {
-        setGameWinnerPlayer(players.filter((player) => getTeamWinnersId().includes(player.id)))
-      }
+  // useEffect(() => {
+  //   if (isFinishedGame) {
+  //     if (mode.variant === '2v2') {
+  //       setGameWinnerPlayer(players.filter((player) => getTeamWinnersId().includes(player.id)))
+  //     }
 
-      if (mode.variant !== '2v2') {
-        const { wonDiamonds } = players.reduce((acc, player) => {
-          if (acc.wonDiamonds < player.wonDiamonds) {
-            acc = player
-          }
-          return acc
-        })
-        const winnersGame = players.filter((player) => player.wonDiamonds === wonDiamonds)
+  //     if (mode.variant !== '2v2') {
+  //       const { wonDiamonds } = players.reduce((acc, player) => {
+  //         if (acc.wonDiamonds < player.wonDiamonds) {
+  //           acc = player
+  //         }
+  //         return acc
+  //       })
+  //       const winnersGame = players.filter((player) => player.wonDiamonds === wonDiamonds)
 
-        setGameWinnerPlayer(winnersGame)
-      }
-    }
-  }, [isFinishedGame])
+  //       setGameWinnerPlayer(winnersGame)
+  //     }
+  //   }
+  // }, [isFinishedGame])
 
   return (
     <div className="flex -mx-2">
@@ -256,11 +256,11 @@ const BattleMode: FC<IBattleModeProps> = ({
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
               'bg-gradient-lvl from-green-primary/30':
-                isWinners(players[i]?.id) ||
-                gameWinnerPlayer?.find((player) => player?.id === players[i]?.id),
+              isWinnerRound(i, currentRound?.items ?? []),
+              // ||  gameWinnerPlayer?.find((player) => player?.id === players[i]?.id) // add is game winner
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                (!isWinners(players[i]?.id) && isSpinEnd) ||
-                (!isWinners(players[i]?.id) && RootBattleStateEnum.done)
+                (!isWinnerRound(i, currentRound?.items ?? []) && isSpinEnd) ||
+                (!isWinnerRound(i, currentRound?.items ?? []) && RootBattleStateEnum.done)
             })}
           >
             {i !== game.players.length - 1 && (
@@ -288,7 +288,7 @@ const BattleMode: FC<IBattleModeProps> = ({
               />
               <RoundWinBorderBottomEffect
                 isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
-                isAddWinClass={isWinners(players[i]?.id)}
+                isAddWinClass={isWinnerRound(i, currentRound?.items ?? [])}
               />
             </div>
             {game.state === RootBattleStateEnum.open && (
@@ -309,8 +309,9 @@ const BattleMode: FC<IBattleModeProps> = ({
             )}
             {game.state === RootBattleStateEnum.playing && (
               <SpinItems
-                status={game.state}
-                playerId={players[i]?.id}
+                currentRound={currentRound}
+                game={game}
+                playerId={game.players[i]?.id}
                 updateRewards={updateRewards}
                 updateRound={updateRound}
                 addWinningCard={addWinningCard}

@@ -114,13 +114,13 @@ const CreateBattle = () => {
 
   const { amountCases, totalCost } = casesBetted.length
     ? casesBetted.reduce(
-        (acc, card) => {
-          acc.amountCases += card.amount
-          acc.totalCost += card.cost * card.amount
-          return acc
-        },
-        { amountCases: 0, totalCost: 0 }
-      )
+      (acc, card) => {
+        acc.amountCases += card.amount
+        acc.totalCost += card.cost * card.amount
+        return acc
+      },
+      { amountCases: 0, totalCost: 0 }
+    )
     : { amountCases: 0, totalCost: 0 }
 
   useEffect(() => {
@@ -146,8 +146,8 @@ const CreateBattle = () => {
         displayBattleConfig.gameType.variant === RootBattleModeEnum.crazy
           ? RootBattleModeEnum.crazy
           : displayBattleConfig.gameType.variant === RootBattleModeEnum.group
-          ? RootBattleModeEnum.group
-          : RootBattleModeEnum.regular,
+            ? RootBattleModeEnum.group
+            : RootBattleModeEnum.regular,
       participants: getParticipantsByDisplayMode(displayBattleConfig.gameMode.variant),
       cases: casesBetted.map((item) => item.short)
     }

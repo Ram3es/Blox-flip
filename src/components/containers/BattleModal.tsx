@@ -9,9 +9,9 @@ import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import ModalWrapper from './ModalWrapper'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { useSocketCtx } from '../../store/SocketStore'
-import { getToast } from '../../helpers/toast'
 import { Context } from '../../store/Store'
-import { IRootCaseItem, IRootCaseItemWithAmount } from '../../types/Cases'
+import { IRootCaseItemWithAmount } from '../../types/Cases'
+import { useBattleCase } from '../../store/BattleCaseStore'
 
 const BattleModal = ({
   onClose,
@@ -22,8 +22,8 @@ const BattleModal = ({
   onSubmit: Function
   casesBetted: IRootCaseItemWithAmount[]
 }) => {
-  const { socket } = useSocketCtx()
   const { state } = useContext(Context)
+  const { allCases } = useBattleCase()
 
   const [allCards, setAllCards] = useState<IRootCaseItemWithAmount[]>([])
   const [selectedCards, setSelected] = useState<IRootCaseItemWithAmount[]>([])
@@ -77,19 +77,8 @@ const BattleModal = ({
   }, [casesBetted])
 
   useEffect(() => {
-    socket.emit(
-      'load_cases',
-      { type: 'casebattle' },
-      (err: boolean | string, skins: IRootCaseItem[]) => {
-        if (typeof err === 'string') {
-          getToast(err)
-        }
-        if (!err) {
-          setAllCards(skins.map((item) => ({ ...item, amount: 1 })))
-        }
-      }
-    )
-  }, [state.user])
+    setAllCards(allCases.map((item) => ({ ...item, amount: 1 })))
+  }, [allCases])
 
   return (
     <ModalWrapper

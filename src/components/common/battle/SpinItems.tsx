@@ -1,28 +1,34 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { getRandomCards } from '../../../helpers/casesHelpers'
-import { cards } from '../../../mocks/cards'
-import { IItemCard } from '../../../types/ItemCard'
 import BattleGameItem from '../Cards/BattleGameItem'
+import { useBattleCase } from '../../../store/BattleCaseStore'
+import { IRootBattle, IRootBattleResult } from '../../../types/CaseBattles'
+import { IRootCasePotentialItem } from '../../../types/Cases'
 
 interface ISpinGameProps {
-  status: string
+  game: IRootBattle
+  currentRound: IRootBattleResult | null
   updateRewards: Function
-  playerId: string
+  playerId: number
   updateRound: Function
   addWinningCard: Function
   setShowEnd: Function
 }
 
 const SpinItems: FC<ISpinGameProps> = ({
-  status,
+  game,
+  currentRound,
   updateRewards,
   playerId,
   updateRound,
   addWinningCard,
   setShowEnd
 }) => {
-  const [randomItems, setRandomItems] = useState<IItemCard[]>(getRandomCards(100, cards))
-  const [winningCard, setWinningCard] = useState<IItemCard>()
+  const { allCases } = useBattleCase()
+
+  const [rouletteItems, setRouletteItems] = useState<IRootCasePotentialItem[]>([])
+  const [winningCard, setWinningCard] = useState<IRootCasePotentialItem | null>(null)
+
   const [isRespin, setRespin] = useState(false)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
 
@@ -44,17 +50,19 @@ const SpinItems: FC<ISpinGameProps> = ({
       itemsRef.current.style.transition = 'none'
       itemsRef.current.style.bottom = '0px'
     }
-    setWinningCard(undefined)
+    setWinningCard(null)
   }
 
   const load = () => {
-    const randomCardIndex = Math.floor(Math.random() * cards.length)
-    const randomCard = cards[randomCardIndex]
-    const winningCart = {
-      ...randomCard,
-      id: `${randomCard.id} ${new Date().getTime()}`
-    }
-    setRandomItems((prev) => {
+    // const randomCardIndex = Math.floor(Math.random() * cards.length)
+    // const randomCard = cards[randomCardIndex]
+    // const winningCart = {
+    //   ...randomCard,
+    //   id: `${randomCard.id} ${new Date().getTime()}`
+    // }
+
+
+    setRouletteItems((prev) => {
       const state = [...prev]
       state[87] = winningCart
       return state
@@ -91,7 +99,7 @@ const SpinItems: FC<ISpinGameProps> = ({
       refInterval.current && clearInterval(refInterval.current)
       setTimeout(() => setShowEnd(), 8000)
     }
-  }, [status, isRespin])
+  }, [game.state, isRespin])
 
   useEffect(() => {
     if (winningCard) {
@@ -102,13 +110,25 @@ const SpinItems: FC<ISpinGameProps> = ({
     }
   }, [winningCard])
 
+  useEffect(() => {
+    if (currentRound) {
+      const currentCase = allCases.find(
+        (item) => item.name === game.caselist[currentRound.round - 1].name
+      )
+
+      if (currentCase) {
+        setRouletteItems(getRandomCards<IRootCasePotentialItem>(100, currentCase.items))
+      }
+    }
+  }, [currentRound])
+
   return (
-    <div className='min-h-[380px] absolute top-0 left-0 w-full h-full overflow-hidden'>
+    <div className="min-h-[380px] absolute top-0 left-0 w-full h-full overflow-hidden">
       <div
         ref={itemsRef}
-        className='z-20 absolute inset-0 flex flex-col-reverse justify-start items-center pt-1 pb-2 overflow-hidden'
+        className="z-20 absolute inset-0 flex flex-col-reverse justify-start items-center pt-1 pb-2 overflow-hidden"
       >
-        {randomItems.map((item, index) => (
+        {rouletteItems.map((item, index) => (
           <BattleGameItem
             key={index}
             itsWinning={item.id === winningCard?.id}

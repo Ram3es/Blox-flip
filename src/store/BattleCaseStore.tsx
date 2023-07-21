@@ -10,6 +10,8 @@ import {
 import { useSocketCtx } from './SocketStore'
 import { getToast } from '../helpers/toast'
 import { IRootBattle } from '../types/CaseBattles'
+import { IRootCaseItem } from '../types/Cases'
+import { Context } from './Store'
 
 interface BattleCaseProviderProps {
   children: ReactNode
@@ -18,6 +20,8 @@ interface BattleCaseProviderProps {
 interface IBattleCaseContext {
   games: IRootBattle[]
   setGames: Dispatch<SetStateAction<IRootBattle[]>>
+  allCases: IRootCaseItem[]
+  setAllCases: Dispatch<SetStateAction<IRootCaseItem[]>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -29,6 +33,9 @@ export const useBattleCase = () => {
 
 export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
   const [games, setGames] = useState<IRootBattle[]>([])
+  const [allCases, setAllCases] = useState<IRootCaseItem[]>([])
+  const { state } = useContext(Context)
+
   const { socket } = useSocketCtx()
 
   useEffect(() => {
@@ -46,11 +53,29 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
     }
   }, [socket])
 
+  useEffect(() => {
+    socket.emit(
+      'load_cases',
+      { type: 'casebattle' },
+      (err: boolean | string, skins: IRootCaseItem[]) => {
+        if (typeof err === 'string') {
+          getToast(err)
+        }
+        if (!err) {
+          setAllCases(skins)
+          // setAllCards(skins.map((item) => ({ ...item, amount: 1 })))
+        }
+      }
+    )
+  }, [state.user])
+
   return (
     <BattleCaseContext.Provider
       value={{
         games,
-        setGames
+        setGames,
+        allCases,
+        setAllCases
       }}
     >
       {children}

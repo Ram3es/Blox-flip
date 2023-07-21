@@ -1,12 +1,12 @@
 import { FC, useMemo } from 'react'
 import { IMAGES } from '../../../constants/images'
-import { IBattleUser } from '../../../mocks/battle'
+import { IRootBattlePlayer } from '../../../types/CaseBattles'
 
 interface IBackdropEffects {
   statusGame: string
-  player?: IBattleUser
-  winningCard?: string
   isEndGame: boolean
+  player?: IRootBattlePlayer
+  winningCard?: string
 }
 
 const BackdropEffects: FC<IBackdropEffects> = ({ statusGame, player, winningCard, isEndGame }) => {
@@ -64,6 +64,7 @@ const BackdropEffects: FC<IBackdropEffects> = ({ statusGame, player, winningCard
   }
 
   const renderBackdrop = useMemo(() => winningCard && getBackdropStars(winningCard), [winningCard])
+
   return (
     <div className="relative z-10 h-[380px]">
       {statusGame === 'created' && (
