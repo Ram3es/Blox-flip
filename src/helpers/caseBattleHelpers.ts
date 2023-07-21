@@ -1,4 +1,9 @@
-import { IDisplayedBattleModeEnum, IRootBattle, IRootBattleModeEnum } from '../types/CaseBattles'
+import {
+  IDisplayedBattleModeEnum,
+  IRootBattle,
+  IRootBattleModeEnum,
+  IRootMaximumPlayers
+} from '../types/CaseBattles'
 
 export const getDisplayedModeByGame = (game: IRootBattle) => {
   if (!game.team) {
@@ -20,4 +25,14 @@ export const getDisplayedModeByGame = (game: IRootBattle) => {
   if (game.gamemode === IRootBattleModeEnum.group) {
     return IDisplayedBattleModeEnum.group
   }
+}
+
+export const getParticipantsByDisplayMode = (
+  mode: Exclude<IDisplayedBattleModeEnum, IDisplayedBattleModeEnum.group>
+): IRootMaximumPlayers => {
+  return mode === IDisplayedBattleModeEnum['1v1']
+    ? 2
+    : mode === IDisplayedBattleModeEnum['1v1v1']
+      ? 3
+      : 4
 }

@@ -1,6 +1,6 @@
 export enum IRootBattleModeEnum {
-  crazy = 'crazy',
   regular = 'regular',
+  crazy = 'crazy',
   group = 'group'
 }
 

@@ -11,7 +11,7 @@ import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
 import { Context } from '../../store/Store'
-import { ICaseUnboxingItem, ICaseUnboxingItemWithAmount } from '../../types/Cases'
+import { IRootCaseItem, IRootCaseItemWithAmount } from '../../types/Cases'
 
 const BattleModal = ({
   onClose,
@@ -20,32 +20,35 @@ const BattleModal = ({
 }: {
   onClose: Function
   onSubmit: Function
-  casesBetted: ICaseUnboxingItemWithAmount[]
+  casesBetted: IRootCaseItemWithAmount[]
 }) => {
   const { socket } = useSocketCtx()
   const { state } = useContext(Context)
 
-  const [allCards, setAllCards] = useState<ICaseUnboxingItemWithAmount[]>([])
-  const [selectedCards, setSelected] = useState<ICaseUnboxingItemWithAmount[]>([])
+  const [allCards, setAllCards] = useState<IRootCaseItemWithAmount[]>([])
+  const [selectedCards, setSelected] = useState<IRootCaseItemWithAmount[]>([])
   const { value, searchBy, priceRange, onChange, setPriceRange } = useToolbarState()
 
   const totalPriceSelected = useMemo(
-    () => selectedCards.reduce((acc, item) => acc + item.cost * item.amount, 0),
+    () => selectedCards.reduce((acc, item) => Number(acc) + item.cost * item.amount, 0),
     [casesBetted, selectedCards]
   )
   const ranged = useMemo(
     () => allCards.filter((card) => card.cost >= priceRange.from && card.cost <= priceRange.to),
     [priceRange, allCards]
   )
-  const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, allCards, ranged])
+  const filtered = useMemo(
+    () => searchData(ranged, 'name', searchBy),
+    [searchBy, allCards, ranged, state.user]
+  )
 
-  const onSelect = (card: ICaseUnboxingItemWithAmount) => {
+  const onSelect = (card: IRootCaseItemWithAmount) => {
     setSelected((prev) => {
       const selectedCard = prev.find((prevCard) => prevCard.name === card.name)
       if (!selectedCard) {
         const addNewCard = allCards.find(
           (unCard) => unCard.name === card.name
-        ) as ICaseUnboxingItemWithAmount
+        ) as IRootCaseItemWithAmount
 
         return [...prev, addNewCard]
       }
@@ -77,7 +80,7 @@ const BattleModal = ({
     socket.emit(
       'load_cases',
       { type: 'casebattle' },
-      (err: boolean | string, skins: ICaseUnboxingItem[]) => {
+      (err: boolean | string, skins: IRootCaseItem[]) => {
         if (typeof err === 'string') {
           getToast(err)
         }

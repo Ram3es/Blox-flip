@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { useBattleCase } from '../../store/BattleCaseStore'
 import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
 
 import { useNavigate } from 'react-router-dom'
@@ -19,12 +18,46 @@ import NavHeader from '../../components/navigate/NavHeader'
 import { Button } from '../../components/base/Button'
 import { CopyIcon } from '../../components/icons/CopyIcon'
 
-
-import { gameSettings } from '../../constants/battle-cases'
+import { DISPLAYED_BATTLE_CONFIG } from '../../constants/battle-cases'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
 import { IRootCaseItemWithAmount } from '../../types/Cases'
+import {
+  IDisplayedBattleModeEnum,
+  IRootBattleModeEnum,
+  IRootMaximumPlayers
+} from '../../types/CaseBattles'
+import { getParticipantsByDisplayMode } from '../../helpers/caseBattleHelpers'
+
+enum StandardEnum {
+  'standard' = 'standard'
+}
+
+enum PolicyEnum {
+  'private' = 'private',
+  'public' = 'public'
+}
+
+interface DisplayBattleConfig {
+  gameMode: {
+    variant: Exclude<IDisplayedBattleModeEnum, IDisplayedBattleModeEnum.group>
+  }
+  gameType: {
+    variant: Exclude<IRootBattleModeEnum, IRootBattleModeEnum.regular> | StandardEnum
+  }
+  policy: {
+    variant: PolicyEnum
+  }
+}
+
+interface BattleConfig {
+  team: 1 | 0
+  gamemode: keyof typeof IRootBattleModeEnum
+  participants: IRootMaximumPlayers
+  cases: string[]
+  private?: 1 | 0
+}
 
 const CreateBattle = () => {
   const { socket } = useSocketCtx()
@@ -33,7 +66,17 @@ const CreateBattle = () => {
   const { text: referralLink, handleCopyText: handleReferralLink } = useCopyToClipboard(
     'https://robloxsite.com/i?/h371s9f!39g_123'
   )
-  const [battleSettings, setSetting] = useState(battleInitState)
+  const [displayBattleConfig, setDisplayBattleConfig] = useState<DisplayBattleConfig>({
+    gameMode: {
+      variant: IDisplayedBattleModeEnum['1v1']
+    },
+    gameType: {
+      variant: StandardEnum.standard
+    },
+    policy: {
+      variant: PolicyEnum.public
+    }
+  })
 
   const fieldWithLinkRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
@@ -87,40 +130,33 @@ const CreateBattle = () => {
         block: 'end'
       })
     }
-  }, [battleSettings])
+  }, [displayBattleConfig])
 
-  const onSubmitModal = useCallback(
-    (cards: IRootCaseItemWithAmount[]) => setCasesToBet(cards),
-    []
-  )
-
-  // const convertAmountBoxes = (): IUnboxCardCounter[] => {
-  //   let converted = [] as IUnboxCardCounter[]
-  //   casesBetted.forEach((box) => {
-  //     const multiplayed: IUnboxCardCounter[] = Array.from(Array(box.amount).fill(box))
-  //     converted = converted.concat(multiplayed)
-  //   })
-  //   return converted
-  // }
+  const onSubmitModal = useCallback((cards: IRootCaseItemWithAmount[]) => setCasesToBet(cards), [])
 
   const createGame = () => {
-    socket.emit(
-      'create_battle',
-      {
-        team: battleSettings.typeGame.variant.toLowerCase() === 'group' ? 1 : 0,
-        gamemode: battleSettings.typeGame.variant.toLowerCase() === 'crazy' ? 'crazy' : 'regular',
-        participants: battleSettings.mode.requiredPlayers,
-        cases: casesBetted.map((item) => item.short)
-      },
-      (err: string | boolean, data: number) => {
-        if (typeof err === 'string') {
-          getToast(err)
-        }
-        if (!err) {
-          navigate(`/battle/${data}`)
-        }
+    const sendedData: BattleConfig = {
+      team: displayBattleConfig.gameMode.variant === IDisplayedBattleModeEnum['2v2'] ? 1 : 0,
+      gamemode:
+        displayBattleConfig.gameType.variant === IRootBattleModeEnum.crazy
+          ? IRootBattleModeEnum.crazy
+          : displayBattleConfig.gameType.variant === IRootBattleModeEnum.group
+            ? IRootBattleModeEnum.group
+            : IRootBattleModeEnum.regular,
+      participants: getParticipantsByDisplayMode(displayBattleConfig.gameMode.variant),
+      cases: casesBetted.map((item) => item.short)
+    }
+
+    console.log('sended', sendedData)
+
+    socket.emit('create_battle', sendedData, (err: string | boolean, data: number) => {
+      if (typeof err === 'string') {
+        getToast(err)
       }
-    )
+      if (!err) {
+        navigate(`/battle/${data}`)
+      }
+    })
   }
 
   return (
@@ -156,7 +192,7 @@ const CreateBattle = () => {
             </div>
             <div className="w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0">
               <Button
-                disabled={!casesBetted.length}
+                // disabled={!casesBetted.length}
                 onClick={createGame}
                 className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
               >
@@ -181,15 +217,17 @@ const CreateBattle = () => {
             />
           ))}
       </PaymentMethodContainer>
-      {gameSettings.map((setting) => (
+      {DISPLAYED_BATTLE_CONFIG.map((item) => (
         <ToggleTabs
-          key={setting.label}
-          label={setting.label}
-          options={setting.tabs}
-          onSelect={(option) => setSetting((state) => ({ ...state, [setting.name]: option }))}
+          key={item.label}
+          label={item.label}
+          options={item.tabs}
+          onSelect={(option) =>
+            setDisplayBattleConfig((state) => ({ ...state, [item.name]: option }))
+          }
         />
       ))}
-      {battleSettings.privacy.variant === 'Private' && (
+      {displayBattleConfig.policy.variant === PolicyEnum.private && (
         <div ref={fieldWithLinkRef} className="relative px-2 w-full grow shrink-0 mb-4">
           <InputWithLabel
             type="text"

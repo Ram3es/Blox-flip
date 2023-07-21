@@ -15,7 +15,6 @@ import {
   IRootBattlePlayer,
   IRootBattleStateEnum
 } from '../../types/CaseBattles'
-import { IBattleUser } from '../../mocks/battle'
 
 const BattleCases = () => {
   const { id } = useParams()
@@ -66,39 +65,6 @@ const BattleCases = () => {
     }
     return 0
   }
-
-  // useEffect(() => {
-  //   if (
-  //     gameState.players.length === gameState.gameSetting.mode.requiredPlayers &&
-  //     gameState.players.every((item) => item !== undefined) &&
-  //     !gameState.gameSetting.currentRound
-  //   ) {
-  //     setGameState((state) => ({
-  //       ...state,
-  //       status: 'running',
-  //       gameSetting: { ...state.gameSetting, currentRound: 1 }
-  //     }))
-  //     return
-  //   }
-  //   if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
-  //     setGameState((state) => ({ ...state, status: 'ended' }))
-  //   }
-  // }, [gameState])
-
-  // useEffect(() => {
-  //   const users = Object.values(usersFinishedRound)
-  //   if (
-  //     users.length === gameState.gameSetting.mode.requiredPlayers &&
-  //     users.every((val) => val === gameState.gameSetting.currentRound) &&
-  //     gameState.gameSetting.currentRound &&
-  //     gameState.status !== 'ended'
-  //   ) {
-  //     setGameState((state) => ({
-  //       ...state,
-  //       gameSetting: { ...state.gameSetting, currentRound: state.gameSetting.currentRound + 1 }
-  //     }))
-  //   }
-  // }, [usersFinishedRound])
 
   useEffect(() => {
     if (id) {
