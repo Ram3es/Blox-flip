@@ -24,8 +24,8 @@ import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
 import { IRootCaseItemWithAmount } from '../../types/Cases'
 import {
-  IDisplayedBattleModeEnum,
-  IRootBattleModeEnum,
+  DisplayedBattleModeEnum,
+  RootBattleModeEnum,
   IRootMaximumPlayers
 } from '../../types/CaseBattles'
 import { getParticipantsByDisplayMode } from '../../helpers/caseBattleHelpers'
@@ -41,10 +41,10 @@ enum PolicyEnum {
 
 interface DisplayBattleConfig {
   gameMode: {
-    variant: Exclude<IDisplayedBattleModeEnum, IDisplayedBattleModeEnum.group>
+    variant: Exclude<DisplayedBattleModeEnum, DisplayedBattleModeEnum.group>
   }
   gameType: {
-    variant: Exclude<IRootBattleModeEnum, IRootBattleModeEnum.regular> | StandardEnum
+    variant: Exclude<RootBattleModeEnum, RootBattleModeEnum.regular> | StandardEnum
   }
   policy: {
     variant: PolicyEnum
@@ -53,7 +53,7 @@ interface DisplayBattleConfig {
 
 interface BattleConfig {
   team: 1 | 0
-  gamemode: keyof typeof IRootBattleModeEnum
+  gamemode: keyof typeof RootBattleModeEnum
   participants: IRootMaximumPlayers
   cases: string[]
   private?: 1 | 0
@@ -68,7 +68,7 @@ const CreateBattle = () => {
   )
   const [displayBattleConfig, setDisplayBattleConfig] = useState<DisplayBattleConfig>({
     gameMode: {
-      variant: IDisplayedBattleModeEnum['1v1']
+      variant: DisplayedBattleModeEnum['1v1']
     },
     gameType: {
       variant: StandardEnum.standard
@@ -114,13 +114,13 @@ const CreateBattle = () => {
 
   const { amountCases, totalCost } = casesBetted.length
     ? casesBetted.reduce(
-      (acc, card) => {
-        acc.amountCases += card.amount
-        acc.totalCost += card.cost * card.amount
-        return acc
-      },
-      { amountCases: 0, totalCost: 0 }
-    )
+        (acc, card) => {
+          acc.amountCases += card.amount
+          acc.totalCost += card.cost * card.amount
+          return acc
+        },
+        { amountCases: 0, totalCost: 0 }
+      )
     : { amountCases: 0, totalCost: 0 }
 
   useEffect(() => {
@@ -135,14 +135,19 @@ const CreateBattle = () => {
   const onSubmitModal = useCallback((cards: IRootCaseItemWithAmount[]) => setCasesToBet(cards), [])
 
   const createGame = () => {
+    if (casesBetted.length === 0) {
+      getToast('Select minimum 1 case')
+      return
+    }
+
     const sendedData: BattleConfig = {
-      team: displayBattleConfig.gameMode.variant === IDisplayedBattleModeEnum['2v2'] ? 1 : 0,
+      team: displayBattleConfig.gameMode.variant === DisplayedBattleModeEnum['2v2'] ? 1 : 0,
       gamemode:
-        displayBattleConfig.gameType.variant === IRootBattleModeEnum.crazy
-          ? IRootBattleModeEnum.crazy
-          : displayBattleConfig.gameType.variant === IRootBattleModeEnum.group
-            ? IRootBattleModeEnum.group
-            : IRootBattleModeEnum.regular,
+        displayBattleConfig.gameType.variant === RootBattleModeEnum.crazy
+          ? RootBattleModeEnum.crazy
+          : displayBattleConfig.gameType.variant === RootBattleModeEnum.group
+          ? RootBattleModeEnum.group
+          : RootBattleModeEnum.regular,
       participants: getParticipantsByDisplayMode(displayBattleConfig.gameMode.variant),
       cases: casesBetted.map((item) => item.short)
     }
@@ -192,7 +197,6 @@ const CreateBattle = () => {
             </div>
             <div className="w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0">
               <Button
-                // disabled={!casesBetted.length}
                 onClick={createGame}
                 className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
               >

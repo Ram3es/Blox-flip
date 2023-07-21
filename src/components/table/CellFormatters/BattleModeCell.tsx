@@ -8,13 +8,13 @@ import { IModeGame, IBattleUser } from '../../../mocks/battle'
 import question from '../../../assets/img/question-mark-circle-1.svg'
 import YellowLine from '../../icons/YellowLine'
 import BlueLine from '../../icons/BlueLine'
-import { IRootBattle, IRootBattleStateEnum } from '../../../types/CaseBattles'
+import { IRootBattle, RootBattleStateEnum } from '../../../types/CaseBattles'
 
 interface BattleModeCellProps
   extends Pick<IRootBattle, 'gamemode' | 'team' | 'state' | 'players'> {}
 
 const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps) => {
-  const isFinished = state === IRootBattleStateEnum.done
+  const isFinished = state === RootBattleStateEnum.done
 
   const getCell = (value: IModeGame) => {
     switch (value.variant) {

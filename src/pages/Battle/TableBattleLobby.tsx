@@ -14,7 +14,7 @@ import ButtonsCell from '../../components/table/CellFormatters/ButtonsCell'
 import CasesCell from '../../components/table/CellFormatters/CasesCell'
 import RoundCell from '../../components/table/CellFormatters/RoundCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
-import { IRootBattle, IRootBattleStateEnum } from '../../types/CaseBattles'
+import { IRootBattle, RootBattleStateEnum } from '../../types/CaseBattles'
 
 interface TableBattleLobbyProps {
   data: IRootBattle[]
@@ -30,11 +30,7 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
       id: 'rounds',
       header: () => 'Rounds',
       cell: ({ row: { original } }) => (
-        <RoundCell
-          round={original.caselist.length}
-          mode={original.mode}
-          status={original.state}
-        />
+        <RoundCell round={original.caselist.length} mode={original.mode} status={original.state} />
       ),
       footer: (props) => props.column.id
     }),
@@ -66,9 +62,7 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
     columnHelper.accessor((row) => row.cost, {
       id: 'price',
       header: () => 'Price',
-      cell: ({ row: { original } }) => (
-        <CoinsWithDiamond typographyQuantity={original.cost} />
-      ),
+      cell: ({ row: { original } }) => <CoinsWithDiamond typographyQuantity={original.cost} />,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row) => row, {
@@ -127,15 +121,15 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
             key={row.id}
             className={clsx('', {
               'battle_td--radial-green overflow-hidden relative': Boolean(
-                row.original.state !== IRootBattleStateEnum.done
+                row.original.state !== RootBattleStateEnum.done
               ),
               'battle_td--radial-gray overflow-hidden relative': Boolean(
-                row.original.state === IRootBattleStateEnum.done
+                row.original.state === RootBattleStateEnum.done
               )
             })}
           >
             {row.getVisibleCells().map((cell, i, a) => {
-              const isActive = cell.row.original.state === IRootBattleStateEnum.playing
+              const isActive = cell.row.original.state === RootBattleStateEnum.playing
               return (
                 <td
                   className={clsx('border py-2.5 px-2', {

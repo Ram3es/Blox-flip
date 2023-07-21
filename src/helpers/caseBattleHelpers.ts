@@ -1,38 +1,40 @@
 import {
-  IDisplayedBattleModeEnum,
+  DisplayedBattleModeEnum,
   IRootBattle,
-  IRootBattleModeEnum,
+  RootBattleModeEnum,
   IRootMaximumPlayers
 } from '../types/CaseBattles'
 
-export const getDisplayedModeByGame = (game: IRootBattle) => {
+export const getDisplayedModeByGame = (game: IRootBattle): DisplayedBattleModeEnum => {
   if (!game.team) {
     if (game.max === 2) {
-      return IDisplayedBattleModeEnum['1v1']
+      return DisplayedBattleModeEnum['1v1']
     }
     if (game.max === 3) {
-      return IDisplayedBattleModeEnum['1v1v1']
+      return DisplayedBattleModeEnum['1v1v1']
     }
     if (game.max === 4) {
-      return IDisplayedBattleModeEnum['1v1v1v1']
+      return DisplayedBattleModeEnum['1v1v1v1']
     }
   }
 
   if (game.team && game.max === 4) {
-    return IDisplayedBattleModeEnum['2v2']
+    return DisplayedBattleModeEnum['2v2']
   }
 
-  if (game.gamemode === IRootBattleModeEnum.group) {
-    return IDisplayedBattleModeEnum.group
+  if (game.gamemode === RootBattleModeEnum.group) {
+    return DisplayedBattleModeEnum.group
   }
+
+  return DisplayedBattleModeEnum['1v1']
 }
 
 export const getParticipantsByDisplayMode = (
-  mode: Exclude<IDisplayedBattleModeEnum, IDisplayedBattleModeEnum.group>
+  mode: Exclude<DisplayedBattleModeEnum, DisplayedBattleModeEnum.group>
 ): IRootMaximumPlayers => {
-  return mode === IDisplayedBattleModeEnum['1v1']
+  return mode === DisplayedBattleModeEnum['1v1']
     ? 2
-    : mode === IDisplayedBattleModeEnum['1v1v1']
-      ? 3
-      : 4
+    : mode === DisplayedBattleModeEnum['1v1v1']
+    ? 3
+    : 4
 }

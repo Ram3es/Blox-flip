@@ -1,10 +1,10 @@
-export enum IRootBattleModeEnum {
+export enum RootBattleModeEnum {
   regular = 'regular',
   crazy = 'crazy',
   group = 'group'
 }
 
-export enum IRootBattleStateEnum {
+export enum RootBattleStateEnum {
   open = 'open',
   playing = 'playing',
   done = 'done'
@@ -41,9 +41,9 @@ export type IRootMaximumPlayers = 2 | 3 | 4
 
 export interface IRootBattle {
   team: boolean
-  gamemode: keyof typeof IRootBattleModeEnum
+  gamemode: keyof typeof RootBattleModeEnum
   id: number
-  state: keyof typeof IRootBattleStateEnum
+  state: keyof typeof RootBattleStateEnum
   cost: number
   caselist: IRootBattleCaseItem[]
   result: IRootBattleResult[]
@@ -52,7 +52,7 @@ export interface IRootBattle {
   hash: string
 }
 
-export enum IDisplayedBattleModeEnum {
+export enum DisplayedBattleModeEnum {
   '1v1' = '1v1',
   '1v1v1' = '1v1v1',
   '1v1v1v1' = '1v1v1v1',

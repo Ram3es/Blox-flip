@@ -24,6 +24,7 @@ const UserBar = ({
   wonDiamonds
 }: UserBarProps) => {
   const isLostGame = isEndGame && !isPlayerGameWinners
+
   return (
     <div
       className={`${user ? 'justify-between' : 'justify-center'} flex ${

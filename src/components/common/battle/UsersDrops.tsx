@@ -1,11 +1,10 @@
 import clsx from 'clsx'
-import React from 'react'
 import { IItemCard } from '../../../types/ItemCard'
 import DoubleRombIconSolid from '../../icons/DoubleRombIconSolid'
 import ItemCard from '../Cards/ItemCard'
 
 const UsersDrops = ({ cards, amountGamePlates }: { cards?: IItemCard[], amountGamePlates: number }) => {
-  const resposiveDropCards = clsx('mb-2 px-1 w-1/2 point-hidden group/item is-block', {
+  const responsiveDropCards = clsx('mb-2 px-1 w-1/2 point-hidden group/item is-block', {
     'sm:w-1/2 md:w-1/3 lg:w-1/4': amountGamePlates === 2,
     'sm:w-full md:w-1/2 lg:w-1/3': amountGamePlates === 3,
     'sm:w-1/2 md:w-full ls:w-1/2 ': amountGamePlates === 4
@@ -26,7 +25,7 @@ const UsersDrops = ({ cards, amountGamePlates }: { cards?: IItemCard[], amountGa
           <div className="flex flex-wrap -mx-1 ">
             {cards?.map(card => (
                 <ItemCard
-                  itemClasses={resposiveDropCards}
+                  itemClasses={responsiveDropCards}
                   key={card.id}
                   id={card.id}
                   name={card.name}
