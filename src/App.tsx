@@ -12,7 +12,6 @@ import HistoryUser from './pages/UserProfile/HistoryUser'
 import { Deposit } from './pages/Deposit/Deposit'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import { DepositGift } from './pages/Deposit/methods/DepositGift'
-import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 
 import { Withdraw } from './pages/Withdraw/Withdraw'
@@ -66,7 +65,7 @@ export const App = () => {
             <Route path="robux" element={<DepositRobux />} />
             <Route path="roblox-limiteds" element={<RobloxLimiteds />} />
             <Route path="litecoin" element={<CryptoForm variant='Deposit' />} />
-            <Route path="bitcoin" element={<DepositCrypto />} />
+            <Route path="bitcoin" element={<CryptoForm variant='Deposit' />} />
             <Route path="ethereum" element={<CryptoForm variant='Deposit' />} />
             <Route path="credit-card" element={<CreditCard />} />
             <Route path="g2a" element={<DepositGift />} />
