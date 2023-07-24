@@ -73,7 +73,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
     <div className="border-t border-b border-t-sky-primary/40 border-b-sky-primary/40 rounded mb-9">
       <div className="border--mask border--radial-blue  bg-gradient-radial from-blue-light-secondary/20 to-blue-accent-secondary/0 rounded text-sm px-3 xxs:px-6 py-9 overflow-hidden relative">
         <div className="relative z-20 text-base">
-          <form onSubmit={handleWithdrawCrypto}>
+          <form onSubmit={variant === 'Withdraw' ? handleWithdrawCrypto : () => null}>
             <div className="flex flex-wrap -mx-2 mb-5">
               <div className="relative px-2 w-full xs:w-1/2 md:w-[50%] grow shrink-0 mb-4">
                 <InputWithLabel
