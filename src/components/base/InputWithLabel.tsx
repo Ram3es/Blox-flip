@@ -6,7 +6,7 @@ interface IInputWithLabelProps extends InputHTMLAttributes<HTMLInputElement> {
   inputClasses?: string
   titleClasses?: string
   inputWrapperClasses?: string
-  inputSecondWrapperClasses?: string
+  inputSecondWrapperClasses?: string | null
 }
 
 const InputWithLabel: FC<IInputWithLabelProps> = ({
