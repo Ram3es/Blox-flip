@@ -3,7 +3,6 @@ import { FC, useEffect, useRef, FormEvent, ChangeEvent } from 'react'
 import { Button } from './Button'
 import DiamondIcon from '../icons/DiamondIcon'
 
-import SeparatorGrayIcon from '../../assets/img/separator_gray_h.svg'
 import InputWithLabel from './InputWithLabel'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 
@@ -108,15 +107,7 @@ export const RobuxTransactionForm: FC<RobuxTransactionFormProps> = ({
       </form>
       {variant === VariantEnum.Withdraw && (
         <>
-          <img
-            src={SeparatorGrayIcon}
-            alt=''
-            width='300'
-            height=''
-            loading='lazy'
-            decoding='async'
-            className='mx-auto my-7'
-          />
+          <div className="bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7"></div>
           <div className='font-semibold text-center text-gray-primary mx-auto'>
             Roblox imposes a 30% fee on every transaction. We do not have any way to stop it,{' '}
             <br className='hidden xs:inline' /> and will not receive any of this fee.
