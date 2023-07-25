@@ -28,7 +28,10 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
   const [withdrawAddress, setWithdrawAddress] = useState('')
   const [sendAmount, setSendAmount] = useState(100)
   const [rateCoin, setRateCoin] = useState<number>()
-  const { pathname, state: type } = useLocation()
+  const {
+    pathname,
+    state: { type, shortName }
+  } = useLocation()
   const { socket } = useOutletContext<{ socket: TSocket }>()
 
   useEffect(() => {
@@ -60,9 +63,20 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
     cryptoAddressSchema
       .validate(withdrawAddress)
       .then(() => {
-        getToast('Withdrawal successful. Wait for funds to arrive')
-        setSendAmount(0)
-        setWithdrawAddress('')
+        socket.emit(
+          'withdraw',
+          { type: shortName, address: withdrawAddress, amount: sendAmount },
+          (err: string | boolean) => {
+            if (typeof err === 'string') {
+              getToast(err)
+            }
+            if (!err) {
+              getToast('Withdrawal successful. Wait for funds to arrive')
+              setSendAmount(0)
+              setWithdrawAddress('')
+            }
+          }
+        )
       })
       .catch((error) => {
         getToast(error.errors[0])
