@@ -1,8 +1,43 @@
-const GameInfoListItem = ({ label, children }: { label: string, children: JSX.Element }) => {
+import clsx from 'clsx'
+
+enum LabelStyleEnum {
+  Default = 'Default',
+  Green = 'Green'
+}
+
+enum ChildrenStyleEnum {
+  Default = 'Default',
+  None = 'None'
+}
+
+interface GameInfoListItemProps {
+  label: string
+  children: JSX.Element
+  labelStyle?: keyof typeof LabelStyleEnum
+  childrenStyle?: keyof typeof ChildrenStyleEnum
+}
+
+const GameInfoListItem = ({
+  label,
+  children,
+  labelStyle = LabelStyleEnum.Default,
+  childrenStyle = ChildrenStyleEnum.Default
+}: GameInfoListItemProps) => {
   return (
     <div className="flex flex-col gap-4">
-      <span className="uppercase text-gray-primary font-extrabold text-13">{label}</span>
-      <div className="px-2 min-w-[121px] min-h-[48px] bg-blue-accent flex items-center justify-center rounded-lg">
+      <span
+        className={clsx('text-xs font-extrabold uppercase', {
+          'text-gray-primary': labelStyle === LabelStyleEnum.Default,
+          'text-green-primary': labelStyle === LabelStyleEnum.Green
+        })}
+      >
+        {label}
+      </span>
+      <div
+        className={clsx('min-w-[121px] min-h-[48px] flex items-center justify-center', {
+          'px-2 bg-blue-accent rounded-lg': childrenStyle === ChildrenStyleEnum.Default
+        })}
+      >
         {children}
       </div>
     </div>

@@ -8,8 +8,6 @@ interface PlinkoProviderProps {
 export interface ICoinFlipContext {
   currentGame: ICoinFlip | null
   setCurrentGame: Dispatch<SetStateAction<ICoinFlip | null>>
-  isOpenLobbyModal: boolean
-  setIsOpenLobbyModal: Dispatch<SetStateAction<boolean>>
   isOpenBattleGame: boolean
   setIsOpenBattleGame: Dispatch<SetStateAction<boolean>>
   isOpenLoginModal: boolean
@@ -26,7 +24,6 @@ export const useCoinFlip = () => {
 export const CoinFlipProvider = ({ children }: PlinkoProviderProps) => {
   const [currentGame, setCurrentGame] = useState<ICoinFlip | null>(null)
 
-  const [isOpenLobbyModal, setIsOpenLobbyModal] = useState(false)
   const [isOpenBattleGame, setIsOpenBattleGame] = useState(false)
   const [isOpenLoginModal, setIsOpenLoginModal] = useState(false)
 
@@ -35,8 +32,6 @@ export const CoinFlipProvider = ({ children }: PlinkoProviderProps) => {
       value={{
         currentGame,
         setCurrentGame,
-        isOpenLobbyModal,
-        setIsOpenLobbyModal,
         isOpenBattleGame,
         setIsOpenBattleGame,
         isOpenLoginModal,
