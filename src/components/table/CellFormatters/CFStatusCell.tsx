@@ -15,17 +15,31 @@ import YellowCoin from '../../../assets/img/CoinFlipHead.png'
 import PurpleCoin from '../../../assets/img/CoinFlipTail.png'
 
 import { ICoinFlip } from '../../../types/CoinFlip'
+import { getToast } from '../../../helpers/toast'
+import { useSocketCtx } from '../../../store/SocketStore'
 
 const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
-  const { setIsOpenBattleGame, setCurrentGame, setIsOpenLoginModal, setIsOpenLobbyModal } =
-    useCoinFlip()
+  const { setIsOpenBattleGame, setCurrentGame, setIsOpenLoginModal } = useCoinFlip()
   const { state } = useContext(Context)
+  const { socket } = useSocketCtx()
 
   const handleJoinGame = useCallback(() => {
-    setCurrentGame(game)
-
     if (state.user) {
-      setIsOpenLobbyModal(true)
+      socket.emit(
+        'coinflip_join',
+        {
+          gameId: game.id
+        },
+        (error: boolean | string) => {
+          if (typeof error === 'string') {
+            getToast(error)
+          }
+
+          if (!error) {
+            setIsOpenBattleGame(true)
+          }
+        }
+      )
     } else {
       setIsOpenLoginModal(true)
     }
@@ -39,12 +53,12 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
   const getCurrentButtonByState = () => {
     if (game.state === 1) {
       return (
-        <Button variant='GreenGradient' onClick={handleJoinGame}>
-          <div className='flex items-center justify-center h-10 w-[5.5rem]'>
-            <span className='w-4 shrink-0 relative text-white'>
-              <DiamondIcon className='w-[16px] h-[12px]' />
+        <Button variant="GreenGradient" onClick={handleJoinGame}>
+          <div className="flex items-center justify-center h-10 w-[5.5rem]">
+            <span className="w-4 shrink-0 relative text-white">
+              <DiamondIcon className="w-[16px] h-[12px]" />
             </span>
-            <span className='pl-2'>Join</span>
+            <span className="pl-2">Join</span>
           </div>
         </Button>
       )
@@ -64,11 +78,11 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
           disabled
           variant={game.winner?.coin === 0 ? 'YellowOutlinedSecondary' : 'BlueGolfOutlined'}
         >
-          <div className='flex items-center justify-center w-28 h-10'>
+          <div className="flex items-center justify-center w-28 h-10">
             <img
-              className='h-6 w-6'
+              className="h-6 w-6"
               src={game.winner?.coin === 0 ? YellowCoin : PurpleCoin}
-              alt='head'
+              alt="head"
             />
             <span
               className={clsx('text-sm font-bold pl-2', {
@@ -89,14 +103,14 @@ const CFStatusCell = ({ game }: { game: ICoinFlip }) => {
   }
 
   return (
-    <div className='flex items-center justify-end'>
+    <div className="flex items-center justify-end">
       {getCurrentButtonByState()}
       {game.state !== 3 && (
         <Button
           onClick={handleWatchGame}
-          className='leading-10 ml-2 flex h-10 w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary'
+          className="leading-10 ml-2 flex h-10 w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary"
         >
-          <PreviewIcon iconClasses='mx-auto my-auto' />
+          <PreviewIcon iconClasses="mx-auto my-auto" />
         </Button>
       )}
     </div>

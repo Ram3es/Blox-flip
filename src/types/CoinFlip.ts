@@ -34,10 +34,6 @@ export interface ICoinFlip {
 }
 
 export interface ICoinFlipCreate {
-  type: 'coinflip'
-  items: string[]
   coin: ICoin
   wager: number
-  '2fa_code'?: string
-  gameId?: string
 }

@@ -35,7 +35,7 @@ const CoinFlipHeader = () => {
         return
       }
 
-      const sendedData: Pick<ICoinFlipCreate, 'coin' | 'wager'> = {
+      const sendedData: ICoinFlipCreate = {
         coin: selectedCoin,
         wager: wager.amountNumber
       }
