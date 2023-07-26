@@ -78,17 +78,20 @@ const WithdrawGifts = () => {
     (card: GiftCardInterface, type: 'increment' | 'decrement') => {
       setCards((prevState) =>
         prevState.map((item) => {
-          return item.id === card.id
-            ? {
-                ...card,
-                isSelected: !(type === 'decrement' && item.amount === 0),
-                amount: type === 'increment' ? item.amount++ : item.amount--
-              }
-            : item
+          if (item.id === card.id) {
+            const newAmount = type === 'increment' ? item.amount + 1 : item.amount - 1
+
+            return {
+              ...card,
+              isSelected: !(type === 'decrement' && item.amount === 0),
+              amount: newAmount
+            }
+          }
+          return item
         })
       )
     },
-    [cards]
+    [setCards]
   )
 
   const handleCloseGiftModal = () => {
