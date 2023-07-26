@@ -51,6 +51,9 @@ const WithdrawGifts = () => {
 
   const selectedCards = useMemo(() => cards.filter((card) => card.isSelected), [cards])
 
+  console.log(selectedCards, 'selectedCards')
+  console.log(cards, 'cards')
+
   const ranged = useMemo(
     () => cards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
     [priceRange, cards]
@@ -83,7 +86,7 @@ const WithdrawGifts = () => {
 
             return {
               ...card,
-              isSelected: !(type === 'decrement' && item.amount === 0),
+              isSelected: !(type === 'decrement' && newAmount === 0),
               amount: newAmount
             }
           }
