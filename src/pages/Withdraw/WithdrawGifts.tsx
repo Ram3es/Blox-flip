@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 import { searchData } from '../../helpers/searchData'
@@ -8,6 +8,7 @@ import { TSocket } from '../../store/SocketStore'
 import { giftCards } from '../../mocks/giftCrads'
 import CardWithCounter from '../../components/common/Cards/CardWithCounter'
 import GiftCardHorizontal from '../../components/common/Cards/GiftCardVertical'
+import WithdrawGiftModal from '../../components/containers/WithdrawGiftModal'
 
 export interface GiftCardInterface {
   id: string
@@ -19,8 +20,12 @@ export interface GiftCardInterface {
   isSelected?: boolean
 }
 
+interface GiftModalInterface {
+  isOpen: boolean
+  data: null | GiftCardInterface
+}
+
 const WithdrawGifts = () => {
-  // const [allCards, setAllCards] = useState<GiftCardInterface[]>([])
   const {
     sortBy,
     direction,
@@ -32,11 +37,13 @@ const WithdrawGifts = () => {
     sortBy?: string
     searchBy: string
     direction?: 'ASC' | 'DESC'
-    priceRange: { from: number, to: number }
+    priceRange: { from: number; to: number }
     selectedCards: GiftCardInterface[]
     setSelectedCard: Dispatch<SetStateAction<GiftCardInterface[]>>
     socket: TSocket
   }>()
+
+  const [giftModal, setGiftModal] = useState<GiftModalInterface>({ isOpen: false, data: null })
 
   useEffect(() => {
     setCards(giftCards)
@@ -48,9 +55,7 @@ const WithdrawGifts = () => {
     () => cards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
     [priceRange, cards]
   )
-
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, cards, ranged])
-
   const sorted = useMemo(() => {
     if (sortBy && direction) {
       return sortData(filtered, sortBy as keyof GiftCardInterface, direction)
@@ -83,7 +88,13 @@ const WithdrawGifts = () => {
     )
   }
 
-  console.log(selectedCards)
+  const handleCloseGiftModal = () => {
+    setGiftModal((prev) => ({ isOpen: false, data: null }))
+  }
+
+  const handleOpenGiftModal = (card: GiftCardInterface) => {
+    setGiftModal({ isOpen: true, data: card })
+  }
 
   return (
     <div className="flex">
@@ -114,13 +125,8 @@ const WithdrawGifts = () => {
                 {selectedCards.map((card) => (
                   <GiftCardHorizontal
                     key={card.id}
-                    id={card.id}
-                    name={card.name}
-                    price={card.price}
-                    pic={card.pic}
-                    status={card.status}
-                    amount={card.amount}
-                    isSelected={card.isSelected}
+                    handleClaim={() => handleOpenGiftModal(card)}
+                    {...card}
                   />
                 ))}
               </div>
@@ -128,6 +134,13 @@ const WithdrawGifts = () => {
           </div>
         </div>
       </div>
+      {giftModal.isOpen && giftModal.data && (
+        <WithdrawGiftModal
+          handleClose={handleCloseGiftModal}
+          code={'35K29 - 35K29 - 35K29 - 35K29 - 35K29 - 35K29'}
+          image={giftModal.data.pic}
+        />
+      )}
     </div>
   )
 }

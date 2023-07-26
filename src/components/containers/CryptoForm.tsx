@@ -110,7 +110,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
                 />
                 {variant === 'Deposit' && (
                   <div className="absolute z-20 top-[60px] right-4">
-                    <Button onClick={setBitcoinAddress} className="w-7 shrink-0" type="button">
+                    <Button onClick={setBitcoinAddress} className="w-7 shrink-0 text-gray-primary" type="button">
                       <CopyIconSecond />
                     </Button>
                   </div>

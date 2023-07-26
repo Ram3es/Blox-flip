@@ -3,10 +3,22 @@ import { Button } from '../../base/Button'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 import { GiftCardInterface } from '../../../pages/Withdraw/WithdrawGifts'
 
-const GiftCardHorizontal = ({ id, pic, name, price, amount, status }: GiftCardInterface) => {
+interface GiftCardHorizontalProps extends GiftCardInterface {
+  handleClaim?: () => void
+}
+
+const GiftCardHorizontal = ({
+  id,
+  pic,
+  name,
+  price,
+  amount,
+  status,
+  handleClaim
+}: GiftCardHorizontalProps) => {
   return (
     <div className="w-full xxs:w-1/2 xs:w-full ">
-      <div className="border--mask border--radial-blue rounded overflow-hidden relative z-20 cursor-pointer">
+      <div className="border--mask border--radial-blue rounded overflow-hidden relative z-20">
         <div className="gradient-blue-secondary rounded relative z-20 px-5 py-[12px] h-[125px] grid grid-cols-2 grid-rows-3 gap-2.5">
           <div className="flex items-center gap-1 col-span-2">
             {amount > 0 && <span>{amount}x</span>}
@@ -18,7 +30,7 @@ const GiftCardHorizontal = ({ id, pic, name, price, amount, status }: GiftCardIn
           <div className="row-start-2">
             {status === 'active' && (
               <div className="px-2">
-                <Button variant="GreenGradient">
+                <Button variant="GreenGradient" onClick={handleClaim}>
                   <span className="px-2 w-[56px] h-[27px] flex items-center justify-center">
                     Claim
                   </span>
