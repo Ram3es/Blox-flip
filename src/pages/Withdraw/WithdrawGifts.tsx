@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 import { searchData } from '../../helpers/searchData'
@@ -74,19 +74,22 @@ const WithdrawGifts = () => {
     }
   }
 
-  const handleChangeCount = (card: GiftCardInterface, type: 'increment' | 'decrement') => {
-    setCards((prevState) =>
-      prevState.map((item) => {
-        return item.id === card.id
-          ? {
-              ...card,
-              isSelected: !(type === 'decrement' && item.amount === 0),
-              amount: type === 'increment' ? item.amount++ : item.amount--
-            }
-          : item
-      })
-    )
-  }
+  const handleChangeCount = useCallback(
+    (card: GiftCardInterface, type: 'increment' | 'decrement') => {
+      setCards((prevState) =>
+        prevState.map((item) => {
+          return item.id === card.id
+            ? {
+                ...card,
+                isSelected: !(type === 'decrement' && item.amount === 0),
+                amount: type === 'increment' ? item.amount++ : item.amount--
+              }
+            : item
+        })
+      )
+    },
+    [cards]
+  )
 
   const handleCloseGiftModal = () => {
     setGiftModal((prev) => ({ isOpen: false, data: null }))
