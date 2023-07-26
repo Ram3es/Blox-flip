@@ -13,8 +13,8 @@ interface CardWithCounterProps {
   price: number
   count: number
   image?: string
-  increment: Function
-  decrement: Function
+  increment: () => void
+  decrement: () => void
   variant?: keyof typeof CardEnumVariant
   handleClick?: () => void
 }
