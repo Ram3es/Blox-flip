@@ -2,6 +2,7 @@ export interface IPaymentMethods {
   roblox: { name: string, methods: IMethodLabel[] }
   crypto: { name: string, methods: IMethodLabel[] }
   fiat: { name: string, methods: IMethodLabel[] }
+  gift: { name: string, methods: IMethodLabel[] }
 }
 
 export interface IMethodLabel {

@@ -46,6 +46,7 @@ import { ToastContainer } from 'react-toastify'
 import { useSocketCtx } from './store/SocketStore'
 import TwoFactorAuthModal from './components/containers/TwoFactorAuthModal'
 import CryptoForm from './components/containers/CryptoForm'
+import WithdrawGifts from './pages/Withdraw/WithdrawGifts'
 
 export const App = () => {
   const { twoFactorAuthModal, setTwoFactorAuthModal } = useSocketCtx()
@@ -74,6 +75,7 @@ export const App = () => {
           <Route path="/withdraw" element={<Withdraw />}>
             <Route path="robux" element={<Robux />} />
             <Route path="roblox-limiteds" element={<RobloxLimiteds />} />
+            <Route path="gift" element={<WithdrawGifts />} />
             <Route path="litecoin" element={<CryptoForm variant='Withdraw' />} />
             <Route path="bitcoin" element={<CryptoForm variant='Withdraw' />} />
             <Route path="ethereum" element={<CryptoForm variant='Withdraw' />} />

@@ -94,5 +94,19 @@ export const METHODS: IPaymentMethods = {
         }
       }
     ]
+  },
+  gift: {
+    name: 'Gift Methods',
+    methods: [
+      {
+        path: 'gift',
+        title: 'Gift Cards',
+        image: IMAGES.creditCard,
+        smallSize: {
+          width: '20px',
+          height: '20px'
+        }
+      }
+    ]
   }
 }

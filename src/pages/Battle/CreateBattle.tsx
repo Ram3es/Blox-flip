@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import InputWithLabel from '../../components/base/InputWithLabel'
 import AddBoxCard from '../../components/common/Cards/AddBoxCard'
-import UnboxingWithCounter from '../../components/common/Cards/UnboxingWithCounter'
+import CardWithCounter from '../../components/common/Cards/CardWithCounter'
 import ToggleTabs from '../../components/common/ToggleTabs'
 import BattleModal from '../../components/containers/BattleModal'
 import PaymentMethodContainer from '../../components/containers/PaymentMethodContainer'
@@ -60,9 +60,9 @@ const CreateBattle = () => {
 
   const decrementCounter = useCallback(
     (id: string) => {
-      const found = casesBetted.find(betted => betted.id === id)
+      const found = casesBetted.find((betted) => betted.id === id)
       if (found?.amount === 1) {
-        setCasesToBet(prev => [...prev.filter(card => card.id !== found.id)])
+        setCasesToBet((prev) => [...prev.filter((card) => card.id !== found.id)])
       }
       setCasesToBet((state) => [
         ...state.map((box) => {
@@ -78,13 +78,13 @@ const CreateBattle = () => {
 
   const { amountCases, totalCost } = casesBetted.length
     ? casesBetted.reduce(
-      (acc, card) => {
-        acc.amountCases += card.amount
-        acc.totalCost += card.price * card.amount
-        return acc
-      },
-      { amountCases: 0, totalCost: 0 }
-    )
+        (acc, card) => {
+          acc.amountCases += card.amount
+          acc.totalCost += card.price * card.amount
+          return acc
+        },
+        { amountCases: 0, totalCost: 0 }
+      )
     : { amountCases: 0, totalCost: 0 }
 
   useEffect(() => {
@@ -146,41 +146,41 @@ const CreateBattle = () => {
   }
 
   return (
-    <div className='max-w-1190 w-full mx-auto'>
+    <div className="max-w-1190 w-full mx-auto">
       <NavHeader
-        title='Battle Creation'
-        renderIcon={() => <DaggersGreenGradient iconClasses='w-[25px] h-[25px] ml-2' />}
+        title="Battle Creation"
+        renderIcon={() => <DaggersGreenGradient iconClasses="w-[25px] h-[25px] ml-2" />}
       >
         <div>
-          <div className='flex flex-wrap items-center '>
-            <div className=' flex items-center mb-3 xxs:mb-0'>
-              <div className='w-4 shrink-0 mr-2.5 text-blue-golf'>
-                <UnboxingIconTitle iconClasses='w-[17px] h-[17px]' />
+          <div className="flex flex-wrap items-center ">
+            <div className=" flex items-center mb-3 xxs:mb-0">
+              <div className="w-4 shrink-0 mr-2.5 text-blue-golf">
+                <UnboxingIconTitle iconClasses="w-[17px] h-[17px]" />
               </div>
-              <div className='flex text-gray-primary font-semibold shrink-0'>
-                <div className='text-white text-center w-5 mr-1 '>{amountCases}</div>
+              <div className="flex text-gray-primary font-semibold shrink-0">
+                <div className="text-white text-center w-5 mr-1 ">{amountCases}</div>
                 Cases
               </div>
-              <div className='w-px shrink-0 mx-4'>
+              <div className="w-px shrink-0 mx-4">
                 <VerticalDivider />
               </div>
             </div>
-            <div className='flex items-center mt-3 xxs:mt-0'>
-              <span className='text-gray-primary mr-2.5 font-semibold'>Total cost</span>
+            <div className="flex items-center mt-3 xxs:mt-0">
+              <span className="text-gray-primary mr-2.5 font-semibold">Total cost</span>
               <CoinsWithDiamond
-                containerColor='GreenDarken'
+                containerColor="GreenDarken"
                 typographyQuantity={totalCost}
-                typographyFontSize='Size16'
+                typographyFontSize="Size16"
               />
-              <div className='w-px shrink-0 mx-4'>
+              <div className="w-px shrink-0 mx-4">
                 <VerticalDivider />
               </div>
             </div>
-            <div className='w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0'>
+            <div className="w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0">
               <Button
                 disabled={!casesBetted.length}
                 onClick={createGame}
-                className='bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded '
+                className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
               >
                 Create
               </Button>
@@ -190,17 +190,18 @@ const CreateBattle = () => {
       </NavHeader>
       <PaymentMethodContainer>
         <AddBoxCard openModal={() => setOpenModal(true)} />
-        {casesBetted.filter(card => card.amount > 0).map((card) => (
-          <UnboxingWithCounter
-            key={card.id}
-            id={card.id}
-            name={card.name}
-            price={card.price}
-            count={card.amount}
-            increment={() => incrementCounter(card.id)}
-            decrement={() => decrementCounter(card.id)}
-          />
-        ))}
+        {casesBetted
+          .filter((card) => card.amount > 0)
+          .map((card) => (
+            <CardWithCounter
+              key={card.id}
+              name={card.name}
+              price={card.price}
+              count={card.amount}
+              increment={() => incrementCounter(card.id)}
+              decrement={() => decrementCounter(card.id)}
+            />
+          ))}
       </PaymentMethodContainer>
       {gameSettings.map((setting) => (
         <ToggleTabs
@@ -211,21 +212,21 @@ const CreateBattle = () => {
         />
       ))}
       {battleSettings.privacy.variant === 'Private' && (
-        <div ref={fieldWithLinkRef} className='relative px-2 w-full grow shrink-0 mb-4'>
+        <div ref={fieldWithLinkRef} className="relative px-2 w-full grow shrink-0 mb-4">
           <InputWithLabel
-            type='text'
-            name='affiliate'
-            label='Your referral link'
-            labelClasses='flex flex-col w-full mb-4 items-center'
-            titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
-            inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
-            inputClasses='overflow-ellipsis grow w-0 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate'
+            type="text"
+            name="affiliate"
+            label="Your referral link"
+            labelClasses="flex flex-col w-full mb-4 items-center"
+            titleClasses="gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block"
+            inputWrapperClasses="bg-dark/25 rounded-xl overflow-hidden w-full"
+            inputClasses="overflow-ellipsis grow w-0 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate"
             value={referralLink}
-            placeholder='...'
+            placeholder="..."
             readOnly
           />
-          <div className='absolute z-20 top-[60px] right-7'>
-            <Button className='w-7 shrink-0' onClick={handleReferralLink} type='button'>
+          <div className="absolute z-20 top-[60px] right-7">
+            <Button className="w-7 shrink-0" onClick={handleReferralLink} type="button">
               <CopyIcon />
             </Button>
           </div>
@@ -235,7 +236,8 @@ const CreateBattle = () => {
         isOpen={isOpenModal}
         casesBetted={casesBetted}
         onSubmit={onSubmitModal}
-        onClose={() => setOpenModal(false)} />
+        onClose={() => setOpenModal(false)}
+      />
     </div>
   )
 }
