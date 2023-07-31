@@ -75,7 +75,7 @@ const ItemCard: FC<IItemCardProps> = ({
       'w-full xxs:w-2/3 xs:w-1/2 x sm:w-1/3 lg:w-1/4 min-h-[160px] text-xs point-hidden ':
         variant === ItemCardVariantEnum.FourByFour,
       'xxs:w-1/4 max-w-[121px] max-h-[160px] text-xs point-hidden': variant === ItemCardVariantEnum.KingList,
-      'xxs:w-1/4 max-w-[121px] max-h-[180px] text-xs point-hidden': variant === ItemCardVariantEnum.CaseAdminItem
+      'w-32 h-48 text-xs point-hidden': variant === ItemCardVariantEnum.CaseAdminItem
     }
   )
 
@@ -109,7 +109,7 @@ const ItemCard: FC<IItemCardProps> = ({
             </div>
             <div className='w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden'></div>
             <div className='text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left group-[.is-user]/item:hidden'>
-              <span className='inline-block group-[.is-block]/item:min-h-[60px] '>{name}</span>
+              <span className='inline-block group-[.is-block]/item:min-h-[60px]'>{name}</span>
             </div>
             <div className='w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start group-[.is-user]/item:items-center'>
               <div className='w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] '>
