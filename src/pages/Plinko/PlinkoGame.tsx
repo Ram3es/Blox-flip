@@ -14,7 +14,6 @@ import clsx from 'clsx'
 
 import {
   getColorByMultiplier,
-  getMultipliersByProps,
   getPlinkoBottomFields,
   getRowSettingsByRows
 } from '../../helpers/plinkoHelpers'
@@ -115,9 +114,11 @@ const PlinkoGame = () => {
 
             if (multiplierBox?.style) {
               multiplierBox.style.transform = 'translateY(10px)'
+              multiplierBox.style.transform = 'scale(1.5)'
 
               setTimeout(() => {
                 multiplierBox.style.transform = 'translateY(0px)'
+                multiplierBox.style.transform = 'scale(1)'
                 setInGameBalls((prev) => prev - 1)
               }, 500)
             }
@@ -276,11 +277,11 @@ const PlinkoGame = () => {
 
   useEffect(() => {
     setEngine(Engine.create())
-  }, [risk, rows])
+  }, [rows])
 
   return (
-    <div className='bg-blue-primary rounded-lg flex justify-center h-full mt-4 md:mt-0 '>
-      <div className='scale-[0.58] sm:scale-100 flex items-center flex-col justify-center'>
+    <div className='bg-blue-primary rounded-lg flex justify-center h-full mt-4 md:mt-0'>
+      <div className='scale-[0.58] sm:scale-100 flex items-center flex-col justify-center will-change-transform'>
         <div ref={plinkoGameRef} />
         <div className='flex justify-center items-center'>
           {getPlinkoBottomFields(risk, rows)
@@ -292,10 +293,10 @@ const PlinkoGame = () => {
                     multiplier
                   )} flex items-center justify-center rounded mx-0.5`,
                   {
-                    'h-4 text-[8px] w-6': rows === 16,
-                    'h-4 text-10 w-7': rows === 14,
-                    'h-5 text-11 w-8': rows === 12,
-                    'h-7 text-13 w-10': rows === 10,
+                    'h-4 text-[8px] w-6': rows === 16 || rows === 15,
+                    'h-4 text-10 w-7': rows === 14 || rows === 13,
+                    'h-5 text-11 w-8': rows === 12 || rows === 11,
+                    'h-7 text-13 w-10': rows === 10 || rows === 9,
                     'h-8 text-14 w-12': rows === 8
                   }
                 )}
