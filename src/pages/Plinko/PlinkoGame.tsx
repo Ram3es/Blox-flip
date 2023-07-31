@@ -290,7 +290,7 @@ const PlinkoGame = () => {
                 key={multiplier + new Date().getTime() * Math.random()}
                 className={clsx(
                   `${getColorByMultiplier(
-                    multiplier
+                    multiplier, risk
                   )} flex items-center justify-center rounded mx-0.5`,
                   {
                     'h-4 text-[8px] w-6': rows === 16 || rows === 15,

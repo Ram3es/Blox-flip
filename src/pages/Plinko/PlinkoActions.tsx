@@ -48,7 +48,6 @@ const PlinkoActions = () => {
 
   const handleChangeBetAmount = useCallback(
     (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {
-      console.log(eventOrValue)
       if (typeof eventOrValue === 'number') {
         setBetAmount(eventOrValue)
       } else {
@@ -134,7 +133,7 @@ const PlinkoActions = () => {
           }
         )
       }
-    }, 400),
+    }, 500),
     [numberOfBets, isStarted, selectedRow]
   )
 

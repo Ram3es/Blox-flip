@@ -101,16 +101,22 @@ export const getRandomPathByRows = (rows: number): number[] => {
   return result
 }
 
-export const getColorByMultiplier = (multiplier: number): string => {
+export const getColorByMultiplier = (
+  multiplier: number,
+  currentRisk: keyof typeof RiskVariant
+): string => {
   if (multiplier < 1) {
     return 'bg-blue-accent-five blue-accent-five--shadow'
   }
 
-  if (multiplier < 10) {
+  if (multiplier < 5) {
     return 'bg-lightblue-primary-secondary light-blue-primary-secondary--shadow'
   }
 
-  if (multiplier > 100) {
+  if (
+    (currentRisk === RiskVariant.Medium && multiplier > 31) ||
+    (currentRisk === RiskVariant.High && multiplier > 27)
+  ) {
     return 'bg-pink-third pink-third--shadow'
   }
 
