@@ -2,7 +2,7 @@ export interface IRootMarketItem {
   color: string
   id: number
   name: string
-  pic: string
+  image: string
   price: number
   type: string
 }
