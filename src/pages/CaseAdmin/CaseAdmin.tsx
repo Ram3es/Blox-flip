@@ -27,7 +27,7 @@ interface ICaseModalState {
 }
 
 const caseModalInitialState: ICaseModalState = {
-  state: true,
+  state: false,
   caseData: null
 }
 

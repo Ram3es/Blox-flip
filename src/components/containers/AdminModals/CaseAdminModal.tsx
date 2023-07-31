@@ -185,7 +185,8 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
                           image: values.image,
                           cost: values.casePrice,
                           skins: values.formikSkins.map((skin) => ({
-                            id: skin.id,
+                            name: skin.name,
+                            image: skin.image,
                             price: skin.priceInCase,
                             chance: skin.chanceInCase
                           }))
