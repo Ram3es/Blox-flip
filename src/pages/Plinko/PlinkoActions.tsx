@@ -116,6 +116,10 @@ const PlinkoActions = () => {
             }
 
             if (!err) {
+              console.log(multiplier, 'multiplier')
+              console.log(amount, 'amount')
+              console.log(win, 'win')
+
               setInGameBalls((prev: number) =>
                 numberOfBets > 1 ? (prev += numberOfBets) : prev + 1
               )
@@ -129,7 +133,7 @@ const PlinkoActions = () => {
           }
         )
       }
-    }, 400),
+    }, 500),
     [numberOfBets, isStarted, selectedRow]
   )
 
