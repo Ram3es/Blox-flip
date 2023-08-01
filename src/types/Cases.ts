@@ -12,7 +12,7 @@ export interface IRootCasePotentialItem {
   image: string
   price: number
   name: string
-  id?: number
+  id?: string | number
 }
 
 export interface IRootCaseItem {
@@ -21,6 +21,14 @@ export interface IRootCaseItem {
   image: string
   price: number
   items: IRootCasePotentialItem[]
+}
+
+export interface IRootCaseDrop {
+  case: string
+  cost: number
+  odds: number
+  skin_image: string
+  skin_name: string
 }
 
 export interface ICaseItem {

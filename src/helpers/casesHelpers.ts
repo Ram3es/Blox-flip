@@ -7,7 +7,7 @@ export const getRandomCards = <T extends object>(count: number, availableCards: 
 
     const card = {
       ...randomCard,
-      id: `${i}`
+      id: getRandomId()
     }
 
     cards.push(card)

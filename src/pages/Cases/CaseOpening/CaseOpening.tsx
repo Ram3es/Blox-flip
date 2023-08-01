@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { SPIN_TIME, SPIN_TIME_MILLISECONDS } from '../../../constants/cases'
 import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 
-import type { IRootCasePotentialItem } from '../../../types/Cases'
+import type { IRootCaseDrop, IRootCasePotentialItem } from '../../../types/Cases'
 
 import { Button } from '../../../components/base/Button'
 import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
@@ -29,24 +29,17 @@ export const CaseOpening = () => {
   const [currentCasePrice, setCurrentCasePrice] = useState(0)
   const [potentialDropItems, setPotentialDropsItems] = useState<IRootCasePotentialItem[]>([])
   const [wonItem, setWonItem] = useState<IRootCasePotentialItem[]>([])
-
   const navigate = useNavigate()
 
   const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
   const [isSpin, setIsSpin] = useState(false)
   const itemsRef = useRef<HTMLDivElement[]>([])
 
-  // const [rouletteItems, setRouletteItems] = useState<Array<{ items: IRootCasePotentialItem[] }>>([
-  //   {
-  //     items: getRandomCards<IRootCasePotentialItem>(100, potentialDropItems)
-  //   }
-  // ])
   const [rouletteItems, setRouletteItems] = useState<Array<{ items: IRootCasePotentialItem[] }>>([
     {
       items: []
     }
   ])
-
   const refreshLinesByCount = (count: number) => {
     const localLineCount = Math.min(count, 4)
     if (potentialDropItems.length > 0) {
@@ -120,25 +113,13 @@ export const CaseOpening = () => {
   }
 
   const addWonItemInLines = (wonItemsArray: IRootCasePotentialItem[]) => {
-    // const wonItemsArray: IRootCasePotentialItem[] = []
-    // for (let i = 0; i < lineCount; i++) {
-    //   const randomCardIndex = Math.floor(Math.random() * potentialDropItems.length)
-    //   const randomCard = potentialDropItems[randomCardIndex]
-    //   const itemWon = {
-    //     ...randomCard,
-    //     id: `${randomCard.id} ${new Date().getTime()}`
-    //   }
-    //   wonItemsArray.push(itemWon)
-    // }
-    // const wonItemsWithIds = wonItemsArray.map((item) => ({ ...item, id: getRandomId() }))
     setRouletteItems((prevItems) => {
       const rouletteItems = [...prevItems]
       for (let i = 0; i < lineCount; i++) {
         const rouletteItem = [...rouletteItems[i].items]
-        if (wonItem.length > 0) {
+        if (wonItemsArray.length > 0) {
           rouletteItem[87] = wonItemsArray[i]
         }
-        // console.log(rouletteItem, 'rouletteItem')
         rouletteItems[i] = { items: rouletteItem }
       }
       return rouletteItems
@@ -150,15 +131,21 @@ export const CaseOpening = () => {
     socket.emit(
       'open_case',
       { short: shortName, num: lineCount },
-      (error: string | boolean, skins: []) => {
+      (error: string | boolean, skins: IRootCaseDrop[]) => {
         if (typeof error === 'string') {
           getToast(error)
         }
-        console.log(skins)
         if (!error) {
-          console.log(skins, 'skins')
           reset()
-          addWonItemInLines(skins)
+          addWonItemInLines(
+            skins.map((item) => ({
+              name: item.skin_name,
+              image: item.skin_image,
+              price: item.cost,
+              chance: 124,
+              id: getRandomId()
+            }))
+          )
           spin(SPIN_TIME)
           setIsSpin(true)
         }
@@ -182,8 +169,6 @@ export const CaseOpening = () => {
     setPotentialDropsItems(currentCase.items)
     reset()
   }, [cases])
-
-  // console.log(rouletteItems, 'rouletteItems')
 
   return (
     <div className="max-w-1190 w-full m-auto">
