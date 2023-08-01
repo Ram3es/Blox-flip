@@ -29,8 +29,6 @@ const Unboxing = () => {
   const { value, searchBy, onChange, sortOptions, priceRange, setPriceRange, setSortOptions } =
     useToolbarState()
 
-  console.log(cases[0], 'cases')
-
   const ranged = useMemo(
     () => cases.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
     [priceRange, cases]
