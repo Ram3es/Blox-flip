@@ -58,7 +58,7 @@ const CaseAdmin = () => {
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <div className="w-[47px] h-[53px] flex items-center justify-center">
-            <img src={row.original.img} className="w-full h-full object-contain" alt="" />
+            <img src={row.original.image} className="w-full h-full object-contain" alt="" />
           </div>
           <p className="font-bold text-white text-13">{row.original.name}</p>
         </div>
@@ -79,7 +79,7 @@ const CaseAdmin = () => {
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('cost', {
+    columnHelper.accessor('price', {
       id: 'price',
       header: 'Cost',
       cell: ({ cell }) => (

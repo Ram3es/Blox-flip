@@ -1,4 +1,4 @@
-import { Formik, Form } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import clsx from 'clsx'
@@ -24,6 +24,18 @@ import { getRandomId } from '../../../helpers/casesHelpers'
 import InputWithLabel from '../../base/InputWithLabel'
 import IconContainer from '../IconContainer'
 
+const caseSchema = Yup.object({
+  caseName: Yup.string()
+    .min(2, 'Case Name must be at least 2 characters')
+    .required('Case Name Required'),
+  shortName: Yup.string()
+    .min(2, 'Short Case Name must be at least 2 characters')
+    .required('Short Name Required'),
+  casePrice: Yup.number()
+    .min(1, 'Case price must be greater than 0')
+    .required('Case Price Required'),
+  image: Yup.string().url('Invalid URL').required('Image Required')
+})
 interface CaseAdminModalProps {
   handleClose: () => void
   caseData: IRootCaseItem | null
@@ -41,9 +53,63 @@ interface SkinInCase extends SkinInterface {
 const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
   const { socket } = useSocketCtx()
   const [tabIndex, setTabIndex] = useState(0)
+
+  const [formSkins, setFormSkins] = useState<SkinInCase[]>([])
+
   const [skins, setSkins] = useState<SkinInCase[]>([])
 
   const selectedSkins = useMemo(() => skins.filter((skin) => skin.isSelected), [skins])
+
+  const formik = useFormik({
+    initialValues: {
+      caseName: caseData?.name ?? '',
+      shortName: caseData?.short ?? '',
+      casePrice: caseData?.price ?? '0',
+      image: caseData?.image ?? ''
+    },
+    onSubmit: (values, { setSubmitting }) => {
+      caseSchema
+        .validate(values, { abortEarly: false })
+        .then(() => {
+          if (formSkins.length >= 1) {
+            socket.emit(
+              'create_case',
+              {
+                name: values.caseName,
+                short: values.shortName,
+                image: values.image,
+                cost: values.casePrice,
+                skins: formSkins.map((skin) => ({
+                  name: skin.name,
+                  image: skin.image,
+                  price: skin.priceInCase,
+                  chance: skin.chanceInCase
+                }))
+              },
+              (error: string | boolean) => {
+                if (typeof error === 'string') {
+                  toast.error(error)
+                }
+                if (!error) {
+                  getToast('Case created successful')
+                  handleClose()
+                }
+              }
+            )
+          } else {
+            getToast('Please select minimum 1 skin')
+          }
+        })
+        .catch((errors) => {
+          console.log(errors)
+          const messages = errors.inner.join(', ')
+          getToast(messages)
+        })
+        .finally(() => {
+          setSubmitting(false)
+        })
+    }
+  })
 
   const handleSelectSkin = useCallback(
     (skinId: number) => {
@@ -66,10 +132,6 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
 
   const getCostInSelectedSkins = (): number => {
     return getCostByFieldName(selectedSkins, 'price')
-  }
-
-  const getSkinsIds = (skins: SkinInterface[]) => {
-    return skins.map((skin) => skin.id)
   }
 
   const loadItems = () => {
@@ -112,20 +174,9 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
     loadItems()
   }, [])
 
-  const caseSchema = Yup.object({
-    caseName: Yup.string()
-      .min(2, 'Case Name must be at least 2 characters')
-      .required('Case Name Required'),
-    shortName: Yup.string()
-      .min(2, 'Short Case Name must be at least 2 characters')
-      .required('Short Name Required'),
-    casePrice: Yup.number()
-      .min(1, 'Case price must be greater than 0')
-      .required('Case Price Required'),
-    image: Yup.string().url('Invalid URL').required('Image Required')
-  })
-
-  console.log(selectedSkins)
+  useEffect(() => {
+    setFormSkins(selectedSkins)
+  }, [selectedSkins])
 
   return (
     <ModalWrapper
@@ -164,163 +215,115 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <Formik
-              initialValues={{
-                caseName: caseData?.name ?? '',
-                shortName: caseData?.short ?? '',
-                casePrice: getCostInSelectedSkins() ?? '0',
-                image: caseData?.img ?? '',
-                formikSkins: selectedSkins
-              }}
-              onSubmit={(values, { setSubmitting, setFieldValue }) => {
-                caseSchema
-                  .validate(values, { abortEarly: false })
-                  .then(() => {
-                    if (getSkinsIds(selectedSkins).length >= 1) {
-                      socket.emit(
-                        'create_case',
-                        {
-                          name: values.caseName,
-                          short: values.shortName,
-                          image: values.image,
-                          cost: values.casePrice,
-                          skins: values.formikSkins.map((skin) => ({
-                            name: skin.name,
-                            image: skin.image,
-                            price: skin.priceInCase,
-                            chance: skin.chanceInCase
-                          }))
-                        },
-                        (error: string | boolean) => {
-                          if (typeof error === 'string') {
-                            toast.error(error)
-                          }
-                          if (!error) {
-                            getToast('Case created successful')
-                            handleClose()
-                          }
-                        }
-                      )
-                    } else {
-                      getToast('Please select minimum 1 skin')
-                    }
-                  })
-                  .catch((errors) => {
-                    console.log(errors)
-                    const messages = errors.inner.join(', ')
-                    getToast(messages)
-                  })
-                  .finally(() => {
-                    setSubmitting(false)
-                  })
-              }}
-            >
-              {({ handleChange, values, setFieldValue, setFieldTouched }) => (
-                <Form>
-                  <div className="space-y-4">
-                    <div className="py-4 space-y-3">
-                      <InputWithInlineLabel
-                        value={values.caseName}
-                        onChange={handleChange('caseName')}
-                        type="text"
-                        placeholder="..."
-                        label="Case Name"
-                      />
-                      <InputWithInlineLabel
-                        value={values.shortName}
-                        onChange={handleChange('shortName')}
-                        type="text"
-                        placeholder="..."
-                        label="Short Case Name"
-                      />
-                      <InputWithInlineLabel
-                        value={values.casePrice}
-                        onChange={handleChange('casePrice')}
-                        type="number"
-                        placeholder="..."
-                        label="Case price"
-                        icon={
-                          <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
-                            <DiamondIcon className="-inset-full absolute m-auto" />
-                          </div>
-                        }
-                      />
-                      <InputWithInlineLabel
-                        value={values.image}
-                        onChange={handleChange('image')}
-                        type="text"
-                        placeholder="..."
-                        label="Image Url"
-                      />
-                      <div className="grid grid-cols-6 w-full gap-y-2">
-                        {selectedSkins.map((caseItem, index) => (
-                          <div key={caseItem.name} className="flex flex-col gap-2 h-full p-2">
-                            <ItemCard
-                              variant="CaseAdminItem"
-                              image={caseItem.image}
-                              color={caseItem.color}
-                              price={caseItem.price}
-                              id={caseItem.id}
-                              name={caseItem.name}
-                            />
-                            <InputWithLabel
-                              type="number"
-                              placeholder="..."
-                              value={values.formikSkins[index].chanceInCase ?? 0}
-                              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setFieldValue(
-                                  `formikSkins.${index}.chanceInCase`,
-                                  Number(event.target.value)
-                                )
-                              }}
-                              labelClasses="flex flex-col"
-                              label="Chance %"
-                            />
-                            <div className="relative">
-                              <InputWithLabel
-                                labelClasses="flex flex-col"
-                                type="number"
-                                label="Price in case"
-                                placeholder="..."
-                                value={values.formikSkins[index].priceInCase ?? 0}
-                                inputSecondWrapperClasses="relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-10 pr-3"
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                  setFieldValue(
-                                    `formikSkins.${index}.priceInCase`,
-                                    Number(event.target.value)
-                                  )
-                                }}
-                              />
-                              <span className="absolute top-[48px] left-2">
-                                <IconContainer>
-                                  <DiamondIcon />
-                                </IconContainer>
-                              </span>
-                            </div>
-
-                            <Button color="RedLight" onClick={() => handleSelectSkin(caseItem.id)}>
-                              <span className="h-12 flex items-center justify-center w-full">
-                                Delete
-                              </span>
-                            </Button>
-                          </div>
-                        ))}
+            <form onSubmit={formik.handleSubmit}>
+              <div className="space-y-4">
+                <div className="py-4 space-y-3">
+                  <InputWithInlineLabel
+                    value={formik.values.caseName}
+                    onChange={formik.handleChange('caseName')}
+                    type="text"
+                    placeholder="..."
+                    label="Case Name"
+                  />
+                  <InputWithInlineLabel
+                    value={formik.values.shortName}
+                    onChange={formik.handleChange('shortName')}
+                    type="text"
+                    placeholder="..."
+                    label="Short Case Name"
+                  />
+                  <InputWithInlineLabel
+                    value={formik.values.casePrice}
+                    onChange={formik.handleChange('casePrice')}
+                    type="number"
+                    placeholder="..."
+                    label="Case price"
+                    icon={
+                      <div className="relative w-6 h-6 text-center leading-6 shrink-0 bg-green-primary/20 rounded text-green-primary">
+                        <DiamondIcon className="-inset-full absolute m-auto" />
                       </div>
-                      <div className="flex items-center justify-center gap-4">
-                        <Button color="BlueAccentPrimary" type="button" onClick={handleClose}>
-                          <span className="px-3 py-2.5 text-gray-primary">Cancel</span>
-                        </Button>
-                        <Button color="GreenPrimary" type="submit">
-                          <span className="px-3 py-2.5">
-                            {caseData ? 'Save Settings' : 'Create Case'}
+                    }
+                  />
+                  <InputWithInlineLabel
+                    value={formik.values.image}
+                    onChange={formik.handleChange('image')}
+                    type="text"
+                    placeholder="..."
+                    label="Image Url"
+                  />
+                  <div className="grid grid-cols-6 w-full gap-y-2">
+                    {formSkins.map((caseItem, index) => (
+                      <div key={caseItem.name} className="flex flex-col gap-2 h-full p-2">
+                        <ItemCard
+                          variant="CaseAdminItem"
+                          image={caseItem.image}
+                          color={caseItem.color}
+                          price={caseItem.price}
+                          id={caseItem.id}
+                          name={caseItem.name}
+                        />
+                        <InputWithLabel
+                          type="number"
+                          placeholder="..."
+                          value={formSkins[index].chanceInCase ?? 0}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setFormSkins((prev) => {
+                              return prev.map((item, i) => {
+                                return i === index
+                                  ? { ...item, chanceInCase: Number(event.target.value) }
+                                  : item
+                              })
+                            })
+                          }}
+                          labelClasses="flex flex-col"
+                          label="Chance %"
+                        />
+                        <div className="relative">
+                          <InputWithLabel
+                            labelClasses="flex flex-col"
+                            type="number"
+                            label="Price in case"
+                            placeholder="..."
+                            inputSecondWrapperClasses="relative z-10 gradient-blue-secondary flex items-center min-h-[57px] py-2.5 pl-10 pr-3"
+                            value={formSkins[index].priceInCase ?? 0}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                              setFormSkins((prev) => {
+                                return prev.map((item, i) => {
+                                  return i === index
+                                    ? { ...item, priceInCase: Number(event.target.value) }
+                                    : item
+                                })
+                              })
+                            }}
+                          />
+                          <span className="absolute top-[48px] left-2">
+                            <IconContainer>
+                              <DiamondIcon />
+                            </IconContainer>
+                          </span>
+                        </div>
+
+                        <Button color="RedLight" onClick={() => handleSelectSkin(caseItem.id)}>
+                          <span className="h-12 flex items-center justify-center w-full">
+                            Delete
                           </span>
                         </Button>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                </Form>
-              )}
-            </Formik>
+                  <div className="flex items-center justify-center gap-4">
+                    <Button color="BlueAccentPrimary" type="button" onClick={handleClose}>
+                      <span className="px-3 py-2.5 text-gray-primary">Cancel</span>
+                    </Button>
+                    <Button color="GreenPrimary" type="submit">
+                      <span className="px-3 py-2.5">
+                        {caseData ? 'Save Settings' : 'Create Case'}
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </form>
           </Tab.Panel>
           <Tab.Panel>
             <div className="space-y-2">
