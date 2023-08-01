@@ -58,7 +58,7 @@ const CaseAdmin = () => {
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <div className="w-[47px] h-[53px] flex items-center justify-center">
-            <img src={row.original.img} className="w-full h-full object-contain" alt="" />
+            <img src={row.original.image} className="w-full h-full object-contain" alt="" />
           </div>
           <p className="font-bold text-white text-13">{row.original.name}</p>
         </div>
@@ -79,7 +79,7 @@ const CaseAdmin = () => {
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('cost', {
+    columnHelper.accessor('price', {
       id: 'price',
       header: 'Cost',
       cell: ({ cell }) => (
@@ -154,15 +154,16 @@ const CaseAdmin = () => {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index, array) => {
-                  return array[index] === array.at(-1)
-                    ? (<th key={header.id} className="pb-4">
-                        <Button variant="GreenGradient" onClick={handleCreateCase}>
-                          <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
-                            Create new
-                          </span>
-                        </Button>
-                      </th>)
-                    : (<th key={header.id} className="pb-4 font-medium">
+                  return array[index] === array.at(-1) ? (
+                    <th key={header.id} className="pb-4">
+                      <Button variant="GreenGradient" onClick={handleCreateCase}>
+                        <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
+                          Create new
+                        </span>
+                      </Button>
+                    </th>
+                  ) : (
+                    <th key={header.id} className="pb-4 font-medium">
                       <div
                         onClick={header.column.getToggleSortingHandler()}
                         className={clsx('cursor-pointer leading-2 px-1 w-24 py-1 rounded', {
@@ -173,7 +174,8 @@ const CaseAdmin = () => {
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
                       </div>
-                    </th>)
+                    </th>
+                  )
                 })}
               </tr>
             ))}

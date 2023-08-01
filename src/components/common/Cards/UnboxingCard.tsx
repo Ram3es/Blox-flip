@@ -6,7 +6,7 @@ export interface UnboxingCardInterface extends Omit<IRootCaseItem, 'items'> {
   onSelect: () => void
 }
 
-const UnboxingCard: FC<UnboxingCardInterface> = ({ name, cost, img, short, onSelect }) => {
+const UnboxingCard: FC<UnboxingCardInterface> = ({ name, price, image, short, onSelect }) => {
   return (
     <div className="px-2 w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/6 shrink-0 lg:w-1/6 mb-4">
       <div
@@ -20,7 +20,7 @@ const UnboxingCard: FC<UnboxingCardInterface> = ({ name, cost, img, short, onSel
             </div>
             <div className="w-full pb-60% h-0 relative mb-5">
               <img
-                src={img}
+                src={image}
                 alt={short}
                 width="93"
                 height="101"
@@ -29,7 +29,7 @@ const UnboxingCard: FC<UnboxingCardInterface> = ({ name, cost, img, short, onSel
                 className="absolute object-contain w-full h-full"
               />
             </div>
-            <CoinsWithDiamond typographyQuantity={cost} />
+            <CoinsWithDiamond typographyQuantity={price} />
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import {
 } from 'react'
 import { useSocketCtx } from './SocketStore'
 import { IRootCaseItem } from '../types/Cases'
+import { getToast } from '../helpers/toast'
 
 interface ChatProviderProps {
   children: ReactNode
@@ -32,11 +33,15 @@ export const CaseOpeningProvider = ({ children }: ChatProviderProps) => {
   const { socket } = useSocketCtx()
 
   useEffect(() => {
-    socket.emit('load_cases', (err: boolean, cases: []) => {
-      if (err) {
-        return
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    socket.emit('load_cases', (err: boolean, case_list: IRootCaseItem[]) => {
+      if (typeof err === 'string') {
+        getToast(err)
       }
-      setCases(cases)
+      if (!err) {
+        console.log(case_list, 'caselist')
+        setCases(case_list)
+      }
     })
   }, [socket])
 

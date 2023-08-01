@@ -22,18 +22,19 @@ export const PotentialDrops = ({ cards }: { cards: IRootCasePotentialItem[] }) =
         <div className="h-px grow mr-2.5 bg-gradient-to-l from-blue-highlight to-blue-light-secondary/0"></div>
       </div>
       <div className="flex flex-wrap -mx-1 mb-8 md:mb-12 text-xs">
-        {cards.map((card) => (
-          <ItemCard
-            key={card.name}
-            id={getRandomId()}
-            price={card.cost}
-            image={card.image}
-            chance={card.odds}
-            variant="CaseOpening"
-            name={card.name}
-            color={card.color}
-          />
-        ))}
+        {cards.length > 0 &&
+          cards.map((card) => (
+            <ItemCard
+              key={card.name}
+              id={getRandomId()}
+              price={card.price}
+              image={card.image}
+              chance={card.chance}
+              variant="CaseOpening"
+              name={card.name}
+              color={'Red'} // change after sended data
+            />
+          ))}
       </div>
     </>
   )
