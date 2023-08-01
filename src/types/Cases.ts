@@ -7,17 +7,19 @@ export interface IRootMarketItem {
   type: string
 }
 
-export interface IRootCasePotentialItem extends Pick<IRootMarketItem, 'id' | 'name' | 'color'> {
-  odds: number
-  cost: number
+export interface IRootCasePotentialItem {
+  chance: number
   image: string
+  price: number
+  name: string
+  id?: number
 }
 
 export interface IRootCaseItem {
   name: string
   short: string
-  img: string
-  cost: number
+  image: string
+  price: number
   items: IRootCasePotentialItem[]
 }
 

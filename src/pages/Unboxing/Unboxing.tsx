@@ -26,14 +26,14 @@ const Unboxing = () => {
   const { cases } = useCaseOpening()
   const [currentTab, setCurrentBoxes] = useState(tabs[0])
   const navigate = useNavigate()
-
   const { value, searchBy, onChange, sortOptions, priceRange, setPriceRange, setSortOptions } =
     useToolbarState()
 
   const ranged = useMemo(
-    () => cases.filter((card) => card.cost >= priceRange.from && card.cost <= priceRange.to),
+    () => cases.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
     [priceRange, cases]
   )
+
   const filtered = useMemo(() => searchData(ranged, 'name', searchBy), [searchBy, ranged])
 
   const sorted: IRootCaseItem[] = useMemo(() => {
@@ -91,14 +91,7 @@ const Unboxing = () => {
         <div className="flex flex-wrap items-center -mx-1 py-2 order-2 lg:order-3"></div>
         <div className="flex flex-wrap -mx-2 mb-8 md:mb-12">
           {sorted.map((card) => (
-            <UnboxingCard
-              key={card.name}
-              name={card.name}
-              cost={card.cost}
-              short={card.short}
-              img={card.img}
-              onSelect={() => navigate(card.short)}
-            />
+            <UnboxingCard key={card.name} onSelect={() => navigate(card.short)} {...card} />
           ))}
         </div>
       </div>
