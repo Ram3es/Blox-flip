@@ -148,17 +148,17 @@ export const CaseOpening = () => {
 
   const play = () => {
     socket.emit(
-      'case_open',
+      'open_case',
       { short: shortName, num: lineCount },
-      (error: boolean | string, results: IRootCasePotentialItem[]) => {
+      (error: string | boolean, skins: []) => {
         if (typeof error === 'string') {
           getToast(error)
         }
-
+        console.log(skins)
         if (!error) {
-          console.log(results, 'RESULTS')
+          console.log(skins, 'skins')
           reset()
-          addWonItemInLines(results)
+          addWonItemInLines(skins)
           spin(SPIN_TIME)
           setIsSpin(true)
         }
