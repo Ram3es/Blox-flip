@@ -154,15 +154,16 @@ const CaseAdmin = () => {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index, array) => {
-                  return array[index] === array.at(-1)
-                    ? (<th key={header.id} className="pb-4">
-                        <Button variant="GreenGradient" onClick={handleCreateCase}>
-                          <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
-                            Create new
-                          </span>
-                        </Button>
-                      </th>)
-                    : (<th key={header.id} className="pb-4 font-medium">
+                  return array[index] === array.at(-1) ? (
+                    <th key={header.id} className="pb-4">
+                      <Button variant="GreenGradient" onClick={handleCreateCase}>
+                        <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
+                          Create new
+                        </span>
+                      </Button>
+                    </th>
+                  ) : (
+                    <th key={header.id} className="pb-4 font-medium">
                       <div
                         onClick={header.column.getToggleSortingHandler()}
                         className={clsx('cursor-pointer leading-2 px-1 w-24 py-1 rounded', {
@@ -173,7 +174,8 @@ const CaseAdmin = () => {
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
                       </div>
-                    </th>)
+                    </th>
+                  )
                 })}
               </tr>
             ))}

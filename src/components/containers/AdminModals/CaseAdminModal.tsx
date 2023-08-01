@@ -16,7 +16,6 @@ import { getCostByFieldName } from '../../../helpers/numbers'
 import CoinsWithDiamond from '../../common/CoinsWithDiamond'
 import RefreshIcon from '../../icons/RefreshIcon'
 import { useSocketCtx } from '../../../store/SocketStore'
-import { toast } from 'react-toastify'
 import { IRootCaseItem, IRootMarketItem } from '../../../types/Cases'
 import DiamondIcon from '../../icons/DiamondIcon'
 import { getToast } from '../../../helpers/toast'
@@ -36,6 +35,7 @@ const caseSchema = Yup.object({
     .required('Case Price Required'),
   image: Yup.string().url('Invalid URL').required('Image Required')
 })
+
 interface CaseAdminModalProps {
   handleClose: () => void
   caseData: IRootCaseItem | null
@@ -88,7 +88,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
               },
               (error: string | boolean) => {
                 if (typeof error === 'string') {
-                  toast.error(error)
+                  getToast(error)
                 }
                 if (!error) {
                   getToast('Case created successful')
