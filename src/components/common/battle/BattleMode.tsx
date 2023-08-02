@@ -45,7 +45,7 @@ const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
   switch (type) {
     case DisplayedBattleModeEnum['2v2']:
       return case2v2Icons[index]
-    case DisplayedBattleModeEnum.group:
+    case DisplayedBattleModeEnum.shared:
       return <FriendlyGreen />
     default:
       return <BattleDaggers />

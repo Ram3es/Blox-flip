@@ -40,8 +40,13 @@ const BattleCases = () => {
       })
     }
 
+    socket.on('join_battle', (id, player) => {
+      console.log(id, player, 'DATA JOIN BATTLE')
+    })
+
     return () => {
       socket.off('battle_result')
+      socket.off('join_battle')
     }
   }, [socket, id, gameState])
 

@@ -6,7 +6,7 @@ import {
 } from '../types/CaseBattles'
 
 export const getDisplayedModeByGame = (game: IRootBattle): DisplayedBattleModeEnum => {
-  if (!game.team) {
+  if (!game.team && game.mode !== DisplayedBattleModeEnum.shared) {
     if (game.max === 2) {
       return DisplayedBattleModeEnum['1v1']
     }
@@ -22,15 +22,15 @@ export const getDisplayedModeByGame = (game: IRootBattle): DisplayedBattleModeEn
     return DisplayedBattleModeEnum['2v2']
   }
 
-  if (game.mode === RootBattleModeEnum.group) {
-    return DisplayedBattleModeEnum.group
+  if (game.mode === RootBattleModeEnum.shared) {
+    return DisplayedBattleModeEnum.shared
   }
 
   return DisplayedBattleModeEnum['1v1']
 }
 
 export const getParticipantsByDisplayMode = (
-  mode: Exclude<DisplayedBattleModeEnum, DisplayedBattleModeEnum.group>
+  mode: keyof typeof DisplayedBattleModeEnum
 ): IRootMaximumPlayers => {
   return mode === DisplayedBattleModeEnum['1v1']
     ? 2
