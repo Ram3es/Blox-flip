@@ -53,7 +53,7 @@ const BattleCases = () => {
   return (
     <div className="max-w-1190 w-full mx-auto text-sm">
       {gameState && (
-        <BattleLayout amountGamePlates={gameState.players.length}>
+        <BattleLayout amountGamePlates={gameState.max}>
           <GameHeader game={gameState} currentRound={currentRound} />
           <GameRoundsInfo game={gameState} currentRound={currentRound} />
           <BattleMode game={gameState} currentRound={currentRound} historyRounds={historyRounds} />

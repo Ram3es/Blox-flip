@@ -173,7 +173,7 @@ module.exports = {
       keyframes: {
         ping: {
           '75%, 100%': {
-            transform: 'scale(2.4)',
+            transform: 'scale(1.4)',
             opacity: 0
           }
         },

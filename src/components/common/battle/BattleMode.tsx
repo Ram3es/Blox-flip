@@ -267,8 +267,8 @@ const BattleMode: FC<IBattleModeProps> = ({
                 (!isWinnerRound(index, currentRound?.items ?? []) && RootBattleStateEnum.done)
             })}
           >
-            {index !== game.players.length - 1 && (
-              <div className="absolute -ml-9 -mt-8 top-1/2 w-16 z-30">
+            {index !== game.max - 1 && (
+              <div className="absolute left-full -ml-6 -mt-8 top-1/2 w-16 z-30">
                 {getIcons(getDisplayedModeByGame(game), index)}
               </div>
             )}
