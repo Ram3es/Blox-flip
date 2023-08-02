@@ -15,6 +15,7 @@ import CasesCell from '../../components/table/CellFormatters/CasesCell'
 import RoundCell from '../../components/table/CellFormatters/RoundCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { IRootBattle, RootBattleStateEnum } from '../../types/CaseBattles'
+import { getDisplayedModeByGame } from '../../helpers/caseBattleHelpers'
 
 interface TableBattleLobbyProps {
   data: IRootBattle[]
@@ -33,7 +34,7 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
         <RoundCell
           // round={original.caselist.length}
           round={1}
-          mode={original.mode}
+          mode={getDisplayedModeByGame(original)}
           status={original.state}
         />
       ),

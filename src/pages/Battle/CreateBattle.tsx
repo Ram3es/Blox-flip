@@ -22,7 +22,13 @@ import { CopyIcon } from '../../components/icons/CopyIcon'
 import { getParticipantsByDisplayMode } from '../../helpers/caseBattleHelpers'
 import { getToast } from '../../helpers/toast'
 
-import { DISPLAYED_BATTLE_CONFIG } from '../../constants/battle-cases'
+import {
+  DEFAULT_PLAYERS_VARIANTS,
+  GAME_MODE_TABS,
+  PLAYERS_VARIANTS_TABS,
+  PRIVACY_TABS,
+  SHARED_PLAYERS_VARIANTS
+} from '../../constants/battle-cases'
 import { IRootCaseItemWithAmount } from '../../types/Cases'
 import {
   DisplayedBattleModeEnum,
@@ -31,9 +37,6 @@ import {
   IRootBattle
 } from '../../types/CaseBattles'
 
-enum StandardEnum {
-  'standard' = 'standard'
-}
 
 enum PolicyEnum {
   'private' = 'private',
@@ -42,10 +45,10 @@ enum PolicyEnum {
 
 interface DisplayBattleConfig {
   gameMode: {
-    variant: Exclude<DisplayedBattleModeEnum, DisplayedBattleModeEnum.group>
+    variant: keyof typeof DisplayedBattleModeEnum
   }
   gameType: {
-    variant: Exclude<RootBattleModeEnum, RootBattleModeEnum.regular> | StandardEnum
+    variant: keyof typeof RootBattleModeEnum
   }
   policy: {
     variant: PolicyEnum
@@ -72,7 +75,7 @@ const CreateBattle = () => {
       variant: DisplayedBattleModeEnum['1v1']
     },
     gameType: {
-      variant: StandardEnum.standard
+      variant: RootBattleModeEnum.regular
     },
     policy: {
       variant: PolicyEnum.public
@@ -146,14 +149,15 @@ const CreateBattle = () => {
       gamemode:
         displayBattleConfig.gameType.variant === RootBattleModeEnum.crazy
           ? RootBattleModeEnum.crazy
-          : displayBattleConfig.gameType.variant === RootBattleModeEnum.group
-          ? RootBattleModeEnum.group
+          : displayBattleConfig.gameType.variant === RootBattleModeEnum.shared
+          ? RootBattleModeEnum.shared
           : RootBattleModeEnum.regular,
       participants: getParticipantsByDisplayMode(displayBattleConfig.gameMode.variant),
       cases: casesBetted.flatMap((item) =>
         item.amount > 1 ? Array.from({ length: item.amount }, () => item.short) : item.short
       )
     }
+    console.log('sendedData', sendedData)
 
     socket.emit('create_battle', sendedData, (error: string | boolean, battle: IRootBattle) => {
       if (typeof error === 'string') {
@@ -223,16 +227,31 @@ const CreateBattle = () => {
             />
           ))}
       </PaymentMethodContainer>
-      {DISPLAYED_BATTLE_CONFIG.map((item) => (
-        <ToggleTabs
-          key={item.label}
-          label={item.label}
-          options={item.tabs}
-          onSelect={(option) =>
-            setDisplayBattleConfig((state) => ({ ...state, [item.name]: option }))
-          }
-        />
-      ))}
+      <ToggleTabs
+        label={PLAYERS_VARIANTS_TABS.label}
+        options={
+          displayBattleConfig.gameType.variant === 'shared'
+            ? SHARED_PLAYERS_VARIANTS
+            : DEFAULT_PLAYERS_VARIANTS
+        }
+        onSelect={(option) =>
+          setDisplayBattleConfig((state) => ({ ...state, [PLAYERS_VARIANTS_TABS.name]: option }))
+        }
+      />
+      <ToggleTabs
+        label={GAME_MODE_TABS.label}
+        options={GAME_MODE_TABS.tabs}
+        onSelect={(option) =>
+          setDisplayBattleConfig((state) => ({ ...state, [GAME_MODE_TABS.name]: option }))
+        }
+      />
+      <ToggleTabs
+        label={PRIVACY_TABS.label}
+        options={PRIVACY_TABS.tabs}
+        onSelect={(option) =>
+          setDisplayBattleConfig((state) => ({ ...state, [PRIVACY_TABS.name]: option }))
+        }
+      />
       {displayBattleConfig.policy.variant === PolicyEnum.private && (
         <div ref={fieldWithLinkRef} className="relative px-2 w-full grow shrink-0 mb-4">
           <InputWithLabel

@@ -1,7 +1,7 @@
 export enum RootBattleModeEnum {
   regular = 'regular',
   crazy = 'crazy',
-  group = 'group'
+  shared = 'shared'
 }
 
 export enum RootBattleStateEnum {
@@ -56,6 +56,7 @@ export interface IRootBattle {
   max: IRootMaximumPlayers
   hash: string
   winner: IRootBattlePlayer[]
+  joining?: boolean
 }
 
 export enum DisplayedBattleModeEnum {
@@ -63,5 +64,5 @@ export enum DisplayedBattleModeEnum {
   '1v1v1' = '1v1v1',
   '1v1v1v1' = '1v1v1v1',
   '2v2' = '2v2',
-  'group' = 'group'
+  'shared' = 'shared'
 }

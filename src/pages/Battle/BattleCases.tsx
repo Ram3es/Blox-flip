@@ -20,7 +20,10 @@ const BattleCases = () => {
   const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
 
   useEffect(() => {
-    if (id) {
+    if (state) {
+      setGameState(state)
+    }
+    if (id && !state) {
       const currentGame = games.find((game) => game.id === id)
       console.log('BATTLE CASE', currentGame)
       if (currentGame) {
@@ -40,15 +43,20 @@ const BattleCases = () => {
       })
     }
 
+    socket.on('join_battle', (id, player) => {
+      console.log(id, player, 'DATA JOIN BATTLE')
+    })
+
     return () => {
       socket.off('battle_result')
+      socket.off('join_battle')
     }
   }, [socket, id, gameState])
 
   return (
     <div className="max-w-1190 w-full mx-auto text-sm">
       {gameState && (
-        <BattleLayout amountGamePlates={gameState.players.length}>
+        <BattleLayout amountGamePlates={gameState.max}>
           <GameHeader game={gameState} currentRound={currentRound} />
           <GameRoundsInfo game={gameState} currentRound={currentRound} />
           <BattleMode game={gameState} currentRound={currentRound} historyRounds={historyRounds} />

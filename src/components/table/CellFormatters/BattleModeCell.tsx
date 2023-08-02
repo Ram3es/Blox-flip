@@ -13,7 +13,7 @@ import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 
 const BattleModeCell = ({ game }: { game: IRootBattle }) => {
   const isFinished = game.state === RootBattleStateEnum.done
-  console.log(game, 'players[0]')
+
   const getCell = (game: IRootBattle) => {
     switch (getDisplayedModeByGame(game)) {
       case '1v1':
@@ -69,7 +69,7 @@ const BattleModeCell = ({ game }: { game: IRootBattle }) => {
             ))}
           </div>
         )
-      case 'group':
+      case 'shared':
         return (
           <div className="flex items-center">
             <div
