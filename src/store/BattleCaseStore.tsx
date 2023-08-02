@@ -44,7 +44,7 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
         getToast(err)
       }
       if (!err) {
-        setGames((prev) => [...prev, data])
+        setGames((prev) => ([...prev, data]))
       }
     })
 
@@ -54,19 +54,24 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
   }, [socket])
 
   useEffect(() => {
-    socket.emit(
-      'load_cases',
-      { type: 'casebattle' },
-      (err: boolean | string, skins: IRootCaseItem[]) => {
-        if (typeof err === 'string') {
-          getToast(err)
-        }
-        if (!err) {
-          setAllCases(skins)
-          // setAllCards(skins.map((item) => ({ ...item, amount: 1 })))
-        }
+    socket.emit('load_cases', (err: boolean | string, skins: IRootCaseItem[]) => {
+      if (typeof err === 'string') {
+        getToast(err)
       }
-    )
+      if (!err) {
+        setAllCases(skins)
+      }
+    })
+
+    socket.emit('load_case_battles', (err: string | boolean, data: IRootBattle[]) => {
+      if (typeof err === 'string') {
+        getToast(err)
+      }
+      if (!err) {
+        setGames(data)
+        console.log(data, 'root battles')
+      }
+    })
   }, [state.user])
 
   return (

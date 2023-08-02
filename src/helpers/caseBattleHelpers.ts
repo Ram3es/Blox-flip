@@ -22,7 +22,7 @@ export const getDisplayedModeByGame = (game: IRootBattle): DisplayedBattleModeEn
     return DisplayedBattleModeEnum['2v2']
   }
 
-  if (game.gamemode === RootBattleModeEnum.group) {
+  if (game.mode === RootBattleModeEnum.group) {
     return DisplayedBattleModeEnum.group
   }
 
@@ -35,6 +35,6 @@ export const getParticipantsByDisplayMode = (
   return mode === DisplayedBattleModeEnum['1v1']
     ? 2
     : mode === DisplayedBattleModeEnum['1v1v1']
-    ? 3
-    : 4
+      ? 3
+      : 4
 }

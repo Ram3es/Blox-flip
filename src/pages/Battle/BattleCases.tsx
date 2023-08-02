@@ -54,7 +54,7 @@ const BattleCases = () => {
 
   useEffect(() => {
     if (id) {
-      const currentGame = games.find((game) => game.id === Number(id))
+      const currentGame = games.find((game) => game.id === id)
       if (currentGame) {
         setGameState(currentGame)
       }
@@ -64,7 +64,7 @@ const BattleCases = () => {
   useEffect(() => {
     if (id && gameState) {
       socket.on('battle_result', (data: IRootBattleResult[]) => {
-        const battleRound = data.find((item) => item.id === Number(id))
+        const battleRound = data.find((item) => item.id === id)
         if (battleRound) {
           setCurrentRound(battleRound)
           setHistoryRounds((prev) => [...prev, battleRound])

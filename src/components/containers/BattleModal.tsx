@@ -30,11 +30,11 @@ const BattleModal = ({
   const { value, searchBy, priceRange, onChange, setPriceRange } = useToolbarState()
 
   const totalPriceSelected = useMemo(
-    () => selectedCards.reduce((acc, item) => Number(acc) + item.cost * item.amount, 0),
+    () => selectedCards.reduce((acc, item) => Number(acc) + item.price * item.amount, 0),
     [casesBetted, selectedCards]
   )
   const ranged = useMemo(
-    () => allCards.filter((card) => card.cost >= priceRange.from && card.cost <= priceRange.to),
+    () => allCards.filter((card) => card.price >= priceRange.from && card.price <= priceRange.to),
     [priceRange, allCards]
   )
   const filtered = useMemo(
@@ -99,13 +99,12 @@ const BattleModal = ({
       <div className="w-full min-h-[250px] max-h-[calc(100vh_-_210px)]  mt-5 mb-[34px] flex flex-wrap  overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full  pr-3 -mr-2 ">
         {filtered.map((card) => (
           <UnboxingCard
-            key={card.id}
+            key={card.name}
             name={card.name}
             image={card.image}
             short={card.name}
             price={card.price}
             onSelect={() => onSelect(card)}
-            amount={card.amount}
           />
         ))}
       </div>

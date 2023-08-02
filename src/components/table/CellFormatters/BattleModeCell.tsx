@@ -1,23 +1,21 @@
+/* eslint-disable multiline-ternary */
 import React, { useMemo } from 'react'
 import DaggersGreenGradient from '../../icons/DaggersGreenGradient'
 import DaggersIcons from '../../icons/DaggersIcons'
 import GreenLineLeftBattleLeft from '../../icons/GreenLineBattleLeft'
 import GreenLineBattleRight from '../../icons/GreenLineBattleRight'
 import Image from '../../base/Image'
-import { IModeGame, IBattleUser } from '../../../mocks/battle'
 import question from '../../../assets/img/question-mark-circle-1.svg'
 import YellowLine from '../../icons/YellowLine'
 import BlueLine from '../../icons/BlueLine'
 import { IRootBattle, RootBattleStateEnum } from '../../../types/CaseBattles'
+import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 
-interface BattleModeCellProps
-  extends Pick<IRootBattle, 'gamemode' | 'team' | 'state' | 'players'> {}
-
-const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps) => {
-  const isFinished = state === RootBattleStateEnum.done
-
-  const getCell = (value: IModeGame) => {
-    switch (value.variant) {
+const BattleModeCell = ({ game }: { game: IRootBattle }) => {
+  const isFinished = game.state === RootBattleStateEnum.done
+  console.log(game, 'players[0]')
+  const getCell = (game: IRootBattle) => {
+    switch (getDisplayedModeByGame(game)) {
       case '1v1':
         return (
           <div className="flex items-center">
@@ -25,7 +23,7 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
               <GreenLineLeftBattleLeft className={isFinished ? 'grayscale ' : ''} />
             </div>
             <div className=" w-12 h-12 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue">
-              <Image image={players?.[0]?.avatar ?? question} />
+              <Image image={game.players[0]?.avatar ?? question} />
             </div>
             <div
               className={`${
@@ -39,7 +37,7 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
               )}
             </div>
             <div className="w-12 h-12 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue">
-              <Image image={players?.[1]?.avatar ?? question} />
+              <Image image={game.players?.[1]?.avatar ?? question} />
             </div>
             <div className="w-6 shrink-0 ml-4">
               <GreenLineBattleRight className={isFinished ? 'grayscale ' : ''} />
@@ -49,12 +47,12 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
       case '1v1v1':
         return (
           <div className="flex items-center">
-            {Array.from(Array(value.requiredPlayers)).map((_, i) => (
+            {Array.from(Array(game.max)).map((_, i) => (
               <React.Fragment key={i}>
                 <div className="w-10 h-10 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue">
-                  <Image image={players?.[i]?.avatar ?? question} />
+                  <Image image={game.players?.[i]?.avatar ?? question} />
                 </div>
-                {i === value.requiredPlayers - 1 ? null : (
+                {i === game.max - 1 ? null : (
                   <div
                     className={`${
                       isFinished ? 'gradient--battle-tr-grayscale' : 'gradient--battle-tr'
@@ -85,12 +83,12 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
                 <DaggersGreenGradient iconClasses="w-5 h-[26px] mx-auto" />
               )}
             </div>
-            {Array.from(Array(value.requiredPlayers)).map((_, i) => (
+            {Array.from(Array(game.max)).map((_, i) => (
               <div
                 key={i}
                 className="w-8 h-8 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue mx-0.5"
               >
-                <Image image={players?.[i]?.avatar ?? question} />
+                <Image image={game.players?.[i]?.avatar ?? question} />
               </div>
             ))}
             <div
@@ -109,12 +107,12 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
       case '1v1v1v1':
         return (
           <div className="flex items-center">
-            {Array.from(Array(value.requiredPlayers)).map((_, i) => (
+            {Array.from(Array(game.max)).map((_, i) => (
               <React.Fragment key={i}>
                 <div className="w-8 h-8 shrink-0 border border-blue-accent rounded-full overflow-hidden radial--blue">
-                  <Image image={players?.[i]?.avatar ?? question} />
+                  <Image image={game.players?.[i]?.avatar ?? question} />
                 </div>
-                {i === value.requiredPlayers - 1 ? null : (
+                {i === game.max - 1 ? null : (
                   <div
                     className={`${
                       isFinished ? 'gradient--battle-tr-grayscale' : 'gradient--battle-tr'
@@ -134,13 +132,13 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
       case '2v2':
         return (
           <>
-            <div className=" flex flex-col items-end ">
+            <div className="flex flex-col items-end">
               <div className="mb-3 mr-3 w-8 h-8 shrink-0 border border-[#ffb84d] rounded-full overflow-hidden radial--blue">
-                <Image image={players?.[0]?.avatar ?? question} />
+                <Image image={game.players?.[0]?.avatar ?? question} />
               </div>
               <YellowLine className={isFinished ? 'grayscale ' : ''} />
-              <div className=" mt-3 mr-3 w-8 h-8 shrink-0 border border-[#ffb84d] rounded-full overflow-hidden radial--blue">
-                <Image image={players?.[1]?.avatar ?? question} />
+              <div className="mt-3 mr-3 w-8 h-8 shrink-0 border border-[#ffb84d] rounded-full overflow-hidden radial--blue">
+                <Image image={game.players?.[1]?.avatar ?? question} />
               </div>
             </div>
             <div
@@ -154,13 +152,13 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
                 <DaggersGreenGradient iconClasses="w-6 h-6 mx-auto" />
               )}
             </div>
-            <div className=" flex flex-col items-start ">
+            <div className="flex flex-col items-start">
               <div className="mb-3 ml-3 w-8 h-8 shrink-0 border border-[#6389ff] rounded-full overflow-hidden radial--blue">
-                <Image image={players?.[2]?.avatar ?? question} />
+                <Image image={game.players?.[2]?.avatar ?? question} />
               </div>
               <BlueLine className={isFinished ? 'grayscale ' : ''} />
               <div className="mt-3 ml-3 w-8 h-8 shrink-0 border border-[#6389ff] rounded-full overflow-hidden radial--blue">
-                <Image image={players?.[3]?.avatar ?? question} />
+                <Image image={game.players?.[3]?.avatar ?? question} />
               </div>
             </div>
           </>
@@ -168,7 +166,7 @@ const BattleModeCell = ({ gamemode, team, state, players }: BattleModeCellProps)
     }
   }
 
-  const renderCell = useMemo(() => getCell(mode), [mode, state])
+  const renderCell = useMemo(() => getCell(game), [game])
   return <div className="flex items-center">{renderCell}</div>
 }
 

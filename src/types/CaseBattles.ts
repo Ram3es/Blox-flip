@@ -10,18 +10,23 @@ export enum RootBattleStateEnum {
   done = 'done'
 }
 export interface IRootBattleCaseItem {
-  img: string
+  image: string
   name: string
   price: number
-  id: number
+  short: string
+  num: number
 }
 
 export interface IRootBattlePlayer {
-  id: number
+  // id: number
+  is_bot: boolean
+  is_host: true
   name: string
   avatar: string
   level: number
-  place: number
+  // ref_by: null | string
+  slot: number
+  value: number
 }
 
 export interface IRootBattleRoundItem {
@@ -32,7 +37,7 @@ export interface IRootBattleRoundItem {
 }
 
 export interface IRootBattleResult {
-  id: number
+  id: string
   round: number
   items: IRootBattleRoundItem[]
 }
@@ -41,8 +46,8 @@ export type IRootMaximumPlayers = 2 | 3 | 4
 
 export interface IRootBattle {
   team: boolean
-  gamemode: keyof typeof RootBattleModeEnum
-  id: number
+  mode: keyof typeof RootBattleModeEnum
+  id: string
   state: keyof typeof RootBattleStateEnum
   cost: number
   caselist: IRootBattleCaseItem[]
@@ -50,6 +55,7 @@ export interface IRootBattle {
   players: IRootBattlePlayer[]
   max: IRootMaximumPlayers
   hash: string
+  winner: IRootBattlePlayer[]
 }
 
 export enum DisplayedBattleModeEnum {

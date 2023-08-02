@@ -30,7 +30,12 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
       id: 'rounds',
       header: () => 'Rounds',
       cell: ({ row: { original } }) => (
-        <RoundCell round={original.caselist.length} mode={original.mode} status={original.state} />
+        <RoundCell
+          // round={original.caselist.length}
+          round={1}
+          mode={original.mode}
+          status={original.state}
+        />
       ),
       footer: (props) => props.column.id
     }),
@@ -41,7 +46,8 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
         <CasesCell
           status={original.state}
           totalRounds={original.caselist.length}
-          currentRound={original.gameSetting?.currentRound}
+          // currentRound={original.gameSetting?.currentRound}
+          currentRound={1}
         />
       ),
       footer: (props) => props.column.id
@@ -49,12 +55,9 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
     columnHelper.accessor((row) => row.team, {
       id: 'mode',
       header: () => 'Mode',
-      cell: ({ row: { original } }) => (
+      cell: ({ row }) => (
         <BattleModeCell
-          state={original.state}
-          gamemode={original.gamemode}
-          players={original.players}
-          team={original.team}
+          game={row.original}
         />
       ),
       footer: (props) => props.column.id
