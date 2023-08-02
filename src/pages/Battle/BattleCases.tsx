@@ -1,113 +1,59 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import BattleLayout from '../../components/containers/BattleGameLayout'
-import { IBattlesInfo, IBattleUser } from '../../mocks/battle'
-import type { IItemCard, IUnboxCard } from '../../types/ItemCard'
 import BattleMode from '../../components/common/battle/BattleMode'
 import GameHeader from '../../components/common/battle/GameHeader'
 import GameRoundsInfo from '../../components/common/battle/GameRoundsInfo'
+import { useBattleCase } from '../../store/BattleCaseStore'
+import { useSocketCtx } from '../../store/SocketStore'
+import { IRootBattle, IRootBattleResult } from '../../types/CaseBattles'
 
 const BattleCases = () => {
-  const location = useLocation()
+  const { id } = useParams()
+  const { games } = useBattleCase()
+  const { socket } = useSocketCtx()
+  const { state } = useLocation()
+  // console.log(state, 'state')
 
-  const [gameState, setGameState] = useState<IBattlesInfo>(location.state)
-  const [usersFinishedRound, setFinishedRound] = useState<Record<string, number>>({})
-
-  const updateRound = (userId: string) => {
-    setFinishedRound((state) => ({ ...state, [userId]: state[userId] + 1 || gameState.gameSetting.currentRound }))
-  }
-
-  const joinBattle = (idx: number, player: IBattleUser) => {
-    console.log(idx, 'idx', gameState.players, 'gameState')
-
-    setGameState((state) => ({
-      ...state,
-      players: [...state.players.slice(0, idx), player, ...state.players.slice(idx + 1)]
-    }))
-  }
-
-  const setFinishGame = () => {
-    setGameState(state => ({ ...state, gameSetting: { ...state.gameSetting, isDone: true } }))
-  }
-
-  const updateRewards = (userId: string, card: IItemCard) => {
-    setGameState((state) => ({
-      ...state,
-      players: [
-        ...state.players.map((player) => {
-          if (player?.id === userId) {
-            return {
-              ...player,
-              dropsCards: [...player.dropsCards, card],
-              wonDiamonds: player.wonDiamonds + card.price
-            }
-          }
-          return player
-        })
-      ]
-    }))
-  }
-
-  const getCurrentBoxPrice = (cases: IUnboxCard[]): number => {
-    if (gameState.status !== 'created' && gameState.gameSetting.currentRound) {
-      return cases[gameState.gameSetting.currentRound - 1].price
-    }
-    return 0
-  }
+  const [gameState, setGameState] = useState<IRootBattle | null>(null)
+  const [historyRounds, setHistoryRounds] = useState<IRootBattleResult[]>([])
+  const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
 
   useEffect(() => {
-    if (gameState.players.length === gameState.gameSetting.mode.requiredPlayers && gameState.players.every(item => item !== undefined) && !gameState.gameSetting.currentRound) {
-      setGameState(state => ({
-        ...state,
-        status: 'running',
-        gameSetting: { ...state.gameSetting, currentRound: 1 }
-      }))
-      return
+    if (id) {
+      const currentGame = games.find((game) => game.id === id)
+      console.log('BATTLE CASE', currentGame)
+      if (currentGame) {
+        setGameState(currentGame)
+      }
     }
-    if (gameState.gameSetting.rounds === gameState.gameSetting.currentRound) {
-      setGameState(state =>
-        ({ ...state, status: 'ended' })
-      )
-    }
-  }, [gameState.players, gameState.gameSetting.currentRound])
+  }, [id, games])
 
   useEffect(() => {
-    const users = Object.values(usersFinishedRound)
-    if (users.length === gameState.gameSetting.mode.requiredPlayers && users.every(val => val === gameState.gameSetting.currentRound) && gameState.gameSetting.currentRound && gameState.status !== 'ended') {
-      setGameState(state => ({
-        ...state,
-        gameSetting: { ...state.gameSetting, currentRound: state.gameSetting.currentRound + 1 }
-      }))
+    if (id && gameState) {
+      socket.on('battle_result', (data: IRootBattleResult[]) => {
+        const battleRound = data.find((item) => item.id === id)
+        if (battleRound) {
+          setCurrentRound(battleRound)
+          setHistoryRounds((prev) => [...prev, battleRound])
+        }
+      })
     }
-  }, [usersFinishedRound])
+
+    return () => {
+      socket.off('battle_result')
+    }
+  }, [socket, id, gameState])
 
   return (
-    <div className='max-w-1190 w-full mx-auto text-sm'>
-      <BattleLayout amountGamePlates={gameState.gameSetting.mode.requiredPlayers}>
-        <GameHeader
-          gameStatus={gameState.status}
-          amountRounds={gameState.gameSetting.rounds}
-          currentRound={gameState.gameSetting.currentRound}
-          totalPrice={gameState.gameSetting.price}
-          currentBoxPrice={getCurrentBoxPrice(gameState?.cases as IUnboxCard[])}
-        />
-        <GameRoundsInfo
-          gameVariant={gameState.gameSetting.mode.variant}
-          amountRounds={gameState.gameSetting.rounds}
-          currentRound={gameState.gameSetting.currentRound}
-        />
-        <BattleMode
-          status={gameState.status}
-          players={gameState.players}
-          casesBox={gameState.cases}
-          onJoinUser={joinBattle}
-          mode={gameState.gameSetting.mode}
-          updateRewards={updateRewards}
-          updateRound={updateRound}
-          setFinishGame={setFinishGame}
-          isFinishedGame={gameState.gameSetting.isDone}
-        />
-      </BattleLayout>
+    <div className="max-w-1190 w-full mx-auto text-sm">
+      {gameState && (
+        <BattleLayout amountGamePlates={gameState.players.length}>
+          <GameHeader game={gameState} currentRound={currentRound} />
+          <GameRoundsInfo game={gameState} currentRound={currentRound} />
+          <BattleMode game={gameState} currentRound={currentRound} historyRounds={historyRounds} />
+        </BattleLayout>
+      )}
     </div>
   )
 }

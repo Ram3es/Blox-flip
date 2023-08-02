@@ -47,8 +47,6 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
 
   useEffect(() => {
-    const robloxTwoFactorAuthCode = localStorage.getItem('roblox_2xfa_code')
-
     const onConnect = () => {
       setConnected(true)
     }

@@ -1,13 +1,11 @@
+/* eslint-disable @typescript-eslint/indent */
 import { useCallback, useEffect, useRef, useState } from 'react'
-
-import { useBattleCase } from '../../store/BattleCaseStore'
-import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
-
 import { useNavigate } from 'react-router-dom'
+import { useSocketCtx } from '../../store/SocketStore'
+import { useCopyToClipboard } from '../../helpers/hooks/useCopyToClipboard'
 
 import InputWithLabel from '../../components/base/InputWithLabel'
 import AddBoxCard from '../../components/common/Cards/AddBoxCard'
-import CardWithCounter from '../../components/common/Cards/CardWithCounter'
 import ToggleTabs from '../../components/common/ToggleTabs'
 import BattleModal from '../../components/containers/BattleModal'
 import PaymentMethodContainer from '../../components/containers/PaymentMethodContainer'
@@ -15,42 +13,81 @@ import DaggersGreenGradient from '../../components/icons/DaggersGreenGradient'
 import UnboxingIconTitle from '../../components/icons/UnboxingIconTitle'
 import VerticalDivider from '../../components/icons/VerticalDivider'
 import NavHeader from '../../components/navigate/NavHeader'
+import CardWithCounter from '../../components/common/Cards/CardWithCounter'
+import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import { Button } from '../../components/base/Button'
 import { CopyIcon } from '../../components/icons/CopyIcon'
 
-import type { IUnboxCardCounter } from '../../types/ItemCard'
+import { getParticipantsByDisplayMode } from '../../helpers/caseBattleHelpers'
+import { getToast } from '../../helpers/toast'
 
-import { gameSettings } from '../../constants/battle-cases'
-import { IBattlesInfo } from '../../mocks/battle'
-import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
+import { DISPLAYED_BATTLE_CONFIG } from '../../constants/battle-cases'
+import { IRootCaseItemWithAmount } from '../../types/Cases'
+import {
+  DisplayedBattleModeEnum,
+  RootBattleModeEnum,
+  IRootMaximumPlayers,
+  IRootBattle
+} from '../../types/CaseBattles'
 
-const battleInitState = {
-  rounds: 0,
-  price: 0,
-  mode: { variant: '1v1', requiredPlayers: 2 },
-  privacy: { variant: 'Public' },
-  typeGame: { variant: 'Standard' }
+enum StandardEnum {
+  'standard' = 'standard'
+}
+
+enum PolicyEnum {
+  'private' = 'private',
+  'public' = 'public'
+}
+
+interface DisplayBattleConfig {
+  gameMode: {
+    variant: Exclude<DisplayedBattleModeEnum, DisplayedBattleModeEnum.group>
+  }
+  gameType: {
+    variant: Exclude<RootBattleModeEnum, RootBattleModeEnum.regular> | StandardEnum
+  }
+  policy: {
+    variant: PolicyEnum
+  }
+}
+
+interface BattleConfig {
+  team: boolean
+  gamemode: keyof typeof RootBattleModeEnum
+  participants: IRootMaximumPlayers
+  cases: string[]
+  private?: 1 | 0
 }
 
 const CreateBattle = () => {
-  const { setGames } = useBattleCase()
+  const { socket } = useSocketCtx()
   const [isOpenModal, setOpenModal] = useState(false)
-  const [casesBetted, setCasesToBet] = useState<IUnboxCardCounter[]>([])
+  const [casesBetted, setCasesToBet] = useState<IRootCaseItemWithAmount[]>([])
   const { text: referralLink, handleCopyText: handleReferralLink } = useCopyToClipboard(
     'https://robloxsite.com/i?/h371s9f!39g_123'
   )
-  const [battleSettings, setSetting] = useState(battleInitState)
+  const [displayBattleConfig, setDisplayBattleConfig] = useState<DisplayBattleConfig>({
+    gameMode: {
+      variant: DisplayedBattleModeEnum['1v1']
+    },
+    gameType: {
+      variant: StandardEnum.standard
+    },
+    policy: {
+      variant: PolicyEnum.public
+    }
+  })
 
   const fieldWithLinkRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
   const incrementCounter = useCallback(
-    (id: string) =>
+    (name: string) =>
       setCasesToBet((state) => [
         ...state.map((box) => {
-          if (box.id === id) {
-            return { ...box, amount: box.amount + 1 }
+          if (box.name === name) {
+            return { ...box, amount: box.amount++ }
           }
           return box
         })
@@ -59,14 +96,14 @@ const CreateBattle = () => {
   )
 
   const decrementCounter = useCallback(
-    (id: string) => {
-      const found = casesBetted.find((betted) => betted.id === id)
+    (name: string) => {
+      const found = casesBetted.find((betted) => betted.name === name)
       if (found?.amount === 1) {
-        setCasesToBet((prev) => [...prev.filter((card) => card.id !== found.id)])
+        setCasesToBet((prev) => [...prev.filter((card) => card.name !== found.name)])
       }
       setCasesToBet((state) => [
         ...state.map((box) => {
-          if (box.id === id) {
+          if (box.name === name) {
             return { ...box, amount: box.amount - 1 }
           }
           return box
@@ -94,55 +131,39 @@ const CreateBattle = () => {
         block: 'end'
       })
     }
-  }, [battleSettings])
+  }, [displayBattleConfig])
 
-  const onSubmitModal = useCallback((cards: IUnboxCardCounter[]) => setCasesToBet(cards), [])
-
-  const convertAmountBoxes = (): IUnboxCardCounter[] => {
-    let converted = [] as IUnboxCardCounter[]
-    casesBetted.forEach((box) => {
-      const multiplayed: IUnboxCardCounter[] = Array.from(Array(box.amount).fill(box))
-      converted = converted.concat(multiplayed)
-    })
-    return converted
-  }
+  const onSubmitModal = useCallback((cards: IRootCaseItemWithAmount[]) => setCasesToBet(cards), [])
 
   const createGame = () => {
-    console.log({
-      ...battleSettings,
-      rounds: amountCases,
-      price: totalCost,
-      cases: casesBetted
-    })
-
-    const responseFromDB = {
-      gameSetting: {
-        ...battleSettings,
-        currentRound: 0,
-        rounds: amountCases,
-        price: totalCost,
-        isDone: false
-      },
-      cases: convertAmountBoxes(),
-      players: [
-        {
-          id: new Date().getTime().toString(),
-          name: 'Boris Johnson',
-          avatar:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe_FBy0_PayvR5hOX1F6i5ItKIblV1_y7HTg&usqp=CAU',
-          level: 17,
-          dropsCards: [],
-          wonDiamonds: 0,
-          team: 'blue'
-        },
-        ...Array.from({ length: battleSettings.mode.requiredPlayers - 1 })
-      ],
-      id: '1234567',
-      date: '2032-03-12T23:46:58.567Z',
-      status: 'created'
+    if (casesBetted.length === 0) {
+      getToast('Select minimum 1 case')
+      return
     }
-    setGames((prevState) => [...prevState, responseFromDB as IBattlesInfo])
-    navigate(`/battle/${responseFromDB.id}`, { state: responseFromDB })
+
+    const sendedData: BattleConfig = {
+      team: displayBattleConfig.gameMode.variant === DisplayedBattleModeEnum['2v2'],
+      gamemode:
+        displayBattleConfig.gameType.variant === RootBattleModeEnum.crazy
+          ? RootBattleModeEnum.crazy
+          : displayBattleConfig.gameType.variant === RootBattleModeEnum.group
+          ? RootBattleModeEnum.group
+          : RootBattleModeEnum.regular,
+      participants: getParticipantsByDisplayMode(displayBattleConfig.gameMode.variant),
+      cases: casesBetted.flatMap((item) =>
+        item.amount > 1 ? Array.from({ length: item.amount }, () => item.short) : item.short
+      )
+    }
+
+    socket.emit('create_battle', sendedData, (error: string | boolean, battle: IRootBattle) => {
+      if (typeof error === 'string') {
+        getToast(error)
+      }
+      if (!error) {
+        console.log('data', battle)
+        navigate(`/battle/${battle.id}`, { state: battle })
+      }
+    })
   }
 
   return (
@@ -178,7 +199,6 @@ const CreateBattle = () => {
             </div>
             <div className="w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0">
               <Button
-                disabled={!casesBetted.length}
                 onClick={createGame}
                 className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
               >
@@ -194,24 +214,26 @@ const CreateBattle = () => {
           .filter((card) => card.amount > 0)
           .map((card) => (
             <CardWithCounter
-              key={card.id}
+              key={card.name}
               name={card.name}
               price={card.price}
               count={card.amount}
-              increment={() => incrementCounter(card.id)}
-              decrement={() => decrementCounter(card.id)}
+              increment={() => incrementCounter(card.name)}
+              decrement={() => decrementCounter(card.name)}
             />
           ))}
       </PaymentMethodContainer>
-      {gameSettings.map((setting) => (
+      {DISPLAYED_BATTLE_CONFIG.map((item) => (
         <ToggleTabs
-          key={setting.label}
-          label={setting.label}
-          options={setting.tabs}
-          onSelect={(option) => setSetting((state) => ({ ...state, [setting.name]: option }))}
+          key={item.label}
+          label={item.label}
+          options={item.tabs}
+          onSelect={(option) =>
+            setDisplayBattleConfig((state) => ({ ...state, [item.name]: option }))
+          }
         />
       ))}
-      {battleSettings.privacy.variant === 'Private' && (
+      {displayBattleConfig.policy.variant === PolicyEnum.private && (
         <div ref={fieldWithLinkRef} className="relative px-2 w-full grow shrink-0 mb-4">
           <InputWithLabel
             type="text"
@@ -232,12 +254,13 @@ const CreateBattle = () => {
           </div>
         </div>
       )}
-      <BattleModal
-        isOpen={isOpenModal}
-        casesBetted={casesBetted}
-        onSubmit={onSubmitModal}
-        onClose={() => setOpenModal(false)}
-      />
+      {isOpenModal && (
+        <BattleModal
+          casesBetted={casesBetted}
+          onSubmit={onSubmitModal}
+          onClose={() => setOpenModal(false)}
+        />
+      )}
     </div>
   )
 }

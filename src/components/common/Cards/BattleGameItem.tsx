@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IMAGES } from '../../../constants/images'
 import { IItemCard } from '../../../types/ItemCard'
 
-const BattleGameItem = ({ itsWinning, image, winningCard }: { itsWinning?: boolean, image: string, winningCard: IItemCard | undefined }) => {
+const BattleGameItem = ({
+  itsWinning,
+  image,
+  winningCard
+}: {
+  itsWinning?: boolean
+  image: string
+  winningCard: IItemCard | undefined
+}) => {
   const [winningClass, setWinningClass] = useState<string>()
   useEffect(() => {
     if (itsWinning) {
@@ -18,14 +26,15 @@ const BattleGameItem = ({ itsWinning, image, winningCard }: { itsWinning?: boole
 
   return (
     <div className={winningClass ?? 'h-[120px] shrink-0 pt-3'}>
-        <img
-          src={IMAGES[image]}
-          alt=""
-          width="118"
-          height="90"
-          loading="lazy"
-          decoding="async"
-          className=" grayscale opacity-40 h-full w-auto"/>
+      <img
+        src={IMAGES[image]}
+        alt=""
+        width="118"
+        height="90"
+        loading="lazy"
+        decoding="async"
+        className=" grayscale opacity-40 h-full w-auto"
+      />
     </div>
   )
 }

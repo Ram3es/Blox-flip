@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
 
 interface IToggleTabsProps<T extends { variant: string }> {
@@ -28,7 +28,7 @@ const ToggleTabs = <T extends { variant: string }>({
             currentSelect={currentTab}
             peakFunction={onSelectedTab}
             activeClasses='text-green-primary li--active'
-            btnClasses='mx-2.5 flex flex-col justify-center min-h-full py-5 group text-gray-primary hover:text-white '
+            btnClasses='capitalize mx-2.5 flex flex-col justify-center min-h-full py-5 group text-gray-primary hover:text-white '
           />
         </div>
       </div>

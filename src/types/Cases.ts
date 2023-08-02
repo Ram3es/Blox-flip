@@ -40,3 +40,7 @@ export interface ICaseItem {
   chance: number
   price: number
 }
+
+export interface IRootCaseItemWithAmount extends IRootCaseItem {
+  amount: number
+}
