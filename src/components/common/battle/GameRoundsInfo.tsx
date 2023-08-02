@@ -23,7 +23,7 @@ const GameRoundsInfo = ({ game, currentRound }: IBoxInfoProps) => {
       <div className={`${game.caselist.length > 18 ? 'pb-5 mb-1 scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full' : ''} flex items-center max-w-[864px]  mx-2  `}>
         {game.caselist.map((item, index) => (
           <div key={item.name + getRandomId()} className="px-1.5 py-3 w-12 shrink-0 relative ">
-            <img src={item.img} alt="caseBox"
+            <img src={item.image} alt="caseBox"
               width="56"
               height="62"
               loading="lazy"

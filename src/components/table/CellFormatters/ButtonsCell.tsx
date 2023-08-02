@@ -9,23 +9,20 @@ import DaggersIcons from '../../icons/DaggersIcons'
 import PreviewIcon from '../../icons/PreviewIcon'
 import SelectedIcon from '../../icons/SelectedIcon'
 
-import { useBattleCase } from '../../../store/BattleCaseStore'
 import { IRootBattle, RootBattleStateEnum } from '../../../types/CaseBattles'
 
-const ButtonsCell = ({ id, state }: Pick<IRootBattle, 'id' | 'state'>) => {
-  const { games } = useBattleCase()
-
-  const handleJoinBattle = useCallback(() => {
-    navigate(`/battle/${id}`, { state: games.find((item) => item.id === id) })
-  }, [games])
+const ButtonsCell = ({ game }: { game: IRootBattle }) => {
+  const handleNavigateLobby = useCallback(() => {
+    navigate(`/battle/${game.id}`, { state: game })
+  }, [game])
 
   const navigate = useNavigate()
   const activeButton = useMemo(() => {
-    switch (state) {
+    switch (game.state) {
       case RootBattleStateEnum.open:
         return (
           <Button
-            onClick={handleJoinBattle}
+            onClick={handleNavigateLobby}
             className="grow rounded px-3 py-2 leading-6 flex items-center justify-center bg-green-primary hover:bg-green-500 whitespace-nowrap"
           >
             <DaggersIcons />
@@ -63,7 +60,7 @@ const ButtonsCell = ({ id, state }: Pick<IRootBattle, 'id' | 'state'>) => {
     <div className="flex items-center justify-end">
       {activeButton}
       <Button
-        onClick={() => navigate(`/battle/${id}`, { state: games.find((item) => item.id === id) })}
+        onClick={handleNavigateLobby}
         className=" leading-10 ml-2 w-8 h-8 hidden xxs:flex xs:h-10 xs:w-10 shrink-0 rounded bg-blue-accent-secondary hover:bg-blue-accent text-gray-primary"
       >
         <PreviewIcon iconClasses="mx-auto my-auto" />

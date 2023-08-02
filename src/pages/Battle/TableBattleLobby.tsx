@@ -78,7 +78,7 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
     columnHelper.accessor((row) => row, {
       id: 'active',
       header: () => 'Active',
-      cell: ({ row: { original } }) => <ButtonsCell id={original.id} state={original.state} />,
+      cell: ({ row: { original } }) => <ButtonsCell game={original} />,
       footer: (props) => props.column.id
     })
   ]

@@ -7,7 +7,7 @@ import TableBattleLobby from './TableBattleLobby'
 import { useBattleCase } from '../../store/BattleCaseStore'
 import { RootBattleStateEnum } from '../../types/CaseBattles'
 
-const GreenLink = ({ to, title, amount }: { to: string; title: string; amount: number }) => (
+const GreenLink = ({ to, title, amount }: { to: string, title: string, amount: number }) => (
   <NavLink
     to={to}
     className="relative hover:z-50 rounded text-green-primary border bg-green-primary/15 hover:bg-green-primary/30 border-green-primary whitespace-nowrap px-2 py-1 leading-6 mr-3 cursor-pointer mb-4"

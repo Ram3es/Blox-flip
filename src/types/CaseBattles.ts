@@ -18,7 +18,7 @@ export interface IRootBattleCaseItem {
 }
 
 export interface IRootBattlePlayer {
-  // id: number
+  id: string
   is_bot: boolean
   is_host: true
   name: string

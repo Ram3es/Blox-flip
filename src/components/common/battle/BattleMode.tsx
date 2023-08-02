@@ -104,7 +104,6 @@ const BattleMode: FC<IBattleModeProps> = ({
         if (typeof err === 'string') {
           getToast(err)
         }
-
         if (!err) {
           getToast('bot called successful')
         }
@@ -236,9 +235,9 @@ const BattleMode: FC<IBattleModeProps> = ({
 
   return (
     <div className="flex -mx-2">
-      {Array.from({ length: game.max }).map((_, i) => (
+      {Array.from({ length: game.max }).map((_, index) => (
         <div
-          key={i}
+          key={index}
           className={clsx('px-1 mb-9 relative', {
             'w-1/2': game.max === 2,
             'w-1/3': game.max === 3,
@@ -246,26 +245,31 @@ const BattleMode: FC<IBattleModeProps> = ({
           })}
         >
           <UserBar
-            user={game.players[i]}
-            amountPlayers={game.max}
-            onJoinGame={() => handleJoinGame(i)}
-            isPlayerGameWinners={isWinnerRound(i, currentRound?.items ?? [])} // add is game winner
-            isEndGame={game.state === RootBattleStateEnum.done}
-            wonDiamonds={24124124} // todo
+            game={game}
+            playerIndex={index}
+            // user={game.players[index]}
+            // amountPlayers={game.max}
+            // onJoinGame={() => handleJoinGame(index)}
+            // onJoinGame={() => handleCallBot(index)}
+            // isPlayerGameWinners={isWinnerRound(index, currentRound?.items ?? [])} // add is game winner
+            // isEndGame={game.state === RootBattleStateEnum.done}
+            // wonDiamonds={24124124} // todo
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-              'bg-gradient-lvl from-green-primary/30':
-              isWinnerRound(i, currentRound?.items ?? []),
-              // ||  gameWinnerPlayer?.find((player) => player?.id === players[i]?.id) // add is game winner
+              'bg-gradient-lvl from-green-primary/30': isWinnerRound(
+                index,
+                currentRound?.items ?? []
+              ),
+              // ||  gameWinnerPlayer?.find((player) => player?.id === players[index]?.id) // add is game winner
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                (!isWinnerRound(i, currentRound?.items ?? []) && isSpinEnd) ||
-                (!isWinnerRound(i, currentRound?.items ?? []) && RootBattleStateEnum.done)
+                (!isWinnerRound(index, currentRound?.items ?? []) && isSpinEnd) ||
+                (!isWinnerRound(index, currentRound?.items ?? []) && RootBattleStateEnum.done)
             })}
           >
-            {i !== game.players.length - 1 && (
-              <div className="absolute left-full -ml-7 -mt-8 top-1/2 w-16 z-30 ">
-                {getIcons(getDisplayedModeByGame(game), i)}
+            {index !== game.players.length - 1 && (
+              <div className="absolute -ml-9 -mt-8 top-1/2 w-16 z-30">
+                {getIcons(getDisplayedModeByGame(game), index)}
               </div>
             )}
             <div className="grow -translate-y-[2px] ">
@@ -281,25 +285,28 @@ const BattleMode: FC<IBattleModeProps> = ({
             </div>
             <div className="w-52 mx-auto relative shrink-0 max-w-full z-10">
               <BackdropEffects
-                statusGame={game.state}
-                player={game.players[i]} // todo
-                winningCard={allWinningCards[players[i]?.id]?.image}
-                isEndGame={game.state === RootBattleStateEnum.done}
+                game={game}
+                playerIndex={index}
+                // statusGame={game.state}
+                // player={game.players[index]} // todo
+                // winningCard={allWinningCards[players[index]?.id]?.image} // todo
+                // isEndGame={game.state === RootBattleStateEnum.done}
               />
               <RoundWinBorderBottomEffect
-                isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
-                isAddWinClass={isWinnerRound(i, currentRound?.items ?? [])}
+                // isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
+                isShown={false}
+                isAddWinClass={isWinnerRound(index, currentRound?.items ?? [])}
               />
             </div>
             {game.state === RootBattleStateEnum.open && (
               <div className="z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2">
-                {game.players[i] && (
+                {game.players[index] && (
                   <>
                     <DaggersGreenGradient />
                     <span className="text-base font-bold">Ready</span>
                   </>
                 )}
-                {!game.players[i] && (
+                {!game.players[index] && (
                   <>
                     <Loader height="40px" width="40px" color="rgba(147, 155, 185)" />
                     <span className="text-base font-bold text-gray-primary">Waiting</span>
@@ -311,19 +318,23 @@ const BattleMode: FC<IBattleModeProps> = ({
               <SpinItems
                 currentRound={currentRound}
                 game={game}
-                playerId={game.players[i]?.id}
-                updateRewards={updateRewards}
-                updateRound={updateRound}
-                addWinningCard={addWinningCard}
-                setShowEnd={setFinishGame}
+                playerId={game.players[index]?.id}
+                // updateRewards={updateRewards}
+                // updateRound={updateRound}
+                // addWinningCard={addWinningCard}
+                // setShowEnd={setFinishGame}
+                updateRewards={() => console.log('test')}
+                updateRound={() => console.log('test')}
+                addWinningCard={() => console.log('test')}
+                setShowEnd={() => console.log('test')}
               />
             )}
-            {game.state === RootBattleStateEnum.done && isFinishedGame && (
+            {/* {game.state === RootBattleStateEnum.done && isFinishedGame && (
               <PlayerStatusGame
-                isPlayerGameWinner={isWinners(players[i]?.id)}
-                wonDiamonds={players[i]?.wonDiamonds}
+                isPlayerGameWinner={isWinners(players[index]?.id)}
+                wonDiamonds={players[index]?.wonDiamonds}
               />
-            )}
+            )} */}
             <div className="grow rotate-180 translate-y-[-2px]">
               <img
                 src={IMAGES.graySeparator}
@@ -336,7 +347,12 @@ const BattleMode: FC<IBattleModeProps> = ({
               />
             </div>
           </div>
-          <UsersDrops amountGamePlates={game.max} cards={players[i]?.dropsCards} />
+          <UsersDrops
+            // amountGamePlates={game.max}
+            // cards={game.caselist}
+            game={game}
+            // cards={players[index]?.dropsCards}
+          />
         </div>
       ))}
     </div>

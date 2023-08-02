@@ -9,8 +9,6 @@ import DashedBigSpacerIcon from '../../assets/img/separator_big_icon.png'
 import type { IItemCard } from '../../types/ItemCard'
 import { IKingChampion } from '../../types/King'
 
-import { kingsVaultMock } from '../../mocks/kingMock'
-
 export interface TabInterface {
   variant: string
 }

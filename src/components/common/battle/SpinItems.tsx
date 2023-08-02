@@ -1,15 +1,16 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import { getRandomCards } from '../../../helpers/casesHelpers'
+import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 import BattleGameItem from '../Cards/BattleGameItem'
 import { useBattleCase } from '../../../store/BattleCaseStore'
 import { IRootBattle, IRootBattleResult } from '../../../types/CaseBattles'
 import { IRootCasePotentialItem } from '../../../types/Cases'
+import { cards } from '../../../mocks/cards'
 
 interface ISpinGameProps {
   game: IRootBattle
   currentRound: IRootBattleResult | null
   updateRewards: Function
-  playerId: number
+  playerId: number | string
   updateRound: Function
   addWinningCard: Function
   setShowEnd: Function
@@ -64,10 +65,10 @@ const SpinItems: FC<ISpinGameProps> = ({
 
     setRouletteItems((prev) => {
       const state = [...prev]
-      state[87] = winningCart
+      // state[87] = winningCard
       return state
     })
-    setWinningCard(winningCart)
+    setWinningCard(winningCard)
   }
 
   const play = () => {
@@ -132,7 +133,9 @@ const SpinItems: FC<ISpinGameProps> = ({
           <BattleGameItem
             key={index}
             itsWinning={item.id === winningCard?.id}
-            winningCard={winningCard}
+            // winningCard={winningCard}
+            winningCard={undefined}
+
             image={item.image}
           />
         ))}

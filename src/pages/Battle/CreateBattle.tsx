@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSocketCtx } from '../../store/SocketStore'
@@ -154,14 +155,13 @@ const CreateBattle = () => {
       )
     }
 
-
     socket.emit('create_battle', sendedData, (error: string | boolean, battle: IRootBattle) => {
       if (typeof error === 'string') {
         getToast(error)
       }
       if (!error) {
         console.log('data', battle)
-        navigate(`/battle/${battle.id}`)
+        navigate(`/battle/${battle.id}`, { state: battle })
       }
     })
   }

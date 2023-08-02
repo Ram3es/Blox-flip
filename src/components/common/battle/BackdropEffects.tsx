@@ -1,15 +1,17 @@
 import { FC, useMemo } from 'react'
 import { IMAGES } from '../../../constants/images'
-import { IRootBattlePlayer } from '../../../types/CaseBattles'
+import { IRootBattle, IRootBattlePlayer } from '../../../types/CaseBattles'
 
 interface IBackdropEffects {
-  statusGame: string
-  isEndGame: boolean
-  player?: IRootBattlePlayer
+  game: IRootBattle
+  playerIndex: number
+  // statusGame: string
+  // isEndGame: boolean
+  // player?: IRootBattlePlayer
   winningCard?: string
 }
 
-const BackdropEffects: FC<IBackdropEffects> = ({ statusGame, player, winningCard, isEndGame }) => {
+const BackdropEffects: FC<IBackdropEffects> = ({ game, playerIndex, winningCard }) => {
   const getBackdropStars = (image: string) => {
     switch (image) {
       case 'horns':
@@ -67,9 +69,9 @@ const BackdropEffects: FC<IBackdropEffects> = ({ statusGame, player, winningCard
 
   return (
     <div className="relative z-10 h-[380px]">
-      {statusGame === 'created' && (
+      {game.state === 'open' && (
         <img
-          src={player ? IMAGES.greenBackdrop : IMAGES.grayBackdrop}
+          src={game.players[playerIndex] ? IMAGES.greenBackdrop : IMAGES.grayBackdrop}
           alt="green-backdrop"
           width="206"
           height="300"
@@ -78,8 +80,7 @@ const BackdropEffects: FC<IBackdropEffects> = ({ statusGame, player, winningCard
           className="w-full h-full max-w-full z-10 relative"
         />
       )}
-      {statusGame !== 'created' &&
-        !isEndGame &&
+      {game.state === 'playing' &&
         (renderBackdrop ?? (
           <img
             src={IMAGES.grayBackdrop}
