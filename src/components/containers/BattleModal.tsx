@@ -99,11 +99,11 @@ const BattleModal = ({
       <div className="w-full min-h-[250px] max-h-[calc(100vh_-_210px)]  mt-5 mb-[34px] flex flex-wrap  overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full  pr-3 -mr-2 ">
         {filtered.map((card) => (
           <UnboxingCard
-            key={card.name}
+            key={card.id}
             name={card.name}
-            img={card.img}
-            short={card.short}
-            cost={card.cost}
+            image={card.image}
+            short={card.name}
+            price={card.price}
             onSelect={() => onSelect(card)}
             amount={card.amount}
           />

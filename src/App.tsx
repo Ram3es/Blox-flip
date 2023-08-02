@@ -12,7 +12,6 @@ import HistoryUser from './pages/UserProfile/HistoryUser'
 import { Deposit } from './pages/Deposit/Deposit'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import { DepositGift } from './pages/Deposit/methods/DepositGift'
-import { DepositCrypto } from './pages/Deposit/methods/DepositCrypto'
 import { DepositRobux } from './pages/Deposit/methods/DepositRobux'
 
 import { Withdraw } from './pages/Withdraw/Withdraw'
@@ -46,6 +45,8 @@ import ProvablyFair from './pages/ServicePages/ProvablyFair'
 import { ToastContainer } from 'react-toastify'
 import { useSocketCtx } from './store/SocketStore'
 import TwoFactorAuthModal from './components/containers/TwoFactorAuthModal'
+import CryptoForm from './components/containers/CryptoForm'
+import WithdrawGifts from './pages/Withdraw/WithdrawGifts'
 
 export const App = () => {
   const { twoFactorAuthModal, setTwoFactorAuthModal } = useSocketCtx()
@@ -64,9 +65,9 @@ export const App = () => {
           <Route path="/deposit" element={<Deposit />}>
             <Route path="robux" element={<DepositRobux />} />
             <Route path="roblox-limiteds" element={<RobloxLimiteds />} />
-            <Route path="litecoin" element={<DepositCrypto />} />
-            <Route path="bitcoin" element={<DepositCrypto />} />
-            <Route path="ethereum" element={<DepositCrypto />} />
+            <Route path="litecoin" element={<CryptoForm variant='Deposit' />} />
+            <Route path="bitcoin" element={<CryptoForm variant='Deposit' />} />
+            <Route path="ethereum" element={<CryptoForm variant='Deposit' />} />
             <Route path="credit-card" element={<CreditCard />} />
             <Route path="g2a" element={<DepositGift />} />
             <Route path="kinguin" element={<DepositGift />} />
@@ -74,6 +75,10 @@ export const App = () => {
           <Route path="/withdraw" element={<Withdraw />}>
             <Route path="robux" element={<Robux />} />
             <Route path="roblox-limiteds" element={<RobloxLimiteds />} />
+            <Route path="gift" element={<WithdrawGifts />} />
+            <Route path="litecoin" element={<CryptoForm variant='Withdraw' />} />
+            <Route path="bitcoin" element={<CryptoForm variant='Withdraw' />} />
+            <Route path="ethereum" element={<CryptoForm variant='Withdraw' />} />
           </Route>
           <Route path="/affiliates" element={<Affiliates />} />
 

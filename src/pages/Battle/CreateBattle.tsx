@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import InputWithLabel from '../../components/base/InputWithLabel'
 import AddBoxCard from '../../components/common/Cards/AddBoxCard'
-import UnboxingWithCounter from '../../components/common/Cards/UnboxingWithCounter'
+import CardWithCounter from '../../components/common/Cards/CardWithCounter'
 import ToggleTabs from '../../components/common/ToggleTabs'
 import BattleModal from '../../components/containers/BattleModal'
 import PaymentMethodContainer from '../../components/containers/PaymentMethodContainer'
@@ -166,7 +166,10 @@ const CreateBattle = () => {
 
   return (
     <div className="max-w-1190 w-full mx-auto">
+    <div className="max-w-1190 w-full mx-auto">
       <NavHeader
+        title="Battle Creation"
+        renderIcon={() => <DaggersGreenGradient iconClasses="w-[25px] h-[25px] ml-2" />}
         title="Battle Creation"
         renderIcon={() => <DaggersGreenGradient iconClasses="w-[25px] h-[25px] ml-2" />}
       >
@@ -175,29 +178,43 @@ const CreateBattle = () => {
             <div className=" flex items-center mb-3 xxs:mb-0">
               <div className="w-4 shrink-0 mr-2.5 text-blue-golf">
                 <UnboxingIconTitle iconClasses="w-[17px] h-[17px]" />
+          <div className="flex flex-wrap items-center ">
+            <div className=" flex items-center mb-3 xxs:mb-0">
+              <div className="w-4 shrink-0 mr-2.5 text-blue-golf">
+                <UnboxingIconTitle iconClasses="w-[17px] h-[17px]" />
               </div>
+              <div className="flex text-gray-primary font-semibold shrink-0">
+                <div className="text-white text-center w-5 mr-1 ">{amountCases}</div>
               <div className="flex text-gray-primary font-semibold shrink-0">
                 <div className="text-white text-center w-5 mr-1 ">{amountCases}</div>
                 Cases
               </div>
+              <div className="w-px shrink-0 mx-4">
               <div className="w-px shrink-0 mx-4">
                 <VerticalDivider />
               </div>
             </div>
             <div className="flex items-center mt-3 xxs:mt-0">
               <span className="text-gray-primary mr-2.5 font-semibold">Total cost</span>
+            <div className="flex items-center mt-3 xxs:mt-0">
+              <span className="text-gray-primary mr-2.5 font-semibold">Total cost</span>
               <CoinsWithDiamond
+                containerColor="GreenDarken"
                 containerColor="GreenDarken"
                 typographyQuantity={totalCost}
                 typographyFontSize="Size16"
+                typographyFontSize="Size16"
               />
+              <div className="w-px shrink-0 mx-4">
               <div className="w-px shrink-0 mx-4">
                 <VerticalDivider />
               </div>
             </div>
             <div className="w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0">
+            <div className="w-full flex justify-end xxs:w-fit mt-3 xxs:mt-0">
               <Button
                 onClick={createGame}
+                className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
                 className="bg-green-primary hover:bg-green-500  border border-green-primary py-2 px-7 leading-4 rounded "
               >
                 Create
@@ -211,13 +228,13 @@ const CreateBattle = () => {
         {casesBetted
           .filter((card) => card.amount > 0)
           .map((card) => (
-            <UnboxingWithCounter
-              key={card.name}
+            <CardWithCounter
+              key={card.id}
               name={card.name}
-              price={card.cost}
+              price={card.price}
               count={card.amount}
-              increment={() => incrementCounter(card.name)}
-              decrement={() => decrementCounter(card.name)}
+              increment={() => incrementCounter(card.id)}
+              decrement={() => decrementCounter(card.id)}
             />
           ))}
       </PaymentMethodContainer>
@@ -241,10 +258,20 @@ const CreateBattle = () => {
             titleClasses="gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block"
             inputWrapperClasses="bg-dark/25 rounded-xl overflow-hidden w-full"
             inputClasses="overflow-ellipsis grow w-0 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate"
+            type="text"
+            name="affiliate"
+            label="Your referral link"
+            labelClasses="flex flex-col w-full mb-4 items-center"
+            titleClasses="gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block"
+            inputWrapperClasses="bg-dark/25 rounded-xl overflow-hidden w-full"
+            inputClasses="overflow-ellipsis grow w-0 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-12 truncate"
             value={referralLink}
+            placeholder="..."
             placeholder="..."
             readOnly
           />
+          <div className="absolute z-20 top-[60px] right-7">
+            <Button className="w-7 shrink-0" onClick={handleReferralLink} type="button">
           <div className="absolute z-20 top-[60px] right-7">
             <Button className="w-7 shrink-0" onClick={handleReferralLink} type="button">
               <CopyIcon />

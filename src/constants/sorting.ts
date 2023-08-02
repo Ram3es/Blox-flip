@@ -1,10 +1,9 @@
 import { ISortOptions } from '../types/SortOptions'
 
-export const sortingVariants: ISortOptions [] = [
+export const sortingVariants: ISortOptions[] = [
   { title: 'A - Z', sortBy: 'name', direction: 'ASC' },
   { title: 'High to low', sortBy: 'price', direction: 'DESC' },
   { title: 'Low to high', sortBy: 'price', direction: 'ASC' }
-
 ]
 
 export const selectItem = [
@@ -24,4 +23,23 @@ export const challenges = [
   { title: 'Jackpot', value: 'jackpot' },
   { title: 'Cases', value: 'cases' },
   { title: 'Case Battles', value: 'case-battles' }
+]
+
+export const SORT_REGION_VARIANTS = [
+  {
+    title: 'NA',
+    value: 'na'
+  },
+  {
+    title: 'EU',
+    value: 'eu'
+  },
+  {
+    title: 'UK',
+    value: 'uk'
+  },
+  {
+    title: 'GB',
+    value: 'gb'
+  }
 ]

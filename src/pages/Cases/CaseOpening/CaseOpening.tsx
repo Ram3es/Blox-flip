@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { SPIN_TIME, SPIN_TIME_MILLISECONDS } from '../../../constants/cases'
 import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 
-import type { IRootCasePotentialItem } from '../../../types/Cases'
+import type { IRootCaseDrop, IRootCasePotentialItem } from '../../../types/Cases'
 
 import { Button } from '../../../components/base/Button'
 import { CasesLineItem } from '../../../components/common/Cards/CasesLineItem'
@@ -20,15 +20,15 @@ import ItemBig from '../../../assets/img/item_big1.png'
 import CoinsWithDiamond from '../../../components/common/CoinsWithDiamond'
 import { useCaseOpening } from '../../../store/CaseOpeningStore'
 import { useSocketCtx } from '../../../store/SocketStore'
+import { getToast } from '../../../helpers/toast'
 
 export const CaseOpening = () => {
   const { socket } = useSocketCtx()
-  const { shortName } = useParams()
+  const { short: shortName } = useParams()
   const { cases } = useCaseOpening()
   const [currentCasePrice, setCurrentCasePrice] = useState(0)
   const [potentialDropItems, setPotentialDropsItems] = useState<IRootCasePotentialItem[]>([])
   const [wonItem, setWonItem] = useState<IRootCasePotentialItem[]>([])
-
   const navigate = useNavigate()
 
   const [lineCount, setLineCount] = useState<1 | 2 | 3 | 4>(1)
@@ -37,35 +37,34 @@ export const CaseOpening = () => {
 
   const [rouletteItems, setRouletteItems] = useState<Array<{ items: IRootCasePotentialItem[] }>>([
     {
-      items: getRandomCards<IRootCasePotentialItem>(
-        100,
-        potentialDropItems
-      )
+      items: []
     }
   ])
-
   const refreshLinesByCount = (count: number) => {
     const localLineCount = Math.min(count, 4)
+    if (potentialDropItems.length > 0) {
+      setRouletteItems((prevItems) => {
+        const newItems = [...prevItems]
 
-    setRouletteItems((prevItems) => {
-      const newItems = [...prevItems]
-
-      if (newItems.length > localLineCount) {
-        newItems.splice(localLineCount)
-      } else if (newItems.length < localLineCount) {
-        for (let i = newItems.length; i < localLineCount; i++) {
-          newItems.push({
-            items: getRandomCards(100, potentialDropItems)
-          })
+        if (newItems.length > localLineCount) {
+          newItems.splice(localLineCount)
+        } else if (newItems.length < localLineCount) {
+          for (let i = newItems.length; i < localLineCount; i++) {
+            newItems.push({
+              items: getRandomCards(100, potentialDropItems)
+            })
+          }
         }
-      }
-      return newItems
-    })
+        return newItems
+      })
+    }
   }
 
   useEffect(() => {
-    refreshLinesByCount(lineCount)
-  }, [lineCount])
+    if (potentialDropItems.length > 0) {
+      refreshLinesByCount(lineCount)
+    }
+  }, [lineCount, potentialDropItems])
 
   const reset = () => {
     if (itemsRef.current) {
@@ -114,22 +113,13 @@ export const CaseOpening = () => {
   }
 
   const addWonItemInLines = (wonItemsArray: IRootCasePotentialItem[]) => {
-    // const wonItemsArray: IRootCasePotentialItem[] = []
-    // for (let i = 0; i < lineCount; i++) {
-    //   const randomCardIndex = Math.floor(Math.random() * potentialDropItems.length)
-    //   const randomCard = potentialDropItems[randomCardIndex]
-    //   const itemWon = {
-    //     ...randomCard,
-    //     id: `${randomCard.id} ${new Date().getTime()}`
-    //   }
-    //   wonItemsArray.push(itemWon)
-    // }
-    // const wonItemsWithIds = wonItemsArray.map((item) => ({ ...item, id: getRandomId() }))
     setRouletteItems((prevItems) => {
       const rouletteItems = [...prevItems]
       for (let i = 0; i < lineCount; i++) {
         const rouletteItem = [...rouletteItems[i].items]
-        rouletteItem[87] = wonItemsArray[i]
+        if (wonItemsArray.length > 0) {
+          rouletteItem[87] = wonItemsArray[i]
+        }
         rouletteItems[i] = { items: rouletteItem }
       }
       return rouletteItems
@@ -139,32 +129,45 @@ export const CaseOpening = () => {
 
   const play = () => {
     socket.emit(
-      'case_open',
+      'open_case',
       { short: shortName, num: lineCount },
-      (err: boolean, results: IRootCasePotentialItem[]) => {
-        if (err) {
-          return
+      (error: string | boolean, skins: IRootCaseDrop[]) => {
+        if (typeof error === 'string') {
+          getToast(error)
         }
-        reset()
-        addWonItemInLines(results)
-        spin(SPIN_TIME)
-        setIsSpin(true)
+        if (!error) {
+          reset()
+          addWonItemInLines(
+            skins.map((item) => ({
+              name: item.skin_name,
+              image: item.skin_image,
+              price: item.cost,
+              chance: 124,
+              id: getRandomId()
+            }))
+          )
+          spin(SPIN_TIME)
+          setIsSpin(true)
+        }
       }
     )
   }
 
   useEffect(() => {
-    reset()
-    addWonItemInLines([])
-  }, [lineCount])
+    if (potentialDropItems.length > 0) {
+      reset()
+      addWonItemInLines([])
+    }
+  }, [lineCount, potentialDropItems])
 
   useEffect(() => {
     const currentCase = cases.find((item) => item.short === shortName)
 
     if (!currentCase) return
 
-    setCurrentCasePrice(currentCase.cost)
+    setCurrentCasePrice(currentCase.price)
     setPotentialDropsItems(currentCase.items)
+    reset()
   }, [cases])
 
   return (
@@ -185,7 +188,7 @@ export const CaseOpening = () => {
           <div className="w-6 shrink-0 mr-3 text-blue-golf">
             <UnboxingIcon iconClasses="w-6 h-6 " />
           </div>
-          <span className="text-2xl font-bold">{`Diamond Case ${String(shortName)}`}</span>
+          <span className="text-2xl font-bold capitalize">{`${String(shortName)} Case`}</span>
         </div>
         <Link
           to="/provably-fair#cases"
@@ -254,39 +257,40 @@ export const CaseOpening = () => {
               <div className="bg-gradient-to-r from:bg-blue-highlight/0 to-bg-blue-highlight h-px grow"></div>
             </div>
           </div>
-          {rouletteItems.map((item, index) => (
-            <div
-              key={index + 1}
-              className="flex py-3 relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded justify-center"
-            >
-              <div className="absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1">
-                <OpeningLineIcon />
-              </div>
-              <div className="absolute left-1/2 -ml-0.5 bottom-0 z-20 rotate-180 w-0.5 xs:w-1">
-                <OpeningLineIcon />
-              </div>
-              <div className="min-w-[1094px]">
-                <div
-                  className="whitespace-nowrap relative left-0 flex gap-3"
-                  ref={(item) => {
-                    if (item !== null) {
-                      itemsRef.current[index] = item
-                    }
-                  }}
-                >
-                  {item.items.map((item: IRootCasePotentialItem) => (
-                    <CasesLineItem
-                      key={item.name}
-                      timeoutToShow={SPIN_TIME_MILLISECONDS}
-                      itsWinning={!!wonItem && item.id === wonItem[index]?.id}
-                      image={item.image}
-                      name={item.name}
-                    />
-                  ))}
+          {potentialDropItems.length > 0 &&
+            rouletteItems.map((item, index) => (
+              <div
+                key={index + 1}
+                className="flex py-3 relative z-10 bg-dark/30 overflow-hidden mb-2.5 rounded justify-center"
+              >
+                <div className="absolute left-1/2 -ml-0.5 top-0 z-20 w-0.5 xs:w-1">
+                  <OpeningLineIcon />
+                </div>
+                <div className="absolute left-1/2 -ml-0.5 bottom-0 z-20 rotate-180 w-0.5 xs:w-1">
+                  <OpeningLineIcon />
+                </div>
+                <div className="min-w-[1094px]">
+                  <div
+                    className="whitespace-nowrap relative left-0 flex gap-3"
+                    ref={(item) => {
+                      if (item !== null) {
+                        itemsRef.current[index] = item
+                      }
+                    }}
+                  >
+                    {item.items.map((item: IRootCasePotentialItem) => (
+                      <CasesLineItem
+                        key={item.id}
+                        timeoutToShow={SPIN_TIME_MILLISECONDS}
+                        itsWinning={!!wonItem && item.id === wonItem[index]?.id}
+                        image={item.image}
+                        name={item.name}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       <PotentialDrops cards={potentialDropItems} />

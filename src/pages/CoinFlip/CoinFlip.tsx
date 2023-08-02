@@ -2,7 +2,6 @@ import { useCallback, useContext } from 'react'
 import { useCoinFlip } from '../../store/CoinFlipStore'
 import { Context } from '../../store/Store'
 
-import CoinFlipLobbyModal from './CoinFlipLobbyModal'
 import CoinFlipGameModal from './CoinFlipGameModal'
 import CoinFlipHeader from './CoinFlipHeader'
 import CoinFlipGamesTable from './CoinFlipGamesTable'
@@ -11,8 +10,6 @@ import SignInModal from '../../components/containers/SignInModal'
 
 const CoinFlip = () => {
   const {
-    isOpenLobbyModal,
-    setIsOpenLobbyModal,
     isOpenLoginModal,
     setIsOpenLoginModal,
     isOpenBattleGame
@@ -22,7 +19,6 @@ const CoinFlip = () => {
 
   const handleCloseLoginModal = useCallback(() => {
     setIsOpenLoginModal(false)
-    setIsOpenLobbyModal(true)
   }, [])
 
   return (
@@ -32,7 +28,6 @@ const CoinFlip = () => {
       {isOpenLoginModal && !state.user && (
         <SignInModal isOpen={isOpenLoginModal} onClose={handleCloseLoginModal} />
       )}
-      {isOpenLobbyModal && state.user && <CoinFlipLobbyModal />}
       {isOpenBattleGame && <CoinFlipGameModal />}
     </>
   )

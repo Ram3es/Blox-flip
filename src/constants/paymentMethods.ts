@@ -30,6 +30,7 @@ export const METHODS: IPaymentMethods = {
     methods: [
       {
         type: 'load_btc',
+        shortName: 'btc',
         path: 'bitcoin',
         title: 'Bitcoin',
         image: IMAGES.bitcoin,
@@ -40,6 +41,7 @@ export const METHODS: IPaymentMethods = {
       },
       {
         type: 'load_eth',
+        shortName: 'eth',
         path: 'ethereum',
         title: 'Ethereum',
         image: IMAGES.ethereum,
@@ -50,6 +52,7 @@ export const METHODS: IPaymentMethods = {
       },
       {
         type: 'ltc_address',
+        shortName: 'ltc',
         path: 'litecoin',
         title: 'Litecoin',
         image: IMAGES.litecoin,
@@ -88,6 +91,20 @@ export const METHODS: IPaymentMethods = {
         smallSize: {
           width: '26px',
           height: '24px'
+        }
+      }
+    ]
+  },
+  gift: {
+    name: 'Gift Methods',
+    methods: [
+      {
+        path: 'gift',
+        title: 'Gift Cards',
+        image: IMAGES.creditCard,
+        smallSize: {
+          width: '20px',
+          height: '20px'
         }
       }
     ]

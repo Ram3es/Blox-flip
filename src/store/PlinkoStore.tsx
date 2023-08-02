@@ -42,7 +42,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
   const [numberOfBets, setNumberOfBets] = useState(1)
   const [risk, setRisk] = useState<keyof typeof RiskVariant>(RiskVariant.Low)
   const [selectedRow, setSelectedRow] = useState<RowVariant>(16)
-  const rowOptions: RowVariant[] = [8, 10, 12, 14, 16]
+  const rowOptions: RowVariant[] = [8, 9, 10, 11, 12, 13, 14, 15, 16]
 
   return (
     <PlinkoContext.Provider

@@ -1,7 +1,7 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, memo } from 'react'
 
 interface RangeSliderProps {
-  sliderValueChanged: (value: number) => void
+  sliderValueChanged: (eventOrValue: ChangeEvent<HTMLInputElement> | number) => void
   value: number
   min: number
   max: number
@@ -15,39 +15,17 @@ const RangeSlider = ({
   max,
   disabled = false
 }: RangeSliderProps) => {
-  const [sliderValue, setSliderValue] = useState(value)
-  const [isDragging, setIsDragging] = useState(false)
-
-  useEffect(() => {
-    setSliderValue(value)
-  }, [value])
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSliderValue(Number(event.target.value))
-  }
-
-  const handleMouseUp = () => {
-    if (isDragging) {
-      setIsDragging(false)
-      sliderValueChanged(sliderValue)
-    }
-  }
-
   return (
-    <div className='range-slider'>
-      <input
-        className='rounded-lg overflow-hidden appearance-none bg-blue-accent-third h-3 w-full'
-        type='range'
-        min={min}
-        max={max}
-        disabled={disabled}
-        value={sliderValue}
-        onChange={handleChange}
-        onMouseDown={() => setIsDragging(true)}
-        onMouseUp={handleMouseUp}
-      />
-    </div>
+    <input
+      className="rounded-lg overflow-hidden appearance-none bg-blue-accent-third h-3 w-full cursor-pointer"
+      type="range"
+      min={min}
+      max={max}
+      disabled={disabled}
+      value={value}
+      onChange={sliderValueChanged}
+    />
   )
 }
 
-export default RangeSlider
+export default memo(RangeSlider)

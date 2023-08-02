@@ -53,7 +53,7 @@ const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
       <div className="flex flex-wrap items-center ml-4 mb-8  text-gray-primary">
         <Button
           onClick={handleCopyLocation}
-          className="flex items-center cursor-pointer mb-5 xxs:mb-0 "
+          className='flex items-center cursor-pointer mb-5 xxs:mb-0 text-gray-primary'
         >
           <CopyIconSecond />
           <span className="ml-2">Copy Link</span>

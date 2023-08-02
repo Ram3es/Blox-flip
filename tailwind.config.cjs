@@ -86,6 +86,7 @@ module.exports = {
         'orange-secondary': 'rgba(226, 162, 102)',
         'orange-accent': 'rgba(255, 169, 89)',
         'orange-light': 'rgba(206, 96, 71)',
+        'orange-third': 'rgba(234, 140, 30)',
         'yellow-primary': 'rgba(255, 203, 69)',
         'yellow-secondary': 'rgba(229, 173, 78)',
         'yellow-primary': 'rgba(255, 203, 69, 1)',
@@ -131,7 +132,8 @@ module.exports = {
         'green-primary-10': '0 0 10px rgba(44, 221, 104)',
         'green-20': '0 0 20px rgba(75, 251, 134, 0.35)',
         'dark-15': '0px 2px 10px rgba(0, 0, 0, 0.15)',
-        'orange-10': '0px 0px 10px #FF9900'
+        'orange-10': '0px 0px 10px #FF9900',
+        'orange-20': "0px 0px 10px 0px #EA8C1E"
       },
       outlineWidth: {
         3: '0.1875rem' //3px

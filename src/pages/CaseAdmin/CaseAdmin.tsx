@@ -17,8 +17,6 @@ import PreviewIcon from '../../components/icons/PreviewIcon'
 import CaseAdminModal from '../../components/containers/AdminModals/CaseAdminModal'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
-import { IMAGES } from '../../constants/images'
-
 import { useSocketCtx } from '../../store/SocketStore'
 import { IRootCaseItem } from '../../types/Cases'
 import { getToast } from '../../helpers/toast'
@@ -56,11 +54,11 @@ const CaseAdmin = () => {
   const columns: Array<ColumnDef<IRootCaseItem, any>> = [
     columnHelper.accessor((row: IRootCaseItem) => row, {
       id: 'case',
-      header: () => 'Case',
+      header: () => 'Case Name',
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <div className="w-[47px] h-[53px] flex items-center justify-center">
-            <img src={IMAGES.greenBox} className="w-full h-full object-contain" alt="" />
+            <img src={row.original.image} className="w-full h-full object-contain" alt="" />
           </div>
           <p className="font-bold text-white text-13">{row.original.name}</p>
         </div>
@@ -68,9 +66,9 @@ const CaseAdmin = () => {
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: IRootCaseItem) => row, {
-      id: 'public',
-      header: () => 'Public',
-      cell: ({ row }) => <span className="font-semibold">{row.original.cost ? 'Yes' : 'No'}</span>,
+      id: 'shortName',
+      header: () => 'Short Name',
+      cell: ({ row }) => <span className="font-semibold">{row.original.short}</span>,
       footer: (props) => props.column.id
     }),
     columnHelper.accessor((row: IRootCaseItem) => row, {
@@ -81,9 +79,9 @@ const CaseAdmin = () => {
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('cost', {
+    columnHelper.accessor('price', {
       id: 'price',
-      header: 'Price',
+      header: 'Cost',
       cell: ({ cell }) => (
         <CoinsWithDiamond
           iconContainerSize="Small"
@@ -92,6 +90,14 @@ const CaseAdmin = () => {
           typographyQuantity={cell.getValue()}
           typographyFontSize="Size13"
         />
+      ),
+      footer: (props) => props.column.id
+    }),
+    columnHelper.accessor('items', {
+      id: 'items',
+      header: 'Skins',
+      cell: ({ row }) => (
+        <span className="capitalize font-bold text-white text-13">{row.original.items.length}</span>
       ),
       footer: (props) => props.column.id
     }),
@@ -148,15 +154,16 @@ const CaseAdmin = () => {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index, array) => {
-                  return array[index] === array.at(-1)
-                    ? (<th key={header.id} className="pb-4">
-                        <Button variant="GreenGradient" onClick={handleCreateCase}>
-                          <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
-                            Create new
-                          </span>
-                        </Button>
-                      </th>)
-                    : (<th key={header.id} className="pb-4 font-medium">
+                  return array[index] === array.at(-1) ? (
+                    <th key={header.id} className="pb-4">
+                      <Button variant="GreenGradient" onClick={handleCreateCase}>
+                        <span className="flex items-center justify-center min-w-[87px] min-h-[29px] text-xs">
+                          Create new
+                        </span>
+                      </Button>
+                    </th>
+                  ) : (
+                    <th key={header.id} className="pb-4 font-medium">
                       <div
                         onClick={header.column.getToggleSortingHandler()}
                         className={clsx('cursor-pointer leading-2 px-1 w-24 py-1 rounded', {
@@ -167,7 +174,8 @@ const CaseAdmin = () => {
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
                       </div>
-                    </th>)
+                    </th>
+                  )
                 })}
               </tr>
             ))}
