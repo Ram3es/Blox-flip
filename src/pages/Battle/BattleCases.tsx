@@ -20,7 +20,10 @@ const BattleCases = () => {
   const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
 
   useEffect(() => {
-    if (id) {
+    if (state) {
+      setGameState(state)
+    }
+    if (id && !state) {
       const currentGame = games.find((game) => game.id === id)
       console.log('BATTLE CASE', currentGame)
       if (currentGame) {
