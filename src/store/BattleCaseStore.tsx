@@ -44,7 +44,7 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
         getToast(err)
       }
       if (!err) {
-        setGames((prev) => ([...prev, data]))
+        setGames((prev) => [...prev, data])
       }
     })
 
@@ -60,7 +60,6 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
       }
       if (!err) {
         setAllCases(skins)
-        console.log(skins, ' skins')
       }
     })
 
@@ -70,7 +69,6 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
       }
       if (!err) {
         setGames(data)
-        console.log(data, 'root battles')
       }
     })
   }, [state.user])

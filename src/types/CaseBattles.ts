@@ -19,27 +19,30 @@ export interface IRootBattleCaseItem {
 
 export interface IRootBattlePlayer {
   id: string
-  is_bot: boolean
-  is_host: true
   name: string
   avatar: string
   level: number
-  // ref_by: null | string
-  slot: number
-  value: number
+  place: number
 }
 
 export interface IRootBattleRoundItem {
   case: string
-  item: string
-  price: number
-  slot: number
+  cost: number
+  odds: number
+  skin_image: string
+  skin_name: string
+  user: IRootBattlePlayer
 }
 
 export interface IRootBattleResult {
   id: string
   round: number
-  items: IRootBattleRoundItem[]
+  results: IRootBattleRoundItem[]
+}
+
+export interface IRootBattleResultHistory {
+  id: string
+  drops: IRootBattleRoundItem
 }
 
 export type IRootMaximumPlayers = 2 | 3 | 4
@@ -51,12 +54,12 @@ export interface IRootBattle {
   state: keyof typeof RootBattleStateEnum
   cost: number
   caselist: IRootBattleCaseItem[]
-  result: IRootBattleResult[]
+  result: IRootBattleResultHistory[]
   players: IRootBattlePlayer[]
   max: IRootMaximumPlayers
   hash: string
   winner: IRootBattlePlayer[]
-  joining?: boolean
+  joining: boolean
 }
 
 export enum DisplayedBattleModeEnum {

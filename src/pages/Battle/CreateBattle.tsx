@@ -37,7 +37,6 @@ import {
   IRootBattle
 } from '../../types/CaseBattles'
 
-
 enum PolicyEnum {
   'private' = 'private',
   'public' = 'public'
