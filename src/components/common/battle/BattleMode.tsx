@@ -1,4 +1,6 @@
-import { FC, ReactNode, useEffect, useState } from 'react'
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { FC, ReactNode, useCallback, useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 import Loader from '../../base/Loader'
@@ -8,7 +10,6 @@ import FriendlyBlue from '../../icons/FriendlyBlue'
 import FriendlyGreen from '../../icons/FriendlyGreen'
 import FriendlyOrange from '../../icons/FriendlyOrange'
 import { IMAGES } from '../../../constants/images'
-import { IBattleUser } from '../../../mocks/battle'
 import { IItemCard } from '../../../types/ItemCard'
 import BackdropEffects from './BackdropEffects'
 import PlayerStatusGame from './PlayerStatusGame'
@@ -16,7 +17,6 @@ import UserBar from './UserBar'
 import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
 import SpinItems from './SpinItems'
 import UsersDrops from './UsersDrops'
-import { useSocketCtx } from '../../../store/SocketStore'
 import { getToast } from '../../../helpers/toast'
 import {
   DisplayedBattleModeEnum,
@@ -26,7 +26,10 @@ import {
   RootBattleStateEnum
 } from '../../../types/CaseBattles'
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
-import { sortData } from '../../../helpers/sortData'
+import {
+  CASE_BATTLE_ROUND_TIME_MILLISECONDS,
+  CASE_BATTLE_SPINNER_TIME_MILLISECONDS
+} from '../../../constants/battle-cases'
 
 export interface IWiningPlayerCard {
   id: string
@@ -38,8 +41,6 @@ const case2v2Icons: Record<number, ReactNode> = {
   1: <BattleDaggers />,
   2: <FriendlyOrange />
 }
-
-// const initTeamState = { orange: { score: 0, teamPlayers: [] }, blue: { score: 0, teamPlayers: [] } }
 
 const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
   switch (type) {
@@ -58,22 +59,53 @@ interface IBattleModeProps {
   historyRounds: IRootBattleResult[]
 }
 
-const BattleMode: FC<IBattleModeProps> = ({
-  game,
-  currentRound,
-  historyRounds
-}: IBattleModeProps) => {
-  const { socket } = useSocketCtx()
+const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }: IBattleModeProps) => {
+  const [isSpin, setIsSpin] = useState(false)
+  const [isStartGame, setIsStartGame] = useState(false)
 
-  const [isSpinEnd, setIsSpinEnd] = useState(false)
+  const getSumWonItems = useCallback(
+    (historyRounds: IRootBattleResult[], playerIndex: number) => {
+      return historyRounds.reduce((totalCost, result) => {
+        if (result.results[playerIndex]) {
+          totalCost += result.results[playerIndex].cost
+        }
+        return totalCost
+      }, 0)
+    },
+    [historyRounds]
+  )
 
-  const isWinnerRound = (playerIndex: number, roundItems: IRootBattleRoundItem[]): boolean => {
-    const maxValueOfPrice = Math.max(...roundItems.map((item) => item.price), 0)
-
-    const filterByPrice = roundItems.filter((item) => item.price === maxValueOfPrice)
-
-    return filterByPrice.some((item) => item.slot === playerIndex + 1)
+  const getMaxCostInRound = (round: IRootBattleResult) => {
+    return round.results.reduce((maxCost, roundItem) => {
+      return Math.max(maxCost, roundItem.cost)
+    }, 0)
   }
+
+  const getHistoryRoundsForPlayer = (
+    historyRounds: IRootBattleResult[],
+    playerIndex: number
+  ): IRootBattleRoundItem[] => {
+    return historyRounds.map((round) => round.results[playerIndex])
+  }
+
+  useEffect(() => {
+    if (game.state !== 'done') {
+      setTimeout(() => {
+        setIsSpin(true)
+        setTimeout(() => {
+          setIsSpin(false)
+        }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
+      }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
+    }
+  }, [historyRounds])
+
+  useEffect(() => {
+    if (game.state === 'done') {
+      setTimeout(() => {
+        setIsStartGame(false)
+      }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
+    }
+  }, [game.state])
 
   return (
     <div className="flex -mx-2">
@@ -86,27 +118,21 @@ const BattleMode: FC<IBattleModeProps> = ({
             'w-1/4': game.max === 4
           })}
         >
-          <UserBar
-            game={game}
-            playerIndex={index}
-            // user={game.players[index]}
-            // amountPlayers={game.max}
-            // onJoinGame={() => handleJoinGame(index)}
-            // onJoinGame={() => handleCallBot(index)}
-            // isPlayerGameWinners={isWinnerRound(index, currentRound?.items ?? [])} // add is game winner
-            // isEndGame={game.state === RootBattleStateEnum.done}
-            // wonDiamonds={24124124} // todo
-          />
+          <UserBar game={game} playerIndex={index} getSumWonItems={() => getSumWonItems(historyRounds, index)} />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-              'bg-gradient-lvl from-green-primary/30': isWinnerRound(
-                index,
-                currentRound?.items ?? []
-              ),
-              // ||  gameWinnerPlayer?.find((player) => player?.id === players[index]?.id) // add is game winner
-              'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                (!isWinnerRound(index, currentRound?.items ?? []) && isSpinEnd) ||
-                (!isWinnerRound(index, currentRound?.items ?? []) && RootBattleStateEnum.done)
+              // 'bg-gradient-lvl from-green-primary/30':
+              //   (game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+              //   (game.state === 'playing' &&
+              //     !isSpin &&
+              //     currentRound &&
+              //     getMaxCostInRound(currentRound) === currentRound.results[index].cost),
+              // 'bg-gradient-lvl from-red-accent/30 to-dark/0':
+              //   (game.state === 'done' && game.winners[0].place !== game.players[index].place) ||
+              //   (game.state === 'playing' &&
+              //     !isSpin &&
+              //     currentRound &&
+              //     getMaxCostInRound(currentRound) !== currentRound.results[index].cost)
             })}
           >
             {index !== game.max - 1 && (
@@ -134,11 +160,11 @@ const BattleMode: FC<IBattleModeProps> = ({
                 // winningCard={allWinningCards[players[index]?.id]?.image} // todo
                 // isEndGame={game.state === RootBattleStateEnum.done}
               />
-              <RoundWinBorderBottomEffect
+              {/* <RoundWinBorderBottomEffect
                 // isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
                 isShown={false}
                 isAddWinClass={isWinnerRound(index, currentRound?.items ?? [])}
-              />
+              /> */}
             </div>
             {game.state === RootBattleStateEnum.open && (
               <div className="z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2">
@@ -156,25 +182,19 @@ const BattleMode: FC<IBattleModeProps> = ({
                 )}
               </div>
             )}
-            {game.state === RootBattleStateEnum.playing && (
+            {currentRound && (
               <SpinItems
                 currentRound={currentRound}
                 game={game}
-                playerId={game.players[index]?.id}
-                // updateRewards={updateRewards}
-                // updateRound={updateRound}
-                // addWinningCard={addWinningCard}
-                // setShowEnd={setFinishGame}
-                updateRewards={() => console.log('test')}
-                updateRound={() => console.log('test')}
-                addWinningCard={() => console.log('test')}
-                setShowEnd={() => console.log('test')}
+                playerIndex={index}
+                isSpin={isSpin}
+                isStartGame={isStartGame}
               />
             )}
-            {/* {game.state === RootBattleStateEnum.done && isFinishedGame && (
+            {/* {game.state === RootBattleStateEnum.done && game.winners && (
               <PlayerStatusGame
-                isPlayerGameWinner={isWinners(players[index]?.id)}
-                wonDiamonds={players[index]?.wonDiamonds}
+                isPlayerGameWinner={game.winners[0].place === game.players[index].place}
+                wonDiamonds={getSumWonItems(historyRounds, index)}
               />
             )} */}
             <div className="grow rotate-180 translate-y-[-2px]">
@@ -189,12 +209,7 @@ const BattleMode: FC<IBattleModeProps> = ({
               />
             </div>
           </div>
-          <UsersDrops
-            // amountGamePlates={game.max}
-            // cards={game.caselist}
-            game={game}
-            // cards={players[index]?.dropsCards}
-          />
+          <UsersDrops slots={game.max} playerHistoryRounds={getHistoryRoundsForPlayer(historyRounds, index)} />
         </div>
       ))}
     </div>

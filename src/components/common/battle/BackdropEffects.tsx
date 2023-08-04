@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 import { IMAGES } from '../../../constants/images'
-import { IRootBattle, IRootBattlePlayer } from '../../../types/CaseBattles'
+import { IRootBattle } from '../../../types/CaseBattles'
 
 interface IBackdropEffects {
   game: IRootBattle

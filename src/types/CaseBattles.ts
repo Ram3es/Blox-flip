@@ -1,3 +1,5 @@
+import { IRootCaseItem } from './Cases'
+
 export enum RootBattleModeEnum {
   regular = 'regular',
   crazy = 'crazy',
@@ -9,11 +11,7 @@ export enum RootBattleStateEnum {
   playing = 'playing',
   done = 'done'
 }
-export interface IRootBattleCaseItem {
-  image: string
-  name: string
-  price: number
-  short: string
+export interface IRootBattleCaseItem extends IRootCaseItem {
   num: number
 }
 

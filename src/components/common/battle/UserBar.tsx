@@ -14,9 +14,10 @@ import { getToast } from '../../../helpers/toast'
 interface UserBarProps {
   game: IRootBattle
   playerIndex: number
+  getSumWonItems: () => number
 }
 
-const UserBar = ({ game, playerIndex }: UserBarProps) => {
+const UserBar = ({ game, playerIndex, getSumWonItems }: UserBarProps) => {
   const { socket } = useSocketCtx()
 
   const handleJoinGame = (place: number) => {
@@ -56,7 +57,6 @@ const UserBar = ({ game, playerIndex }: UserBarProps) => {
     )
   }
 
-  // const isLoseGame = game.state === RootBattleStateEnum.done && !isPlayerGameWinners
   const isLoseGame = game.state === RootBattleStateEnum.done
 
   return (
@@ -90,8 +90,7 @@ const UserBar = ({ game, playerIndex }: UserBarProps) => {
             iconContainerColor={`${isLoseGame ? 'RedPrimary' : 'GreenPrimary'}`}
             iconContainerSize="Small"
             iconClasses="w-[13px]"
-            // typographyQuantity={wonDiamonds ?? 1421412}
-            typographyQuantity={2424}
+            typographyQuantity={getSumWonItems()}
           />
         </>
       )}
