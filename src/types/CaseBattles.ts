@@ -25,6 +25,10 @@ export interface IRootBattlePlayer {
   place: number
 }
 
+export interface IRootGameWinner extends IRootBattlePlayer {
+  value: number
+}
+
 export interface IRootBattleRoundItem {
   case: string
   cost: number
@@ -48,18 +52,26 @@ export interface IRootBattleResultHistory {
 export type IRootMaximumPlayers = 2 | 3 | 4
 
 export interface IRootBattle {
-  team: boolean
-  mode: keyof typeof RootBattleModeEnum
-  id: string
-  state: keyof typeof RootBattleStateEnum
-  cost: number
   caselist: IRootBattleCaseItem[]
-  result: IRootBattleResultHistory[]
-  players: IRootBattlePlayer[]
-  max: IRootMaximumPlayers
+  cost: number
   hash: string
+  id: string
+  max: IRootMaximumPlayers
+  mode: keyof typeof RootBattleModeEnum
+  players: IRootBattlePlayer[]
+  result: IRootBattleResultHistory[]
+  state: keyof typeof RootBattleStateEnum
+  team: boolean
   winner: IRootBattlePlayer[]
-  joining: boolean
+  tie?: boolean
+  tie_array?: boolean
+  joining?: boolean
+  winners: IRootBattlePlayer[]
+}
+
+export interface IRootJoinBattle {
+  id: string
+  user: IRootBattlePlayer
 }
 
 export enum DisplayedBattleModeEnum {

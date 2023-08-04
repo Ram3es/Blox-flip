@@ -20,7 +20,7 @@ const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
   const { handleCopyText: handleCopyLocation } = useCopyToClipboard(window.location.href)
 
   const getCurrentCasePrice = useCallback(
-    () => game.caselist[currentRound?.round ?? 0].price,
+    () => (currentRound ? game.caselist[currentRound.round - 1].price : game.caselist[0].price),
     [currentRound]
   )
 
@@ -34,7 +34,7 @@ const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
         <div className="flex items-center">
           <VerticalDivider className="mx-4" />
           <div className="font-semibold">
-            <span className={game.state !== 'playing' ? 'text-primary-gray' : 'text-white'}>
+            <span className={game.state !== 'playing' ? 'text-gray-primary' : 'text-white'}>
               {currentRound?.round ?? 0}
             </span>
             {` / ${game.caselist.length}`}
@@ -53,7 +53,7 @@ const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
       <div className="flex flex-wrap items-center ml-4 mb-8  text-gray-primary">
         <Button
           onClick={handleCopyLocation}
-          className='flex items-center cursor-pointer mb-5 xxs:mb-0 text-gray-primary'
+          className="flex items-center cursor-pointer mb-5 xxs:mb-0 text-gray-primary"
         >
           <CopyIconSecond />
           <span className="ml-2">Copy Link</span>
