@@ -39,7 +39,6 @@ export const CaseOpeningProvider = ({ children }: ChatProviderProps) => {
         getToast(err)
       }
       if (!err) {
-        console.log(case_list, 'caselist')
         setCases(case_list)
       }
     })

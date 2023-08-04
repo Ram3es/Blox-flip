@@ -20,20 +20,19 @@ const GameRoundsInfo = ({ game, currentRound }: IBoxInfoProps) => {
         >
           {getDisplayedModeByGame(game)}
         </div>
-      <div className={`${game.caselist.length > 18 ? 'pb-5 mb-1 scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full' : ''} flex items-center max-w-[864px]  mx-2  `}>
+      <div className={`${game.caselist.length > 18 ? 'pb-5 mb-1 scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full' : ''} flex items-center max-w-[864px] mx-2`}>
         {game.caselist.map((item, index) => (
-          <div key={item.name + getRandomId()} className="px-1.5 py-3 w-12 shrink-0 relative ">
-            <img src={item.image} alt="caseBox"
+          <div key={item.name + getRandomId()} className="px-1.5 py-3 w-12 shrink-0 relative">
+            <img src={item.image} alt={item.name}
               width="56"
               height="62"
               loading="lazy"
               decoding="async"
             />
-            <div className=" absolute w-2.5 -inset-x-full m-auto -bottom-1.5">
+            <div className="absolute w-2.5 -inset-x-full m-auto -bottom-1.5">
               {currentRound && currentRound.round > index
                 ? <img src={IMAGES.pointGreen} alt="green-point" width="10" height="10" loading="lazy" decoding="async" />
                 : <img src={IMAGES.pointBlue} alt="gray-point" width="10" height="10" loading="lazy" decoding="async" />}
-
             </div>
           </div>
         )) }
@@ -46,7 +45,6 @@ const GameRoundsInfo = ({ game, currentRound }: IBoxInfoProps) => {
         </div>
          Provably fair
       </Link>
-
     </div>
   </div>
   )

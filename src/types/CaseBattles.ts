@@ -1,3 +1,5 @@
+import { IRootCaseItem } from './Cases'
+
 export enum RootBattleModeEnum {
   regular = 'regular',
   crazy = 'crazy',
@@ -9,54 +11,65 @@ export enum RootBattleStateEnum {
   playing = 'playing',
   done = 'done'
 }
-export interface IRootBattleCaseItem {
-  image: string
-  name: string
-  price: number
-  short: string
+export interface IRootBattleCaseItem extends IRootCaseItem {
   num: number
 }
 
 export interface IRootBattlePlayer {
   id: string
-  is_bot: boolean
-  is_host: true
   name: string
   avatar: string
   level: number
-  // ref_by: null | string
-  slot: number
+  place: number
+}
+
+export interface IRootGameWinner extends IRootBattlePlayer {
   value: number
 }
 
 export interface IRootBattleRoundItem {
   case: string
-  item: string
-  price: number
-  slot: number
+  cost: number
+  odds: number
+  skin_image: string
+  skin_name: string
+  user: IRootBattlePlayer
 }
 
 export interface IRootBattleResult {
   id: string
   round: number
-  items: IRootBattleRoundItem[]
+  results: IRootBattleRoundItem[]
+}
+
+export interface IRootBattleResultHistory {
+  id: string
+  drops: IRootBattleRoundItem
 }
 
 export type IRootMaximumPlayers = 2 | 3 | 4
 
 export interface IRootBattle {
-  team: boolean
-  mode: keyof typeof RootBattleModeEnum
-  id: string
-  state: keyof typeof RootBattleStateEnum
-  cost: number
   caselist: IRootBattleCaseItem[]
-  result: IRootBattleResult[]
-  players: IRootBattlePlayer[]
-  max: IRootMaximumPlayers
+  cost: number
   hash: string
+  id: string
+  max: IRootMaximumPlayers
+  mode: keyof typeof RootBattleModeEnum
+  players: IRootBattlePlayer[]
+  result: IRootBattleResultHistory[]
+  state: keyof typeof RootBattleStateEnum
+  team: boolean
   winner: IRootBattlePlayer[]
+  tie?: boolean
+  tie_array?: boolean
   joining?: boolean
+  winners: IRootBattlePlayer[]
+}
+
+export interface IRootJoinBattle {
+  id: string
+  user: IRootBattlePlayer
 }
 
 export enum DisplayedBattleModeEnum {

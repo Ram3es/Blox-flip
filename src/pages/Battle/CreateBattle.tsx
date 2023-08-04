@@ -37,7 +37,6 @@ import {
   IRootBattle
 } from '../../types/CaseBattles'
 
-
 enum PolicyEnum {
   'private' = 'private',
   'public' = 'public'
@@ -157,14 +156,12 @@ const CreateBattle = () => {
         item.amount > 1 ? Array.from({ length: item.amount }, () => item.short) : item.short
       )
     }
-    console.log('sendedData', sendedData)
 
     socket.emit('create_battle', sendedData, (error: string | boolean, battle: IRootBattle) => {
       if (typeof error === 'string') {
         getToast(error)
       }
       if (!error) {
-        console.log('data', battle)
         navigate(`/battle/${battle.id}`, { state: battle })
       }
     })

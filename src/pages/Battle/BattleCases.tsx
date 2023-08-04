@@ -6,18 +6,17 @@ import GameHeader from '../../components/common/battle/GameHeader'
 import GameRoundsInfo from '../../components/common/battle/GameRoundsInfo'
 import { useBattleCase } from '../../store/BattleCaseStore'
 import { useSocketCtx } from '../../store/SocketStore'
-import { IRootBattle, IRootBattleResult } from '../../types/CaseBattles'
+import { IRootBattle, IRootBattleResult, IRootJoinBattle } from '../../types/CaseBattles'
 
 const BattleCases = () => {
   const { id } = useParams()
   const { games } = useBattleCase()
   const { socket } = useSocketCtx()
   const { state } = useLocation()
-  // console.log(state, 'state')
 
   const [gameState, setGameState] = useState<IRootBattle | null>(null)
-  const [historyRounds, setHistoryRounds] = useState<IRootBattleResult[]>([])
   const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
+  const [historyRounds, setHistoryRounds] = useState<IRootBattleResult[]>([])
 
   useEffect(() => {
     if (state) {
@@ -25,7 +24,6 @@ const BattleCases = () => {
     }
     if (id && !state) {
       const currentGame = games.find((game) => game.id === id)
-      console.log('BATTLE CASE', currentGame)
       if (currentGame) {
         setGameState(currentGame)
       }
@@ -34,17 +32,28 @@ const BattleCases = () => {
 
   useEffect(() => {
     if (id && gameState) {
-      socket.on('battle_result', (data: IRootBattleResult[]) => {
-        const battleRound = data.find((item) => item.id === id)
-        if (battleRound) {
-          setCurrentRound(battleRound)
-          setHistoryRounds((prev) => [...prev, battleRound])
+      socket.on('battle_result', (data: IRootBattleResult) => {
+        if (data.id === gameState.id) {
+          if (data.round === 1) {
+            setGameState((prev) => prev && { ...prev, state: 'playing' })
+          }
+
+          setCurrentRound(data)
+          setHistoryRounds((prev) => [...prev, data])
         }
       })
     }
 
-    socket.on('join_battle', (id, player) => {
-      console.log(id, player, 'DATA JOIN BATTLE')
+    socket.on('join_battle', (data: IRootJoinBattle) => {
+      if (gameState && gameState.id === data.id) {
+        setGameState((prev) => prev && { ...prev, players: [...prev.players, data.user] })
+      }
+    })
+
+    socket.on('battle_over', (data: IRootBattle) => {
+      if (gameState && gameState.id === data.id) {
+        setGameState(data)
+      }
     })
 
     return () => {

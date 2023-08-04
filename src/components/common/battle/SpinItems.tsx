@@ -1,34 +1,20 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 import BattleGameItem from '../Cards/BattleGameItem'
-import { useBattleCase } from '../../../store/BattleCaseStore'
 import { IRootBattle, IRootBattleResult } from '../../../types/CaseBattles'
 import { IRootCasePotentialItem } from '../../../types/Cases'
-import { cards } from '../../../mocks/cards'
 
 interface ISpinGameProps {
   game: IRootBattle
+  playerIndex: number
   currentRound: IRootBattleResult | null
-  updateRewards: Function
-  playerId: number | string
-  updateRound: Function
-  addWinningCard: Function
-  setShowEnd: Function
+  isSpin: boolean
+  isStartGame: boolean
 }
 
-const SpinItems: FC<ISpinGameProps> = ({
-  game,
-  currentRound,
-  updateRewards,
-  playerId,
-  updateRound,
-  addWinningCard,
-  setShowEnd
-}) => {
-  const { allCases } = useBattleCase()
-
+const SpinItems: FC<ISpinGameProps> = ({ game, currentRound, playerIndex, isSpin, isStartGame }) => {
   const [rouletteItems, setRouletteItems] = useState<IRootCasePotentialItem[]>([])
-  const [winningCard, setWinningCard] = useState<IRootCasePotentialItem | null>(null)
+  const [winItem, setWinItem] = useState<IRootCasePotentialItem | null>(null)
 
   const [isRespin, setRespin] = useState(false)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
@@ -51,75 +37,72 @@ const SpinItems: FC<ISpinGameProps> = ({
       itemsRef.current.style.transition = 'none'
       itemsRef.current.style.bottom = '0px'
     }
-    setWinningCard(null)
+    setWinItem(null)
   }
 
   const load = () => {
-    // const randomCardIndex = Math.floor(Math.random() * cards.length)
-    // const randomCard = cards[randomCardIndex]
-    // const winningCart = {
-    //   ...randomCard,
-    //   id: `${randomCard.id} ${new Date().getTime()}`
-    // }
+    if (currentRound) {
+      const item = currentRound.results[playerIndex]
 
+      const modifyItem = {
+        name: item.skin_name,
+        image: item.skin_image,
+        price: item.cost,
+        chance: 124,
+        id: getRandomId()
+      }
 
-    setRouletteItems((prev) => {
-      const state = [...prev]
-      // state[87] = winningCard
-      return state
-    })
-    setWinningCard(winningCard)
+      setRouletteItems((prev) => {
+        const state = [...prev]
+        state[87] = modifyItem
+        return state
+      })
+      setWinItem(modifyItem)
+    }
   }
 
   const play = () => {
     if (isRespin) {
       reset()
-      updateRound(playerId)
       setTimeout(() => {
         load()
-        spin(4)
+        spin(5)
       }, 10)
-
       return
     }
+    // if (isRespin) {
+    //   reset()
+    //   load()
+    // }
     load()
-    spin(4)
+    spin(5)
     setRespin(true)
   }
 
   useEffect(() => {
-    if (status === 'running') {
-      if (isRespin) {
-        refInterval.current = setInterval(() => play(), 8000)
-      } else {
-        play()
-      }
-      return
+    if (game.state === 'playing') {
+      // if (isRespin) {
+      //   refInterval.current = setInterval(() => play(), 5000)
+      // } else {
+      //   play()
+      // }
+      play()
     }
-    if (status === 'ended') {
+    if (game.state === 'done') {
       refInterval.current && clearInterval(refInterval.current)
-      setTimeout(() => setShowEnd(), 8000)
+      // setTimeout(() => setShowEnd(), 8000)
     }
   }, [game.state, isRespin])
 
   useEffect(() => {
-    if (winningCard) {
-      setTimeout(() => {
-        updateRewards(playerId, winningCard)
-        addWinningCard(playerId, winningCard)
-      }, 5000)
-    }
-  }, [winningCard])
-
-  useEffect(() => {
     if (currentRound) {
-      const currentCase = allCases.find(
-        (item) => item.name === game.caselist[currentRound.round - 1].name
-      )
+      const currentCase = game.caselist[currentRound.round - 1]
 
       if (currentCase) {
         setRouletteItems(getRandomCards<IRootCasePotentialItem>(100, currentCase.items))
       }
+
+      play()
     }
   }, [currentRound])
 
@@ -132,10 +115,8 @@ const SpinItems: FC<ISpinGameProps> = ({
         {rouletteItems.map((item, index) => (
           <BattleGameItem
             key={index}
-            itsWinning={item.id === winningCard?.id}
-            // winningCard={winningCard}
-            winningCard={undefined}
-
+            itsWinning={!isSpin && item.id === winItem?.id}
+            winningCard={winItem}
             image={item.image}
           />
         ))}
