@@ -12,11 +12,12 @@ import SelectedIcon from '../../icons/SelectedIcon'
 import { IRootBattle, RootBattleStateEnum } from '../../../types/CaseBattles'
 
 const ButtonsCell = ({ game }: { game: IRootBattle }) => {
+  const navigate = useNavigate()
+
   const handleNavigateLobby = useCallback(() => {
     navigate(`/battle/${game.id}`, { state: game })
   }, [game])
 
-  const navigate = useNavigate()
   const activeButton = useMemo(() => {
     switch (game.state) {
       case RootBattleStateEnum.open:
@@ -54,7 +55,7 @@ const ButtonsCell = ({ game }: { game: IRootBattle }) => {
           </Button>
         )
     }
-  }, [status])
+  }, [game.state])
 
   return (
     <div className="flex items-center justify-end">
