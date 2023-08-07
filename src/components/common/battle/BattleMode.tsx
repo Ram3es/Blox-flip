@@ -79,6 +79,11 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
     return winners.some((winner) => winner.place === playerPlace)
   }
 
+  const getWinnerValue = (winners: IRootBattlePlayer[], playerPlace: number) => {
+    const winner = winners.find((winner) => winner.place === playerPlace)
+    return winner ? winner.value : 0
+  }
+
   const getHistoryRoundsForPlayerByResult = (
     result: IRootBattleResultHistory[],
     playerIndex: number
@@ -135,27 +140,23 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             sumWonItems={
               game.state === 'done'
                 ? getHistoryRoundsForPlayerByResult(game.result, index).reduce((totalCost, result) => {
-                  totalCost += result.cost
-                  return totalCost
-                }, 0)
+                    totalCost += result.cost
+                    return totalCost
+                  }, 0)
                 : getSumWonItemsByHistory(drops, index)
             }
-            isLoser={game.team ? !isPlayerWinnerGame(game.winners, index + 1) : game.state === 'done' && game.winners[0].place !== game.players[index].place}
+            isLoser={game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)}
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
               'bg-gradient-lvl from-green-primary/30':
-                (game.team
-                  ? isPlayerWinnerGame(game.winners, index + 1)
-                  : game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+                (game.state === 'done' && isPlayerWinnerGame(game.winners, index + 1)) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
                   getMaxCostInRound(currentRound) === currentRound.results[index].cost),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                (game.team
-                  ? !isPlayerWinnerGame(game.winners, index + 1)
-                  : game.state === 'done' && game.winners[0].place !== game.players[index].place) ||
+                (game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
@@ -190,7 +191,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
               <BorderBottomEffect
                 isVisible={isVisibleEffects || game.state === 'done'}
                 isWinner={
-                  (game.team ? isPlayerWinnerGame(game.winners, index + 1) : game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+                  (game.state === 'done' && isPlayerWinnerGame(game.winners, index + 1)) ||
                   (game.state === 'playing' && currentRound
                     ? getMaxCostInRound(currentRound) === currentRound.results[index].cost
                     : false)
@@ -228,8 +229,8 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
               <PlayerStatusGame
                 isPlayerGameWinner={isPlayerWinnerGame(game.winners, index + 1)}
                 wonDiamonds={
-                  game.state === 'done' && game.winners[0].place === game.players[index].place
-                    ? game.winners[0].value
+                  game.state === 'done' && isPlayerWinnerGame(game.winners, index + 1)
+                    ? getWinnerValue(game.winners, game.players[index].place)
                     : getSumWonItemsByHistory(drops, index)
                 }
               />
