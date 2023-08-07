@@ -18,7 +18,8 @@ import {
   DisplayedBattleModeEnum,
   IRootBattle,
   IRootBattleResult,
-  IRootBattleRoundItem,
+  IRootBattleResultHistory,
+  IRootBattleRoundItem
 } from '../../../types/CaseBattles'
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import {
@@ -62,7 +63,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
   const [drops, setDrops] = useState<IRootBattleResult[]>([])
 
-  const getSumWonItems = useCallback(
+  const getSumWonItemsByHistory = useCallback(
     (historyRounds: IRootBattleResult[], playerIndex: number) => {
       return historyRounds.reduce((totalCost, result) => {
         if (result.results[playerIndex]) {
@@ -73,6 +74,13 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
     },
     [historyRounds]
   )
+
+  const getHistoryRoundsForPlayerByResult = (
+    result: IRootBattleResultHistory[],
+    playerIndex: number
+  ): IRootBattleRoundItem[] => {
+    return result.map((item) => item.drops[playerIndex])
+  }
 
   const getMaxCostInRound = (round: IRootBattleResult) => {
     return round.results.reduce((maxCost, roundItem) => {
@@ -126,7 +134,14 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
           <UserBar
             game={game}
             playerIndex={index}
-            getSumWonItems={() => getSumWonItems(drops, index)}
+            sumWonItems={
+              game.state === 'done'
+                ? getHistoryRoundsForPlayerByResult(game.result, index).reduce((totalCost, result) => {
+                  totalCost += result.cost
+                  return totalCost
+                }, 0)
+                : getSumWonItemsByHistory(drops, index)
+            }
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
@@ -210,7 +225,11 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             {game.state === 'done' && game.winners && (
               <PlayerStatusGame
                 isPlayerGameWinner={game.winners[0].place === game.players[index].place}
-                wonDiamonds={getSumWonItems(historyRounds, index)}
+                wonDiamonds={
+                  game.state === 'done' && game.winners[0].place === game.players[index].place
+                    ? game.winners[0].value
+                    : getSumWonItemsByHistory(drops, index)
+                }
               />
             )}
             {game.state !== 'done' && (
@@ -227,7 +246,14 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
               </div>
             )}
           </div>
-          <UsersDrops slots={game.max} playerHistoryRounds={getHistoryRoundsForPlayer(drops, index)} />
+          <UsersDrops
+            slots={game.max}
+            playerHistoryRounds={
+              game.state === 'done'
+                ? getHistoryRoundsForPlayerByResult(game.result, index)
+                : getHistoryRoundsForPlayer(drops, index)
+            }
+          />
         </div>
       ))}
     </div>
