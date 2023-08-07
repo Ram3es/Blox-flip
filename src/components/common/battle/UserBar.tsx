@@ -8,7 +8,7 @@ import Image from '../../base/Image'
 import DaggersIcons from '../../icons/DaggersIcons'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 
-import { IRootBattle, RootBattleStateEnum } from '../../../types/CaseBattles'
+import { IRootBattle } from '../../../types/CaseBattles'
 import { getToast } from '../../../helpers/toast'
 
 interface UserBarProps {

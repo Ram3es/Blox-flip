@@ -12,7 +12,6 @@ import { IItemCard } from '../../../types/ItemCard'
 import BackdropEffects from './BackdropEffects'
 import PlayerStatusGame from './PlayerStatusGame'
 import UserBar from './UserBar'
-import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
 import SpinItems from './SpinItems'
 import UsersDrops from './UsersDrops'
 import {
@@ -20,14 +19,13 @@ import {
   IRootBattle,
   IRootBattleResult,
   IRootBattleRoundItem,
-  RootBattleStateEnum
 } from '../../../types/CaseBattles'
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import {
   CASE_BATTLE_ROUND_TIME_MILLISECONDS,
   CASE_BATTLE_SPINNER_TIME_MILLISECONDS
 } from '../../../constants/battle-cases'
-import BorderBottomEffect from './RoundWinBorderBottomEffect'
+import BorderBottomEffect from './BorderBottomEffect'
 
 export interface IWiningPlayerCard {
   id: string
