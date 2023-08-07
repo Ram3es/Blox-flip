@@ -30,7 +30,7 @@ const GameRoundsInfo = ({ game, currentRound }: IBoxInfoProps) => {
               decoding="async"
             />
             <div className="absolute w-2.5 -inset-x-full m-auto -bottom-1.5">
-              {currentRound && currentRound.round > index
+              {(currentRound && currentRound.round > index) ?? (game.state === 'done')
                 ? <img src={IMAGES.pointGreen} alt="green-point" width="10" height="10" loading="lazy" decoding="async" />
                 : <img src={IMAGES.pointBlue} alt="gray-point" width="10" height="10" loading="lazy" decoding="async" />}
             </div>

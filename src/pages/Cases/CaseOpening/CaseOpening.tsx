@@ -142,7 +142,6 @@ export const CaseOpening = () => {
               name: item.skin_name,
               image: item.skin_image,
               price: item.cost,
-              chance: 124,
               id: getRandomId()
             }))
           )

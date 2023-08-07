@@ -8,16 +8,17 @@ import Image from '../../base/Image'
 import DaggersIcons from '../../icons/DaggersIcons'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 
-import { IRootBattle, RootBattleStateEnum } from '../../../types/CaseBattles'
+import { IRootBattle } from '../../../types/CaseBattles'
 import { getToast } from '../../../helpers/toast'
 
 interface UserBarProps {
   game: IRootBattle
   playerIndex: number
-  getSumWonItems: () => number
+  isLoser?: boolean
+  sumWonItems?: number
 }
 
-const UserBar = ({ game, playerIndex, getSumWonItems }: UserBarProps) => {
+const UserBar = ({ game, playerIndex, sumWonItems, isLoser }: UserBarProps) => {
   const { socket } = useSocketCtx()
 
   const handleJoinGame = (place: number) => {
@@ -57,8 +58,6 @@ const UserBar = ({ game, playerIndex, getSumWonItems }: UserBarProps) => {
     )
   }
 
-  const isLoseGame = game.state === RootBattleStateEnum.done
-
   return (
     <div
       className={`${game.players[playerIndex] ? 'justify-between' : 'justify-center'} flex ${
@@ -85,12 +84,12 @@ const UserBar = ({ game, playerIndex, getSumWonItems }: UserBarProps) => {
             </div>
           </div>
           <CoinsWithDiamond
-            containerColor={`${isLoseGame ? 'RedPrimary' : 'GreenDarken'}`}
+            containerColor={`${isLoser ? 'RedPrimary' : 'GreenDarken'}`}
             containerSize="Small"
-            iconContainerColor={`${isLoseGame ? 'RedPrimary' : 'GreenPrimary'}`}
+            iconContainerColor={`${isLoser ? 'RedPrimary' : 'GreenPrimary'}`}
             iconContainerSize="Small"
             iconClasses="w-[13px]"
-            typographyQuantity={getSumWonItems()}
+            typographyQuantity={sumWonItems ?? 0}
           />
         </>
       )}

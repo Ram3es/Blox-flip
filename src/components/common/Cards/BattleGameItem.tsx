@@ -1,33 +1,34 @@
 import { useEffect, useState } from 'react'
 import { IRootCasePotentialItem } from '../../../types/Cases'
-import { CASE_BATTLE_SPINNER_TIME_MILLISECONDS } from '../../../constants/battle-cases'
 
 interface BattleGameItemProps {
-  itsWinning?: boolean
-  image: string
-  winningCard: IRootCasePotentialItem | null
+  item: IRootCasePotentialItem
+  isWinItem: boolean
+  isVisibleEffects: boolean
 }
 
-const BattleGameItem = ({ itsWinning, image, winningCard }: BattleGameItemProps) => {
+const BattleGameItem = ({ isWinItem, item, isVisibleEffects }: BattleGameItemProps) => {
   const [winningClass, setWinningClass] = useState<string | null>(null)
 
   useEffect(() => {
-    if (itsWinning) {
-      setTimeout(() => {
+    if (isWinItem) {
+      if (isVisibleEffects) {
+        console.log('isVisibleEffects in isVisibleEffects', isVisibleEffects)
         setWinningClass(() => 'h-[160px] shrink-0 pt-3  [&>img]:grayscale-0 [&>img]:opacity-100')
-      }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS + 1000)
-    }
-  }, [itsWinning])
+      }
+      if (!isVisibleEffects) {
+        console.log('isVisibleEffects in !isVisibleEffects', isVisibleEffects)
 
-  useEffect(() => {
-    setWinningClass(null)
-  }, [winningCard])
+        setWinningClass(null)
+      }
+    }
+  }, [isVisibleEffects, isWinItem])
 
   return (
     <div className={winningClass ?? 'h-[120px] shrink-0 pt-3'}>
       <img
-        src={image}
-        alt=""
+        src={item.image}
+        alt={item.name}
         width="118"
         height="90"
         loading="lazy"

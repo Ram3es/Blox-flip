@@ -21,6 +21,7 @@ export interface IRootBattlePlayer {
   avatar: string
   level: number
   place: number
+  value?: number
 }
 
 export interface IRootGameWinner extends IRootBattlePlayer {
@@ -44,7 +45,7 @@ export interface IRootBattleResult {
 
 export interface IRootBattleResultHistory {
   id: string
-  drops: IRootBattleRoundItem
+  drops: IRootBattleRoundItem[]
 }
 
 export type IRootMaximumPlayers = 2 | 3 | 4
@@ -60,11 +61,8 @@ export interface IRootBattle {
   result: IRootBattleResultHistory[]
   state: keyof typeof RootBattleStateEnum
   team: boolean
-  winner: IRootBattlePlayer[]
-  tie?: boolean
-  tie_array?: boolean
-  joining?: boolean
   winners: IRootBattlePlayer[]
+  joining?: boolean
 }
 
 export interface IRootJoinBattle {

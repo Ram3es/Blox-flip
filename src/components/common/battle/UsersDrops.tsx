@@ -6,13 +6,12 @@ import { IRootBattleRoundItem } from '../../../types/CaseBattles'
 
 import { getRandomId } from '../../../helpers/casesHelpers'
 
-const UsersDrops = ({
-  slots,
-  playerHistoryRounds
-}: {
+interface UserDropsProps {
   slots: number
   playerHistoryRounds: IRootBattleRoundItem[]
-}) => {
+}
+
+const UsersDrops = ({ slots, playerHistoryRounds }: UserDropsProps) => {
   const dropCardClasses = clsx('mb-2 px-1 w-1/2 point-hidden group/item is-block', {
     'sm:w-1/2 md:w-1/3 lg:w-1/4': slots === 2,
     'sm:w-full md:w-1/2 lg:w-1/3': slots === 3,
@@ -30,8 +29,8 @@ const UsersDrops = ({
           <DoubleRombIconSolid iconClasses="rotate-180" />
         </span>
       </div>
-      <div className="p-4 pb-2 rounded-xl min-h-[364px] gradient-blue-dark">
-        <div className="flex flex-wrap -mx-1 ">
+      <div className="p-4 pb-2 rounded-xl min-h-[250px] gradient-blue-dark">
+        <div className="flex items-center flex-wrap -mx-1 h-full">
           {playerHistoryRounds.map((item) => (
             <ItemCard
               itemClasses={dropCardClasses}

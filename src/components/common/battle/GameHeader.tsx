@@ -35,7 +35,7 @@ const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
           <VerticalDivider className="mx-4" />
           <div className="font-semibold">
             <span className={game.state !== 'playing' ? 'text-gray-primary' : 'text-white'}>
-              {currentRound?.round ?? 0}
+              {currentRound ? currentRound.round : game.state === 'done' ? game.caselist.length : 0}
             </span>
             {` / ${game.caselist.length}`}
           </div>
