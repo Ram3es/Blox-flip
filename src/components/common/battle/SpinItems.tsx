@@ -101,12 +101,8 @@ const SpinItems: FC<ISpinGameProps> = ({
         {rouletteItems.map((item, index) => (
           <BattleGameItem
             key={index}
-            itsWinning={!isSpin && item.id === winItem?.id}
-            winningCard={winItem}
-            image={item.image}
-            // isStartGame={isStartGame}
-            // isSpin={isSpin}
-            // currentRound={currentRound}
+            item={item}
+            isWinItem={!isSpin && item.id === winItem?.id}
             isVisibleEffects={isVisibleEffects}
           />
         ))}

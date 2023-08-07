@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { FC, ReactNode, useCallback, useEffect, useState } from 'react'
 import clsx from 'clsx'
 
@@ -17,7 +15,6 @@ import UserBar from './UserBar'
 import RoundWinBorderBottomEffect from './RoundWinBorderBottomEffect'
 import SpinItems from './SpinItems'
 import UsersDrops from './UsersDrops'
-import { getToast } from '../../../helpers/toast'
 import {
   DisplayedBattleModeEnum,
   IRootBattle,
@@ -28,9 +25,7 @@ import {
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import {
   CASE_BATTLE_ROUND_TIME_MILLISECONDS,
-  CASE_BATTLE_ROUND_WINNER_TIME_MILLISECONDS,
-  CASE_BATTLE_SPINNER_TIME_MILLISECONDS,
-  CASE_BATTLE_SPINNER_TIME_SECONDS
+  CASE_BATTLE_SPINNER_TIME_MILLISECONDS
 } from '../../../constants/battle-cases'
 
 export interface IWiningPlayerCard {
@@ -94,13 +89,6 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
 
   useEffect(() => {
     if (game.state !== 'done') {
-      // setTimeout(() => {
-      //   setIsSpin(true)
-
-      //   setTimeout(() => {
-      //     setIsSpin(false)
-      //   }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
-      // }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
       if (historyRounds.length > 0) {
         setIsSpin(true)
         console.log('Spin START')
@@ -137,18 +125,18 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
           <UserBar game={game} playerIndex={index} getSumWonItems={() => getSumWonItems(historyRounds, index)} />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
-              // 'bg-gradient-lvl from-green-primary/30':
-              //   (game.state === 'done' && game.winners[0].place === game.players[index].place) ||
-              //   (game.state === 'playing' &&
-              //     !isSpin &&
-              //     currentRound &&
-              //     getMaxCostInRound(currentRound) === currentRound.results[index].cost),
-              // 'bg-gradient-lvl from-red-accent/30 to-dark/0':
-              //   (game.state === 'done' && game.winners[0].place !== game.players[index].place) ||
-              //   (game.state === 'playing' &&
-              //     !isSpin &&
-              //     currentRound &&
-              //     getMaxCostInRound(currentRound) !== currentRound.results[index].cost)
+              'bg-gradient-lvl from-green-primary/30':
+                (game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+                (game.state === 'playing' &&
+                  isVisibleEffects &&
+                  currentRound &&
+                  getMaxCostInRound(currentRound) === currentRound.results[index].cost),
+              'bg-gradient-lvl from-red-accent/30 to-dark/0':
+                (game.state === 'done' && game.winners[0].place !== game.players[index].place) ||
+                (game.state === 'playing' &&
+                  isVisibleEffects &&
+                  currentRound &&
+                  getMaxCostInRound(currentRound) !== currentRound.results[index].cost)
             })}
           >
             {index !== game.max - 1 && (
@@ -171,10 +159,8 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
               <BackdropEffects
                 game={game}
                 playerIndex={index}
-                // statusGame={game.state}
-                // player={game.players[index]} // todo
-                // winningCard={allWinningCards[players[index]?.id]?.image} // todo
-                // isEndGame={game.state === RootBattleStateEnum.done}
+                currentRound={currentRound}
+                isVisibleEffects={isVisibleEffects}
               />
               {/* <RoundWinBorderBottomEffect
                 // isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
