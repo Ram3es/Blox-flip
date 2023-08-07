@@ -14,10 +14,11 @@ import { getToast } from '../../../helpers/toast'
 interface UserBarProps {
   game: IRootBattle
   playerIndex: number
+  isLoser?: boolean
   sumWonItems?: number
 }
 
-const UserBar = ({ game, playerIndex, sumWonItems }: UserBarProps) => {
+const UserBar = ({ game, playerIndex, sumWonItems, isLoser }: UserBarProps) => {
   const { socket } = useSocketCtx()
 
   const handleJoinGame = (place: number) => {
@@ -57,8 +58,6 @@ const UserBar = ({ game, playerIndex, sumWonItems }: UserBarProps) => {
     )
   }
 
-  const isLoseGame = game.state === 'done' && game.winners[0].place !== game.players[playerIndex].place
-
   return (
     <div
       className={`${game.players[playerIndex] ? 'justify-between' : 'justify-center'} flex ${
@@ -85,9 +84,9 @@ const UserBar = ({ game, playerIndex, sumWonItems }: UserBarProps) => {
             </div>
           </div>
           <CoinsWithDiamond
-            containerColor={`${isLoseGame ? 'RedPrimary' : 'GreenDarken'}`}
+            containerColor={`${isLoser ? 'RedPrimary' : 'GreenDarken'}`}
             containerSize="Small"
-            iconContainerColor={`${isLoseGame ? 'RedPrimary' : 'GreenPrimary'}`}
+            iconContainerColor={`${isLoser ? 'RedPrimary' : 'GreenPrimary'}`}
             iconContainerSize="Small"
             iconClasses="w-[13px]"
             typographyQuantity={sumWonItems ?? 0}

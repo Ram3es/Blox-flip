@@ -53,7 +53,6 @@ const BattleCases = () => {
     socket.on('battle_over', (data: IRootBattle) => {
       if (gameState && gameState.id === data.id) {
         setGameState(data)
-        console.log('battle_over')
       }
     })
 

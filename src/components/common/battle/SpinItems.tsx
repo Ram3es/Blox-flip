@@ -10,7 +10,6 @@ interface ISpinGameProps {
   playerIndex: number
   currentRound: IRootBattleResult | null
   isSpin: boolean
-  isStartGame: boolean
   isRespin: boolean
   setRespin: Dispatch<SetStateAction<boolean>>
   isVisibleEffects: boolean
@@ -21,7 +20,6 @@ const SpinItems: FC<ISpinGameProps> = ({
   currentRound,
   playerIndex,
   isSpin,
-  isStartGame,
   isRespin,
   setRespin,
   isVisibleEffects

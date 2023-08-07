@@ -17,6 +17,7 @@ import UsersDrops from './UsersDrops'
 import {
   DisplayedBattleModeEnum,
   IRootBattle,
+  IRootBattlePlayer,
   IRootBattleResult,
   IRootBattleResultHistory,
   IRootBattleRoundItem
@@ -58,7 +59,6 @@ interface IBattleModeProps {
 
 const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }: IBattleModeProps) => {
   const [isSpin, setIsSpin] = useState(false)
-  const [isStartGame, setIsStartGame] = useState(false)
   const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
   const [drops, setDrops] = useState<IRootBattleResult[]>([])
@@ -74,6 +74,10 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
     },
     [historyRounds]
   )
+
+  const isPlayerWinnerGame = (winners: IRootBattlePlayer[], playerPlace: number) => {
+    return winners.some((winner) => winner.place === playerPlace)
+  }
 
   const getHistoryRoundsForPlayerByResult = (
     result: IRootBattleResultHistory[],
@@ -112,12 +116,6 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
         }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
       }
     }
-
-    if (game.state === 'done') {
-      setTimeout(() => {
-        setIsStartGame(false)
-      }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
-    }
   }, [historyRounds, game.state])
 
   return (
@@ -142,17 +140,22 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 }, 0)
                 : getSumWonItemsByHistory(drops, index)
             }
+            isLoser={game.team ? !isPlayerWinnerGame(game.winners, index + 1) : game.state === 'done' && game.winners[0].place !== game.players[index].place}
           />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
               'bg-gradient-lvl from-green-primary/30':
-                (game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+                (game.team
+                  ? isPlayerWinnerGame(game.winners, index + 1)
+                  : game.state === 'done' && game.winners[0].place === game.players[index].place) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
                   getMaxCostInRound(currentRound) === currentRound.results[index].cost),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
-                (game.state === 'done' && game.winners[0].place !== game.players[index].place) ||
+                (game.team
+                  ? !isPlayerWinnerGame(game.winners, index + 1)
+                  : game.state === 'done' && game.winners[0].place !== game.players[index].place) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
@@ -187,7 +190,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
               <BorderBottomEffect
                 isVisible={isVisibleEffects || game.state === 'done'}
                 isWinner={
-                  (game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+                  (game.team ? isPlayerWinnerGame(game.winners, index + 1) : game.state === 'done' && game.winners[0].place === game.players[index].place) ||
                   (game.state === 'playing' && currentRound
                     ? getMaxCostInRound(currentRound) === currentRound.results[index].cost
                     : false)
@@ -216,7 +219,6 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 game={game}
                 playerIndex={index}
                 isSpin={isSpin}
-                isStartGame={isStartGame}
                 isRespin={isRespin}
                 setRespin={setRespin}
                 isVisibleEffects={isVisibleEffects}
@@ -224,7 +226,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             )}
             {game.state === 'done' && game.winners && (
               <PlayerStatusGame
-                isPlayerGameWinner={game.winners[0].place === game.players[index].place}
+                isPlayerGameWinner={isPlayerWinnerGame(game.winners, index + 1)}
                 wonDiamonds={
                   game.state === 'done' && game.winners[0].place === game.players[index].place
                     ? game.winners[0].value

@@ -18,8 +18,6 @@ const UsersDrops = ({ slots, playerHistoryRounds }: UserDropsProps) => {
     'sm:w-1/2 md:w-full ls:w-1/2 ': slots === 4
   })
 
-
-  console.log(playerHistoryRounds)
   return (
     <>
       <div className="gradient-blue-secondary rounded-t-lg w-fit flex justify-center items-center mx-auto py-2 px-6 font-bold text-base text-gray-primary">
