@@ -8,7 +8,7 @@ export interface IRootMarketItem {
 }
 
 export interface IRootCasePotentialItem {
-  chance: number
+  chance?: number
   image: string
   price: number
   name: string

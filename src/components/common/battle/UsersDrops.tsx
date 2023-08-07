@@ -30,8 +30,8 @@ const UsersDrops = ({
           <DoubleRombIconSolid iconClasses="rotate-180" />
         </span>
       </div>
-      <div className="p-4 pb-2 rounded-xl min-h-[364px] gradient-blue-dark">
-        <div className="flex flex-wrap -mx-1 ">
+      <div className="p-4 pb-2 rounded-xl min-h-[250px] gradient-blue-dark">
+        <div className="flex items-center flex-wrap -mx-1 h-full">
           {playerHistoryRounds.map((item) => (
             <ItemCard
               itemClasses={dropCardClasses}

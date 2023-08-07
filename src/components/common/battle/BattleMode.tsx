@@ -28,7 +28,9 @@ import {
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import {
   CASE_BATTLE_ROUND_TIME_MILLISECONDS,
-  CASE_BATTLE_SPINNER_TIME_MILLISECONDS
+  CASE_BATTLE_ROUND_WINNER_TIME_MILLISECONDS,
+  CASE_BATTLE_SPINNER_TIME_MILLISECONDS,
+  CASE_BATTLE_SPINNER_TIME_SECONDS
 } from '../../../constants/battle-cases'
 
 export interface IWiningPlayerCard {
@@ -62,6 +64,8 @@ interface IBattleModeProps {
 const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }: IBattleModeProps) => {
   const [isSpin, setIsSpin] = useState(false)
   const [isStartGame, setIsStartGame] = useState(false)
+  const [isRespin, setRespin] = useState(false)
+  const [isVisibleEffects, setIsVisibleEffects] = useState(false)
 
   const getSumWonItems = useCallback(
     (historyRounds: IRootBattleResult[], playerIndex: number) => {
@@ -90,22 +94,34 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
 
   useEffect(() => {
     if (game.state !== 'done') {
-      setTimeout(() => {
+      // setTimeout(() => {
+      //   setIsSpin(true)
+
+      //   setTimeout(() => {
+      //     setIsSpin(false)
+      //   }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
+      // }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
+      if (historyRounds.length > 0) {
         setIsSpin(true)
+        console.log('Spin START')
         setTimeout(() => {
           setIsSpin(false)
+          console.log('Spin END, Win Effect Start')
+          setIsVisibleEffects(true)
         }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
-      }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
+        setTimeout(() => {
+          setIsVisibleEffects(false)
+          console.log('Win Effect End')
+        }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
+      }
     }
-  }, [historyRounds])
 
-  useEffect(() => {
     if (game.state === 'done') {
       setTimeout(() => {
         setIsStartGame(false)
       }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
     }
-  }, [game.state])
+  }, [historyRounds, game.state])
 
   return (
     <div className="flex -mx-2">
@@ -189,6 +205,9 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 playerIndex={index}
                 isSpin={isSpin}
                 isStartGame={isStartGame}
+                isRespin={isRespin}
+                setRespin={setRespin}
+                isVisibleEffects={isVisibleEffects}
               />
             )}
             {/* {game.state === RootBattleStateEnum.done && game.winners && (

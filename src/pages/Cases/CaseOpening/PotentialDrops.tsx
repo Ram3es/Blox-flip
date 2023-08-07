@@ -27,12 +27,9 @@ export const PotentialDrops = ({ cards }: { cards: IRootCasePotentialItem[] }) =
             <ItemCard
               key={card.name}
               id={getRandomId()}
-              price={card.price}
-              image={card.image}
-              chance={card.chance / 1000}
               variant="CaseOpening"
-              name={card.name}
               color={'Red'} // change after sended data
+              {...card}
             />
           ))}
       </div>
