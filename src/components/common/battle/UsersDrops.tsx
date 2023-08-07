@@ -6,13 +6,12 @@ import { IRootBattleRoundItem } from '../../../types/CaseBattles'
 
 import { getRandomId } from '../../../helpers/casesHelpers'
 
-const UsersDrops = ({
-  slots,
-  playerHistoryRounds
-}: {
+interface UserDropsProps {
   slots: number
   playerHistoryRounds: IRootBattleRoundItem[]
-}) => {
+}
+
+const UsersDrops = ({ slots, playerHistoryRounds }: UserDropsProps) => {
   const dropCardClasses = clsx('mb-2 px-1 w-1/2 point-hidden group/item is-block', {
     'sm:w-1/2 md:w-1/3 lg:w-1/4': slots === 2,
     'sm:w-full md:w-1/2 lg:w-1/3': slots === 3,

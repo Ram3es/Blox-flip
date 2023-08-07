@@ -62,6 +62,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
   const [isStartGame, setIsStartGame] = useState(false)
   const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
+  const [drops, setDrops] = useState<IRootBattleResult[]>([])
 
   const getSumWonItems = useCallback(
     (historyRounds: IRootBattleResult[], playerIndex: number) => {
@@ -97,6 +98,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
           setIsSpin(false)
           console.log('Spin END, Win Effect Start')
           setIsVisibleEffects(true)
+          setDrops([...historyRounds])
         }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
         setTimeout(() => {
           setIsVisibleEffects(false)
@@ -123,7 +125,11 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             'w-1/4': game.max === 4
           })}
         >
-          <UserBar game={game} playerIndex={index} getSumWonItems={() => getSumWonItems(historyRounds, index)} />
+          <UserBar
+            game={game}
+            playerIndex={index}
+            getSumWonItems={() => getSumWonItems(drops, index)}
+          />
           <div
             className={clsx('bg-blue-accent rounded-b flex items-center relative mb-9', {
               'bg-gradient-lvl from-green-primary/30':
@@ -145,17 +151,19 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 {getIcons(getDisplayedModeByGame(game), index)}
               </div>
             )}
-            <div className="grow -translate-y-[2px] ">
-              <img
-                src={IMAGES.graySeparator}
-                alt="divider"
-                width="92"
-                height="1"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-px"
-              />
-            </div>
+            {game.state !== 'done' && (
+              <div className="grow -translate-y-[2px]">
+                <img
+                  src={IMAGES.graySeparator}
+                  alt="divider"
+                  width="92"
+                  height="1"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-px"
+                />
+              </div>
+            )}
             <div className="w-52 mx-auto relative shrink-0 max-w-full z-10">
               <BackdropEffects
                 game={game}
@@ -173,7 +181,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 }
               />
             </div>
-            {game.state === RootBattleStateEnum.open && (
+            {game.state === 'open' && (
               <div className="z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2">
                 {game.players[index] && (
                   <>
@@ -189,7 +197,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 )}
               </div>
             )}
-            {currentRound && (
+            {currentRound && game.state !== 'done' && (
               <SpinItems
                 currentRound={currentRound}
                 game={game}
@@ -201,25 +209,27 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 isVisibleEffects={isVisibleEffects}
               />
             )}
-            {/* {game.state === RootBattleStateEnum.done && game.winners && (
+            {game.state === 'done' && game.winners && (
               <PlayerStatusGame
                 isPlayerGameWinner={game.winners[0].place === game.players[index].place}
                 wonDiamonds={getSumWonItems(historyRounds, index)}
               />
-            )} */}
-            <div className="grow rotate-180 translate-y-[-2px]">
-              <img
-                src={IMAGES.graySeparator}
-                alt="divider"
-                width="92"
-                height="1"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-px"
-              />
-            </div>
+            )}
+            {game.state !== 'done' && (
+              <div className="grow rotate-180 translate-y-[-2px]">
+                <img
+                  src={IMAGES.graySeparator}
+                  alt="divider"
+                  width="92"
+                  height="1"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-px"
+                />
+              </div>
+            )}
           </div>
-          <UsersDrops slots={game.max} playerHistoryRounds={getHistoryRoundsForPlayer(historyRounds, index)} />
+          <UsersDrops slots={game.max} playerHistoryRounds={getHistoryRoundsForPlayer(drops, index)} />
         </div>
       ))}
     </div>

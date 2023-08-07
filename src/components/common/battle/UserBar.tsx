@@ -57,7 +57,7 @@ const UserBar = ({ game, playerIndex, getSumWonItems }: UserBarProps) => {
     )
   }
 
-  const isLoseGame = game.state === RootBattleStateEnum.done
+  const isLoseGame = game.state === 'done' && game.winners[0].place !== game.players[playerIndex].place
 
   return (
     <div
