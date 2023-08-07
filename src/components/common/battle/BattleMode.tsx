@@ -27,6 +27,7 @@ import {
   CASE_BATTLE_ROUND_TIME_MILLISECONDS,
   CASE_BATTLE_SPINNER_TIME_MILLISECONDS
 } from '../../../constants/battle-cases'
+import BorderBottomEffect from './RoundWinBorderBottomEffect'
 
 export interface IWiningPlayerCard {
   id: string
@@ -162,11 +163,15 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 currentRound={currentRound}
                 isVisibleEffects={isVisibleEffects}
               />
-              {/* <RoundWinBorderBottomEffect
-                // isShown={currentRoundWinners?.length > 0 || gameWinnerPlayer.length > 0}
-                isShown={false}
-                isAddWinClass={isWinnerRound(index, currentRound?.items ?? [])}
-              /> */}
+              <BorderBottomEffect
+                isVisible={isVisibleEffects || game.state === 'done'}
+                isWinner={
+                  (game.state === 'done' && game.winners[0].place === game.players[index].place) ||
+                  (game.state === 'playing' && currentRound
+                    ? getMaxCostInRound(currentRound) === currentRound.results[index].cost
+                    : false)
+                }
+              />
             </div>
             {game.state === RootBattleStateEnum.open && (
               <div className="z-20 absolute inset-0 flex flex-col justify-center items-center pt-1 pb-2">
