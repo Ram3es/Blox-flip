@@ -1,17 +1,8 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState
-} from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
 import { useSocketCtx } from './SocketStore'
 import { getToast } from '../helpers/toast'
 import { IRootBattle } from '../types/CaseBattles'
 import { IRootCaseItem } from '../types/Cases'
-import { Context } from './Store'
 
 interface BattleCaseProviderProps {
   children: ReactNode
@@ -34,26 +25,18 @@ export const useBattleCase = () => {
 export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
   const [games, setGames] = useState<IRootBattle[]>([])
   const [allCases, setAllCases] = useState<IRootCaseItem[]>([])
-  const { state } = useContext(Context)
 
   const { socket } = useSocketCtx()
 
   useEffect(() => {
-    socket.on('send_battle', (err: string | boolean, data: IRootBattle) => {
-      if (typeof err === 'string') {
-        getToast(err)
-      }
-      if (!err) {
-        setGames((prev) => [...prev, data])
-      }
+    socket.on('send_battle', (data: IRootBattle) => {
+      setGames((prev) => [...prev, data])
     })
 
-    return () => {
-      socket.off('send_battle')
-    }
-  }, [socket])
+    socket.on('battle_remove', (id: string) => {
+      setGames((prev) => prev.filter((game) => game.id !== id))
+    })
 
-  useEffect(() => {
     socket.emit('load_cases', (err: boolean | string, skins: IRootCaseItem[]) => {
       if (typeof err === 'string') {
         getToast(err)
@@ -71,7 +54,12 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
         setGames(data)
       }
     })
-  }, [state.user])
+
+    return () => {
+      socket.off('send_battle')
+      socket.off('battle_remove')
+    }
+  }, [socket])
 
   return (
     <BattleCaseContext.Provider

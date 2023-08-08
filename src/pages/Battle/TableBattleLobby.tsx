@@ -32,8 +32,7 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
       header: () => 'Rounds',
       cell: ({ row: { original } }) => (
         <RoundCell
-          // round={original.caselist.length}
-          round={1}
+          round={original.caselist.length}
           mode={getDisplayedModeByGame(original)}
           status={original.state}
         />
@@ -47,8 +46,7 @@ const TableBattleLobby: FC<TableBattleLobbyProps> = ({ data, sortBy }) => {
         <CasesCell
           status={original.state}
           totalRounds={original.caselist.length}
-          // currentRound={original.gameSetting?.currentRound}
-          currentRound={1}
+          currentRound={original.result.length}
         />
       ),
       footer: (props) => props.column.id

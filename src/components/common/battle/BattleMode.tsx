@@ -140,9 +140,9 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             sumWonItems={
               game.state === 'done'
                 ? getHistoryRoundsForPlayerByResult(game.result, index).reduce((totalCost, result) => {
-                    totalCost += result.cost
-                    return totalCost
-                  }, 0)
+                  totalCost += result.cost
+                  return totalCost
+                }, 0)
                 : getSumWonItemsByHistory(drops, index)
             }
             isLoser={game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)}
