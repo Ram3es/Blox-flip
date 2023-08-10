@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Button } from '../base/Button'
 import { searchData } from '../../helpers/searchData'
 import UnboxingCard from '../common/Cards/UnboxingCard'
@@ -42,7 +42,7 @@ const BattleModal = ({
     [searchBy, allCards, ranged, state.user]
   )
 
-  const onSelect = (card: IRootCaseItemWithAmount) => {
+  const onSelect = useCallback((card: IRootCaseItemWithAmount) => {
     setSelected((prev) => {
       const selectedCard = prev.find((prevCard) => prevCard.name === card.name)
       if (!selectedCard) {
@@ -55,13 +55,13 @@ const BattleModal = ({
       return [
         ...prev.map((prevCard) => {
           if (prevCard.name === selectedCard.name) {
-            return { ...selectedCard, amount: selectedCard.amount++ }
+            return { ...selectedCard, amount: selectedCard.amount + 1 }
           }
           return prevCard
         })
       ]
     })
-  }
+  }, [allCards, selectedCards])
 
   const handleSubmit = () => {
     onSubmit(selectedCards)
