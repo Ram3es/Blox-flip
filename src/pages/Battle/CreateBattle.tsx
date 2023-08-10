@@ -89,7 +89,7 @@ const CreateBattle = () => {
       setCasesToBet((state) => [
         ...state.map((box) => {
           if (box.name === name) {
-            return { ...box, amount: box.amount++ }
+            return { ...box, amount: box.amount + 1 }
           }
           return box
         })
