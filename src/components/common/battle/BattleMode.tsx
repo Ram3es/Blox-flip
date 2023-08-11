@@ -62,7 +62,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
   const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
   const [drops, setDrops] = useState<IRootBattleResult[]>([])
-
+  
   const getSumWonItemsByHistory = useCallback(
     (historyRounds: IRootBattleResult[], playerIndex: number) => {
       return historyRounds.reduce((totalCost, result) => {
@@ -105,7 +105,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
   }
 
   useEffect(() => {
-    if (game.state !== 'done') {
+    if (game.state === 'playing') {
       if (historyRounds.length > 0) {
         setIsSpin(true)
         console.log('Spin START')
@@ -214,7 +214,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 )}
               </div>
             )}
-            {currentRound && game.state !== 'done' && (
+            {currentRound && game.state === 'playing' && (
               <SpinItems
                 currentRound={currentRound}
                 game={game}

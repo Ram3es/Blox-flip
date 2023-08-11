@@ -19,20 +19,28 @@ const BattleCases = () => {
   const [historyRounds, setHistoryRounds] = useState<IRootBattleResult[]>([])
 
   useEffect(() => {
-    if (state) {
-      setGameState(state)
-    }
-    if (id && !state) {
+    // if (state) {
+    //   setGameState(state)
+    // }
+    // if (id && !state) {
+    //   const currentGame = games.find((game) => game.id === id)
+    //   if (currentGame) {
+    //     setGameState(currentGame)
+    //   }
+    // }
+    if (id) {
       const currentGame = games.find((game) => game.id === id)
       if (currentGame) {
         setGameState(currentGame)
+        console.log(currentGame, 'setstate initial')
       }
     }
-  }, [id, games])
+  }, [id])
 
   useEffect(() => {
     if (id && gameState) {
       socket.on('battle_result', (data: IRootBattleResult) => {
+        console.log(data, 'BATTLE_RESULT')
         if (data.id === gameState.id) {
           if (data.round === 1) {
             setGameState((prev) => prev && { ...prev, state: 'playing' })
@@ -48,17 +56,21 @@ const BattleCases = () => {
       if (gameState && gameState.id === data.id) {
         setGameState((prev) => prev && { ...prev, players: [...prev.players, data.user] })
       }
+      console.log(data, 'JOIN_BATTLE')
     })
 
     socket.on('battle_over', (data: IRootBattle) => {
       if (gameState && gameState.id === data.id) {
         setGameState(data)
+        console.log(data, 'BATTLE_OVER_IN_CONDITION')
       }
+      console.log(data, 'BATTLE_OVER')
     })
 
     return () => {
       socket.off('battle_result')
       socket.off('join_battle')
+      socket.off('battle_over')
     }
   }, [socket, id, gameState])
 
