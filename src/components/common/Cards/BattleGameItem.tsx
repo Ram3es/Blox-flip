@@ -14,7 +14,7 @@ const BattleGameItem = ({ isWinItem, item, isVisibleEffects }: BattleGameItemPro
     if (isWinItem) {
       if (isVisibleEffects) {
         console.log('isVisibleEffects in isVisibleEffects', isVisibleEffects)
-        setWinningClass(() => 'h-[160px] shrink-0 pt-3  [&>img]:grayscale-0 [&>img]:opacity-100')
+        setWinningClass(() => 'will-change-transform h-[160px] shrink-0 pt-3  [&>img]:grayscale-0 [&>img]:opacity-100')
       }
       if (!isVisibleEffects) {
         console.log('isVisibleEffects in !isVisibleEffects', isVisibleEffects)
@@ -25,7 +25,7 @@ const BattleGameItem = ({ isWinItem, item, isVisibleEffects }: BattleGameItemPro
   }, [isVisibleEffects, isWinItem])
 
   return (
-    <div className={winningClass ?? 'h-[120px] shrink-0 pt-3'}>
+    <div className={winningClass ?? 'will-change-transform h-[120px] shrink-0 pt-3'}>
       <img
         src={item.image}
         alt={item.name}
