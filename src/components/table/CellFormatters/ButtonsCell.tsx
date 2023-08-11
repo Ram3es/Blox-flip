@@ -15,7 +15,8 @@ const ButtonsCell = ({ game }: { game: IRootBattle }) => {
   const navigate = useNavigate()
 
   const handleNavigateLobby = useCallback(() => {
-    navigate(`/battle/${game.id}`, { state: game })
+    // navigate(`/battle/${game.id}`, { state: game })
+    navigate(`/battle/${game.id}`)
   }, [game])
 
   const activeButton = useMemo(() => {
