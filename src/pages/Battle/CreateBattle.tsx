@@ -162,7 +162,7 @@ const CreateBattle = () => {
         getToast(error)
       }
       if (!error) {
-        navigate(`/battle/${battle.id}`, { state: battle })
+        navigate(`/battle/${battle.id}`)
       }
     })
   }
