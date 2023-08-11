@@ -1,7 +1,7 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
 import { useSocketCtx } from './SocketStore'
 import { getToast } from '../helpers/toast'
-import { IRootBattle } from '../types/CaseBattles'
+import { IRootBattle, IRootBattleResult, IRootJoinBattle } from '../types/CaseBattles'
 import { IRootCaseItem } from '../types/Cases'
 
 interface BattleCaseProviderProps {
@@ -55,9 +55,36 @@ export const BattleCaseProvider = ({ children }: BattleCaseProviderProps) => {
       }
     })
 
+    socket.on('battle_result', (data: IRootBattleResult) => {
+      setGames((prev) =>
+        prev.map((item) =>
+          item.id === data.id
+            ? {
+                ...item,
+                state: data.round === 1 ? 'playing' : item.state,
+                result: [...item.result, { id: String(data.round), drops: data.results }]
+              }
+            : item
+        )
+      )
+    })
+
+    socket.on('join_battle', (data: IRootJoinBattle) => {
+      setGames((prev) =>
+        prev.map((item) => (item.id === data.id ? { ...item, players: [...item.players, data.user] } : item))
+      )
+    })
+
+    socket.on('battle_over', (data: IRootBattle) => {
+      setGames((prev) => prev.map((item) => (item.id === data.id ? data : item)))
+    })
+
     return () => {
       socket.off('send_battle')
       socket.off('battle_remove')
+      socket.off('battle_result')
+      socket.off('join_battle')
+      socket.off('battle_over')
     }
   }, [socket])
 
