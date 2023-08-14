@@ -5,13 +5,11 @@ import BattleMode from '../../components/common/battle/BattleMode'
 import GameHeader from '../../components/common/battle/GameHeader'
 import GameRoundsInfo from '../../components/common/battle/GameRoundsInfo'
 import { useBattleCase } from '../../store/BattleCaseStore'
-import { useSocketCtx } from '../../store/SocketStore'
 import { IRootBattle, IRootBattleResult } from '../../types/CaseBattles'
 
 const BattleCases = () => {
   const { id } = useParams()
   const { games } = useBattleCase()
-  const { socket } = useSocketCtx()
 
   const [gameState, setGameState] = useState<IRootBattle | null>(null)
   const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
@@ -41,7 +39,7 @@ const BattleCases = () => {
         ])
       }
     }
-  }, [id, socket, currentGame])
+  }, [id, currentGame])
 
   return (
     <div className="max-w-1190 w-full mx-auto text-sm">
