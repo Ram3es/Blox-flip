@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 import BattleGameItem from '../Cards/BattleGameItem'
 import { IRootBattle, IRootBattleResultHistory } from '../../../types/CaseBattles'
@@ -10,8 +10,6 @@ interface ISpinGameProps {
   playerIndex: number
   currentRound: IRootBattleResultHistory | null
   isSpin: boolean
-  isRespin: boolean
-  setRespin: Dispatch<SetStateAction<boolean>>
   isVisibleEffects: boolean
 }
 
@@ -20,12 +18,11 @@ const SpinItems: FC<ISpinGameProps> = ({
   currentRound,
   playerIndex,
   isSpin,
-  isRespin,
-  setRespin,
   isVisibleEffects
 }) => {
   const [rouletteItems, setRouletteItems] = useState<IRootCasePotentialItem[]>([])
   const [winItem, setWinItem] = useState<IRootCasePotentialItem | null>(null)
+  const [isRespin, setRespin] = useState(false)
 
   const itemsRef = useRef<HTMLDivElement>(null)
 
@@ -65,8 +62,8 @@ const SpinItems: FC<ISpinGameProps> = ({
   }
 
   const play = () => {
+    reset()
     if (isRespin) {
-      reset()
       setTimeout(() => {
         load()
         spin(CASE_BATTLE_SPINNER_TIME_SECONDS)

@@ -39,10 +39,10 @@ const case2v2Icons: Record<number, ReactNode> = {
   2: <FriendlyOrange />
 }
 
-const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
+const getIcons = (type: DisplayedBattleModeEnum, playerIndex: number) => {
   switch (type) {
     case DisplayedBattleModeEnum['2v2']:
-      return case2v2Icons[index]
+      return case2v2Icons[playerIndex]
     case DisplayedBattleModeEnum.shared:
       return <FriendlyGreen />
     default:
@@ -58,7 +58,6 @@ interface IBattleModeProps {
 
 const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }: IBattleModeProps) => {
   const [isSpin, setIsSpin] = useState(false)
-  const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
   const [drops, setDrops] = useState<IRootBattleResultHistory[]>([])
 
@@ -217,8 +216,6 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 game={game}
                 playerIndex={index}
                 isSpin={isSpin}
-                isRespin={isRespin}
-                setRespin={setRespin}
                 isVisibleEffects={isVisibleEffects}
               />
             )}
