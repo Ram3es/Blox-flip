@@ -62,7 +62,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
   const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
   const [drops, setDrops] = useState<IRootBattleResult[]>([])
-  
+
   const getSumWonItemsByHistory = useCallback(
     (historyRounds: IRootBattleResult[], playerIndex: number) => {
       return historyRounds.reduce((totalCost, result) => {
