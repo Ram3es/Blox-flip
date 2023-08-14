@@ -25,7 +25,6 @@ import {
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import {
   CASE_BATTLE_ROUND_TIME_MILLISECONDS,
-  CASE_BATTLE_ROUND_WINNER_TIME_MILLISECONDS,
   CASE_BATTLE_SPINNER_TIME_MILLISECONDS
 } from '../../../constants/battle-cases'
 import BorderBottomEffect from './BorderBottomEffect'
@@ -55,20 +54,20 @@ const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
 interface IBattleModeProps {
   game: IRootBattle
   currentRound: IRootBattleResult | null
-  historyRounds: IRootBattleResult[]
+  historyRounds: IRootBattleResultHistory[]
 }
 
 const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }: IBattleModeProps) => {
   const [isSpin, setIsSpin] = useState(false)
   const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
-  const [drops, setDrops] = useState<IRootBattleResult[]>([])
+  const [drops, setDrops] = useState<IRootBattleResultHistory[]>([])
 
   const getSumWonItemsByHistory = useCallback(
-    (historyRounds: IRootBattleResult[], playerIndex: number) => {
+    (historyRounds: IRootBattleResultHistory[], playerIndex: number) => {
       return historyRounds.reduce((totalCost, result) => {
-        if (result.results[playerIndex]) {
-          totalCost += result.results[playerIndex].cost
+        if (result.drops[playerIndex]) {
+          totalCost += result.drops[playerIndex].cost
         }
         return totalCost
       }, 0)
@@ -92,17 +91,17 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
     return result.map((item) => item.drops[playerIndex])
   }
 
-  const getMaxCostInRound = (round: IRootBattleResult) => {
-    return round.results.reduce((maxCost, roundItem) => {
+  const getMaxCostInRound = (round: IRootBattleResultHistory) => {
+    return round.drops.reduce((maxCost, roundItem) => {
       return Math.max(maxCost, roundItem.cost)
     }, 0)
   }
 
   const getHistoryRoundsForPlayer = (
-    historyRounds: IRootBattleResult[],
+    historyRounds: IRootBattleResultHistory[],
     playerIndex: number
   ): IRootBattleRoundItem[] => {
-    return historyRounds.map((round) => round.results[playerIndex])
+    return historyRounds.map((round) => round.drops[playerIndex])
   }
 
   useEffect(() => {
@@ -139,9 +138,9 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             sumWonItems={
               game.state === 'done'
                 ? getHistoryRoundsForPlayerByResult(game.result, index).reduce((totalCost, result) => {
-                  totalCost += result.cost
-                  return totalCost
-                }, 0)
+                    totalCost += result.cost
+                    return totalCost
+                  }, 0)
                 : getSumWonItemsByHistory(drops, index)
             }
             isLoser={game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)}
@@ -153,13 +152,13 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
-                  getMaxCostInRound(currentRound) === currentRound.results[index].cost),
+                  getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.results[index].cost),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
                 (game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
-                  getMaxCostInRound(currentRound) !== currentRound.results[index].cost)
+                  getMaxCostInRound(game.result[game.result.length - 1]) !== currentRound.results[index].cost)
             })}
           >
             {index !== game.max - 1 && (
@@ -192,7 +191,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 isWinner={
                   (game.state === 'done' && isPlayerWinnerGame(game.winners, index + 1)) ||
                   (game.state === 'playing' && currentRound
-                    ? getMaxCostInRound(currentRound) === currentRound.results[index].cost
+                    ? getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.results[index].cost
                     : false)
                 }
               />
