@@ -1,13 +1,13 @@
 import { IMAGES } from '../../../constants/images'
 import { Link } from 'react-router-dom'
 import FairIcon from '../../icons/FairIcon'
-import { IRootBattle, IRootBattleResult } from '../../../types/CaseBattles'
+import { IRootBattle, IRootBattleResultHistory } from '../../../types/CaseBattles'
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import { getRandomId } from '../../../helpers/casesHelpers'
 
 interface IBoxInfoProps {
   game: IRootBattle
-  currentRound: IRootBattleResult | null
+  currentRound: IRootBattleResultHistory | null
 }
 
 const GameRoundsInfo = ({ game, currentRound }: IBoxInfoProps) => {
@@ -30,7 +30,7 @@ const GameRoundsInfo = ({ game, currentRound }: IBoxInfoProps) => {
               decoding="async"
             />
             <div className="absolute w-2.5 -inset-x-full m-auto -bottom-1.5">
-              {(currentRound && currentRound.round > index) ?? (game.state === 'done')
+              {(currentRound && Number(currentRound.id) > index) ?? (game.state === 'done')
                 ? <img src={IMAGES.pointGreen} alt="green-point" width="10" height="10" loading="lazy" decoding="async" />
                 : <img src={IMAGES.pointBlue} alt="gray-point" width="10" height="10" loading="lazy" decoding="async" />}
             </div>

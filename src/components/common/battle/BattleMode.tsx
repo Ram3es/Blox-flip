@@ -18,7 +18,6 @@ import {
   DisplayedBattleModeEnum,
   IRootBattle,
   IRootBattlePlayer,
-  IRootBattleResult,
   IRootBattleResultHistory,
   IRootBattleRoundItem
 } from '../../../types/CaseBattles'
@@ -53,7 +52,7 @@ const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
 
 interface IBattleModeProps {
   game: IRootBattle
-  currentRound: IRootBattleResult | null
+  currentRound: IRootBattleResultHistory | null
   historyRounds: IRootBattleResultHistory[]
 }
 
@@ -138,9 +137,9 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
             sumWonItems={
               game.state === 'done'
                 ? getHistoryRoundsForPlayerByResult(game.result, index).reduce((totalCost, result) => {
-                    totalCost += result.cost
-                    return totalCost
-                  }, 0)
+                  totalCost += result.cost
+                  return totalCost
+                }, 0)
                 : getSumWonItemsByHistory(drops, index)
             }
             isLoser={game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)}
@@ -152,13 +151,13 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
-                  getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.results[index].cost),
+                  getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.drops[index].cost),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
                 (game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
-                  getMaxCostInRound(game.result[game.result.length - 1]) !== currentRound.results[index].cost)
+                  getMaxCostInRound(game.result[game.result.length - 1]) !== currentRound.drops[index].cost)
             })}
           >
             {index !== game.max - 1 && (
@@ -191,7 +190,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 isWinner={
                   (game.state === 'done' && isPlayerWinnerGame(game.winners, index + 1)) ||
                   (game.state === 'playing' && currentRound
-                    ? getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.results[index].cost
+                    ? getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.drops[index].cost
                     : false)
                 }
               />

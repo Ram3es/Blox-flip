@@ -1,14 +1,14 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react'
 import { getRandomCards, getRandomId } from '../../../helpers/casesHelpers'
 import BattleGameItem from '../Cards/BattleGameItem'
-import { IRootBattle, IRootBattleResult } from '../../../types/CaseBattles'
+import { IRootBattle, IRootBattleResultHistory } from '../../../types/CaseBattles'
 import { IRootCasePotentialItem } from '../../../types/Cases'
 import { CASE_BATTLE_SPINNER_TIME_SECONDS } from '../../../constants/battle-cases'
 
 interface ISpinGameProps {
   game: IRootBattle
   playerIndex: number
-  currentRound: IRootBattleResult | null
+  currentRound: IRootBattleResultHistory | null
   isSpin: boolean
   isRespin: boolean
   setRespin: Dispatch<SetStateAction<boolean>>
@@ -46,7 +46,7 @@ const SpinItems: FC<ISpinGameProps> = ({
 
   const load = () => {
     if (currentRound) {
-      const item = currentRound.results[playerIndex]
+      const item = currentRound.drops[playerIndex]
 
       const modifyItem = {
         name: item.skin_name,
@@ -80,7 +80,7 @@ const SpinItems: FC<ISpinGameProps> = ({
 
   useEffect(() => {
     if (currentRound) {
-      const currentCase = game.caselist[currentRound.round - 1]
+      const currentCase = game.caselist[Number(currentRound.id) - 1]
 
       if (currentCase) {
         setRouletteItems(getRandomCards<IRootCasePotentialItem>(100, currentCase.items))
