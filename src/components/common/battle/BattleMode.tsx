@@ -25,6 +25,7 @@ import {
 import { getDisplayedModeByGame } from '../../../helpers/caseBattleHelpers'
 import {
   CASE_BATTLE_ROUND_TIME_MILLISECONDS,
+  CASE_BATTLE_ROUND_WINNER_TIME_MILLISECONDS,
   CASE_BATTLE_SPINNER_TIME_MILLISECONDS
 } from '../../../constants/battle-cases'
 import BorderBottomEffect from './BorderBottomEffect'
@@ -105,23 +106,21 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
   }
 
   useEffect(() => {
-    if (game.state === 'playing') {
-      if (historyRounds.length > 0) {
-        setIsSpin(true)
-        console.log('Spin START')
-        setTimeout(() => {
-          setIsSpin(false)
-          console.log('Spin END, Win Effect Start')
-          setIsVisibleEffects(true)
-          setDrops([...historyRounds])
-        }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
-        setTimeout(() => {
-          setIsVisibleEffects(false)
-          console.log('Win Effect End')
-        }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
-      }
+    if (game.state === 'playing' && game.result.length > 0) {
+      setIsSpin(true)
+      console.log('Spin START')
+      setTimeout(() => {
+        setIsSpin(false)
+        console.log('Spin END, Win Effect Start')
+        setIsVisibleEffects(true)
+        setDrops([...historyRounds])
+      }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
+      setTimeout(() => {
+        setIsVisibleEffects(false)
+        console.log('Win Effect End')
+      }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
     }
-  }, [historyRounds, game.state])
+  }, [game.state, game.result])
 
   return (
     <div className="flex -mx-2">

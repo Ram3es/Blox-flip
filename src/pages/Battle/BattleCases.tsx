@@ -11,7 +11,7 @@ const BattleCases = () => {
   const { id } = useParams()
   const { games } = useBattleCase()
 
-  const [gameState, setGameState] = useState<IRootBattle | null>(null)
+  // const [gameState, setGameState] = useState<IRootBattle | null>(null)
   const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
   const [historyRounds, setHistoryRounds] = useState<IRootBattleResult[]>([])
 
@@ -19,7 +19,7 @@ const BattleCases = () => {
 
   useEffect(() => {
     if (id && currentGame) {
-      setGameState(currentGame)
+      // setGameState(currentGame)
       if (currentGame.state === 'playing') {
         const latestRound = currentGame.result[currentGame.result.length - 1]
 
@@ -43,11 +43,11 @@ const BattleCases = () => {
 
   return (
     <div className="max-w-1190 w-full mx-auto text-sm">
-      {gameState && (
-        <BattleLayout amountGamePlates={gameState.max}>
-          <GameHeader game={gameState} currentRound={currentRound} />
-          <GameRoundsInfo game={gameState} currentRound={currentRound} />
-          <BattleMode game={gameState} currentRound={currentRound} historyRounds={historyRounds} />
+      {currentGame && (
+        <BattleLayout amountGamePlates={currentGame.max}>
+          <GameHeader game={currentGame} currentRound={currentRound} />
+          <GameRoundsInfo game={currentGame} currentRound={currentRound} />
+          <BattleMode game={currentGame} currentRound={currentRound} historyRounds={historyRounds} />
         </BattleLayout>
       )}
     </div>
