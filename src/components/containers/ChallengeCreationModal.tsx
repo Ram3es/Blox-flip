@@ -22,7 +22,6 @@ interface GameVariantInterface {
 }
 
 const gameVariants: GameVariantInterface[] = [
-  { gameName: 'champion' },
   { gameName: 'wheel' },
   { gameName: 'plinko' },
   { gameName: 'coinflip' },

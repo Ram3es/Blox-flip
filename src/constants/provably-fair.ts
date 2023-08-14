@@ -3,6 +3,5 @@ export const games = [
   { id: 'wheel', title: 'Wheel' },
   { id: 'jackpot', title: 'Jackpot' },
   { id: 'battle', title: 'Battle Cases' },
-  { id: 'cases', title: 'Cases' },
-  { id: 'champion', title: 'Champion' }
+  { id: 'cases', title: 'Cases' }
 ]

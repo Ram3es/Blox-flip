@@ -23,7 +23,6 @@ import { Affiliates } from './pages/Affiliates/Affiliates'
 
 import Plinko from './pages/Plinko/Plinko'
 import Wheel from './pages/Wheel/Wheel'
-import King from './pages/King/King'
 import Jackpot from './pages/Jackpot/Jackpot'
 import CoinFlip from './pages/CoinFlip/CoinFlip'
 
@@ -83,7 +82,6 @@ export const App = () => {
           <Route path="/affiliates" element={<Affiliates />} />
 
           <Route path="/wheel" element={<Wheel />} />
-          <Route path="/champion" element={<King />} />
           <Route path="/plinko" element={<Plinko />} />
           <Route path="/coinflip" element={<CoinFlip />} />
           <Route path="/jackpot" element={<Jackpot />} />

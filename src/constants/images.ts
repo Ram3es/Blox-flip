@@ -49,5 +49,5 @@ export const IMAGES: Record<string, string> = {
   grayBackdrop,
   redStarBackdrop,
   orangeStarBackdrop,
-  graySeparator,
+  graySeparator
 }
