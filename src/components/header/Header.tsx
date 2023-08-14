@@ -22,7 +22,6 @@ const routesGames: RouteItem[] = [
   { path: '/jackpot', name: 'jackpot' },
   { path: '/plinko', name: 'plinko' },
   { path: '/wheel', name: 'wheel' },
-  { path: '/champion', name: 'champion' },
   { path: '/challenges', name: 'challenges' }
 ]
 
