@@ -18,7 +18,6 @@ import {
   DisplayedBattleModeEnum,
   IRootBattle,
   IRootBattlePlayer,
-  IRootBattleResult,
   IRootBattleResultHistory,
   IRootBattleRoundItem
 } from '../../../types/CaseBattles'
@@ -40,10 +39,10 @@ const case2v2Icons: Record<number, ReactNode> = {
   2: <FriendlyOrange />
 }
 
-const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
+const getIcons = (type: DisplayedBattleModeEnum, playerIndex: number) => {
   switch (type) {
     case DisplayedBattleModeEnum['2v2']:
-      return case2v2Icons[index]
+      return case2v2Icons[playerIndex]
     case DisplayedBattleModeEnum.shared:
       return <FriendlyGreen />
     default:
@@ -53,21 +52,20 @@ const getIcons = (type: DisplayedBattleModeEnum, index: number) => {
 
 interface IBattleModeProps {
   game: IRootBattle
-  currentRound: IRootBattleResult | null
-  historyRounds: IRootBattleResult[]
+  currentRound: IRootBattleResultHistory | null
+  historyRounds: IRootBattleResultHistory[]
 }
 
 const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }: IBattleModeProps) => {
   const [isSpin, setIsSpin] = useState(false)
-  const [isRespin, setRespin] = useState(false)
   const [isVisibleEffects, setIsVisibleEffects] = useState(false)
-  const [drops, setDrops] = useState<IRootBattleResult[]>([])
-  
+  const [drops, setDrops] = useState<IRootBattleResultHistory[]>([])
+
   const getSumWonItemsByHistory = useCallback(
-    (historyRounds: IRootBattleResult[], playerIndex: number) => {
+    (historyRounds: IRootBattleResultHistory[], playerIndex: number) => {
       return historyRounds.reduce((totalCost, result) => {
-        if (result.results[playerIndex]) {
-          totalCost += result.results[playerIndex].cost
+        if (result.drops[playerIndex]) {
+          totalCost += result.drops[playerIndex].cost
         }
         return totalCost
       }, 0)
@@ -91,37 +89,35 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
     return result.map((item) => item.drops[playerIndex])
   }
 
-  const getMaxCostInRound = (round: IRootBattleResult) => {
-    return round.results.reduce((maxCost, roundItem) => {
+  const getMaxCostInRound = (round: IRootBattleResultHistory) => {
+    return round.drops.reduce((maxCost, roundItem) => {
       return Math.max(maxCost, roundItem.cost)
     }, 0)
   }
 
   const getHistoryRoundsForPlayer = (
-    historyRounds: IRootBattleResult[],
+    historyRounds: IRootBattleResultHistory[],
     playerIndex: number
   ): IRootBattleRoundItem[] => {
-    return historyRounds.map((round) => round.results[playerIndex])
+    return historyRounds.map((round) => round.drops[playerIndex])
   }
 
   useEffect(() => {
-    if (game.state === 'playing') {
-      if (historyRounds.length > 0) {
-        setIsSpin(true)
-        console.log('Spin START')
-        setTimeout(() => {
-          setIsSpin(false)
-          console.log('Spin END, Win Effect Start')
-          setIsVisibleEffects(true)
-          setDrops([...historyRounds])
-        }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
-        setTimeout(() => {
-          setIsVisibleEffects(false)
-          console.log('Win Effect End')
-        }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
-      }
+    if (game.state === 'playing' && game.result.length > 0) {
+      setIsSpin(true)
+      console.log('Spin START')
+      setTimeout(() => {
+        setIsSpin(false)
+        console.log('Spin END, Win Effect Start')
+        setIsVisibleEffects(true)
+        setDrops([...historyRounds])
+      }, CASE_BATTLE_SPINNER_TIME_MILLISECONDS)
+      setTimeout(() => {
+        setIsVisibleEffects(false)
+        console.log('Win Effect End')
+      }, CASE_BATTLE_ROUND_TIME_MILLISECONDS)
     }
-  }, [historyRounds, game.state])
+  }, [game.state, game.result])
 
   return (
     <div className="flex -mx-2">
@@ -154,13 +150,13 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
-                  getMaxCostInRound(currentRound) === currentRound.results[index].cost),
+                  getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.drops[index].cost),
               'bg-gradient-lvl from-red-accent/30 to-dark/0':
                 (game.state === 'done' && !isPlayerWinnerGame(game.winners, index + 1)) ||
                 (game.state === 'playing' &&
                   isVisibleEffects &&
                   currentRound &&
-                  getMaxCostInRound(currentRound) !== currentRound.results[index].cost)
+                  getMaxCostInRound(game.result[game.result.length - 1]) !== currentRound.drops[index].cost)
             })}
           >
             {index !== game.max - 1 && (
@@ -193,7 +189,7 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 isWinner={
                   (game.state === 'done' && isPlayerWinnerGame(game.winners, index + 1)) ||
                   (game.state === 'playing' && currentRound
-                    ? getMaxCostInRound(currentRound) === currentRound.results[index].cost
+                    ? getMaxCostInRound(game.result[game.result.length - 1]) === currentRound.drops[index].cost
                     : false)
                 }
               />
@@ -220,8 +216,6 @@ const BattleMode: FC<IBattleModeProps> = ({ game, currentRound, historyRounds }:
                 game={game}
                 playerIndex={index}
                 isSpin={isSpin}
-                isRespin={isRespin}
-                setRespin={setRespin}
                 isVisibleEffects={isVisibleEffects}
               />
             )}

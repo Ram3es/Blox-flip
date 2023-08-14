@@ -1,73 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import BattleLayout from '../../components/containers/BattleGameLayout'
 import BattleMode from '../../components/common/battle/BattleMode'
 import GameHeader from '../../components/common/battle/GameHeader'
 import GameRoundsInfo from '../../components/common/battle/GameRoundsInfo'
 import { useBattleCase } from '../../store/BattleCaseStore'
-import { useSocketCtx } from '../../store/SocketStore'
-import { IRootBattle, IRootBattleResult, IRootJoinBattle } from '../../types/CaseBattles'
 
 const BattleCases = () => {
   const { id } = useParams()
   const { games } = useBattleCase()
-  const { socket } = useSocketCtx()
 
-  const [gameState, setGameState] = useState<IRootBattle | null>(null)
-  const [currentRound, setCurrentRound] = useState<IRootBattleResult | null>(null)
-  const [historyRounds, setHistoryRounds] = useState<IRootBattleResult[]>([])
-
-  useEffect(() => {
-    if (id && !gameState) {
-      const currentGame = games.find((game) => game.id === id)
-      if (currentGame) {
-        setGameState(currentGame)
-        console.log(currentGame, 'CURRENT GAME')
-      }
-    }
-  }, [id, games, gameState])
-
-  useEffect(() => {
-    if (id && gameState) {
-      socket.on('battle_result', (data: IRootBattleResult) => {
-        if (data.id === gameState.id) {
-          if (data.round === 1) {
-            setGameState((prev) => prev && { ...prev, state: 'playing' })
-          }
-
-          setCurrentRound(data)
-          setHistoryRounds((prev) => [...prev, data])
-        }
-      })
-    }
-
-    socket.on('join_battle', (data: IRootJoinBattle) => {
-      if (gameState && gameState.id === data.id) {
-        setGameState((prev) => prev && { ...prev, players: [...prev.players, data.user] })
-      }
-      console.log(data, 'JOIN_BATTLE')
-    })
-
-    socket.on('battle_over', (data: IRootBattle) => {
-      if (gameState && gameState.id === data.id) {
-        setGameState(data)
-      }
-    })
-
-    return () => {
-      socket.off('battle_result')
-      socket.off('join_battle')
-      socket.off('battle_over')
-    }
-  }, [socket, id, gameState])
+  const currentGame = useMemo(() => games.find((game) => game.id === id), [games])
 
   return (
     <div className="max-w-1190 w-full mx-auto text-sm">
-      {gameState && (
-        <BattleLayout amountGamePlates={gameState.max}>
-          <GameHeader game={gameState} currentRound={currentRound} />
-          <GameRoundsInfo game={gameState} currentRound={currentRound} />
-          <BattleMode game={gameState} currentRound={currentRound} historyRounds={historyRounds} />
+      {currentGame && (
+        <BattleLayout amountGamePlates={currentGame.max}>
+          <GameHeader game={currentGame} currentRound={currentGame.result[currentGame.result.length - 1]} />
+          <GameRoundsInfo game={currentGame} currentRound={currentGame.result[currentGame.result.length - 1]} />
+          <BattleMode game={currentGame} currentRound={currentGame.result[currentGame.result.length - 1]} historyRounds={currentGame.result} />
         </BattleLayout>
       )}
     </div>

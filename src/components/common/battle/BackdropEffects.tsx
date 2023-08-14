@@ -1,11 +1,11 @@
 import { FC, useMemo } from 'react'
 import { IMAGES } from '../../../constants/images'
-import { IRootBattle, IRootBattleResult, IRootBattleRoundItem } from '../../../types/CaseBattles'
+import { IRootBattle, IRootBattleResultHistory, IRootBattleRoundItem } from '../../../types/CaseBattles'
 
 interface IBackdropEffects {
   game: IRootBattle
   playerIndex: number
-  currentRound: IRootBattleResult | null
+  currentRound: IRootBattleResultHistory | null
   isVisibleEffects: boolean
 }
 
@@ -33,7 +33,7 @@ const BackdropEffects: FC<IBackdropEffects> = ({ game, playerIndex, isVisibleEff
   }
 
   const renderBackdrop = useMemo(
-    () => currentRound && getBackdropByItem(currentRound.results[playerIndex]),
+    () => currentRound && getBackdropByItem(currentRound.drops[playerIndex]),
     [currentRound]
   )
 

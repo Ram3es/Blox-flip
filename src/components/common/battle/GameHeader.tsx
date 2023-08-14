@@ -8,19 +8,19 @@ import UnboxingIconTitle from '../../icons/UnboxingIconTitle'
 import VerticalDivider from '../../icons/VerticalDivider'
 import { Button } from '../../base/Button'
 import CoinsWithDiamond from '../CoinsWithDiamond'
-import { IRootBattle, IRootBattleResult } from '../../../types/CaseBattles'
+import { IRootBattle, IRootBattleResultHistory } from '../../../types/CaseBattles'
 import { getCostByFieldName } from '../../../helpers/numbers'
 
 interface IGameHeaderProps {
   game: IRootBattle
-  currentRound: IRootBattleResult | null
+  currentRound: IRootBattleResultHistory | null
 }
 
 const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
   const { handleCopyText: handleCopyLocation } = useCopyToClipboard(window.location.href)
 
   const getCurrentCasePrice = useCallback(
-    () => (currentRound ? game.caselist[currentRound.round - 1].price : game.caselist[0].price),
+    () => (currentRound ? game.caselist[Number(currentRound.id) - 1].price : game.caselist[0].price),
     [currentRound]
   )
 
@@ -35,7 +35,7 @@ const GameHeader: FC<IGameHeaderProps> = ({ game, currentRound }) => {
           <VerticalDivider className="mx-4" />
           <div className="font-semibold">
             <span className={game.state !== 'playing' ? 'text-gray-primary' : 'text-white'}>
-              {currentRound ? currentRound.round : game.state === 'done' ? game.caselist.length : 0}
+              {currentRound ? Number(currentRound.id) : game.state === 'done' ? game.caselist.length : 0}
             </span>
             {` / ${game.caselist.length}`}
           </div>
