@@ -87,11 +87,13 @@ const SpinItems: FC<ISpinGameProps> = ({
 
       if (currentCase) {
         setRouletteItems(getRandomCards<IRootCasePotentialItem>(100, currentCase.items))
+      } else {
+        console.log('nor CURRENT CASE', currentCase)
       }
 
       play()
     } else {
-      console.log('currentRound Error')
+      console.log('currentRound Error', currentRound)
     }
   }, [currentRound])
 
