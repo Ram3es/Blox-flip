@@ -30,6 +30,8 @@ const SpinItems: FC<ISpinGameProps> = ({
     if (itemsRef.current) {
       itemsRef.current.style.transition = `bottom ${time}s cubic-bezier(0.12, 0.8, 0.38, 1)`
       itemsRef.current.style.bottom = `-${7.5 * 86}rem`
+    } else {
+      console.log('Spin Error')
     }
   }
 
@@ -37,6 +39,9 @@ const SpinItems: FC<ISpinGameProps> = ({
     if (itemsRef.current) {
       itemsRef.current.style.transition = 'none'
       itemsRef.current.style.bottom = '0px'
+      console.log(itemsRef.current, 'Reset ref')
+    } else {
+      console.log('Reset Error')
     }
     setWinItem(null)
   }
@@ -63,6 +68,7 @@ const SpinItems: FC<ISpinGameProps> = ({
 
   const play = () => {
     reset()
+
     if (isRespin) {
       setTimeout(() => {
         load()
@@ -84,6 +90,8 @@ const SpinItems: FC<ISpinGameProps> = ({
       }
 
       play()
+    } else {
+      console.log('currentRound Error')
     }
   }, [currentRound])
 
