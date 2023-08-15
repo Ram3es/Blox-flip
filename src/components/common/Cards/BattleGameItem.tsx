@@ -21,6 +21,8 @@ const BattleGameItem = ({ isWinItem, item, isVisibleEffects }: BattleGameItemPro
 
         setWinningClass(null)
       }
+    } else {
+      console.log('NOT isWinItem', isWinItem)
     }
   }, [isVisibleEffects, isWinItem])
 

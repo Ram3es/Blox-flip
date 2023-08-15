@@ -105,7 +105,7 @@ const ItemCard: FC<IItemCardProps> = ({
             className={`bg-gradient-radial-60 ${gradient} flex flex-col group-[.is-added]/item:block items-center justify-between rounded h-full py-2.5 px-2 group-[.is-added]/item:px-5 group-[.is-selected]/item:blur-3xl group-[.is-user]/item:pl-0`}
           >
             <div className='mb-2 hidden group-[.is-percent]/item:block'>
-              {chance ? <>{chance}%</> : <>1.5%</>}
+              {chance ? <>{chance / 1000}%</> : <>1.5%</>}
             </div>
             <div className='w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden'></div>
             <div className='text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left group-[.is-user]/item:hidden'>
