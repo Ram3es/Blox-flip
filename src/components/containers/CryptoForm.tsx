@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
-import { getIconByPathName } from '../../helpers/iconsHelper'
+import { getIconByPathName } from '../../helpers/imageHelpers'
 import { Button } from '../base/Button'
 import InputWithLabel from '../base/InputWithLabel'
 import { CryptoCalculator } from '../common/CryptoCalculator'
@@ -168,19 +168,11 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
               {variant === 'Deposit' && (
                 <>
                   <div className="min-w-fit shrink-0 w-28 mx-3 mb-6 xs:mb-0">
-                    <img
-                      src={QRCodePlaceHolder}
-                      alt=""
-                      width="115"
-                      height="115"
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <img src={QRCodePlaceHolder} alt="" width="115" height="115" loading="lazy" decoding="async" />
                   </div>
                   <span className="text-gray-primary text-center grow lg:pr-36">
-                    Send only Bitcoin to the address above, or QR code to the left. Do not send any
-                    other crypto currency. <br />6 confirmations are required before you are
-                    credited to your balance.
+                    Send only Bitcoin to the address above, or QR code to the left. Do not send any other crypto
+                    currency. <br />6 confirmations are required before you are credited to your balance.
                   </span>
                 </>
               )}
@@ -188,9 +180,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
                 <div className="flex flex-col items-center">
                   <div className="bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7"></div>
 
-                  <div className="text-gray-primary mb-2 font-bold uppercase">
-                    YOU ARE WITHDRAWING
-                  </div>
+                  <div className="text-gray-primary mb-2 font-bold uppercase">YOU ARE WITHDRAWING</div>
                   <div className="flex items-center justify-center mb-7">
                     <CoinsWithDiamond containerSize="Small" typographyQuantity={sendAmount} />
                   </div>
@@ -205,8 +195,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
                   <div className="mt-7 bg-gradient-to-r from-blue-highlight/0 via-blue-highlight to-blue-highlight/0 w-80 h-px mx-auto shrink-0 mb-7"></div>
                   <div className="font-semibold text-center text-gray-primary mx-auto">
                     Make sure to double check your withdraw address and that it’s the correct one.
-                    <br className="hidden xs:inline" /> We’re not responsible for any results of
-                    user errors.
+                    <br className="hidden xs:inline" /> We’re not responsible for any results of user errors.
                   </div>
                 </div>
               )}
