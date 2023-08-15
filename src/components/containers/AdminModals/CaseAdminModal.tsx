@@ -1,5 +1,6 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import clsx from 'clsx'
 
@@ -10,7 +11,8 @@ import InputWithInlineLabel from '../../common/InputWithInlineLabel'
 import ActionModalHeader from './ActionModalHeader'
 
 import { Tab } from '@headlessui/react'
-import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { FixedSizeGrid as Grid } from 'react-window'
+
 import ItemCard from '../../common/Cards/ItemCard'
 import { getCostByFieldName } from '../../../helpers/numbers'
 import CoinsWithDiamond from '../../common/CoinsWithDiamond'
@@ -22,17 +24,12 @@ import { getToast } from '../../../helpers/toast'
 import { getRandomId } from '../../../helpers/casesHelpers'
 import InputWithLabel from '../../base/InputWithLabel'
 import IconContainer from '../IconContainer'
+import type { Properties } from 'csstype'
 
 const caseSchema = Yup.object({
-  caseName: Yup.string()
-    .min(2, 'Case Name must be at least 2 characters')
-    .required('Case Name Required'),
-  shortName: Yup.string()
-    .min(2, 'Short Case Name must be at least 2 characters')
-    .required('Short Name Required'),
-  casePrice: Yup.number()
-    .min(1, 'Case price must be greater than 0')
-    .required('Case Price Required'),
+  caseName: Yup.string().min(2, 'Case Name must be at least 2 characters').required('Case Name Required'),
+  shortName: Yup.string().min(2, 'Short Case Name must be at least 2 characters').required('Short Name Required'),
+  casePrice: Yup.number().min(1, 'Case price must be greater than 0').required('Case Price Required'),
   image: Yup.string().url('Invalid URL').required('Image Required')
 })
 
@@ -155,9 +152,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
           setSkins(
             // return mergedArray
             skins.map((skin) => {
-              const isAlreadySelected = caseData.items.find(
-                (selectedItem) => skin.id === selectedItem.id
-              )
+              const isAlreadySelected = caseData.items.find((selectedItem) => skin.id === selectedItem.id)
 
               return {
                 ...skin,
@@ -177,6 +172,14 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
   useEffect(() => {
     setFormSkins(selectedSkins)
   }, [selectedSkins])
+
+  const CellMarketItem = ({ index, style }: { index: number; style: Properties<string | number, string & {}> }) => {
+    return (
+      <div style={style}>
+        <ItemCard variant="CaseAdminItem" key={getRandomId()} onSelect={handleSelectSkin} {...skins[index]} />
+      </div>
+    )
+  }
 
   return (
     <ModalWrapper
@@ -269,9 +272,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
                           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setFormSkins((prev) => {
                               return prev.map((item, i) => {
-                                return i === index
-                                  ? { ...item, chanceInCase: Number(event.target.value) }
-                                  : item
+                                return i === index ? { ...item, chanceInCase: Number(event.target.value) } : item
                               })
                             })
                           }}
@@ -289,9 +290,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                               setFormSkins((prev) => {
                                 return prev.map((item, i) => {
-                                  return i === index
-                                    ? { ...item, priceInCase: Number(event.target.value) }
-                                    : item
+                                  return i === index ? { ...item, priceInCase: Number(event.target.value) } : item
                                 })
                               })
                             }}
@@ -304,9 +303,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
                         </div>
 
                         <Button color="RedLight" onClick={() => handleSelectSkin(caseItem.id)}>
-                          <span className="h-12 flex items-center justify-center w-full">
-                            Delete
-                          </span>
+                          <span className="h-12 flex items-center justify-center w-full">Delete</span>
                         </Button>
                       </div>
                     ))}
@@ -316,9 +313,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
                       <span className="px-3 py-2.5 text-gray-primary">Cancel</span>
                     </Button>
                     <Button color="GreenPrimary" type="submit">
-                      <span className="px-3 py-2.5">
-                        {caseData ? 'Save Settings' : 'Create Case'}
-                      </span>
+                      <span className="px-3 py-2.5">{caseData ? 'Save Settings' : 'Create Case'}</span>
                     </Button>
                   </div>
                 </div>
@@ -329,9 +324,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
             <div className="space-y-2">
               <div className="flex items-center justify-end gap-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-gray-primary text-sm font-semibold hidden xs:block">
-                    Total selected
-                  </span>
+                  <span className="text-gray-primary text-sm font-semibold hidden xs:block">Total selected</span>
                   <div className="h-9 bg-blue-ocean-secondary/25 border-2 border-blue-ocean-secondary/50 px-3  md:px-4 rounded font-bold text-sm flex items-center justify-between">
                     {selectedSkins.length}/<span className="text-white/60">{skins.length}</span>
                     <span className="text-gray-primary uppercase font-semibold text-xs hidden xs:block">
@@ -349,16 +342,19 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
                   <RefreshIcon />
                 </Button>
               </div>
-              <div className="h-[300px] ls:h-[400px] lg:h-[500px] gap-1 flex flex-wrap justify-center overflow-y-scroll scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
-                {skins.map((caseItem) => (
-                  <ItemCard
-                    variant="CaseAdminItem"
-                    key={getRandomId()}
-                    onSelect={handleSelectSkin}
-                    {...caseItem}
-                  />
-                ))}
-              </div>
+              <Grid
+                className="scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
+                columnCount={6}
+                columnWidth={130}
+                height={350}
+                rowCount={skins.length / 6}
+                rowHeight={200}
+                width={800}
+              >
+                {({ columnIndex, rowIndex, style }) => (
+                  <CellMarketItem index={columnIndex + rowIndex * 6} style={style} />
+                )}
+              </Grid>
             </div>
           </Tab.Panel>
         </Tab.Panels>
