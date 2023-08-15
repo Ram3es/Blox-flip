@@ -12,3 +12,9 @@ export const getIconByPathName = (pathname: string): string => {
   }
   return ''
 }
+
+export const getImagePathByUrl = (url: string) => {
+  const splitted = url.split('/')
+
+  return `assets/${splitted.at(-1) ?? ''}`
+}

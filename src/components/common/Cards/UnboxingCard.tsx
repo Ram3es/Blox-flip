@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 import { IRootCaseItem } from '../../../types/Cases'
+import { getImagePathByUrl } from '../../../helpers/imageHelpers'
 
 export interface UnboxingCardInterface extends Omit<IRootCaseItem, 'items'> {
   onSelect: () => void
@@ -20,7 +21,7 @@ const UnboxingCard: FC<UnboxingCardInterface> = ({ name, price, image, short, on
             </div>
             <div className="w-full pb-60% h-0 relative mb-5">
               <img
-                src={image}
+                src={getImagePathByUrl(image)}
                 alt={short}
                 width="93"
                 height="101"
