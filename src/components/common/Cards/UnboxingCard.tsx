@@ -8,6 +8,7 @@ export interface UnboxingCardInterface extends Omit<IRootCaseItem, 'items'> {
 }
 
 const UnboxingCard: FC<UnboxingCardInterface> = ({ name, price, image, short, onSelect }) => {
+  console.log(image)
   return (
     <div className="px-2 w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/6 shrink-0 lg:w-1/6 mb-4">
       <div

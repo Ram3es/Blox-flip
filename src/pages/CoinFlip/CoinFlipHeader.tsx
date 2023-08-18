@@ -1,6 +1,4 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { Context } from '../../store/Store'
-import { useCoinFlip } from '../../store/CoinFlipStore'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 import { Button } from '../../components/base/Button'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
@@ -12,46 +10,41 @@ import ToggleCoin from '../../components/common/BetActions/ToggleCoin'
 import { getToast } from '../../helpers/toast'
 import { useSocketCtx } from '../../store/SocketStore'
 import { formatNumber, localeStringToNumber } from '../../helpers/numbers'
+import { useNavigate } from 'react-router-dom'
 
 const CoinFlipHeader = () => {
-  const { setIsOpenLoginModal, setIsOpenBattleGame } = useCoinFlip()
   const { socket } = useSocketCtx()
+  const navigate = useNavigate()
 
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
   const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
 
-  const { state } = useContext(Context)
 
   const wagerRef = useRef<HTMLInputElement>(null)
-
   const handleCreateGame = useCallback(() => {
-    if (state.user) {
-      if (!wager.amountNumber) {
-        getToast('Enter wager')
-        if (wagerRef.current) {
-          wagerRef.current.setSelectionRange(0, 0)
-          wagerRef.current.focus()
-        }
-        return
+    if (!wager.amountNumber) {
+      getToast('Enter wager')
+      if (wagerRef.current) {
+        wagerRef.current.setSelectionRange(0, 0)
+        wagerRef.current.focus()
       }
-
-      const sendedData: ICoinFlipCreate = {
-        coin: selectedCoin,
-        wager: wager.amountNumber
-      }
-      socket.emit('coinflip_create', sendedData, (error: boolean | string) => {
-        if (typeof error === 'string') {
-          getToast(error)
-        }
-
-        if (!error) {
-          setIsOpenBattleGame(true)
-        }
-      })
-    } else {
-      setIsOpenLoginModal(true)
+      return
     }
-  }, [state.user, wager, selectedCoin])
+
+    const sendedData: ICoinFlipCreate = {
+      coin: selectedCoin,
+      wager: wager.amountNumber
+    }
+    socket.emit('coinflip_create', sendedData, (error: boolean | string, gameId: string) => {
+      if (typeof error === 'string') {
+        getToast(error)
+      }
+
+      if (!error) {
+        navigate(`/coinflip/${gameId}`)
+      }
+    })
+  }, [wager, selectedCoin])
 
   const handleWagerChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,8 +60,7 @@ const CoinFlipHeader = () => {
     }
   }
 
-  const inputValue =
-    wager.amountNumber === 0 ? wager.amountString : formatNumber(wager.amountNumber)
+  const inputValue = wager.amountNumber === 0 ? wager.amountString : formatNumber(wager.amountNumber)
 
   useEffect(() => {
     const wager = wagerRef.current
@@ -101,15 +93,10 @@ const CoinFlipHeader = () => {
             3 <span className="hidden md:block">&nbsp;Joinable</span>
           </span>
         </Button>
-        <CoinsWithDiamond
-          containerSize="Large"
-          containerColor="GreenGradient"
-          typographyQuantity={14214.51}
-        />
+        <CoinsWithDiamond containerSize="Large" containerColor="GreenGradient" typographyQuantity={14214.51} />
       </div>
       <div className="grid grid-cols-1 ls:flex items-center gap-[15px]">
         <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
-
         <div className="flex items-center gap-5">
           <span className="text-gray-primary font-semibold text-sm">Amount:</span>
           <div className="w-[136px] h-[45px] relative z-10 rounded border bg-green-primary/15 border-green-primary/40 border-dashed flex items-center justify-between px-2">

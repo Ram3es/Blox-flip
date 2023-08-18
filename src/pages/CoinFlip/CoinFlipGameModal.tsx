@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { useCoinFlip } from '../../store/CoinFlipStore'
-import { useSocketCtx } from '../../store/SocketStore'
 
 import ModalWrapper from '../../components/containers/ModalWrapper'
 import CoinFlipGamePlayer from './CoinFlipGamePlayer'
@@ -15,11 +13,14 @@ import { loadImage } from '../../helpers/loadImages'
 
 import blueSide from '../../assets/img/coinflip-blue-winin-sprite.png'
 import whiteSide from '../../assets/img/coinflip-white-win-sprite.png'
-import { getToast } from '../../helpers/toast'
+import { useNavigate } from 'react-router-dom'
 
-const CoinFlipGameModal = () => {
-  const { setIsOpenBattleGame, setCurrentGame, currentGame } = useCoinFlip()
-  const { socket } = useSocketCtx()
+interface CoinFlipGameModalProps {
+  game: ICoinFlip
+}
+
+const CoinFlipGameModal = ({ game }: CoinFlipGameModalProps) => {
+  const navigate = useNavigate()
 
   const [timeToStartEffect, setTimeToStartEffect] = useState<number>(7)
 
@@ -32,7 +33,7 @@ const CoinFlipGameModal = () => {
   const opponentBodyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (currentGame?.winner && isLoadedSprites) {
+    if (game?.winner && isLoadedSprites) {
       setAnimation(true)
 
       const countdown = setInterval(() => {
@@ -45,13 +46,13 @@ const CoinFlipGameModal = () => {
               creatorBodyRef.current &&
               opponentBodyRef.current
             ) {
-              if (currentGame.winner?.coin === currentGame.creator.coin) {
+              if (game.winner?.coin === game.creator.coin) {
                 opponentHeadRef.current.style.opacity = '0.3'
                 opponentHeadRef.current.style.filter = 'grayscale(30%)'
                 opponentBodyRef.current.style.opacity = '0.3'
                 opponentBodyRef.current.style.filter = 'grayscale(30%)'
               }
-              if (currentGame.winner?.coin === currentGame.joining?.coin) {
+              if (game.winner?.coin === game.joining?.coin) {
                 creatorHeadRef.current.style.opacity = '0.3'
                 creatorHeadRef.current.style.filter = 'grayscale(30%)'
                 creatorBodyRef.current.style.opacity = '0.3'
@@ -68,35 +69,7 @@ const CoinFlipGameModal = () => {
         clearInterval(countdown)
       }
     }
-  }, [currentGame, isLoadedSprites])
-
-  useEffect(() => {
-    socket.on('coinflip_update', (joining: ICoinFlip | boolean) => {
-      if (typeof joining === 'boolean') {
-        getToast('user failed join')
-      } else {
-        setCurrentGame(joining)
-      }
-    })
-
-    socket.on('coinflip_over', (joining: ICoinFlip | boolean) => {
-      if (typeof joining === 'boolean') {
-        getToast('user failed join')
-      } else {
-        setCurrentGame(joining)
-      }
-    })
-
-    return () => {
-      socket.off('coinflip_update')
-      socket.off('coinflip_over')
-    }
-  }, [])
-
-  const handleCloseGameModal = () => {
-    setIsOpenBattleGame(false)
-    setCurrentGame(null)
-  }
+  }, [game, isLoadedSprites])
 
   useEffect(() => {
     loadImage([blueSide, whiteSide], () => setIsloadedSprites(true))
@@ -104,7 +77,7 @@ const CoinFlipGameModal = () => {
 
   return (
     <ModalWrapper
-      closeModal={handleCloseGameModal}
+      closeModal={() => navigate('/coinflip')}
       modalClasses="relative ls:px-0 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-6xl w-full m-auto space-y-5 min-h-[535px]"
     >
       <div className="overflow-hidden pt-6 xs:pt-0">
@@ -115,20 +88,18 @@ const CoinFlipGameModal = () => {
             </div>
             <div className="flex items-center">
               <span className="hidden xxs:block">CF&nbsp;</span>
-              <span className="text-orange-primary-light">#{currentGame?.id}</span>
+              <span className="text-orange-primary-light">#{game?.id}</span>
             </div>
             <CoinsWithDiamond
               containerColor="GreenGradient"
               containerSize="Large"
-              typographyQuantity={
-                (currentGame?.creator.value ?? 0) + (currentGame?.joining?.value ?? 0)
-              }
+              typographyQuantity={(game?.creator.value ?? 0) + (game?.joining?.value ?? 0)}
             />
           </div>
           <div className="p-3 flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center">
             <div
               className={`
-                 ${currentGame?.winner?.coin === 0 ? 'blue' : 'white'} 
+                 ${game?.winner?.coin === 0 ? 'blue' : 'white'} 
                  ${animation ? 'play' : 'grayscale opacity-80'} coinflip-animation absolute z-1`}
             />
           </div>
@@ -136,29 +107,21 @@ const CoinFlipGameModal = () => {
             <img className="rotate-[-48deg]" src={VersusBattleIcon} alt="versus" />
           </div>
           <div className="sm:w-96 flex justify-center items-center">
-            <AvatarWithUsername
-              ref={creatorHeadRef}
-              username={currentGame?.creator.name}
-              avatar={currentGame?.creator.avatar}
-            />
+            <AvatarWithUsername ref={creatorHeadRef} username={game?.creator.name} avatar={game?.creator.avatar} />
             <span className="mx-6">
               <img src={VersusBattleIcon} alt="versus" />
             </span>
-            <AvatarWithUsername
-              ref={opponentHeadRef}
-              username={currentGame?.joining?.name}
-              avatar={currentGame?.joining?.avatar}
-            />
+            <AvatarWithUsername ref={opponentHeadRef} username={game?.joining?.name} avatar={game?.joining?.avatar} />
           </div>
         </div>
         <div className="flex">
-          <CoinFlipGamePlayer ref={creatorBodyRef} opponent={false} />
-          <CoinFlipGamePlayer ref={opponentBodyRef} opponent={true} />
+          <CoinFlipGamePlayer ref={creatorBodyRef} game={game} opponent={false} />
+          <CoinFlipGamePlayer ref={opponentBodyRef} game={game} opponent={true} />
         </div>
         <div className="absolute z-[50] bottom-0 left-0 w-full text-center py-2.5 px-6 bg-blue-highlight-secondary rounded-b-2xl">
           <p className="text-clip overflow-hidden text-blue-ocean-third font-normal text-base">
             <span className="font-bold">Server Seed #</span>
-            {currentGame?.seed}
+            {game?.seed}
           </p>
         </div>
       </div>
