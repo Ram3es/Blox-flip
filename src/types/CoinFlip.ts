@@ -1,8 +1,6 @@
-import { IItemCard } from './ItemCard'
-
 export type ICoin = 0 | 1
 
-export type ICoinFlipStatus = 1 | 2 | 3 | 4
+export type ICoinFlipStatus = '1' | '2' | '3' | '4'
 
 export interface ICoinFlipPlayer {
   id: string
@@ -11,7 +9,6 @@ export interface ICoinFlipPlayer {
   level: number
   value: number
   chance: number
-  skins: IItemCard[]
   coin: ICoin
 }
 
@@ -27,8 +24,8 @@ export interface ICoinFlip {
   seed: string
   creator: ICoinFlipPlayer
   joining?: ICoinFlipPlayer
-  timer?: number
-  winner?: Omit<ICoinFlipPlayer, 'chance' | 'skins'>
+  winner?: Omit<ICoinFlipPlayer, 'chance'>
+  start_time: number
   min: number
   max: number
 }
@@ -37,3 +34,5 @@ export interface ICoinFlipCreate {
   coin: ICoin
   wager: number
 }
+
+export type ICoinFlipList = Record<number, ICoinFlip>

@@ -84,6 +84,8 @@ export const App = () => {
           <Route path="/wheel" element={<Wheel />} />
           <Route path="/plinko" element={<Plinko />} />
           <Route path="/coinflip" element={<CoinFlip />} />
+          <Route path="/coinflip/:id" element={<CoinFlip />} />
+
           <Route path="/jackpot" element={<Jackpot />} />
 
           <Route path="/unboxing" element={<Unboxing />} />

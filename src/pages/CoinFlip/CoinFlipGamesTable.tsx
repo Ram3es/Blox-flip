@@ -1,31 +1,19 @@
-import { useEffect, useState } from 'react'
-import { useSocketCtx } from '../../store/SocketStore'
+import { useMemo } from 'react'
 
-import {
-  ColumnDef,
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable
-} from '@tanstack/react-table'
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
 import clsx from 'clsx'
 
 import CFUserInfoCell from '../../components/table/CellFormatters/CFUserInfoCell'
-import ItemsListCell from '../../components/table/CellFormatters/ItemsListCell'
 import CFStatusCell from '../../components/table/CellFormatters/CFStatusCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 
 import { ICoinFlip } from '../../types/CoinFlip'
 
-import { getCostByFieldName } from '../../helpers/numbers'
+import { useCoinFlip } from '../../store/CoinFlipStore'
 
 const CoinFlipGamesTable = () => {
-  const [games, setGames] = useState<ICoinFlip[]>([])
-  const { socket } = useSocketCtx()
-
-  const removeGameById = (games: ICoinFlip[], gameId: string): ICoinFlip[] =>
-    games.filter((game) => game.id !== gameId)
+  const { games } = useCoinFlip()
 
   const columnHelper = createColumnHelper<ICoinFlip>()
   const gameColumns: Array<ColumnDef<ICoinFlip, any>> = [
@@ -40,20 +28,14 @@ const CoinFlipGamesTable = () => {
       ),
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('creator.skins', {
-      id: 'items',
-      header: () => 'Items',
-      cell: (props) => <ItemsListCell items={props.getValue()} />,
-      footer: (props) => props.column.id
-    }),
-    columnHelper.accessor('creator.skins', {
+    columnHelper.accessor('creator.value', {
       id: 'total',
       header: () => 'Total',
       cell: ({ row }) => (
         <CoinsWithDiamond
           containerSize="Large"
           containerColor="GreenGradient"
-          typographyQuantity={getCostByFieldName(row.original.creator.skins, 'price')}
+          typographyQuantity={row.original.creator.value}
           typographyFontSize="Size16"
         />
       ),
@@ -67,29 +49,13 @@ const CoinFlipGamesTable = () => {
     })
   ]
 
+  const memoizedData = useMemo(() => games, [games])
+
   const table = useReactTable({
-    data: games,
+    data: memoizedData,
     columns: gameColumns,
     getCoreRowModel: getCoreRowModel()
   })
-
-  useEffect(() => {
-    socket.on('coinflip_remove', (id: string) => {
-      if (id) {
-        const filteredGames = removeGameById(games, id)
-        setGames(filteredGames)
-      }
-    })
-
-    socket.on('coinflip_new', (data: ICoinFlip) => {
-      setGames((prev) => ({ ...prev, data }))
-    })
-
-    return () => {
-      socket.off('coinflip_remove')
-      socket.off('coinflip_new')
-    }
-  }, [socket])
 
   return (
     <div className="overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full max-w-full py-4">
@@ -119,8 +85,9 @@ const CoinFlipGamesTable = () => {
               {row.getVisibleCells().map((cell, index, array) => (
                 <td
                   key={cell.id}
-                  className={clsx('bg-blue-accent', {
+                  className={clsx('bg-blue-accent h-28', {
                     'rounded-l-md pl-4': index === 0,
+                    'w-[200px]': index === 1,
                     'rounded-r-md pr-4': array[index] === array.at(-1)
                   })}
                 >
