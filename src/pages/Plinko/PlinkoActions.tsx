@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEventHandler, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react'
 import { usePlinko } from '../../store/PlinkoStore'
 
 import RangeSlider from '../../components/common/RangeSlider'
@@ -43,6 +43,12 @@ const PlinkoActions = () => {
     setRisk,
     setSelectedRow
   } = usePlinko()
+
+  const numberOfBetsRef = useRef(numberOfBets)
+
+  useEffect(() => {
+    numberOfBetsRef.current = numberOfBets
+  }, [numberOfBets])
 
   const BUTTON_DISABLED_DELAY = selectedRow * PlinkoConfig.DELAY_BALL_DROP
 
@@ -99,43 +105,47 @@ const PlinkoActions = () => {
     setTimeout(() => setIsButtonDisabled(false), BUTTON_DISABLED_DELAY)
   }
 
-  const handlePlaceBet = useCallback(
-    debounce(() => {
-      if (numberOfBets >= 1) {
-        mode === 'Automatic' && buttonDisabled()
+  const placeBet = useCallback(() => {
+    if (numberOfBets >= 1) {
+      mode === 'Automatic' && buttonDisabled()
 
-        socket.emit(
-          'plinko',
-          { rows: selectedRow, risk: risk.toLowerCase(), wager: betAmount },
-          (
-            err: boolean,
-            { multiplier, amount, win }: { multiplier: number, amount: number, win: number }
-          ) => {
-            if (err) {
-              getToast("Plinko doesn't fall")
-            }
-
-            if (!err) {
-              console.log(multiplier, 'multiplier')
-              console.log(amount, 'amount')
-              console.log(win, 'win')
-
-              setInGameBalls((prev: number) =>
-                numberOfBets > 1 ? (prev += numberOfBets) : prev + 1
-              )
-              setPaths([])
-              setIsStarted(true)
-
-              const validPath = getRandomValidPath(risk, selectedRow, multiplier)
-
-              setPaths((prev) => [...prev, validPath])
-            }
+      socket.emit(
+        'plinko',
+        { rows: selectedRow, risk: risk.toLowerCase(), wager: betAmount },
+        (err: boolean | string, { multiplier, amount, win }: { multiplier: number, amount: number, win: number }) => {
+          if (typeof err === 'string') {
+            getToast(err)
           }
-        )
-      }
-    }, 500),
-    [numberOfBets, isStarted, selectedRow]
-  )
+
+          if (!err) {
+            setInGameBalls((prev: number) => prev + 1)
+            setPaths([])
+            setIsStarted(true)
+
+            const validPath = getRandomValidPath(risk, selectedRow, multiplier)
+
+            setPaths((prev) => [...prev, validPath])
+          }
+        }
+      )
+    }
+  }, [isStarted, mode, numberOfBets, selectedRow])
+
+  const handlePlaceBet = debounce(() => {
+    if (mode === 'Manual') {
+      placeBet()
+    }
+    if (mode === 'Automatic') {
+      const interval = setInterval(() => {
+        if (numberOfBetsRef.current > 0) {
+          placeBet()
+          setNumberOfBets((prev) => prev - 1)
+        } else {
+          clearInterval(interval)
+        }
+      }, 1000)
+    }
+  }, 500)
 
   useEffect(() => {
     if (inGameBalls < 1 && isStarted) {
@@ -164,23 +174,13 @@ const PlinkoActions = () => {
               <DiamondIcon className="-inset-full absolute m-auto" />
             </div>
           </div>
-          <RangeSlider
-            value={betAmount}
-            min={100}
-            max={1500}
-            sliderValueChanged={handleChangeBetAmount}
-          />
+          <RangeSlider value={betAmount} min={100} max={1500} sliderValueChanged={handleChangeBetAmount} />
         </div>
         <div className="border-b-2 border-b-blue-accent-fourth pb-6">
           <ToggleBets value={selectedBet} handleChange={setSelectedBet} betToolkit={betToolkit} />
         </div>
         <div className="border-b-2 border-b-blue-accent-fourth flex flex-col w-full pb-6">
-          <ToggleRows
-            isBlocked={isStarted}
-            value={selectedRow}
-            handleChange={setSelectedRow}
-            rowOptions={rowOptions}
-          />
+          <ToggleRows isBlocked={isStarted} value={selectedRow} handleChange={setSelectedRow} rowOptions={rowOptions} />
         </div>
         <div className="border-b-2 border-b-blue-accent-fourth pb-6">
           <ToggleRisk isBlocked={isStarted} value={risk} handleChange={setRisk} />
@@ -188,6 +188,7 @@ const PlinkoActions = () => {
         {mode === 'Automatic' && (
           <div className="border-b-2 border-b-blue-accent-fourth">
             <InputWithLabel
+              disabled={isStarted}
               type="number"
               name="numberOfBets"
               label="Number of Bets"
@@ -198,11 +199,7 @@ const PlinkoActions = () => {
           </div>
         )}
         <div className="flex pb-6">
-          <Button
-            disabled={isButtonDisabled}
-            onClick={handlePlaceBet}
-            className="w-full bg-green-primary rounded h-11"
-          >
+          <Button disabled={isButtonDisabled} onClick={handlePlaceBet} className="w-full bg-green-primary rounded h-11">
             Place Bet
           </Button>
         </div>
