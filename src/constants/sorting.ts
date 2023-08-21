@@ -14,9 +14,8 @@ export const selectItem = [
   { title: '10k - 25k', value: { from: 10001, to: 25000 } }
 ]
 
-export const challenges = [
+export const CHALLENGE_SORT_VARIANTS = [
   { title: 'All games', value: 'all' },
-  { title: 'King', value: 'king' },
   { title: 'Wheel', value: 'wheel' },
   { title: 'Plinko', value: 'plinko' },
   { title: 'Coinflip', value: 'coinflip' },

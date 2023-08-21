@@ -8,62 +8,39 @@ import CoinsWithDiamond from '../CoinsWithDiamond'
 
 interface IChallengeCardProps {
   isClaimed?: boolean
-  price: number
+  reward: number
   image: string
   openModal?: Function
   wrapClasses?: string
 }
 
-const ChallengesCard: FC<IChallengeCardProps> = ({
-  wrapClasses,
-  price,
-  isClaimed,
-  image,
-  openModal
-}) => {
-  const borderColor = clsx(
-    'w-full h-[250px] challenges--mask border mt-10 relative rounded-lg cursor-pointer',
-    {
-      'challenge-card-border-gold': !isClaimed
-    }
-  )
+const ChallengesCard: FC<IChallengeCardProps> = ({ wrapClasses, reward, isClaimed, image, openModal }) => {
+  const borderColor = clsx('w-full h-[250px] challenges--mask border mt-10 relative rounded-lg cursor-pointer', {
+    'challenge-card-border-gold': !isClaimed
+  })
   const cardGradient = clsx('absolute inset-0 w-full h-full z-10 rounded-[10px]', {
     'gradient-challenge--darkgreen': isClaimed,
     'gradient-challenge--gold': !isClaimed
   })
   return (
-    <div
-      className={
-        wrapClasses ?? ' px-1 xxxs:px-2 w-1/2 xxxs:w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/5 flex shrink-0'
-      }
-    >
+    <div className={wrapClasses ?? ' px-1 xxxs:px-2 w-1/2 xxxs:w-1/2 xxs:w-1/3 xs:w-1/4 md:w-1/5 flex shrink-0'}>
       <div onClick={() => openModal?.()} className={`${borderColor} `}>
         <div className={cardGradient}>
-          <div className='flex flex-col gap-2 items-center justify-between absolute pt-6 pb-4  w-full h-full z-20'>
-            <div className='w-full shrink-0 pb-[70%] h-0 relative mb-1.5'>
-              <img src={image} alt='game' className='absolute object-contain w-full h-full' />
+          <div className="flex flex-col gap-2 items-center justify-between absolute pt-6 pb-4  w-full h-full z-20">
+            <div className="w-full shrink-0 pb-[70%] h-0 relative mb-1.5">
+              <img src={image} alt="game" className="absolute object-contain w-full h-full" />
             </div>
-            <div className='flex flex-col items-center '>
-              <span className='text-[20px] text-gradient-gold font-bold'>
-                {isClaimed ? 'Rewarded' : 'Rewards'}
-              </span>
-              <CoinsWithDiamond
-                iconContainerSize='Small'
-                typographyQuantity={price}
-                typographyFontSize='Size17'
-              />
+            <div className="flex flex-col items-center ">
+              <span className="text-[20px] text-gradient-gold font-bold">{isClaimed ? 'Rewarded' : 'Rewards'}</span>
+              <CoinsWithDiamond iconContainerSize="Small" typographyQuantity={reward} typographyFontSize="Size17" />
             </div>
           </div>
-          <img
-            src={ribbedGray}
-            alt='Tq'
-            className=' w-full h-full backdrop-invert-[0.5] opacity-[0.05]'
-          />
+          <img src={ribbedGray} alt="Tq" className=" w-full h-full backdrop-invert-[0.5] opacity-[0.05]" />
         </div>
         <img
           src={!isClaimed ? dartsGold : greenCheck}
-          alt='card-logo'
-          className='absolute z-10 -top-[17px] left-[calc(50%-14px)]'
+          alt="card-logo"
+          className="absolute z-10 -top-[17px] left-[calc(50%-14px)]"
         />
       </div>
     </div>
