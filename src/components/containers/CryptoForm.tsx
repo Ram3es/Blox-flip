@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
 import * as Yup from 'yup'
-import QRCodePlaceHolder from '../../assets/img/qr-kod.png'
 import { getIconByPathName } from '../../helpers/imageHelpers'
 import { Button } from '../base/Button'
 import InputWithLabel from '../base/InputWithLabel'
@@ -13,6 +12,7 @@ import { getToast } from '../../helpers/toast'
 import DiamondIcon from '../icons/DiamondIcon'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import IconContainer from './IconContainer'
+import QRCode from 'qrcode.react'
 
 enum CryptoFormVariantEnum {
   Withdraw = 'Withdraw',
@@ -36,7 +36,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
 
   useEffect(() => {
     if (variant === 'Deposit') {
-      socket.emit(`${type as string}`, (err: boolean | string, address: string, rate: number) => {
+      socket.emit(`${'load_address' ?? type as string}`, { type: shortName }, (err: boolean | string, address: string, rate: number) => {
         if (typeof err === 'string') {
           getToast(err)
         }
@@ -168,7 +168,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
               {variant === 'Deposit' && (
                 <>
                   <div className="min-w-fit shrink-0 w-28 mx-3 mb-6 xs:mb-0">
-                    <img src={QRCodePlaceHolder} alt="" width="115" height="115" loading="lazy" decoding="async" />
+                    <QRCode value={renderText} className={`${renderText ? 'block' : 'hidden'}`} />
                   </div>
                   <span className="text-gray-primary text-center grow lg:pr-36">
                     Send only Bitcoin to the address above, or QR code to the left. Do not send any other crypto

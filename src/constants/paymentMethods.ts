@@ -13,16 +13,16 @@ export const METHODS: IPaymentMethods = {
           width: '31px',
           height: '19px'
         }
-      },
-      {
-        path: 'robux',
-        title: 'Robux',
-        image: IMAGES.robuxDeposite,
-        smallSize: {
-          width: '31px',
-          height: '19px'
-        }
       }
+      // {
+      //   path: 'robux',
+      //   title: 'Robux',
+      //   image: IMAGES.robuxDeposite,
+      //   smallSize: {
+      //     width: '31px',
+      //     height: '19px'
+      //   }
+      // }
     ]
   },
   crypto: {
