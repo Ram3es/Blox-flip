@@ -6,73 +6,48 @@ import StrippedBgItem from '../../components/common/StrippedBgItem'
 import VerifyBets from '../../components/common/VerifyBets'
 import Image from '../../components/base/Image'
 import { cards } from '../../mocks/cards'
-import { IJackpotPlayer, jackpotPlayer } from '../../mocks/jackpotPlayer'
-import { IJackpotCard } from '../../types/Jackpot'
+import {
+  IJackpotCard,
+  IRootJackpotAll,
+  IRootJackpotChance,
+  IRootJackpotHistory,
+  IRootJackpotNew,
+  IRootJackpotRoll,
+  IRootJackpotWager
+} from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
 import { Context } from '../../store/Store'
-import SignInModal from '../../components/containers/SignInModal'
 import JoinedUserRow from '../../components/common/Cards/JackpotUserCard'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
-import { formatNumber, getCostByFieldName, localeStringToNumber } from '../../helpers/numbers'
+import { formatNumber, localeStringToNumber } from '../../helpers/numbers'
 import { Input } from '../../components/base/Input'
 import DiamondIcon from '../../components/icons/DiamondIcon'
+import { useSocketCtx } from '../../store/SocketStore'
+import { getToast } from '../../helpers/toast'
+import { JACKPOT_ROUND_TIME_SECONDS } from '../../constants/jackpot'
 
 const Jackpot = () => {
-  const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
+  const { socket } = useSocketCtx()
+
+  const [roundInfo, setRoundInfo] = useState<IRootJackpotAll | null>(null)
+
+  const [joinedUsers, setUserJoined] = useState<IRootJackpotNew[]>([])
+
+  const [winner, setWinner] = useState<IRootJackpotRoll | null>(null)
+  const [chance, setChance] = useState<IRootJackpotChance | null>(null)
+  const [history, setHistory] = useState<any>([])
+
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
-  const [isOpenLoginModal, setOpenLoginModal] = useState<boolean>(false)
-  // const [isOpenModal, setOpenModal] = useState<boolean>(false)
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
 
-  const [timer, setTimer] = useState<number>(30)
+  const [timer, setTimer] = useState<number>(JACKPOT_ROUND_TIME_SECONDS)
 
   const {
     state: { user }
   } = useContext(Context)
 
-  //   const AVATAR_URL =
-  // 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
+  const jackpot = joinedUsers.reduce((acc, user) => acc + user.wager, 0)
 
-  const jackpot = joinedUsers.reduce((acc, user) => acc + user.deposit, 0)
-
-  // const toggleModal = () => setOpenModal((state) => !state)
-  const calculateWinChance = useCallback(
-    (bet: number) => Number(((bet / jackpot) * 100).toFixed(2)),
-    [joinedUsers]
-  )
-
-  const joinUserToGame = () => {
-    if (user) {
-      setUserJoined((state) => [
-        ...state,
-        {
-          id: user?.id,
-          avatar: user?.avatar,
-          level: user?.level,
-          userName: user?.name,
-          deposit: getCostByFieldName(selectedCards, 'price')
-        }
-      ])
-    } else {
-      setOpenLoginModal(true)
-    }
-  }
-
-  // const onSubmitJackpotModal = (selectedCards: IJackpotCard[]) => {
-  //   setSelectedCard(selectedCards)
-  //   if (user) {
-  //     setUserJoined((state) => [
-  //       ...state,
-  //       {
-  //         id: user?.id,
-  //         avatar: user?.avatar,
-  //         level: user?.level,
-  //         userName: user?.name,
-  //         deposit: getCostByFieldName(selectedCards, 'price')
-  //       }
-  //     ])
-  //   }
-  // }
   const wagerRef = useRef<HTMLInputElement>(null)
 
   const handleWagerChange = useCallback(
@@ -89,8 +64,7 @@ const Jackpot = () => {
     }
   }
 
-  const inputValue =
-    wager.amountNumber === 0 ? wager.amountString : formatNumber(wager.amountNumber)
+  const inputValue = wager.amountNumber === 0 ? wager.amountString : formatNumber(wager.amountNumber)
 
   useEffect(() => {
     const wager = wagerRef.current
@@ -106,6 +80,52 @@ const Jackpot = () => {
     }
   }, [wagerRef])
 
+  useEffect(() => {
+    socket.on('jackpot_new', (data: IRootJackpotNew) => {
+      setUserJoined((prev) => [...prev, data])
+    })
+
+    socket.on('jackpot_all', (data: IRootJackpotAll) => {
+      setUserJoined(data.deposits)
+      setRoundInfo(data)
+
+      setTimer((data.timer * 1000 - Date.now()) / 1000)
+    })
+
+    socket.on('jackpot_chance_update', (data: IRootJackpotChance) => {
+      setChance(data)
+    })
+
+    socket.on('jackpot_roll', (data: IRootJackpotRoll) => {
+      setWinner(data)
+    })
+
+    socket.on('jackpot_history', (data: IRootJackpotHistory) => {
+      setHistory(data)
+    })
+
+    return () => {
+      socket.off('jackpot_new')
+      socket.off('jackpot_all')
+      socket.off('jackpot_chance_update')
+      socket.off('jackpot_roll')
+      socket.off('jackpot_history')
+    }
+  }, [])
+
+  const handleJoinGame = useCallback(() => {
+    const sendedData: IRootJackpotWager = {
+      id: 1,
+      wager: wager.amountNumber
+    }
+
+    socket.emit('jackpot_wager', sendedData, (err: string | boolean) => {
+      if (typeof err === 'string') {
+        getToast(err)
+      }
+    })
+  }, [wager])
+
   return (
     <div className="mx-auto w-full max-w-[1200px]">
       <div className="w-full flex-col gap-1">
@@ -113,12 +133,7 @@ const Jackpot = () => {
         <div className="flex w-full flex-col-reverse gap-10 ls:flex-row">
           <div className="flex flex-col items-center gap-2 md:flex-row ls:flex-col ls:gap-6">
             <div className="mx-0 flex h-[492px] w-[492px] scale-75 items-center justify-center xs:mx-auto xs:scale-100 md:mx-0">
-              <JackpotWheel
-                timer={timer}
-                setTimer={setTimer}
-                jackPot={jackpot}
-                joinedUsers={joinedUsers}
-              />
+              <JackpotWheel timer={timer} setTimer={setTimer} jackPot={jackpot} joinedUsers={joinedUsers} />
             </div>
             <div className="mx-auto flex w-full max-w-[382px] flex-col gap-4">
               <div className="flex justify-between gap-3">
@@ -127,16 +142,13 @@ const Jackpot = () => {
                 </GameInfoListItem>
                 <GameInfoListItem label="WIN CHANCE %">
                   <span className="text-green-primary">
-                    {calculateWinChance(
-                      joinedUsers.find((player) => player.id === user?.id)?.deposit ?? 0
-                    )}{' '}
-                    %
+                    {joinedUsers.find((player) => player.user.id === user?.id)?.chance ?? 0} %
                   </span>
                 </GameInfoListItem>
                 <GameInfoListItem label="YOUR DEPOSIT">
                   <CoinsWithDiamond
                     iconContainerSize="Small"
-                    typographyQuantity={getCostByFieldName(selectedCards, 'price')}
+                    typographyQuantity={joinedUsers.find((player) => player.user.id === user?.id)?.wager ?? 0}
                   />
                 </GameInfoListItem>
               </div>
@@ -187,7 +199,7 @@ const Jackpot = () => {
                   />
                 </div>
               </GameInfoListItem>
-              <Button color="GreenPrimary" variant="GreenGradient" onClick={joinUserToGame}>
+              <Button color="GreenPrimary" variant="GreenGradient" onClick={handleJoinGame}>
                 <div className="flex h-12 w-[121px] items-center justify-center">Join Game</div>
               </Button>
             </div>
@@ -195,59 +207,46 @@ const Jackpot = () => {
             <StrippedBgItem color="Blue">
               <div className="flex w-full flex-col items-center">
                 <div className="flex items-center">
-                  <span className="mr-1 text-base font-bold uppercase text-green-primary">
-                    Round starts in
-                  </span>
-                  {`0.${timer}s`}
+                  <span className="mr-1 text-base font-bold uppercase text-green-primary">Round starts in</span>
+                  {`${timer}s`}
                 </div>
                 <div className="w-full truncate text-center text-gray-primary">{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
               </div>
             </StrippedBgItem>
-            <div className="h-[310px] z-10  pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
-              <div className="flex flex-col  gap-y-2 p-0.5 ">
+            <div className="h-[310px] z-10 pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+              <div className="flex flex-col gap-y-2 p-0.5 ">
                 {joinedUsers.map((player) => (
-                  <JoinedUserRow
-                    key={player.id}
-                    user={player}
-                    userChance={calculateWinChance(player.deposit)}
-                  />
+                  <JoinedUserRow key={player.user.id} player={player} />
                 ))}
               </div>
             </div>
-            <div className="w-full border-b border-blue-accent-secondary " />
-            <StrippedBgItem color="Green" wrapContentClasses="py-2 px-6 xs:py-5 ">
+            <div className="w-full border-b border-blue-accent-secondary" />
+            <StrippedBgItem color="Green" wrapContentClasses="py-2 px-6 xs:py-5">
               <div className="flex flex-col items-center justify-between xs:flex-row">
-                <div className="mb-2 flex w-full flex-col  items-center gap-1 text-sm xs:mb-0 xs:flex-row">
-                  <div className=" radial--blue mx-auto my-1 h-11 w-[50px] shrink-0 overflow-hidden rounded border border-blue-highlight xs:mx-0 ">
-                    <Image image={joinedUsers[0].avatar} />
+                <div className="mb-2 flex w-full flex-col items-center gap-1 text-sm xs:mb-0 xs:flex-row">
+                  <div className="radial--blue mx-auto my-1 h-11 w-[50px] shrink-0 overflow-hidden rounded border border-blue-highlight xs:mx-0">
+                    <Image
+                      image={
+                        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/563.jpg'
+                      }
+                    />
                   </div>
                   <div className="ml-2 flex items-center gap-1">
-                    <span className="block  max-w-[150px] truncate text-green-primary">
-                      {joinedUsers[2].userName}
-                    </span>
+                    <span className="block max-w-[150px] truncate text-green-primary">PlayerName</span>
                     <span className="block">has won the jackpot</span>
                   </div>
                 </div>
-                <CoinsWithDiamond
-                  containerColor="GreenGradient"
-                  containerSize="XL"
-                  typographyQuantity={115500}
-                />
+                <CoinsWithDiamond containerColor="GreenGradient" containerSize="XL" typographyQuantity={115500} />
               </div>
             </StrippedBgItem>
-            <div className="flex flex-col  gap-y-2 p-0.5 opacity-50 ">
+            <div className="flex flex-col gap-y-2 p-0.5 opacity-50">
               {joinedUsers.map((player) => (
-                <JoinedUserRow
-                  key={player.id}
-                  user={player}
-                  userChance={calculateWinChance(player.deposit)}
-                />
+                <JoinedUserRow key={player.user.id} player={player} />
               ))}
             </div>
           </div>
         </div>
       </div>
-      <SignInModal isOpen={isOpenLoginModal} onClose={() => setOpenLoginModal(false)} />
     </div>
   )
 }
