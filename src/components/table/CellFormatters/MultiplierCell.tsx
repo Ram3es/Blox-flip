@@ -1,14 +1,13 @@
 import { FC } from 'react'
 
 interface MultiplierCellProps {
-  multiplier: number
-  isWinner?: boolean
+  gameID: string
 }
 
-export const MultiplierCell: FC<MultiplierCellProps> = ({ multiplier, isWinner = true }) => {
+export const MultiplierCell: FC<MultiplierCellProps> = ({ gameID }) => {
   return (
-    <div className='flex'>
-      <span className={isWinner ? 'text-white' : 'text-gray-primary'}>{multiplier}x</span>
+    <div className='flex '>
+      <span className='text-white'>{gameID}</span>
     </div>
   )
 }

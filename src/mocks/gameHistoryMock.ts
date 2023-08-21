@@ -2,6 +2,7 @@ import { IHistory } from '../types/History'
 
 export const mockHistory: IHistory[] = [
   {
+    id: 'ssdfsd-ewf-sdfwe43-34353545',
     game: 'crash',
     date: '2032-07-12T23:46:58.567Z',
     multiplier: 15.29,

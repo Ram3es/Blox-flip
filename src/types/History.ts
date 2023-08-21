@@ -1,9 +1,10 @@
 export interface IHistory {
+  id: string
   game: string
   date: string
-  multiplier: number
+  multiplier?: number
   wager: number
   profit: number
-  isError: boolean
+  isError?: boolean
   isWinner: boolean
 }
