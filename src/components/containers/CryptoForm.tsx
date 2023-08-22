@@ -36,7 +36,7 @@ const CryptoForm = ({ variant = CryptoFormVariantEnum.Deposit }: CryptoFormProps
 
   useEffect(() => {
     if (variant === 'Deposit') {
-      socket.emit(`${'load_address' ?? type as string}`, { type: shortName }, (err: boolean | string, address: string, rate: number) => {
+      socket.emit(`${type as string}`, { type: shortName }, (err: boolean | string, address: string, rate: number) => {
         if (typeof err === 'string') {
           getToast(err)
         }

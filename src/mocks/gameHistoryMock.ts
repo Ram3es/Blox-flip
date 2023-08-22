@@ -1,6 +1,5 @@
-import { IHistory } from '../types/History'
 
-export const mockHistory: IHistory[] = [
+export const mockHistory = [
   {
     id: 'ssdfsd-ewf-sdfwe43-34353545',
     game: 'crash',
