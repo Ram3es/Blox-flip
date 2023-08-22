@@ -21,7 +21,7 @@ export const Transactions = () => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
-  const [searchValue, setSearchValue] = useState<string[]>([])
+  const [searchValue, setSearchValue] = useState<string[] | string >([])
 
   const { socket } = useSocketCtx()
 

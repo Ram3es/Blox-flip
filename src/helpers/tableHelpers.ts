@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 export const resetColumnFilterHelper = <T>(
   setCurrentColumn: (column: string) => void,
-  setSearchValue: (value: string[]) => void,
+  setSearchValue: (value: string[] | string) => void,
   setColumnFilters: (filters: T[]) => void,
   columnFilters: T[]
 ) => {
@@ -15,10 +15,10 @@ export const resetColumnFilterHelper = <T>(
 
 export const handleFilterByValueHelper = (
   setCurrentColumn: (column: string) => void,
-  setSearchValue: (value: string[]) => void
+  setSearchValue: (value: string[] | string) => void
 ) => {
   return useCallback(
-    (column: string, value: string[]) => {
+    (column: string, value: string[] | string) => {
       setCurrentColumn(column)
       setSearchValue(value)
     },

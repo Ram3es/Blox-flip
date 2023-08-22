@@ -1,6 +1,5 @@
-import { ITransaction } from '../types/Transaction'
 
-export const mockTransactions: ITransaction[] = [
+export const mockTransactions = [
   {
     id: '1234-32rdef-43t5tff-1234',
     type: 'Deposit',
