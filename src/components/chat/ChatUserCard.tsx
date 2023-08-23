@@ -101,6 +101,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     {
       handleFunction: () => {
         setIsOpenTipModal(true)
+        setUserSelected(user)
       },
       name: 'Tip user',
       icon: <TipIcon className={baseIconSizeClasses} />

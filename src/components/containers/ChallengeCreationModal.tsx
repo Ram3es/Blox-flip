@@ -69,7 +69,6 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
             }
           })
           handleFunction()
-          console.log('zaebis')
         })
         .catch((errors) => {
           console.log(errors)
@@ -110,7 +109,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
         />
         <Listbox
           value={formik.values.game}
-          onChange={(variant) => {
+          onChange={(variant: string) => {
             formik.setFieldValue('game', variant).then(
               () => {},
               () => {}
