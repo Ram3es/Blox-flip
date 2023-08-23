@@ -19,7 +19,7 @@ export const History = () => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState<string | string[]>('')
 
   const resetFilter = resetColumnFilterHelper(
     setCurrentColumn,

@@ -29,7 +29,7 @@ export const LiveFeed = () => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
-  const [searchValue, setSearchValue] = useState<string | number>('')
+  const [searchValue, setSearchValue] = useState<string | number | string[]>('')
 
   const resetFilter = resetColumnFilterHelper(
     setCurrentColumn,
