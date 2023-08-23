@@ -28,7 +28,7 @@ export const Affiliates = () => {
       }
     })
   }, [])
-  
+
   return (
     <div className="max-w-5xl w-full mx-auto">
       <div className="text-center relative rounded-2xl border border-lightblue-primary/70 mb-12 xs:mb-9">
