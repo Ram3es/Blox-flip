@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { GameStatus } from '../../../types/enums'
-import { DisplayedBattleModeEnum, RootBattleModeEnum } from '../../../types/CaseBattles'
+import { DisplayedBattleModeEnum } from '../../../types/CaseBattles'
 
 interface IRoundProps {
   round: number

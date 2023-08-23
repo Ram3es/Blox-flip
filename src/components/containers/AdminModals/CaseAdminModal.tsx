@@ -173,7 +173,7 @@ const CaseAdminModal = ({ handleClose, caseData }: CaseAdminModalProps) => {
     setFormSkins(selectedSkins)
   }, [selectedSkins])
 
-  const CellMarketItem = ({ index, style }: { index: number; style: Properties<string | number, string & {}> }) => {
+  const CellMarketItem = ({ index, style }: { index: number, style: Properties<string | number, string & {}> }) => {
     return (
       <div style={style}>
         <ItemCard variant="CaseAdminItem" key={getRandomId()} onSelect={handleSelectSkin} {...skins[index]} />

@@ -21,24 +21,24 @@ interface UserBarProps {
 const UserBar = ({ game, playerIndex, sumWonItems, isLoser }: UserBarProps) => {
   const { socket } = useSocketCtx()
 
-  const handleJoinGame = (place: number) => {
-    socket.emit(
-      'join_battle',
-      {
-        id: game.id,
-        place
-      },
-      (err: boolean | string) => {
-        if (typeof err === 'string') {
-          getToast(err)
-        }
+  // const handleJoinGame = (place: number) => {
+  //   socket.emit(
+  //     'join_battle',
+  //     {
+  //       id: game.id,
+  //       place
+  //     },
+  //     (err: boolean | string) => {
+  //       if (typeof err === 'string') {
+  //         getToast(err)
+  //       }
 
-        if (!err) {
-          getToast('joined successful')
-        }
-      }
-    )
-  }
+  //       if (!err) {
+  //         getToast('joined successful')
+  //       }
+  //     }
+  //   )
+  // }
 
   const handleCallBot = (place: number) => {
     socket.emit(
