@@ -13,8 +13,3 @@ export interface IAffiliateDeposit {
   date: string
   deposited: number
 }
-
-export interface ILeaderbordData extends Pick<IAffiliateDeposit, 'user'> {
-  wagered: number
-  reward: number
-}
