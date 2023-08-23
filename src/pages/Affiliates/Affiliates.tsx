@@ -20,6 +20,12 @@ export const Affiliates = () => {
       setAffilateData(data)
     })
   }, [])
+
+  useEffect(() => {
+    socket.emit('load_affiliates', ({ data }: { data: IAffilateData }) => {
+      setAffilateData(data)
+    })
+  }, [])
   return (
     <div className='max-w-5xl w-full mx-auto'>
       <div className='text-center relative rounded-2xl border border-lightblue-primary/70 mb-12 xs:mb-9'>
@@ -84,7 +90,7 @@ export const Affiliates = () => {
             <CoinsWithDiamond
               iconContainerSize='XL'
               iconClasses='w-[18.5px] h-[15.5px]'
-              typographyQuantity={affilateData?.deposits ?? 0}
+              typographyQuantity={affilateData?.totaldeposited ?? 0}
               typographyFontSize='Size18'
             />
           </div>
@@ -95,7 +101,7 @@ export const Affiliates = () => {
             <CoinsWithDiamond
               iconContainerSize='XL'
               iconClasses='w-[18.5px] h-[15.5px]'
-              typographyQuantity={affilateData?.total ?? 0}
+              typographyQuantity={affilateData?.totalearned ?? 0}
               typographyFontSize='Size18'
             />
           </div>
@@ -108,7 +114,7 @@ export const Affiliates = () => {
             <CoinsWithDiamond
               iconContainerSize='XL'
               iconClasses='w-[18.5px] h-[15.5px]'
-              typographyQuantity={affilateData?.current ?? 0}
+              typographyQuantity={affilateData?.available ?? 0}
               typographyFontSize='Size18'
             />
             <Link to='/withdraw'>
@@ -123,9 +129,9 @@ export const Affiliates = () => {
         </div>
       </div>
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
-      <AffiliatesForm referalCode={ affilateData?.code } />
+      <AffiliatesForm referalCode={ affilateData?.link } />
       <div className='pb-5 border-b border-blue-highlight mb-6'></div>
-      {affilateData?.users.length &&
+      { affilateData?.users?.length &&
         <AffiliatesTable data={affilateData.users } />}
     </div>
   )

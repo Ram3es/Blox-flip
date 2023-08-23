@@ -7,16 +7,30 @@ import * as Yup from 'yup'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import { Button } from '../../components/base/Button'
 import { CopyIcon } from '../../components/icons/CopyIcon'
+import { useSocketCtx } from '../../store/SocketStore'
+import { getToast } from '../../helpers/toast'
 
-const baseUrl = 'https://robloxsite.com/?a/'
+const baseUrl = import.meta.env.VITE_BASE_REFERAL_URL as string || 'https://robloxsite.com/?a/'
 
-export const AffiliatesForm = ({ referalCode = '182Affiliatehahawqrqw' }: { referalCode?: string }) => {
+export const AffiliatesForm = ({ referalCode }: { referalCode?: string }) => {
   const [referralCode, setReferralCode] = useState<string>('')
   const {
     handleCopyText: handleCopyReferralLink,
     setText: setReferralLink,
     renderText: referralLink
   } = useCopyToClipboard()
+
+  const { socket } = useSocketCtx()
+
+  const changeCode = (code: string) => {
+    console.log(code)
+    socket.emit('change_aff', { code }, (err: string | boolean) => {
+      if (typeof err === 'string') {
+        return getToast(err)
+      }
+      setReferralLink(baseUrl + code)
+    })
+  }
 
   useEffect(() => {
     if (referalCode) {
@@ -45,10 +59,13 @@ export const AffiliatesForm = ({ referalCode = '182Affiliatehahawqrqw' }: { refe
       validationSchema={referralCodeSchema}
       onSubmit={(values) => {
         setReferralCode(values.referralCode)
+        changeCode(values.referralCode)
       }}
+      enableReinitialize
+
     >
-      {(props) => (
-        <Form onSubmit={props.handleSubmit} className='flex flex-wrap -mx-2'>
+      {({ handleSubmit, handleChange, values }) => (
+        <Form onSubmit={handleSubmit} className='flex flex-wrap -mx-2'>
           <div className='relative px-2 w-full xs:w-1/2 md:w-auto grow shrink-0 mb-4'>
             <InputWithLabel
               type='text'
@@ -79,10 +96,9 @@ export const AffiliatesForm = ({ referalCode = '182Affiliatehahawqrqw' }: { refe
               titleClasses='gradient-blue-secondary text-gray-primary rounded-t-xl py-2 px-5 inline-block'
               inputWrapperClasses='bg-dark/25 rounded-xl overflow-hidden w-full'
               inputClasses='overflow-ellipsis grow w-0 mr-2 bg-transparent bg-none border-none outline-none shadow-none leading-5 py-4 mr-28 truncate'
-              value={referralCode}
+              value={values.referralCode}
               placeholder='...'
-              onChange={props.handleChange}
-              readOnly
+              onChange={handleChange}
             />
             <div className='absolute z-20 top-[52px] right-7'>
               <Button color='GreenPrimary' variant='GreenGradient' type='submit'>

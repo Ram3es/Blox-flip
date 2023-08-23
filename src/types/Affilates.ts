@@ -1,11 +1,11 @@
 import { TBaseUser } from './User'
 
 export interface IAffilateData {
-  code: string
-  deposits: number // total deposits for the user
-  total: number // total earnings
-  current: number // current earning
-  users: IAffilateDeposit[]
+  link: string
+  totaldeposited: number // total deposits for the user
+  totalearned: number // total earnings
+  available: number // current earning
+  users?: IAffilateDeposit[]
 }
 
 export interface IAffilateDeposit {
