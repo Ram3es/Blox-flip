@@ -1,7 +1,4 @@
-import { useCallback, useContext } from 'react'
-
-import { useCoinFlip } from '../../../store/CoinFlipStore'
-import { Context } from '../../../store/Store'
+import { useCallback } from 'react'
 
 import clsx from 'clsx'
 

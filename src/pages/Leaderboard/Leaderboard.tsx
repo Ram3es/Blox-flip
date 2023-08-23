@@ -9,28 +9,35 @@ import { ILeaderbordData } from '../../types/Affiliates'
 import { ILeaderboardUser } from '../../types/User'
 import { getTopThreeUsers } from '../../helpers/leaderboardHelpers'
 import { getToast } from '../../helpers/toast'
+import { ILeaderboardUserData } from '../../types/Leaderboard'
 
 export const Leaderboard = () => {
-  const [boardData, setBoardData] = useState<ILeaderboardUser[]>([])
+  const [boardData, setBoardData] = useState<ILeaderboardUserData[]>([])
   const { socket } = useSocketCtx()
 
   useEffect(() => {
-    socket.emit('load_leaderboards', (err: string | boolean, data: ILeaderbordData[]) => {
+    socket.emit('load_leaderboards', (err: string | boolean, data: ILeaderboardUserData[]) => {
       if (typeof err === 'string') {
         getToast(err)
       }
-
       if (!err) {
-        setBoardData(
-          data.map((item) => ({
-            ...item.user,
-            bet: item.wagered,
-            profit: item.reward
-          }))
-        )
+        setBoardData(data)
       }
     })
+
+    socket.on('show_leaderboards', (err: string | boolean, data: ILeaderboardUserData[]) => {
+      if (typeof err === 'string') {
+        getToast(err)
+      }
+      if (!err) {
+        setBoardData(data)
+      }
+    })
+    return () => {
+      socket.off('show_leaderboards')
+    }
   }, [])
+
   return (
     <div className="max-w-5xl w-full mx-auto">
       <div className="flex flex-wrap xxs:flex-nowrap items-end relative">
@@ -69,7 +76,7 @@ export const Leaderboard = () => {
           />
         </div>
       </div>
-      <LeaderboardPodium users={getTopThreeUsers(boardData, 'level')} />
+      <LeaderboardPodium users={getTopThreeUsers(boardData, 'place')} />
       <div className="pb-5 border-b border-blue-highlight mb-6"></div>
       <LeaderboardTable data={boardData} />
     </div>

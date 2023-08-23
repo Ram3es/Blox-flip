@@ -14,7 +14,7 @@ interface IToolBarProps {
 
 const ToolBar: FC<IToolBarProps> = ({ value, onChange, setSortOptions, currentOption, setPriceRange }) => {
   return (
-    <div className='flex flex-wrap gap-x-3 gap-y-8 mb-8' >
+    <div className="flex flex-wrap gap-x-3 gap-y-8">
       <SortSelect options={sortingVariants} onSelect={setSortOptions} currentOptions={currentOption} />
       <GreenTipSelect onSelect={setPriceRange} />
       <SearchInput value={value} onChange={onChange} />

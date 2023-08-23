@@ -13,7 +13,6 @@ import { ChatMessageList } from './ChatMessagesList'
 import { ChatMessageInput } from './ChatMessageInput'
 import { ChatFab } from './ChatFab'
 
-import { user } from '../../mocks'
 import TriviaModal from '../containers/TriviaModal'
 import { IChatUser } from '../../types/User'
 import { useSocketCtx } from '../../store/SocketStore'
@@ -88,11 +87,10 @@ export const Chat = () => {
           handleFunction={handleTimeoutSubmit}
         />
       )}
-      {isOpenTipModal && (
+      {isOpenTipModal && selectedUser && (
         <TipModal
-          user={user}
-          onClose={() => setIsOpenTipModal(false)}
-          handleFunction={() => console.log('ban')}
+          user={selectedUser}
+          handleFunction={() => setIsOpenTipModal((prev) => !prev)}
         />
       )}
       {isOpenTriviaModal && (

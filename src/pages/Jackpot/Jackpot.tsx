@@ -19,7 +19,7 @@ import DiamondIcon from '../../components/icons/DiamondIcon'
 
 const Jackpot = () => {
   const [joinedUsers, setUserJoined] = useState<IJackpotPlayer[]>(jackpotPlayer)
-  const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
+  const [selectedCards] = useState<IJackpotCard[]>([])
   const [isOpenLoginModal, setOpenLoginModal] = useState<boolean>(false)
   // const [isOpenModal, setOpenModal] = useState<boolean>(false)
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })

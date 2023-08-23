@@ -1,13 +1,13 @@
 import { getPlaceByIndex } from '../../helpers/leaderboardHelpers'
-import { ILeaderboardUser } from '../../types/User'
+import { ILeaderboardUserData } from '../../types/Leaderboard'
 
 import { PodiumItem } from './PodiumItem'
 
-export const LeaderboardPodium = ({ users }: { users: ILeaderboardUser[] }) => {
+export const LeaderboardPodium = ({ users }: { users: ILeaderboardUserData[] }) => {
   return (
     <div className="flex flex-wrap items-end">
-      {users.map((user, index) => (
-        <PodiumItem key={user.id} user={user} place={getPlaceByIndex(index)} />
+      {users.map(({ place, ...user }, index) => (
+        <PodiumItem key={user.id} {...user} place={getPlaceByIndex(index)} />
       ))}
     </div>
   )

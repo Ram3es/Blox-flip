@@ -8,15 +8,13 @@ import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import FirstPlaceIcon from '../../assets/img/coin1.svg'
 import SecondPlaceIcon from '../../assets/img/coin2.svg'
 import ThirdPlaceIcon from '../../assets/img/coin3.svg'
+import { ILeaderboardUserData } from '../../types/Leaderboard'
 
-import type { ILeaderboardUser } from '../../types/User'
-
-interface PodiumItemProps {
-  user: ILeaderboardUser
+interface PodiumItemProps extends Omit<ILeaderboardUserData, 'place'> {
   place: 1 | 2 | 3
 }
 
-export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
+export const PodiumItem: FC<PodiumItemProps> = ({ place, avatar, name, wager, reward }) => {
   const podiumPlaceImage = (place: number) => {
     return place === 1 ? FirstPlaceIcon : place === 2 ? SecondPlaceIcon : ThirdPlaceIcon
   }
@@ -73,9 +71,9 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
                 }
               )}
             >
-              <Image image={user.avatar} className="object-cover w-full h-full rounded-lg" />
+              <Image image={avatar} className="object-cover w-full h-full rounded-lg" />
             </div>
-            <div className="mb-3 font-bold">{user.name}</div>
+            <div className="mb-3 font-bold">{name}</div>
             <div className="flex justify-center mb-3">
               <Button variant="Highlight">
                 <span
@@ -92,7 +90,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               <CoinsWithDiamond
                 iconContainerSize={place === 1 ? 'Medium' : 'Small'}
                 iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
-                typographyQuantity={user.bet}
+                typographyQuantity={wager}
                 typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
               />
             </div>
@@ -114,7 +112,7 @@ export const PodiumItem: FC<PodiumItemProps> = ({ user, place }) => {
               <CoinsWithDiamond
                 iconContainerSize={place === 1 ? 'Medium' : 'Small'}
                 iconClasses={`${place === 1 ? 'w-4 h-4' : 'w-3 h-3'}`}
-                typographyQuantity={user.profit}
+                typographyQuantity={reward}
                 typographyFontSize={place === 1 ? 'Size16' : 'Size14'}
               />
             </div>

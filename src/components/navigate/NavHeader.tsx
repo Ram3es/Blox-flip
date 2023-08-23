@@ -12,7 +12,7 @@ const NavHeader = ({ title, pathName, children, renderIcon, wrapperClasses }: { 
   const navigate = useNavigate()
   return (
     <div className={wrapperClasses ?? ' w-full flex flex-wrap justify-between mb-8'}>
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-center gap-4">
         <Button
            onClick={() => navigate(-1)}
            className='flex items-center justify-center font-semibold p-2 leading-4 gap-1.5 group text-gray-primary rounded bg-blue-accent-secondary hover:bg-blue-accent border border-transparent '

@@ -52,7 +52,7 @@ export const Withdraw = () => {
           renderIcon={() => <DiamondIcon className="w-[29px] h-[25px] text-green-secondary ml-2" />}
         >
           {currentPath === 'roblox-limiteds' && (
-            <div className="flex flex-wrap gap-x-3 gap-y-8 mb-8">
+            <div className="flex flex-wrap gap-x-3 gap-y-8">
               <SortSelect
                 options={sortingVariants}
                 onSelect={setSortOptions}
@@ -63,7 +63,7 @@ export const Withdraw = () => {
             </div>
           )}
           {currentPath === 'gift' && (
-            <div className="flex flex-wrap gap-x-3 gap-y-8 mb-8">
+            <div className="flex flex-wrap gap-x-3 gap-y-8">
               <SortSelect
                 options={SORT_REGION_VARIANTS}
                 onSelect={setSortOptions}
