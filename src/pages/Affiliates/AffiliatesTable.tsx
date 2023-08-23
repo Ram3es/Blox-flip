@@ -5,14 +5,14 @@ import { Table } from '../../components/table/Table'
 import { UserInfoCell } from '../../components/table/CellFormatters/UserInfoCell'
 import { TimeCell } from '../../components/table/CellFormatters/TimeCell'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
-import { IAffilateDeposit } from '../../types/Affilates'
+import { IAffiliateDeposit } from '../../types/Affiliates'
 
-export const AffiliatesTable = ({ data }: { data: IAffilateDeposit[] }) => {
+export const AffiliatesTable = ({ users }: { users: IAffiliateDeposit[] }) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
-  const columnHelper = createColumnHelper<IAffilateDeposit>()
-  const columns: Array<ColumnDef<IAffilateDeposit, any>> = [
-    columnHelper.accessor((row: IAffilateDeposit) => row.user, {
+  const columnHelper = createColumnHelper<IAffiliateDeposit>()
+  const columns: Array<ColumnDef<IAffiliateDeposit, any>> = [
+    columnHelper.accessor((row: IAffiliateDeposit) => row.user, {
       id: 'user',
       header: () => 'User',
       cell: ({ row }) => <UserInfoCell user={{ ...row.original.user }} />,
@@ -25,7 +25,7 @@ export const AffiliatesTable = ({ data }: { data: IAffilateDeposit[] }) => {
       cell: (props) => <TimeCell date={props.getValue()} />,
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor((row: IAffilateDeposit) => row.deposited, {
+    columnHelper.accessor((row: IAffiliateDeposit) => row.deposited, {
       id: 'deposited',
       header: () => 'Deposited',
       cell: ({ row }) => (
@@ -42,7 +42,7 @@ export const AffiliatesTable = ({ data }: { data: IAffilateDeposit[] }) => {
 
   return (
     <Table
-      data={data}
+      data={users}
       columns={columns}
       sorting={sorting}
       setSorting={setSorting}
