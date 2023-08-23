@@ -10,6 +10,7 @@ import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
 import { useEffect, useState } from 'react'
 import { useSocketCtx } from '../../store/SocketStore'
 import { IAffilateData } from '../../types/Affilates'
+import ReferalCode from './ReferalCode'
 
 export const Affiliates = () => {
   const [affilateData, setAffilateData] = useState<IAffilateData>()
@@ -128,9 +129,12 @@ export const Affiliates = () => {
           </div>
         </div>
       </div>
-      <div className='pb-5 border-b border-blue-highlight mb-6'></div>
-      <AffiliatesForm referalCode={ affilateData?.link } />
-      <div className='pb-5 border-b border-blue-highlight mb-6'></div>
+      <div className='pb-5 border-b border-blue-highlight mb-6'/>
+      <div className='flex flex-col'>
+        <AffiliatesForm referalCode={ affilateData?.link } />
+        <ReferalCode />
+      </div>
+      <div className='pb-5 border-b border-blue-highlight mb-6'/>
       { affilateData?.users?.length &&
         <AffiliatesTable data={affilateData.users } />}
     </div>
