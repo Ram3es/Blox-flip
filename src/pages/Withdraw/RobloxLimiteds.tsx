@@ -18,7 +18,7 @@ const RobloxLimiteds = () => {
       sortBy?: string
       searchBy: string
       direction?: 'ASC' | 'DESC'
-      priceRange: { from: number; to: number }
+      priceRange: { from: number, to: number }
       selectedCards: TRobloxCard[]
       setSelectedCard: Dispatch<SetStateAction<TRobloxCard[]>>
       socket: TSocket
