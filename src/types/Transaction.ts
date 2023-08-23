@@ -1,11 +1,10 @@
 import { StatusCode } from './enums'
 
 export interface ITransaction {
+  id: string
   type: 'Deposit' | 'Withdraw'
-  date: string
-  paymentMethod: 'Crypto' | 'Robux' | 'Limiteds'
+  time: string
+  currency: string
   status: `${StatusCode}`
   amount: number
-  isError?: boolean
-  isWinner?: boolean
 }

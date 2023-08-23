@@ -1,7 +1,8 @@
 export enum StatusCode {
-  Confirmed = 'Confirmed',
-  Pending = 'Pending',
-  Failed = 'Failed'
+  Completed = 'Completed',
+  Processing = 'Processing',
+  Failed = 'Failed',
+  Refunded = 'Refunded'
 }
 
 export enum TransactionVariant {
