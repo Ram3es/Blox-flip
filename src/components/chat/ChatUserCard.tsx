@@ -71,7 +71,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
       },
       name: 'Trivia'
     },
-    { path: '/megadrop', name: 'megadrop' },
+    { handleFunction: () => console.log('chat gift'), name: 'Chat Gift' },
     { path: '/challenges', name: 'challenges' },
     { path: '/FAQ', name: 'FAQ' },
     { path: '/terms', name: 'Terms of Service' },
