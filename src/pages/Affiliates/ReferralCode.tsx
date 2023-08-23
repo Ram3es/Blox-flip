@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Button } from '../../components/base/Button'
 import InputWithLabel from '../../components/base/InputWithLabel'
 
-const ReferalCode = () => {
+const ReferralCode = () => {
+  // TODO: Move code to AffiliatesForm and use useFormik to create two separate form
   const [code, setCode] = useState('')
   return (
     <div className='relative px-2 w-full xs:w-2/3 sm:w-1/2  grow shrink-0 mb-4 mx-auto'>
@@ -27,4 +28,4 @@ const ReferalCode = () => {
   )
 }
 
-export default ReferalCode
+export default ReferralCode

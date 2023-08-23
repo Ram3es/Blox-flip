@@ -10,9 +10,10 @@ import { CopyIcon } from '../../components/icons/CopyIcon'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
 
-const baseUrl = import.meta.env.VITE_BASE_REFERAL_URL as string || 'https://robloxsite.com/?a/'
+const baseUrl = import.meta.env.VITE_BASE_REFFERAL_URL as string || 'https://robloxsite.com/?a/'
 
 export const AffiliatesForm = ({ referalCode }: { referalCode?: string }) => {
+  // !!!Need to change useState to useFormik, and give up referralCode code state, to use only props
   const [referralCode, setReferralCode] = useState<string>('')
   const {
     handleCopyText: handleCopyReferralLink,

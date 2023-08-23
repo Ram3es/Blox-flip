@@ -1,20 +1,20 @@
 import { TBaseUser } from './User'
 
-export interface IAffilateData {
+export interface IAffiliateData {
   link: string
   totaldeposited: number // total deposits for the user
   totalearned: number // total earnings
   available: number // current earning
-  users?: IAffilateDeposit[]
+  users?: IAffiliateDeposit[]
 }
 
-export interface IAffilateDeposit {
+export interface IAffiliateDeposit {
   user: TBaseUser
   date: string
   deposited: number
 }
 
-export interface ILeaderbordData extends Pick<IAffilateDeposit, 'user'> {
+export interface ILeaderbordData extends Pick<IAffiliateDeposit, 'user'> {
   wagered: number
   reward: number
 }
