@@ -101,17 +101,29 @@ export const METHODS: IPaymentMethods = {
       {
         path: 'toro',
         title: 'OfferToro',
-        image: IMAGES.torro
+        image: IMAGES.torro,
+        smallSize: {
+          width: '40px',
+          height: '24px'
+        }
       },
       {
         path: 'lootably',
         title: 'Lootably',
-        image: IMAGES.lootably
+        image: IMAGES.lootably,
+        smallSize: {
+          width: '40px',
+          height: '24px'
+        }
       },
       {
         path: 'adgatemedia ',
         title: 'AdGateMedia ',
-        image: IMAGES.adGate
+        image: IMAGES.adGate,
+        smallSize: {
+          width: '26px',
+          height: '24px'
+        }
       }
     ]
 
