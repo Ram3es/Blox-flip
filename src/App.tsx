@@ -104,6 +104,7 @@ export const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/provably-fair" element={<ProvablyFair />} />
+          <Route path='*' element={<Home />} />
         </Routes>
         {twoFactorAuthModal && <TwoFactorAuthModal handleClose={() => setTwoFactorAuthModal(false)} />}
         <ToastContainer

@@ -23,6 +23,9 @@ import redStarBackdrop from '../assets/img/lvl-red.png'
 import orangeStarBackdrop from '../assets/img/lvl-orange.png'
 import graySeparator from '../assets/img/separator-lvl.png'
 import yellowGuy from '../assets/img/lvl1.png'
+import torro from '../assets/img/logo-offer-torro.png'
+import lootably from '../assets/img/logo-lootably.png'
+import adGate from '../assets/img/logo-ad-gate.png'
 
 export const IMAGES: Record<string, string> = {
   horns,
@@ -49,5 +52,8 @@ export const IMAGES: Record<string, string> = {
   grayBackdrop,
   redStarBackdrop,
   orangeStarBackdrop,
-  graySeparator
+  graySeparator,
+  torro,
+  lootably,
+  adGate
 }

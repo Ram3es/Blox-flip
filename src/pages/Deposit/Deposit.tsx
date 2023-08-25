@@ -9,8 +9,9 @@ import { IItemCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 import { useSocketCtx } from '../../store/SocketStore'
 import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
-import { Field, Form, Formik, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import { getToast } from '../../helpers/toast'
+import { TransactionVariant } from '../../types/enums'
 
 export const Deposit = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
@@ -140,7 +141,7 @@ export const Deposit = () => {
           </div>
         )}
       </div>
-      {pathname === '/deposit' ? <Methods /> : <Outlet context={contextOutlet} />}
+      {pathname === '/deposit' ? <Methods transactionVariant={TransactionVariant.Deposit} /> : <Outlet context={contextOutlet} />}
     </div>
   )
 }

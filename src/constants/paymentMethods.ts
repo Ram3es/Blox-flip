@@ -95,6 +95,27 @@ export const METHODS: IPaymentMethods = {
       }
     ]
   },
+  survey: {
+    name: ' Survey Section',
+    methods: [
+      {
+        path: 'toro',
+        title: 'OfferToro',
+        image: IMAGES.torro
+      },
+      {
+        path: 'lootably',
+        title: 'Lootably',
+        image: IMAGES.lootably
+      },
+      {
+        path: 'adgatemedia ',
+        title: 'AdGateMedia ',
+        image: IMAGES.adGate
+      }
+    ]
+
+  },
   gift: {
     name: 'Gift Methods',
     methods: [

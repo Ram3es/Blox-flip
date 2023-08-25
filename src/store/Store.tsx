@@ -11,6 +11,10 @@ import { CaseOpeningProvider } from './CaseOpeningStore'
 export interface IState {
   user?: IUser
   hash?: string
+  referal?: {
+    type: string
+    code: string
+  }
 }
 
 const initialState: IState = {}
