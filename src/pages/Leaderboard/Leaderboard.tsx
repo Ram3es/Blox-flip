@@ -5,7 +5,6 @@ import FighterSecondIcon from '../../assets/img/leaderboard2.png'
 import { useSocketCtx } from '../../store/SocketStore'
 import { LeaderboardPodium } from './LeaderboardPodium'
 import { LeaderboardTable } from './LeaderboardTable'
-
 import { getTopThreeUsers } from '../../helpers/leaderboardHelpers'
 import { getToast } from '../../helpers/toast'
 import { ILeaderboardUserData } from '../../types/Leaderboard'
@@ -41,14 +40,7 @@ export const Leaderboard = () => {
     <div className="max-w-5xl w-full mx-auto">
       <div className="flex flex-wrap xxs:flex-nowrap items-end relative">
         <div className="w-1/3 xxs:w-1/4 shrink-0 pr-12 order-2 xxs:order-1  absolute left-0 top-0 xxs:static z-10">
-          <img
-            src={FighterFirstIcon}
-            alt=""
-            width="159"
-            height="302"
-            loading="lazy"
-            decoding="async"
-          />
+          <img src={FighterFirstIcon} alt="" width="159" height="302" loading="lazy" decoding="async" />
         </div>
         <div className="w-full xxs:w-auto grow text-center yellow--shadow order-1 xxs:order-2 z-20 pb-12">
           <div className="mb-5">
@@ -66,8 +58,8 @@ export const Leaderboard = () => {
             LEADERBOARD
           </div>
           <div className="text-base">
-            This is the weekly leaderboard, where users can compete against each other to reach the
-            number one spot to earn the best rewards!
+            This is the weekly leaderboard, where users can compete against each other to reach the number one spot to
+            earn the best rewards!
           </div>
         </div>
         <div className="w-2/5 ml-auto xxs:w-1/4 shrink-0 pl-12 order-3 absolute right-0 top-4 xxs:static z-10">
