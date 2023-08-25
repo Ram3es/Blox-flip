@@ -1,9 +1,9 @@
-import { IJackpotPlayer } from '../../../mocks/jackpotPlayer'
+import { IRootJackpotNew } from '../../../types/Jackpot'
 import Image from '../../base/Image'
 import { UserLevel } from '../../user/UserLevel'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 
-const JoinedUserRow = ({ user, userChance }: { user: IJackpotPlayer, userChance: number }) => {
+const JoinedUserRow = ({ player }: { player: IRootJackpotNew }) => {
   return (
     <div className='w-full flex items-center justify-between rounded  relative bg-[#252942]'>
       <div
@@ -23,15 +23,15 @@ const JoinedUserRow = ({ user, userChance }: { user: IJackpotPlayer, userChance:
           JOINED
         </div>
         <div className='w-9 h-8 shrink-0 border border-blue-highlight rounded my-1 overflow-hidden radial--blue '>
-          <Image image={user.avatar} />
+          <Image image={player.user.avatar} />
         </div>
-        <div className='max-w-[120px] truncate'>{user.userName}</div>
+        <div className='max-w-[120px] truncate'>{player.user.name}</div>
         <div className='flex  mx-1'>
-          <UserLevel level={user.level} />
+          <UserLevel level={player.user.level} />
         </div>
       </div>
       <div className='h-full flex items-center rounded-r overflow-hidden gap-5 ml-2'>
-        <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={user.deposit} />
+        <CoinsWithDiamond iconContainerSize='Small' typographyQuantity={player.wager} />
         <div
           style={{
             background:
@@ -39,7 +39,7 @@ const JoinedUserRow = ({ user, userChance }: { user: IJackpotPlayer, userChance:
           }}
           className=' h-full flex flex-col items-center justify-center grow  px-3 py-[20px] text-10 font-semibold'
         >
-          <div className='text-green-primary text-13 min-w-[50px] text-center'>{userChance} %</div>
+          <div className='text-green-primary text-13 min-w-[50px] text-center'>{player.chance} %</div>
           <div className='leading-none'>CHANCE</div>
         </div>
       </div>
