@@ -10,7 +10,7 @@ import { ICoinFlip } from '../../types/CoinFlip'
 import { getToast } from '../../helpers/toast'
 
 const CoinFlip = () => {
-  const { games, setGames } = useCoinFlip()
+  const { games } = useCoinFlip()
 
   const navigate = useNavigate()
   const match = useMatch('/coinflip/:id')

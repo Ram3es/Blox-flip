@@ -19,7 +19,6 @@ const CoinFlipHeader = () => {
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
   const [selectedCoin, setSelectedCoin] = useState<ICoin>(0)
 
-
   const wagerRef = useRef<HTMLInputElement>(null)
   const handleCreateGame = useCallback(() => {
     if (!wager.amountNumber) {

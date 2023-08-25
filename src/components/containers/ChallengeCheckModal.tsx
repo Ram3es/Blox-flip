@@ -2,11 +2,11 @@ import ModalWrapper from './ModalWrapper'
 import ChallengeIcon from '../icons/ChallengeIcon'
 import CheckMarkRoundedIcon from '../icons/CheckMarkRoundedIcon'
 import ChallengesCard from '../common/Cards/ChallengesCard'
-import { IChallengeCard } from '../../mocks/challenges'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
+import { IChallenge } from '../../types/Challenges'
 
 interface ChallengeCheckModalProps {
-  challenge: IChallengeCard | null
+  challenge: IChallenge | null
   onClose: () => void
 }
 
@@ -32,9 +32,9 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
         <div className='flex flex-col xm:flex-row items-center gradient-trivia-info rounded-15 rounded-tr-15 '>
           <div className='w-2/3 xxxs:w-1/2 xxs:w-1/3 xm:w-1/4 relative h-[248px] '>
             <ChallengesCard
-              price={challenge?.price ?? 0}
+              reward={challenge?.reward ?? 0}
               image={challenge?.image ?? ''}
-              isClaimed={challenge?.isClaimed}
+              isClaimed={challenge?.completed}
               wrapClasses='w-full absolute -top-[42px]'
             />
           </div>
@@ -51,7 +51,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
                 <span className='ml-2 inline-block align-top'>
                   <CoinsWithDiamond
                     iconContainerSize='Large'
-                    typographyQuantity={challenge?.price ?? 0}
+                    typographyQuantity={challenge?.min ?? 0}
                     typographyFontSize='Size22'
                   />
                 </span>{' '}
@@ -59,7 +59,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
                 <span className='ml-2 inline-block align-top'>
                   <CoinsWithDiamond
                     iconContainerSize='Large'
-                    typographyQuantity={(challenge?.price as number) * 10 ?? 0}
+                    typographyQuantity={(challenge?.reward as number) ?? 0}
                     typographyFontSize='Size22'
                   />
                 </span>
@@ -67,13 +67,13 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
             </div>
             <span className='text-green-accent-secondary flex gap-2 items-center justify-center my-auto font-bold xs:text-lg mx-9 xs:mx-0'>
               <CheckMarkRoundedIcon />
-              {challenge?.isClaimed
+              {challenge?.completed
                 ? 'You completed and claimed this challenge'
                 : 'Your account hits all requirements'}
             </span>
           </div>
         </div>
-        {!challenge?.isClaimed && (
+        {!challenge?.completed && (
           <div className='rounded-15 gradient-trivia-info py-2 xs:px-20 px-4 text-center space-y-6 font-semibold xs:text-base'>
             <p className='text-gray-secondary-light'>
               Please double check the challenge and your bet amounts before proceeding with it

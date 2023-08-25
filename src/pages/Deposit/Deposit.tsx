@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useMatch } from 'react-router-dom'
 import { Button } from '../../components/base/Button'
 import ToolBar from '../../components/common/ToolBar'
 import DiamondIcon from '../../components/icons/DiamondIcon'
@@ -9,15 +9,18 @@ import { IItemCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 import { useSocketCtx } from '../../store/SocketStore'
 import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
+import { useFormik } from 'formik'
+import { getToast } from '../../helpers/toast'
 
 export const Deposit = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
   const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
   const { socket, setTwoFactorAuthModal } = useSocketCtx()
   const { pathname } = useLocation()
-  const currentPath = pathname.split('/')[2]
-  const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } =
-    useToolbarState()
+  const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } = useToolbarState()
+
+  const matchDeposit = useMatch('/deposit')
+  const matchMethod = useMatch('/deposit/:method')
 
   const contextOutlet = useMemo(
     () => ({
@@ -43,15 +46,32 @@ export const Deposit = () => {
     }
   }
 
+  const formikGiftCode = useFormik({
+    initialValues: {
+      code: ''
+    },
+    onSubmit: (values) => {
+      socket.emit('promo', { code: values.code }, (err: string | boolean) => {
+        if (typeof err === 'string') {
+          getToast(err)
+        }
+
+        if (!err) {
+          getToast('code successfully')
+        }
+      })
+    }
+  })
+
   return (
     <div className="max-w-[1470px] w-full mx-auto">
       <div className="flex flex-col xs:flex-row">
         <NavHeader
           title="Deposit"
-          pathName={currentPath}
+          pathName={matchMethod?.params.method}
           renderIcon={() => <DiamondIcon className="w-[29px] h-[25px] text-green-secondary ml-2" />}
         >
-          {currentPath === 'roblox-limiteds' && (
+          {matchMethod?.params.method === 'roblox-limiteds' && (
             <ToolBar
               value={value}
               onChange={onChange}
@@ -60,9 +80,32 @@ export const Deposit = () => {
               setPriceRange={setPriceRange}
             />
           )}
+          {matchDeposit && (
+            <form onSubmit={formikGiftCode.handleSubmit}>
+              <div className="flex gap-4 items-center">
+                <InputWithInlineLabel
+                  value={formikGiftCode.values.code}
+                  onChange={formikGiftCode.handleChange('code')}
+                  type="text"
+                  placeholder="..."
+                  label="Gift Code"
+                  containerClasses="pl-2 pr-4 w-[380px] rounded-md gradient-background--blue__secondary h-10 flex items-center justify-between cursor-text"
+                  labelClasses="pr-2 shrink truncate rounded-md px-3 h-[25px] flex items-center text-11 gradient--background--blue__third text-gray-primary"
+                  inputClasses="bg-transparent text-right outline-none placeholder:text-white max-w-[280px] overflow-y-scroll"
+                />
+                <Button type="submit" color="GreenPrimary">
+                  <div className="w-[100px] h-10 flex items-center gap-2 justify-center">
+                    <DiamondIcon className="w-[21px] h-[17px]" />
+                    <span className="capitalize">send</span>
+                  </div>
+                </Button>
+              </div>
+            </form>
+          )}
         </NavHeader>
-        {currentPath === 'roblox-limiteds' && (
-          <div className="flex flex-col gap-y-2 items-end lg:ml-5 lg:items-start mb-8">
+
+        {matchMethod?.params.method === 'roblox-limiteds' && (
+          <div className="flex flex-col gap-y-2 items-end lg:ml-5 lg:items-start">
             <InputWithInlineLabel
               value={twoFactorAuthCode}
               onChange={(event) => setTwoFactorAuthCode(event.target.value)}

@@ -13,23 +13,23 @@ export const METHODS: IPaymentMethods = {
           width: '31px',
           height: '19px'
         }
-      },
-      {
-        path: 'robux',
-        title: 'Robux',
-        image: IMAGES.robuxDeposite,
-        smallSize: {
-          width: '31px',
-          height: '19px'
-        }
       }
+      // {
+      //   path: 'robux',
+      //   title: 'Robux',
+      //   image: IMAGES.robuxDeposite,
+      //   smallSize: {
+      //     width: '31px',
+      //     height: '19px'
+      //   }
+      // }
     ]
   },
   crypto: {
     name: 'Crypto Methods',
     methods: [
       {
-        type: 'load_btc',
+        type: 'load_address',
         shortName: 'btc',
         path: 'bitcoin',
         title: 'Bitcoin',
@@ -40,7 +40,7 @@ export const METHODS: IPaymentMethods = {
         }
       },
       {
-        type: 'load_eth',
+        type: 'load_address',
         shortName: 'eth',
         path: 'ethereum',
         title: 'Ethereum',
@@ -51,7 +51,7 @@ export const METHODS: IPaymentMethods = {
         }
       },
       {
-        type: 'ltc_address',
+        type: 'load_address',
         shortName: 'ltc',
         path: 'litecoin',
         title: 'Litecoin',

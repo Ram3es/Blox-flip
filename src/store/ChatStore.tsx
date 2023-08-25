@@ -24,8 +24,8 @@ interface IChatContext {
   setIsOpenTipModal: Dispatch<SetStateAction<boolean>>
   isOpenTriviaModal: boolean
   setIsOpenTriviaModal: Dispatch<SetStateAction<boolean>>
-  selectedUser?: IChatUser
-  setUserSelected: Dispatch<SetStateAction<IChatUser | undefined>>
+  selectedUser: IChatUser | null
+  setUserSelected: Dispatch<SetStateAction<IChatUser | null>>
   selectedMessage: string
   setSelectedMessage: Dispatch<SetStateAction<string>>
   historyChat: IChatMessage[]
@@ -44,7 +44,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [isOpenTipModal, setIsOpenTipModal] = useState(false)
   const [isOpenTriviaModal, setIsOpenTriviaModal] = useState(false)
   const [historyChat, setHistoryChat] = useState<IChatMessage[]>([])
-  const [selectedUser, setUserSelected] = useState<IChatUser>()
+  const [selectedUser, setUserSelected] = useState<IChatUser | null>(null)
   const [selectedMessage, setSelectedMessage] = useState<string>('')
   const { socket } = useSocketCtx()
 
