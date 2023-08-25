@@ -7,7 +7,7 @@ import JackpotWheelInfo from './JackpotWheelInfo'
 import CircularProgressBar from '../../components/common/CIrcularProgressBar'
 import GreenVector from '../../components/icons/GreenVector'
 import { getAngleTilt, getColorByIndex } from '../../helpers/jackpotHelpers'
-import { IRootJackpotNew } from '../../types/Jackpot'
+import { IRootJackpotNew, IRootJackpotRoll } from '../../types/Jackpot'
 import { JACKPOT_ROLLING_TIME_SECONDS } from '../../constants/jackpot'
 
 interface IJackpotWheelProps {
@@ -15,9 +15,10 @@ interface IJackpotWheelProps {
   setTimer: Function
   jackPot: number
   joinedUsers: IRootJackpotNew[]
+  winner: IRootJackpotRoll | null
 }
 
-const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joinedUsers }) => {
+const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joinedUsers, winner }) => {
   const [data, setData] = useState<Array<d3Shape.PieArcDatum<number | {
     valueOf: () => number
   }>>>([])
@@ -57,7 +58,9 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
   useEffect(() => {
     refInterval.current && clearInterval(refInterval.current)
     if (timer === 0) {
-      setTimeout(() => start(Math.floor(Math.random() * data.length)), 500)
+      // setTimeout(() => start(Math.floor(Math.random() * data.length)), 500)
+      setTimeout(() => start(joinedUsers.findIndex((item) => item.user.id === winner?.winner.id)), 500)
+
       setTimeout(() => {
         setTimer(10)
       }, 8500)

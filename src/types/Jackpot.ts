@@ -34,7 +34,7 @@ export interface IRootJackpotChance {
 }
 
 export interface IRootJackpotRoll {
-  winner: IUser[]
+  winner: IUser
 }
 
 export interface IRootJackpotHistory {
