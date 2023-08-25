@@ -15,6 +15,8 @@ export const Reducer = (state: IState, action: IAction): IState => {
     }
     case 'CONNECT':
       return { ...state, hash: action.payload }
+    case 'REFERAL':
+      return { ...state, referal: action.payload }
     default:
       return state
   }

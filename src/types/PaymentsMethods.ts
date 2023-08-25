@@ -3,6 +3,7 @@ export interface IPaymentMethods {
   crypto: { name: string, methods: IMethodLabel[] }
   fiat: { name: string, methods: IMethodLabel[] }
   gift: { name: string, methods: IMethodLabel[] }
+  survey: { name: string, methods: IMethodLabel[] }
 }
 
 export interface IMethodLabel {

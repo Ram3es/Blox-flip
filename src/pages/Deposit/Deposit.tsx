@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useMatch } from 'react-router-dom'
 import { Button } from '../../components/base/Button'
 import ToolBar from '../../components/common/ToolBar'
@@ -11,6 +11,8 @@ import { useSocketCtx } from '../../store/SocketStore'
 import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
 import { useFormik } from 'formik'
 import { getToast } from '../../helpers/toast'
+import { TransactionVariant } from '../../types/enums'
+import { useAppStore } from '../../store/Store'
 
 export const Deposit = () => {
   const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
@@ -18,6 +20,7 @@ export const Deposit = () => {
   const { socket, setTwoFactorAuthModal } = useSocketCtx()
   const { pathname } = useLocation()
   const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } = useToolbarState()
+  const { state: { referal } } = useAppStore()
 
   const matchDeposit = useMatch('/deposit')
   const matchMethod = useMatch('/deposit/:method')
@@ -62,6 +65,15 @@ export const Deposit = () => {
       })
     }
   })
+
+  useEffect(() => {
+    if (referal?.type === 'p') {
+      const setInitValue = async () => {
+        await formikGiftCode.setValues({ code: referal.code })
+      }
+      void setInitValue()
+    }
+  }, [])
 
   return (
     <div className="max-w-[1470px] w-full mx-auto">
@@ -140,7 +152,7 @@ export const Deposit = () => {
           </div>
         )}
       </div>
-      {pathname === '/deposit' ? <Methods /> : <Outlet context={contextOutlet} />}
+      {pathname === '/deposit' ? <Methods transactionVariant={TransactionVariant.Deposit} /> : <Outlet context={contextOutlet} />}
     </div>
   )
 }

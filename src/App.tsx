@@ -46,6 +46,7 @@ import { useSocketCtx } from './store/SocketStore'
 import TwoFactorAuthModal from './components/containers/TwoFactorAuthModal'
 import CryptoForm from './components/containers/CryptoForm'
 import WithdrawGifts from './pages/Withdraw/WithdrawGifts'
+import Survey from './pages/Deposit/methods/Survey'
 
 export const App = () => {
   const { twoFactorAuthModal, setTwoFactorAuthModal } = useSocketCtx()
@@ -70,6 +71,7 @@ export const App = () => {
             <Route path="credit-card" element={<CreditCard />} />
             <Route path="g2a" element={<DepositGift />} />
             <Route path="kinguin" element={<DepositGift />} />
+            {['toro', 'lootably', 'adgatemedia'].map(path => <Route key={path} path={path} element={<Survey />} />)}
           </Route>
           <Route path="/withdraw" element={<Withdraw />}>
             <Route path="robux" element={<Robux />} />
@@ -104,6 +106,7 @@ export const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/provably-fair" element={<ProvablyFair />} />
+          <Route path='*' element={<Home />} />
         </Routes>
         {twoFactorAuthModal && <TwoFactorAuthModal handleClose={() => setTwoFactorAuthModal(false)} />}
         <ToastContainer
