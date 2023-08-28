@@ -103,7 +103,7 @@ const CoinFlipGameModal = ({ game }: CoinFlipGameModalProps) => {
                  ${animation ? 'play' : 'grayscale opacity-80'} coinflip-animation absolute z-1`}
             />
           </div>
-          <div className="z-40 absolute hidden left-[45.2%] md:left-[46.4%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center">
+          <div className="z-40 absolute hidden left-[45.2%] md:left-[46.8%] xs:top-[62%] bg-rectangle--yellow w-10 h-10 xs:flex items-center justify-center">
             <img className="rotate-[-48deg]" src={VersusBattleIcon} alt="versus" />
           </div>
           <div className="sm:w-96 flex justify-center items-center">

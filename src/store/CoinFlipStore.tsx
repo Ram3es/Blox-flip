@@ -42,6 +42,20 @@ export const CoinFlipProvider = ({ children }: CoinFlipProviderProps) => {
     })
 
     socket.on('coinflip_update', (joining: ICoinFlip | boolean) => {
+      console.log(joining, 'coinflip_update')
+
+      if (typeof joining === 'boolean') {
+        console.log('failed COINFLIP_UPDATE')
+      } else {
+        setGames((prev) => {
+          return prev.map((game) => (game.id === joining.id ? joining : game))
+        })
+      }
+    })
+
+    socket.on('update_coinflip', (joining: ICoinFlip | boolean) => {
+      console.log(joining, 'update_coinflip')
+
       if (typeof joining === 'boolean') {
         console.log('failed COINFLIP_UPDATE')
       } else {
@@ -65,6 +79,7 @@ export const CoinFlipProvider = ({ children }: CoinFlipProviderProps) => {
       socket.off('coinflip_remove')
       socket.off('coinflip_new')
       socket.off('coinflip_update')
+      socket.off('update_coinflip')
       socket.off('coinflip_over')
     }
   }, [socket])
