@@ -18,7 +18,7 @@ const CoinFlip = () => {
   const [currentGame, setCurrentGame] = useState<ICoinFlip | null>(null)
 
   useEffect(() => {
-    if (match) {
+    if (match && games.length > 0) {
       const currentGame = games.find((game) => String(game.id) === match?.params.id)
       if (currentGame) {
         setCurrentGame(currentGame)
