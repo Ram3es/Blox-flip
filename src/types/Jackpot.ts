@@ -16,7 +16,7 @@ export interface IRootJackpotNew {
   user: IUser
   wager: number
   color: string
-  skins: IRootMarketItem[]
+  skins?: IRootMarketItem[]
   chance: number
 }
 
@@ -40,4 +40,15 @@ export interface IRootJackpotRoll {
 export interface IRootJackpotHistory {
   users: IRootJackpotAll[]
   winner: IRootJackpotRoll[]
+}
+
+export interface IRootJackpotInfo {
+  hash: string
+  history: any[]
+  id: number
+  len: number
+  participants: IRootJackpotNew[]
+  state: number
+  timer: number
+  value: number
 }

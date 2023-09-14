@@ -11,6 +11,7 @@ import {
   IRootJackpotAll,
   IRootJackpotChance,
   IRootJackpotHistory,
+  IRootJackpotInfo,
   IRootJackpotNew,
   IRootJackpotRoll,
   IRootJackpotWager
@@ -85,11 +86,9 @@ const Jackpot = () => {
       setUserJoined((prev) => [...prev, data])
     })
 
-    socket.on('jackpot_all', (data: IRootJackpotAll) => {
-      setUserJoined(data.deposits)
-      setRoundInfo(data)
-
-      setTimer((data.timer * 1000 - Date.now()) / 1000)
+    socket.on('jackpot_all', (data: IRootJackpotNew[]) => {
+      console.log(data, 'JACKPOT ALL')
+      setUserJoined(data)
     })
 
     socket.on('jackpot_chance_update', (data: IRootJackpotChance) => {
@@ -102,6 +101,11 @@ const Jackpot = () => {
 
     socket.on('jackpot_history', (data: IRootJackpotHistory) => {
       setHistory(data)
+    })
+
+    socket.on('jackpot_info', (data: IRootJackpotInfo) => {
+      console.log(data, 'JACKPOT INFO')
+      setTimer((data.timer * 1000 - Date.now()) / 1000)
     })
 
     return () => {
@@ -133,7 +137,13 @@ const Jackpot = () => {
         <div className="flex w-full flex-col-reverse gap-10 ls:flex-row">
           <div className="flex flex-col items-center gap-2 md:flex-row ls:flex-col ls:gap-6">
             <div className="mx-0 flex h-[492px] w-[492px] scale-75 items-center justify-center xs:mx-auto xs:scale-100 md:mx-0">
-              <JackpotWheel timer={timer} setTimer={setTimer} jackPot={jackpot} joinedUsers={joinedUsers} winner={winner} />
+              <JackpotWheel
+                timer={timer}
+                setTimer={setTimer}
+                jackPot={jackpot}
+                joinedUsers={joinedUsers}
+                winner={winner}
+              />
             </div>
             <div className="mx-auto flex w-full max-w-[382px] flex-col gap-4">
               <div className="flex justify-between gap-3">
