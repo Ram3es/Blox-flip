@@ -50,5 +50,6 @@ export interface IRootJackpotInfo {
   participants: IRootJackpotNew[]
   state: number
   timer: number
+  time: number
   value: number
 }
