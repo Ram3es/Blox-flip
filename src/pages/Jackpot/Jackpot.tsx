@@ -105,7 +105,7 @@ const Jackpot = () => {
 
     socket.on('jackpot_info', (data: IRootJackpotInfo) => {
       console.log(data, 'JACKPOT INFO')
-      setTimer((data.timer * 1000 - Date.now()) / 1000)
+      setTimer((data.time * 1000 - Date.now()) / 1000)
     })
 
     return () => {
@@ -226,7 +226,7 @@ const Jackpot = () => {
             <div className="h-[310px] z-10 pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
               <div className="flex flex-col gap-y-2 p-0.5 ">
                 {joinedUsers.map((player) => (
-                  <JoinedUserRow key={player.user.id} player={player} />
+                  <JoinedUserRow key={player.user.id + Math.random() * 1000} player={player} />
                 ))}
               </div>
             </div>
@@ -249,7 +249,7 @@ const Jackpot = () => {
             )}
             <div className="flex flex-col gap-y-2 p-0.5 opacity-50">
               {joinedUsers.map((player) => (
-                <JoinedUserRow key={player.user.id} player={player} />
+                <JoinedUserRow key={player.user.id + Math.random() * 1000} player={player} />
               ))}
             </div>
           </div>
