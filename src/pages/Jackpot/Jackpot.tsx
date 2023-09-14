@@ -87,13 +87,8 @@ const Jackpot = () => {
     })
 
     socket.on('jackpot_all', (data: IRootJackpotNew[]) => {
-      console.log(data, 'jackpot_all')
-
-      // setUserJoined(data.deposits)
+      console.log(data, 'JACKPOT ALL')
       setUserJoined(data)
-      // setRoundInfo(data)
-
-      // setTimer((data.timer * 1000 - Date.now()) / 1000)
     })
 
     socket.on('jackpot_chance_update', (data: IRootJackpotChance) => {
