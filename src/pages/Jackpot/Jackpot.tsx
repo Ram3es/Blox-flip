@@ -74,10 +74,6 @@ const Jackpot = () => {
     }
   }, [wagerRef])
 
-  useEffect(() => {
-    setTimeout(() => socket.emit('load_jackpot', { id: 1 }), 10000)
-  }, [])
-
   const handleJoinGame = useCallback(() => {
     const sendedData: IRootJackpotWager = {
       id: 1,
@@ -101,7 +97,6 @@ const Jackpot = () => {
               <JackpotWheel
                 jackPot={jackpot}
                 joinedUsers={joinedUsers}
-                winner={winner}
               />
             </div>
             <div className="mx-auto flex w-full max-w-[382px] flex-col gap-4">

@@ -7,22 +7,23 @@ import JackpotWheelInfo from './JackpotWheelInfo'
 import CircularProgressBar from '../../components/common/CIrcularProgressBar'
 import GreenVector from '../../components/icons/GreenVector'
 import { getAngleTilt, getColorByIndex } from '../../helpers/jackpotHelpers'
-import { IRootJackpotNew, IRootJackpotRoll } from '../../types/Jackpot'
+import { IRootJackpotNew } from '../../types/Jackpot'
 import { JACKPOT_ROLLING_TIME_SECONDS } from '../../constants/jackpot'
 import { useJackpot } from '../../store/JackpotStore'
+import { useSocketCtx } from '../../store/SocketStore'
 
 interface IJackpotWheelProps {
   jackPot: number
   joinedUsers: IRootJackpotNew[]
-  winner: IRootJackpotRoll | null
 }
 
-const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers, winner }) => {
+const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
   const [data, setData] = useState<Array<d3Shape.PieArcDatum<number | {
     valueOf: () => number
   }>>>([])
 
-  const { timer, setTimer } = useJackpot()
+  const { socket } = useSocketCtx()
+  const { timer, winner, setTimer } = useJackpot()
 
   const refSvg = useRef<SVGSVGElement>(null)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
@@ -58,9 +59,9 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers, winner }) 
 
   useEffect(() => {
     refInterval.current && clearInterval(refInterval.current)
-    if (timer === 0) {
-      // setTimeout(() => start(Math.floor(Math.random() * data.length)), 500)
-      setTimeout(() => start(joinedUsers.findIndex((item) => item.user.id === winner?.winner.id)), 500)
+    if (winner) {
+      start(joinedUsers.findIndex((item) => (item.user.id).toString() === winner?.winner.id))
+      setTimeout(() => socket.emit('load_jackpot', { id: 1 }), 8000)
       return
     }
     if (timer) {
@@ -68,7 +69,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers, winner }) 
         setTimer(timer - 1)
       }, 1000)
     }
-  }, [timer, data])
+  }, [timer, data, winner])
 
   useEffect(() => {
     if (refSvg.current) {

@@ -47,7 +47,6 @@ export const JackpotProvider = ({ children }: JackpotProviderProps) => {
       })
 
       socket.on('jackpot_history', (data: IRootJackpotHistory) => {
-        console.log(data, 'JACKPOT HISTORY')
         setHistory(data)
       })
     })
