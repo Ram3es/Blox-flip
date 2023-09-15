@@ -9,19 +9,20 @@ import GreenVector from '../../components/icons/GreenVector'
 import { getAngleTilt, getColorByIndex } from '../../helpers/jackpotHelpers'
 import { IRootJackpotNew, IRootJackpotRoll } from '../../types/Jackpot'
 import { JACKPOT_ROLLING_TIME_SECONDS } from '../../constants/jackpot'
+import { useJackpot } from '../../store/JackpotStore'
 
 interface IJackpotWheelProps {
-  timer: number
-  setTimer: Function
   jackPot: number
   joinedUsers: IRootJackpotNew[]
   winner: IRootJackpotRoll | null
 }
 
-const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joinedUsers, winner }) => {
+const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers, winner }) => {
   const [data, setData] = useState<Array<d3Shape.PieArcDatum<number | {
     valueOf: () => number
   }>>>([])
+
+  const { timer, setTimer } = useJackpot()
 
   const refSvg = useRef<SVGSVGElement>(null)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
@@ -60,15 +61,13 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
     if (timer === 0) {
       // setTimeout(() => start(Math.floor(Math.random() * data.length)), 500)
       setTimeout(() => start(joinedUsers.findIndex((item) => item.user.id === winner?.winner.id)), 500)
-
-      setTimeout(() => {
-        setTimer(10)
-      }, 8500)
       return
     }
-    refInterval.current = setInterval(() => {
-      setTimer(timer - 1)
-    }, 1000)
+    if (timer) {
+      refInterval.current = setInterval(() => {
+        setTimer(timer - 1)
+      }, 1000)
+    }
   }, [timer, data])
 
   useEffect(() => {
@@ -137,7 +136,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
           </div>
           <svg ref={refSvg} width={448} height={448} className="absolute m-auto inset-0" />
           <CircularProgressBar
-            progress={convertToProgress(timer)}
+            progress={convertToProgress(timer ?? 0)}
             wrapClasses="w-[328px] h-[328px] absolute inset m-auto"
           />
         </div>

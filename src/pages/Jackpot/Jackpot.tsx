@@ -9,11 +9,6 @@ import { cards } from '../../mocks/cards'
 import {
   IJackpotCard,
   IRootJackpotAll,
-  IRootJackpotChance,
-  IRootJackpotHistory,
-  IRootJackpotInfo,
-  IRootJackpotNew,
-  IRootJackpotRoll,
   IRootJackpotWager
 } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
@@ -25,23 +20,21 @@ import { Input } from '../../components/base/Input'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
-import { JACKPOT_ROUND_TIME_SECONDS } from '../../constants/jackpot'
+import { useJackpot } from '../../store/JackpotStore'
 
 const Jackpot = () => {
   const { socket } = useSocketCtx()
+  const {
+    timer,
+    winner,
+    gameInfo,
+    joinedUsers
+  } = useJackpot()
 
   const [roundInfo, setRoundInfo] = useState<IRootJackpotAll | null>(null)
 
-  const [joinedUsers, setUserJoined] = useState<IRootJackpotNew[]>([])
-
-  const [winner, setWinner] = useState<IRootJackpotRoll | null>(null)
-  const [chance, setChance] = useState<IRootJackpotChance | null>(null)
-  const [history, setHistory] = useState<any>([])
-
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
-
-  const [timer, setTimer] = useState<number>(JACKPOT_ROUND_TIME_SECONDS)
 
   const {
     state: { user }
@@ -82,39 +75,7 @@ const Jackpot = () => {
   }, [wagerRef])
 
   useEffect(() => {
-    socket.on('jackpot_new', (data: IRootJackpotNew) => {
-      setUserJoined((prev) => [...prev, data])
-    })
-
-    socket.on('jackpot_all', (data: IRootJackpotNew[]) => {
-      console.log(data, 'JACKPOT ALL')
-      setUserJoined(data)
-    })
-
-    socket.on('jackpot_chance_update', (data: IRootJackpotChance) => {
-      setChance(data)
-    })
-
-    socket.on('jackpot_roll', (data: IRootJackpotRoll) => {
-      setWinner(data)
-    })
-
-    socket.on('jackpot_history', (data: IRootJackpotHistory) => {
-      setHistory(data)
-    })
-
-    socket.on('jackpot_info', (data: IRootJackpotInfo) => {
-      console.log(data, 'JACKPOT INFO')
-      setTimer((data.time * 1000 - Date.now()) / 1000)
-    })
-
-    return () => {
-      socket.off('jackpot_new')
-      socket.off('jackpot_all')
-      socket.off('jackpot_chance_update')
-      socket.off('jackpot_roll')
-      socket.off('jackpot_history')
-    }
+    setTimeout(() => socket.emit('load_jackpot', { id: 1 }), 10000)
   }, [])
 
   const handleJoinGame = useCallback(() => {
@@ -138,8 +99,6 @@ const Jackpot = () => {
           <div className="flex flex-col items-center gap-2 md:flex-row ls:flex-col ls:gap-6">
             <div className="mx-0 flex h-[492px] w-[492px] scale-75 items-center justify-center xs:mx-auto xs:scale-100 md:mx-0">
               <JackpotWheel
-                timer={timer}
-                setTimer={setTimer}
                 jackPot={jackpot}
                 joinedUsers={joinedUsers}
                 winner={winner}
@@ -218,9 +177,9 @@ const Jackpot = () => {
               <div className="flex w-full flex-col items-center">
                 <div className="flex items-center">
                   <span className="mr-1 text-base font-bold uppercase text-green-primary">Round starts in</span>
-                  {`${timer}s`}
+                  {`${timer ?? 0}s`}
                 </div>
-                <div className="w-full truncate text-center text-gray-primary">{`Hash: ${'895b7f3ef391e048da04ce3d42c528f336fafef36596f4d41f864fe16850acd5asd'}`}</div>
+                <div className="w-full truncate text-center text-gray-primary">{`Hash: ${gameInfo?.hash ?? ''}`}</div>
               </div>
             </StrippedBgItem>
             <div className="h-[310px] z-10 pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">

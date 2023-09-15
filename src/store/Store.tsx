@@ -7,6 +7,7 @@ import { ChatProvider } from './ChatStore'
 import { BattleCaseProvider } from './BattleCaseStore'
 import SocketCtxProvider from './SocketStore'
 import { CaseOpeningProvider } from './CaseOpeningStore'
+import { JackpotProvider } from './JackpotStore'
 
 export interface IState {
   user?: IUser
@@ -37,7 +38,11 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
           <CaseOpeningProvider>
             <BattleCaseProvider>
               <PlinkoProvider>
-                <CoinFlipProvider>{children}</CoinFlipProvider>
+                <CoinFlipProvider>
+                  <JackpotProvider>
+                    {children}
+                  </JackpotProvider>
+                </CoinFlipProvider>
               </PlinkoProvider>
             </BattleCaseProvider>
           </CaseOpeningProvider>

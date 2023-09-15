@@ -84,7 +84,11 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
       const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token ?? (hash as string)))
       dispatch({
         type: 'LOGIN',
-        payload: { name: decoded.UserName, avatar: decoded.ThumbnailUrl }
+        payload: {
+          id: decoded.UserID,
+          name: decoded.UserName,
+          avatar: decoded.ThumbnailUrl
+        }
       })
       if (isConnected) {
         socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
