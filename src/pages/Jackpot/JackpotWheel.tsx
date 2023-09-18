@@ -10,7 +10,6 @@ import { getAngleTilt, getColorByIndex } from '../../helpers/jackpotHelpers'
 import { IRootJackpotNew } from '../../types/Jackpot'
 import { JACKPOT_ROLLING_TIME_SECONDS } from '../../constants/jackpot'
 import { useJackpot } from '../../store/JackpotStore'
-import { useSocketCtx } from '../../store/SocketStore'
 
 interface IJackpotWheelProps {
   jackPot: number
@@ -22,8 +21,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
     valueOf: () => number
   }>>>([])
 
-  const { socket } = useSocketCtx()
-  const { timer, winner, setTimer } = useJackpot()
+  const { timer, winner, setTimer, setIsRolling } = useJackpot()
 
   const refSvg = useRef<SVGSVGElement>(null)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
@@ -61,7 +59,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
     refInterval.current && clearInterval(refInterval.current)
     if (winner) {
       start(joinedUsers.findIndex((item) => (item.user.id).toString() === winner?.winner.id))
-      setTimeout(() => socket.emit('load_jackpot', { id: 1 }), 8000)
+      setTimeout(() => setIsRolling(false), JACKPOT_ROLLING_TIME_SECONDS)
       return
     }
     if (timer) {

@@ -8,7 +8,6 @@ import Image from '../../components/base/Image'
 import { cards } from '../../mocks/cards'
 import {
   IJackpotCard,
-  IRootJackpotAll,
   IRootJackpotWager
 } from '../../types/Jackpot'
 import JackpotWheel from './JackpotWheel'
@@ -28,11 +27,11 @@ const Jackpot = () => {
     timer,
     winner,
     gameInfo,
+    isRolling,
     joinedUsers
   } = useJackpot()
 
-  const [roundInfo, setRoundInfo] = useState<IRootJackpotAll | null>(null)
-
+  // const [roundInfo, setRoundInfo] = useState<IRootJackpotAll | null>(null)
   const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
 
@@ -185,7 +184,7 @@ const Jackpot = () => {
               </div>
             </div>
             <div className="w-full border-b border-blue-accent-secondary" />
-            {winner && (
+            {winner && !isRolling && (
               <StrippedBgItem color="Green" wrapContentClasses="py-2 px-6 xs:py-5">
                 <div className="flex flex-col items-center justify-between xs:flex-row">
                   <div className="mb-2 flex w-full flex-col items-center gap-1 text-sm xs:mb-0 xs:flex-row">
