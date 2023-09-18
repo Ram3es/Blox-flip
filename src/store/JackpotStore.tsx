@@ -11,11 +11,9 @@ export interface IJackpotContext {
   history: IRootJackpotHistory[]
   winner: IRootJackpotRoll | null
   gameInfo?: IRootJackpotInfo
-  isRolling: boolean
   joinedUsers: IRootJackpotNew[]
   setUserJoined: Dispatch<SetStateAction<IRootJackpotNew[]>>
   setTimer: Dispatch<SetStateAction<number | undefined>>
-  setIsRolling: Dispatch<SetStateAction<boolean>>
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -30,7 +28,6 @@ export const JackpotProvider = ({ children }: JackpotProviderProps) => {
   const [history, setHistory] = useState<IRootJackpotHistory[]>([])
   const [gameInfo, setGameInfo] = useState<IRootJackpotInfo>()
   const [winner, setWinner] = useState<IRootJackpotRoll | null>(null)
-  const [isRolling, setIsRolling] = useState(false)
   const [timer, setTimer] = useState<number>()
 
   const { socket } = useSocketCtx()
@@ -77,12 +74,14 @@ export const JackpotProvider = ({ children }: JackpotProviderProps) => {
   }, [])
 
   useEffect(() => {
-    if (isRolling) {
+    if (winner) {
       setTimeout(() => {
+        setUserJoined([])
+        setWinner(null)
         socket.emit('load_jackpot', { id: 1 })
       }, 8000)
     }
-  }, [isRolling])
+  }, [winner])
 
   return (
     <JackpotContext.Provider
@@ -91,10 +90,8 @@ export const JackpotProvider = ({ children }: JackpotProviderProps) => {
         winner,
         history,
         gameInfo,
-        isRolling,
         joinedUsers,
         setTimer,
-        setIsRolling,
         setUserJoined
       }}
     >

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import GameInfoListItem from '../../components/common/GameInfoListItem'
@@ -25,14 +25,12 @@ const Jackpot = () => {
   const { socket } = useSocketCtx()
   const {
     timer,
-    winner,
+    history,
     gameInfo,
-    isRolling,
     joinedUsers
   } = useJackpot()
 
-  // const [roundInfo, setRoundInfo] = useState<IRootJackpotAll | null>(null)
-  const [selectedCards, setSelectedCard] = useState<IJackpotCard[]>([])
+  const [selectedCards] = useState<IJackpotCard[]>([])
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
 
   const {
@@ -178,33 +176,35 @@ const Jackpot = () => {
             </StrippedBgItem>
             <div className="h-[310px] z-10 pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
               <div className="flex flex-col gap-y-2 p-0.5 ">
-                {joinedUsers.map((player) => (
-                  <JoinedUserRow key={player.user.id + Math.random() * 1000} player={player} />
+                {joinedUsers.map((player, idx) => (
+                  <JoinedUserRow key={player.user.id + idx.toString()} player={player} />
                 ))}
               </div>
             </div>
             <div className="w-full border-b border-blue-accent-secondary" />
-            {winner && !isRolling && (
+            {[...history].reverse().map(prevGame => (
+            <Fragment key={prevGame.hash}>
               <StrippedBgItem color="Green" wrapContentClasses="py-2 px-6 xs:py-5">
-                <div className="flex flex-col items-center justify-between xs:flex-row">
-                  <div className="mb-2 flex w-full flex-col items-center gap-1 text-sm xs:mb-0 xs:flex-row">
-                    <div className="radial--blue mx-auto my-1 h-11 w-[50px] shrink-0 overflow-hidden rounded border border-blue-highlight xs:mx-0">
-                      <Image image={winner.winner.avatar} />
-                    </div>
-                    <div className="ml-2 flex items-center gap-1">
-                      <span className="block max-w-[150px] truncate text-green-primary">{winner.winner.name}</span>
-                      <span className="block">has won the jackpot</span>
-                    </div>
+              <div className="flex flex-col items-center justify-between xs:flex-row">
+                <div className="mb-2 flex w-full flex-col items-center gap-1 text-sm xs:mb-0 xs:flex-row">
+                  <div className="radial--blue mx-auto my-1 h-11 w-[50px] shrink-0 overflow-hidden rounded border border-blue-highlight xs:mx-0">
+                    <Image image={prevGame.winner.avatar} />
                   </div>
-                  <CoinsWithDiamond containerColor="GreenGradient" containerSize="XL" typographyQuantity={115500} />
+                  <div className="ml-2 flex items-center gap-1">
+                    <span className="block max-w-[150px] truncate text-green-primary">{prevGame.winner.name}</span>
+                    <span className="block">has won the jackpot</span>
+                  </div>
                 </div>
-              </StrippedBgItem>
-            )}
-            <div className="flex flex-col gap-y-2 p-0.5 opacity-50">
-              {joinedUsers.map((player) => (
-                <JoinedUserRow key={player.user.id + Math.random() * 1000} player={player} />
-              ))}
-            </div>
+                <CoinsWithDiamond containerColor="GreenGradient" containerSize="XL" typographyQuantity={prevGame.value} />
+              </div>
+            </StrippedBgItem>
+             <div className="flex flex-col gap-y-2 p-0.5 opacity-50">
+             {prevGame.participants.map((player, idx) => (
+               <JoinedUserRow key={player.user.id + idx.toString()} player={player} />
+             ))}
+           </div>
+           </Fragment>
+            ))}
           </div>
         </div>
       </div>
