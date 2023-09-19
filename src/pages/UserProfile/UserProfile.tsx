@@ -74,9 +74,7 @@ const UserProfile = () => {
               </NavLink>))}
           </div>
         </div>
-        <div className='min-h-screen'>
           {pathname === '/profile' ? <Profile isOwnProfile={state?.userId === user?.id} /> : <Outlet/> }
-        </div>
       </>
   )
 }

@@ -1,17 +1,14 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-
-import ButtonsToggle from '../../components/base/ButtonToggle'
+import { useContext } from 'react'
 import UserProgress from '../../components/user/UserProgress'
-import ItemCard from '../../components/common/Cards/ItemCard'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
-
 import Preferences from './Preferences'
-import ItemsBar from './UserItemsBar'
-
-import { cards } from '../../mocks/cards'
-import type { IItemCard } from '../../types/ItemCard'
 import { Context } from '../../store/Store'
+// import { useLocation } from 'react-router-dom'
+// import ButtonsToggle from '../../components/base/ButtonToggle'
+// import ItemCard from '../../components/common/Cards/ItemCard'
+// import ItemsBar from './UserItemsBar'
+// import { cards } from '../../mocks/cards'
+// import type { IItemCard } from '../../types/ItemCard'
 
 const actions = [
   { name: 'wagered' },
@@ -20,66 +17,66 @@ const actions = [
   { name: 'profit' }
 ]
 
-const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
+// const cardsSorting = [{ variant: 'All' }, { variant: 'Active Items' }, { variant: 'Sold' }]
 
 const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
   const { state } = useContext(Context)
 
-  const [currentCardsVariant, setCurrentCardsVariant] = useState(cardsSorting[0])
-  const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
-  const [sorted, setSorted] = useState<IItemCard[]>([])
-  const {
-    state: { userId }
-  } = useLocation()
+  // const [currentCardsVariant] = useState(cardsSorting[0])
+  // const [selectedCard, setSelectedCard] = useState<IItemCard[]>([])
+  // const [sorted, setSorted] = useState<IItemCard[]>([])
+  // const {
+  //   state: { userId }
+  // } = useLocation()
 
-  const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
+  // const totalPriceSelected = selectedCard.reduce((acc, item) => acc + item.price, 0)
 
-  const filtered = useCallback(() => {
-    switch (currentCardsVariant.variant) {
-      case 'Active Items':
-        setSorted(cards.filter((card) => card.active))
-        break
-      case 'Sold':
-        setSorted(cards.filter((card) => card.sold))
-        break
-      default:
-        setSorted(cards)
-    }
-  }, [currentCardsVariant])
+  // const filtered = useCallback(() => {
+  //   switch (currentCardsVariant.variant) {
+  //     case 'Active Items':
+  //       setSorted(cards.filter((card) => card.active))
+  //       break
+  //     case 'Sold':
+  //       setSorted(cards.filter((card) => card.sold))
+  //       break
+  //     default:
+  //       setSorted(cards)
+  //   }
+  // }, [currentCardsVariant])
 
-  const handleSelectCard = (id: string) => {
-    if (!isOwnProfile) {
-      return
-    }
-    const card = sorted.find((item) => item.id === id) as IItemCard
+  // const handleSelectCard = (id: string) => {
+  //   if (!isOwnProfile) {
+  //     return
+  //   }
+  //   const card = sorted.find((item) => item.id === id) as IItemCard
 
-    if (!selectedCard.some((item) => item.id === card.id)) {
-      setSelectedCard((state) => [...state, card])
-      setSorted((state) => [
-        ...state.map((elem) => {
-          if (elem.id === id) {
-            return { ...elem, isSelected: true }
-          }
-          return elem
-        })
-      ])
-    } else {
-      setSelectedCard((state) => [...state.filter((el) => el.id !== card.id)])
-      setSorted((state) => [
-        ...state.map((elem) => {
-          if (elem.id === id) {
-            return { ...elem, isSelected: false }
-          }
-          return elem
-        })
-      ])
-    }
-  }
+  //   if (!selectedCard.some((item) => item.id === card.id)) {
+  //     setSelectedCard((state) => [...state, card])
+  //     setSorted((state) => [
+  //       ...state.map((elem) => {
+  //         if (elem.id === id) {
+  //           return { ...elem, isSelected: true }
+  //         }
+  //         return elem
+  //       })
+  //     ])
+  //   } else {
+  //     setSelectedCard((state) => [...state.filter((el) => el.id !== card.id)])
+  //     setSorted((state) => [
+  //       ...state.map((elem) => {
+  //         if (elem.id === id) {
+  //           return { ...elem, isSelected: false }
+  //         }
+  //         return elem
+  //       })
+  //     ])
+  //   }
+  // }
 
-  useEffect(() => {
-    setSelectedCard([])
-    filtered()
-  }, [currentCardsVariant, userId])
+  // useEffect(() => {
+  //   setSelectedCard([])
+  //   filtered()
+  // }, [currentCardsVariant, userId])
 
   return (
     <div className='h-fit'>
@@ -109,7 +106,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
           ))}
         </div>
       </div>
-      <div className='flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center'>
+      {/* <div className='flex flex-wrap justify-between border-b border-blue-accent-secondary mb-6 pb-4 items-center'>
         <ItemsBar
           isOwnProfile={isOwnProfile}
           totalPriceSelected={totalPriceSelected}
@@ -127,7 +124,7 @@ const Profile = ({ isOwnProfile }: { isOwnProfile: boolean }) => {
         {sorted.map((card) => (
           <ItemCard key={card.id} onSelect={handleSelectCard} {...card} />
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

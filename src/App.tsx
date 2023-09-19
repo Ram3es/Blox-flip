@@ -7,8 +7,7 @@ import { Header } from './components/header/Header'
 import { Home } from './pages/Home/Home'
 import UserProfile from './pages/UserProfile/UserProfile'
 import { Transactions } from './components/transactions/Transactions'
-import HistoryUser from './pages/UserProfile/HistoryUser'
-
+import { History } from './components/history/History'
 import { Deposit } from './pages/Deposit/Deposit'
 import CreditCard from './pages/Deposit/methods/CreditCard'
 import { DepositGift } from './pages/Deposit/methods/DepositGift'
@@ -60,7 +59,7 @@ export const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<UserProfile />}>
             <Route path="transactions" element={<Transactions />} />
-            <Route path="history" element={<HistoryUser />} />
+            <Route path="history" element={<History />} />
           </Route>
           <Route path="/deposit" element={<Deposit />}>
             <Route path="robux" element={<DepositRobux />} />
