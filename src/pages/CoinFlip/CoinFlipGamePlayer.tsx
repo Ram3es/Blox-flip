@@ -10,8 +10,8 @@ import WinPercent from '../../components/common/WinPercent'
 
 import QuestionIcon from '../../components/icons/QuestionIcon'
 
-import YellowCoin from '../../assets/img/coinflip/YellowCoin.png'
-import PurpleCoin from '../../assets/img/coinflip/PurpleCoin.png'
+import YellowCoin from '../../assets/img/coinflip/coinflip-white-placeholder.png'
+import PurpleCoin from '../../assets/img/coinflip/coinflip-blue-placeholder.png'
 import { useSocketCtx } from '../../store/SocketStore'
 import { ICoinFlip } from '../../types/CoinFlip'
 import { getToast } from '../../helpers/toast'

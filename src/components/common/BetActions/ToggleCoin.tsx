@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction } from 'react'
 
 import clsx from 'clsx'
 
-import YellowCoin from '../../../assets/img/coinflip/coinflip_yellow.png'
-import PurpleCoin from '../../../assets/img/coinflip/coinflip_purple.png'
+import YellowCoin from '../../../assets/img/coinflip/coinflip-white-placeholder.png'
+import PurpleCoin from '../../../assets/img/coinflip/coinflip-blue-placeholder.png'
 
 import { ICoin } from '../../../types/CoinFlip'
 

@@ -1,6 +1,6 @@
 import Image from '../../base/Image'
-import CoinFlipHead from '../../../assets/img/CoinFlipHead.png'
-import CoinFlipTail from '../../../assets/img/CoinFlipTail.png'
+import CoinFlipHead from '../../../assets/img/coinflip/coinflip-white-placeholder.png'
+import CoinFlipTail from '../../../assets/img/coinflip/coinflip-blue-placeholder.png'
 
 interface CFUserInfoCellProps {
   userAvatar: string
@@ -14,8 +14,8 @@ const CFUserInfoCell = ({ userAvatar, coin }: CFUserInfoCellProps) => {
         image={userAvatar}
         className='h-14 w-14 border border-blue-highlight rounded radial--blue'
       />
-      <div className='absolute top-[0.46875rem] left-[3.25rem]'>
-        <img src={coin === 0 ? CoinFlipHead : CoinFlipTail} alt={coin === 0 ? 'head' : 'tail'} />
+      <div className='absolute top-[0.46875rem] left-[4rem]'>
+        <img src={coin === 0 ? CoinFlipHead : CoinFlipTail} className='w-11 h-auto' alt={coin === 0 ? 'head' : 'tail'} />
       </div>
     </div>
   )
