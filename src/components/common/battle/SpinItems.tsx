@@ -39,7 +39,6 @@ const SpinItems: FC<ISpinGameProps> = ({
     if (itemsRef.current) {
       itemsRef.current.style.transition = 'none'
       itemsRef.current.style.bottom = '0px'
-      console.log(itemsRef.current, 'Reset ref')
     } else {
       console.log('Reset Error')
     }
@@ -75,8 +74,10 @@ const SpinItems: FC<ISpinGameProps> = ({
         spin(CASE_BATTLE_SPINNER_TIME_SECONDS)
       }, 100)
     } else {
-      load()
-      spin(CASE_BATTLE_SPINNER_TIME_SECONDS)
+      setTimeout(() => {
+        load()
+        spin(CASE_BATTLE_SPINNER_TIME_SECONDS)
+      }, 10)
       setRespin(true)
     }
   }
