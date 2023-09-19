@@ -10,6 +10,7 @@ import { getTimerValue } from '../../helpers/wheelHelpers'
 import { getToast } from '../../helpers/toast'
 
 const RALL_TIME = 1500
+const DELAY = 15000
 let interval: any
 
 const Wheel = () => {
@@ -39,8 +40,8 @@ const Wheel = () => {
     socket.emit('wheel:connect')
 
     socket.on('load_wheel', (data: ILoadWheelRes) => {
-      if (getTimerValue(data.time) > 0) {
-        setTimer(getTimerValue(data.time))
+      if (getTimerValue(data.time, DELAY) > 0) {
+        setTimer(getTimerValue(data.time, DELAY))
       }
     })
     socket.on('wheel_history', (data: possibleBets[]) => {

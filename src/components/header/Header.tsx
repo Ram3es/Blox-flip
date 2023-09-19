@@ -5,7 +5,7 @@ import { Menu } from '@headlessui/react'
 
 import DiamondIcon from '../icons/DiamondIcon'
 
-import Logo from '../../assets/img/logo.png'
+import Logo from '../../assets/img/logo-gametery.svg'
 import HomeIcon from '../../assets/img/home_ico.svg'
 import GamesIcon from '../../assets/img/games_ico.svg'
 import { RouteItem } from '../../types/Routes'
@@ -36,11 +36,9 @@ export const Header = () => {
           <img
             src={Logo}
             alt=''
-            width='126'
-            height='30'
             loading='lazy'
             decoding='async'
-            className='min-w-[126px]'
+            className='h-5 ls:h-[30px] w-auto'
           />
         </Link>
         <NavLink

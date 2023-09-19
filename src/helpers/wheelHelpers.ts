@@ -32,8 +32,8 @@ export const getColorHistory = (color: possibleBets) => {
   return colors[color]
 }
 
-export const getTimerValue = (unixTimestamp: string): number => {
+export const getTimerValue = (unixTimestamp: string, delay = 0): number => {
   const now = Date.now()
   const future = +unixTimestamp * 1000
-  return Math.floor((future + 15000 - now) / 1000) // date to won ticket + 15sec
+  return Math.floor((future + delay - now) / 1000) // date to won ticket + 15sec
 }

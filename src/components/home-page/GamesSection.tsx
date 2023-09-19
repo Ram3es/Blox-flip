@@ -23,6 +23,9 @@ const GamesSection = () => {
       {games.map(({ name, path }, idx) => (
         <GameCard key={path} titleBtn={name} path={path} isLeftCorner={idx % 2 === 0} />
       ))}
+      {/* <div className='w-full xxs:w-1/2 xs:w-1/3 lg:w-1/6 mb-18'>
+        <img src={Plinko} className=' w-full h-full' />
+      </div> */}
       <GiftCard />
       <SignInModal isOpen={isOpenSignInModal} onClose={() => setIsOpenModal(false)} />
     </div>

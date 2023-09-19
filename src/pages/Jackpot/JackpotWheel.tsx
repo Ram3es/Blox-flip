@@ -7,21 +7,21 @@ import JackpotWheelInfo from './JackpotWheelInfo'
 import CircularProgressBar from '../../components/common/CIrcularProgressBar'
 import GreenVector from '../../components/icons/GreenVector'
 import { getAngleTilt, getColorByIndex } from '../../helpers/jackpotHelpers'
-import { IRootJackpotNew, IRootJackpotRoll } from '../../types/Jackpot'
+import { IRootJackpotNew } from '../../types/Jackpot'
 import { JACKPOT_ROLLING_TIME_SECONDS } from '../../constants/jackpot'
+import { useJackpot } from '../../store/JackpotStore'
 
 interface IJackpotWheelProps {
-  timer: number
-  setTimer: Function
   jackPot: number
   joinedUsers: IRootJackpotNew[]
-  winner: IRootJackpotRoll | null
 }
 
-const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joinedUsers, winner }) => {
+const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
   const [data, setData] = useState<Array<d3Shape.PieArcDatum<number | {
     valueOf: () => number
   }>>>([])
+
+  const { timer, winner, setTimer } = useJackpot()
 
   const refSvg = useRef<SVGSVGElement>(null)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
@@ -57,19 +57,16 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
 
   useEffect(() => {
     refInterval.current && clearInterval(refInterval.current)
-    if (timer === 0) {
-      // setTimeout(() => start(Math.floor(Math.random() * data.length)), 500)
-      setTimeout(() => start(joinedUsers.findIndex((item) => item.user.id === winner?.winner.id)), 500)
-
-      setTimeout(() => {
-        setTimer(10)
-      }, 8500)
+    if (winner) {
+      start(joinedUsers.findIndex((item) => (item.user.id).toString() === winner?.winner.id))
       return
     }
-    refInterval.current = setInterval(() => {
-      setTimer(timer - 1)
-    }, 1000)
-  }, [timer, data])
+    if (timer) {
+      refInterval.current = setInterval(() => {
+        setTimer(timer - 1)
+      }, 1000)
+    }
+  }, [timer, data, winner])
 
   useEffect(() => {
     if (refSvg.current) {
@@ -137,7 +134,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ timer, setTimer, jackPot, joined
           </div>
           <svg ref={refSvg} width={448} height={448} className="absolute m-auto inset-0" />
           <CircularProgressBar
-            progress={convertToProgress(timer)}
+            progress={convertToProgress(timer ?? 0)}
             wrapClasses="w-[328px] h-[328px] absolute inset m-auto"
           />
         </div>

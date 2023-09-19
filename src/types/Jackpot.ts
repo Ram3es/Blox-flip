@@ -37,9 +37,8 @@ export interface IRootJackpotRoll {
   winner: IUser
 }
 
-export interface IRootJackpotHistory {
-  users: IRootJackpotAll[]
-  winner: IRootJackpotRoll[]
+export interface IRootJackpotHistory extends Pick<IRootJackpotInfo, 'hash' | 'id' | 'participants' | 'value'> {
+  winner: Pick<IUser, 'id' | 'avatar' | 'name'>
 }
 
 export interface IRootJackpotInfo {
