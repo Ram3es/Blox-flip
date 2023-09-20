@@ -47,6 +47,6 @@ export const DEPOSIT_GIFT_CARDS = [
     id: 8,
     img: Five,
     name: 'gift_5'
-  },
+  }
 
 ]

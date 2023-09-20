@@ -6,3 +6,11 @@ export interface IHistory {
   value: number
   won: boolean
 }
+
+export interface IGameInfo {
+  id: number
+  hash: string
+  server: string
+  nonce?: number
+  random?: number
+}

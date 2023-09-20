@@ -12,7 +12,8 @@ module.exports = {
     extend: {
       animation: {
         'spin-slow': 'spin 2s linear infinite',
-        'reset-card': 'reset 0.3s linear'
+        'reset-card': 'reset 0.3s linear',
+        'ping-header': 'pingHeader 1s cubic-bezier(0, 0, 0.2, 1) infinite'
       },
       fontSize: {
         10: '0.625rem', //10px
@@ -174,6 +175,12 @@ module.exports = {
         ping: {
           '75%, 100%': {
             transform: 'scale(1.4)',
+            opacity: 0
+          }
+        },
+        pingHeader : {
+          '50%, 100%': {
+            transform: 'scale(2)',
             opacity: 0
           }
         },
