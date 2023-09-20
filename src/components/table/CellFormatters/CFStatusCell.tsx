@@ -8,8 +8,8 @@ import LabelWithTimer from '../../common/LabelWithTimer'
 import DiamondIcon from '../../icons/DiamondIcon'
 import PreviewIcon from '../../icons/PreviewIcon'
 
-import YellowCoin from '../../../assets/img/CoinFlipHead.png'
-import PurpleCoin from '../../../assets/img/CoinFlipTail.png'
+import YellowCoin from '../../../assets/img/coinflip/coinflip-white-placeholder.png'
+import PurpleCoin from '../../../assets/img/coinflip/coinflip-blue-placeholder.png'
 
 import { ICoinFlip } from '../../../types/CoinFlip'
 import { getToast } from '../../../helpers/toast'

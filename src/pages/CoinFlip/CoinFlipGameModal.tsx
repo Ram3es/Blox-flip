@@ -99,7 +99,7 @@ const CoinFlipGameModal = ({ game }: CoinFlipGameModalProps) => {
           <div className="p-3 flex z-40 absolute top-[-20%] xs:left-[calc(50%-96px)] xs:top-[-14%] border--coinflip-game w-32 xs:w-40 h-32 xs:h-40 justify-center items-center">
             <div
               className={`
-                 ${game?.winner?.coin === 0 ? 'blue' : 'white'} 
+                 ${game?.winner?.coin === 0 ? 'white' : 'blue'} 
                  ${animation ? 'play' : 'grayscale opacity-80'} coinflip-animation absolute z-1`}
             />
           </div>

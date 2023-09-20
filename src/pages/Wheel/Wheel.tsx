@@ -13,14 +13,16 @@ const RALL_TIME = 1500
 const DELAY = 15000
 let interval: any
 
+const INIT_BETS_STATE = {
+  gray: [],
+  yellow: [],
+  blue: [],
+  red: []
+}
+
 const Wheel = () => {
   const [historyGames, setHistory] = useState<possibleBets[]>([])
-  const [wheelBets, setWheelBets] = useState<WheelBetRecord>({
-    gray: [],
-    yellow: [],
-    blue: [],
-    red: []
-  })
+  const [wheelBets, setWheelBets] = useState<WheelBetRecord>(INIT_BETS_STATE)
   const [timer, setTimer] = useState<number>()
   const [wonTicket, setWonTicket] = useState<IWinTicket | null>(null)
   const [betAmount, setBetAmount] = useState(200)
@@ -43,6 +45,7 @@ const Wheel = () => {
       if (getTimerValue(data.time, DELAY) > 0) {
         setTimer(getTimerValue(data.time, DELAY))
       }
+      setWheelBets(INIT_BETS_STATE)
     })
     socket.on('wheel_history', (data: possibleBets[]) => {
       setHistory(data)
@@ -53,21 +56,13 @@ const Wheel = () => {
       setWonTicket(roll.color === 'gold' ? { ...roll, color: possibleBets.YELLOW } : roll)
     })
     socket.on('add_wheel_bets', (data: WheelBetRecord) => {
-      console.log('data', data)
+      console.log('add_wheel_bets', data)
       setWheelBets(data)
     })
     socket.on('add_wheel', (data: IIWheelBet) => {
       const { color } = data
       setWheelBets((prev) => {
         if (prev) {
-          console.log('add_wheel', {
-            ...prev,
-            [color === 'gold' ? possibleBets.YELLOW : color]: [
-              ...prev[color === 'gold' ? possibleBets.YELLOW : color],
-              color === 'gold' ? { ...data, color: possibleBets.YELLOW } : data
-            ]
-          })
-
           return {
             ...prev,
             [color === 'gold' ? possibleBets.YELLOW : color]: [

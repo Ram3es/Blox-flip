@@ -39,7 +39,6 @@ export const JackpotProvider = ({ children }: JackpotProviderProps) => {
       })
 
       socket.on('jackpot_info', (data: IRootJackpotInfo) => {
-        console.log('GAMEINFO', data)
         setGameInfo(data)
         if (data.timer) {
           setTimer(data.timer)
