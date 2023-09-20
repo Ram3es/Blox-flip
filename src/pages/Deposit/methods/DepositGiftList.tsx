@@ -1,9 +1,9 @@
-import GiftCardImage from '../../../assets/img/gift1.png'
+import { DEPOSIT_GIFT_CARDS } from '../../../constants/gift-cards'
 
-const GiftCard = () => {
+const GiftCard = ({ src, name }: { src: string, name: string }) => {
   return (
     <div>
-      <img src={GiftCardImage} alt='' width='279' height='141' loading='lazy' decoding='async' />
+      <img src={src} alt={name} width='279' height='141' loading='lazy' decoding='async' />
     </div>
   )
 }
@@ -11,8 +11,8 @@ const GiftCard = () => {
 export const DepositGiftList = () => {
   return (
     <div className='grid grid-cols-1 xxs:grid-cols-3 sm:grid-cols-4 gap-4'>
-      {Array.from({ length: 8 }).map((_, index) => (
-        <GiftCard key={index + 1} />
+      {DEPOSIT_GIFT_CARDS.map(card => (
+        <GiftCard key={card.id} src={card.img} name={card.name} />
       ))}
     </div>
   )
