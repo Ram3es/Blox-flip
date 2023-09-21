@@ -17,6 +17,7 @@ import TriviaModal from '../containers/TriviaModal'
 import { IChatUser } from '../../types/User'
 import { useSocketCtx } from '../../store/SocketStore'
 import { IBanUser } from '../../types/Chat'
+import Rain from './Rain'
 
 export const Chat = () => {
   const [showChat, setShowChat] = useState(false)
@@ -57,7 +58,7 @@ export const Chat = () => {
   }, [selectedMessage])
 
   const chatClasses = clsx(
-    'bg-blue-primary w-72 p-4 h-screen flex flex-col fixed -right-full top-0 bottom-0 z-100 sm:z-40 ease-out duration-300 chatJs',
+    'bg-blue-primary w-72 h-screen flex flex-col fixed -right-full top-0 bottom-0 z-100 sm:z-40 ease-out duration-300 chatJs',
     {
       'sm:right-0': !showChat,
       'right-0': showChat
@@ -67,9 +68,12 @@ export const Chat = () => {
   return (
     <>
       <div className={chatClasses}>
-        <ChatHeader />
-        <ChatTools />
-        <ChatMessageList />
+        <div className='p-4 grow flex flex-col'>
+          <ChatHeader />
+          <ChatTools />
+          <ChatMessageList />
+        </div>
+        <Rain />
         <ChatMessageInput />
       </div>
       <ChatFab onClick={handleShowChat} active={showChat} />
