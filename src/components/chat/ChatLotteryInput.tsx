@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '../base/Button'
 import { Input } from '../base/Input'
 import DiamondIcon from '../icons/DiamondIcon'
+import { useSocketCtx } from '../../store/SocketStore'
 
 export const ChatLotteryInput = () => {
-  const [tipCoins, setTipCoins] = useState('')
+  const { socket } = useSocketCtx()
+  const [tipCoins, setTipCoins] = useState<string>('')
   const { t } = useTranslation()
 
   const handleTipRain = (event: ChangeEvent<HTMLInputElement>) => {
@@ -14,8 +16,10 @@ export const ChatLotteryInput = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log('rain from coins')
-    setTipCoins('')
+    console.log('rain from coins', tipCoins)
+    socket.emit('tip_rain', { amount: tipCoins }, () => {
+      setTipCoins('')
+    })
   }
 
   return (
@@ -27,7 +31,7 @@ export const ChatLotteryInput = () => {
         <DiamondIcon className='-inset-full absolute m-auto' width='15' height='12' />
       </span>
       <Input
-        type='text'
+        type='number'
         placeholder='...'
         variant='OUTLINED'
         value={tipCoins}
