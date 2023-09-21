@@ -32,6 +32,8 @@ const PlinkoActions = () => {
     risk,
     selectedRow,
     rowOptions,
+    autoBet,
+    setAutoBet,
     setPaths,
     setMode,
     setBetAmount,
@@ -41,8 +43,6 @@ const PlinkoActions = () => {
   } = usePlinko()
 
   const intervalRef = useRef<ReturnType<typeof setInterval>>()
-
-  const [autoBet, setAutoBet] = useState(false)
 
   const handleChangeBetAmount = useCallback(
     (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {
@@ -150,7 +150,7 @@ const PlinkoActions = () => {
   const autoBetHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) > 100) {
       setNumberOfBets(100)
-      return getToast('max 100 bets')
+      return getToast('Max 100 bets')
     }
     setNumberOfBets(Number(e.target.value))
   }
