@@ -9,29 +9,29 @@ interface IGameCardProps {
   titleBtn: string
   path: string
   isLeftCorner: boolean
+  img: string
 }
 
-const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path }) => {
+const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path, img }) => {
   const { t } = useTranslation()
   return (
     <div className='px-3 mb-6 xs:mb-10 sm:mb-18 w-full xxs:w-1/2 xs:w-1/3 lg:w-1/6'>
       <div className='relative overflow-hidden h-full'>
         <img
-          src={CardBg}
+          src={img}
           alt='bg'
           width='241'
           height='228'
           loading='lazy'
           decoding='async'
-          className={
-            isLeftCorner
-              ? 'relative z-20 object-cover w-full'
-              : 'relative z-20 object-cover w-full flip--h'
+          className={'h-full mx-auto w-full'
+            // isLeftCorner
+            //   ? 'relative z-20 object-cover w-full'
+            //   : 'relative z-20 object-cover w-full flip--h'
           }
         />
         <div className='absolute inset-4 z-[35] flex flex-col items-center'>
           <div className='mt-5 grow'>
-            case
           </div>
           <NavLink
             to={path}
@@ -40,7 +40,7 @@ const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path }) => {
             {t(`common.games.${titleBtn}`)}
           </NavLink>
         </div>
-        <div className='absolute inset-0 z-0 top-16 overflow-hidden'>
+        {/* <div className='absolute inset-0 z-0 top-16 overflow-hidden'>
           <img
             src={CardInnerBg}
             alt='bg_inner'
@@ -50,8 +50,8 @@ const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path }) => {
             decoding='async'
             className='absolute left-0 bottom-0 w-full'
           />
-        </div>
-        <div className='absolute inset-0 z-30 top-16 overflow-hidden'>
+        </div> */}
+        {/* <div className='absolute inset-0 z-30 top-16 overflow-hidden'>
           <img
             src={CardRadial}
             alt='radial'
@@ -61,7 +61,7 @@ const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path }) => {
             decoding='async'
             className='absolute left-0 bottom-0 w-full'
           />
-        </div>
+        </div> */}
       </div>
     </div>
   )

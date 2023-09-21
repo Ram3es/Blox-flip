@@ -4,13 +4,20 @@ import SignInModal from '../containers/SignInModal'
 import GameCard from './GameCard'
 import GiftCard from './GiftCard'
 import WelcomeCard from './WelcomeCard'
+import Cases from '../../assets/img/main/Cases banner2.png'
+import BattlesBaner from '../../assets/img/main/Case battles banner1.png'
+import Wheel from '../../assets/img/main/Wheel banner6.png'
+import Plinko from '../../assets/img/main/Plinko banner5.png'
+import Coinflip from '../../assets/img/main/CF banner3.png'
+import Jackpot from '../../assets/img/main/jackpot banner4.png'
 
 const games = [
-  { name: 'caseBattles', path: '/battles-lobby' },
-  { name: 'cases', path: '/unboxing' },
-  { name: 'crash', path: '/crash' },
-  { name: 'mines', path: '/mines' },
-  { name: 'wheel', path: '/wheel' }
+  { name: 'caseBattles', path: '/battles-lobby', image: BattlesBaner },
+  { name: 'cases', path: '/unboxing', image: Cases },
+  { name: 'wheel', path: '/wheel', image: Wheel },
+  { name: 'plinko', path: '/plinko', image: Plinko },
+  { name: 'coinflip', path: '/coinflip', image: Coinflip },
+  { name: 'jackpot', path: '/jackpot', image: Jackpot }
 ]
 
 const GamesSection = () => {
@@ -20,8 +27,8 @@ const GamesSection = () => {
   return (
     <div className="flex flex-wrap -mx-3">
       <WelcomeCard user={state?.user} openModal={() => setIsOpenModal(true)} />
-      {games.map(({ name, path }, idx) => (
-        <GameCard key={path} titleBtn={name} path={path} isLeftCorner={idx % 2 === 0} />
+      {games.map(({ name, path, image }, idx) => (
+        <GameCard key={path} titleBtn={name} path={path} img={image} isLeftCorner={idx % 2 === 0} />
       ))}
       {/* <div className='w-full xxs:w-1/2 xs:w-1/3 lg:w-1/6 mb-18'>
         <img src={Plinko} className=' w-full h-full' />
