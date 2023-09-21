@@ -1,4 +1,4 @@
-import Logo from '../../assets/img/logo.png'
+import Logo from '../../assets/img/logo-gametery.svg'
 import RainBg from '../../assets/img/rain/rainStripesBg.png'
 import RainBtnBg from '../../assets/img/rain/rainBtnBg.svg'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
@@ -9,7 +9,7 @@ const Rain = () => {
   const { socket } = useSocketCtx()
   const [isJoined, setIsJoined] = useState(false)
   const [rainAmount, setRainAmount] = useState(0)
-  const [isRainStarted, setIsRainStartd] = useState(false)
+  const [isRainStarted, setIsRainStarted] = useState(false)
 
   const checkAndCallFunction = (serverUnixTimestamp: number) => {
     // Get the current Unix timestamp
@@ -18,9 +18,9 @@ const Rain = () => {
     const timeDifference = serverUnixTimestamp - currentUnixTimestamp
 
     if (timeDifference <= 0) {
-      setTimeout(() => setIsRainStartd(false), (timeDifference + 10) * 1000)
+      setTimeout(() => setIsRainStarted(false), (timeDifference + 10) * 1000)
     } else {
-      setIsRainStartd(true)
+      setIsRainStarted(true)
     }
   }
 
@@ -43,7 +43,7 @@ const Rain = () => {
   }, [])
 
   return (
-    <>{isRainStarted
+    <>{!isRainStarted
       ? <div className="flex flex-col rain-wrapper relative">
       <div
         className="py-2 px-4 flex justify-between items-center bg-cover"
