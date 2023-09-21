@@ -43,7 +43,7 @@ const Rain = () => {
   }, [])
 
   return (
-    <>{!isRainStarted
+    <>{isRainStarted
       ? <div className="flex flex-col rain-wrapper relative">
       <div
         className="py-2 px-4 flex justify-between items-center bg-cover"
