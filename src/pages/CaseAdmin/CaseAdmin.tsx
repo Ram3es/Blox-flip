@@ -202,7 +202,7 @@ const CaseAdmin = () => {
             ))}
           </tbody>
         </table>
-        {data.length > 10 && (
+        {data?.length > 10 && (
           <TablePagination
             nextPage={() => table.nextPage()}
             previousPage={() => table.previousPage()}

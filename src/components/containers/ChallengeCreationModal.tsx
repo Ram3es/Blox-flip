@@ -66,9 +66,10 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
           socket.emit('create_challenge', sendedData, (err: string | boolean) => {
             if (typeof err === 'string') {
               getToast(err)
+            } else {
+              handleFunction()
             }
           })
-          handleFunction()
         })
         .catch((errors) => {
           console.log(errors)
