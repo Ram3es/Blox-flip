@@ -42,14 +42,14 @@ const GiftCard = () => {
               {t('home.here')}
             </Button>
           </div>
-          <div className='text-center'>
+          {/* <div className='text-center'>
             <a
               href='#'
               className='inline-block font-xs text-pink-accent leading-4 py-2 px-10 rounded-full bg-pink-accent/10'
             >
               {t('home.rewards')}
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
       <RobuxModal isOpen={isOpenModal} onClose={() => setOpenModal(false)} />

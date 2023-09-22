@@ -20,6 +20,7 @@ export interface ChatSocketCtxState {
   userLevel: IUserLevel | null
   twoFactorAuthModal: boolean
   setTwoFactorAuthModal: Dispatch<SetStateAction<boolean>>
+  isAuthenticated: boolean
 }
 const URL = import.meta.env.VITE_API_URL
 const socket = io(URL, {
@@ -46,6 +47,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
   const [onlineUsers, setOnlineUsers] = useState<number>(0)
   const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     const onConnect = () => {
@@ -97,7 +99,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
       })
       if (isConnected) {
         socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
-          console.log(res, 'res')
+          setIsAuthenticated(true)
         })
       }
     }
@@ -111,7 +113,8 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         userLevel,
         onlineUsers,
         twoFactorAuthModal,
-        setTwoFactorAuthModal
+        setTwoFactorAuthModal,
+        isAuthenticated
       }}
     >
       {children}

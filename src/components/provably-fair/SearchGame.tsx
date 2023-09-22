@@ -47,6 +47,13 @@ const SearchGame = () => {
         })
     }
   })
+
+  const updateSeed = () => {
+    socket.emit('regenerate_seed', {}, (res: any) => {
+      getToast(res)
+    })
+  }
+
   return (
     <div className='w-full max-w-[800px] flex flex-col gap-6  mx-auto mb-6'>
         <form onSubmit={formik.handleSubmit} className='flex flex-col gap-4 items-center' >
@@ -79,7 +86,7 @@ const SearchGame = () => {
             {MODE_VARIANTS.map((variant) => (
               <Listbox.Option key={variant} value={variant}>
                 {({ selected }) => (
-                  <li
+                  <div
                     className={clsx(
                       'capitalize text-15 cursor-pointer py-1.5 px-2.5 rounded font-medium hover:text-white',
                       {
@@ -89,7 +96,7 @@ const SearchGame = () => {
                     )}
                   >
                     {variant}
-                  </li>
+                  </div>
                 )}
               </Listbox.Option>
             ))}
@@ -110,10 +117,21 @@ const SearchGame = () => {
               className=' flex gap-2'
             >
               <span className='capitalize'>{key === 'random' ? 'Serial' : key }:</span>
-              {value}
+              {key === 'random' && value === -1 ? 'Random.ORG was not used for this Round as it contained no active players. We generated the roll from the Server Seed only.' : value}
             </span>))}
         </div>
       )}
+      <div className='flex flex-col'>
+        <p className='w-full pb-10 text-lg font-normal leading-5 text-gray-primary'>
+        Your Client Seed is used in Plinko and Case Opening. Click this Button to Regenerate it. You can only view your Previous Seed after you Make a new one.
+        </p>
+        <Button
+          className='flex h-10 w-max mx-auto items-center justify-center min-w-[160px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5'
+          onClick={updateSeed}
+        >
+          Regenerate Client Seed
+        </Button>
+      </div>
     </div>
   )
 }

@@ -9,4 +9,5 @@ export interface IChallenge {
   multiplier: number
   reward: number
   spots: number
+  winners: any[]
 }

@@ -83,7 +83,6 @@ export const Table = <T extends object>({
       filteringColumn.setFilterValue(searchValue)
     }
   }, [filteringColumn, searchValue])
-
   return (
     <>
       <div
@@ -176,7 +175,7 @@ export const Table = <T extends object>({
             ))}
           </tbody>
         </table>
-        {data.length > 10 && (
+        {data?.length > 10 && (
           <TablePagination
             nextPage={() => table.nextPage()}
             previousPage={() => table.previousPage()}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
@@ -15,6 +15,7 @@ import { StatusCell } from '../table/CellFormatters/StatusCell'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
+import { Context } from '../../store/Store'
 
 export const Transactions = () => {
   const [data, setData] = useState<ITransaction[]>([])
@@ -24,6 +25,7 @@ export const Transactions = () => {
   const [searchValue, setSearchValue] = useState<string[] | string >([])
 
   const { socket } = useSocketCtx()
+  const { state: { user } } = useContext(Context)
 
   const resetFilter = resetColumnFilterHelper(
     setCurrentColumn,
@@ -33,13 +35,15 @@ export const Transactions = () => {
   )
 
   useEffect(() => {
-    socket.emit('load_history', { type: 'transactions' }, (err: boolean | string, data: ITransaction[]) => {
-      if (typeof err === 'string') {
-        getToast(err)
-      }
-      setData(data)
-    })
-  }, [])
+    if (user?.id) {
+      socket.emit('load_history', { type: 'transactions' }, (err: boolean | string, data: ITransaction[]) => {
+        if (typeof err === 'string') {
+          getToast(err)
+        }
+        setData(data)
+      })
+    }
+  }, [user])
   const filterByValue = handleFilterByValueHelper(setCurrentColumn, setSearchValue)
 
   const filtersVariants: FilterVariant[] = [
