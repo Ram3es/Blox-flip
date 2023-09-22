@@ -1,9 +1,6 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import CardBg from '../../assets/img/case_bg.svg'
-import CardInnerBg from '../../assets/img/case_bg2.svg'
-import CardRadial from '../../assets/img/case_radial.svg'
 
 interface IGameCardProps {
   titleBtn: string
@@ -24,11 +21,7 @@ const GameCard: FC<IGameCardProps> = ({ titleBtn, isLeftCorner, path, img }) => 
           height='228'
           loading='lazy'
           decoding='async'
-          className={'h-full mx-auto w-full'
-            // isLeftCorner
-            //   ? 'relative z-20 object-cover w-full'
-            //   : 'relative z-20 object-cover w-full flip--h'
-          }
+          className={'h-full mx-auto w-full'}
         />
         <div className='absolute inset-4 z-[35] flex flex-col items-center'>
           <div className='mt-5 grow'>
