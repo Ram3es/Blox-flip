@@ -1,13 +1,11 @@
 import { useMemo, useState } from 'react'
 import ButtonsToggle from '../../components/base/ButtonToggle'
-import ItemCard from '../../components/common/Cards/ItemCard'
 import GreenTipSelect from '../../components/common/GreenTipSelect'
 import SearchInput from '../../components/common/SearchInput'
 import SortSelect from '../../components/common/SortSelect'
 import { sortingVariants } from '../../constants/sorting'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
 import { searchData } from '../../helpers/searchData'
-import { cards } from '../../mocks/cards'
 import { sortData } from '../../helpers/sortData'
 import { useNavigate } from 'react-router-dom'
 import UnboxingCard from '../../components/common/Cards/UnboxingCard'
@@ -48,7 +46,7 @@ const Unboxing = () => {
   return (
     <div className="flex flex-col min-h-full text-sm">
       <div className="max-w-1190 w-full m-auto">
-        <div className="flex overflow-hidden mb-8 md:mb-12 text-xs">
+        {/* <div className="flex overflow-hidden mb-8 md:mb-12 text-xs">
           {cards.map((card) => (
             <ItemCard
               key={card.id}
@@ -61,7 +59,7 @@ const Unboxing = () => {
               itemClasses="px-1 w-1/2 xxs:w-1/4 xs:w-1/5 md:w-1/7 shrink-0 lg:w-1/9 mb-2 overflow-hidden"
             />
           ))}
-        </div>
+        </div> */}
         <div className="flex flex-wrap justify-between items-center mb-6 border-b border-blue-accent-secondary">
           <div className="flex items-center mb-3 xs:mb-2 order-1">
             <div className="w-7 shrink-0 mr-2 text-blue-golf">

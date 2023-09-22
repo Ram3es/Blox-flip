@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
@@ -13,6 +13,7 @@ import { handleFilterByValueHelper } from '../../helpers/tableHelpers'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
+import { Context } from '../../store/Store'
 
 export const History = () => {
   const [data, setData] = useState<IHistory[]>([])
@@ -21,7 +22,9 @@ export const History = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState<string | string[]>('')
 
-  const { socket } = useSocketCtx()
+  const { socket, isAuthenticated } = useSocketCtx()
+
+  const { state: { user } } = useContext(Context)
 
   const filterByValue = handleFilterByValueHelper(setCurrentColumn, setSearchValue)
 
@@ -43,23 +46,25 @@ export const History = () => {
       onClick: () => filterByValue('game', 'wheel')
     },
     {
-      name: 'cases',
-      onClick: () => filterByValue('game', 'cases')
+      name: 'case',
+      onClick: () => filterByValue('game', 'case')
     },
     {
-      name: 'cases battles',
-      onClick: () => filterByValue('game', 'cases battles')
+      name: 'battle',
+      onClick: () => filterByValue('game', 'battle')
     }
   ]
 
   useEffect(() => {
-    socket.emit('load_history', { type: searchValue || filtersVariants[0].name }, (err: boolean | string, data: IHistory[]) => {
-      if (typeof err === 'string') {
-        getToast(err)
-      }
-      setData(data)
-    })
-  }, [searchValue])
+    if (user?.id && isAuthenticated) {
+      socket.emit('load_history', { type: searchValue === 'case' ? 'cases' : searchValue === 'battle' ? 'cases battles' : searchValue || filtersVariants[0].name }, (err: boolean | string, data: IHistory[]) => {
+        if (typeof err === 'string') {
+          getToast(err)
+        }
+        setData(data)
+      })
+    }
+  }, [searchValue, user, isAuthenticated])
 
   const columnHelper = createColumnHelper<IHistory>()
   const columns: Array<ColumnDef<IHistory, any>> = [
@@ -106,10 +111,10 @@ export const History = () => {
       footer: (props) => props.column.id
     })
   ]
-
   return (
     <div className='py-5'>
-      <Table
+      { data
+        ? <Table
         data={data}
         columns={columns}
         sorting={sorting}
@@ -132,6 +137,7 @@ export const History = () => {
         }
         variant='History'
       />
+        : ''}
     </div>
   )
 }

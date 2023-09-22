@@ -25,8 +25,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
             </h3>
           </div>
           <span className='xs:text-xl font-medium text-center'>
-            Below you will see the challenge you have completed, it’s requirements and what you were
-            rewarded.
+            {challenge?.name}
           </span>
         </div>
         <div className='flex flex-col xm:flex-row items-center gradient-trivia-info rounded-15 rounded-tr-15 '>
@@ -43,11 +42,11 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
               <h3>
                 First to hit <span className='text-gradient-gold'>10x on</span>
                 {` ${
-                  challenge?.name
+                  challenge?.game
                     .charAt(0)
                     .toUpperCase()
-                    .concat(challenge?.name.slice(1).toLowerCase()) ?? ''
-                } with minimum `}
+                    .concat(challenge?.game.slice(1).toLowerCase()) ?? ''
+                } for the first ${challenge?.spots ?? ''} `}
                 <span className='ml-2 inline-block align-top'>
                   <CoinsWithDiamond
                     iconContainerSize='Large'
@@ -76,7 +75,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
         {!challenge?.completed && (
           <div className='rounded-15 gradient-trivia-info py-2 xs:px-20 px-4 text-center space-y-6 font-semibold xs:text-base'>
             <p className='text-gray-secondary-light'>
-              Please double check the challenge and your bet amounts before proceeding with it
+              {challenge?.description}
             </p>
             <p className='text-orange-light'>
               We are NOT responsible for any miss-clicks or wrong input amounts when trying to win
