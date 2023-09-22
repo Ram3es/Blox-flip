@@ -133,7 +133,7 @@ export const getPlinkoBottomFields = (risk: keyof typeof RiskVariant, rows: RowV
   }
 }
 
-export const getAllIndexesByValue = <T>(array: T[], value: T) =>
+export const getAllIndexesByValue = <T>(array: T[], value: T): number[] =>
   array.reduce<number[]>((acc, item, index) => (item === value ? [...acc, index] : acc), [])
 
 export const getRandomItemFromArray = <T>(array: T[]) => {
@@ -158,5 +158,19 @@ export const getRandomValidPath = (
       path.push(0)
     }
   }
-  return path
+  return shuffleArray(path)
+}
+
+const shuffleArray = <T>(array: T[]): T[] => {
+  let currentIndex = array.length
+  let randomIndex
+  while (currentIndex > 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]]
+  }
+
+  return array
 }

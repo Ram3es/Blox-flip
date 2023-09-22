@@ -27,7 +27,7 @@ const routesGames: RouteItem[] = [
 
 export const Header = () => {
   const { t } = useTranslation()
-  const { userBalance } = useSocketCtx()
+  const { userBalance, onlineUsers } = useSocketCtx()
 
   return (
     <div className='mb-8 md:mb-12 pl-4 xs:pl-8 flex flex-wrap justify-between bg-blue-accent rounded-lg relative'>
@@ -100,9 +100,13 @@ export const Header = () => {
         </Menu>
       </div>
       <div className='flex flex-wrap items-center ml-auto'>
-        <div className='flex items-center rounded text-11 font-extrabold leading-6 bg-green-accent/30 bg-opacity-25 pr-1.5 pl-2 ml-1 xs:ml-2 border border-green-primary border-opacity-30'>
-          <span className='w-1.5 h-1.5 bg-green-primary rounded-full outline outline-3 outline-green-primary/25 mr-1.5'></span>
-          1545
+        <div className='flex gap-2 items-center rounded text-11 font-extrabold leading-6 bg-green-accent/30 bg-opacity-25 pr-1.5 pl-2 ml-1 xs:ml-2 border border-green-primary border-opacity-30'>
+          <span className='w-1.5 h-1.5 relative flex '>
+            <span className=" absolute animate-ping-header inline-flex h-full w-full rounded-full bg-green-primary-light opacity-100" />
+            <span className="relative w-1.5 h-1.5 inline-flex  rounded-full bg-green-primary "></span>
+          </span>
+          {/* <span className='w-1.5 h-1.5 bg-green-primary rounded-full outline outline-3 outline-green-primary/25 mr-1.5'></span> */}
+          {onlineUsers}
         </div>
         <Button
           variant='GreenGradient'

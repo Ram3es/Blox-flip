@@ -12,7 +12,7 @@ export const ChatLottery = () => {
         containerSize='Small'
         iconContainerSize='Small'
         iconClasses='w-3 h-3'
-        typographyQuantity={25500}
+        typographyQuantity={0}
       />
       <Popover>
         <Popover.Button as={Button} color='GreenPrimary' variant='GreenGradient'>

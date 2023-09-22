@@ -1,6 +1,5 @@
 import { ChangeEvent, MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react'
 import { usePlinko } from '../../store/PlinkoStore'
-
 import RangeSlider from '../../components/common/RangeSlider'
 import InputWithLabel from '../../components/base/InputWithLabel'
 import ToggleBets from '../../components/common/BetActions/ToggleBets'
@@ -9,19 +8,16 @@ import ToggleRows from '../../components/common/BetActions/ToggleRows'
 import BetActionsContainer from '../../components/common/BetActions/BetActionsContainer'
 import ToggleMode from '../../components/common/BetActions/ToggleMode'
 import { Button } from '../../components/base/Button'
-
 import { BetToolkit } from '../../types/Bets'
 import { BetMode } from '../../types/Plinko'
-import { debounce } from '../../helpers/hooks/useDebounceCallback'
 import { getRandomValidPath } from '../../helpers/plinkoHelpers'
-import { PlinkoConfig } from '../../constants/plinko'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import { useSocketCtx } from '../../store/SocketStore'
 import { getToast } from '../../helpers/toast'
 
 const PlinkoActions = () => {
   const [selectedBet, setSelectedBet] = useState<BetToolkit | null>(null)
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+  const [isButtonDisabled] = useState(false)
 
   const { socket } = useSocketCtx()
 
@@ -36,6 +32,8 @@ const PlinkoActions = () => {
     risk,
     selectedRow,
     rowOptions,
+    autoBet,
+    setAutoBet,
     setPaths,
     setMode,
     setBetAmount,
@@ -44,13 +42,7 @@ const PlinkoActions = () => {
     setSelectedRow
   } = usePlinko()
 
-  const numberOfBetsRef = useRef(numberOfBets)
-
-  useEffect(() => {
-    numberOfBetsRef.current = numberOfBets
-  }, [numberOfBets])
-
-  const BUTTON_DISABLED_DELAY = selectedRow * PlinkoConfig.DELAY_BALL_DROP
+  const intervalRef = useRef<ReturnType<typeof setInterval>>()
 
   const handleChangeBetAmount = useCallback(
     (eventOrValue: ChangeEvent<HTMLInputElement> | number) => {
@@ -68,13 +60,13 @@ const PlinkoActions = () => {
       const mode = event.currentTarget.textContent as BetMode
 
       if (mode === BetMode.Manual) {
+        setAutoBet(false)
         setNumberOfBets(1)
         setPaths([])
       }
-
       setMode(mode)
     },
-    [mode]
+    []
   )
 
   const betToolkit: BetToolkit[] = [
@@ -100,15 +92,8 @@ const PlinkoActions = () => {
     }
   ]
 
-  const buttonDisabled = () => {
-    setIsButtonDisabled(true)
-    setTimeout(() => setIsButtonDisabled(false), BUTTON_DISABLED_DELAY)
-  }
-
   const placeBet = useCallback(() => {
     if (numberOfBets >= 1) {
-      mode === 'Automatic' && buttonDisabled()
-
       socket.emit(
         'plinko',
         { rows: selectedRow, risk: risk.toLowerCase(), wager: betAmount },
@@ -123,7 +108,6 @@ const PlinkoActions = () => {
             setIsStarted(true)
 
             const validPath = getRandomValidPath(risk, selectedRow, multiplier)
-
             setPaths((prev) => [...prev, validPath])
           }
         }
@@ -131,27 +115,56 @@ const PlinkoActions = () => {
     }
   }, [isStarted, mode, numberOfBets, selectedRow])
 
-  const handlePlaceBet = debounce(() => {
+  const handlePlaceBet = () => {
     if (mode === 'Manual') {
       placeBet()
     }
     if (mode === 'Automatic') {
-      const interval = setInterval(() => {
-        if (numberOfBetsRef.current > 0) {
+      setAutoBet(true)
+    }
+  }
+
+  useEffect(() => {
+    intervalRef.current && clearInterval(intervalRef.current)
+    if (autoBet) {
+      if (numberOfBets > 0) {
+        intervalRef.current = setInterval(() => {
           placeBet()
           setNumberOfBets((prev) => prev - 1)
-        } else {
-          clearInterval(interval)
-        }
-      }, 1000)
+        }, 1000)
+      } else {
+        setAutoBet(false)
+      }
     }
-  }, 500)
+    return () => {
+      intervalRef.current && clearInterval(intervalRef.current)
+    }
+  }, [autoBet, numberOfBets, mode])
 
   useEffect(() => {
     if (inGameBalls < 1 && isStarted) {
       setIsStarted(false)
     }
   }, [isStarted, inGameBalls])
+
+  const autoBetHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (Number(e.target.value) > 100) {
+      setNumberOfBets(100)
+      return getToast('Max 100 bets')
+    }
+    setNumberOfBets(Number(e.target.value))
+  }
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setAutoBet(false)
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [])
 
   return (
     <BetActionsContainer path="/provably-fair#plinko">
@@ -194,14 +207,23 @@ const PlinkoActions = () => {
               label="Number of Bets"
               placeholder="Enter number of bets"
               value={numberOfBets}
-              onChange={(e) => setNumberOfBets(Number(e.target.value))}
+              onChange={autoBetHandler}
             />
           </div>
         )}
         <div className="flex pb-6">
-          <Button disabled={isButtonDisabled} onClick={handlePlaceBet} className="w-full bg-green-primary rounded h-11">
-            Place Bet
-          </Button>
+          {mode === 'Automatic' && autoBet
+            ? (
+              <Button onClick={() => setAutoBet(false)} className="w-full bg-red-secondary rounded h-11">
+                Stop Auto Bet
+              </Button>
+              )
+            : (
+              <Button disabled={isButtonDisabled} onClick={handlePlaceBet} className="w-full bg-green-primary rounded h-11">
+                Place Bet
+              </Button>
+              )}
+
         </div>
       </div>
     </BetActionsContainer>

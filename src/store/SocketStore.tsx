@@ -16,6 +16,7 @@ export type TSocket = Socket
 export interface ChatSocketCtxState {
   socket: TSocket
   userBalance: number
+  onlineUsers: number
   userLevel: IUserLevel | null
   twoFactorAuthModal: boolean
   setTwoFactorAuthModal: Dispatch<SetStateAction<boolean>>
@@ -43,7 +44,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
   const [userBalance, setUserBalance] = useState(0)
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
-
+  const [onlineUsers, setOnlineUsers] = useState<number>(0)
   const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
 
   useEffect(() => {
@@ -66,6 +67,10 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
     socket.on('level', (userLevel: IUserLevel) => {
       setUserLevel(userLevel)
+    })
+
+    socket.on('online_list', ({ users }: { users: number }) => {
+      setOnlineUsers(users)
     })
 
     socket.connect()
@@ -104,6 +109,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         socket,
         userBalance,
         userLevel,
+        onlineUsers,
         twoFactorAuthModal,
         setTwoFactorAuthModal
       }}

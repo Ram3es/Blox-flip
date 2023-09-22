@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import ServicePageContainer from '../../components/containers/ServicePage'
 import { games } from '../../constants/provably-fair'
+import SearchGame from '../../components/provably-fair/SearchGame'
 
 const ProvablyFair = () => {
   const { hash, pathname } = useLocation()
@@ -15,7 +16,8 @@ const ProvablyFair = () => {
     }
   }, [hash, pathname])
 
-  return (
+  return (<>
+    <SearchGame />
     <ServicePageContainer
     title='Provably Fair'
     renderHeaderDescription={() => (
@@ -46,6 +48,7 @@ const ProvablyFair = () => {
           </React.Fragment>))}
         </div>
     </ServicePageContainer>
+    </>
   )
 }
 

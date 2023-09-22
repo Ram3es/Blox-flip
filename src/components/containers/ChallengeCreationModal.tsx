@@ -20,7 +20,7 @@ interface ChallengeCreationModalProps {
   handleFunction: () => void
 }
 
-const GAME_VARIANTS: string[] = ['wheel', 'plinko', 'coinflip', 'jackpot', 'cases', 'case battles']
+export const GAME_VARIANTS: string[] = ['wheel', 'plinko', 'coinflip', 'jackpot', 'cases', 'case battles']
 
 const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationModalProps) => {
   const { socket } = useSocketCtx()

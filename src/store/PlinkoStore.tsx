@@ -16,6 +16,8 @@ interface IPlinkoContext {
   risk: keyof typeof RiskVariant
   selectedRow: RowVariant
   rowOptions: RowVariant[]
+  autoBet: boolean
+  setAutoBet: Dispatch<SetStateAction<boolean>>
   setPaths: Dispatch<SetStateAction<number[][]>>
   setIsStarted: Dispatch<SetStateAction<boolean>>
   setMode: Dispatch<SetStateAction<keyof typeof BetMode>>
@@ -43,6 +45,7 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
   const [risk, setRisk] = useState<keyof typeof RiskVariant>(RiskVariant.Low)
   const [selectedRow, setSelectedRow] = useState<RowVariant>(16)
   const rowOptions: RowVariant[] = [8, 9, 10, 11, 12, 13, 14, 15, 16]
+  const [autoBet, setAutoBet] = useState(false)
 
   return (
     <PlinkoContext.Provider
@@ -56,6 +59,8 @@ export const PlinkoProvider = ({ children }: PlinkoProviderProps) => {
         risk,
         selectedRow,
         rowOptions,
+        autoBet,
+        setAutoBet,
         setPaths,
         setInGameBalls,
         setIsStarted,

@@ -73,6 +73,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     },
     { handleFunction: () => console.log('chat gift'), name: 'Chat Gift' },
     { path: '/challenges', name: 'challenges' },
+    { path: '/provably-fair', name: 'Provably Fair' },
     { path: '/FAQ', name: 'FAQ' },
     { path: '/terms', name: 'Terms of Service' },
     {
