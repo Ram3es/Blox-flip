@@ -112,7 +112,8 @@ export const LiveFeed = () => {
       id: 'profit',
       header: 'Profit',
       cell: ({ row }) => {
-        const isWin = row.original.profit * row.original.amount >= row.original.amount
+        const profit = row.original.profit * row.original.amount
+        const isWin = profit >= row.original.amount
 
         return (
           <CoinsWithDiamond
@@ -122,7 +123,7 @@ export const LiveFeed = () => {
             }
             iconContainerSize="Small"
             iconClasses="w-3 h-3"
-            typographyQuantity={Math.round(row.original.profit * row.original.amount)}
+            typographyQuantity={Math.round(profit)}
             typographyFontSize="Size13"
             typographyFontColor={isWin ? 'Green' : 'White'}
           />
