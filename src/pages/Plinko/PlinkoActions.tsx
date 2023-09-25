@@ -55,19 +55,16 @@ const PlinkoActions = () => {
     [betAmount]
   )
 
-  const handleChangeBetMode: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      const mode = event.currentTarget.textContent as BetMode
+  const handleChangeBetMode: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+    const mode = event.currentTarget.textContent as BetMode
 
-      if (mode === BetMode.Manual) {
-        setAutoBet(false)
-        setNumberOfBets(1)
-        setPaths([])
-      }
-      setMode(mode)
-    },
-    []
-  )
+    if (mode === BetMode.Manual) {
+      setAutoBet(false)
+      setNumberOfBets(1)
+      setPaths([])
+    }
+    setMode(mode)
+  }, [])
 
   const betToolkit: BetToolkit[] = [
     {
@@ -98,7 +95,7 @@ const PlinkoActions = () => {
       socket.emit(
         'plinko',
         { rows: selectedRow, risk: risk.toLowerCase(), wager: betAmount },
-        (err: boolean | string, { multiplier, amount, win }: { multiplier: number, amount: number, win: number }) => {
+        (err: boolean | string, data: { multiplier: number, amount?: number, win?: number }) => {
           if (typeof err === 'string') {
             getToast(err)
           }
@@ -108,7 +105,7 @@ const PlinkoActions = () => {
             setPaths([])
             setIsStarted(true)
 
-            const validPath = getRandomValidPath(risk, selectedRow, multiplier)
+            const validPath = getRandomValidPath(risk, selectedRow, data.multiplier)
             setPaths((prev) => [...prev, validPath])
           }
         }
@@ -213,18 +210,19 @@ const PlinkoActions = () => {
           </div>
         )}
         <div className="flex pb-6">
-          {mode === 'Automatic' && autoBet
-            ? (
-              <Button onClick={() => setAutoBet(false)} className="w-full bg-red-secondary rounded h-11">
-                Stop Auto Bet
-              </Button>
-              )
-            : (
-              <Button disabled={isButtonDisabled} onClick={handlePlaceBet} className="w-full bg-green-primary rounded h-11">
-                Place Bet
-              </Button>
-              )}
-
+          {mode === 'Automatic' && autoBet ? (
+            <Button onClick={() => setAutoBet(false)} className="w-full bg-red-secondary rounded h-11">
+              Stop Auto Bet
+            </Button>
+          ) : (
+            <Button
+              disabled={isButtonDisabled}
+              onClick={handlePlaceBet}
+              className="w-full bg-green-primary rounded h-11"
+            >
+              Place Bet
+            </Button>
+          )}
         </div>
       </div>
     </BetActionsContainer>
