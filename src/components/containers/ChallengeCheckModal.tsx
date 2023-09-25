@@ -39,28 +39,24 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
               <h3>
                 First to hit <span className="text-gradient-gold">{challenge?.multiplier}x on</span>{' '}
                 {challenge?.game.charAt(0).toUpperCase().concat(challenge?.game.slice(1).toLowerCase()) ?? ''}
-                <p>
+                <p className="flex items-center gap-1">
                   Win bet:{' '}
-                  <span className="inline-block align-top">
-                    <CoinsWithDiamond
-                      iconContainerSize="Large"
-                      typographyQuantity={challenge?.min ?? 0}
-                      typographyFontSize="Size18"
-                    />
-                  </span>
+                  <CoinsWithDiamond
+                    iconContainerSize="Medium"
+                    typographyQuantity={challenge?.min ?? 0}
+                    typographyFontSize="Size18"
+                  />
                 </p>
-                <p>
+                <p className="flex items-center gap-1">
                   Reward:{' '}
-                  <span className="inline-block align-top">
-                    <CoinsWithDiamond
-                      iconContainerSize="Large"
-                      typographyQuantity={(challenge?.reward as number) ?? 0}
-                      typographyFontSize="Size18"
-                    />
-                  </span>
+                  <CoinsWithDiamond
+                    iconContainerSize="Medium"
+                    typographyQuantity={(challenge?.reward as number) ?? 0}
+                    typographyFontSize="Size18"
+                  />
                 </p>
                 <p>
-                  Spots: <span className="inline-block text-lg">{challenge?.spots}</span>
+                  Spots: <span className="text-lg ml-1">{challenge?.spots}</span>
                 </p>
               </h3>
             </div>
