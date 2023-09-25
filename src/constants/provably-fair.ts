@@ -1,7 +1,8 @@
-export const games = [
-  { id: 'plinko', title: 'Plinko' },
-  { id: 'wheel', title: 'Wheel' },
-  { id: 'jackpot', title: 'Jackpot' },
-  { id: 'battle', title: 'Battle Cases' },
-  { id: 'cases', title: 'Cases' }
-]
+export const games = {
+  plinko: { id: 'plinko', title: 'Plinko' },
+  wheel: { id: 'wheel', title: 'Wheel' },
+  jackpot: { id: 'jackpot', title: 'Jackpot' },
+  coinflip: { id: 'coinflip', title: 'Coinflip' },
+  battle: { id: 'battle', title: 'Case Battles' },
+  cases: { id: 'cases', title: 'Case Opening' }
+}
