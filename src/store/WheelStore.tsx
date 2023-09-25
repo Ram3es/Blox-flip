@@ -39,7 +39,7 @@ export const WheelProvider = ({ children }: WheelProviderProps) => {
     socket.on('load_wheel', (data: ILoadWheelRes) => {
       const timerValue = getTimerValue(data.time, DELAY)
       if (timerValue >= 0) {
-        setTimer(getTimerValue(data.time, DELAY))
+        setTimer(timerValue)
       }
       setWheelBets(INIT_BETS_STATE)
     })
