@@ -8,6 +8,7 @@ import CoinFlipGamesTable from './CoinFlipGamesTable'
 import { useMatch, useNavigate } from 'react-router-dom'
 import { ICoinFlip } from '../../types/CoinFlip'
 import { getToast } from '../../helpers/toast'
+import VerifyBets from '../../components/common/VerifyBets'
 
 const CoinFlip = () => {
   const { games } = useCoinFlip()
@@ -32,6 +33,7 @@ const CoinFlip = () => {
   return (
     <>
       <CoinFlipHeader />
+      <VerifyBets wrapClasses='flex text-blue-golf pt-4 mx-auto sm:mx-0 sm:ml-auto sm:mr-4' path="/provably-fair#coinflip" />
       <CoinFlipGamesTable />
       {currentGame && match?.params.id && <CoinFlipGameModal game={currentGame} />}
     </>
