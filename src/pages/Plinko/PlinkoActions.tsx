@@ -95,7 +95,7 @@ const PlinkoActions = () => {
       socket.emit(
         'plinko',
         { rows: selectedRow, risk: risk.toLowerCase(), wager: betAmount },
-        (err: boolean | string, data: { multiplier: number, amount?: number, win?: number }) => {
+        (err: boolean | string, data: { multiplier: number, amount: number, win: number }) => {
           if (typeof err === 'string') {
             getToast(err)
           }
