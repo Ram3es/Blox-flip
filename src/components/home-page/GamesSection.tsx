@@ -6,7 +6,7 @@ import GiftCard from './GiftCard'
 import WelcomeCard from './WelcomeCard'
 import CasesBanner from '../../assets/img/banners/cases-banner.png'
 import CaseBattlesBanner from '../../assets/img/banners/case-battles-banner.png'
-// import WheelBanner from '../../assets/img/banners/wheel-banner.png'
+import WheelBanner from '../../assets/img/banners/wheel-banner.png'
 import PlinkoBanner from '../../assets/img/banners/plinko-banner.png'
 import JackpotBanner from '../../assets/img/banners/jackpot-banner.png'
 import CFBanner from '../../assets/img/banners/coinflip-banner.png'
@@ -14,7 +14,7 @@ import CFBanner from '../../assets/img/banners/coinflip-banner.png'
 const games = [
   { name: 'caseBattles', path: '/battles-lobby', image: CaseBattlesBanner },
   { name: 'cases', path: '/unboxing', image: CasesBanner },
-  // { name: 'wheel', path: '/wheel', image: WheelBanner },
+  { name: 'wheel', path: '/wheel', image: WheelBanner },
   { name: 'plinko', path: '/plinko', image: PlinkoBanner },
   { name: 'coinflip', path: '/coinflip', image: CFBanner },
   { name: 'jackpot', path: '/jackpot', image: JackpotBanner }
