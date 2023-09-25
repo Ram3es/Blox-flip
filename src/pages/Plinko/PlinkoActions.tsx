@@ -93,6 +93,7 @@ const PlinkoActions = () => {
   ]
 
   const placeBet = useCallback(() => {
+    console.log(betAmount, 'amount')
     if (numberOfBets >= 1) {
       socket.emit(
         'plinko',
@@ -113,7 +114,7 @@ const PlinkoActions = () => {
         }
       )
     }
-  }, [isStarted, mode, numberOfBets, selectedRow])
+  }, [isStarted, mode, numberOfBets, selectedRow, betAmount])
 
   const handlePlaceBet = () => {
     if (mode === 'Manual') {
