@@ -11,7 +11,7 @@ import { getToast } from '../../helpers/toast'
 
 const RALL_TIME = 1500
 const DELAY = 15000
-let interval: any
+let interval: ReturnType<typeof setInterval>
 
 const INIT_BETS_STATE = {
   gray: [],
@@ -42,9 +42,7 @@ const Wheel = () => {
     socket.emit('wheel:connect')
 
     socket.on('load_wheel', (data: ILoadWheelRes) => {
-      if (getTimerValue(data.time, DELAY) > 0) {
-        setTimer(getTimerValue(data.time, DELAY))
-      }
+      setTimer(getTimerValue(data.time, DELAY))
       setWheelBets(INIT_BETS_STATE)
     })
     socket.on('wheel_history', (data: possibleBets[]) => {
@@ -85,7 +83,7 @@ const Wheel = () => {
 
   useEffect(() => {
     clearInterval(interval)
-    if (timer && timer) {
+    if (timer) {
       interval = setInterval(() => setTimer((prev) => prev && prev - 1), 1000)
     }
 
@@ -94,10 +92,7 @@ const Wheel = () => {
       setTimeout(() => {
         setIsStart(false)
         if (wonTicket) {
-          setHistory((prev) => [
-            ...prev.slice(1),
-            wonTicket.color === 'gold' ? possibleBets.YELLOW : wonTicket?.color
-          ])
+          setHistory((prev) => ([...prev, wonTicket.color === 'gold' ? possibleBets.YELLOW : wonTicket?.color]))
         }
       }, RALL_TIME)
     }
