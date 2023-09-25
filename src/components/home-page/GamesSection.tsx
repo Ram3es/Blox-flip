@@ -4,20 +4,20 @@ import SignInModal from '../containers/SignInModal'
 import GameCard from './GameCard'
 import GiftCard from './GiftCard'
 import WelcomeCard from './WelcomeCard'
-import Cases from '../../assets/img/main/Cases banner2.png'
-import BattlesBaner from '../../assets/img/main/Case battles banner1.png'
-// import Wheel from '../../assets/img/main/wheel-banner.png'
-import Plinko from '../../assets/img/main/Plinko banner5.png'
-import Coinflip from '../../assets/img/main/CF banner3.png'
-import Jackpot from '../../assets/img/main/jackpot banner4.png'
+import CasesBanner from '../../assets/img/banners/cases-banner.png'
+import CaseBattlesBanner from '../../assets/img/banners/case-battles-banner.png'
+// import WheelBanner from '../../assets/img/banners/wheel-banner.png'
+import PlinkoBanner from '../../assets/img/banners/plinko-banner.png'
+import JackpotBanner from '../../assets/img/banners/jackpot-banner.png'
+import CFBanner from '../../assets/img/banners/coinflip-banner.png'
 
 const games = [
-  { name: 'caseBattles', path: '/battles-lobby', image: BattlesBaner },
-  { name: 'cases', path: '/unboxing', image: Cases },
-  // { name: 'wheel', path: '/wheel', image: Wheel },
-  { name: 'plinko', path: '/plinko', image: Plinko },
-  { name: 'coinflip', path: '/coinflip', image: Coinflip },
-  { name: 'jackpot', path: '/jackpot', image: Jackpot }
+  { name: 'caseBattles', path: '/battles-lobby', image: CaseBattlesBanner },
+  { name: 'cases', path: '/unboxing', image: CasesBanner },
+  // { name: 'wheel', path: '/wheel', image: WheelBanner },
+  { name: 'plinko', path: '/plinko', image: PlinkoBanner },
+  { name: 'coinflip', path: '/coinflip', image: CFBanner },
+  { name: 'jackpot', path: '/jackpot', image: JackpotBanner }
 ]
 
 const GamesSection = () => {

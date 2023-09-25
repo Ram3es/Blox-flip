@@ -49,26 +49,30 @@ const SearchGame = () => {
   })
 
   const updateSeed = () => {
-    socket.emit('regenerate_seed', {}, (res: any) => {
-      getToast(res)
+    socket.emit('regenerate_seed', {}, (err: boolean, msg: string) => {
+      if (!err) {
+        getToast(msg)
+      }
     })
   }
 
   return (
-    <div className='w-full max-w-[800px] flex flex-col gap-6  mx-auto mb-6'>
-        <form onSubmit={formik.handleSubmit} className='flex flex-col gap-4 items-center' >
-            <InputWithInlineLabel
-              type="text"
-              label='Hash or ID'
-              value={formik.values.input}
-              onChange={formik.handleChange('input')}
-            />
-             <Listbox
-               value={formik.values.type}
-               onChange={(variant: string) => { void formik.setFieldValue('type', variant) }}
-               as="div"
-               className="relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text flex items-center justify-between"
-            >
+    <div className="w-full max-w-[800px] flex flex-col gap-6  mx-auto mb-6">
+      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 items-center">
+        <InputWithInlineLabel
+          type="text"
+          label="Hash or ID"
+          value={formik.values.input}
+          onChange={formik.handleChange('input')}
+        />
+        <Listbox
+          value={formik.values.type}
+          onChange={(variant: string) => {
+            void formik.setFieldValue('type', variant)
+          }}
+          as="div"
+          className="relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text flex items-center justify-between"
+        >
           <span className="capitalize rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary">
             Mode
           </span>
@@ -103,30 +107,31 @@ const SearchGame = () => {
           </Listbox.Options>
         </Listbox>
         <Button
-          type='submit'
-          className='flex h-10 items-center justify-center min-w-[160px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5'
+          type="submit"
+          className="flex h-10 items-center justify-center min-w-[160px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5"
         >
           Search Game
         </Button>
       </form>
       {gameInfo && (
-        <div className='flex flex-col gap-2 py-4 px-8 rounded-10 gradient-background--blue__secondary'>
-            {Object.entries(gameInfo).map(([key, value]) => (
-            <span
-              key={key}
-              className=' flex gap-2'
-            >
-              <span className='capitalize'>{key === 'random' ? 'Serial' : key }:</span>
-              {key === 'random' && value === -1 ? 'Random.ORG was not used for this Round as it contained no active players. We generated the roll from the Server Seed only.' : value}
-            </span>))}
+        <div className="flex flex-col gap-2 py-4 px-8 rounded-10 gradient-background--blue__secondary">
+          {Object.entries(gameInfo).map(([key, value]) => (
+            <span key={key} className=" flex gap-2">
+              <span className="capitalize">{key === 'random' ? 'Serial' : key}:</span>
+              {key === 'random' && value === -1
+                ? 'Random.ORG was not used for this Round as it contained no active players. We generated the roll from the Server Seed only.'
+                : value}
+            </span>
+          ))}
         </div>
       )}
-      <div className='flex flex-col'>
-        <p className='w-full pb-10 text-lg font-normal leading-5 text-gray-primary'>
-        Your Client Seed is used in Plinko and Case Opening. Click this Button to Regenerate it. You can only view your Previous Seed after you Make a new one.
+      <div className="flex flex-col">
+        <p className="w-full pb-10 text-lg font-normal leading-5 text-gray-primary">
+          Your Client Seed is used in Plinko and Case Opening. Click this Button to Regenerate it. You can only view
+          your Previous Seed after you Make a new one.
         </p>
         <Button
-          className='flex h-10 w-max mx-auto items-center justify-center min-w-[160px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5'
+          className="flex h-10 w-max mx-auto items-center justify-center min-w-[160px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5"
           onClick={updateSeed}
         >
           Regenerate Client Seed

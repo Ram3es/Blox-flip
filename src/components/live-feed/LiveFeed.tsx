@@ -3,18 +3,18 @@ import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
 
-import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 import { UserInfoCell } from '../table/CellFormatters/UserInfoCell'
 import { GameCell } from '../table/CellFormatters/GameCell'
 import { TimeCell } from '../table/CellFormatters/TimeCell'
 import { FilterHeader } from '../table/FilterHeader'
 
-import type { ILiveFeedUser } from '../../types/User'
 import type { FilterVariant } from '../../types/Table'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { Context } from '../../store/Store'
 import { useSocketCtx } from '../../store/SocketStore'
+import { ILiveFeedUser } from '../../types/LiveFeed'
+import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 
 const RedDotIcon = () => {
   return (
@@ -31,12 +31,7 @@ export const LiveFeed = () => {
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState<string | number | string[]>('')
 
-  const resetFilter = resetColumnFilterHelper(
-    setCurrentColumn,
-    setSearchValue,
-    setColumnFilters,
-    columnFilters
-  )
+  const resetFilter = resetColumnFilterHelper(setCurrentColumn, setSearchValue, setColumnFilters, columnFilters)
 
   const handleFilterByValue = useCallback(
     (column: string, value: typeof searchValue) => {
@@ -72,8 +67,8 @@ export const LiveFeed = () => {
       id: 'username',
       header: () => 'Username',
       cell: ({ row }) => {
-        const { avatar, username, level } = row.original
-        return <UserInfoCell user={{ avatar, name: username, level }} />
+        const { useravatar, username, level = 0 } = row.original
+        return <UserInfoCell user={{ avatar: useravatar, name: username, level }} level={false} />
       },
       filterFn: 'equalsString',
       footer: (props) => props.column.id
@@ -98,16 +93,16 @@ export const LiveFeed = () => {
           containerSize="Small"
           iconContainerSize="Small"
           iconClasses="w-3 h-3"
-          typographyQuantity={row.original.bet}
+          typographyQuantity={row.original.amount}
           typographyFontSize="Size13"
         />
       ),
       filterFn: (row, _columnId, value) => {
-        return row.original.bet > value
+        return row.original.amount > value
       },
       footer: (props) => props.column.id
     }),
-    columnHelper.accessor('multiplier', {
+    columnHelper.accessor((row: ILiveFeedUser) => row.profit, {
       id: 'multiplier',
       header: () => 'Multiplier',
       cell: (props) => <MultiplierCell multiplier={props.getValue()} />,
@@ -116,16 +111,24 @@ export const LiveFeed = () => {
     columnHelper.accessor((row: ILiveFeedUser) => row.profit, {
       id: 'profit',
       header: 'Profit',
-      cell: ({ row }) => (
-        <CoinsWithDiamond
-          containerSize="Small"
-          iconContainerColor={row.original.profit >= row.original.bet ? 'GreenPrimary' : 'RedAccent'}
-          iconContainerSize="Small"
-          iconClasses="w-3 h-3"
-          typographyQuantity={row.original.profit}
-          typographyFontSize="Size13"
-        />
-      ),
+      cell: ({ row }) => {
+        const profit = row.original.profit * row.original.amount
+        const isWin = profit >= row.original.amount
+
+        return (
+          <CoinsWithDiamond
+            containerSize="Small"
+            iconContainerColor={
+              isWin ? 'GreenPrimary' : 'RedAccent'
+            }
+            iconContainerSize="Small"
+            iconClasses="w-3 h-3"
+            typographyQuantity={Math.round(profit)}
+            typographyFontSize="Size13"
+            typographyFontColor={isWin ? 'Green' : 'White'}
+          />
+        )
+      },
       filterFn: (row, _columnId, value) => {
         return row.original.profit > value
       },
@@ -134,12 +137,17 @@ export const LiveFeed = () => {
   ]
 
   useEffect(() => {
+    socket.on('bets', (data: ILiveFeedUser[]) => {
+      setData((prev) => [...prev, ...data])
+    })
+
     socket.on('push_bet', (data: ILiveFeedUser) => {
-      setData((prev) => ([...prev, data]))
+      setData((prev) => [...prev, data])
     })
 
     return () => {
       socket.off('push_bet')
+      socket.off('bets')
     }
   }, [])
 

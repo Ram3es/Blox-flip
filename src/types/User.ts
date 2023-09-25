@@ -34,17 +34,10 @@ export interface IChatUser extends Omit<IUser, 'progress'> {
   flag?: number
 }
 export type TBaseUser = Omit<IUser, 'progress' | 'role' | 'flag'>
-export type TBaseSecondUser = Omit<ISecondUser, 'isWinner' | 'rate' | 'id' | 'isWin' | 'bet' | 'date' | 'game' | 'profit'>
+export type TBaseSecondUser = Omit<ISecondUser, 'isWinner' | 'rate' | 'id' | 'isWin' | 'bet' | 'date' | 'game' | 'profit'
+>
 
 export interface ILeaderboardUser extends TBaseUser {
   bet: number
-  profit: number
-}
-
-export interface ILiveFeedUser extends TBaseSecondUser {
-  multiplier: number
-  bet: number
-  time: string
-  game: string
   profit: number
 }
