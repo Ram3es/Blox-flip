@@ -8,6 +8,7 @@ import { BattleCaseProvider } from './BattleCaseStore'
 import SocketCtxProvider from './SocketStore'
 import { CaseOpeningProvider } from './CaseOpeningStore'
 import { JackpotProvider } from './JackpotStore'
+import { WheelProvider } from './WheelStore'
 
 export interface IState {
   user?: IUser
@@ -40,7 +41,7 @@ const Store: FC<PropsWithChildren> = ({ children }) => {
               <PlinkoProvider>
                 <CoinFlipProvider>
                   <JackpotProvider>
-                    {children}
+                    <WheelProvider>{children}</WheelProvider>
                   </JackpotProvider>
                 </CoinFlipProvider>
               </PlinkoProvider>
