@@ -42,7 +42,6 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
     dispatch
   } = useAppStore()
   const [isConnected, setConnected] = useState(socket.connected)
-
   const [userBalance, setUserBalance] = useState(0)
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
   const [onlineUsers, setOnlineUsers] = useState<number>(0)

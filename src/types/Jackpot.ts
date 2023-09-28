@@ -33,8 +33,14 @@ export interface IRootJackpotChance {
   chance: number
 }
 
-export interface IRootJackpotRoll {
-  winner: IUser
+export interface IWinnerData {
+  potId: number
+  winner: {
+    id: string
+    avatar: string
+    name: string
+  }
+
 }
 
 export interface IRootJackpotHistory extends Pick<IRootJackpotInfo, 'hash' | 'id' | 'participants' | 'value'> {
