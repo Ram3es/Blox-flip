@@ -55,7 +55,6 @@ export const JackpotProvider = ({ children }: JackpotProviderProps) => {
 
     socket.on('jackpot_new', (data: IRootJackpotNew) => {
       setUserJoined((prev) => [...prev, data])
-      console.log(data)
     })
 
     socket.on('jackpot_chance_update', (data: IRootJackpotChance[]) => {
