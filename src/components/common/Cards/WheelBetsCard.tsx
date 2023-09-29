@@ -62,7 +62,7 @@ const WheelBetsCard = ({ color, bets, onPeack }: IWheelBetCard) => {
               </defs>
             )}
           </TeamGroupIcon>
-          <span className='text-white font-bold text-15'>{bets.length}</span>
+          <span className='text-white font-bold text-15 ml-1'>{bets.length}</span>
         </div>
         <div
           className={`grow text-center uppercase text-15 font-extrabold ${
@@ -70,14 +70,14 @@ const WheelBetsCard = ({ color, bets, onPeack }: IWheelBetCard) => {
           }`}
         >
           BET {color}
-          {color === possibleBets.GRAY
+          <span className='ml-1.5'>{color === possibleBets.GRAY
             ? '2'
             : color === possibleBets.YELLOW
               ? '3'
               : color === possibleBets.BLUE
                 ? '5'
-                : '50'}
-          X
+                : '50'}X
+          </span>
         </div>
       </div>
       <div className='flex flex-col'>
