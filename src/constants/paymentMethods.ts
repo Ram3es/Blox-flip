@@ -74,39 +74,39 @@ export const METHODS: IPaymentMethods = {
           width: '20px',
           height: '20px'
         }
-      },
-      {
-        path: 'g2a',
-        title: 'G2A',
-        image: IMAGES.g2a,
-        smallSize: {
-          width: '37px',
-          height: '11px'
-        }
-      },
-      {
-        path: 'kinguin',
-        title: 'Kinguin',
-        image: IMAGES.kinguin,
-        smallSize: {
-          width: '26px',
-          height: '24px'
-        }
       }
+      // {
+      //   path: 'g2a',
+      //   title: 'G2A',
+      //   image: IMAGES.g2a,
+      //   smallSize: {
+      //     width: '37px',
+      //     height: '11px'
+      //   }
+      // },
+      // {
+      //   path: 'kinguin',
+      //   title: 'Kinguin',
+      //   image: IMAGES.kinguin,
+      //   smallSize: {
+      //     width: '26px',
+      //     height: '24px'
+      //   }
+      // }
     ]
   },
   survey: {
     name: ' Survey Section',
     methods: [
-      {
-        path: 'toro',
-        title: 'OfferToro',
-        image: IMAGES.torro,
-        smallSize: {
-          width: '40px',
-          height: '24px'
-        }
-      },
+      // {
+      //   path: 'toro',
+      //   title: 'OfferToro',
+      //   image: IMAGES.torro,
+      //   smallSize: {
+      //     width: '40px',
+      //     height: '24px'
+      //   }
+      // },
       {
         path: 'lootably',
         title: 'Lootably',
@@ -115,16 +115,16 @@ export const METHODS: IPaymentMethods = {
           width: '40px',
           height: '24px'
         }
-      },
-      {
-        path: 'adgatemedia ',
-        title: 'AdGateMedia ',
-        image: IMAGES.adGate,
-        smallSize: {
-          width: '26px',
-          height: '24px'
-        }
       }
+      // {
+      //   path: 'adgatemedia ',
+      //   title: 'AdGateMedia ',
+      //   image: IMAGES.adGate,
+      //   smallSize: {
+      //     width: '26px',
+      //     height: '24px'
+      //   }
+      // }
     ]
 
   },

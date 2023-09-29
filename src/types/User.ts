@@ -5,7 +5,7 @@ export interface IUserLevel {
 }
 
 export interface IUser extends IUserLevel {
-  id: string
+  id: number
   name: string
   avatar: string
   level: number

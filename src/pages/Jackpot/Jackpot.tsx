@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '../../components/base/Button'
 import ItemCard from '../../components/common/Cards/ItemCard'
 import GameInfoListItem from '../../components/common/GameInfoListItem'
@@ -27,6 +27,7 @@ const Jackpot = () => {
     timer,
     history,
     gameInfo,
+    isPlaying,
     joinedUsers
   } = useJackpot()
 
@@ -36,6 +37,8 @@ const Jackpot = () => {
   const {
     state: { user }
   } = useContext(Context)
+
+  const isUserInGame = useMemo(() => joinedUsers.some((player) => player.user.id === user?.id), [joinedUsers, user])
 
   const jackpot = joinedUsers.reduce((acc, user) => +acc + +user.wager, 0)
 
@@ -72,6 +75,12 @@ const Jackpot = () => {
   }, [wagerRef])
 
   const handleJoinGame = useCallback(() => {
+    if (isPlaying) {
+      return getToast('Round has already started')
+    }
+    if (isUserInGame) {
+      return getToast('You are in the Game')
+    }
     const sendedData: IRootJackpotWager = {
       id: 1,
       wager: wager.amountNumber
@@ -82,7 +91,7 @@ const Jackpot = () => {
         getToast(err)
       }
     })
-  }, [wager])
+  }, [wager, user, isPlaying, isUserInGame])
 
   return (
     <div className="mx-auto w-full max-w-[1200px]">
@@ -160,24 +169,32 @@ const Jackpot = () => {
                   />
                 </div>
               </GameInfoListItem>
-              <Button color="GreenPrimary" variant="GreenGradient" onClick={handleJoinGame}>
+              <Button
+                color="GreenPrimary"
+                variant="GreenGradient"
+                onClick={handleJoinGame}
+              >
                 <div className="flex h-12 w-[121px] items-center justify-center">Join Game</div>
               </Button>
             </div>
             <div className="w-full border-b border-blue-accent-secondary " />
             <StrippedBgItem color="Blue">
               <div className="flex w-full flex-col items-center">
-                <div className="flex items-center">
-                  <span className="mr-1 text-base font-bold uppercase text-green-primary">Round starts in</span>
-                  {`${timer ?? 0}s`}
-                </div>
+                {joinedUsers.length > 1
+                  ? <div className="flex items-center">
+                      <span className="mr-1 text-base font-bold uppercase text-green-primary">Round starts in</span>
+                      {`${timer ?? 0}s`}
+                    </div>
+                  : <span className='text-base font-bold uppercase text-orange-accent'>ROUND STARTS WITH 2 USERS</span>
+                   }
+
                 <div className="w-full truncate text-center text-gray-primary">{`Hash: ${gameInfo?.hash ?? ''}`}</div>
               </div>
             </StrippedBgItem>
             <div className="h-[310px] z-10 pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
               <div className="flex flex-col gap-y-2 p-0.5 ">
                 {joinedUsers.map((player, idx) => (
-                  <JoinedUserRow key={player.user.id + idx.toString()} player={player} />
+                  <JoinedUserRow key={player.user.id + idx} player={player} />
                 ))}
               </div>
             </div>
@@ -200,7 +217,7 @@ const Jackpot = () => {
             </StrippedBgItem>
              <div className="flex flex-col gap-y-2 p-0.5 opacity-50">
              {prevGame.participants.map((player, idx) => (
-               <JoinedUserRow key={player.user.id + idx.toString()} player={player} />
+               <JoinedUserRow key={player.user.id + idx} player={player} />
              ))}
            </div>
            </Fragment>
