@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect, useRef } from 'react'
 import CloseIcon from '../../assets/img/close.svg'
 import { Button } from '../base/Button'
 
@@ -15,9 +15,24 @@ const ModalWrapper: FC<IModalWrapper> = ({
   modalClasses,
   closeBtnClasses
 }) => {
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (!contentRef.current?.contains(e.target as Node)) {
+      closeModal()
+    }
+  }
+  useEffect(() => {
+    wrapperRef.current?.addEventListener('click', handleOutsideClick)
+    return () => {
+      wrapperRef.current?.removeEventListener('click', handleOutsideClick)
+    }
+  }, [])
   return (
-    <div className='fixed inset-0 z-[100] h-screen w-screen flex flex-col justify-center items-center bg-blue-darken/75'>
+    <div ref={wrapperRef} className='fixed inset-0 z-[100] h-full w-full flex flex-col justify-center items-center bg-blue-darken/75'>
       <div
+        ref={contentRef}
         className={
           modalClasses ??
           'py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-xl w-full m-auto'
@@ -28,7 +43,7 @@ const ModalWrapper: FC<IModalWrapper> = ({
             closeBtnClasses ??
             'rounded w-7 h-7 leading-7 absolute top-4 right-6 text-center flex items-center justify-center bg-lightblue-darken cursor-pointer z-[50]'
           }
-          onClick={() => closeModal()}
+          onClick={(e) => { e.stopPropagation(); closeModal() } }
         >
           <img
             src={CloseIcon}

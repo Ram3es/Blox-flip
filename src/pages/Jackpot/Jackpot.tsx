@@ -105,8 +105,8 @@ const Jackpot = () => {
                 joinedUsers={joinedUsers}
               />
             </div>
-            <div className="mx-auto flex w-full max-w-[382px] flex-col gap-4">
-              <div className="flex w-full justify-between gap-1.5 sm:gap-3">
+            <div className="mx-auto flex w-full max-w-[400px] flex-col gap-4">
+              <div className="flex flex-wrap justify-center gap-3">
                 <GameInfoListItem label="TOTAL PLAYERS">
                   <span>{joinedUsers.length}</span>
                 </GameInfoListItem>

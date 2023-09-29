@@ -15,23 +15,24 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses="xs:mt-4 md:mt-auto relative py-6 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto"
+      modalClasses="max-w-3xl w-full h-[85%] xxs:h-max m-auto xs:mt-4 md:mt-auto py-6 px-4 xs:px-6  rounded-2xl shadow-dark-15 gradient-blue-primary relative "
     >
-      <div className="space-y-6">
-        <div className="flex items-center justify-center flex-col gap-6 border-b-[1px] border-blue-accent-primary pb-8 mb-12 xs:px-28">
+      <div className="h-full space-y-3 xxs:space-y-6">
+        <div className="flex items-center justify-center flex-col gap-2  xxs:gap-6 border-b-[1px] border-blue-accent-primary pb-4 xxs:pb-8 xs:px-28">
           <div className="flex items-center gap-2">
             <ChallengeIcon />
             <h3 className="uppercase text-gradient-gold text-xl xs:text-3xl font-black">challenges</h3>
           </div>
-          <span className="xs:text-xl font-medium text-center">{challenge?.name}</span>
+          <span className="xs:text-xl font-medium text-center max-w-full truncate ">{challenge?.name}</span>
         </div>
-        <div className="flex flex-col xm:flex-row items-center gradient-trivia-info rounded-15 rounded-tr-15 ">
+        <div className='h-[calc(100%_-_90px)] xxs:h-full flex flex-col gap-6 overflow-y-scroll xxs:overflow-hidden pt-[28px] '>
+        <div className="flex flex-col xm:flex-row items-center gradient-trivia-info rounded-15 rounded-tr-15  ">
           <div className="w-2/3 xxxs:w-1/2 xxs:w-1/3 xm:w-1/4 relative h-[248px] ">
             <ChallengesCard
               reward={challenge?.reward ?? 0}
               image={challenge?.image ?? ''}
               isClaimed={challenge?.completed}
-              wrapClasses="w-full absolute -top-[42px]"
+              wrapClasses="w-full absolute -top-[42px] xxs:-top-[52px]"
             />
           </div>
           <div className="w-full xm:w-3/4 py-7">
@@ -40,7 +41,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
                 First to hit <span className="text-gradient-gold">{challenge?.multiplier}x on</span>{' '}
                 {challenge?.game.charAt(0).toUpperCase().concat(challenge?.game.slice(1).toLowerCase()) ?? ''}
                 <p className="flex items-center gap-1">
-                  Win bet:{' '}
+                  Min bet:{' '}
                   <CoinsWithDiamond
                     iconContainerSize="Medium"
                     typographyQuantity={challenge?.min ?? 0}
@@ -75,6 +76,7 @@ const ChallengeCheckModal = ({ challenge, onClose }: ChallengeCheckModalProps) =
             </p>
           </div>
         )}
+        </div>
       </div>
     </ModalWrapper>
   )

@@ -42,8 +42,6 @@ export const CoinFlipProvider = ({ children }: CoinFlipProviderProps) => {
     })
 
     socket.on('coinflip_update', (joining: ICoinFlip | boolean) => {
-      console.log(joining, 'coinflip_update')
-
       if (typeof joining === 'boolean') {
         console.log('failed COINFLIP_UPDATE')
       } else {
