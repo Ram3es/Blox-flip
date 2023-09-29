@@ -21,7 +21,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
     valueOf: () => number
   }>>>([])
 
-  const { timer, winner, setTimer } = useJackpot()
+  const { timer, winner, setTimer, setIsPlaying } = useJackpot()
 
   const refSvg = useRef<SVGSVGElement>(null)
   const refInterval = useRef<ReturnType<typeof setInterval>>()
@@ -46,7 +46,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
       }
       setTimeout(() => {
         if (refSvg?.current?.style) {
-          refSvg.current.style.transform = `rotate(${-360 * 4 - winDegrees}deg)`
+          refSvg.current.style.transform = `rotate(${-360 * 8 - winDegrees}deg)`
           refSvg.current.style.transitionTimingFunction = 'ease-out'
           refSvg.current.style.transitionDuration = `${JACKPOT_ROLLING_TIME_SECONDS}s`
         }
@@ -58,6 +58,7 @@ const JackpotWheel: FC<IJackpotWheelProps> = ({ jackPot, joinedUsers }) => {
   useEffect(() => {
     refInterval.current && clearInterval(refInterval.current)
     if (winner) {
+      setIsPlaying(true)
       start(joinedUsers.findIndex((item) => (item.user.id).toString() === winner?.winner.id))
       return
     }

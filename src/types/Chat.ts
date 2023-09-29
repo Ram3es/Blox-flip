@@ -8,7 +8,7 @@ export interface IChatMessage {
 }
 
 export interface IBanUser {
-  id: string
+  id: number
   reason: string
   time: string
 }

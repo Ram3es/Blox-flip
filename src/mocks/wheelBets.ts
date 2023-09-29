@@ -12,7 +12,7 @@ export const wheelBetsMock: WheelBetRecord = {
   [possibleBets.GRAY]: [
     {
       user: {
-        id: '21',
+        id: 21,
         avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
         name: 'Patron',
         level: 13
@@ -24,7 +24,7 @@ export const wheelBetsMock: WheelBetRecord = {
   [possibleBets.YELLOW]: [
     {
       user: {
-        id: '11',
+        id: 11,
         avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
         name: 'Patron',
         level: 17
@@ -36,7 +36,7 @@ export const wheelBetsMock: WheelBetRecord = {
   [possibleBets.BLUE]: [
     {
       user: {
-        id: '116',
+        id: 116,
         avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
         name: 'Patron',
         level: 18
@@ -46,7 +46,7 @@ export const wheelBetsMock: WheelBetRecord = {
     },
     {
       user: {
-        id: '141',
+        id: 141,
         avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
         name: 'Patron',
         level: 37
@@ -58,7 +58,7 @@ export const wheelBetsMock: WheelBetRecord = {
   [possibleBets.RED]: [
     {
       user: {
-        id: '116q',
+        id: 116,
         avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
         name: 'Patron',
         level: 18
@@ -68,7 +68,7 @@ export const wheelBetsMock: WheelBetRecord = {
     },
     {
       user: {
-        id: '14e1',
+        id: 14,
         avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/553.jpg',
         name: 'Patron',
         level: 37
