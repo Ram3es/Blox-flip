@@ -21,12 +21,13 @@ const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
   return (
     <ModalWrapper
       closeModal={handleClose}
-      modalClasses="relative py-6 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-2xl w-full m-auto overflow-hidden"
+      modalClasses="max-w-2xl w-full  py-6 px-4 xs:px-6 m-auto shadow-dark-15 rounded-2xl gradient-blue-primary overflow-hidden relative"
     >
-      <div className="flex flex-col gap-4 px-4">
-        <div className="text-center text-3xl font-extrabold text-lightblue-secondary uppercase shrink-0 px-4 py-4">
+      <div className="text-center text-2xl px-4 py-4 xxs:text-3xl font-extrabold text-lightblue-secondary uppercase shrink-0 ">
           2-Step Verification
-        </div>
+      </div>
+      <div className='h-[calc(100%_-_64px)] pr-4 -mr-3 overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+      <div className="flex flex-col gap-4  xxs:px-4">
         <div className="flex flex-col gap-2 text-gray-primary">
           <p>
             {' '}
@@ -105,7 +106,7 @@ const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
               </div>
             </div>
           </Disclosure.Button>
-          <Disclosure.Panel className="flex flex-col gap-2 max-h-[200px] text-gray-primary overflow-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+          <Disclosure.Panel className="flex flex-col gap-2 text-gray-primary ">
             <p>
               <span className="font-bold text-lightblue-secondary">1&#41;</span> Navigate to{' '}
               <span
@@ -154,6 +155,7 @@ const TwoFactorAuthModal: FC<TwoFactorAuthModalProps> = ({ handleClose }) => {
             </p>
           </Disclosure.Panel>
         </Disclosure>
+      </div>
       </div>
     </ModalWrapper>
   )
