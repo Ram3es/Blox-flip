@@ -97,8 +97,8 @@ const Jackpot = () => {
     <div className="mx-auto w-full max-w-[1200px]">
       <div className="w-full flex-col gap-1">
         <VerifyBets path="/provably-fair#jackpot" />
-        <div className="flex w-full flex-col-reverse gap-10 ls:flex-row">
-          <div className="flex flex-col items-center gap-2 md:flex-row ls:flex-col ls:gap-6">
+        <div className="flex w-full flex-col gap-10 ls:flex-row">
+          <div className="flex flex-col items-center gap-6">
             <div className="mx-0 flex h-[492px] w-[492px] scale-75 items-center justify-center xs:mx-auto xs:scale-100 md:mx-0">
               <JackpotWheel
                 jackPot={jackpot}
@@ -106,7 +106,7 @@ const Jackpot = () => {
               />
             </div>
             <div className="mx-auto flex w-full max-w-[382px] flex-col gap-4">
-              <div className="flex justify-between gap-3">
+              <div className="flex w-full justify-between gap-1.5 sm:gap-3">
                 <GameInfoListItem label="TOTAL PLAYERS">
                   <span>{joinedUsers.length}</span>
                 </GameInfoListItem>
@@ -125,7 +125,7 @@ const Jackpot = () => {
               <div className="w-full border-b border-blue-accent-secondary" />
               <div
                 style={{ direction: 'rtl' }}
-                className="h-[490px] overflow-auto pl-2.5 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full "
+                className={`${selectedCards.length ? 'block' : 'hidden'} h-[490px] overflow-auto pl-2.5 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full `}
               >
                 <div className="h-[480px]" style={{ direction: 'ltr' }}>
                   {selectedCards.map((card, idx) => (
@@ -147,7 +147,7 @@ const Jackpot = () => {
             </div>
           </div>
           <div className="flex w-full flex-col gap-5">
-            <div className="flex w-full flex-wrap items-end gap-3">
+            <div className="flex  flex-wrap items-end gap-3 justify-center">
               <GameInfoListItem label="MIN. BET">
                 <CoinsWithDiamond iconContainerSize="Small" typographyQuantity={1500} />
               </GameInfoListItem>
@@ -191,10 +191,10 @@ const Jackpot = () => {
                 <div className="w-full truncate text-center text-gray-primary">{`Hash: ${gameInfo?.hash ?? ''}`}</div>
               </div>
             </StrippedBgItem>
-            <div className="h-[310px] z-10 pr-6 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
-              <div className="flex flex-col gap-y-2 p-0.5 ">
+            <div className="h-[310px] z-10 pr-2 scrollbar-thin scrollbar-track-blue-darken/40 scrollbar-thumb-blue-secondary scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+              <div className="flex flex-col items-center gap-y-2 p-0.5 ">
                 {joinedUsers.map((player, idx) => (
-                  <JoinedUserRow key={player.user.id + idx} player={player} />
+                  <JoinedUserRow key={player.user.id} player={player} />
                 ))}
               </div>
             </div>
@@ -215,7 +215,7 @@ const Jackpot = () => {
                 <CoinsWithDiamond containerColor="GreenGradient" containerSize="XL" typographyQuantity={prevGame.value} />
               </div>
             </StrippedBgItem>
-             <div className="flex flex-col gap-y-2 p-0.5 opacity-50">
+             <div className="flex flex-col items-center gap-y-2 p-0.5 opacity-50">
              {prevGame.participants.map((player, idx) => (
                <JoinedUserRow key={player.user.id + idx} player={player} />
              ))}

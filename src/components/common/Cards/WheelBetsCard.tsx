@@ -3,7 +3,6 @@ import TeamGroupIcon from '../../icons/TeamGroupIcon'
 import Image from '../../base/Image'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 import { IIWheelBet, possibleBets } from '../../../types/Wheel'
-import { getRandomId } from '../../../helpers/casesHelpers'
 
 interface IWheelBetCard {
   color: possibleBets
@@ -83,7 +82,7 @@ const WheelBetsCard = ({ color, bets, onPeack }: IWheelBetCard) => {
       <div className='flex flex-col'>
         {bets.map((bet, index) => (
           <div
-            key={color + 'bet' + bet.user.id + getRandomId()}
+            key={bet.user.id + Date.now()}
             className='px-2 py-1 relative flex justify-between'
           >
             <div
