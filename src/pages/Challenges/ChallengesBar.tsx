@@ -41,7 +41,11 @@ const ChallengesBar = ({ openChallengeModal, openAdminModal, userRole = 'admin',
           </div>
           <div className="w-1/2 h-[1px]  gradient-line-divider"></div>
           <div className="w-full flex flex-wrap justify-between items-center absolute top-11 md:top-0 ">
-            <SortSelect options={CHALLENGE_SORT_VARIANTS} onSelect={setGameFilter} currentOptions={gameFilter.title} />
+            <SortSelect
+              options={CHALLENGE_SORT_VARIANTS}
+              onSelect={setGameFilter}
+              currentOptions={gameFilter.title}
+            />
             <div className="flex flex-wrap items-center ml-3 mt-2 xxxs:mt-0">
               {userRole === 'admin' && (
                 <Button
@@ -61,9 +65,9 @@ const ChallengesBar = ({ openChallengeModal, openAdminModal, userRole = 'admin',
         </div>
       </div>
       <div className=" flex flex-wrap -mx-2 mb-8 md:mb-12">
-        {filterClaimedStatus.map((card) => (
+        {filterClaimedStatus.map((card, idx) => (
           <ChallengesCard
-            key={card.name}
+            key={`${Date.now()}-${idx}`}
             isClaimed={card.completed}
             reward={card.reward}
             image={card.image}
