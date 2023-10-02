@@ -10,7 +10,6 @@ import { IWinTicket } from '../../types/Wheel'
 
 const WheelCircle = ({ rallTime, count, ticket, isStart }: { rallTime: number, count?: number, ticket?: IWinTicket | null, isStart: boolean }) => {
   const ref = useRef<SVGSVGElement>(null)
-  // console.log(rallTime, count, ticket, isStart)
   const start = (ticket: number): void => {
     if (ref?.current?.style) {
       ref.current.style.transform = 'rotate(0deg)'
