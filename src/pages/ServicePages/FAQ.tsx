@@ -8,8 +8,8 @@ const FAQ = () => {
         renderHeaderDescription={() => (
             <>
               <p className='mb-5'>Please read these terms and conditions carefully before using Our Service.</p>
-              <p> This site is operated by Liquid Gaming N.V. (153298) and has its office registered in Abraham de Veerstraat 9, Willemstad in Curacao.</p>
-              <p> Registered under license GLH-OCCHKTW076092020.</p>
+              <p>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</p>
+              <p>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</p>
            </>
         )}>
         <h2 className='text-xl font-bold text-blue-golf mt-10 mb-6'>1. How do I deposit?</h2>

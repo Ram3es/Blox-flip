@@ -34,7 +34,7 @@ const GameInfoListItem = ({
         {label}
       </span>
       <div
-        className={clsx('min-w-[121px] min-h-[48px] flex items-center justify-center', {
+        className={clsx('min-w-[120px] min-h-[48px] flex items-center justify-center', {
           'px-2 bg-blue-accent rounded-lg': childrenStyle === ChildrenStyleEnum.Default
         })}
       >

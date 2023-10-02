@@ -85,7 +85,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
   return (
     <ModalWrapper
       closeModal={onClose}
-      modalClasses="mt-4 md:mt-auto relative py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary relative max-w-4xl w-full m-auto  h-5/6 overflow-y-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
+      modalClasses="w-full h-[90%] max-h-[1000px]  py-5 px-4 xs:px-6 shadow-dark-15 rounded-2xl gradient-blue-primary max-w-4xl relative "
     >
       <div className="flex items-center gap-6 border-b-[1px]  border-blue-accent-primary pb-4 mb-6">
         <div className="flex items-center gap-2">
@@ -93,7 +93,8 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
           <h3 className="uppercase text-gradient-gold text-3xl font-black">challenge creation</h3>
         </div>
       </div>
-      <form className="flex flex-col gap-6" onSubmit={formik.handleSubmit}>
+      <div className='h-[calc(100%_-_120px)]  overflow-y-auto scrollbar-thumb-blue-secondary scrollbar-track-blue-darken/40 scrollbar-thin scrollbar-track-rounded-full scrollbar-thumb-rounded-full'>
+      <form className="flex flex-col gap-6 pr-4" onSubmit={formik.handleSubmit}>
         <InputWithInlineLabel
           value={formik.values.image}
           onChange={formik.handleChange('image')}
@@ -215,6 +216,7 @@ const ChallengeCreationModal = ({ onClose, handleFunction }: ChallengeCreationMo
           </div>
         </div>
       </form>
+      </div>
     </ModalWrapper>
   )
 }
