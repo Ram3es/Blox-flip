@@ -8,16 +8,22 @@ export enum possibleBets {
   GRAY = 'gray',
   YELLOW = 'yellow',
   BLUE = 'blue',
-  RED = 'red',
+  RED = 'red'
 }
 
-export interface IWheelGameHistory { ticket: possibleBets, gameId: number }
-export interface IWheelBetHistory { betColor: possibleBets, betId: number }
+export interface IWheelGameHistory {
+  ticket: possibleBets
+  gameId: number
+}
+export interface IWheelBetHistory {
+  betColor: possibleBets
+  betId: number
+}
 
 export interface IIWheelBet {
   color: possibleBets | goldEnum
   wager: number
-  user: Omit< IUser, 'role' | 'progress' >
+  user: Omit<IUser, 'role' | 'progress'>
 }
 
 export interface IWinTicket {
@@ -30,5 +36,7 @@ export interface ILoadWheelRes {
   hash: string
   time: string
   roll: string
-
 }
+
+export type WheelBetRecord = Record<possibleBets, IIWheelBet[]>
+export type BetHistoryRecord = Record<possibleBets, possibleBets[]>
