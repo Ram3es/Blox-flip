@@ -1,20 +1,18 @@
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { useSocketCtx } from './SocketStore'
-import { IIWheelBet, ILoadWheelRes, IWinTicket, possibleBets } from '../types/Wheel'
+import { IIWheelBet, ILoadWheelRes, IWinTicket, WheelBetRecord, possibleBets } from '../types/Wheel'
 import { getTimerValue } from '../helpers/wheelHelpers'
-import { WheelBetRecord } from '../mocks/wheelBets'
-import { DELAY, INIT_BETS_STATE } from '../constants/wheel'
+import { DELAY, INIT_BETS_STATE, RALL_TIME } from '../constants/wheel'
 
 interface WheelProviderProps {
   children: ReactNode
 }
 
 export interface IWheelContext {
+  isStart: boolean
   history: possibleBets[]
-  setHistory: Dispatch<SetStateAction<possibleBets[]>>
   wheelBets: WheelBetRecord
   timer: number
-  setTimer: Dispatch<SetStateAction<number>>
   wonTicket: IWinTicket | null
 }
 
@@ -25,7 +23,10 @@ export const useWheel = () => {
   return useContext(WheelContext)
 }
 
+let interval: ReturnType<typeof setInterval>
+
 export const WheelProvider = ({ children }: WheelProviderProps) => {
+  const [isStart, setIsStart] = useState(false)
   const [history, setHistory] = useState<possibleBets[]>([])
   const [wheelBets, setWheelBets] = useState<WheelBetRecord>(INIT_BETS_STATE)
   const [timer, setTimer] = useState<number>(0)
@@ -54,7 +55,7 @@ export const WheelProvider = ({ children }: WheelProviderProps) => {
     })
     socket.on('add_wheel', (data: IIWheelBet) => {
       const { color } = data
-      setWheelBets((prev) => {
+      setWheelBets((prev: WheelBetRecord) => {
         if (prev) {
           return {
             ...prev,
@@ -76,14 +77,30 @@ export const WheelProvider = ({ children }: WheelProviderProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    clearInterval(interval)
+    if (timer) {
+      interval = setInterval(() => setTimer((prev) => prev && prev - 1), 1000)
+    }
+
+    if (timer === 0 && !isStart && wonTicket) {
+      setIsStart(true)
+      setTimeout(() => {
+        setIsStart(false)
+        setHistory((prev) => [...prev, wonTicket.color === 'gold' ? possibleBets.YELLOW : wonTicket?.color])
+        setWonTicket(null)
+      }, RALL_TIME)
+    }
+    return () => clearInterval(interval)
+  }, [timer, isStart, wonTicket])
+
   return (
     <WheelContext.Provider
       value={{
+        isStart,
         history,
-        setHistory,
         wheelBets,
         timer,
-        setTimer,
         wonTicket
       }}
     >
