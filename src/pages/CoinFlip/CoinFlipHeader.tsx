@@ -11,9 +11,11 @@ import { getToast } from '../../helpers/toast'
 import { useSocketCtx } from '../../store/SocketStore'
 import { formatNumber, localeStringToNumber } from '../../helpers/numbers'
 import { useNavigate } from 'react-router-dom'
+import { useCoinFlip } from '../../store/CoinFlipStore'
 
 const CoinFlipHeader = () => {
   const { socket } = useSocketCtx()
+  const { games } = useCoinFlip()
   const navigate = useNavigate()
 
   const [wager, setWager] = useState({ amountString: '', amountNumber: 0 })
@@ -75,6 +77,9 @@ const CoinFlipHeader = () => {
     }
   }, [wagerRef])
 
+  const getJoinableGames = () => games.filter(game => game.state === '1')
+  const calculateGames = () => games.filter(game => game.state !== '4').reduce((acc, curr) => acc + (curr.creator.value + (curr.joining?.value ?? 0)), 0)
+
   return (
     <div className="flex flex-col xs:flex-row space-y-4 xs:space-y-0 items-center justify-between bg-blue-accent rounded-lg p-5">
       <div className="flex items-center space-x-4">
@@ -84,15 +89,15 @@ const CoinFlipHeader = () => {
         </div>
         <Button variant="YellowOutlined">
           <span className="text-orange-primary-light text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center">
-            7 <span className="hidden md:block">&nbsp;Games</span>
+            {games.length} <span className="hidden md:block">&nbsp;Games</span>
           </span>
         </Button>
         <Button variant="GreenOutlinedSecondary">
           <span className="text-green-primary text-13 font-medium px-3 py-1.5 md:px-4 md:py-2.5 flex items-center justify-center">
-            3 <span className="hidden md:block">&nbsp;Joinable</span>
+            {getJoinableGames().length} <span className="hidden md:block">&nbsp;Joinable</span>
           </span>
         </Button>
-        <CoinsWithDiamond containerSize="Large" containerColor="GreenGradient" typographyQuantity={14214.51} />
+        <CoinsWithDiamond containerSize="Large" containerColor="GreenGradient" typographyQuantity={calculateGames()} />
       </div>
       <div className="grid grid-cols-1 ls:flex items-center gap-[15px]">
         <ToggleCoin selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />
