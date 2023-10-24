@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react'
+import { forwardRef, useContext, useMemo } from 'react'
 
 import clsx from 'clsx'
 
@@ -23,7 +23,6 @@ export interface PlayerProps {
 
 const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent, game }, ref) => {
   const { socket } = useSocketCtx()
-
   const isCreatorSide = useMemo(
     () => (!opponent && game?.creator.coin === 0) || (opponent && game?.creator.coin === 1),
     [game]
@@ -39,7 +38,7 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent, 
     {
       'bg-circle-avatar--yellow': isCreatorSide,
       'bg-circle-avatar--blue': !isCreatorSide,
-      'items-end': game?.state !== '1' || isCreatorSide
+      'items-end': game?.state !== '1' || !opponent
     }
   )
 
@@ -73,12 +72,12 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent, 
             />
           </div>
           <div className={avatarClasses}>
-            {(game?.state !== '1' || isCreatorSide) && (
+            {(game?.state !== '1' || !opponent) && (
               <div className="w-21 h-21 rounded-full overflow-hidden">
-                <Image image={!opponent ? game?.creator.avatar ?? '' : game?.joining?.avatar ?? ''} />
+                <Image className='rounded-full' image={!opponent ? game?.creator.avatar ?? '' : game?.joining?.avatar ?? ''} />
               </div>
             )}
-            {!isCreatorSide && game?.state === '1' && (
+            {opponent && game?.state === '1' && (
               <div className="flex items-center justify-center text-blue-highlight-third">
                 <QuestionIcon className="w-7 h-[30px]" />
               </div>
@@ -122,7 +121,7 @@ const CoinFlipGamePlayer = forwardRef<HTMLDivElement, PlayerProps>(({ opponent, 
           )} */}
           <div className="flex items-center justify-center">
             <div className="px-2 my-10 mx-auto space-y-2">
-              {!isCreatorSide && game?.state === '1' && (
+              {opponent && game?.state === '1' && (
                 <>
                   <Button color="GreenPrimary" onClick={handleCallBot}>
                     <div className="w-32 xs:w-40 h-9 flex items-center justify-center">Call bot</div>
