@@ -215,11 +215,13 @@ const PlinkoActions = () => {
           </div>
         )}
         <div className="flex pb-6">
-          {mode === 'Automatic' && autoBet ? (
-            <Button onClick={() => setAutoBet(false)} className="w-full bg-red-secondary rounded h-11">
-              Stop Auto Bet
-            </Button>
-          ) : (
+          {mode === 'Automatic' && autoBet
+            ? (
+              <Button onClick={() => setAutoBet(false)} className="w-full bg-red-secondary rounded h-11">
+                Stop Auto Bet
+              </Button>
+              )
+            : (
             <Button
               disabled={isButtonDisabled}
               onClick={handlePlaceBet}
@@ -227,7 +229,7 @@ const PlinkoActions = () => {
             >
               Place Bet
             </Button>
-          )}
+              )}
         </div>
       </div>
     </BetActionsContainer>
