@@ -191,7 +191,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
               })}
             >
               <span
-                className={clsx('font-bold mr-2', {
+                className={clsx('max-w-[120px] truncate font-bold mr-2', {
                   'text-gray-primary': variant === ChatUserCardVariant.Header,
                   'text-white': variant === ChatUserCardVariant.Base
                 })}
