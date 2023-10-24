@@ -118,6 +118,11 @@ const PlinkoActions = () => {
       placeBet()
     }
     if (mode === 'Automatic') {
+      if (numberOfBets === 0) {
+        getToast('minimum number of bets is 1')
+        return
+      }
+
       setAutoBet(true)
     }
   }
