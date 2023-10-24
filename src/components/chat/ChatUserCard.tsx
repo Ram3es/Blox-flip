@@ -181,17 +181,17 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     <Menu>
       <Menu.Button as='div' className='w-full'>
         {({ open }: { open: boolean }) => (
-          <div className='flex items-center justify-between mb-2 relative cursor-pointer'>
+          <div className='flex items-center justify-between gap-1 mb-2 relative cursor-pointer'>
             <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
               <Image image={user.avatar} />
             </div>
             <div
-              className={clsx('flex', {
+              className={clsx('flex justify-between', {
                 'mr-7': variant === ChatUserCardVariant.Base
               })}
             >
               <span
-                className={clsx('max-w-[120px] truncate font-bold mr-2', {
+                className={clsx('max-w-[100px] truncate font-bold mr-2', {
                   'text-gray-primary': variant === ChatUserCardVariant.Header,
                   'text-white': variant === ChatUserCardVariant.Base
                 })}
