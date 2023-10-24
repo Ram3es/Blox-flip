@@ -23,14 +23,11 @@ export const CoinFlipProvider = ({ children }: CoinFlipProviderProps) => {
 
   const [games, setGames] = useState<ICoinFlip[]>([])
 
-  const removeGameById = (games: ICoinFlip[], gameId: string): ICoinFlip[] => games.filter((game) => game.id !== gameId)
-
   useEffect(() => {
-    socket.on('coinflip_remove', (id: string) => {
-      if (id) {
-        const filteredGames = removeGameById(games, id)
-        setGames(filteredGames)
-      }
+    socket.on('coinflip_remove', (data: { id: number }) => {
+      setGames((prev) => {
+        return prev.filter((game) => game.id !== data.id)
+      })
     })
 
     socket.on('coinflip_new', (data: ICoinFlip) => {
