@@ -20,7 +20,7 @@ export interface ICoinFlipPlayer {
 
 export interface ICoinFlip {
   state: ICoinFlipStatus
-  id: string
+  id: number
   seed: string
   creator: ICoinFlipPlayer
   joining?: ICoinFlipPlayer
