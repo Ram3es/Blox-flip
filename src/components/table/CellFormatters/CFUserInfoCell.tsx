@@ -14,7 +14,7 @@ const CFUserInfoCell = ({ userAvatar, coin }: CFUserInfoCellProps) => {
         image={userAvatar}
         className='h-14 w-14 border border-blue-highlight rounded radial--blue'
       />
-      <div className='absolute top-[0.46875rem] left-[4rem]'>
+      <div className='absolute top-[0.46875rem] left-[3rem]'>
         <img src={coin === 0 ? CoinFlipHead : CoinFlipTail} className='w-11 h-auto ' alt={coin === 0 ? 'head' : 'tail'} />
       </div>
     </div>

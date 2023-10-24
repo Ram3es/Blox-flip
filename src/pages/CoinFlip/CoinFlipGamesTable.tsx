@@ -35,7 +35,7 @@ const CoinFlipGamesTable = () => {
         <CoinsWithDiamond
           containerSize="Large"
           containerColor="GreenGradient"
-          typographyQuantity={row.original.creator.value}
+          typographyQuantity={row.original.creator.value + (row.original.joining?.value ?? 0)}
           typographyFontSize="Size16"
         />
       ),
