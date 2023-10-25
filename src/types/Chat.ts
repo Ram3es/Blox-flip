@@ -2,7 +2,7 @@ import { IChatUser } from './User'
 
 export interface IChatMessage {
   message: string
-  time: string
+  time: number
   hash: string
   user: IChatUser
 }
