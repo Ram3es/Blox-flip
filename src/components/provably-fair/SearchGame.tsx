@@ -71,21 +71,21 @@ const SearchGame = () => {
             void formik.setFieldValue('type', variant)
           }}
           as="div"
-          className="relative pl-4 pr-4 rounded-10 gradient-background--blue__secondary py-4 w-full cursor-text flex items-center justify-between"
+          className="relative p-4 rounded-10 gradient-background--blue__secondary w-full flex items-center justify-between"
         >
           <span className="capitalize rounded-md px-5 py-2 font-medium text-sm gradient--background--blue__third text-gray-primary">
             Mode
           </span>
           <Listbox.Button
             as="div"
-            className="cursor-pointer text-gray-primary capitalize font-medium text-base flex justify-between items-center pl-10"
+            className="w-full cursor-pointer text-gray-primary capitalize font-medium text-base flex justify-end items-center pl-10"
           >
             <div className="flex items-center gap-2">
               {formik.values.type}
               <ArrowTriangleIcon className="w-2 h-2" />
             </div>
           </Listbox.Button>
-          <Listbox.Options className="z-10 focus:outline-none absolute top-14 right-[-1.5rem] w-48 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5">
+          <Listbox.Options className="z-10 focus:outline-none absolute top-20 right-0 w-56 p-2 rounded bg-blue-accent-secondary list-none space-y-1.5">
             <div className="w-0 h-0 border-solid border-r-8 border-b-8 rotate-90 border-r-blue-accent-secondary border-transparent absolute top-[-8px] right-[42px]" />
             {MODE_VARIANTS.map((variant) => (
               <Listbox.Option key={variant} value={variant}>
