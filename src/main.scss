@@ -821,6 +821,27 @@ input {
     top: -7px;
   }
 }
+.popup--corner-br {
+  border-bottom-right-radius: 0;
+  &:before {
+    content: '';
+    border: 7px solid transparent;
+    border-right: 10px solid rgba(36, 42, 66);
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    z-index: 10;
+  }
+  &:after {
+    content: '';
+    z-index: 9;
+    border: 7px solid transparent;
+    border-right: 10px solid rgba(54, 62, 96);
+    position: absolute;
+    right: -1px;
+    bottom: -7px;
+  }
+}
 .popup--corner-tr-green {
   border-top-right-radius: 0;
   &:before {
