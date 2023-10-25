@@ -1,4 +1,4 @@
-import { FC, ReactNode, memo } from 'react'
+import { FC, MouseEvent, ReactNode, memo, useState } from 'react'
 import { useChat } from '../../store/ChatStore'
 
 import { Link } from 'react-router-dom'
@@ -27,7 +27,7 @@ interface userAction {
 }
 
 enum ChatUserCardVariant {
-  Base = 'Base',
+  Chat = 'Chat',
   Header = 'Header'
 }
 
@@ -35,9 +35,10 @@ interface ChatUserCardProps {
   user: IChatUser
   hashMsg?: string
   variant?: keyof typeof ChatUserCardVariant
+  dropDownPosition?: 'fixed' | 'float'
 }
 
-const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }) => {
+const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Chat', dropDownPosition = 'fixed' }) => {
   const {
     setIsOpenBanModal,
     setIsOpenTimeoutModal,
@@ -47,13 +48,13 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     setSelectedMessage
   } = useChat()
 
-  const {
-    setTwoFactorAuthModal
-  } = useSocketCtx()
+  const { setTwoFactorAuthModal } = useSocketCtx()
 
   const { dispatch } = useAppStore()
 
-  const baseIconSizeClasses = 'w-3 h-3'
+  const [floatPosition, setFloatPosition] = useState<'bottom' | 'top'>('bottom')
+
+  const ChatIconSizeClasses = 'w-3 h-3'
 
   const profileActions: userAction[] = [
     { path: '/profile', name: 'profile' },
@@ -83,29 +84,28 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
       },
       name: 'Logout'
     }
-
   ]
 
   const chatUserActions: userAction[] = [
-    { path: '/profile', name: 'profile', icon: <UserIcon className={baseIconSizeClasses} /> },
+    { path: '/profile', name: 'profile', icon: <UserIcon className={ChatIconSizeClasses} /> },
     {
       handleFunction: () => {
         setIsOpenTipModal(true)
       },
       name: 'Tip user',
-      icon: <TipIcon className={baseIconSizeClasses} />
+      icon: <TipIcon className={ChatIconSizeClasses} />
     }
   ]
 
   const chatAdminActions: userAction[] = [
-    { path: '/profile', name: 'Profile', icon: <UserIcon className={baseIconSizeClasses} /> },
+    { path: '/profile', name: 'Profile', icon: <UserIcon className={ChatIconSizeClasses} /> },
     {
       handleFunction: () => {
         setIsOpenTipModal(true)
         setUserSelected(user)
       },
       name: 'Tip user',
-      icon: <TipIcon className={baseIconSizeClasses} />
+      icon: <TipIcon className={ChatIconSizeClasses} />
     },
     {
       handleFunction: () => {
@@ -113,7 +113,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
         setUserSelected(user)
       },
       name: 'Timeout user',
-      icon: <TimeoutIcon className={baseIconSizeClasses} />
+      icon: <TimeoutIcon className={ChatIconSizeClasses} />
     },
     {
       handleFunction: () => {
@@ -121,21 +121,21 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
         setUserSelected(user)
       },
       name: 'Ban user',
-      icon: <BanIcon className={baseIconSizeClasses} />
+      icon: <BanIcon className={ChatIconSizeClasses} />
     },
     {
       handleFunction: () => {
         setSelectedMessage(hashMsg as string)
       },
       name: 'Remove Message',
-      icon: <BanIcon className={baseIconSizeClasses} />
+      icon: <BanIcon className={ChatIconSizeClasses} />
     }
     // {
     //   handleFunction: () => {
     //     setUserSelected(user)
     //   },
     //   name: 'Remove User',
-    //   icon: <BanIcon className={baseIconSizeClasses} />
+    //   icon: <BanIcon className={ChatIconSizeClasses} />
     // }
   ]
 
@@ -158,12 +158,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
     }
     if (action.handleFunction) {
       return (
-        <Menu.Item
-          key={action.name}
-          onClick={action.handleFunction}
-          as='div'
-          className={itemClasses}
-        >
+        <Menu.Item key={action.name} onClick={action.handleFunction} as="div" className={itemClasses}>
           {action.icon && action.icon} {action.name}
         </Menu.Item>
       )
@@ -171,36 +166,45 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
   }
 
   const getCurrentActions =
-    variant === ChatUserCardVariant.Header
-      ? profileActions
-      : user
-        ? chatAdminActions
-        : chatUserActions
+    variant === ChatUserCardVariant.Header ? profileActions : user ? chatAdminActions : chatUserActions
+
+  const handleCalculateDropdownPosition = (e: MouseEvent<HTMLElement>) => {
+    if (dropDownPosition === 'fixed') {
+      return
+    }
+
+    const innerHeight = window.innerHeight
+    const clientY = e.clientY
+
+    const diff = innerHeight - clientY
+
+    setFloatPosition(diff < 350 ? 'top' : 'bottom')
+  }
 
   return (
     <Menu>
-      <Menu.Button as='div' className='w-full'>
+      <Menu.Button id="button" onClick={handleCalculateDropdownPosition} as="div" className="w-full">
         {({ open }: { open: boolean }) => (
-          <div className='flex items-center justify-between gap-1 mb-2 relative cursor-pointer'>
-            <div className='w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue'>
+          <div className="flex items-center justify-between gap-1 mb-2 relative cursor-pointer">
+            <div className="w-10 h-10 border border-blue-highlight rounded overflow-hidden radial--blue">
               <Image image={user.avatar} />
             </div>
             <div
               className={clsx('flex justify-between', {
-                'mr-7': variant === ChatUserCardVariant.Base
+                'mr-7': variant === ChatUserCardVariant.Chat
               })}
             >
               <span
                 className={clsx('max-w-[100px] truncate font-bold mr-2', {
                   'text-gray-primary': variant === ChatUserCardVariant.Header,
-                  'text-white': variant === ChatUserCardVariant.Base
+                  'text-white': variant === ChatUserCardVariant.Chat
                 })}
               >
                 {user?.name || ''}
               </span>
               <UserLevel level={user?.level || 0} />
             </div>
-            <div className='w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center'>
+            <div className="w-6 h-6 leading-6 bg-blue-accent shrink-0 rounded text-gray-secondary flex items-center justify-center">
               <ArrowTriangleIcon
                 className={clsx('', {
                   'rotate-180': open
@@ -213,11 +217,21 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Base' }
       <Menu.Items
         className={clsx('absolute left-0 right-0 pt-2.5 z-40', {
           'top-full': variant === ChatUserCardVariant.Header,
-          'top-8': variant === ChatUserCardVariant.Base
+          'top-8':
+            dropDownPosition === 'fixed' ||
+            (dropDownPosition === 'float' && floatPosition === 'bottom' && variant === ChatUserCardVariant.Chat),
+          'bottom-28': dropDownPosition === 'float' && floatPosition === 'top' && variant === ChatUserCardVariant.Chat
         })}
-        as='div'
+        as="div"
       >
-        <div className='relative p-2 border border-blue-highlight rounded rounded-tr-none bg-blue-secondary popup--corner-tr'>
+        <div
+          className={clsx('relative p-2 border border-blue-highlight rounded  bg-blue-secondary', {
+            'popup--corner-tr rounded-tr-none':
+              dropDownPosition === 'fixed' || (dropDownPosition === 'float' && floatPosition === 'bottom'),
+            'popup--corner-br rounded-br-none':
+              dropDownPosition === 'float' && floatPosition === 'top' && variant === ChatUserCardVariant.Chat
+          })}
+        >
           {getCurrentActions.map((action) => renderActions(action))}
         </div>
       </Menu.Items>
