@@ -9,6 +9,7 @@ import SocketCtxProvider from './SocketStore'
 import { CaseOpeningProvider } from './CaseOpeningStore'
 import { JackpotProvider } from './JackpotStore'
 import { WheelProvider } from './WheelStore'
+import { LiveFeedProvider } from './LiveFeedStore'
 
 export interface IState {
   user?: IUser
@@ -32,21 +33,24 @@ export const useAppStore = () => useContext(Context)
 
 const Store: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)
+
   return (
     <Context.Provider value={{ state, dispatch }}>
       <SocketCtxProvider>
         <ChatProvider>
-          <CaseOpeningProvider>
-            <BattleCaseProvider>
-              <PlinkoProvider>
-                <CoinFlipProvider>
-                  <JackpotProvider>
-                    <WheelProvider>{children}</WheelProvider>
-                  </JackpotProvider>
-                </CoinFlipProvider>
-              </PlinkoProvider>
-            </BattleCaseProvider>
-          </CaseOpeningProvider>
+          <LiveFeedProvider>
+            <CaseOpeningProvider>
+              <BattleCaseProvider>
+                <PlinkoProvider>
+                  <CoinFlipProvider>
+                    <JackpotProvider>
+                      <WheelProvider>{children}</WheelProvider>
+                    </JackpotProvider>
+                  </CoinFlipProvider>
+                </PlinkoProvider>
+              </BattleCaseProvider>
+            </CaseOpeningProvider>
+          </LiveFeedProvider>
         </ChatProvider>
       </SocketCtxProvider>
     </Context.Provider>

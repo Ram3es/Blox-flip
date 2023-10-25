@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
@@ -12,9 +12,9 @@ import type { FilterVariant } from '../../types/Table'
 import { resetColumnFilterHelper } from '../../helpers/tableHelpers'
 import CoinsWithDiamond from '../common/CoinsWithDiamond'
 import { Context } from '../../store/Store'
-import { useSocketCtx } from '../../store/SocketStore'
 import { ILiveFeedUser } from '../../types/LiveFeed'
 import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
+import { useLiveFeed } from '../../store/LiveFeedStore'
 
 const RedDotIcon = () => {
   return (
@@ -23,10 +23,9 @@ const RedDotIcon = () => {
 }
 
 export const LiveFeed = () => {
-  const { socket } = useSocketCtx()
   const { state } = useContext(Context)
-  const [data, setData] = useState<ILiveFeedUser[]>([])
-  const [sorting, setSorting] = useState<SortingState>([])
+  const { bets } = useLiveFeed()
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'time', desc: true }])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [currentColum, setCurrentColumn] = useState('')
   const [searchValue, setSearchValue] = useState<string | number | string[]>('')
@@ -118,9 +117,7 @@ export const LiveFeed = () => {
         return (
           <CoinsWithDiamond
             containerSize="Small"
-            iconContainerColor={
-              isWin ? 'GreenPrimary' : 'RedAccent'
-            }
+            iconContainerColor={isWin ? 'GreenPrimary' : 'RedAccent'}
             iconContainerSize="Small"
             iconClasses="w-3 h-3"
             typographyQuantity={Math.round(profit)}
@@ -136,25 +133,10 @@ export const LiveFeed = () => {
     })
   ]
 
-  useEffect(() => {
-    socket.on('bets', (data: ILiveFeedUser[]) => {
-      setData((prev) => [...prev, ...data])
-    })
-
-    socket.on('push_bet', (data: ILiveFeedUser) => {
-      setData((prev) => [...prev, data])
-    })
-
-    return () => {
-      socket.off('push_bet')
-      socket.off('bets')
-    }
-  }, [])
-
   return (
     <div className="bg-blue-primary rounded-2xl px-4 md:px-9 py-5">
       <Table
-        data={data}
+        data={bets}
         columns={columns}
         sorting={sorting}
         setSorting={setSorting}
