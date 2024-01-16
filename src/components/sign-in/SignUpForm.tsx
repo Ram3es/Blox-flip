@@ -6,7 +6,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { getToast } from '../../helpers/toast'
 import axios from 'axios'
-import { encodeBase64 } from '../../helpers/decodeToken'
 import { useAppStore } from '../../store/Store'
 
 export const signUpSchema = Yup.object().shape({
@@ -33,12 +32,9 @@ const SignUpForm = ({ onClose }: { onClose: Function }) => {
         .validate(values, { abortEarly: false })
         .then(async () => {
           try {
-            const { data } = await signUp(values)
-            console.log(data)
-
-            const hash = encodeBase64(JSON.stringify(data))
-            dispatch({ type: 'CONNECT', payload: hash })
-            localStorage.setItem('token', hash)
+            const { data: { token } } = await signUp(values)
+            dispatch({ type: 'CONNECT', payload: token })
+            localStorage.setItem('token', token)
             onClose()
           } catch (error) {
             if (axios.isAxiosError(error)) {

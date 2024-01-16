@@ -3,7 +3,6 @@ import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
 import { useFormik } from 'formik'
 import { signUpSchema } from './SignUpForm'
-import { encodeBase64 } from '../../helpers/decodeToken'
 import { useAppStore } from '../../store/Store'
 import axios from 'axios'
 import { getToast } from '../../helpers/toast'
@@ -22,12 +21,9 @@ const SignInFormNew = ({ onClose }: { onClose: Function }) => {
         .validate(values, { abortEarly: false })
         .then(async () => {
           try {
-            const { data } = await signIn(values)
-            console.log(data)
-
-            const hash = encodeBase64(JSON.stringify(data))
-            dispatch({ type: 'CONNECT', payload: hash })
-            localStorage.setItem('token', hash)
+            const { data: { token } } = await signIn(values)
+            dispatch({ type: 'CONNECT', payload: token })
+            localStorage.setItem('token', token)
             onClose()
           } catch (error) {
             if (axios.isAxiosError(error)) {

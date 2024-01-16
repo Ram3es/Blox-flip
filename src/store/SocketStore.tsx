@@ -9,8 +9,10 @@ import {
 } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { useAppStore } from './Store'
-import { decodeBase64 } from '../helpers/decodeToken'
 import { IUserLevel } from '../types/User'
+import { jwtDecode } from 'jwt-decode'
+
+import DEFAULT_AVATAR from '../assets/img/avatar_img.png'
 
 export type TSocket = Socket
 export interface ChatSocketCtxState {
@@ -87,17 +89,18 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     if (token ?? hash) {
-      const decoded: IRobloxSecurityData = JSON.parse(decodeBase64(token ?? (hash as string)))
+      const decoded: IRobloxSecurityData = jwtDecode(token ?? (hash as string))
       dispatch({
         type: 'LOGIN',
         payload: {
-          id: decoded.UserID,
-          name: decoded.UserName,
-          avatar: decoded.ThumbnailUrl
+          id: decoded.UserID ?? decoded.id,
+          name: decoded.UserName ?? decoded?.email,
+          avatar: decoded.ThumbnailUrl ?? DEFAULT_AVATAR
         }
       })
       if (isConnected) {
         socket.emit('authenticate_user', { token: token ?? hash }, (res: any) => {
+          console.log('AUTH_SOCKET_RES', res)
           setIsAuthenticated(true)
         })
       }

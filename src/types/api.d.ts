@@ -19,6 +19,8 @@ interface IRobloxSecurityData {
   ThumbnailUrl: string
   UserID: number
   UserName: string
+  email?: string
+  id?: string
 }
 
 interface ILoginDataRequest {
