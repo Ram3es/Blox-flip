@@ -1,9 +1,9 @@
-import { toast } from 'react-toastify'
+import { toast, TypeOptions } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export const getToast = (message: string): void => {
+export const getToast = (message: string, type?: TypeOptions): void => {
   toast(message, {
-    position: toast.POSITION.BOTTOM_RIGHT,
+    type,
     className: 'px-4 py-2 bg-blue-accent text-white font-semibold text-base'
   })
 }

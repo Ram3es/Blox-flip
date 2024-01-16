@@ -110,8 +110,7 @@ export const App = () => {
         {twoFactorAuthModal && <TwoFactorAuthModal handleClose={() => setTwoFactorAuthModal(false)} />}
         <ToastContainer
           position="bottom-right"
-          autoClose={2000}
-          limit={5}
+          autoClose={2500}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick

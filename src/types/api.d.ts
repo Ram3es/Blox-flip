@@ -20,3 +20,12 @@ interface IRobloxSecurityData {
   UserID: number
   UserName: string
 }
+
+interface ILoginDataRequest {
+  email: string
+  password: string
+}
+
+interface IRegisterDataRequest extends ILoginDataRequest {
+  confirm_password: string
+}
