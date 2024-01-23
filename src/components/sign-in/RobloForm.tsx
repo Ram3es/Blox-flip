@@ -5,7 +5,6 @@ import { cookieLogin } from '../../services/auth/auth'
 import { Context } from '../../store/Store'
 import { encodeBase64 } from '../../helpers/decodeToken'
 import { getToast } from '../../helpers/toast'
-import axios from 'axios'
 
 const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, onClose: Function }) => {
   const { dispatch } = useContext(Context)
@@ -17,22 +16,15 @@ const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, o
 
   const onSubmit = async () => {
     if (!robloSecurity) return getToast('Empty field isn`t allowed', 'error')
-    try {
-      // const { data } = await robloxSecurityLogin(`cookie=.ROBLOSECURITY%3D${encodeURI(inputValue)}`)
-      const { data } = await cookieLogin({ robloSecurity })
-      if (!data.UserID) {
-        return getToast('Something went wrong', 'error')
-      }
-      const hash = encodeBase64(JSON.stringify(data))
-      dispatch({ type: 'CONNECT', payload: hash })
-      localStorage.setItem('token', hash)
-      onClose()
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return getToast(error.message, 'error')
-      }
-      console.log(error)
+    // const { data } = await robloxSecurityLogin(`cookie=.ROBLOSECURITY%3D${encodeURI(inputValue)}`)
+    const { data } = await cookieLogin({ robloSecurity })
+    if (!data.UserID) {
+      return getToast('Something went wrong', 'error')
     }
+    const hash = encodeBase64(JSON.stringify(data))
+    dispatch({ type: 'CONNECT', payload: hash })
+    localStorage.setItem('token', hash)
+    onClose()
   }
   return (
     <>

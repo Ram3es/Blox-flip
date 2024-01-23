@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
 import { useFormik } from 'formik'
 import { signUpSchema } from './SignUpForm'
 import { useAppStore } from '../../store/Store'
-import axios from 'axios'
 import { getToast } from '../../helpers/toast'
 import { signIn } from '../../services/auth/auth'
 
 const SignInFormNew = ({ onClose }: { onClose: Function }) => {
-  const [isShownToast, setShownToast] = useState<boolean>(false)
   const { dispatch } = useAppStore()
   const formik = useFormik({
     initialValues: {
@@ -20,27 +18,13 @@ const SignInFormNew = ({ onClose }: { onClose: Function }) => {
       void signUpSchema
         .validate(values, { abortEarly: false })
         .then(async () => {
-          try {
-            const { data: { token } } = await signIn(values)
-            dispatch({ type: 'CONNECT', payload: token })
-            localStorage.setItem('token', token)
-            onClose()
-          } catch (error) {
-            if (axios.isAxiosError(error)) {
-              return getToast(error.message, 'error')
-            }
-            console.log(error)
-          }
+          const { data: { token } } = await signIn(values)
+          dispatch({ type: 'CONNECT', payload: token })
+          onClose()
         })
         .catch((errors) => {
-          const messages = errors.inner.map((err: { message: string }) => err.message) as string[]
-          setShownToast(true)
-          messages.forEach(msg => {
-            getToast(msg, 'error')
-          })
-          setTimeout(() => setShownToast(false), 3500)
+          errors?.inner?.forEach((err: { message: string }) => getToast(err.message, 'error'))
         })
-      console.log(values)
     }
   })
   return (
@@ -65,7 +49,6 @@ const SignInFormNew = ({ onClose }: { onClose: Function }) => {
           />
           <Submit
             submitFunction={formik.handleSubmit}
-            disabled={isShownToast}
            />
         </>
   )

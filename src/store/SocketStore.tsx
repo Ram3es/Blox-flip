@@ -12,7 +12,7 @@ import { useAppStore } from './Store'
 import { IUserLevel } from '../types/User'
 import { jwtDecode } from 'jwt-decode'
 
-import DEFAULT_AVATAR from '../assets/img/avatar_img.png'
+// import DEFAULT_AVATAR from '../assets/img/avatar_img.png'
 
 export type TSocket = Socket
 export interface ChatSocketCtxState {
@@ -94,8 +94,8 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         type: 'LOGIN',
         payload: {
           id: decoded.UserID ?? decoded.id,
-          name: decoded.UserName ?? decoded?.email,
-          avatar: decoded.ThumbnailUrl ?? DEFAULT_AVATAR
+          name: decoded.UserName ?? decoded?.name,
+          avatar: decoded.ThumbnailUrl ?? decoded?.avatar
         }
       })
       if (isConnected) {

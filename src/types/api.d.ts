@@ -21,6 +21,8 @@ interface IRobloxSecurityData {
   UserName: string
   email?: string
   id?: string
+  name?: string
+  avatar?: string
 }
 
 interface ILoginDataRequest {

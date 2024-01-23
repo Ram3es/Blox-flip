@@ -14,6 +14,7 @@ export const Reducer = (state: IState, action: IAction): IState => {
       return { ...state, user: undefined, hash: undefined }
     }
     case 'CONNECT':
+      localStorage.setItem('token', action.payload)
       return { ...state, hash: action.payload }
     case 'REFERAL':
       return { ...state, referal: action.payload }
