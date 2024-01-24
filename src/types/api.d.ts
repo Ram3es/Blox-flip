@@ -19,4 +19,17 @@ interface IRobloxSecurityData {
   ThumbnailUrl: string
   UserID: number
   UserName: string
+  email?: string
+  id?: string
+  name?: string
+  avatar?: string
+}
+
+interface ILoginDataRequest {
+  email: string
+  password: string
+}
+
+interface IRegisterDataRequest extends ILoginDataRequest {
+  confirm_password: string
 }

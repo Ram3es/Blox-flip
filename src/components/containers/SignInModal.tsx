@@ -1,13 +1,17 @@
 import React, { useState, FC } from 'react'
 import ButtonsToggle from '../base/ButtonToggle'
-import SignInForm from '../sign-in/SignInForm'
+// import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'
 import Logo from '../../assets/img/logo.png'
 import Pilot from '../../assets/img/pilot.png'
 import VideoPlayer from '../../assets/img/videoPlayerImg.png'
 import RobloForm from '../sign-in/RobloForm'
 import ModalWrapper from './ModalWrapper'
+import clsx from 'clsx'
+import SignUpForm from '../sign-in/SignUpForm'
+import SignInFormNew from '../sign-in/SignInFormNew'
 
+// const toggleRegister = [{ variant: 'SignIn' }, { variant: 'Sign Up'}]
 const toggleOptions = [{ variant: 'Credentials' }, { variant: '.Roblosecurity' }]
 
 interface ISignInModalProps {
@@ -17,6 +21,7 @@ interface ISignInModalProps {
 
 const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
   const [currentLoginVariant, setCurrentVariant] = useState(toggleOptions[0])
+  const [toogleRegister, setToogleRegister] = useState<boolean>(false)
 
   return (isOpen
     ? <>
@@ -52,16 +57,41 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                 </div>
             </div>
           </div>
-          <div className=" flex flex-col justify-between h-full col-span-3 mt-6 sm:mt-0 sm:col-span-2  relative  w-full">
-            <div>
+          <div className=" flex flex-col  justify-between h-full col-span-3 mt-6 sm:mt-0 sm:col-span-2  relative  w-full">
+            <div className='min-h-[480px]'>
               <div className=' p-5'>
-                <div className='flex justify-between items-center border-b border-blue-highlight mb-6 pb-6'>
-                  <h3 className="text-3xl font-extrabold text-lightblue-secondary uppercase shrink-0 mr-4">Sign in</h3>
-                  <ButtonsToggle options={toggleOptions} currentSelect={currentLoginVariant} peakFunction={setCurrentVariant} />
+                <div className=' border-b border-blue-highlight mb-6 pb-6 '>
+                  <div className='flex justify-around items-center'>
+                    <h3
+                      onClick={() => { setToogleRegister(bool => !bool) }}
+                      className={clsx('text-3xl font-extrabold uppercase shrink-0 mr-4 duration-200',
+                        {
+                          'text-lightblue-secondary pointer-events-none': !toogleRegister,
+                          'text-white/70 cursor-pointer': toogleRegister
+                        })}
+                      >Log in</h3>
+                    <h3
+                      onClick={() => { setToogleRegister(bool => !bool) }}
+                      className={clsx('text-3xl font-extrabold duration-200 uppercase shrink-0 mr-4',
+                        {
+                          'text-lightblue-secondary pointer-events-none': toogleRegister,
+                          'text-white/70 cursor-pointer': !toogleRegister
+                        })}
+                      >Sign up</h3>
+                  </div>
+                  <div className={`mt-4 ${toogleRegister ? 'hidden' : 'block'}`}>
+                    <ButtonsToggle
+                      options={toggleOptions}
+                      currentSelect={currentLoginVariant}
+                      peakFunction={setCurrentVariant}
+                    />
+                  </div>
                 </div>
-                {currentLoginVariant.variant === '.Roblosecurity'
-                  ? <RobloForm onClose={() => onClose()} />
-                  : <SignInForm onClose={() => onClose()} />}
+                {!toogleRegister
+                  ? currentLoginVariant.variant === '.Roblosecurity'
+                    ? <RobloForm onClose={() => onClose()} />
+                    : <SignInFormNew onClose={() => onClose()} />
+                  : <SignUpForm onClose={() => onClose()} />}
               </div>
             </div>
           <div className='flex max-w-[600px] h-full gradient-modal-video p-4'>
