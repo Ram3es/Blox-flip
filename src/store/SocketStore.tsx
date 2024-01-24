@@ -22,7 +22,10 @@ export interface ChatSocketCtxState {
   userLevel: IUserLevel | null
   twoFactorAuthModal: boolean
   setTwoFactorAuthModal: Dispatch<SetStateAction<boolean>>
+  setIsShownRobloxModal: Dispatch<SetStateAction<boolean>>
   isAuthenticated: boolean
+  isShownRobloxModal: boolean
+  isShownLinkinRobloxBtn: boolean
 }
 const URL = import.meta.env.VITE_API_URL
 const socket = io(URL, {
@@ -48,7 +51,9 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [userLevel, setUserLevel] = useState<IUserLevel | null>(null)
   const [onlineUsers, setOnlineUsers] = useState<number>(0)
   const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
+  const [isShownRobloxModal, setIsShownRobloxModal] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isShownLinkinRobloxBtn, setIsShownLinkinRobloxBtn] = useState(false)
 
   useEffect(() => {
     const onConnect = () => {
@@ -74,6 +79,21 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
 
     socket.on('online_list', ({ users }: { users: number }) => {
       setOnlineUsers(users)
+    })
+
+    socket.on('link_roblox', (data: any) => {
+      console.log('LISTENER:link_roblox', data)
+      setIsShownRobloxModal(true)
+    })
+
+    socket.on('link_roblox', (data: any) => {
+      console.log('LISTENER:link_roblox', data)
+      setIsShownRobloxModal(true)
+    })
+
+    socket.on('unlock_linking', (data: any) => {
+      console.log('LISTENER:unlock_linking', data)
+      setIsShownLinkinRobloxBtn(true)
     })
 
     socket.connect()
@@ -116,7 +136,11 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         onlineUsers,
         twoFactorAuthModal,
         setTwoFactorAuthModal,
-        isAuthenticated
+        setIsShownRobloxModal,
+        isAuthenticated,
+        isShownRobloxModal,
+        isShownLinkinRobloxBtn
+
       }}
     >
       {children}

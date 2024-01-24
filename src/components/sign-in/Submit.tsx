@@ -11,8 +11,8 @@ const Submit = ({ submitFunction, titleBtn, typeBtn = 'submit', disabled }: { su
     setChecked((prev) => ({ ...prev, [name]: checked }))
   }
   return (
-    <div className='flex justify-between items-center '>
-      <div className='flex'>
+    <div className='flex flex-col sm:flex-row justify-between items-center '>
+      <div className='flex flex-col sm:flex-row'>
         <InputWithLabel
           type='checkbox'
           checked={isChecked.policy}
@@ -22,17 +22,17 @@ const Submit = ({ submitFunction, titleBtn, typeBtn = 'submit', disabled }: { su
           label='By checking this box you agree to our'
           titleClasses='text-purple-terms ml-3'
         />
-        <a
-          href='https://sinoptik.ua'
-          className='text-lightblue-secondary underline ml-1'
-          target='_blank'
-          rel='noreferrer'
-        >
-          Terms Of Service
-        </a>
+        <div className='mx-auto sm:mx-0'>
+          <a
+            href='/terms'
+            className='text-lightblue-secondary underline ml-1 '
+          >
+            Terms Of Service
+          </a>
+        </div>
       </div>
       <Button
-        className={clsx('flex items-center justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5', {
+        className={clsx('flex items-center mt-6 sm:mt-0 justify-center min-w-[110px] leading-9 text-sm font-bold rounded bg-green-primary hover:bg-green-highlight px-2.5', {
           'pointer-events-none grayscale': !isChecked.policy
         })}
         onClick={() => submitFunction()}

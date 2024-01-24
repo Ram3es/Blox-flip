@@ -1,18 +1,12 @@
 import React, { useState, FC } from 'react'
-import ButtonsToggle from '../base/ButtonToggle'
-// import SignInForm from '../sign-in/SignInForm'
 import Mountains from '../../assets/img/bg-mountain.png'
 import Logo from '../../assets/img/logo.png'
 import Pilot from '../../assets/img/pilot.png'
 import VideoPlayer from '../../assets/img/videoPlayerImg.png'
-import RobloForm from '../sign-in/RobloForm'
 import ModalWrapper from './ModalWrapper'
 import clsx from 'clsx'
 import SignUpForm from '../sign-in/SignUpForm'
 import SignInFormNew from '../sign-in/SignInFormNew'
-
-// const toggleRegister = [{ variant: 'SignIn' }, { variant: 'Sign Up'}]
-const toggleOptions = [{ variant: 'Credentials' }, { variant: '.Roblosecurity' }]
 
 interface ISignInModalProps {
   onClose: Function
@@ -20,7 +14,6 @@ interface ISignInModalProps {
 }
 
 const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
-  const [currentLoginVariant, setCurrentVariant] = useState(toggleOptions[0])
   const [toogleRegister, setToogleRegister] = useState<boolean>(false)
 
   return (isOpen
@@ -58,13 +51,13 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
           <div className=" flex flex-col  justify-between h-full col-span-3 mt-6 sm:mt-0 sm:col-span-2  relative  w-full">
-            <div className='min-h-[480px]'>
+            <div className='min-h-[580px] sm:min-h-[480px]'>
               <div className=' p-5'>
                 <div className=' border-b border-blue-highlight mb-6 pb-6 '>
-                  <div className='flex justify-around items-center'>
+                  <div className='flex justify-between sm:justify-around items-center mt-4 sm:mt-0'>
                     <h3
                       onClick={() => { setToogleRegister(bool => !bool) }}
-                      className={clsx('text-3xl font-extrabold uppercase shrink-0 mr-4 duration-200',
+                      className={clsx('text-3xl font-extrabold uppercase shrink-0 duration-200',
                         {
                           'text-lightblue-secondary pointer-events-none': !toogleRegister,
                           'text-white/70 cursor-pointer': toogleRegister
@@ -72,29 +65,20 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                       >Log in</h3>
                     <h3
                       onClick={() => { setToogleRegister(bool => !bool) }}
-                      className={clsx('text-3xl font-extrabold duration-200 uppercase shrink-0 mr-4',
+                      className={clsx('text-3xl font-extrabold duration-200 uppercase shrink-0 ',
                         {
                           'text-lightblue-secondary pointer-events-none': toogleRegister,
                           'text-white/70 cursor-pointer': !toogleRegister
                         })}
                       >Sign up</h3>
                   </div>
-                  <div className={`mt-4 ${toogleRegister ? 'hidden' : 'block'}`}>
-                    <ButtonsToggle
-                      options={toggleOptions}
-                      currentSelect={currentLoginVariant}
-                      peakFunction={setCurrentVariant}
-                    />
-                  </div>
                 </div>
                 {!toogleRegister
-                  ? currentLoginVariant.variant === '.Roblosecurity'
-                    ? <RobloForm onClose={() => onClose()} />
-                    : <SignInFormNew onClose={() => onClose()} />
+                  ? <SignInFormNew onClose={() => onClose()} />
                   : <SignUpForm onClose={() => onClose()} />}
               </div>
             </div>
-          <div className='flex max-w-[600px] h-full gradient-modal-video p-4'>
+          <div className=' hidden sm:flex max-w-[600px] h-full gradient-modal-video p-4'>
             <div className='text-lightblue-secondary w-[70%]'>
               <p className='mb-4'>In order for *Site* to operate correctly, we need access to your Roblox account.</p>
               <p> Press the play button to view a vide of how exactly to sign in using either credentials or .roblosecurity on our website.</p>

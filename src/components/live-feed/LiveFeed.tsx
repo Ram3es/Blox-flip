@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { ColumnFiltersState, createColumnHelper } from '@tanstack/react-table'
 import type { ColumnDef, SortingState } from '@tanstack/react-table'
 import { Table } from '../table/Table'
@@ -15,12 +15,7 @@ import { Context } from '../../store/Store'
 import { ILiveFeedUser } from '../../types/LiveFeed'
 import { MultiplierCell } from '../table/CellFormatters/MultiplierCell'
 import { useLiveFeed } from '../../store/LiveFeedStore'
-
-const RedDotIcon = () => {
-  return (
-    <span className="inline-block align-middle outline-green-primary/25 bg-green-primary outline outline-4 rounded-full mr-2.5 h-2 w-2"></span>
-  )
-}
+import PulseGreenPoint from '../common/PulseGreenPoint'
 
 export const LiveFeed = () => {
   const { state } = useContext(Context)
@@ -145,7 +140,7 @@ export const LiveFeed = () => {
         currentColum={currentColum}
         searchValue={searchValue}
         filtersVariants={filtersVariants}
-        tableHeader={<FilterHeader label={<RedDotIcon />} text="Live feed" />}
+        tableHeader={<FilterHeader label={<PulseGreenPoint />} text="Live feed" />}
         variant="Feed"
       />
     </div>

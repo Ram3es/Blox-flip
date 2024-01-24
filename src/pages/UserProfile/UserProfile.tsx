@@ -6,6 +6,8 @@ import Profile from './Profile'
 import { useContext, useEffect, useState } from 'react'
 import { Context } from '../../store/Store'
 import RedirectIcon from '../../components/icons/RedirectIcon'
+import { useSocketCtx } from '../../store/SocketStore'
+import { Button } from '../../components/base/Button'
 
 interface INavTab {
   name: string
@@ -35,6 +37,7 @@ const UserProfile = () => {
   const { pathname, state } = useLocation()
 
   const { state: { user } } = useContext(Context)
+  const { isShownLinkinRobloxBtn, setIsShownRobloxModal } = useSocketCtx()
 
   useEffect(() => {
     if (state?.userId === user?.id) {
@@ -53,7 +56,16 @@ const UserProfile = () => {
               </div>
              {profileTabs[varinatProfile].title}
           </div>
-          <div>
+          <div className='flex flex-col-reverse sm:flex-row items-center'>
+            {isShownLinkinRobloxBtn &&
+             varinatProfile === 'ownProfile' &&
+             <Button
+               className='self-start xxs:self-end sm:self-auto mt-4 sm:mt-0 capitalize text-13 py-2 leading-3 px-4 text-center rounded  mx-1 border hover:text-white text-gray-primary border-transparent bg-blue-highlight'
+               onClick={() => setIsShownRobloxModal(true)}
+             >
+              Link Roblox Account
+             </Button>}
+             <div className='flex'>
             {profileTabs[varinatProfile].tabs.map(tab => (
               <NavLink
                 key={tab.path}
@@ -72,6 +84,7 @@ const UserProfile = () => {
                   <span>{tab.name}</span>
                 </div>
               </NavLink>))}
+              </div>
           </div>
         </div>
           {pathname === '/profile' ? <Profile isOwnProfile={state?.userId === user?.id} /> : <Outlet/> }
