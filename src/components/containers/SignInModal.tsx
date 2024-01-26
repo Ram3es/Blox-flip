@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react'
 import Mountains from '../../assets/img/bg-mountain.png'
 import Logo from '../../assets/img/logo.png'
 import Pilot from '../../assets/img/pilot.png'
-import VideoPlayer from '../../assets/img/videoPlayerImg.png'
 import ModalWrapper from './ModalWrapper'
 import clsx from 'clsx'
 import SignUpForm from '../sign-in/SignUpForm'
@@ -50,8 +49,8 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                 </div>
             </div>
           </div>
-          <div className=" flex flex-col  justify-between h-full col-span-3 mt-6 sm:mt-0 sm:col-span-2  relative  w-full">
-            <div className='min-h-[580px] sm:min-h-[480px]'>
+          <div className=" flex flex-col justify-between h-full col-span-3 mt-6 sm:mt-0 sm:col-span-2  relative">
+            <div className='min-h-[580px] sm:min-h-[520px] w-auto xs:w-[600px]'>
               <div className=' p-5'>
                 <div className=' border-b border-blue-highlight mb-6 pb-6 '>
                   <div className='flex justify-between sm:justify-around items-center mt-4 sm:mt-0'>
@@ -78,13 +77,6 @@ const SignInModal: FC<ISignInModalProps> = ({ isOpen, onClose }) => {
                   : <SignUpForm onClose={() => onClose()} />}
               </div>
             </div>
-          <div className=' hidden sm:flex max-w-[600px] h-full gradient-modal-video p-4'>
-            <div className='text-lightblue-secondary w-[70%]'>
-              <p className='mb-4'>In order for *Site* to operate correctly, we need access to your Roblox account.</p>
-              <p> Press the play button to view a vide of how exactly to sign in using either credentials or .roblosecurity on our website.</p>
-           </div>
-           <img src={VideoPlayer} alt='mock' className='mx-auto my-auto h-[70px]'/>
-          </div>
         </div>
         </ModalWrapper>
       </>

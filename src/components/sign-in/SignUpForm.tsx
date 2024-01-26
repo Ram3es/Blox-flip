@@ -38,36 +38,38 @@ const SignUpForm = ({ onClose }: { onClose: Function }) => {
   })
   return (
     <>
-      <InputWithLabel
-        type='text'
-        name='email'
-        label='Email'
-        placeholder='...'
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        labelClasses = 'flex flex-col w-full mb-4'
-        autoComplete='off'
-      />
-      <InputWithLabel
-        type='text'
-        name='password'
-        label='Password'
-        placeholder='...'
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        labelClasses = 'flex flex-col w-full mb-4'
-        autoComplete='off'
-      />
+      <div className='mb-8'>
         <InputWithLabel
-        type='text'
-        name='confirm_password'
-        label='Confirm Password'
-        placeholder='...'
-        value={formik.values.confirm_password}
-        onChange={formik.handleChange}
-        labelClasses = 'flex flex-col w-full mb-4'
-        autoComplete='off'
-      />
+          type='text'
+          name='email'
+          label='Email'
+          placeholder='...'
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          labelClasses = 'flex flex-col w-full mb-4'
+          autoComplete='off'
+        />
+        <InputWithLabel
+          type='text'
+          name='password'
+          label='Password'
+          placeholder='...'
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          labelClasses = 'flex flex-col w-full mb-4'
+          autoComplete='off'
+        />
+          <InputWithLabel
+          type='text'
+          name='confirm_password'
+          label='Confirm Password'
+          placeholder='...'
+          value={formik.values.confirm_password}
+          onChange={formik.handleChange}
+          labelClasses = 'flex flex-col w-full mb-4'
+          autoComplete='off'
+        />
+      </div>
       <Submit
         submitFunction={formik.handleSubmit}
         titleBtn="Register"

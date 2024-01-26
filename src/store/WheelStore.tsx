@@ -37,12 +37,15 @@ export const WheelProvider = ({ children }: WheelProviderProps) => {
   useEffect(() => {
     socket.emit('wheel:connect')
 
+    socket.emit('load_wheel_wagers', (data: WheelBetRecord) => {
+      setWheelBets(data)
+    })
+
     socket.on('load_wheel', (data: ILoadWheelRes) => {
       const timerValue = getTimerValue(data.time, DELAY)
       if (timerValue >= 0) {
         setTimer(timerValue)
       }
-      setWheelBets(INIT_BETS_STATE)
     })
     socket.on('wheel_history', (data: possibleBets[]) => {
       setHistory(data)

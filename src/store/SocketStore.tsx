@@ -23,8 +23,10 @@ export interface ChatSocketCtxState {
   twoFactorAuthModal: boolean
   setTwoFactorAuthModal: Dispatch<SetStateAction<boolean>>
   setIsShownRobloxModal: Dispatch<SetStateAction<boolean>>
+  setIsShownChangeNameModal: Dispatch<SetStateAction<boolean>>
   isAuthenticated: boolean
   isShownRobloxModal: boolean
+  isShownChangeNameModal: boolean
   isShownLinkinRobloxBtn: boolean
 }
 const URL = import.meta.env.VITE_API_URL
@@ -54,6 +56,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [isShownRobloxModal, setIsShownRobloxModal] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isShownLinkinRobloxBtn, setIsShownLinkinRobloxBtn] = useState(false)
+  const [isShownChangeNameModal, setIsShownChangeNameModal] = useState(false)
 
   useEffect(() => {
     const onConnect = () => {
@@ -86,14 +89,14 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
       setIsShownRobloxModal(true)
     })
 
-    socket.on('link_roblox', (data: any) => {
-      console.log('LISTENER:link_roblox', data)
-      setIsShownRobloxModal(true)
-    })
-
     socket.on('unlock_linking', (data: any) => {
       console.log('LISTENER:unlock_linking', data)
       setIsShownLinkinRobloxBtn(true)
+    })
+
+    socket.on('name_change', (data: { name: string }) => {
+      console.log(data)
+      dispatch({ type: 'CHANGE_USER_NAME', payload: data.name })
     })
 
     socket.connect()
@@ -102,7 +105,10 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
       socket.off('connect', onConnect)
       socket.off('disconnect', onDisconnect)
       socket.off('balance')
-      socket.off('level')
+      socket.off('online_list')
+      socket.off('link_roblox')
+      socket.off('unlock_linking')
+      socket.off('name_change')
       socket.disconnect()
     }
   }, [])
@@ -137,9 +143,11 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
         twoFactorAuthModal,
         setTwoFactorAuthModal,
         setIsShownRobloxModal,
+        setIsShownChangeNameModal,
         isAuthenticated,
         isShownRobloxModal,
-        isShownLinkinRobloxBtn
+        isShownLinkinRobloxBtn,
+        isShownChangeNameModal
 
       }}
     >
