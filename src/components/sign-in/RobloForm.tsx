@@ -1,42 +1,36 @@
-import React, { ChangeEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
 import { cookieLogin } from '../../services/auth/auth'
-import { Context } from '../../store/Store'
-import { encodeBase64 } from '../../helpers/decodeToken'
 import { getToast } from '../../helpers/toast'
 
 const RobloSignIn = ({ submitFunction, onClose }: { submitFunction?: Function, onClose: Function }) => {
-  const { dispatch } = useContext(Context)
-  const [robloSecurity, setInputValue] = useState('')
+  const [cookie, setInputValue] = useState('')
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value)
   }
 
   const onSubmit = async () => {
-    if (!robloSecurity) return getToast('Empty field isn`t allowed', 'error')
-    // const { data } = await robloxSecurityLogin(`cookie=.ROBLOSECURITY%3D${encodeURI(inputValue)}`)
-    const { data } = await cookieLogin({ robloSecurity })
-    if (!data.UserID) {
-      return getToast('Something went wrong', 'error')
-    }
-    const hash = encodeBase64(JSON.stringify(data))
-    dispatch({ type: 'CONNECT', payload: hash })
-    localStorage.setItem('token', hash)
+    if (!cookie) return getToast('Empty field not allowed', 'error')
+    const { data } = await cookieLogin({ cookie })
+    getToast(data?.message, 'success')
     onClose()
   }
   return (
     <>
-      <div className='min-h-[278px]'>
+      <div className='pb-6'>
         <InputWithLabel
           type='text'
           label='.Roblosecurity'
-          value={robloSecurity}
+          value={cookie}
           placeholder="..."
           onChange={onChange}
         />
-        <Submit submitFunction={onSubmit} />
+        <Submit
+          titleBtn='Link'
+          submitFunction={onSubmit}
+        />
       </div>
     </>
 

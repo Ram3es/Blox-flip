@@ -1,7 +1,7 @@
 import { FC, MouseEvent, ReactNode, memo, useState } from 'react'
 import { useChat } from '../../store/ChatStore'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Menu } from '@headlessui/react'
 
 import clsx from 'clsx'
@@ -48,6 +48,8 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Chat', 
     setSelectedMessage
   } = useChat()
 
+  const navigate = useNavigate()
+
   const { setTwoFactorAuthModal } = useSocketCtx()
 
   const { dispatch } = useAppStore()
@@ -80,6 +82,7 @@ const ChatUserCard: FC<ChatUserCardProps> = ({ user, hashMsg, variant = 'Chat', 
     {
       handleFunction: () => {
         dispatch({ type: 'LOGOUT' })
+        navigate('/', { replace: true })
         window.location.reload()
       },
       name: 'Logout'

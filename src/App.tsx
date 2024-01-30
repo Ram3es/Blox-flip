@@ -46,9 +46,16 @@ import TwoFactorAuthModal from './components/containers/TwoFactorAuthModal'
 import CryptoForm from './components/containers/CryptoForm'
 import WithdrawGifts from './pages/Withdraw/WithdrawGifts'
 import Survey from './pages/Deposit/methods/Survey'
+import RobloxModal from './components/containers/RobloxLinkedModal'
+import ChangeNameModal from './components/containers/ChangeNameModal'
 
 export const App = () => {
-  const { twoFactorAuthModal, setTwoFactorAuthModal } = useSocketCtx()
+  const {
+    twoFactorAuthModal,
+    isShownRobloxModal,
+    isShownChangeNameModal,
+    setTwoFactorAuthModal
+  } = useSocketCtx()
 
   return (
     <BrowserRouter>
@@ -108,6 +115,8 @@ export const App = () => {
           <Route path='*' element={<Home />} />
         </Routes>
         {twoFactorAuthModal && <TwoFactorAuthModal handleClose={() => setTwoFactorAuthModal(false)} />}
+        {isShownRobloxModal && <RobloxModal />}
+        {isShownChangeNameModal && <ChangeNameModal />}
         <ToastContainer
           position="bottom-right"
           autoClose={2500}

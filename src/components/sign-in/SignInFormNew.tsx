@@ -1,4 +1,3 @@
-import React from 'react'
 import InputWithLabel from '../base/InputWithLabel'
 import Submit from './Submit'
 import { useFormik } from 'formik'
@@ -29,24 +28,26 @@ const SignInFormNew = ({ onClose }: { onClose: Function }) => {
   })
   return (
         <>
-          <InputWithLabel
-            type='text'
-            name='email'
-            label='Email'
-            placeholder='...'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            autoComplete='off'
-          />
-          <InputWithLabel
-            type='text'
-            name='password'
-            label='Password'
-            placeholder='...'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            autoComplete='off'
-          />
+          <div className='mb-10'>
+            <InputWithLabel
+              type='text'
+              name='email'
+              label='Email'
+              placeholder='...'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              autoComplete='off'
+            />
+            <InputWithLabel
+              type='text'
+              name='password'
+              label='Password'
+              placeholder='...'
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              autoComplete='off'
+            />
+          </div>
           <Submit
             submitFunction={formik.handleSubmit}
            />

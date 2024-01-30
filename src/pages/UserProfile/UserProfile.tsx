@@ -3,9 +3,11 @@ import clsx from 'clsx'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import IconProfile from '../../components/icons/IconProfile'
 import Profile from './Profile'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Context } from '../../store/Store'
 import RedirectIcon from '../../components/icons/RedirectIcon'
+import { useSocketCtx } from '../../store/SocketStore'
+import { Button } from '../../components/base/Button'
 
 interface INavTab {
   name: string
@@ -31,29 +33,43 @@ const profileTabs: Record<string, { title: string, tabs: INavTab[] } > = {
 }
 
 const UserProfile = () => {
-  const [varinatProfile, setVariantProfile] = useState<string>('ownProfile')
+  const [varinatProfile] = useState<string>('ownProfile')
   const { pathname, state } = useLocation()
 
   const { state: { user } } = useContext(Context)
-
-  useEffect(() => {
-    if (state?.userId === user?.id) {
-      setVariantProfile('ownProfile')
-    } else {
-      setVariantProfile('userProfile')
-    }
-  }, [state])
+  const {
+    isShownLinkinRobloxBtn,
+    setIsShownRobloxModal,
+    setIsShownChangeNameModal
+  } = useSocketCtx()
 
   return (
       <>
-        <div className='flex flex-wrap justify-between'>
-          <div className="flex items-center text-base font-bold mr-2 mb-4 md:mb-0">
+        <div className='flex flex-wrap justify-between mb-4'>
+          <div className="flex items-center text-base font-bold mr-2 ">
               <div className="shrink-0 w-4 mr-2.5 text-gray-primary">
                  <IconProfile />
               </div>
              {profileTabs[varinatProfile].title}
           </div>
-          <div>
+          <div className='flex flex-col-reverse sm:flex-row items-center '>
+            <div className='flex self-start'>
+              {isShownLinkinRobloxBtn &&
+              varinatProfile === 'ownProfile' &&
+              <Button
+                className='self-start xxs:self-end sm:self-auto mt-4 sm:mt-0 capitalize text-13 py-2 leading-3 px-4 text-center rounded  mx-1 border hover:text-white text-gray-primary border-transparent bg-blue-highlight'
+                onClick={() => setIsShownRobloxModal(true)}
+              >
+                Link Roblox Account
+              </Button>}
+              <Button
+                className='self-start mt-4 sm:mt-0 capitalize text-13 py-2 leading-3 px-4 text-center rounded  mx-1 border hover:text-white text-gray-primary border-transparent bg-blue-highlight'
+                onClick={() => setIsShownChangeNameModal(true)}
+              >
+                Change Name
+              </Button>
+             </div>
+             <div className='flex'>
             {profileTabs[varinatProfile].tabs.map(tab => (
               <NavLink
                 key={tab.path}
@@ -72,6 +88,7 @@ const UserProfile = () => {
                   <span>{tab.name}</span>
                 </div>
               </NavLink>))}
+              </div>
           </div>
         </div>
           {pathname === '/profile' ? <Profile isOwnProfile={state?.userId === user?.id} /> : <Outlet/> }
