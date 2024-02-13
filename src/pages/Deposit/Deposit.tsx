@@ -5,7 +5,7 @@ import ToolBar from '../../components/common/ToolBar'
 import DiamondIcon from '../../components/icons/DiamondIcon'
 import NavHeader from '../../components/navigate/NavHeader'
 import { useToolbarState } from '../../helpers/hooks/useToolbarState'
-import { IItemCard } from '../../types/ItemCard'
+import { TRobloxCard } from '../../types/ItemCard'
 import Methods from './methods/Methods'
 import { useSocketCtx } from '../../store/SocketStore'
 import InputWithInlineLabel from '../../components/common/InputWithInlineLabel'
@@ -13,14 +13,24 @@ import { useFormik } from 'formik'
 import { getToast } from '../../helpers/toast'
 import { TransactionVariant } from '../../types/enums'
 import { useAppStore } from '../../store/Store'
+import { depositByRobloxInventory } from '../../services/payment/deposit'
 
 export const Deposit = () => {
-  const [selectedCards, setSelectedCard] = useState<IItemCard[]>([])
+  const [selectedCards, setSelectedCard] = useState<TRobloxCard[]>([])
   const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('')
   const { socket, setTwoFactorAuthModal } = useSocketCtx()
   const { pathname } = useLocation()
-  const { value, searchBy, onChange, priceRange, sortOptions, setPriceRange, setSortOptions } = useToolbarState()
   const { state: { referal } } = useAppStore()
+
+  const {
+    value,
+    searchBy,
+    onChange,
+    priceRange,
+    sortOptions,
+    setPriceRange,
+    setSortOptions
+  } = useToolbarState()
 
   const matchDeposit = useMatch('/deposit')
   const matchMethod = useMatch('/deposit/:method')
@@ -45,6 +55,14 @@ export const Deposit = () => {
         '2fa_code': twoFactorAuthCode === '' ? null : twoFactorAuthCode,
         items: selectedCards.map((card) => card.id)
       })
+      try {
+        depositByRobloxInventory(selectedCards.map(card => card.id))
+          .then(({ data }) => console.log(data))
+          .catch(error => console.log(error))
+      } catch (error) {
+        console.log(error)
+      }
+
       setSelectedCard([])
     }
   }
@@ -117,7 +135,7 @@ export const Deposit = () => {
         </NavHeader>
 
         {matchMethod?.params.method === 'roblox-limiteds' && (
-          <div className="flex flex-col gap-y-2 items-end lg:ml-5 lg:items-start">
+          <div className="flex flex-col gap-y-4 justify-end md:ml-5 lg:items-start min-w-[256px] mb-8">
             <InputWithInlineLabel
               value={twoFactorAuthCode}
               onChange={(event) => setTwoFactorAuthCode(event.target.value)}
@@ -143,16 +161,20 @@ export const Deposit = () => {
                 </svg>
               }
             />
-            <Button onClick={handleDeposit} color="GreenPrimary">
-              <div className="w-[220px] h-10 flex items-center gap-2 justify-center">
-                <DiamondIcon className="w-[21px] h-[17px]" />
-                <span>Deposit</span>
-              </div>
-            </Button>
+            <div className='mx-auto'>
+              <Button onClick={handleDeposit} color="GreenPrimary">
+                <div className="w-[240px] h-10 flex items-center gap-2 justify-center ">
+                  <DiamondIcon className="w-[21px] h-[17px]" />
+                  <span>Deposit</span>
+                </div>
+              </Button>
+            </div>
           </div>
         )}
       </div>
-      {pathname === '/deposit' ? <Methods transactionVariant={TransactionVariant.Deposit} /> : <Outlet context={contextOutlet} />}
+      {pathname === '/deposit'
+        ? <Methods transactionVariant={TransactionVariant.Deposit} />
+        : <Outlet context={contextOutlet} />}
     </div>
   )
 }

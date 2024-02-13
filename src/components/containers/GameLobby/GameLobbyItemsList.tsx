@@ -5,7 +5,7 @@ import { IJackpotCard } from '../../../types/Jackpot'
 
 interface GameLobbyItemsListProps {
   items: TRobloxCard[] | IJackpotCard[] | IItemCard[]
-  handleSelectItem: (id: string) => void
+  handleSelectItem: (id: number) => void
 }
 
 const GameLobbyItemsList = ({ items, handleSelectItem }: GameLobbyItemsListProps) => {

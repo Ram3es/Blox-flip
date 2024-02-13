@@ -5,7 +5,6 @@ import GameInfoListItem from '../../components/common/GameInfoListItem'
 import StrippedBgItem from '../../components/common/StrippedBgItem'
 import VerifyBets from '../../components/common/VerifyBets'
 import Image from '../../components/base/Image'
-import { cards } from '../../mocks/cards'
 import {
   IJackpotCard,
   IRootJackpotWager
@@ -138,7 +137,7 @@ const Jackpot = () => {
                       color={card.color}
                       userAvatar={card.avatar}
                       itemClasses={`${
-                        cards.length - 1 === idx ? 'mb-0' : 'mb-2'
+                        selectedCards.length - 1 === idx ? 'mb-0' : 'mb-2'
                       } px-1 shrink-0 w-full xs:w-full group/item is-user is-added`}
                     />
                   ))}

@@ -55,7 +55,7 @@ const SocketCtxProvider = ({ children }: { children?: ReactNode }) => {
   const [twoFactorAuthModal, setTwoFactorAuthModal] = useState(false)
   const [isShownRobloxModal, setIsShownRobloxModal] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isShownLinkinRobloxBtn, setIsShownLinkinRobloxBtn] = useState(false)
+  const [isShownLinkinRobloxBtn, setIsShownLinkinRobloxBtn] = useState(true)
   const [isShownChangeNameModal, setIsShownChangeNameModal] = useState(false)
 
   useEffect(() => {

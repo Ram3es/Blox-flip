@@ -69,7 +69,7 @@ export const Table = <T extends object>({
   })
 
   const filteringColumn = useMemo(() => {
-    return table.getAllColumns().filter((col) => col.id === currentColum)[0]
+    return table.getAllColumns()?.filter((col) => col.id === currentColum)[0]
   }, [currentColum, table])
 
   useEffect(() => {

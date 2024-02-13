@@ -62,7 +62,7 @@ export interface IKingFight {
 }
 
 export interface IKingJoin {
-  items: string[]
+  items: number[]
   type: 1 | 0
   '2fa_code'?: string
 }

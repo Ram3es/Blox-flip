@@ -9,6 +9,9 @@ export const POST = async <T, B = undefined>(
 ): Promise<AxiosResponse<T>> =>
   await getInstance().post(endPoint, data)
 
+export const GET = async <T>(endPoint: string): Promise<AxiosResponse<T>> =>
+  await getInstance().get(endPoint)
+
 const getInstance = () => {
   const instance = axios.create({
     baseURL: BASE_URL,
@@ -19,8 +22,8 @@ const getInstance = () => {
 
   instance.interceptors.request.use(
     config => {
-      if (config.url === '/auth/roblox/login-with-cookie') {
-        const token = localStorage.getItem('token') ?? ''
+      const token = localStorage.getItem('token')
+      if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }
       return config

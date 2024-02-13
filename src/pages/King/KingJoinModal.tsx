@@ -34,18 +34,18 @@ const KingJoinModal = ({ onClose, handleFunction }: KingJoinModalProps) => {
 
   const selectedSkins = skins.filter((skin) => skin.isSelected)
 
-  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: string, isSelected: boolean) => {
+  const updateArrayBySelectedSkin = (skins: IItemCard[], skinId: number, isSelected: boolean) => {
     return skins.map((skin) => (skin.id === skinId ? { ...skin, isSelected } : skin))
   }
 
-  const isItemSelected = (skins: IItemCard[], skinId: string) => {
+  const isItemSelected = (skins: IItemCard[], skinId: number) => {
     return skins.some((skin) => skin.id === skinId && skin.isSelected)
   }
 
-  const findSkinByItemId = (skinId: string) => skins.find((skin) => skin.id === skinId)
+  const findSkinByItemId = (skinId: number) => skins.find((skin) => skin.id === skinId)
 
   const handleSelectSkin = useCallback(
-    (skinId: string) => {
+    (skinId: number) => {
       const skin = findSkinByItemId(skinId)
 
       if (!skin) return

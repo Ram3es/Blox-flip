@@ -5,6 +5,7 @@ import SelectedIcon from '../../icons/SelectedIcon'
 import Image from '../../base/Image'
 import CoinsWithDiamond from '../CoinsWithDiamond'
 import { TypographySizeEnum } from '../../../types/enums'
+import PulseGreenPoint from '../PulseGreenPoint'
 
 enum BorderColorEnum {
   Red = 'Red',
@@ -107,7 +108,10 @@ const ItemCard: FC<IItemCardProps> = ({
             <div className='mb-2 hidden group-[.is-percent]/item:block'>
               {chance ? <>{chance / 1000}%</> : <>1.5%</>}
             </div>
-            <div className='w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden'></div>
+            {/* <div className='w-2 h-2 outline outline-4 rounded-full bg-green-primary outline-green-primary/25 shadow-green-primary-10 mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden'></div> */}
+            <div className='mb-2 group-[.point-hidden]/item:hidden group-[.is-added]/item:hidden group-[.is-percent]/item:hidden'>
+              <PulseGreenPoint />
+            </div>
             <div className='text-gray-primary mb-2.5 grow flex flex-col justify-center group-[.is-added]/item:text-left group-[.is-user]/item:hidden'>
               <span className='inline-block group-[.is-block]/item:min-h-[60px]'>{name}</span>
             </div>

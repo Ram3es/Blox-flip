@@ -11,7 +11,7 @@ const labelProps = Object.values(METHODS).reduce<IMethodLabel[]>((acc, method) =
 const NavHeader = ({ title, pathName, children, renderIcon, wrapperClasses }: { title: string, pathName?: string, children?: ReactNode, renderIcon: () => JSX.Element, wrapperClasses?: string }) => {
   const navigate = useNavigate()
   return (
-    <div className={wrapperClasses ?? ' w-full flex flex-wrap justify-between mb-8'}>
+    <div className={wrapperClasses ?? ' w-full flex flex-wrap gap-y-4 items-start justify-between mb-8'}>
       <div className="flex items-center gap-4">
         <Button
            onClick={() => navigate(-1)}
