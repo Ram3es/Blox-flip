@@ -7,7 +7,7 @@ import CoinsWithDiamond from '../CoinsWithDiamond'
 import { TypographySizeEnum } from '../../../types/enums'
 import PulseGreenPoint from '../PulseGreenPoint'
 
-enum BorderColorEnum {
+export enum BorderColorEnum {
   Red = 'Red',
   Pink = 'Pink',
   Orange = 'Orange',
@@ -116,7 +116,7 @@ const ItemCard: FC<IItemCardProps> = ({
               <span className='inline-block group-[.is-block]/item:min-h-[60px]'>{name}</span>
             </div>
             <div className='w-full group-[.is-added]/item:flex group-[.is-added]/item:items-start group-[.is-user]/item:items-center'>
-              <div className='w-full shrink-0 pb-60% h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] '>
+              <div className='w-full shrink-0 pb-[75%] h-0 relative mb-2.5 group-[.is-added]/item:mr-3 group-[.is-added]/item:mb-0 group-[.is-added]/item:pb-[34%] group-[.is-added]/item:w-2/5 group-[.is-user]/item:w-[120px] group-[.is-user]/item:pb-[28%] '>
                 <img
                   src={image}
                   alt='@T'

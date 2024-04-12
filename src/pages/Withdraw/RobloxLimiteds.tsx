@@ -1,16 +1,15 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-
 import ItemCard from '../../components/common/Cards/ItemCard'
 import RemoveArrowBold from '../../components/icons/RemoveArrowBold'
 import CoinsWithDiamond from '../../components/common/CoinsWithDiamond'
-
 import { searchData } from '../../helpers/searchData'
 import { sortData } from '../../helpers/sortData'
-
 import type { TRobloxCard } from '../../types/ItemCard'
 import { TSocket } from '../../store/SocketStore'
 import { getDepositInventory } from '../../services/payment/deposit'
+import { fetchAsset } from '../../services/roblox/getItemImage'
+import { getColorCardbyPrice } from '../../helpers/getColorCard'
 
 const RobloxLimiteds = () => {
   const [allCards, setAllCards] = useState<TRobloxCard[]>([])
@@ -78,12 +77,15 @@ const RobloxLimiteds = () => {
 
   const getInventory = useCallback(async () => {
     const { data: { inventory } } = await getDepositInventory()
+    const itemIdsQuery = inventory.map(item => item.assetId).join(',')
+    const assets = await fetchAsset(itemIdsQuery)
+
     setAllCards(inventory.map(item => ({
       id: item.assetId,
       name: item.assetName,
       price: item.value,
-      color: 'Green',
-      pic: 'Horns'
+      color: getColorCardbyPrice(item.value),
+      pic: assets.find((pic: { targetId: number }) => pic.targetId === item.assetId)?.imageUrl ?? ''
     })))
   }, [])
 
